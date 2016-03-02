@@ -1,0 +1,6 @@
+{
+	"@metadata": {
+		"authors": []
+	},
+	"wikibase-media-info-desc": "Provides a media info entity type for use with a Wikibase repo."
+}

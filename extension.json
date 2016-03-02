@@ -1,0 +1,36 @@
+{
+	"name": "WikibaseMediaInfo",
+	"version": "0.0.0",
+	"author": [
+		"The Wikidata team"
+	],
+	"url": "https://www.mediawiki.org/wiki/Extension:WikibaseMediaInfo",
+	"descriptionmsg": "wikibase-media-info-desc",
+	"license-name": "GPL-2.0+",
+	"type": "other",
+	"AutoloadClasses": {
+	},
+	"config": {
+	},
+	"ExtensionMessagesFiles": {
+		"WikibaseMediaInfoAlias": "WikibaseMediaInfo.i18n.alias.php"
+	},
+	"Hooks": {
+		"NameOfHook": [
+		]
+	},
+	"MessagesDirs": {
+		"WikibaseMediaInfo": [
+			"i18n"
+		]
+	},
+	"ResourceModules": {
+	},
+	"ResourceFileModulePaths": {
+		"localBasePath": "",
+		"remoteExtPath": "WikibaseMediaInfo"
+	},
+	"SpecialPages": {
+	},
+	"manifest_version": 1
+}

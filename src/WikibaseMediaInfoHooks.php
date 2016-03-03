@@ -23,4 +23,43 @@ class WikibaseMediaInfoHooks {
 		$paths[] = __DIR__ . '/../tests/phpunit/';
 	}
 
+	/**
+	 * Returns the common definition of the media info entity type that both repo and client use.
+	 *
+	 * @return array
+	 */
+	private static function getCommonMediaInfoDefinition() {
+		return [
+			// TODO
+		];
+	}
+
+	/**
+	 * Adds the definition of the media info entity type to the definitions array Wikibase uses.
+	 *
+	 * @param $entityTypeDefinitions
+	 */
+	public static function onWikibaseRepoEntityTypes( &$entityTypeDefinitions ) {
+		$entityTypeDefinitions['mediainfo'] = array_merge(
+			self::getCommonMediaInfoDefinition(),
+			[
+				// TODO
+			]
+		);
+	}
+
+	/**
+	 * Adds the definition of the media info entity type to the definitions array Wikibase uses.
+	 *
+	 * @param $entityTypeDefinitions
+	 */
+	public static function onWikibaseClientEntityTypes( &$entityTypeDefinitions ) {
+		$entityTypeDefinitions['mediainfo'] = array_merge(
+			self::getCommonMediaInfoDefinition(),
+			[
+				// TODO
+			]
+		);
+	}
+
 }

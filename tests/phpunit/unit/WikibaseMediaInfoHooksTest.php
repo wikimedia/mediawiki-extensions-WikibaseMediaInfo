@@ -21,4 +21,30 @@ class WikibaseMediaInfoHooksTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals( realpath( __DIR__ . '/../' ), realpath( $paths[1] ) );
 	}
 
+	public function testOnWikibaseRepoEntityTypes() {
+		$entityTypeDefinitions = [
+			'item' => [ 'foo', 'bar' ]
+		];
+
+		WikibaseMediaInfoHooks::onWikibaseRepoEntityTypes( $entityTypeDefinitions );
+
+		$this->assertArrayHasKey( 'item', $entityTypeDefinitions );
+		$this->assertEquals( [ 'foo', 'bar' ], $entityTypeDefinitions['item'] );
+
+		$this->assertArrayHasKey( 'mediainfo', $entityTypeDefinitions );
+	}
+
+	public function testOnWikibaseClientEntityTypes() {
+		$entityTypeDefinitions = [
+			'item' => [ 'foo', 'bar' ]
+		];
+
+		WikibaseMediaInfoHooks::onWikibaseClientEntityTypes( $entityTypeDefinitions );
+
+		$this->assertArrayHasKey( 'item', $entityTypeDefinitions );
+		$this->assertEquals( [ 'foo', 'bar' ], $entityTypeDefinitions['item'] );
+
+		$this->assertArrayHasKey( 'mediainfo', $entityTypeDefinitions );
+	}
+
 }

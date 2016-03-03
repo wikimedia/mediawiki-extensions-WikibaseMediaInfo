@@ -1,6 +1,7 @@
 .*.swp
 *~
 /.project
+/.idea
 /composer.lock
 /vendor
 /node_modules

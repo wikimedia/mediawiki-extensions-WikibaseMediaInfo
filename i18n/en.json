@@ -1,6 +1,8 @@
 {
 	"@metadata": {
-		"authors": []
+		"authors": [
+			"Bene*"
+		]
 	},
-	"wikibase-media-info-desc": "Provides a media info entity type for use with a Wikibase repo."
+	"wikibase-media-info-desc": "Wikibase extension to manage structured metadata of media files"
 }

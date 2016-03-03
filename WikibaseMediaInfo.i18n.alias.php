@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Aliases for special pages of the WikibaseMediaInfo extension
  *

@@ -1,0 +1,23 @@
+<?php
+
+/**
+ * PHPUnit test bootstrap file for the Wikibase MediaInfo component.
+ *
+ * @licence GNU GPL v2+
+ * @author Bene* < benestar.wikimedia@gmail.com >
+ */
+
+if ( PHP_SAPI !== 'cli' ) {
+	die( 'Not an entry point' );
+}
+
+error_reporting( E_ALL | E_STRICT );
+ini_set( 'display_errors', 1 );
+
+if ( is_readable( __DIR__ . '/../../vendor/autoload.php' ) ) {
+	require __DIR__ . '/../../vendor/autoload.php';
+} elseif ( is_readable( __DIR__ . '/../../../vendor/autoload.php' ) ) {
+	require __DIR__ . '/../../../vendor/autoload.php';
+} else {
+	die( 'You need to install this package with Composer before you can run the tests' );
+}

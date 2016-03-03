@@ -16,7 +16,8 @@
 		"WikibaseMediaInfoAlias": "WikibaseMediaInfo.i18n.alias.php"
 	},
 	"Hooks": {
-		"NameOfHook": [
+		"UnitTestsList": [
+			"Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onUnitTestsList"
 		]
 	},
 	"MessagesDirs": {

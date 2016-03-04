@@ -2,6 +2,11 @@
 
 namespace Wikibase\MediaInfo;
 
+use Wikibase\DataModel\DeserializerFactory;
+use Wikibase\DataModel\SerializerFactory;
+use Wikibase\MediaInfo\DataModel\Serialization\MediaInfoDeserializer;
+use Wikibase\MediaInfo\DataModel\Serialization\MediaInfoSerializer;
+
 /**
  * MediaWiki hook handlers for the Wikibase MediaInfo extension.
  *
@@ -30,7 +35,18 @@ class WikibaseMediaInfoHooks {
 	 */
 	private static function getCommonMediaInfoDefinition() {
 		return [
-			// TODO
+			'serializer-factory-callback' => function( SerializerFactory $serializerFactory ) {
+				return new MediaInfoSerializer(
+					$serializerFactory->newTermListSerializer(),
+					$serializerFactory->newStatementListSerializer()
+				);
+			},
+			'deserializer-factory-callback' => function( DeserializerFactory $deserializerFactory ) {
+				return new MediaInfoDeserializer(
+					$deserializerFactory->newTermListDeserializer(),
+					$deserializerFactory->newStatementListDeserializer()
+				);
+			}
 		];
 	}
 

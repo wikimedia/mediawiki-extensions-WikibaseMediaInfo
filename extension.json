@@ -7,7 +7,7 @@
 	"url": "https://www.mediawiki.org/wiki/Extension:WikibaseMediaInfo",
 	"descriptionmsg": "wikibase-media-info-desc",
 	"license-name": "GPL-2.0+",
-	"type": "other",
+	"type": "wikibase",
 	"AutoloadClasses": {
 	},
 	"config": {

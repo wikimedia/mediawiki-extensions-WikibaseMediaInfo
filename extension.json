@@ -18,6 +18,12 @@
 	"Hooks": {
 		"UnitTestsList": [
 			"Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onUnitTestsList"
+		],
+		"WikibaseRepoEntityTypes": [
+			"Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onWikibaseRepoEntityTypes"
+		],
+		"WikibaseClientEntityTypes": [
+			"Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onWikibaseClientEntityTypes"
 		]
 	},
 	"MessagesDirs": {

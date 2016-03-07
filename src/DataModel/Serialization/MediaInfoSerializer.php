@@ -67,18 +67,21 @@ class MediaInfoSerializer implements DispatchableSerializer {
 	}
 
 	private function getSerialized( MediaInfo $mediaInfo ) {
-		$serialization = [
-			'type' => $mediaInfo->getType(),
-			'labels' => $this->termListSerializer->serialize( $mediaInfo->getLabels() ),
-			'descriptions' => $this->termListSerializer->serialize( $mediaInfo->getDescriptions() ),
-			'statements' => $this->statementListSerializer->serialize( $mediaInfo->getStatements() )
-		];
+		$serialization = [ 'type' => $mediaInfo->getType() ];
 
 		$id = $mediaInfo->getId();
 
 		if ( $id !== null ) {
 			$serialization['id'] = $id->getSerialization();
 		}
+
+		$serialization['labels'] = $this->termListSerializer->serialize( $mediaInfo->getLabels() );
+		$serialization['descriptions'] = $this->termListSerializer->serialize(
+			$mediaInfo->getDescriptions()
+		);
+		$serialization['statements'] = $this->statementListSerializer->serialize(
+			$mediaInfo->getStatements()
+		);
 
 		return $serialization;
 	}

@@ -110,7 +110,17 @@ class MediaInfoSerializerTest extends PHPUnit_Framework_TestCase {
 	public function testSerialize( $object, $serialization ) {
 		$serializer = $this->newSerializer();
 
-		$this->assertEquals( $serialization, $serializer->serialize( $object ) );
+		$this->assertSame( $serialization, $serializer->serialize( $object ) );
+	}
+
+	public function testSerializationOrder() {
+		$mediaInfo = new MediaInfo( new MediaInfoId( 'M1' ) );
+		$serialization = $this->newSerializer()->serialize( $mediaInfo );
+
+		$this->assertSame(
+			[ 'type', 'id', 'labels', 'descriptions', 'statements' ],
+			array_keys( $serialization )
+		);
 	}
 
 	/**

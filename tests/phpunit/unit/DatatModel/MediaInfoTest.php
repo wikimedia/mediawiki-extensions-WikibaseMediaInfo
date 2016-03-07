@@ -7,6 +7,7 @@ use PHPUnit_Framework_TestCase;
 use Wikibase\DataModel\Entity\Item;
 use Wikibase\DataModel\Entity\ItemId;
 use Wikibase\DataModel\Snak\PropertyNoValueSnak;
+use Wikibase\DataModel\Statement\Statement;
 use Wikibase\DataModel\Statement\StatementList;
 use Wikibase\DataModel\Term\TermList;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
@@ -46,7 +47,7 @@ class MediaInfoTest extends PHPUnit_Framework_TestCase {
 	public function testGetEntityType() {
 		$mediaInfo = new MediaInfo();
 
-		$this->assertEquals( 'mediainfo', $mediaInfo->getType() );
+		$this->assertSame( 'mediainfo', $mediaInfo->getType() );
 	}
 
 	public function testSetNewId() {
@@ -77,10 +78,11 @@ class MediaInfoTest extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * @dataProvider provideInvalidIds
-	 * @expectedException InvalidArgumentException
 	 */
 	public function testSetInvalidId( $id ) {
 		$mediaInfo = new MediaInfo();
+
+		$this->setExpectedException( InvalidArgumentException::class );
 		$mediaInfo->setId( $id );
 	}
 
@@ -117,106 +119,109 @@ class MediaInfoTest extends PHPUnit_Framework_TestCase {
 		$this->assertFalse( $mediaInfo->isEmpty() );
 	}
 
-	public function testEqualsEmpty() {
-		$mediaInfo = new MediaInfo();
+	public function provideEqualEntities() {
+		$empty = new MediaInfo();
 
-		$this->assertTrue( $mediaInfo->equals( new MediaInfo() ) );
+		$withLabel = new MediaInfo();
+		$withLabel->getLabels()->setTextForLanguage( 'en', 'Foo' );
+
+		$withDescription = new MediaInfo();
+		$withDescription->getDescriptions()->setTextForLanguage( 'en', 'Foo' );
+
+		$withStatement = new MediaInfo();
+		$withStatement->getStatements()->addNewStatement( new PropertyNoValueSnak( 42 ) );
+
+		return [
+			'empty' => [
+				$empty,
+				new MediaInfo()
+			],
+			'same id' => [
+				new MediaInfo( new MediaInfoId( 'M1' ) ),
+				new MediaInfo( new MediaInfoId( 'M1' ) )
+			],
+			'different id' => [
+				new MediaInfo( new MediaInfoId( 'M1' ) ),
+				new MediaInfo( new MediaInfoId( 'M2' ) )
+			],
+			'no id' => [
+				new MediaInfo( new MediaInfoId( 'M1' ) ),
+				$empty
+			],
+			'same object' => [
+				$empty,
+				$empty
+			],
+			'same labels' => [
+				$withLabel,
+				clone $withLabel
+			],
+			'same descriptions' => [
+				$withDescription,
+				clone $withDescription
+			],
+			'same statements' => [
+				$withStatement,
+				clone $withStatement
+			],
+		];
 	}
 
-	public function testEqualsSameId() {
-		$mediaInfo = new MediaInfo( new MediaInfoId( 'M1' ) );
-
-		$this->assertTrue( $mediaInfo->equals( new MediaInfo( new MediaInfoId( 'M1' ) ) ) );
+	/**
+	 * @dataProvider provideEqualEntities
+	 */
+	public function testEquals( MediaInfo $a, MediaInfo $b ) {
+		$this->assertTrue( $a->equals( $b ) );
 	}
 
-	public function testEqualsDifferentId() {
-		$mediaInfo = new MediaInfo( new MediaInfoId( 'M1' ) );
+	public function provideNotEqualEntities() {
+		$withLabel1 = new MediaInfo();
+		$withLabel1->getLabels()->setTextForLanguage( 'en', 'Foo' );
 
-		$this->assertTrue( $mediaInfo->equals( new MediaInfo( new MediaInfoId( 'M2' ) ) ) );
+		$withLabel2 = new MediaInfo();
+		$withLabel2->getLabels()->setTextForLanguage( 'en', 'Bar' );
+
+		$withDescription1 = new MediaInfo();
+		$withDescription1->getDescriptions()->setTextForLanguage( 'en', 'Foo' );
+
+		$withDescription2 = new MediaInfo();
+		$withDescription2->getDescriptions()->setTextForLanguage( 'en', 'Bar' );
+
+		$withStatement1 = new MediaInfo();
+		$withStatement1->getStatements()->addNewStatement( new PropertyNoValueSnak( 42 ) );
+
+		$withStatement2 = new MediaInfo();
+		$withStatement2->getStatements()->addNewStatement( new PropertyNoValueSnak( 24 ) );
+
+		return [
+			'null' => [
+				new MediaInfo(),
+				null
+			],
+			'item' => [
+				new MediaInfo(),
+				new Item()
+			],
+			'different labels' => [
+				$withLabel1,
+				$withLabel2
+			],
+			'different descriptions' => [
+				$withDescription1,
+				$withDescription2
+			],
+			'different statements' => [
+				$withStatement1,
+				$withStatement2
+			],
+		];
 	}
 
-	public function testEqualsNoId() {
-		$mediaInfo = new MediaInfo( new MediaInfoId( 'M1' ) );
-
-		$this->assertTrue( $mediaInfo->equals( new MediaInfo() ) );
-	}
-
-	public function testEqualsSameObject() {
-		$mediaInfo = new MediaInfo();
-
-		$this->assertTrue( $mediaInfo->equals( $mediaInfo ) );
-	}
-
-	public function testEqualsSameLabels() {
-		$mediaInfo1 = new MediaInfo();
-		$mediaInfo2 = new MediaInfo();
-
-		$mediaInfo1->getLabels()->setTextForLanguage( 'en', 'Foo' );
-		$mediaInfo2->getLabels()->setTextForLanguage( 'en', 'Foo' );
-
-		$this->assertTrue( $mediaInfo1->equals( $mediaInfo2 ) );
-	}
-
-	public function testEqualsSameDescriptions() {
-		$mediaInfo1 = new MediaInfo();
-		$mediaInfo2 = new MediaInfo();
-
-		$mediaInfo1->getDescriptions()->setTextForLanguage( 'en', 'Foo' );
-		$mediaInfo2->getDescriptions()->setTextForLanguage( 'en', 'Foo' );
-
-		$this->assertTrue( $mediaInfo1->equals( $mediaInfo2 ) );
-	}
-
-	public function testEqualsSameStatements() {
-		$mediaInfo1 = new MediaInfo();
-		$mediaInfo2 = new MediaInfo();
-
-		$mediaInfo1->getStatements()->addNewStatement( new PropertyNoValueSnak( 42 ) );
-		$mediaInfo2->getStatements()->addNewStatement( new PropertyNoValueSnak( 42 ) );
-
-		$this->assertTrue( $mediaInfo1->equals( $mediaInfo2 ) );
-	}
-
-	public function testNotEqualsNull() {
-		$mediaInfo = new MediaInfo();
-
-		$this->assertFalse( $mediaInfo->equals( null ) );
-	}
-
-	public function testNotEqualsItem() {
-		$mediaInfo = new MediaInfo();
-
-		$this->assertFalse( $mediaInfo->equals( new Item() ) );
-	}
-
-	public function testNotEqualsDifferentLabels() {
-		$mediaInfo1 = new MediaInfo();
-		$mediaInfo2 = new MediaInfo();
-
-		$mediaInfo1->getLabels()->setTextForLanguage( 'en', 'Foo' );
-		$mediaInfo2->getLabels()->setTextForLanguage( 'en', 'Bar' );
-
-		$this->assertFalse( $mediaInfo1->equals( $mediaInfo2 ) );
-	}
-
-	public function testNotEqualsDifferentDescriptions() {
-		$mediaInfo1 = new MediaInfo();
-		$mediaInfo2 = new MediaInfo();
-
-		$mediaInfo1->getDescriptions()->setTextForLanguage( 'en', 'Foo' );
-		$mediaInfo2->getDescriptions()->setTextForLanguage( 'en', 'Bar' );
-
-		$this->assertFalse( $mediaInfo1->equals( $mediaInfo2 ) );
-	}
-
-	public function testNotEqualsDifferentStatements() {
-		$mediaInfo1 = new MediaInfo();
-		$mediaInfo2 = new MediaInfo();
-
-		$mediaInfo1->getStatements()->addNewStatement( new PropertyNoValueSnak( 42 ) );
-		$mediaInfo2->getStatements()->addNewStatement( new PropertyNoValueSnak( 24 ) );
-
-		$this->assertFalse( $mediaInfo1->equals( $mediaInfo2 ) );
+	/**
+	 * @dataProvider provideNotEqualEntities
+	 */
+	public function testNotEquals( MediaInfo $a, $b ) {
+		$this->assertFalse( $a->equals( $b ) );
 	}
 
 	public function testCopyEmptyEquals() {
@@ -267,11 +272,18 @@ class MediaInfoTest extends PHPUnit_Framework_TestCase {
 		$copy->getLabels()->setTextForLanguage( 'en', 'Bar' );
 		$copy->getDescriptions()->setTextForLanguage( 'en', 'Bar' );
 		$copy->getStatements()->addNewStatement( new PropertyNoValueSnak( 24 ) );
+		$copy->getStatements()->getFirstStatementWithGuid( null )->setRank(
+			Statement::RANK_DEPRECATED
+		);
 
-		$this->assertEquals( 'M1', $mediaInfo->getId()->getSerialization() );
-		$this->assertEquals( 'Foo', $mediaInfo->getLabels()->getByLanguage( 'en' )->getText() );
-		$this->assertEquals( 'Foo', $mediaInfo->getDescriptions()->getByLanguage( 'en' )->getText() );
-		$this->assertEquals( 1, $mediaInfo->getStatements()->count() );
+		$this->assertSame( 'M1', $mediaInfo->getId()->getSerialization() );
+		$this->assertSame( 'Foo', $mediaInfo->getLabels()->getByLanguage( 'en' )->getText() );
+		$this->assertSame( 'Foo', $mediaInfo->getDescriptions()->getByLanguage( 'en' )->getText() );
+		$this->assertCount( 1, $mediaInfo->getStatements() );
+		$this->assertSame(
+			Statement::RANK_NORMAL,
+			$mediaInfo->getStatements()->getFirstStatementWithGuid( null )->getRank()
+		);
 	}
 
 }

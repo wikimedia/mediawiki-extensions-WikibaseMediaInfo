@@ -29,7 +29,7 @@ class MediaInfoIdTest extends PHPUnit_Framework_TestCase {
 	public function testValidIds( $serialization ) {
 		$id = new MediaInfoId( $serialization );
 
-		$this->assertEquals( strtoupper( $serialization ), $id->getSerialization() );
+		$this->assertSame( strtoupper( $serialization ), $id->getSerialization() );
 	}
 
 	public function provideInvalidIds() {
@@ -56,34 +56,34 @@ class MediaInfoIdTest extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * @dataProvider provideInvalidIds
-	 * @expectedException InvalidArgumentException
 	 */
 	public function testInvalidIds( $serialization ) {
+		$this->setExpectedException( InvalidArgumentException::class );
 		new MediaInfoId( $serialization );
 	}
 
 	public function testGetEntityType() {
 		$id = new MediaInfoId( 'M1' );
 
-		$this->assertEquals( 'mediainfo', $id->getEntityType() );
+		$this->assertSame( 'mediainfo', $id->getEntityType() );
 	}
 
 	public function testSerialize() {
 		$id = new MediaInfoId( 'M1' );
 
-		$this->assertEquals( 'M1', $id->serialize() );
+		$this->assertSame( 'M1', $id->serialize() );
 	}
 
 	/**
-	 * @dataProvider serializationProvider
+	 * @dataProvider provideIdSerializations
 	 */
-	public function testUnserialize( $serialization ) {
+	public function testUnserialize( $idString ) {
 		$id = new MediaInfoId( 'M1' );
-		$id->unserialize( $serialization );
-		$this->assertSame( $serialization, $id->getSerialization() );
+		$id->unserialize( $idString );
+		$this->assertSame( $idString, $id->getSerialization() );
 	}
 
-	public function serializationProvider() {
+	public function provideIdSerializations() {
 		return [
 			[ 'M2' ],
 
@@ -102,6 +102,13 @@ class MediaInfoIdTest extends PHPUnit_Framework_TestCase {
 		$id = new MediaInfoId( $idString );
 
 		$this->assertEquals( $id, unserialize( serialize( $id ) ) );
+	}
+
+	public function testSerializationStability() {
+		$this->assertSame(
+			'C:40:"Wikibase\MediaInfo\DataModel\MediaInfoId":2:{M1}',
+			serialize( new MediaInfoId( 'M1' ) )
+		);
 	}
 
 }

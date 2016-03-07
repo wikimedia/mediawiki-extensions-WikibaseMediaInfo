@@ -78,6 +78,8 @@ class MediaInfo implements EntityDocument, LabelsProvider, DescriptionsProvider,
 
 	/**
 	 * @param MediaInfoId $id
+	 *
+	 * @throws InvalidArgumentException
 	 */
 	public function setId( $id ) {
 		if ( !( $id instanceof MediaInfoId ) ) {
@@ -148,8 +150,9 @@ class MediaInfo implements EntityDocument, LabelsProvider, DescriptionsProvider,
 	 * @see http://php.net/manual/en/language.oop5.cloning.php
 	 */
 	public function __clone() {
-		$this->labels = unserialize( serialize( $this->labels ) );
-		$this->descriptions = unserialize( serialize( $this->descriptions ) );
+		$this->labels = clone $this->labels;
+		$this->descriptions = clone $this->descriptions;
+		// TODO: DataModel 5.1 is needed to be able to use clone for the statements.
 		$this->statements = unserialize( serialize( $this->statements ) );
 	}
 

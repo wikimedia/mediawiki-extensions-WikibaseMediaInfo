@@ -27,8 +27,8 @@
 	"autoload": {
 		"psr-4": {
 			"Wikibase\\MediaInfo\\": "src/",
-			"Wikibase\\MediaInfo\\Tests\\": "tests/phpunit/unit/",
-			"Wikibase\\MediaInfo\\Tests\\Integration\\": "tests/phpunit/integration/"
+			"Wikibase\\MediaInfo\\Tests\\": "tests/phpunit/composer/",
+			"Wikibase\\MediaInfo\\Tests\\MediaWiki\\": "tests/phpunit/mediawiki/"
 		}
 	},
 	"scripts": {

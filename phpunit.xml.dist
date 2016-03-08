@@ -14,7 +14,7 @@
          verbose="true">
     <testsuites>
         <testsuite name="WikibaseMediaInfo">
-            <directory>tests/phpunit/unit</directory>
+            <directory>tests/phpunit/composer</directory>
         </testsuite>
     </testsuites>
     <filter>

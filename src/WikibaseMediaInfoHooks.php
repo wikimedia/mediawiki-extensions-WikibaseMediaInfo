@@ -16,7 +16,7 @@ use Wikibase\MediaInfo\DataModel\Serialization\MediaInfoSerializer;
 class WikibaseMediaInfoHooks {
 
 	/**
-	 * Hook to add integration tests that depend on MediaWiki.
+	 * Hook to add all tests, including those that depend on MediaWiki.
 	 *
 	 * @see https://www.mediawiki.org/wiki/Manual:Hooks/UnitTestsList
 	 *

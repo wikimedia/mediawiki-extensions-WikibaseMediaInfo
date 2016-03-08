@@ -1,6 +1,6 @@
 <?php
 
-namespace Wikibase\MediaInfo\Tests\Integration;
+namespace Wikibase\MediaInfo\Tests\MediaWiki;
 
 use Hooks;
 use PHPUnit_Framework_TestCase;

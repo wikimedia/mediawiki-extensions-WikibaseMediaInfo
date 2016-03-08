@@ -23,8 +23,8 @@ class WikibaseMediaInfoHooksTest extends PHPUnit_Framework_TestCase {
 		$paths = [ 'foo' ];
 		WikibaseMediaInfoHooks::onUnitTestsList( $paths );
 
-		$this->assertEquals( 'foo', $paths[0] );
-		$this->assertEquals( realpath( __DIR__ . '/../' ), realpath( $paths[1] ) );
+		$this->assertSame( 'foo', $paths[0] );
+		$this->assertSame( realpath( __DIR__ . '/../' ), realpath( $paths[1] ) );
 	}
 
 	public function testOnWikibaseRepoEntityTypes() {
@@ -35,7 +35,7 @@ class WikibaseMediaInfoHooksTest extends PHPUnit_Framework_TestCase {
 		WikibaseMediaInfoHooks::onWikibaseRepoEntityTypes( $entityTypeDefinitions );
 
 		$this->assertArrayHasKey( 'item', $entityTypeDefinitions );
-		$this->assertEquals( [ 'foo', 'bar' ], $entityTypeDefinitions['item'] );
+		$this->assertSame( [ 'foo', 'bar' ], $entityTypeDefinitions['item'] );
 
 		$this->assertArrayHasKey( 'mediainfo', $entityTypeDefinitions );
 		$this->assertSerializerFactoryCallback( $entityTypeDefinitions['mediainfo'] );
@@ -50,7 +50,7 @@ class WikibaseMediaInfoHooksTest extends PHPUnit_Framework_TestCase {
 		WikibaseMediaInfoHooks::onWikibaseClientEntityTypes( $entityTypeDefinitions );
 
 		$this->assertArrayHasKey( 'item', $entityTypeDefinitions );
-		$this->assertEquals( [ 'foo', 'bar' ], $entityTypeDefinitions['item'] );
+		$this->assertSame( [ 'foo', 'bar' ], $entityTypeDefinitions['item'] );
 
 		$this->assertArrayHasKey( 'mediainfo', $entityTypeDefinitions );
 		$this->assertSerializerFactoryCallback( $entityTypeDefinitions['mediainfo'] );

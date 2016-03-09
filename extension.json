@@ -20,10 +20,10 @@
 			"Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onUnitTestsList"
 		],
 		"WikibaseRepoEntityTypes": [
-			"Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onWikibaseRepoEntityTypes"
+			"Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onWikibaseEntityTypes"
 		],
 		"WikibaseClientEntityTypes": [
-			"Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onWikibaseClientEntityTypes"
+			"Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onWikibaseEntityTypes"
 		]
 	},
 	"MessagesDirs": {

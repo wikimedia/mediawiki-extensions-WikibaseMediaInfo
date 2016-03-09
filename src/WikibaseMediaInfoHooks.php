@@ -4,8 +4,7 @@ namespace Wikibase\MediaInfo;
 
 use Wikibase\DataModel\DeserializerFactory;
 use Wikibase\DataModel\SerializerFactory;
-use Wikibase\MediaInfo\DataModel\Serialization\MediaInfoDeserializer;
-use Wikibase\MediaInfo\DataModel\Serialization\MediaInfoSerializer;
+use Wikibase\MediaInfo\Content\MediaInfoContent;
 
 /**
  * MediaWiki hook handlers for the Wikibase MediaInfo extension.
@@ -20,8 +19,6 @@ class WikibaseMediaInfoHooks {
 	 *
 	 * @see https://www.mediawiki.org/wiki/Manual:Hooks/UnitTestsList
 	 *
-	 * @since 0.1
-	 *
 	 * @param string[] &$paths
 	 */
 	public static function onUnitTestsList( array &$paths ) {
@@ -29,52 +26,19 @@ class WikibaseMediaInfoHooks {
 	}
 
 	/**
-	 * Returns the common definition of the media info entity type that both repo and client use.
-	 *
-	 * @return array
-	 */
-	private static function getCommonMediaInfoDefinition() {
-		return [
-			'serializer-factory-callback' => function( SerializerFactory $serializerFactory ) {
-				return new MediaInfoSerializer(
-					$serializerFactory->newTermListSerializer(),
-					$serializerFactory->newStatementListSerializer()
-				);
-			},
-			'deserializer-factory-callback' => function( DeserializerFactory $deserializerFactory ) {
-				return new MediaInfoDeserializer(
-					$deserializerFactory->newTermListDeserializer(),
-					$deserializerFactory->newStatementListDeserializer()
-				);
-			}
-		];
-	}
-
-	/**
 	 * Adds the definition of the media info entity type to the definitions array Wikibase uses.
 	 *
-	 * @param $entityTypeDefinitions
-	 */
-	public static function onWikibaseRepoEntityTypes( &$entityTypeDefinitions ) {
-		$entityTypeDefinitions['mediainfo'] = array_merge(
-			self::getCommonMediaInfoDefinition(),
-			[
-				// TODO
-			]
-		);
-	}
-
-	/**
-	 * Adds the definition of the media info entity type to the definitions array Wikibase uses.
+	 * @see WikibaseMediaInfo.entitytypes.php
 	 *
-	 * @param $entityTypeDefinitions
+	 * @note: This is bootstrap code, it is executed for EVERY request. Avoid instantiating
+	 * objects or loading classes here!
+	 *
+	 * @param array[] $entityTypeDefinitions
 	 */
-	public static function onWikibaseClientEntityTypes( &$entityTypeDefinitions ) {
-		$entityTypeDefinitions['mediainfo'] = array_merge(
-			self::getCommonMediaInfoDefinition(),
-			[
-				// TODO
-			]
+	public static function onWikibaseEntityTypes( array &$entityTypeDefinitions ) {
+		$entityTypeDefinitions = array_merge(
+			$entityTypeDefinitions,
+			require __DIR__ . '/../WikibaseMediaInfo.entitytypes.php'
 		);
 	}
 

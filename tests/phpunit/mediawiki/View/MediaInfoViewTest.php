@@ -5,6 +5,8 @@ namespace Wikibase\MediaInfo\Tests\MediaWiki\View;
 use InvalidArgumentException;
 use Language;
 use PHPUnit_Framework_TestCase;
+use Title;
+use User;
 use Wikibase\DataModel\Entity\EntityDocument;
 use Wikibase\DataModel\Entity\PropertyId;
 use Wikibase\DataModel\Snak\PropertyNoValueSnak;
@@ -13,11 +15,15 @@ use Wikibase\DataModel\Statement\StatementList;
 use Wikibase\DataModel\Term\Fingerprint;
 use Wikibase\DataModel\Term\Term;
 use Wikibase\DataModel\Term\TermList;
+use Wikibase\Lib\LanguageNameLookup;
+use Wikibase\Lib\StaticContentLanguages;
+use Wikibase\Lib\UserLanguageLookup;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\MediaInfo\DataModel\MediaInfoId;
 use Wikibase\MediaInfo\View\MediaInfoView;
 use Wikibase\View\EntityTermsView;
 use Wikibase\View\EntityView;
+use Wikibase\View\EntityViewPlaceholderExpander;
 use Wikibase\View\LanguageDirectionalityLookup;
 use Wikibase\View\StatementSectionsView;
 use Wikibase\View\Template\TemplateFactory;
@@ -117,10 +123,8 @@ class MediaInfoViewTest extends PHPUnit_Framework_TestCase {
 			)
 			->will( $this->returnValue( 'entityTermsView->getHtml' ) );
 
-		// FIXME Shouldn't be called
-		$entityTermsView->expects( $this->once() )
-			->method( 'getEntityTermsForLanguageListView' )
-			->will( $this->returnValue( 'entityTermsView->getEntityTermsForLanguageListView' ) );
+		$entityTermsView->expects( $this->never() )
+			->method( 'getEntityTermsForLanguageListView' );
 
 		$statementSectionsView = $this->newStatementSectionsViewMock();
 		$statementSectionsView->expects( $this->once() )
@@ -270,6 +274,26 @@ class MediaInfoViewTest extends PHPUnit_Framework_TestCase {
 		];
 	}
 
+	private function getEntityViewPlaceholderExpander( EntityDocument $entity, $uiLanguageCode ) {
+		$userLanguageLookup = $this->getMock( UserLanguageLookup::class );
+		$userLanguageLookup->expects( $this->once() )
+			->method( 'getAllUserLanguages' )
+			->will( $this->returnValue( [] ) );
+
+		return new EntityViewPlaceholderExpander(
+			TemplateFactory::getDefaultInstance(),
+			$this->getMock( Title::class ),
+			$this->getMock( User::class ),
+			Language::factory( $uiLanguageCode ),
+			$entity,
+			$entity,
+			null,
+			$userLanguageLookup,
+			new StaticContentLanguages( [] ),
+			$this->getMock( LanguageNameLookup::class )
+		);
+	}
+
 	public function testPlaceholderIntegration() {
 		$entity = new MediaInfo( new MediaInfoId( 'M1' ) );
 
@@ -285,17 +309,22 @@ class MediaInfoViewTest extends PHPUnit_Framework_TestCase {
 				) {
 					return $textInjector->newMarker(
 						'entityViewPlaceholder-entitytermsview-entitytermsforlanguagelistview-class'
-					);
+					) . $termBoxHtml;
 				}
 			) );
 
 		$view = $this->newMediaInfoView( 'en', $entityTermsView );
-		$view->getHtml( $entity );
+		$html = $view->getHtml( $entity );
 		$placeholders = $view->getPlaceholders();
 
-		// FIXME: EntityViewPlaceholderExpander only supports entities with fingerprints
-		// Otherwise this would be 2.
-		$this->assertEquals( 1, count( $placeholders ) );
+		$this->assertEquals( 2, count( $placeholders ) );
+
+		$injector = new TextInjector( $placeholders );
+		$expander = $this->getEntityViewPlaceholderExpander( $entity, 'fa' );
+
+		$html = $injector->inject( $html, [ $expander, 'getHtmlForPlaceholder' ] );
+
+		$this->assertContains( 'wikibase-entitytermsforlanguageview-fa', $html );
 	}
 
 }

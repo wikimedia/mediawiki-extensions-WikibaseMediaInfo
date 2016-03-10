@@ -2,6 +2,7 @@
 
 namespace Wikibase\MediaInfo\Tests\MediaWiki\View;
 
+use InvalidArgumentException;
 use Language;
 use PHPUnit_Framework_TestCase;
 use Wikibase\DataModel\Entity\EntityDocument;
@@ -18,7 +19,6 @@ use Wikibase\MediaInfo\DataModel\MediaInfoId;
 use Wikibase\MediaInfo\View\MediaInfoView;
 use Wikibase\View\EntityTermsView;
 use Wikibase\View\EntityView;
-use Wikibase\View\EntityViewPlaceholderExpander;
 use Wikibase\View\StatementSectionsView;
 use Wikibase\View\Template\TemplateFactory;
 use Wikibase\View\TextInjector;
@@ -27,7 +27,7 @@ use Wikibase\View\TextInjector;
  * @covers Wikibase\MediaInfo\View\MediaInfoView
  *
  * @license GPL-2.0+
- * @author Adrian Heine <adrian.heine@wikimedia.de>
+ * @author Adrian Heine < adrian.heine@wikimedia.de >
  */
 class MediaInfoViewTest extends PHPUnit_Framework_TestCase {
 
@@ -49,20 +49,22 @@ class MediaInfoViewTest extends PHPUnit_Framework_TestCase {
 		StatementSectionsView $statementSectionsView = null
 	) {
 		$templateFactory = TemplateFactory::getDefaultInstance();
+
 		if ( !$entityTermsView ) {
 			$entityTermsView = $this->newEntityTermsViewMock();
 		}
+
 		if ( !$statementSectionsView ) {
 			$statementSectionsView = $this->newStatementSectionsViewMock();
 		}
-		$view = new MediaInfoView(
+
+		return new MediaInfoView(
 			$templateFactory,
 			$entityTermsView,
 			$statementSectionsView,
 			$this->getMock( Language::class ),
 			$contentLanguageCode
 		);
-		return $view;
 	}
 
 	private function newEntityRevision( EntityDocument $entity ) {
@@ -77,15 +79,13 @@ class MediaInfoViewTest extends PHPUnit_Framework_TestCase {
 		$this->assertInstanceOf( EntityView::class, $view );
 	}
 
-	/**
-	 * @expectedException InvalidArgumentException
-	 */
 	public function testGetHtml_invalidEntityType() {
 		$view = $this->newMediaInfoView();
 
 		$entity = $this->getMock( EntityDocument::class );
 		$revision = $this->newEntityRevision( $entity );
 
+		$this->setExpectedException( InvalidArgumentException::class );
 		$view->getHtml( $revision );
 	}
 
@@ -99,11 +99,9 @@ class MediaInfoViewTest extends PHPUnit_Framework_TestCase {
 		$contentLanguageCode = 'en',
 		StatementList $statements = null
 	) {
-
 		$entityTermsView = $this->newEntityTermsViewMock();
 		$entityTermsView->expects( $this->once() )
 			->method( 'getHtml' )
-			->will( $this->returnValue( 'entityTermsView->getHtml' ) )
 			->with(
 				$this->callback( function( Fingerprint $fingerprint ) use ( $descriptions ) {
 					if ( $descriptions ) {
@@ -115,7 +113,8 @@ class MediaInfoViewTest extends PHPUnit_Framework_TestCase {
 				$entityId,
 				$this->isType( 'string' ),
 				$this->isInstanceOf( TextInjector::class )
-			);
+			)
+			->will( $this->returnValue( 'entityTermsView->getHtml' ) );
 
 		// FIXME Shouldn't be called
 		$entityTermsView->expects( $this->once() )
@@ -224,15 +223,15 @@ class MediaInfoViewTest extends PHPUnit_Framework_TestCase {
 		$entityTermsView = $this->newEntityTermsViewMock();
 		$entityTermsView->expects( $this->once() )
 			->method( 'getTitleHtml' )
-			->will( $this->returnValue( 'entityTermsView->getTitleHtml' ) )
 			->with(
 				$this->callback( function( Fingerprint $fingerprint ) use ( $labels ) {
 					return $labels ? $fingerprint->getLabels() === $labels : $fingerprint->getLabels()->isEmpty();
 				} ),
 				$entityId
-			);
-		$view = $this->newMediaInfoView( $contentLanguageCode, $entityTermsView );
+			)
+			->will( $this->returnValue( 'entityTermsView->getTitleHtml' ) );
 
+		$view = $this->newMediaInfoView( $contentLanguageCode, $entityTermsView );
 		$revision = $this->newEntityRevision( $entity );
 
 		$result = $view->getTitleHtml( $revision );
@@ -243,6 +242,7 @@ class MediaInfoViewTest extends PHPUnit_Framework_TestCase {
 	public function provideTestGetTitleHtml() {
 		$mediaInfoId = new MediaInfoId( 'M1' );
 		$labels = new TermList( [ new Term( 'en', 'EN_LABEL' ) ] );
+
 		return [
 			[
 				new MediaInfo()

@@ -19,6 +19,7 @@ use Wikibase\MediaInfo\DataModel\MediaInfoId;
 use Wikibase\MediaInfo\View\MediaInfoView;
 use Wikibase\View\EntityTermsView;
 use Wikibase\View\EntityView;
+use Wikibase\View\LanguageDirectionalityLookup;
 use Wikibase\View\StatementSectionsView;
 use Wikibase\View\Template\TemplateFactory;
 use Wikibase\View\TextInjector;
@@ -43,6 +44,14 @@ class MediaInfoViewTest extends PHPUnit_Framework_TestCase {
 			->getMock();
 	}
 
+	private function newLanguageDirectionalityLookupMock() {
+		$languageDirectionalityLookup = $this->getMock( LanguageDirectionalityLookup::class );
+		$languageDirectionalityLookup->method( 'getDirectionality' )
+			->willReturn( 'auto' );
+
+		return $languageDirectionalityLookup;
+	}
+
 	private function newMediaInfoView(
 		$contentLanguageCode = 'en',
 		EntityTermsView $entityTermsView = null,
@@ -62,7 +71,7 @@ class MediaInfoViewTest extends PHPUnit_Framework_TestCase {
 			$templateFactory,
 			$entityTermsView,
 			$statementSectionsView,
-			$this->getMock( Language::class ),
+			$this->newLanguageDirectionalityLookupMock(),
 			$contentLanguageCode
 		);
 	}
@@ -294,7 +303,7 @@ class MediaInfoViewTest extends PHPUnit_Framework_TestCase {
 			) );
 
 		$view = $this->newMediaInfoView( 'en', $entityTermsView );
-		$html = $view->getHtml( $entityRevision );
+		$view->getHtml( $entityRevision );
 		$placeholders = $view->getPlaceholders();
 
 		// FIXME: EntityViewPlaceholderExpander only supports entities with fingerprints

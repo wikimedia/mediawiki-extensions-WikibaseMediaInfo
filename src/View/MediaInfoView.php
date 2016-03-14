@@ -10,6 +10,7 @@ use Wikibase\EntityRevision;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\View\EntityTermsView;
 use Wikibase\View\EntityView;
+use Wikibase\View\LanguageDirectionalityLookup;
 use Wikibase\View\StatementSectionsView;
 use Wikibase\View\Template\TemplateFactory;
 use Wikibase\View\TextInjector;
@@ -41,15 +42,19 @@ class MediaInfoView extends EntityView {
 	 * @param TemplateFactory $templateFactory
 	 * @param EntityTermsView $entityTermsView
 	 * @param StatementSectionsView $statementSectionsView
-	 * @param Language $uiLanguage
+	 * @param LanguageDirectionalityLookup $languageDirectionalityLookup
+	 * @param string $languageCode
 	 */
 	public function __construct(
 		TemplateFactory $templateFactory,
 		EntityTermsView $entityTermsView,
 		StatementSectionsView $statementSectionsView,
-		Language $uiLanguage
+		LanguageDirectionalityLookup $languageDirectionalityLookup,
+		$languageCode
 	) {
-		parent::__construct( $templateFactory, $entityTermsView, $uiLanguage );
+		parent::__construct(
+			$templateFactory, $entityTermsView, $languageDirectionalityLookup, $languageCode
+		);
 
 		$this->entityTermsView = $entityTermsView;
 		$this->statementSectionsView = $statementSectionsView;
@@ -87,7 +92,7 @@ class MediaInfoView extends EntityView {
 		// FIXME should be $this->getHtmlForTermBox( $id, $entityRevision->getRevisionId() )
 		$entityTermsView = $this->entityTermsView->getEntityTermsForLanguageListView(
 			$fingerprint,
-			[ $this->language->getCode() ]
+			[ $this->languageCode ]
 		);
 
 		return $this->entityTermsView->getHtml(

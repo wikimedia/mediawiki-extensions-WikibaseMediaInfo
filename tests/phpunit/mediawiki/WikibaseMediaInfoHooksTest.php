@@ -2,8 +2,14 @@
 
 namespace Wikibase\MediaInfo\Tests\MediaWiki;
 
+use Deserializers\Deserializer;
 use Hooks;
 use PHPUnit_Framework_TestCase;
+use Serializers\Serializer;
+use Wikibase\DataModel\DeserializerFactory;
+use Wikibase\DataModel\SerializerFactory;
+use Wikibase\MediaInfo\DataModel\Serialization\MediaInfoDeserializer;
+use Wikibase\MediaInfo\DataModel\Serialization\MediaInfoSerializer;
 
 /**
  * @covers Wikibase\MediaInfo\WikibaseMediaInfoHooks
@@ -24,25 +30,22 @@ class WikibaseMediaInfoHooksTest extends PHPUnit_Framework_TestCase {
 		$this->assertContains( $expected, $paths );
 	}
 
-	public function testOnWikibaseRepoEntityTypes() {
-		$entityTypeDefinitions = [
-			'item' => [ 'foo', 'bar' ]
+	public function provideWikibaseEntityTypesHooks() {
+		return [
+			[ 'WikibaseRepoEntityTypes' ],
+		    [ 'WikibaseClientEntityTypes' ]
 		];
-
-		Hooks::run( 'WikibaseRepoEntityTypes', [ &$entityTypeDefinitions ] );
-
-		$this->assertArrayHasKey( 'item', $entityTypeDefinitions );
-		$this->assertSame( [ 'foo', 'bar' ], $entityTypeDefinitions['item'] );
-
-		$this->assertArrayHasKey( 'mediainfo', $entityTypeDefinitions );
 	}
 
-	public function testOnWikibaseClientEntityTypes() {
+	/**
+	 * @dataProvider provideWikibaseEntityTypesHooks
+	 */
+	public function testOnWikibaseEntityTypes( $hook ) {
 		$entityTypeDefinitions = [
 			'item' => [ 'foo', 'bar' ]
 		];
 
-		Hooks::run( 'WikibaseClientEntityTypes', [ &$entityTypeDefinitions ] );
+		Hooks::run( $hook, [ &$entityTypeDefinitions ] );
 
 		$this->assertArrayHasKey( 'item', $entityTypeDefinitions );
 		$this->assertSame( [ 'foo', 'bar' ], $entityTypeDefinitions['item'] );

@@ -7,10 +7,14 @@ use PHPUnit_Framework_TestCase;
 use Serializers\Serializer;
 use Wikibase\DataModel\DeserializerFactory;
 use Wikibase\DataModel\SerializerFactory;
+use Wikibase\DataModel\Services\Lookup\LabelDescriptionLookup;
+use Wikibase\LanguageFallbackChain;
 use Wikibase\MediaInfo\Content\MediaInfoContent;
 use Wikibase\MediaInfo\Content\MediaInfoHandler;
 use Wikibase\MediaInfo\DataModel\Serialization\MediaInfoDeserializer;
 use Wikibase\MediaInfo\DataModel\Serialization\MediaInfoSerializer;
+use Wikibase\MediaInfo\View\MediaInfoView;
+use Wikibase\View\EditSectionGenerator;
 
 /**
  * @covers WikibaseMediaInfo.entitytypes.php
@@ -89,6 +93,26 @@ class EntityTypesTest extends PHPUnit_Framework_TestCase {
 
 		$mediaInfoDeserializer = call_user_func( $callback, $this->getDeserializerFactory() );
 		$this->assertInstanceOf( MediaInfoDeserializer::class, $mediaInfoDeserializer );
+	}
+
+	public function testViewFactoryCallback() {
+		$registry = $this->getRegistry();
+
+		$this->assertArrayHasKey( 'mediainfo', $registry );
+		$this->assertArrayHasKey( 'view-factory-callback', $registry['mediainfo'] );
+
+		$callback = $registry['mediainfo']['view-factory-callback'];
+		$this->assertInternalType( 'callable', $callback );
+
+		$mediaInfoView = call_user_func(
+			$callback,
+			'de',
+			$this->getMock( LabelDescriptionLookup::class ),
+			new LanguageFallbackChain( [] ),
+			$this->getMock( EditSectionGenerator::class )
+		);
+
+		$this->assertInstanceOf( MediaInfoView::class, $mediaInfoView );
 	}
 
 	public function testContentModelId() {

@@ -15,11 +15,17 @@
 
 use Wikibase\DataModel\DeserializerFactory;
 use Wikibase\DataModel\SerializerFactory;
+use Wikibase\DataModel\Services\Lookup\LabelDescriptionLookup;
+use Wikibase\LanguageFallbackChain;
 use Wikibase\MediaInfo\Content\MediaInfoContent;
 use Wikibase\MediaInfo\Content\MediaInfoHandler;
 use Wikibase\MediaInfo\DataModel\Serialization\MediaInfoDeserializer;
 use Wikibase\MediaInfo\DataModel\Serialization\MediaInfoSerializer;
+use Wikibase\MediaInfo\View\MediaInfoView;
+use Wikibase\Repo\MediaWikiLanguageDirectionalityLookup;
 use Wikibase\Repo\WikibaseRepo;
+use Wikibase\View\EditSectionGenerator;
+use Wikibase\View\Template\TemplateFactory;
 
 return [
 	'mediainfo' => [
@@ -33,6 +39,27 @@ return [
 			return new MediaInfoDeserializer(
 				$deserializerFactory->newTermListDeserializer(),
 				$deserializerFactory->newStatementListDeserializer()
+			);
+		},
+		'view-factory-callback' => function(
+			$languageCode,
+			LabelDescriptionLookup $labelDescriptionLookup,
+			LanguageFallbackChain $fallbackChain,
+			EditSectionGenerator $editSectionGenerator
+		) {
+			$viewFactory = WikibaseRepo::getDefaultInstance()->getViewFactory();
+
+			return new MediaInfoView(
+				TemplateFactory::getDefaultInstance(),
+				$viewFactory->newEntityTermsView( $languageCode, $editSectionGenerator ),
+				$viewFactory->newStatementSectionsView(
+					$languageCode,
+					$labelDescriptionLookup,
+					$fallbackChain,
+					$editSectionGenerator
+				),
+				new MediaWikiLanguageDirectionalityLookup(),
+				$languageCode
 			);
 		},
 		'content-model-id' => MediaInfoContent::CONTENT_MODEL_ID,

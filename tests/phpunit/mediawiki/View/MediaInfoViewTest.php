@@ -13,7 +13,6 @@ use Wikibase\DataModel\Statement\StatementList;
 use Wikibase\DataModel\Term\Fingerprint;
 use Wikibase\DataModel\Term\Term;
 use Wikibase\DataModel\Term\TermList;
-use Wikibase\EntityRevision;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\MediaInfo\DataModel\MediaInfoId;
 use Wikibase\MediaInfo\View\MediaInfoView;
@@ -76,12 +75,6 @@ class MediaInfoViewTest extends PHPUnit_Framework_TestCase {
 		);
 	}
 
-	private function newEntityRevision( EntityDocument $entity ) {
-		$revId = 0;
-		$timestamp = wfTimestamp( TS_MW );
-		return new EntityRevision( $entity, $revId, $timestamp );
-	}
-
 	public function testInstantiate() {
 		$view = $this->newMediaInfoView();
 		$this->assertInstanceOf( MediaInfoView::class, $view );
@@ -92,10 +85,9 @@ class MediaInfoViewTest extends PHPUnit_Framework_TestCase {
 		$view = $this->newMediaInfoView();
 
 		$entity = $this->getMock( EntityDocument::class );
-		$revision = $this->newEntityRevision( $entity );
 
 		$this->setExpectedException( InvalidArgumentException::class );
-		$view->getHtml( $revision );
+		$view->getHtml( $entity );
 	}
 
 	/**
@@ -146,9 +138,7 @@ class MediaInfoViewTest extends PHPUnit_Framework_TestCase {
 			$statementSectionsView
 		);
 
-		$revision = $this->newEntityRevision( $entity );
-
-		$result = $view->getHtml( $revision );
+		$result = $view->getHtml( $entity );
 		$this->assertInternalType( 'string', $result );
 		$this->assertContains( 'wb-mediainfo', $result );
 		$this->assertContains( 'entityTermsView->getHtml', $result );
@@ -215,9 +205,7 @@ class MediaInfoViewTest extends PHPUnit_Framework_TestCase {
 		$view = $this->newMediaInfoView();
 
 		$entity = $this->getMock( EntityDocument::class );
-		$revision = $this->newEntityRevision( $entity );
-
-		$view->getTitleHtml( $revision );
+		$view->getTitleHtml( $entity );
 	}
 
 	/**
@@ -241,9 +229,8 @@ class MediaInfoViewTest extends PHPUnit_Framework_TestCase {
 			->will( $this->returnValue( 'entityTermsView->getTitleHtml' ) );
 
 		$view = $this->newMediaInfoView( $contentLanguageCode, $entityTermsView );
-		$revision = $this->newEntityRevision( $entity );
 
-		$result = $view->getTitleHtml( $revision );
+		$result = $view->getTitleHtml( $entity );
 		$this->assertInternalType( 'string', $result );
 		$this->assertEquals( 'entityTermsView->getTitleHtml', $result );
 	}
@@ -284,7 +271,7 @@ class MediaInfoViewTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testPlaceholderIntegration() {
-		$entityRevision = $this->newEntityRevision( new MediaInfo( new MediaInfoId( 'M1' ) ) );
+		$entity = new MediaInfo( new MediaInfoId( 'M1' ) );
 
 		$entityTermsView = $this->newEntityTermsViewMock();
 		$entityTermsView->expects( $this->once() )
@@ -303,7 +290,7 @@ class MediaInfoViewTest extends PHPUnit_Framework_TestCase {
 			) );
 
 		$view = $this->newMediaInfoView( 'en', $entityTermsView );
-		$view->getHtml( $entityRevision );
+		$view->getHtml( $entity );
 		$placeholders = $view->getPlaceholders();
 
 		// FIXME: EntityViewPlaceholderExpander only supports entities with fingerprints

@@ -32,6 +32,56 @@
 		]
 	},
 	"ResourceModules": {
+		"jquery.wikibase.mediainfoview": {
+			"scripts": "resources/jquery.wikibase.mediainfoview.js",
+			"dependencies": [
+				"jquery.wikibase.entityview"
+			]
+		},
+		"wikibase.mediainfo": {
+			"scripts": "resources/__namespace.js",
+			"dependencies": "wikibase"
+		},
+		"wikibase.mediainfo.mediainfoview": {
+			"dependencies": [
+				"jquery.wikibase.mediainfoview",
+				"wikibase.mediainfo.getDeserializer"
+			]
+		},
+		"wikibase.mediainfo.datamodel.MediaInfo": {
+			"scripts": [
+				"resources/datamodel/__namespace.js",
+				"resources/datamodel/MediaInfo.js"
+			],
+			"dependencies": [
+				"util.inherit",
+				"wikibase.datamodel.Entity",
+				"wikibase.datamodel.Fingerprint",
+				"wikibase.datamodel.StatementGroupSet",
+				"wikibase.datamodel.TermMap",
+				"wikibase.mediainfo"
+			]
+		},
+		"wikibase.mediainfo.getDeserializer": {
+			"scripts": "resources/getDeserializer.js",
+			"dependencies": [
+				"wikibase.mediainfo.serialization.MediaInfoDeserializer"
+			]
+		},
+		"wikibase.mediainfo.serialization.MediaInfoDeserializer": {
+			"scripts": [
+				"resources/serialization/__namespace.js",
+				"resources/serialization/MediaInfoDeserializer.js"
+			],
+			"dependencies": [
+				"util.inherit",
+				"wikibase.mediainfo",
+				"wikibase.mediainfo.datamodel.MediaInfo",
+				"wikibase.serialization.Deserializer",
+				"wikibase.serialization.StatementGroupSetDeserializer",
+				"wikibase.serialization.TermMapDeserializer"
+			]
+		}
 	},
 	"ResourceFileModulePaths": {
 		"localBasePath": "",

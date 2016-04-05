@@ -1,4 +1,51 @@
 {
 	"preset": "wikimedia",
-	"excludeFiles": [ "node_modules/**", "vendor/**" ]
+	"excludeFiles": [ "node_modules/**", "vendor/**" ],
+
+	// wikimedia overwrites
+
+	"disallowDanglingUnderscores": null,
+	"requireMultipleVarDecl": null,
+
+	"jsDoc": {
+		// what we don't yet follow is commented out
+		"checkAnnotations": {
+			"preset": "jsduck5",
+			"extra": {
+				"license": "some"
+			}
+		},
+		"checkParamNames": true,
+		"requireParamTypes": true,
+		"checkRedundantParams": true,
+		"checkReturnTypes": true,
+		"checkRedundantReturns": true,
+		"requireReturnTypes": true,
+		"checkTypes": "strictNativeCase",
+		"checkRedundantAccess": true,
+		"requireNewlineAfterDescription": true
+	},
+
+	"requireVarDeclFirst": null,
+
+	// No space after function
+	"disallowSpaceAfterKeywords": [
+		"function"
+	],
+
+	"requireSpaceAfterKeywords": [
+		"do",
+		"for",
+		"if",
+		"else",
+		"switch",
+		"case",
+		"try",
+		"catch",
+		"void",
+		"while",
+		"with",
+		"return",
+		"typeof"
+	]
 }

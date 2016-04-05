@@ -2,14 +2,8 @@
 
 namespace Wikibase\MediaInfo\Tests\MediaWiki;
 
-use Deserializers\Deserializer;
 use Hooks;
 use PHPUnit_Framework_TestCase;
-use Serializers\Serializer;
-use Wikibase\DataModel\DeserializerFactory;
-use Wikibase\DataModel\SerializerFactory;
-use Wikibase\MediaInfo\DataModel\Serialization\MediaInfoDeserializer;
-use Wikibase\MediaInfo\DataModel\Serialization\MediaInfoSerializer;
 
 /**
  * @covers Wikibase\MediaInfo\WikibaseMediaInfoHooks

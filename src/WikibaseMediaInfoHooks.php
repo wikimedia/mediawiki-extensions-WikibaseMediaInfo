@@ -2,10 +2,6 @@
 
 namespace Wikibase\MediaInfo;
 
-use Wikibase\DataModel\DeserializerFactory;
-use Wikibase\DataModel\SerializerFactory;
-use Wikibase\MediaInfo\Content\MediaInfoContent;
-
 /**
  * MediaWiki hook handlers for the Wikibase MediaInfo extension.
  *

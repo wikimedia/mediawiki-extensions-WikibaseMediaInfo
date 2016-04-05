@@ -37,18 +37,27 @@ use Wikibase\View\TextInjector;
  */
 class MediaInfoViewTest extends PHPUnit_Framework_TestCase {
 
+	/**
+	 * @return StatementSectionsView
+	 */
 	private function newStatementSectionsViewMock() {
 		return $this->getMockBuilder( StatementSectionsView::class )
 			->disableOriginalConstructor()
 			->getMock();
 	}
 
+	/**
+	 * @return EntityTermsView
+	 */
 	private function newEntityTermsViewMock() {
 		return $this->getMockBuilder( EntityTermsView::class )
 			->disableOriginalConstructor()
 			->getMock();
 	}
 
+	/**
+	 * @return LanguageDirectionalityLookup
+	 */
 	private function newLanguageDirectionalityLookupMock() {
 		$languageDirectionalityLookup = $this->getMock( LanguageDirectionalityLookup::class );
 		$languageDirectionalityLookup->method( 'getDirectionality' )

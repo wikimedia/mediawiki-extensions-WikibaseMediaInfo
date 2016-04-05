@@ -3,11 +3,9 @@
 namespace Wikibase\MediaInfo\View;
 
 use InvalidArgumentException;
-use Language;
 use Wikibase\DataModel\Entity\EntityDocument;
 use Wikibase\DataModel\Term\Fingerprint;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
-use Wikibase\MediaInfo\DataModel\MediaInfoId;
 use Wikibase\View\EntityTermsView;
 use Wikibase\View\EntityView;
 use Wikibase\View\LanguageDirectionalityLookup;
@@ -130,6 +128,7 @@ class MediaInfoView extends EntityView {
 	 *
 	 * @param EntityDocument $entity
 	 *
+	 * @throws InvalidArgumentException
 	 * @return string HTML
 	 */
 	public function getTitleHtml( EntityDocument $entity ) {

@@ -37,6 +37,9 @@ class EntityTypesTest extends PHPUnit_Framework_TestCase {
 		);
 	}
 
+	/**
+	 * @return SerializerFactory
+	 */
 	private function getSerializerFactory() {
 		$serializerFactory = $this->getMockBuilder( SerializerFactory::class )
 			->disableOriginalConstructor()

@@ -2,8 +2,6 @@
 
 namespace Wikibase\MediaInfo\Content;
 
-use Wikibase\DataModel\Entity\Entity;
-use Wikibase\DataModel\Entity\EntityId;
 use Wikibase\DataModel\Entity\EntityIdParser;
 use Wikibase\EditEntityAction;
 use Wikibase\HistoryEntityAction;
@@ -81,6 +79,8 @@ class MediaInfoHandler extends EntityHandler {
 	}
 
 	/**
+	 * @param string $id
+	 *
 	 * @return MediaInfoId
 	 */
 	public function makeEntityId( $id ) {

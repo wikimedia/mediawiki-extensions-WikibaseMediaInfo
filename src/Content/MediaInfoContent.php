@@ -5,7 +5,6 @@ namespace Wikibase\MediaInfo\Content;
 use Hooks;
 use InvalidArgumentException;
 use Wikibase\Content\EntityHolder;
-use Wikibase\DataModel\Entity\Entity;
 use Wikibase\DataModel\Term\Fingerprint;
 use Wikibase\EntityContent;
 use Wikibase\MediaInfo\DataModel\MediaInfo;

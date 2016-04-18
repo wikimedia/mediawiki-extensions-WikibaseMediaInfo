@@ -51,7 +51,7 @@ return [
 
 			return new MediaInfoView(
 				TemplateFactory::getDefaultInstance(),
-				$viewFactory->newEntityTermsView( $languageCode, $editSectionGenerator ),
+				$viewFactory->newEntityTermsView( $editSectionGenerator ),
 				$viewFactory->newStatementSectionsView(
 					$languageCode,
 					$labelDescriptionLookup,

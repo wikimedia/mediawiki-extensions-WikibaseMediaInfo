@@ -25,6 +25,7 @@ use Wikibase\View\EntityTermsView;
 use Wikibase\View\EntityView;
 use Wikibase\View\EntityViewPlaceholderExpander;
 use Wikibase\View\LanguageDirectionalityLookup;
+use Wikibase\View\LocalizedTextProvider;
 use Wikibase\View\StatementSectionsView;
 use Wikibase\View\Template\TemplateFactory;
 use Wikibase\View\TextInjector;
@@ -119,6 +120,7 @@ class MediaInfoViewTest extends PHPUnit_Framework_TestCase {
 		$entityTermsView->expects( $this->once() )
 			->method( 'getHtml' )
 			->with(
+				$contentLanguageCode,
 				$this->callback( function( Fingerprint $fingerprint ) use ( $descriptions ) {
 					if ( $descriptions ) {
 						return $fingerprint->getDescriptions() === $descriptions;
@@ -234,8 +236,10 @@ class MediaInfoViewTest extends PHPUnit_Framework_TestCase {
 		$entityTermsView->expects( $this->once() )
 			->method( 'getTitleHtml' )
 			->with(
+				$contentLanguageCode,
 				$this->callback( function( Fingerprint $fingerprint ) use ( $labels ) {
-					return $labels ? $fingerprint->getLabels() === $labels : $fingerprint->getLabels()->isEmpty();
+					return $labels ? $fingerprint->getLabels() === $labels :
+						$fingerprint->getLabels()->isEmpty();
 				} ),
 				$entityId
 			)
@@ -291,7 +295,6 @@ class MediaInfoViewTest extends PHPUnit_Framework_TestCase {
 
 		return new EntityViewPlaceholderExpander(
 			TemplateFactory::getDefaultInstance(),
-			$this->getMock( Title::class ),
 			$this->getMock( User::class ),
 			Language::factory( $uiLanguageCode ),
 			$entity,
@@ -299,7 +302,8 @@ class MediaInfoViewTest extends PHPUnit_Framework_TestCase {
 			null,
 			$userLanguageLookup,
 			new StaticContentLanguages( [] ),
-			$this->getMock( LanguageNameLookup::class )
+			$this->getMock( LanguageNameLookup::class ),
+			$this->getMock( LocalizedTextProvider::class )
 		);
 	}
 
@@ -311,6 +315,7 @@ class MediaInfoViewTest extends PHPUnit_Framework_TestCase {
 			->method( 'getHtml' )
 			->will( $this->returnCallback(
 				function(
+					$languageCode,
 					Fingerprint $fingerprint,
 					MediaInfoId $entityId,
 					$termBoxHtml,

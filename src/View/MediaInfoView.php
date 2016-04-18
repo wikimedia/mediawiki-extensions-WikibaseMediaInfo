@@ -84,6 +84,7 @@ class MediaInfoView extends EntityView {
 		}
 
 		return $this->entityTermsView->getHtml(
+				$this->languageCode,
 				$this->getFingerprint( $entity ),
 				$entity->getId(),
 				$this->getHtmlForTermBox(),
@@ -136,6 +137,7 @@ class MediaInfoView extends EntityView {
 			throw new InvalidArgumentException( '$entity must be a MediaInfo entity.' );
 		}
 		return $this->entityTermsView->getTitleHtml(
+			$this->languageCode,
 			$this->getFingerprint( $entity ),
 			$entity->getId()
 		);

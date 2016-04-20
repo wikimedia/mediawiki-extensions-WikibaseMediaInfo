@@ -288,20 +288,13 @@ class MediaInfoViewTest extends PHPUnit_Framework_TestCase {
 	}
 
 	private function getEntityViewPlaceholderExpander( EntityDocument $entity, $uiLanguageCode ) {
-		$userLanguageLookup = $this->getMock( UserLanguageLookup::class );
-		$userLanguageLookup->expects( $this->once() )
-			->method( 'getAllUserLanguages' )
-			->will( $this->returnValue( [] ) );
-
 		return new EntityViewPlaceholderExpander(
 			TemplateFactory::getDefaultInstance(),
 			$this->getMock( User::class ),
-			Language::factory( $uiLanguageCode ),
 			$entity,
 			$entity,
 			null,
-			$userLanguageLookup,
-			new StaticContentLanguages( [] ),
+			[ $uiLanguageCode ],
 			$this->getMock( LanguageNameLookup::class ),
 			$this->getMock( LocalizedTextProvider::class )
 		);

@@ -87,5 +87,8 @@ return [
 		'entity-differ-strategy-builder' => function() {
 			return new MediaInfoDiffer();
 		},
+		'entity-factory-callback' => function() {
+			return new MediaInfo();
+		}
 	]
 ];

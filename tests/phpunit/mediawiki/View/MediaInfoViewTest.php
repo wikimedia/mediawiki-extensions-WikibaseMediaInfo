@@ -295,6 +295,7 @@ class MediaInfoViewTest extends PHPUnit_Framework_TestCase {
 			$entity,
 			null,
 			[ $uiLanguageCode ],
+			$this->newLanguageDirectionalityLookupMock(),
 			$this->getMock( LanguageNameLookup::class ),
 			$this->getMock( LocalizedTextProvider::class )
 		);

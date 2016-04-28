@@ -19,8 +19,11 @@ use Wikibase\DataModel\Services\Lookup\LabelDescriptionLookup;
 use Wikibase\LanguageFallbackChain;
 use Wikibase\MediaInfo\Content\MediaInfoContent;
 use Wikibase\MediaInfo\Content\MediaInfoHandler;
+use Wikibase\MediaInfo\DataModel\MediaInfo;
+use Wikibase\MediaInfo\DataModel\MediaInfoId;
 use Wikibase\MediaInfo\DataModel\Serialization\MediaInfoDeserializer;
 use Wikibase\MediaInfo\DataModel\Serialization\MediaInfoSerializer;
+use Wikibase\MediaInfo\DataModel\Services\Diff\MediaInfoDiffer;
 use Wikibase\MediaInfo\View\MediaInfoView;
 use Wikibase\Repo\MediaWikiLanguageDirectionalityLookup;
 use Wikibase\Repo\WikibaseRepo;
@@ -74,6 +77,15 @@ return [
 				$errorLocalizer = $wikibaseRepo->getValidatorErrorLocalizer(),
 				$wikibaseRepo->getEntityIdParser()
 			);
-		}
+		},
+		'entity-id-builder-pair' => [
+			MediaInfoId::PATTERN,
+			function( $serialization ) {
+				return new MediaInfoId( $serialization );
+			}
+		],
+		'entity-differ-strategy-builder' => function() {
+			return new MediaInfoDiffer();
+		},
 	]
 ];

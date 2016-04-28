@@ -82,6 +82,11 @@ class MediaInfo implements EntityDocument, LabelsProvider, DescriptionsProvider,
 	 * @throws InvalidArgumentException
 	 */
 	public function setId( $id ) {
+		// FIXME: Support for numeric IDs is a temporary hack that must be removed!
+		if ( is_int( $id ) ) {
+			$id = new MediaInfoId( 'M' . $id );
+		}
+
 		if ( !( $id instanceof MediaInfoId ) ) {
 			throw new InvalidArgumentException( '$id must be an instance of MediaInfoId' );
 		}

@@ -66,11 +66,21 @@ class MediaInfoTest extends PHPUnit_Framework_TestCase {
 		$this->assertSame( $id, $mediaInfo->getId() );
 	}
 
+	public function testSetNumericId() {
+		$mediaInfo = new MediaInfo();
+		// FIXME: Support for numeric IDs is a temporary hack that must be removed!
+		$mediaInfo->setId( 1 );
+
+		$this->assertSame( 'M1', $mediaInfo->getId()->getSerialization() );
+	}
+
 	public function provideInvalidIds() {
 		return [
 			[ null ],
 			[ false ],
-			[ 42 ],
+			// FIXME: Support for numeric IDs is a temporary hack that must be removed!
+			// [ 1 ],
+			[ 1.0 ],
 			[ 'M1' ],
 			[ new ItemId( 'Q1' ) ],
 		];

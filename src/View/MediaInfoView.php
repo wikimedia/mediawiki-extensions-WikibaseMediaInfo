@@ -138,7 +138,7 @@ class MediaInfoView extends EntityView {
 		}
 		return $this->entityTermsView->getTitleHtml(
 			$this->languageCode,
-			$this->getFingerprint( $entity ),
+			$entity,
 			$entity->getId()
 		);
 	}

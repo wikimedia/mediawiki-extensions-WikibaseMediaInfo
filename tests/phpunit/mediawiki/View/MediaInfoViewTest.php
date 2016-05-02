@@ -13,6 +13,7 @@ use Wikibase\DataModel\Snak\PropertyNoValueSnak;
 use Wikibase\DataModel\Statement\Statement;
 use Wikibase\DataModel\Statement\StatementList;
 use Wikibase\DataModel\Term\Fingerprint;
+use Wikibase\DataModel\Term\LabelsProvider;
 use Wikibase\DataModel\Term\Term;
 use Wikibase\DataModel\Term\TermList;
 use Wikibase\Lib\LanguageNameLookup;
@@ -237,9 +238,9 @@ class MediaInfoViewTest extends PHPUnit_Framework_TestCase {
 			->method( 'getTitleHtml' )
 			->with(
 				$contentLanguageCode,
-				$this->callback( function( Fingerprint $fingerprint ) use ( $labels ) {
-					return $labels ? $fingerprint->getLabels() === $labels :
-						$fingerprint->getLabels()->isEmpty();
+				$this->callback( function( LabelsProvider $labelsProvider ) use ( $labels ) {
+					return $labels ? $labelsProvider->getLabels() === $labels :
+						$labelsProvider->getLabels()->isEmpty();
 				} ),
 				$entityId
 			)

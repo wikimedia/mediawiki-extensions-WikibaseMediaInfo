@@ -4,7 +4,6 @@ namespace Wikibase\MediaInfo\View;
 
 use InvalidArgumentException;
 use Wikibase\DataModel\Entity\EntityDocument;
-use Wikibase\DataModel\Term\Fingerprint;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\View\EntityTermsView;
 use Wikibase\View\EntityView;
@@ -60,17 +59,6 @@ class MediaInfoView extends EntityView {
 	}
 
 	/**
-	 * Construct a Fingerprint holding the MediaInfo's terms for compatibility with EntityTermsView
-	 *
-	 * @param MediaInfo $entity
-	 *
-	 * @return Fingerprint
-	 */
-	private function getFingerprint( MediaInfo $entity ) {
-		return new Fingerprint( $entity->getLabels(), $entity->getDescriptions() );
-	}
-
-	/**
 	 * @see EntityView::getMainHtml
 	 *
 	 * @param EntityDocument $entity
@@ -85,7 +73,9 @@ class MediaInfoView extends EntityView {
 
 		return $this->entityTermsView->getHtml(
 				$this->languageCode,
-				$this->getFingerprint( $entity ),
+				$entity,
+				$entity,
+				null,
 				$entity->getId(),
 				$this->getHtmlForTermBox(),
 				$this->textInjector

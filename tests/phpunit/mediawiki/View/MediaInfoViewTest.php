@@ -12,7 +12,8 @@ use Wikibase\DataModel\Entity\PropertyId;
 use Wikibase\DataModel\Snak\PropertyNoValueSnak;
 use Wikibase\DataModel\Statement\Statement;
 use Wikibase\DataModel\Statement\StatementList;
-use Wikibase\DataModel\Term\Fingerprint;
+use Wikibase\DataModel\Term\AliasesProvider;
+use Wikibase\DataModel\Term\DescriptionsProvider;
 use Wikibase\DataModel\Term\LabelsProvider;
 use Wikibase\DataModel\Term\Term;
 use Wikibase\DataModel\Term\TermList;
@@ -122,13 +123,9 @@ class MediaInfoViewTest extends PHPUnit_Framework_TestCase {
 			->method( 'getHtml' )
 			->with(
 				$contentLanguageCode,
-				$this->callback( function( Fingerprint $fingerprint ) use ( $descriptions ) {
-					if ( $descriptions ) {
-						return $fingerprint->getDescriptions() === $descriptions;
-					} else {
-						return $fingerprint->getDescriptions()->isEmpty();
-					}
-				} ),
+				$entity,
+				$entity,
+				null,
 				$entityId,
 				$this->isType( 'string' ),
 				$this->isInstanceOf( TextInjector::class )
@@ -311,7 +308,9 @@ class MediaInfoViewTest extends PHPUnit_Framework_TestCase {
 			->will( $this->returnCallback(
 				function(
 					$languageCode,
-					Fingerprint $fingerprint,
+					LabelsProvider $labelsProvider,
+					DescriptionsProvider $descriptionsProvider,
+					AliasesProvider $aliasesProvider = null,
 					MediaInfoId $entityId,
 					$termBoxHtml,
 					TextInjector $textInjector

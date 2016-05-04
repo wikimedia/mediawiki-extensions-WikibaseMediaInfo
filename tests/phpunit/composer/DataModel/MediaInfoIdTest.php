@@ -46,6 +46,7 @@ class MediaInfoIdTest extends PHPUnit_Framework_TestCase {
 			[ 'M0123' ],
 			[ ' m123' ],
 			[ 'M123 ' ],
+			[ "M1\n" ],
 			[ 'm 2' ],
 			[ 'm34534;' ],
 			[ 'M3.14159' ],

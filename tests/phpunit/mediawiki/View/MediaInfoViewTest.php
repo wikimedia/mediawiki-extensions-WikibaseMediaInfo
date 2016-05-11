@@ -3,34 +3,25 @@
 namespace Wikibase\MediaInfo\Tests\MediaWiki\View;
 
 use InvalidArgumentException;
-use Language;
 use PHPUnit_Framework_TestCase;
-use Title;
-use User;
 use Wikibase\DataModel\Entity\EntityDocument;
 use Wikibase\DataModel\Entity\PropertyId;
 use Wikibase\DataModel\Snak\PropertyNoValueSnak;
 use Wikibase\DataModel\Statement\Statement;
 use Wikibase\DataModel\Statement\StatementList;
 use Wikibase\DataModel\Term\AliasesProvider;
-use Wikibase\DataModel\Term\DescriptionsProvider;
 use Wikibase\DataModel\Term\LabelsProvider;
 use Wikibase\DataModel\Term\Term;
 use Wikibase\DataModel\Term\TermList;
-use Wikibase\Lib\LanguageNameLookup;
-use Wikibase\Lib\StaticContentLanguages;
-use Wikibase\Lib\UserLanguageLookup;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\MediaInfo\DataModel\MediaInfoId;
 use Wikibase\MediaInfo\View\MediaInfoView;
 use Wikibase\View\EntityTermsView;
 use Wikibase\View\EntityView;
-use Wikibase\View\EntityViewPlaceholderExpander;
 use Wikibase\View\LanguageDirectionalityLookup;
 use Wikibase\View\LocalizedTextProvider;
 use Wikibase\View\StatementSectionsView;
 use Wikibase\View\Template\TemplateFactory;
-use Wikibase\View\TextInjector;
 
 /**
  * @covers Wikibase\MediaInfo\View\MediaInfoView
@@ -126,9 +117,7 @@ class MediaInfoViewTest extends PHPUnit_Framework_TestCase {
 				$entity,
 				$entity,
 				null,
-				$entityId,
-				$this->isType( 'string' ),
-				$this->isInstanceOf( TextInjector::class )
+				$entityId
 			)
 			->will( $this->returnValue( 'entityTermsView->getHtml' ) );
 
@@ -211,14 +200,12 @@ class MediaInfoViewTest extends PHPUnit_Framework_TestCase {
 		];
 	}
 
-	/**
-	 * @expectedException InvalidArgumentException
-	 */
 	public function testGetTitleHtml_invalidEntityType() {
 		$view = $this->newMediaInfoView();
 
 		$entity = $this->getMock( EntityDocument::class );
-		$view->getTitleHtml( $entity );
+		$html = $view->getTitleHtml( $entity );
+		$this->assertSame( $html, '' );
 	}
 
 	/**
@@ -283,56 +270,6 @@ class MediaInfoViewTest extends PHPUnit_Framework_TestCase {
 				'lkt'
 			],
 		];
-	}
-
-	private function getEntityViewPlaceholderExpander( EntityDocument $entity, $uiLanguageCode ) {
-		return new EntityViewPlaceholderExpander(
-			TemplateFactory::getDefaultInstance(),
-			$this->getMock( User::class ),
-			$entity,
-			$entity,
-			null,
-			[ $uiLanguageCode ],
-			$this->newLanguageDirectionalityLookupMock(),
-			$this->getMock( LanguageNameLookup::class ),
-			$this->getMock( LocalizedTextProvider::class )
-		);
-	}
-
-	public function testPlaceholderIntegration() {
-		$entity = new MediaInfo( new MediaInfoId( 'M1' ) );
-
-		$entityTermsView = $this->newEntityTermsViewMock();
-		$entityTermsView->expects( $this->once() )
-			->method( 'getHtml' )
-			->will( $this->returnCallback(
-				function(
-					$languageCode,
-					LabelsProvider $labelsProvider,
-					DescriptionsProvider $descriptionsProvider,
-					AliasesProvider $aliasesProvider = null,
-					MediaInfoId $entityId,
-					$termBoxHtml,
-					TextInjector $textInjector
-				) {
-					return $textInjector->newMarker(
-						'entityViewPlaceholder-entitytermsview-entitytermsforlanguagelistview-class'
-					) . $termBoxHtml;
-				}
-			) );
-
-		$view = $this->newMediaInfoView( 'en', $entityTermsView );
-		$html = $view->getHtml( $entity );
-		$placeholders = $view->getPlaceholders();
-
-		$this->assertEquals( 2, count( $placeholders ) );
-
-		$injector = new TextInjector( $placeholders );
-		$expander = $this->getEntityViewPlaceholderExpander( $entity, 'fa' );
-
-		$html = $injector->inject( $html, [ $expander, 'getHtmlForPlaceholder' ] );
-
-		$this->assertContains( 'wikibase-entitytermsforlanguageview-fa', $html );
 	}
 
 }

@@ -10,7 +10,6 @@ use Wikibase\View\EntityView;
 use Wikibase\View\LanguageDirectionalityLookup;
 use Wikibase\View\StatementSectionsView;
 use Wikibase\View\Template\TemplateFactory;
-use Wikibase\View\TextInjector;
 
 /**
  * Class for creating HTML views for MediaInfo instances.
@@ -21,19 +20,9 @@ use Wikibase\View\TextInjector;
 class MediaInfoView extends EntityView {
 
 	/**
-	 * @var EntityTermsView
-	 */
-	private $entityTermsView;
-
-	/**
 	 * @var StatementSectionsView
 	 */
 	private $statementSectionsView;
-
-	/**
-	 * @var TextInjector
-	 */
-	private $textInjector;
 
 	/**
 	 * @param TemplateFactory $templateFactory
@@ -53,9 +42,7 @@ class MediaInfoView extends EntityView {
 			$templateFactory, $entityTermsView, $languageDirectionalityLookup, $languageCode
 		);
 
-		$this->entityTermsView = $entityTermsView;
 		$this->statementSectionsView = $statementSectionsView;
-		$this->textInjector = new TextInjector();
 	}
 
 	/**
@@ -71,36 +58,11 @@ class MediaInfoView extends EntityView {
 			throw new InvalidArgumentException( '$entity must be a MediaInfo entity.' );
 		}
 
-		return $this->entityTermsView->getHtml(
-				$this->languageCode,
-				$entity,
-				$entity,
-				null,
-				$entity->getId(),
-				$this->getHtmlForTermBox(),
-				$this->textInjector
-			)
+		$html = $this->getHtmlForFingerprint( $entity )
+			. $this->templateFactory->render( 'wikibase-toc' )
 			. $this->statementSectionsView->getHtml( $entity->getStatements() );
-	}
 
-	/**
-	 * @return string HTML
-	 */
-	private function getHtmlForTermBox() {
-		// Placeholder for a termbox for the present item.
-		return $this->textInjector->newMarker( 'termbox' );
-	}
-
-	/**
-	 * @see EntityView::getPlaceholders
-	 *
-	 * @return array[] string -> array
-	 */
-	public function getPlaceholders() {
-		return array_merge(
-			parent::getPlaceHolders(),
-			$this->textInjector->getMarkers()
-		);
+		return $html;
 	}
 
 	/**
@@ -112,25 +74,6 @@ class MediaInfoView extends EntityView {
 	 */
 	protected function getSideHtml( EntityDocument $entity ) {
 		return '';
-	}
-
-	/**
-	 * @see EntityView::getTitleHtml
-	 *
-	 * @param EntityDocument $entity
-	 *
-	 * @throws InvalidArgumentException
-	 * @return string HTML
-	 */
-	public function getTitleHtml( EntityDocument $entity ) {
-		if ( !( $entity instanceof MediaInfo ) ) {
-			throw new InvalidArgumentException( '$entity must be a MediaInfo entity.' );
-		}
-		return $this->entityTermsView->getTitleHtml(
-			$this->languageCode,
-			$entity,
-			$entity->getId()
-		);
 	}
 
 }

@@ -6,10 +6,8 @@ use InvalidArgumentException;
 use Wikibase\DataModel\Entity\EntityDocument;
 use Wikibase\DataModel\Services\Diff\EntityDiff;
 use Wikibase\DataModel\Services\Diff\EntityPatcherStrategy;
-use Wikibase\DataModel\Services\Diff\Internal\FingerprintPatcher;
-use Wikibase\DataModel\Services\Diff\Internal\StatementListPatcher;
-use Wikibase\DataModel\Term\Fingerprint;
-use Wikibase\DataModel\Term\TermList;
+use Wikibase\DataModel\Services\Diff\StatementListPatcher;
+use Wikibase\DataModel\Services\Diff\TermListPatcher;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 
 /**
@@ -22,9 +20,9 @@ use Wikibase\MediaInfo\DataModel\MediaInfo;
 class MediaInfoPatcher implements EntityPatcherStrategy {
 
 	/**
-	 * @var FingerprintPatcher
+	 * @var TermListPatcher
 	 */
-	private $fingerprintPatcher;
+	private $termListPatcher;
 
 	/**
 	 * @var StatementListPatcher
@@ -32,14 +30,14 @@ class MediaInfoPatcher implements EntityPatcherStrategy {
 	private $statementListPatcher;
 
 	public function __construct() {
-		$this->fingerprintPatcher = new FingerprintPatcher();
+		$this->termListPatcher = new TermListPatcher();
 		$this->statementListPatcher = new StatementListPatcher();
 	}
 
 	/**
 	 * @param string $entityType
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function canPatchEntityType( $entityType ) {
 		return $entityType === 'mediainfo';
@@ -49,52 +47,26 @@ class MediaInfoPatcher implements EntityPatcherStrategy {
 	 * @param EntityDocument $entity
 	 * @param EntityDiff $patch
 	 *
-	 * @return MediaInfo
 	 * @throws InvalidArgumentException
 	 */
 	public function patchEntity( EntityDocument $entity, EntityDiff $patch ) {
-		$this->assertIsMediaInfo( $entity );
-
-		$this->patchMediaInfo( $entity, $patch );
-	}
-
-	private function assertIsMediaInfo( EntityDocument $mediaInfo ) {
-		if ( !( $mediaInfo instanceof MediaInfo ) ) {
-			throw new InvalidArgumentException( '$mediaInfo must be an instance of MediaInfo' );
+		if ( !( $entity instanceof MediaInfo ) ) {
+			throw new InvalidArgumentException( '$entity must be an instance of MediaInfo' );
 		}
-	}
 
-	private function patchMediaInfo( MediaInfo $mediaInfo, EntityDiff $patch ) {
-		// TODO: Introduce and use TermListPatcher.
-		$fingerprint = new Fingerprint(
-			$mediaInfo->getLabels(),
-			$mediaInfo->getDescriptions()
+		$this->termListPatcher->patchTermList(
+			$entity->getLabels(),
+			$patch->getLabelsDiff()
 		);
-		$this->fingerprintPatcher->patchFingerprint( $fingerprint, $patch );
-		$this->replaceTerms( $mediaInfo->getLabels(), $fingerprint->getLabels() );
-		$this->replaceTerms( $mediaInfo->getDescriptions(), $fingerprint->getDescriptions() );
+		$this->termListPatcher->patchTermList(
+			$entity->getDescriptions(),
+			$patch->getDescriptionsDiff()
+		);
 
-		$statements = $mediaInfo->getStatements();
-		$patchedStatements = $this->statementListPatcher->getPatchedStatementList(
-			$statements,
+		$this->statementListPatcher->patchStatementList(
+			$entity->getStatements(),
 			$patch->getClaimsDiff()
 		);
-		// TODO: Introduce and use StatementListPatcher::patchStatementList.
-		foreach ( $statements->toArray() as $statement ) {
-			$statements->removeStatementsWithGuid( $statement->getGuid() );
-		}
-		foreach ( $patchedStatements->toArray() as $statement ) {
-			$statements->addStatement( $statement );
-		}
-	}
-
-	private function replaceTerms( TermList $old, TermList $new ) {
-		foreach ( $old as $languageCode => $term ) {
-			$old->removeByLanguage( $languageCode );
-		}
-		foreach ( $new as $term ) {
-			$old->setTerm( $term );
-		}
 	}
 
 }

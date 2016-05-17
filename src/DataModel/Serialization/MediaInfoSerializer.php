@@ -41,7 +41,7 @@ class MediaInfoSerializer implements DispatchableSerializer {
 	 *
 	 * @param mixed $object
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function isSerializerFor( $object ) {
 		return $object instanceof MediaInfo;

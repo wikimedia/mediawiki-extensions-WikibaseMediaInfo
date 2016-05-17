@@ -7,7 +7,7 @@ use InvalidArgumentException;
 use Wikibase\DataModel\Entity\EntityDocument;
 use Wikibase\DataModel\Services\Diff\EntityDiff;
 use Wikibase\DataModel\Services\Diff\EntityDifferStrategy;
-use Wikibase\DataModel\Services\Diff\Internal\StatementListDiffer;
+use Wikibase\DataModel\Services\Diff\StatementListDiffer;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 
 /**

@@ -1,0 +1,5 @@
+.wb-mediainfo .wikibase-entitytermsforlanguagelistview-aliases,
+.wb-mediainfo .wikibase-entitytermsforlanguageview-aliases,
+.wb-mediainfo .wikibase-entitytermsview-aliases {
+	display: none;
+}

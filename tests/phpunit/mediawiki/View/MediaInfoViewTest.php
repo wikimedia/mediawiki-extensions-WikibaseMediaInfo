@@ -213,7 +213,6 @@ class MediaInfoViewTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testGetTitleHtml(
 		MediaInfo $entity,
-		TermList $labels = null,
 		MediaInfoId $entityId = null,
 		$contentLanguageCode = 'en'
 	) {
@@ -221,11 +220,6 @@ class MediaInfoViewTest extends PHPUnit_Framework_TestCase {
 		$entityTermsView->expects( $this->once() )
 			->method( 'getTitleHtml' )
 			->with(
-				$contentLanguageCode,
-				$this->callback( function( LabelsProvider $labelsProvider ) use ( $labels ) {
-					return $labels ? $labelsProvider->getLabels() === $labels :
-						$labelsProvider->getLabels()->isEmpty();
-				} ),
 				$entityId
 			)
 			->will( $this->returnValue( 'entityTermsView->getTitleHtml' ) );
@@ -233,7 +227,6 @@ class MediaInfoViewTest extends PHPUnit_Framework_TestCase {
 		$view = $this->newMediaInfoView( $contentLanguageCode, $entityTermsView );
 
 		$result = $view->getTitleHtml( $entity );
-		$this->assertInternalType( 'string', $result );
 		$this->assertEquals( 'entityTermsView->getTitleHtml', $result );
 	}
 
@@ -249,7 +242,6 @@ class MediaInfoViewTest extends PHPUnit_Framework_TestCase {
 				new MediaInfo(
 					$mediaInfoId
 				),
-				null,
 				$mediaInfoId
 			],
 			[
@@ -257,7 +249,6 @@ class MediaInfoViewTest extends PHPUnit_Framework_TestCase {
 					$mediaInfoId,
 					$labels
 				),
-				$labels,
 				$mediaInfoId
 			],
 			[
@@ -265,7 +256,6 @@ class MediaInfoViewTest extends PHPUnit_Framework_TestCase {
 					$mediaInfoId,
 					$labels
 				),
-				$labels,
 				$mediaInfoId,
 				'lkt'
 			],

@@ -15,6 +15,7 @@ use Wikibase\MediaInfo\DataModel\Serialization\MediaInfoDeserializer;
 use Wikibase\MediaInfo\DataModel\Serialization\MediaInfoSerializer;
 use Wikibase\MediaInfo\View\MediaInfoView;
 use Wikibase\View\EditSectionGenerator;
+use Wikibase\View\EntityTermsView;
 
 /**
  * @covers WikibaseMediaInfo.entitytypes.php
@@ -112,7 +113,8 @@ class EntityTypesTest extends PHPUnit_Framework_TestCase {
 			'de',
 			$this->getMock( LabelDescriptionLookup::class ),
 			new LanguageFallbackChain( [] ),
-			$this->getMock( EditSectionGenerator::class )
+			$this->getMock( EditSectionGenerator::class ),
+			$this->getMock( EntityTermsView::class )
 		);
 
 		$this->assertInstanceOf( MediaInfoView::class, $mediaInfoView );

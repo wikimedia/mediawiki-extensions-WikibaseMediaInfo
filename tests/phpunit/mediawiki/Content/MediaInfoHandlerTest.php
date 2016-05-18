@@ -2,17 +2,20 @@
 
 namespace Wikibase\MediaInfo\Tests\MediaWiki\Content;
 
+use Closure;
 use HistoryAction;
 use PHPUnit_Framework_TestCase;
 use ViewAction;
 use Wikibase\DataModel\Entity\EntityIdParser;
 use Wikibase\Lib\Store\EntityContentDataCodec;
+use Wikibase\Lib\Store\LanguageFallbackLabelDescriptionLookupFactory;
 use Wikibase\MediaInfo\Content\MediaInfoHandler;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\MediaInfo\DataModel\MediaInfoId;
 use Wikibase\Repo\Store\EntityPerPage;
 use Wikibase\Repo\Validators\EntityConstraintProvider;
 use Wikibase\Repo\Validators\ValidatorErrorLocalizer;
+use Wikibase\Store\EntityIdLookup;
 use Wikibase\TermIndex;
 
 /**
@@ -36,7 +39,11 @@ class MediaInfoHandlerTest extends PHPUnit_Framework_TestCase {
 			$this->getMockWithoutConstructor( EntityContentDataCodec::class ),
 			$this->getMockWithoutConstructor( EntityConstraintProvider::class ),
 			$this->getMock( ValidatorErrorLocalizer::class ),
-			$this->getMock( EntityIdParser::class )
+			$this->getMock( EntityIdParser::class ),
+			$this->getMock( EntityIdLookup::class ),
+			$this->getMockBuilder( LanguageFallbackLabelDescriptionLookupFactory::class )
+				->disableOriginalConstructor()
+				->getMock()
 		);
 	}
 
@@ -50,7 +57,7 @@ class MediaInfoHandlerTest extends PHPUnit_Framework_TestCase {
 			array_keys( $actionOverrides )
 		);
 
-		$this->assertTrue( is_subclass_of( $actionOverrides['history'], HistoryAction::class ) );
+		$this->assertTrue( $actionOverrides['history'] instanceof Closure );
 		$this->assertTrue( is_subclass_of( $actionOverrides['view'], ViewAction::class ) );
 		$this->assertTrue( is_subclass_of( $actionOverrides['edit'], ViewAction::class ) );
 		$this->assertTrue( is_subclass_of( $actionOverrides['submit'], ViewAction::class ) );

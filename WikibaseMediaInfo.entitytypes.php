@@ -28,6 +28,7 @@ use Wikibase\MediaInfo\View\MediaInfoView;
 use Wikibase\Repo\MediaWikiLanguageDirectionalityLookup;
 use Wikibase\Repo\WikibaseRepo;
 use Wikibase\View\EditSectionGenerator;
+use Wikibase\View\EntityTermsView;
 use Wikibase\View\Template\TemplateFactory;
 
 return [
@@ -48,13 +49,14 @@ return [
 			$languageCode,
 			LabelDescriptionLookup $labelDescriptionLookup,
 			LanguageFallbackChain $fallbackChain,
-			EditSectionGenerator $editSectionGenerator
+			EditSectionGenerator $editSectionGenerator,
+			EntityTermsView $entityTermsView
 		) {
 			$viewFactory = WikibaseRepo::getDefaultInstance()->getViewFactory();
 
 			return new MediaInfoView(
 				TemplateFactory::getDefaultInstance(),
-				$viewFactory->newEntityTermsView( $editSectionGenerator ),
+				$entityTermsView,
 				$viewFactory->newStatementSectionsView(
 					$languageCode,
 					$labelDescriptionLookup,
@@ -75,7 +77,9 @@ return [
 				$codec = $wikibaseRepo->getEntityContentDataCodec(),
 				$constraintProvider = $wikibaseRepo->getEntityConstraintProvider(),
 				$errorLocalizer = $wikibaseRepo->getValidatorErrorLocalizer(),
-				$wikibaseRepo->getEntityIdParser()
+				$wikibaseRepo->getEntityIdParser(),
+				$wikibaseRepo->getEntityIdLookup(),
+				$wikibaseRepo->getLanguageFallbackLabelDescriptionLookupFactory()
 			);
 		},
 		'entity-id-builder-pair' => [

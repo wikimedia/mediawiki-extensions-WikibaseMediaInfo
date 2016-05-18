@@ -89,6 +89,10 @@ return [
 		},
 		'entity-factory-callback' => function() {
 			return new MediaInfo();
-		}
+		},
+
+		// Identifier of a resource loader module that, when `require`d, returns a function
+		// returning a deserializer
+		'js-deserializer-factory-function' => 'wikibase.mediainfo.getDeserializer',
 	]
 ];

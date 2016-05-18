@@ -14,7 +14,9 @@
 	"browser": true,
 
 	"globals": {
-		"mw": false,
-		"$": false
+		"jQuery": false,
+		"module": false,
+		"util": false,
+		"wikibase": false
 	}
 }

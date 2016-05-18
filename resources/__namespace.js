@@ -1,0 +1,1 @@
+wikibase.mediainfo = wikibase.mediainfo || {};

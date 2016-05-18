@@ -6,6 +6,7 @@ use Wikibase\DataModel\Entity\EntityIdParser;
 use Wikibase\EditEntityAction;
 use Wikibase\HistoryEntityAction;
 use Wikibase\Lib\Store\EntityContentDataCodec;
+use Wikibase\MediaInfo\Actions\ViewMediaInfoAction;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\MediaInfo\DataModel\MediaInfoId;
 use Wikibase\Repo\Content\EntityHandler;
@@ -58,7 +59,7 @@ class MediaInfoHandler extends EntityHandler {
 	public function getActionOverrides() {
 		return [
 			'history' => HistoryEntityAction::class,
-			'view' => ViewEntityAction::class,
+			'view' => ViewMediaInfoAction::class,
 			'edit' => EditEntityAction::class,
 			'submit' => SubmitEntityAction::class,
 		];

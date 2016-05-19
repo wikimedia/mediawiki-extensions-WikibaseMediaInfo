@@ -8,8 +8,7 @@
 	"descriptionmsg": "wikibasemediainfo-desc",
 	"license-name": "GPL-2.0+",
 	"type": "wikibase",
-	"AutoloadClasses": {
-	},
+	"load_composer_autoloader": true,
 	"config": {
 	},
 	"ExtensionMessagesFiles": {

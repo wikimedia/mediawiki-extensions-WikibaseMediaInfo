@@ -19,7 +19,6 @@ use Wikibase\Repo\Validators\ValidatorErrorLocalizer;
 use Wikibase\Store\EntityIdLookup;
 use Wikibase\SubmitEntityAction;
 use Wikibase\TermIndex;
-use Wikibase\ViewEntityAction;
 
 /**
  * @license GPL-2.0+

@@ -9,8 +9,6 @@ use Wikibase\DataModel\Entity\PropertyId;
 use Wikibase\DataModel\Snak\PropertyNoValueSnak;
 use Wikibase\DataModel\Statement\Statement;
 use Wikibase\DataModel\Statement\StatementList;
-use Wikibase\DataModel\Term\AliasesProvider;
-use Wikibase\DataModel\Term\LabelsProvider;
 use Wikibase\DataModel\Term\Term;
 use Wikibase\DataModel\Term\TermList;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
@@ -19,7 +17,6 @@ use Wikibase\MediaInfo\View\MediaInfoView;
 use Wikibase\View\EntityTermsView;
 use Wikibase\View\EntityView;
 use Wikibase\View\LanguageDirectionalityLookup;
-use Wikibase\View\LocalizedTextProvider;
 use Wikibase\View\StatementSectionsView;
 use Wikibase\View\Template\TemplateFactory;
 
@@ -219,9 +216,7 @@ class MediaInfoViewTest extends PHPUnit_Framework_TestCase {
 		$entityTermsView = $this->newEntityTermsViewMock();
 		$entityTermsView->expects( $this->once() )
 			->method( 'getTitleHtml' )
-			->with(
-				$entityId
-			)
+			->with( $entityId )
 			->will( $this->returnValue( 'entityTermsView->getTitleHtml' ) );
 
 		$view = $this->newMediaInfoView( $contentLanguageCode, $entityTermsView );

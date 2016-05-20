@@ -2,11 +2,14 @@
 
 namespace Wikibase\MediaInfo\Tests\MediaWiki\Content;
 
+use Action;
 use Closure;
-use HistoryAction;
+use IContextSource;
+use Language;
+use Page;
 use PHPUnit_Framework_TestCase;
-use ViewAction;
 use Wikibase\DataModel\Entity\EntityIdParser;
+use Wikibase\DataModel\Services\Lookup\LabelDescriptionLookup;
 use Wikibase\Lib\Store\EntityContentDataCodec;
 use Wikibase\Lib\Store\LanguageFallbackLabelDescriptionLookupFactory;
 use Wikibase\MediaInfo\Content\MediaInfoHandler;
@@ -33,6 +36,13 @@ class MediaInfoHandlerTest extends PHPUnit_Framework_TestCase {
 	}
 
 	private function newMediaInfoHandler() {
+		$labelLookupFactory = $this->getMockWithoutConstructor(
+			LanguageFallbackLabelDescriptionLookupFactory::class
+		);
+		$labelLookupFactory->expects( $this->any() )
+			->method( 'newLabelDescriptionLookup' )
+			->will( $this->returnValue( $this->getMock( LabelDescriptionLookup::class ) ) );
+
 		return new MediaInfoHandler(
 			$this->getMock( EntityPerPage::class ),
 			$this->getMock( TermIndex::class ),
@@ -41,26 +51,34 @@ class MediaInfoHandlerTest extends PHPUnit_Framework_TestCase {
 			$this->getMock( ValidatorErrorLocalizer::class ),
 			$this->getMock( EntityIdParser::class ),
 			$this->getMock( EntityIdLookup::class ),
-			$this->getMockBuilder( LanguageFallbackLabelDescriptionLookupFactory::class )
-				->disableOriginalConstructor()
-				->getMock()
+			$labelLookupFactory
 		);
 	}
 
 	public function testGetActionOverrides() {
 		$mediaInfoHandler = $this->newMediaInfoHandler();
+		$overrides = $mediaInfoHandler->getActionOverrides();
 
-		$actionOverrides = $mediaInfoHandler->getActionOverrides();
+		$this->assertSame( [ 'history', 'view', 'edit', 'submit' ], array_keys( $overrides ) );
 
-		$this->assertSame(
-			[ 'history', 'view', 'edit', 'submit' ],
-			array_keys( $actionOverrides )
-		);
+		$this->assertActionOverride( $overrides['history'] );
+		$this->assertActionOverride( $overrides['view'] );
+		$this->assertActionOverride( $overrides['edit'] );
+		$this->assertActionOverride( $overrides['submit'] );
+	}
 
-		$this->assertTrue( $actionOverrides['history'] instanceof Closure );
-		$this->assertTrue( is_subclass_of( $actionOverrides['view'], ViewAction::class ) );
-		$this->assertTrue( is_subclass_of( $actionOverrides['edit'], ViewAction::class ) );
-		$this->assertTrue( is_subclass_of( $actionOverrides['submit'], ViewAction::class ) );
+	private function assertActionOverride( $override ) {
+		if ( $override instanceof Closure ) {
+			$context = $this->getMock( IContextSource::class );
+			$context->expects( $this->any() )
+				->method( 'getLanguage' )
+				->will( $this->returnValue( $this->getMockWithoutConstructor( Language::class ) ) );
+
+			$action = $override( $this->getMock( Page::class ), $context );
+			$this->assertInstanceOf( Action::class, $action );
+		} else {
+			$this->assertTrue( is_subclass_of( $override, Action::class ) );
+		}
 	}
 
 	public function testMakeEmptyEntity() {
@@ -78,7 +96,7 @@ class MediaInfoHandlerTest extends PHPUnit_Framework_TestCase {
 	public function testGetEntityType() {
 		$mediaInfoHandler = $this->newMediaInfoHandler();
 
-		$this->assertEquals( MediaInfo::ENTITY_TYPE, $mediaInfoHandler->getEntityType() );
+		$this->assertSame( MediaInfo::ENTITY_TYPE, $mediaInfoHandler->getEntityType() );
 	}
 
 }

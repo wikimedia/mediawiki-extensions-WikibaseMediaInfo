@@ -3,6 +3,7 @@
 namespace Wikibase\MediaInfo\Content;
 
 use IContextSource;
+use Language;
 use Page;
 use Wikibase\DataModel\Entity\EntityIdParser;
 use Wikibase\EditEntityAction;
@@ -19,7 +20,6 @@ use Wikibase\Repo\Validators\ValidatorErrorLocalizer;
 use Wikibase\Store\EntityIdLookup;
 use Wikibase\SubmitEntityAction;
 use Wikibase\TermIndex;
-use Wikibase\ViewEntityAction;
 
 /**
  * @license GPL-2.0+
@@ -35,7 +35,7 @@ class MediaInfoHandler extends EntityHandler {
 	/**
 	 * @var LanguageFallbackLabelDescriptionLookupFactory
 	 */
-	private $labelDescriptionLookupFactory;
+	private $labelLookupFactory;
 
 	/**
 	 * @param EntityPerPage $entityPerPage
@@ -45,7 +45,7 @@ class MediaInfoHandler extends EntityHandler {
 	 * @param ValidatorErrorLocalizer $errorLocalizer
 	 * @param EntityIdParser $entityIdParser
 	 * @param EntityIdLookup $entityIdLookup
-	 * @param LanguageFallbackLabelDescriptionLookupFactory $labelDescriptionLookupFactory
+	 * @param LanguageFallbackLabelDescriptionLookupFactory $labelLookupFactory
 	 * @param callable|null $legacyExportFormatDetector
 	 */
 	public function __construct(
@@ -56,7 +56,7 @@ class MediaInfoHandler extends EntityHandler {
 		ValidatorErrorLocalizer $errorLocalizer,
 		EntityIdParser $entityIdParser,
 		EntityIdLookup $entityIdLookup,
-		LanguageFallbackLabelDescriptionLookupFactory $labelDescriptionLookupFactory,
+		LanguageFallbackLabelDescriptionLookupFactory $labelLookupFactory,
 		$legacyExportFormatDetector = null
 	) {
 		parent::__construct(
@@ -70,11 +70,13 @@ class MediaInfoHandler extends EntityHandler {
 			$legacyExportFormatDetector
 		);
 		$this->entityIdLookup = $entityIdLookup;
-		$this->labelDescriptionLookupFactory = $labelDescriptionLookupFactory;
+		$this->labelLookupFactory = $labelLookupFactory;
 	}
 
 	/**
-	 * @return string[]
+	 * @see ContentHandler::getActionOverrides
+	 *
+	 * @return array
 	 */
 	public function getActionOverrides() {
 		return [
@@ -83,7 +85,7 @@ class MediaInfoHandler extends EntityHandler {
 					$page,
 					$context,
 					$this->entityIdLookup,
-					$this->labelDescriptionLookupFactory->newLabelDescriptionLookup( $context->getLanguage() )
+					$this->labelLookupFactory->newLabelDescriptionLookup( $context->getLanguage() )
 				);
 			},
 			'view' => ViewMediaInfoAction::class,

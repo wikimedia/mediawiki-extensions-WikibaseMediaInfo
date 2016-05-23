@@ -44,6 +44,11 @@ class MediaInfoTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals( new StatementList(), $mediaInfo->getStatements() );
 	}
 
+	public function testGetNumericId() {
+		$id = new MediaInfoId( 'M1' );
+		$this->assertSame( 1, $id->getNumericId() );
+	}
+
 	public function testGetEntityType() {
 		$mediaInfo = new MediaInfo();
 

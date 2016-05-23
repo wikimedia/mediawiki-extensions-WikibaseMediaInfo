@@ -38,6 +38,17 @@ class MediaInfoId extends EntityId {
 	}
 
 	/**
+	 * @deprecated Avoid using this as long as the implementation does not guarantee this does not
+	 * overflow on 32 bit systems.
+	 * @see https://github.com/wmde/WikibaseDataModel/pull/670
+	 *
+	 * @return int The numeric part of the ID, casted to an integer.
+	 */
+	public function getNumericId() {
+		return (int)substr( $this->serialization, 1 );
+	}
+
+	/**
 	 * @see EntityId::getEntityType
 	 *
 	 * @return string

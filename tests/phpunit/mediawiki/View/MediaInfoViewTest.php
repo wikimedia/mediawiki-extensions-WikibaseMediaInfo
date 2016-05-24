@@ -102,7 +102,6 @@ class MediaInfoViewTest extends PHPUnit_Framework_TestCase {
 	public function testGetHtml(
 		MediaInfo $entity,
 		MediaInfoId $entityId = null,
-		TermList $descriptions = null,
 		$contentLanguageCode = 'en',
 		StatementList $statements = null
 	) {
@@ -145,7 +144,6 @@ class MediaInfoViewTest extends PHPUnit_Framework_TestCase {
 
 	public function provideTestGetHtml() {
 		$mediaInfoId = new MediaInfoId( 'M1' );
-		$descriptions = new TermList( [ new Term( 'en', 'EN_DESCRIPTION' ) ] );
 		$statements = new StatementList( [
 			new Statement( new PropertyNoValueSnak( new PropertyId( 'P1' ) ) )
 		] );
@@ -155,42 +153,23 @@ class MediaInfoViewTest extends PHPUnit_Framework_TestCase {
 				new MediaInfo()
 			],
 			[
-				new MediaInfo(
-					$mediaInfoId
-				),
+				new MediaInfo( $mediaInfoId ),
 				$mediaInfoId
 			],
 			[
-				new MediaInfo(
-					$mediaInfoId,
-					null,
-					$descriptions,
-					$statements
-				),
+				new MediaInfo( $mediaInfoId, null, null, $statements ),
 				$mediaInfoId,
-				$descriptions,
 				'en',
 				$statements
 			],
 			[
-				new MediaInfo(
-					$mediaInfoId,
-					null,
-					$descriptions
-				),
+				new MediaInfo( $mediaInfoId ),
 				$mediaInfoId,
-				$descriptions,
 				'lkt'
 			],
 			[
-				new MediaInfo(
-					$mediaInfoId,
-					null,
-					$descriptions,
-					$statements
-				),
+				new MediaInfo( $mediaInfoId, null, null, $statements ),
 				$mediaInfoId,
-				$descriptions,
 				'lkt',
 				$statements
 			],

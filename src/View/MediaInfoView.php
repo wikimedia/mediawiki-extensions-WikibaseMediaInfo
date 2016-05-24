@@ -39,7 +39,10 @@ class MediaInfoView extends EntityView {
 		$languageCode
 	) {
 		parent::__construct(
-			$templateFactory, $entityTermsView, $languageDirectionalityLookup, $languageCode
+			$templateFactory,
+			$entityTermsView,
+			$languageDirectionalityLookup,
+			$languageCode
 		);
 
 		$this->statementSectionsView = $statementSectionsView;

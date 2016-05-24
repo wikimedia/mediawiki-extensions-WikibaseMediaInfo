@@ -24,6 +24,7 @@ use Wikibase\MediaInfo\DataModel\MediaInfoId;
 use Wikibase\MediaInfo\DataModel\Serialization\MediaInfoDeserializer;
 use Wikibase\MediaInfo\DataModel\Serialization\MediaInfoSerializer;
 use Wikibase\MediaInfo\DataModel\Services\Diff\MediaInfoDiffer;
+use Wikibase\MediaInfo\DataModel\Services\Diff\MediaInfoPatcher;
 use Wikibase\MediaInfo\View\MediaInfoView;
 use Wikibase\Repo\MediaWikiLanguageDirectionalityLookup;
 use Wikibase\Repo\WikibaseRepo;
@@ -90,6 +91,9 @@ return [
 		],
 		'entity-differ-strategy-builder' => function() {
 			return new MediaInfoDiffer();
+		},
+		'entity-patcher-strategy-builder' => function() {
+			return new MediaInfoPatcher();
 		},
 		'entity-factory-callback' => function() {
 			return new MediaInfo();

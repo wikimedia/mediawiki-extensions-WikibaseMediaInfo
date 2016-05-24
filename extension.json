@@ -95,5 +95,13 @@
 	},
 	"SpecialPages": {
 	},
-	"manifest_version": 1
+	"manifest_version": 1,
+	"GroupPermissions": {
+		"*": {
+			"mediainfo-term": true
+		}
+	},
+	"AvailableRights": [
+		"mediainfo-term"
+	]
 }

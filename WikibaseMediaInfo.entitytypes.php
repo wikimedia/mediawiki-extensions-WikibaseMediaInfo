@@ -83,12 +83,10 @@ return [
 				$wikibaseRepo->getLanguageFallbackLabelDescriptionLookupFactory()
 			);
 		},
-		'entity-id-builder-pair' => [
-			MediaInfoId::PATTERN,
-			function( $serialization ) {
-				return new MediaInfoId( $serialization );
-			}
-		],
+		'entity-id-pattern' => MediaInfoId::PATTERN,
+		'entity-id-builder' => function( $serialization ) {
+			return new MediaInfoId( $serialization );
+		},
 		'entity-differ-strategy-builder' => function() {
 			return new MediaInfoDiffer();
 		},

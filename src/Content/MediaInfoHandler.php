@@ -3,7 +3,6 @@
 namespace Wikibase\MediaInfo\Content;
 
 use IContextSource;
-use Language;
 use Page;
 use Wikibase\DataModel\Entity\EntityIdParser;
 use Wikibase\EditEntityAction;

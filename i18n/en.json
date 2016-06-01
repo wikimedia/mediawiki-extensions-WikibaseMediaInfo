@@ -4,5 +4,6 @@
 			"Bene*"
 		]
 	},
+	"wikibase-entity-mediainfo": "media info",
 	"wikibasemediainfo-desc": "Wikibase extension to manage structured metadata of media files"
 }

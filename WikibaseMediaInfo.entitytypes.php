@@ -87,6 +87,9 @@ return [
 		'entity-id-builder' => function( $serialization ) {
 			return new MediaInfoId( $serialization );
 		},
+		'entity-id-composer' => function( $uniquePart ) {
+			return new MediaInfoId( 'M' . $uniquePart );
+		},
 		'entity-differ-strategy-builder' => function() {
 			return new MediaInfoDiffer();
 		},

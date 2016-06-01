@@ -61,7 +61,7 @@ class MediaInfoView extends EntityView {
 			throw new InvalidArgumentException( '$entity must be a MediaInfo entity.' );
 		}
 
-		$html = $this->getHtmlForFingerprint( $entity )
+		$html = $this->getHtmlForTerms( $entity )
 			. $this->templateFactory->render( 'wikibase-toc' )
 			. $this->statementSectionsView->getHtml( $entity->getStatements() );
 

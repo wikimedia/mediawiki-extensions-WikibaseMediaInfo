@@ -1,8 +1,10 @@
 {
 	"@metadata": {
 		"authors": [
-			"Gomoko"
+			"Gomoko",
+			"Trial"
 		]
 	},
+	"wikibase-entity-mediainfo": "Infos média",
 	"wikibasemediainfo-desc": "Extension de Wikibase pour gérer les métadonnées structurées des fichiers de média"
 }

@@ -4,5 +4,6 @@
 			"Liuxinyu970226"
 		]
 	},
+	"wikibase-entity-mediainfo": "媒体信息",
 	"wikibasemediainfo-desc": "管理结构化的媒体文件元数据的Wikibase扩展"
 }

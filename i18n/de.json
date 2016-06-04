@@ -4,5 +4,6 @@
 			"Metalhead64"
 		]
 	},
+	"wikibase-entity-mediainfo": "Medieninformationen",
 	"wikibasemediainfo-desc": "Wikibase-Erweiterung zur Verwaltung strukturierter Metadaten von Mediendateien"
 }

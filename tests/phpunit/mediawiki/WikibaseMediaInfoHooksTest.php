@@ -13,7 +13,7 @@ use Wikibase\Repo\WikibaseRepo;
  * @license GPL-2.0+
  * @author Bene* < benestar.wikimedia@gmail.com >
  */
-class WikibaseMediaInfoHooksTest extends PHPUnit_Framework_TestCase {
+class WikibaseMediaInfoHooksTest extends \PHPUnit_Framework_TestCase {
 
 	public function testOnUnitTestsList() {
 		$paths = [];
@@ -102,6 +102,23 @@ class WikibaseMediaInfoHooksTest extends PHPUnit_Framework_TestCase {
 		$this->assertSame( [ 'foo', 'bar' ], $entityTypeDefinitions['item'] );
 
 		$this->assertArrayHasKey( 'mediainfo', $entityTypeDefinitions );
+	}
+
+	public function testOnMediaWikiServices() {
+		$services = $this->getMockBuilder( MediaWikiServices::class )
+			->disableOriginalConstructor()
+			->getMock();
+
+		$allFiles = [];
+		$services->expects( $this->once() )
+			->method( 'loadWiringFiles' )
+			->will( $this->returnCallback( function( $files ) use ( &$allFiles ) {
+				$allFiles = array_merge( $allFiles, $files );
+			} ) );
+
+		Hooks::run( 'MediaWikiServices', [ $services ] );
+
+		$this->assertRegExp( '@/MediaInfoServiceWiring\.php$@m', join( "\n", $allFiles ) );
 	}
 
 }

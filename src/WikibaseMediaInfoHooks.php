@@ -2,7 +2,11 @@
 
 namespace Wikibase\MediaInfo;
 
+use Article;
 use MediaWiki\MediaWikiServices;
+use UnexpectedValueException;
+use Wikibase\MediaInfo\DataModel\MediaInfo;
+use Wikibase\MediaInfo\Services\MediaInfoServices;
 use Wikibase\Repo\WikibaseRepo;
 
 /**
@@ -81,4 +85,10 @@ class WikibaseMediaInfoHooks {
 		);
 	}
 
+	public static function onMediaWikiServices( MediaWikiServices $services ) {
+		// TODO: Use extension.json to put the wiring file into ($wg)ServiceWiringFiles.
+		// TODO: We need better support for relative pathes in the extension loader for that to work!
+		$wiringFile = __DIR__ . '/Services/MediaInfoServiceWiring.php';
+		$services->loadWiringFiles( [ $wiringFile ] );
+	}
 }

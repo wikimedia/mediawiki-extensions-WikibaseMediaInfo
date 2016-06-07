@@ -19,12 +19,14 @@ use Wikibase\DataModel\Services\Lookup\LabelDescriptionLookup;
 use Wikibase\LanguageFallbackChain;
 use Wikibase\MediaInfo\Content\MediaInfoContent;
 use Wikibase\MediaInfo\Content\MediaInfoHandler;
+use Wikibase\MediaInfo\Content\MissingMediaInfoHandler;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\MediaInfo\DataModel\MediaInfoId;
 use Wikibase\MediaInfo\DataModel\Serialization\MediaInfoDeserializer;
 use Wikibase\MediaInfo\DataModel\Serialization\MediaInfoSerializer;
 use Wikibase\MediaInfo\DataModel\Services\Diff\MediaInfoDiffer;
 use Wikibase\MediaInfo\DataModel\Services\Diff\MediaInfoPatcher;
+use Wikibase\MediaInfo\Services\MediaInfoServices;
 use Wikibase\MediaInfo\View\MediaInfoView;
 use Wikibase\Repo\MediaWikiLanguageDirectionalityLookup;
 use Wikibase\Repo\WikibaseRepo;
@@ -80,7 +82,12 @@ return [
 				$errorLocalizer = $wikibaseRepo->getValidatorErrorLocalizer(),
 				$wikibaseRepo->getEntityIdParser(),
 				$wikibaseRepo->getEntityIdLookup(),
-				$wikibaseRepo->getLanguageFallbackLabelDescriptionLookupFactory()
+				$wikibaseRepo->getLanguageFallbackLabelDescriptionLookupFactory(),
+				new MissingMediaInfoHandler(
+					MediaInfoServices::getMediaInfoIdLookup(),
+					MediaInfoServices::getFilePageLookup(),
+					$wikibaseRepo->getEntityParserOutputGeneratorFactory()
+				)
 			);
 		},
 		'entity-id-pattern' => MediaInfoId::PATTERN,

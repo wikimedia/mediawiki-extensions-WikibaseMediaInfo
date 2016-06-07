@@ -31,6 +31,9 @@
 		],
 		"WikibaseClientEntityTypes": [
 			"Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onWikibaseEntityTypes"
+		],
+		"MediaWikiServices": [
+			"Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onMediaWikiServices"
 		]
 	},
 	"MessagesDirs": {

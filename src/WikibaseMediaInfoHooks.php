@@ -2,6 +2,9 @@
 
 namespace Wikibase\MediaInfo;
 
+use MediaWiki\MediaWikiServices;
+use Wikibase\Repo\WikibaseRepo;
+
 /**
  * MediaWiki hook handlers for the Wikibase MediaInfo extension.
  *
@@ -19,6 +22,46 @@ class WikibaseMediaInfoHooks {
 	 */
 	public static function onUnitTestsList( array &$paths ) {
 		$paths[] = __DIR__ . '/../tests/phpunit/';
+	}
+
+	/**
+	 * Hook to register the MediaInfo entity namespaces for EntityNamespaceLookup.
+	 */
+	public static function onWikibaseEntityNamespaces( &$entityNamespacesSetting ) {
+		// XXX: ExtensionProcessor should define an extra config object for every extension.
+		$config = MediaWikiServices::getInstance()->getMainConfig();
+
+		// Setting the namespace to false disabled automatic registration.
+		$entityNamespacesSetting['mediainfo'] = $config->get( 'MediaInfoNamespace' );
+	}
+
+	/**
+	 * Hook to register the default namespace names with $wgExtraNamespaces.
+	 *
+	 * @see https://www.mediawiki.org/wiki/Manual:Hooks/SetupAfterCache
+	 */
+	public static function onSetupAfterCache() {
+		global $wgExtraNamespaces;
+
+		// XXX: ExtensionProcessor should define an extra config object for every extension.
+		$config = MediaWikiServices::getInstance()->getMainConfig();
+
+		// Setting the namespace to false disabled automatic registration.
+		$entityNamespace = $config->get( 'MediaInfoNamespace' );
+		$talkNamespace = $config->get( 'MediaInfoTalkNamespace' );
+
+		if ( $entityNamespace !== false ) {
+			if ( !isset( $wgExtraNamespaces[$entityNamespace] ) && $entityNamespace >= 100 ) {
+				$wgExtraNamespaces[$entityNamespace] = 'MediaInfo';
+			}
+		}
+
+		if ( $talkNamespace !== false ) {
+			if ( !isset( $wgExtraNamespaces[$talkNamespace] ) && $entityNamespace >= 100 ) {
+				// XXX: Localize the default talk namespace?
+				$wgExtraNamespaces[$talkNamespace] = 'MediaInfo_Talk';
+			}
+		}
 	}
 
 	/**

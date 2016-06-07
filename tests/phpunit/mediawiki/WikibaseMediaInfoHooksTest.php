@@ -3,7 +3,9 @@
 namespace Wikibase\MediaInfo\Tests\MediaWiki;
 
 use Hooks;
+use MediaWiki\MediaWikiServices;
 use PHPUnit_Framework_TestCase;
+use Wikibase\Repo\WikibaseRepo;
 
 /**
  * @covers Wikibase\MediaInfo\WikibaseMediaInfoHooks
@@ -22,6 +24,61 @@ class WikibaseMediaInfoHooksTest extends PHPUnit_Framework_TestCase {
 		$expected = realpath( __DIR__ . '/../' );
 
 		$this->assertContains( $expected, $paths );
+	}
+
+	public function testOnWikibaseEntityNamespaces() {
+		global $wgNamespaceContentModels;
+
+		// The SetupAfterCache hook already ran.
+		// We now just check that it did what it should.
+		$config = MediaWikiServices::getInstance()->getMainConfig();
+		$entityNamespace = $config->get( 'MediaInfoNamespace' );
+
+		if ( $entityNamespace === false ) {
+			$this->markTestSkipped( 'MediaInfoNamespace is set to false,' .
+				' disabling automatic namespace registration.' );
+		}
+
+		$this->assertArrayHasKey( $entityNamespace, $wgNamespaceContentModels );
+		$this->assertSame( 'wikibase-mediainfo', $wgNamespaceContentModels[$entityNamespace] );
+
+		$namespaceLookup = WikibaseRepo::getDefaultInstance()->getEntityNamespaceLookup();
+		$namespaces = $namespaceLookup->getEntityNamespaces();
+
+		$this->assertArrayHasKey( 'mediainfo', $namespaces );
+		$this->assertSame( $entityNamespace, $namespaces['mediainfo'] );
+	}
+
+	public function testOnSetupAfterCache() {
+		global $wgExtraNamespaces;
+
+		// The SetupAfterCache hook already ran.
+		// We now just check that it did what it should.
+		$config = MediaWikiServices::getInstance()->getMainConfig();
+		$entityNamespace = $config->get( 'MediaInfoNamespace' );
+
+		if ( $entityNamespace === false ) {
+			$this->markTestSkipped( 'MediaInfoNamespace is set to false,' .
+				' disabling automatic namespace registration.' );
+		}
+
+		$this->assertArrayHasKey( $entityNamespace, $wgExtraNamespaces );
+	}
+
+	public function testOnSetupAfterCache_talk() {
+		global $wgExtraNamespaces;
+
+		// The SetupAfterCache hook already ran.
+		// We now just check that it did what it should.
+		$config = MediaWikiServices::getInstance()->getMainConfig();
+		$talkNamespace = $config->get( 'MediaInfoTalkNamespace' );
+
+		if ( $talkNamespace === false ) {
+			$this->markTestSkipped( 'MediaInfoTalkNamespace is set to false,' .
+				' disabling automatic namespace registration.' );
+		}
+
+		$this->assertArrayHasKey( $talkNamespace, $wgExtraNamespaces );
 	}
 
 	public function provideWikibaseEntityTypesHooks() {

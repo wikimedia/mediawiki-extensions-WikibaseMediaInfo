@@ -11,6 +11,7 @@ use Page;
 use PHPUnit_Framework_TestCase;
 use RequestContext;
 use Title;
+use Wikibase\DataModel\Entity\EntityId;
 use Wikibase\DataModel\Entity\EntityIdParser;
 use Wikibase\DataModel\Services\Lookup\LabelDescriptionLookup;
 use Wikibase\Lib\Store\EntityContentDataCodec;
@@ -19,6 +20,7 @@ use Wikibase\MediaInfo\Content\MediaInfoHandler;
 use Wikibase\MediaInfo\Content\MissingMediaInfoHandler;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\MediaInfo\DataModel\MediaInfoId;
+use Wikibase\MediaInfo\Services\FilePageLookup;
 use Wikibase\Repo\Store\EntityPerPage;
 use Wikibase\Repo\Validators\EntityConstraintProvider;
 use Wikibase\Repo\Validators\ValidatorErrorLocalizer;
@@ -63,6 +65,17 @@ class MediaInfoHandlerTest extends PHPUnit_Framework_TestCase {
 				}
 			) );
 
+		$filePageLookup = $this->getMockWithoutConstructor( FilePageLookup::class );
+		$filePageLookup->expects( $this->any() )
+			->method( 'getFilePage' )
+			->will( $this->returnCallback( function( MediaInfoId $id ) {
+				if ( $id->getSerialization() !== 'M1' ) {
+					return null;
+				}
+
+				return Title::makeTitle( NS_FILE, 'Test-' . $id->getSerialization() . '.png' );
+			} ) );
+
 		return new MediaInfoHandler(
 			$this->getMock( EntityPerPage::class ),
 			$this->getMock( TermIndex::class ),
@@ -72,7 +85,8 @@ class MediaInfoHandlerTest extends PHPUnit_Framework_TestCase {
 			$this->getMock( EntityIdParser::class ),
 			$this->getMock( EntityIdLookup::class ),
 			$labelLookupFactory,
-			$missingMediaInfoHandler
+			$missingMediaInfoHandler,
+			$filePageLookup
 		);
 	}
 
@@ -131,6 +145,28 @@ class MediaInfoHandlerTest extends PHPUnit_Framework_TestCase {
 
 		$html = $context->getOutput()->getHTML();
 		$this->assertContains( 'MISSING!', $html );
+	}
+
+	public function testAllowAutomaticIds() {
+		$mediaInfoHandler = $this->newMediaInfoHandler();
+
+		$this->assertFalse( $mediaInfoHandler->allowAutomaticIds() );
+	}
+
+	public function provideCanCreateWithCustomId() {
+		return [
+			'id matches existing file page' => [ new MediaInfoId( 'M1' ), true ],
+			'id does not match existing file page' => [ new MediaInfoId( 'M17' ), false ],
+		];
+	}
+
+	/**
+	 * @dataProvider provideCanCreateWithCustomId
+	 */
+	public function testCanCreateWithCustomId( EntityId $id, $expected ) {
+		$mediaInfoHandler = $this->newMediaInfoHandler();
+
+		$this->assertSame( $expected, $mediaInfoHandler->canCreateWithCustomId( $id ) );
 	}
 
 }

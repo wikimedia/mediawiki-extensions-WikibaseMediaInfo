@@ -4,6 +4,7 @@ namespace Wikibase\MediaInfo\Content;
 
 use IContextSource;
 use Page;
+use Title;
 use Wikibase\DataModel\Entity\EntityIdParser;
 use Wikibase\EditEntityAction;
 use Wikibase\HistoryEntityAction;
@@ -37,6 +38,11 @@ class MediaInfoHandler extends EntityHandler {
 	private $labelLookupFactory;
 
 	/**
+	 * @var MissingMediaInfoHandler
+	 */
+	private $missingMediaInfoHandler;
+
+	/**
 	 * @param EntityPerPage $entityPerPage
 	 * @param TermIndex $termIndex
 	 * @param EntityContentDataCodec $contentCodec
@@ -45,6 +51,7 @@ class MediaInfoHandler extends EntityHandler {
 	 * @param EntityIdParser $entityIdParser
 	 * @param EntityIdLookup $entityIdLookup
 	 * @param LanguageFallbackLabelDescriptionLookupFactory $labelLookupFactory
+	 * @param MissingMediaInfoHandler $missingMediaInfoHandler
 	 * @param callable|null $legacyExportFormatDetector
 	 */
 	public function __construct(
@@ -56,6 +63,7 @@ class MediaInfoHandler extends EntityHandler {
 		EntityIdParser $entityIdParser,
 		EntityIdLookup $entityIdLookup,
 		LanguageFallbackLabelDescriptionLookupFactory $labelLookupFactory,
+		MissingMediaInfoHandler $missingMediaInfoHandler,
 		$legacyExportFormatDetector = null
 	) {
 		parent::__construct(
@@ -70,6 +78,7 @@ class MediaInfoHandler extends EntityHandler {
 		);
 		$this->entityIdLookup = $entityIdLookup;
 		$this->labelLookupFactory = $labelLookupFactory;
+		$this->missingMediaInfoHandler = $missingMediaInfoHandler;
 	}
 
 	/**
@@ -121,6 +130,29 @@ class MediaInfoHandler extends EntityHandler {
 	 */
 	public function getEntityType() {
 		return MediaInfo::ENTITY_TYPE;
+	}
+
+	/**
+	 * @see EntityHandler::showMissingEntity
+	 *
+	 * This is overwritten to show a dummy MediaInfo entity when appropriate.
+	 *
+	 * @see MissingMediaInfoHandler::showMissingMediaInfo
+	 *
+	 * @param Title $title
+	 * @param IContextSource $context
+	 */
+	public function showMissingEntity( Title $title, IContextSource $context ) {
+		$id = $this->missingMediaInfoHandler->getMediaInfoId( $title, $context );
+
+		if ( $id === null ) {
+			// No virtual MediaInfo for this title, fall back to the default behavior
+			// of displaying an error message.
+			parent::showMissingEntity( $title, $context );
+		} else {
+			// Show a virtual MediaInfo
+			$this->missingMediaInfoHandler->showVirtualMediaInfo( $id, $context );
+		}
 	}
 
 }

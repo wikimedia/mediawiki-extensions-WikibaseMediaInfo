@@ -4,15 +4,19 @@ namespace Wikibase\MediaInfo\Tests\MediaWiki\Content;
 
 use Action;
 use Closure;
+use FauxRequest;
 use IContextSource;
 use Language;
 use Page;
 use PHPUnit_Framework_TestCase;
+use RequestContext;
+use Title;
 use Wikibase\DataModel\Entity\EntityIdParser;
 use Wikibase\DataModel\Services\Lookup\LabelDescriptionLookup;
 use Wikibase\Lib\Store\EntityContentDataCodec;
 use Wikibase\Lib\Store\LanguageFallbackLabelDescriptionLookupFactory;
 use Wikibase\MediaInfo\Content\MediaInfoHandler;
+use Wikibase\MediaInfo\Content\MissingMediaInfoHandler;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\MediaInfo\DataModel\MediaInfoId;
 use Wikibase\Repo\Store\EntityPerPage;
@@ -36,12 +40,28 @@ class MediaInfoHandlerTest extends PHPUnit_Framework_TestCase {
 	}
 
 	private function newMediaInfoHandler() {
+		$m17 = new MediaInfoId( 'M17' );
+
 		$labelLookupFactory = $this->getMockWithoutConstructor(
 			LanguageFallbackLabelDescriptionLookupFactory::class
 		);
 		$labelLookupFactory->expects( $this->any() )
 			->method( 'newLabelDescriptionLookup' )
 			->will( $this->returnValue( $this->getMock( LabelDescriptionLookup::class ) ) );
+
+		$missingMediaInfoHandler = $this->getMockWithoutConstructor(
+			MissingMediaInfoHandler::class
+		);
+		$missingMediaInfoHandler->expects( $this->any() )
+			->method( 'getMediaInfoId' )
+			->will( $this->returnValue( $m17 ) );
+		$missingMediaInfoHandler->expects( $this->any() )
+			->method( 'showVirtualMediaInfo' )
+			->will( $this->returnCallback(
+				function( MediaInfoId $id, IContextSource $context ) {
+					$context->getOutput()->addHTML( 'MISSING!' );
+				}
+			) );
 
 		return new MediaInfoHandler(
 			$this->getMock( EntityPerPage::class ),
@@ -51,7 +71,8 @@ class MediaInfoHandlerTest extends PHPUnit_Framework_TestCase {
 			$this->getMock( ValidatorErrorLocalizer::class ),
 			$this->getMock( EntityIdParser::class ),
 			$this->getMock( EntityIdLookup::class ),
-			$labelLookupFactory
+			$labelLookupFactory,
+			$missingMediaInfoHandler
 		);
 	}
 
@@ -97,6 +118,19 @@ class MediaInfoHandlerTest extends PHPUnit_Framework_TestCase {
 		$mediaInfoHandler = $this->newMediaInfoHandler();
 
 		$this->assertSame( MediaInfo::ENTITY_TYPE, $mediaInfoHandler->getEntityType() );
+	}
+
+	public function testShowMissingEntity() {
+		$mediaInfoHandler = $this->newMediaInfoHandler();
+
+		$title = Title::makeTitle( 112, 'M11' );
+		$context = new RequestContext( new FauxRequest() );
+		$context->setTitle( $title );
+
+		$mediaInfoHandler->showMissingEntity( $title, $context );
+
+		$html = $context->getOutput()->getHTML();
+		$this->assertContains( 'MISSING!', $html );
 	}
 
 }

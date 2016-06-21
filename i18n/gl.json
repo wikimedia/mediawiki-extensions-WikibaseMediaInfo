@@ -1,8 +1,10 @@
 {
 	"@metadata": {
 		"authors": [
-			"Banjo"
+			"Banjo",
+			"Elisardojm"
 		]
 	},
+	"wikibase-entity-mediainfo": "información multimedia",
 	"wikibasemediainfo-desc": "Extensión de Wikibase para manexar metadatos estruturados de ficheiros multimedia"
 }

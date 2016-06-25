@@ -2,9 +2,10 @@
 	"@metadata": {
 		"authors": [
 			"Kwj2772",
-			"Jonghaya"
+			"Jonghaya",
+			"Ykhwong"
 		]
 	},
-	"wikibase-entity-mediainfo": "미디어 정보�",
+	"wikibase-entity-mediainfo": "미디어 정보",
 	"wikibasemediainfo-desc": "미디어 파일의 구조화된 메타데이터를 관리하는 위키베이스 확장 기능"
 }

@@ -1,8 +1,10 @@
 {
 	"@metadata": {
 		"authors": [
-			"Piramidion"
+			"Piramidion",
+			"Base"
 		]
 	},
+	"wikibase-entity-mediainfo": "медіа-інформація",
 	"wikibasemediainfo-desc": "Розширення Вікібази для управління структурованими метаданими медіафайлів"
 }

@@ -1,0 +1,9 @@
+{
+	"@metadata": {
+		"authors": [
+			"Minh Nguyen"
+		]
+	},
+	"wikibase-entity-mediainfo": "thông tin phương tiện",
+	"wikibasemediainfo-desc": "Phần mở rộng Wikibase để quản lý siêu dữ liệu có cấu trúc của tập tin phương tiện"
+}

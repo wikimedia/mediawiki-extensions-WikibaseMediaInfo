@@ -2,12 +2,7 @@
 
 namespace Wikibase\MediaInfo;
 
-use Article;
 use MediaWiki\MediaWikiServices;
-use UnexpectedValueException;
-use Wikibase\MediaInfo\DataModel\MediaInfo;
-use Wikibase\MediaInfo\Services\MediaInfoServices;
-use Wikibase\Repo\WikibaseRepo;
 
 /**
  * MediaWiki hook handlers for the Wikibase MediaInfo extension.
@@ -30,6 +25,8 @@ class WikibaseMediaInfoHooks {
 
 	/**
 	 * Hook to register the MediaInfo entity namespaces for EntityNamespaceLookup.
+	 *
+	 * @param int[] $entityNamespacesSetting
 	 */
 	public static function onWikibaseEntityNamespaces( &$entityNamespacesSetting ) {
 		// XXX: ExtensionProcessor should define an extra config object for every extension.
@@ -91,4 +88,5 @@ class WikibaseMediaInfoHooks {
 		$wiringFile = __DIR__ . '/Services/MediaInfoServiceWiring.php';
 		$services->loadWiringFiles( [ $wiringFile ] );
 	}
+
 }

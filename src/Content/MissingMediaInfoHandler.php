@@ -2,12 +2,8 @@
 
 namespace Wikibase\MediaInfo\Content;
 
-use Html;
 use IContextSource;
-use Language;
 use MediaWiki\Linker\LinkTarget;
-use OutputPage;
-use Title;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\MediaInfo\DataModel\MediaInfoId;
 use Wikibase\MediaInfo\Services\FilePageLookup;

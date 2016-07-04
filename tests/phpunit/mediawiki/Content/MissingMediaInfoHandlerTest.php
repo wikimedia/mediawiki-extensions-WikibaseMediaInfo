@@ -4,7 +4,6 @@ namespace Wikibase\MediaInfo\Tests\MediaWiki\Content;
 
 use FauxRequest;
 use Language;
-use MediaWiki\MediaWikiServices;
 use ParserOutput;
 use RequestContext;
 use Title;

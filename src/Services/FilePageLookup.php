@@ -32,8 +32,7 @@ class FilePageLookup {
 	 * the given MediaInfo, or null if there is no such page.
 	 */
 	public function getFilePage( MediaInfoId $mediaInfoId ) {
-		// TODO: Fix this hack. $mediaInfoId should have getNumericId() (or getPageId()).
-		$pageId = (int)substr( $mediaInfoId->getSerialization(), 1 );
+		$pageId = $mediaInfoId->getNumericId();
 
 		try {
 			$filePageTitle = $this->titleFactory->newFromID( $pageId );

@@ -5,6 +5,7 @@ namespace Wikibase\MediaInfo\Content;
 use IContextSource;
 use Page;
 use Title;
+use Wikibase\DataModel\Entity\EntityId;
 use Wikibase\DataModel\Entity\EntityIdParser;
 use Wikibase\EditEntityAction;
 use Wikibase\HistoryEntityAction;
@@ -13,6 +14,7 @@ use Wikibase\Lib\Store\LanguageFallbackLabelDescriptionLookupFactory;
 use Wikibase\MediaInfo\Actions\ViewMediaInfoAction;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\MediaInfo\DataModel\MediaInfoId;
+use Wikibase\MediaInfo\Services\FilePageLookup;
 use Wikibase\Repo\Content\EntityHandler;
 use Wikibase\Repo\Store\EntityPerPage;
 use Wikibase\Repo\Validators\EntityConstraintProvider;
@@ -43,6 +45,11 @@ class MediaInfoHandler extends EntityHandler {
 	private $missingMediaInfoHandler;
 
 	/**
+	 * @var FilePageLookup
+	 */
+	private $filePageLookup;
+
+	/**
 	 * @param EntityPerPage $entityPerPage
 	 * @param TermIndex $termIndex
 	 * @param EntityContentDataCodec $contentCodec
@@ -52,6 +59,7 @@ class MediaInfoHandler extends EntityHandler {
 	 * @param EntityIdLookup $entityIdLookup
 	 * @param LanguageFallbackLabelDescriptionLookupFactory $labelLookupFactory
 	 * @param MissingMediaInfoHandler $missingMediaInfoHandler
+	 * @param FilePageLookup $filePageLookup
 	 * @param callable|null $legacyExportFormatDetector
 	 */
 	public function __construct(
@@ -64,6 +72,7 @@ class MediaInfoHandler extends EntityHandler {
 		EntityIdLookup $entityIdLookup,
 		LanguageFallbackLabelDescriptionLookupFactory $labelLookupFactory,
 		MissingMediaInfoHandler $missingMediaInfoHandler,
+		FilePageLookup $filePageLookup,
 		$legacyExportFormatDetector = null
 	) {
 		parent::__construct(
@@ -79,6 +88,7 @@ class MediaInfoHandler extends EntityHandler {
 		$this->entityIdLookup = $entityIdLookup;
 		$this->labelLookupFactory = $labelLookupFactory;
 		$this->missingMediaInfoHandler = $missingMediaInfoHandler;
+		$this->filePageLookup = $filePageLookup;
 	}
 
 	/**
@@ -153,6 +163,22 @@ class MediaInfoHandler extends EntityHandler {
 			// Show a virtual MediaInfo
 			$this->missingMediaInfoHandler->showVirtualMediaInfo( $id, $context );
 		}
+	}
+
+	/**
+	 * @param EntityId $id
+	 * @return bool
+	 */
+	public function canCreateWithCustomId( EntityId $id ) {
+		return ( $id instanceof MediaInfoId )
+			&& ( $this->filePageLookup->getFilePage( $id ) !== null );
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function allowAutomaticIds() {
+		return false;
 	}
 
 }

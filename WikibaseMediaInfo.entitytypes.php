@@ -87,7 +87,8 @@ return [
 					MediaInfoServices::getMediaInfoIdLookup(),
 					MediaInfoServices::getFilePageLookup(),
 					$wikibaseRepo->getEntityParserOutputGeneratorFactory()
-				)
+				),
+				MediaInfoServices::getFilePageLookup()
 			);
 		},
 		'entity-id-pattern' => MediaInfoId::PATTERN,

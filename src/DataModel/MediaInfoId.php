@@ -4,6 +4,7 @@ namespace Wikibase\MediaInfo\DataModel;
 
 use InvalidArgumentException;
 use Wikibase\DataModel\Entity\EntityId;
+use Wikibase\DataModel\Entity\Int32EntityId;
 
 /**
  * Identifier for media info entities, containing a numeric id prefixed by 'M'.
@@ -12,10 +13,11 @@ use Wikibase\DataModel\Entity\EntityId;
  *
  * @license GPL-2.0+
  * @author Bene* < benestar.wikimedia@gmail.com >
+ * @author Thiemo Mättig
  */
-class MediaInfoId extends EntityId {
+class MediaInfoId extends EntityId implements Int32EntityId {
 
-	const PATTERN = '/^M[1-9]\d*\z/i';
+	const PATTERN = '/^M[1-9]\d{0,9}\z/i';
 
 	/**
 	 * @param string $idSerialization
@@ -35,14 +37,19 @@ class MediaInfoId extends EntityId {
 		if ( !preg_match( self::PATTERN, $idSerialization ) ) {
 			throw new InvalidArgumentException( '$idSerialization must match ' . self::PATTERN );
 		}
+
+		if ( strlen( $idSerialization ) > 10
+			&& substr( $idSerialization, 1 ) > Int32EntityId::MAX
+		) {
+			throw new InvalidArgumentException( '$idSerialization can not exceed '
+				. Int32EntityId::MAX );
+		}
 	}
 
 	/**
-	 * @deprecated Avoid using this as long as the implementation does not guarantee this does not
-	 * overflow on 32 bit systems.
-	 * @see https://github.com/wmde/WikibaseDataModel/pull/670
+	 * @see Int32EntityId::getNumericId
 	 *
-	 * @return int The numeric part of the ID, casted to an integer.
+	 * @return int Guaranteed to be a unique integer in the range [1..2147483647].
 	 */
 	public function getNumericId() {
 		return (int)substr( $this->serialization, 1 );

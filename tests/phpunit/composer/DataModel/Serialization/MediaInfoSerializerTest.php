@@ -34,9 +34,7 @@ class MediaInfoSerializerTest extends PHPUnit_Framework_TestCase {
 		$statementListSerializer->expects( $this->any() )
 			->method( 'serialize' )
 			->will( $this->returnCallback( function( StatementList $statementList ) {
-				return array_map( function( Statement $statement ) {
-					return $statement->getPropertyId()->getNumericId();
-				}, $statementList->toArray() );
+				return implode( '|', $statementList->getPropertyIds() );
 			} ) );
 
 		return new MediaInfoSerializer( $termListSerializer, $statementListSerializer );
@@ -53,7 +51,7 @@ class MediaInfoSerializerTest extends PHPUnit_Framework_TestCase {
 				'type' => 'mediainfo',
 				'labels' => [],
 				'descriptions' => [],
-				'statements' => []
+				'statements' => '',
 			]
 		];
 
@@ -66,7 +64,7 @@ class MediaInfoSerializerTest extends PHPUnit_Framework_TestCase {
 				'id' => 'M1',
 				'labels' => [],
 				'descriptions' => [],
-				'statements' => []
+				'statements' => '',
 			]
 		];
 
@@ -81,7 +79,7 @@ class MediaInfoSerializerTest extends PHPUnit_Framework_TestCase {
 				'type' => 'mediainfo',
 				'labels' => [ 'en' => 'Foo' ],
 				'descriptions' => [ 'en' => 'Foo' ],
-				'statements' => [ 42 ]
+				'statements' => 'P42',
 			]
 		];
 
@@ -97,7 +95,7 @@ class MediaInfoSerializerTest extends PHPUnit_Framework_TestCase {
 				'id' => 'M2',
 				'labels' => [ 'en' => 'Foo' ],
 				'descriptions' => [ 'en' => 'Foo' ],
-				'statements' => [ 42 ]
+				'statements' => 'P42',
 			]
 		];
 

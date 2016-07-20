@@ -18,8 +18,8 @@ class MediaInfoIdTest extends PHPUnit_Framework_TestCase {
 		return [
 			[ 'm1' ],
 			[ 'M2' ],
-			[ 'm1238253457982347893264' ],
-			[ 'M123456789123456789123456789' ],
+			[ 'm2147483647' ],
+			[ 'M2147483647' ],
 		];
 	}
 
@@ -52,6 +52,8 @@ class MediaInfoIdTest extends PHPUnit_Framework_TestCase {
 			[ 'M3.14159' ],
 			[ '345m' ],
 			[ '1M22' ],
+			[ 'M2147483648' ],
+			[ 'M99999999999' ],
 		];
 	}
 

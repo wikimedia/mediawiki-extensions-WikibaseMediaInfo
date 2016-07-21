@@ -2,7 +2,10 @@
 
 namespace Wikibase\MediaInfo;
 
+use ImagePage;
 use MediaWiki\MediaWikiServices;
+use Wikibase\MediaInfo\DataModel\MediaInfoId;
+use Wikibase\Repo\WikibaseRepo;
 
 /**
  * MediaWiki hook handlers for the Wikibase MediaInfo extension.
@@ -87,6 +90,24 @@ class WikibaseMediaInfoHooks {
 		// TODO: We need better support for relative pathes in the extension loader for that to work!
 		$wiringFile = __DIR__ . '/Services/MediaInfoServiceWiring.php';
 		$services->loadWiringFiles( [ $wiringFile ] );
+	}
+
+	public static function onImagePageAfterImageLinks( ImagePage $page, &$html ) {
+		$imgTitle = $page->getTitle();
+		$pageId = $imgTitle->getArticleID();
+
+		if ( !$pageId ) {
+			return;
+		}
+
+		// TODO: extract this into a service
+		$id = new MediaInfoId( "M$pageId" );
+
+		$title = WikibaseRepo::getDefaultInstance()->getEntityTitleLookup()->getTitleForId( $id );
+		$linkHtml = MediaWikiServices::getInstance()->getLinkRenderer()->makeKnownLink( $title );
+
+		$html .= '<h2>' . $linkHtml . '</h2>';
+		return;
 	}
 
 }

@@ -5,6 +5,7 @@ namespace Wikibase\MediaInfo\Tests\MediaWiki;
 use Hooks;
 use MediaWiki\MediaWikiServices;
 use PHPUnit_Framework_TestCase;
+use Title;
 use Wikibase\Repo\WikibaseRepo;
 
 /**
@@ -119,6 +120,24 @@ class WikibaseMediaInfoHooksTest extends \PHPUnit_Framework_TestCase {
 		Hooks::run( 'MediaWikiServices', [ $services ] );
 
 		$this->assertRegExp( '@/MediaInfoServiceWiring\.php$@m', join( "\n", $allFiles ) );
+	}
+
+	public function testOnImagePageAfterImageLinks() {
+		$imgTitle = Title::makeTitle( NS_FILE, 'Foo.jpg' );
+		$imgTitle->resetArticleID( 23 );
+
+		$imgPage = $this->getMockBuilder( \ImagePage::class )
+			->disableOriginalConstructor()
+			->getMock();
+
+		$imgPage->expects( $this->any() )
+			->method( 'getTitle' )
+			->will( $this->returnValue( $imgTitle ) );
+
+		$html = '';
+		Hooks::run( 'ImagePageAfterImageLinks', [ $imgPage, &$html ] );
+
+		$this->assertRegExp( '@<h2><a .*MediaInfo:M23.*>MediaInfo:M23</a></h2>@', $html );
 	}
 
 }

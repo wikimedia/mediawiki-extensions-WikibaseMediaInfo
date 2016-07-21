@@ -3,8 +3,11 @@
 namespace Wikibase\MediaInfo\View;
 
 use InvalidArgumentException;
+use MediaWiki\Linker\LinkRenderer;
 use Wikibase\DataModel\Entity\EntityDocument;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
+use Wikibase\MediaInfo\DataModel\MediaInfoId;
+use Wikibase\MediaInfo\Services\FilePageLookup;
 use Wikibase\View\EntityTermsView;
 use Wikibase\View\EntityView;
 use Wikibase\View\LanguageDirectionalityLookup;
@@ -25,18 +28,32 @@ class MediaInfoView extends EntityView {
 	private $statementSectionsView;
 
 	/**
+	 * @var LinkRenderer
+	 */
+	private $linkRenderer;
+
+	/**
+	 * @var FilePageLookup
+	 */
+	private $filePageLookup;
+
+	/**
 	 * @param TemplateFactory $templateFactory
 	 * @param EntityTermsView $entityTermsView
 	 * @param StatementSectionsView $statementSectionsView
 	 * @param LanguageDirectionalityLookup $languageDirectionalityLookup
 	 * @param string $languageCode
+	 * @param LinkRenderer $linkRenderer
+	 * @param FilePageLookup $filePageLookup
 	 */
 	public function __construct(
 		TemplateFactory $templateFactory,
 		EntityTermsView $entityTermsView,
 		StatementSectionsView $statementSectionsView,
 		LanguageDirectionalityLookup $languageDirectionalityLookup,
-		$languageCode
+		$languageCode,
+		LinkRenderer $linkRenderer,
+		FilePageLookup $filePageLookup
 	) {
 		parent::__construct(
 			$templateFactory,
@@ -46,6 +63,8 @@ class MediaInfoView extends EntityView {
 		);
 
 		$this->statementSectionsView = $statementSectionsView;
+		$this->linkRenderer = $linkRenderer;
+		$this->filePageLookup = $filePageLookup;
 	}
 
 	/**
@@ -61,7 +80,9 @@ class MediaInfoView extends EntityView {
 			throw new InvalidArgumentException( '$entity must be a MediaInfo entity.' );
 		}
 
-		$html = $this->getHtmlForTerms( $entity )
+		$html = $this->getFileLinkHtml( $entity->getId() );
+
+		$html .= $this->getHtmlForTerms( $entity )
 			. $this->templateFactory->render( 'wikibase-toc' )
 			. $this->statementSectionsView->getHtml( $entity->getStatements() );
 
@@ -77,6 +98,20 @@ class MediaInfoView extends EntityView {
 	 */
 	protected function getSideHtml( EntityDocument $entity ) {
 		return '';
+	}
+
+	/**
+	 * @param MediaInfoId $id
+	 * @return string HTML
+	 */
+	private function getFileLinkHtml( MediaInfoId $id = null ) {
+		if ( !$id ) {
+			return '';
+		}
+
+		$title = $this->filePageLookup->getFilePage( $id );
+		$html = $this->linkRenderer->makeKnownLink( $title );
+		return $html;
 	}
 
 }

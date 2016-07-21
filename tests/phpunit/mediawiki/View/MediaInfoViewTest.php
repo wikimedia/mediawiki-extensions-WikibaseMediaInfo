@@ -3,7 +3,9 @@
 namespace Wikibase\MediaInfo\Tests\MediaWiki\View;
 
 use InvalidArgumentException;
+use MediaWiki\Linker\LinkRenderer;
 use PHPUnit_Framework_TestCase;
+use Title;
 use Wikibase\DataModel\Entity\EntityDocument;
 use Wikibase\DataModel\Entity\PropertyId;
 use Wikibase\DataModel\Snak\PropertyNoValueSnak;
@@ -13,6 +15,7 @@ use Wikibase\DataModel\Term\Term;
 use Wikibase\DataModel\Term\TermList;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\MediaInfo\DataModel\MediaInfoId;
+use Wikibase\MediaInfo\Services\FilePageLookup;
 use Wikibase\MediaInfo\View\MediaInfoView;
 use Wikibase\View\EntityTermsView;
 use Wikibase\View\EntityView;
@@ -72,12 +75,35 @@ class MediaInfoViewTest extends PHPUnit_Framework_TestCase {
 			$statementSectionsView = $this->newStatementSectionsViewMock();
 		}
 
+		$linkRenderer = $this->getMockBuilder( LinkRenderer::class )
+			->disableOriginalConstructor()
+			->getMock();
+
+		$filePageTitle = Title::makeTitle( NS_FILE, 'Foo.jpg' );
+
+		$linkRenderer->expects( $this->any() )
+			->method( 'makeKnownLink' )
+			->with( $filePageTitle )
+			->will( $this->returnValue( '[FILE-LINK]' ) );
+		/** @var LinkRenderer $linkRenderer */
+
+		$filePageLookup = $this->getMockBuilder( FilePageLookup::class )
+			->disableOriginalConstructor()
+			->getMock();
+
+		$filePageLookup->expects( $this->any() )
+			->method( 'getFilePage' )
+			->will( $this->returnValue( $filePageTitle ) );
+		/** @var FilePageLookup $filePageLookup */
+
 		return new MediaInfoView(
 			$templateFactory,
 			$entityTermsView,
 			$statementSectionsView,
 			$this->newLanguageDirectionalityLookupMock(),
-			$contentLanguageCode
+			$contentLanguageCode,
+			$linkRenderer,
+			$filePageLookup
 		);
 	}
 
@@ -140,6 +166,12 @@ class MediaInfoViewTest extends PHPUnit_Framework_TestCase {
 		$this->assertInternalType( 'string', $result );
 		$this->assertContains( 'wb-mediainfo', $result );
 		$this->assertContains( 'entityTermsView->getHtml', $result );
+
+		if ( $entity->getId() ) {
+			$this->assertContains( '[FILE-LINK]', $result );
+		} else {
+			$this->assertNotContains( '[FILE-LINK]', $result );
+		}
 	}
 
 	public function provideTestGetHtml() {

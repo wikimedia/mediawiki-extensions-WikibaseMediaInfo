@@ -105,12 +105,16 @@ class MediaInfoView extends EntityView {
 	 * @return string HTML
 	 */
 	private function getFileLinkHtml( MediaInfoId $id = null ) {
-		if ( !$id ) {
-			return '';
+		$html = '';
+
+		if ( $id ) {
+			$title = $this->filePageLookup->getFilePage( $id );
+
+			if ( $title ) {
+				$html = $this->linkRenderer->makeKnownLink( $title );
+			}
 		}
 
-		$title = $this->filePageLookup->getFilePage( $id );
-		$html = $this->linkRenderer->makeKnownLink( $title );
 		return $html;
 	}
 

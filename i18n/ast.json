@@ -4,5 +4,6 @@
 			"Xuacu"
 		]
 	},
+	"wikibase-entity-mediainfo": "información multimedia",
 	"wikibasemediainfo-desc": "Estensión de Wikibase pa xestionar los metadatos estructuraos de los ficheros multimedia"
 }

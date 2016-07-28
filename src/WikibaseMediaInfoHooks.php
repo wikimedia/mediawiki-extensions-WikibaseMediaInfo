@@ -4,7 +4,7 @@ namespace Wikibase\MediaInfo;
 
 use ImagePage;
 use MediaWiki\MediaWikiServices;
-use Wikibase\MediaInfo\DataModel\MediaInfoId;
+use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\Repo\WikibaseRepo;
 
 /**
@@ -100,14 +100,15 @@ class WikibaseMediaInfoHooks {
 			return;
 		}
 
-		// TODO: extract this into a service
-		$id = new MediaInfoId( "M$pageId" );
-
-		$title = WikibaseRepo::getDefaultInstance()->getEntityTitleLookup()->getTitleForId( $id );
+		$wikibaseRepo = WikibaseRepo::getDefaultInstance();
+		$entityId = $wikibaseRepo->getEntityIdComposer()->composeEntityId(
+			MediaInfo::ENTITY_TYPE,
+			$pageId
+		);
+		$title = $wikibaseRepo->getEntityTitleLookup()->getTitleForId( $entityId );
 		$linkHtml = MediaWikiServices::getInstance()->getLinkRenderer()->makeKnownLink( $title );
 
 		$html .= '<h2>' . $linkHtml . '</h2>';
-		return;
 	}
 
 }

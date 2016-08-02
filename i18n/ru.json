@@ -4,5 +4,6 @@
 			"Okras"
 		]
 	},
+	"wikibase-entity-mediainfo": "медиаинформация",
 	"wikibasemediainfo-desc": "Расширение Wikibase для управления структурированными метаданными медиа-файлов"
 }

@@ -9,6 +9,8 @@ use Wikibase\MediaInfo\Services\MediaInfoServices;
 /**
  * @covers Wikibase\MediaInfo\Services\MediaInfoServices
  *
+ * @group WikibaseMediaInfo
+ *
  * @license GPL-2.0+
  * @author Daniel Kinzler
  */

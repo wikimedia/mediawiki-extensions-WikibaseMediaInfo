@@ -9,6 +9,8 @@ use Wikibase\MediaInfo\DataModel\MediaInfoId;
 /**
  * @covers Wikibase\MediaInfo\DataModel\MediaInfoId
  *
+ * @group WikibaseMediaInfo
+ *
  * @license GPL-2.0+
  * @author Bene* < benestar.wikimedia@gmail.com >
  */

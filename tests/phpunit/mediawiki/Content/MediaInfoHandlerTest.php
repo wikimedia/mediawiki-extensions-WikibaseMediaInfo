@@ -30,6 +30,8 @@ use Wikibase\TermIndex;
 /**
  * @covers Wikibase\MediaInfo\Content\MediaInfoHandler
  *
+ * @group WikibaseMediaInfo
+ *
  * @license GPL-2.0+
  * @author Bene* < benestar.wikimedia@gmail.com >
  */

@@ -16,17 +16,6 @@ use Wikibase\Repo\WikibaseRepo;
  */
 class WikibaseMediaInfoHooksTest extends \PHPUnit_Framework_TestCase {
 
-	public function testOnUnitTestsList() {
-		$paths = [];
-
-		Hooks::run( 'UnitTestsList', [ &$paths ] );
-
-		$paths = array_map( 'realpath', $paths );
-		$expected = realpath( __DIR__ . '/../' );
-
-		$this->assertContains( $expected, $paths );
-	}
-
 	public function testOnWikibaseEntityNamespaces() {
 		global $wgNamespaceContentModels;
 

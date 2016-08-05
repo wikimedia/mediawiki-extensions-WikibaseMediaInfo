@@ -16,17 +16,6 @@ use Wikibase\Repo\WikibaseRepo;
 class WikibaseMediaInfoHooks {
 
 	/**
-	 * Hook to add all tests, including those that depend on MediaWiki.
-	 *
-	 * @see https://www.mediawiki.org/wiki/Manual:Hooks/UnitTestsList
-	 *
-	 * @param string[] &$paths
-	 */
-	public static function onUnitTestsList( array &$paths ) {
-		$paths[] = __DIR__ . '/../tests/phpunit/';
-	}
-
-	/**
 	 * Hook to register the MediaInfo entity namespaces for EntityNamespaceLookup.
 	 *
 	 * @param int[] $entityNamespacesSetting

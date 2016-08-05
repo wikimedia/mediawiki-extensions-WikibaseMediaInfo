@@ -17,9 +17,6 @@
 		"WikibaseMediaInfoAlias": "WikibaseMediaInfo.i18n.alias.php"
 	},
 	"Hooks": {
-		"UnitTestsList": [
-			"Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onUnitTestsList"
-		],
 		"SetupAfterCache": [
 			"Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onSetupAfterCache"
 		],

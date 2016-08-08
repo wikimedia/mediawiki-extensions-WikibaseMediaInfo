@@ -19,6 +19,8 @@ use Wikibase\Repo\ParserOutput\EntityParserOutputGeneratorFactory;
 /**
  * @covers Wikibase\MediaInfo\Content\MissingMediaInfoHandler
  *
+ * @group WikibaseMediaInfo
+ *
  * @license GPL-2.0+
  * @author DanielKinzler
  */

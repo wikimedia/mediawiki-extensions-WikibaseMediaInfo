@@ -10,6 +10,8 @@ use Wikibase\MediaInfo\Services\MediaInfoIdLookup;
 /**
  * @covers Wikibase\MediaInfo\IdLookup\MediaInfoIdLookup
  *
+ * @group WikibaseMediaInfo
+ *
  * @license GPL-2.0+
  * @author Daniel Kinzler
  */

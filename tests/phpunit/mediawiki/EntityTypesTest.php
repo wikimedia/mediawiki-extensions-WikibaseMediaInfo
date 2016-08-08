@@ -20,6 +20,8 @@ use Wikibase\View\EntityTermsView;
 /**
  * @covers WikibaseMediaInfo.entitytypes.php
  *
+ * @group WikibaseMediaInfo
+ *
  * @license GPL-2.0+
  * @author Bene* < benestar.wikimedia@gmail.com >
  */

@@ -11,6 +11,8 @@ use Wikibase\MediaInfo\Services\FilePageLookup;
 /**
  * @covers Wikibase\MediaInfo\IdLookup\FilePageLookup
  *
+ * @group WikibaseMediaInfo
+ *
  * @license GPL-2.0+
  * @author Daniel Kinzler
  */

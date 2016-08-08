@@ -11,6 +11,8 @@ use Wikibase\Repo\WikibaseRepo;
 /**
  * @covers Wikibase\MediaInfo\WikibaseMediaInfoHooks
  *
+ * @group WikibaseMediaInfo
+ *
  * @license GPL-2.0+
  * @author Bene* < benestar.wikimedia@gmail.com >
  */

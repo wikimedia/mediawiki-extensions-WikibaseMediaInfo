@@ -15,6 +15,8 @@ use Wikibase\MediaInfo\DataModel\Serialization\MediaInfoDeserializer;
 /**
  * @covers Wikibase\MediaInfo\DataModel\Serialization}MediaInfoDeserializer
  *
+ * @group WikibaseMediaInfo
+ *
  * @license GPL-2.0+
  * @author Bene* < benestar.wikimedia@gmail.com >
  */

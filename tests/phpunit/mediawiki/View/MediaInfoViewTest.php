@@ -26,6 +26,8 @@ use Wikibase\View\Template\TemplateFactory;
 /**
  * @covers Wikibase\MediaInfo\View\MediaInfoView
  *
+ * @group WikibaseMediaInfo
+ *
  * @license GPL-2.0+
  * @author Adrian Heine < adrian.heine@wikimedia.de >
  */

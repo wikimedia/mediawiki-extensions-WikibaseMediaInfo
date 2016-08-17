@@ -1,8 +1,10 @@
 {
 	"@metadata": {
 		"authors": [
-			"Dvorapa"
+			"Dvorapa",
+			"Mormegil"
 		]
 	},
-	"wikibase-entity-mediainfo": "Informace o souboru"
+	"wikibase-entity-mediainfo": "Informace o souboru",
+	"wikibasemediainfo-desc": "Rozšíření Wikibase pro správu strukturovaných metadat k mediálním souborům"
 }

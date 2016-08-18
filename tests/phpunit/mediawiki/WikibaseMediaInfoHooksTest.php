@@ -102,7 +102,7 @@ class WikibaseMediaInfoHooksTest extends \PHPUnit_Framework_TestCase {
 			->getMock();
 
 		$allFiles = [];
-		$services->expects( $this->once() )
+		$services->expects( $this->atLeastOnce() )
 			->method( 'loadWiringFiles' )
 			->will( $this->returnCallback( function( $files ) use ( &$allFiles ) {
 				$allFiles = array_merge( $allFiles, $files );

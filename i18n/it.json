@@ -1,8 +1,10 @@
 {
 	"@metadata": {
 		"authors": [
-			"Beta16"
+			"Beta16",
+			"Selven"
 		]
 	},
+	"wikibase-entity-mediainfo": "informazioni multimediali",
 	"wikibasemediainfo-desc": "Estensione Wikibase per gestire i metadati strutturati di file multimediali"
 }

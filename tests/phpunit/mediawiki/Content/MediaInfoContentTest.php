@@ -40,6 +40,21 @@ class MediaInfoContentTest extends PHPUnit_Framework_TestCase {
 		$this->assertSame( $mediaInfo, $mediaInfoContent->getEntity() );
 	}
 
+	public function testIsEmpty() {
+		$mediaInfo = new MediaInfo();
+		$content = new MediaInfoContent( new EntityInstanceHolder( $mediaInfo ) );
+
+		$this->assertTrue( $content->isEmpty() );
+	}
+
+	public function testIsNotEmpty() {
+		$mediaInfo = new MediaInfo();
+		$mediaInfo->getLabels()->setTextForLanguage( 'en', 'Foo' );
+		$content = new MediaInfoContent( new EntityInstanceHolder( $mediaInfo ) );
+
+		$this->assertFalse( $content->isEmpty() );
+	}
+
 	public function provideStubs() {
 		$stubs = [];
 

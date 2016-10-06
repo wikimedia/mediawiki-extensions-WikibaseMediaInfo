@@ -71,6 +71,15 @@ class MediaInfoContent extends EntityContent {
 	}
 
 	/**
+	 * @see EntityContent::isEmpty
+	 *
+	 * @return bool
+	 */
+	public function isEmpty() {
+		return !$this->isRedirect() && $this->getMediaInfo()->isEmpty();
+	}
+
+	/**
 	 * @see EntityContent::isStub
 	 *
 	 * @return bool

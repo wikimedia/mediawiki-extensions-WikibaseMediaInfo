@@ -35,10 +35,9 @@ class WikibaseMediaInfoHooksTest extends \PHPUnit_Framework_TestCase {
 		$this->assertSame( 'wikibase-mediainfo', $wgNamespaceContentModels[$entityNamespace] );
 
 		$namespaceLookup = WikibaseRepo::getDefaultInstance()->getEntityNamespaceLookup();
-		$namespaces = $namespaceLookup->getEntityNamespaces();
+		$namespace = $namespaceLookup->getEntityNamespace( 'mediainfo' );
 
-		$this->assertArrayHasKey( 'mediainfo', $namespaces );
-		$this->assertSame( $entityNamespace, $namespaces['mediainfo'] );
+		$this->assertSame( $entityNamespace, $namespace );
 	}
 
 	public function testOnSetupAfterCache() {

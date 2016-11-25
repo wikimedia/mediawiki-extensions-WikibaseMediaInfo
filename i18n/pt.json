@@ -1,8 +1,10 @@
 {
 	"@metadata": {
 		"authors": [
-			"Vitorvicentevalente"
+			"Vitorvicentevalente",
+			"Hamilton Abreu"
 		]
 	},
-	"wikibase-entity-mediainfo": "informação multimédia"
+	"wikibase-entity-mediainfo": "informação multimédia",
+	"wikibasemediainfo-desc": "Extensão Wikibase para gerir metadados estruturados de ficheiros multimédia"
 }

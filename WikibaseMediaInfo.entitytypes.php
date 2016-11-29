@@ -15,6 +15,7 @@
 
 use MediaWiki\MediaWikiServices;
 use Wikibase\DataModel\DeserializerFactory;
+use Wikibase\DataModel\Entity\EntityId;
 use Wikibase\DataModel\SerializerFactory;
 use Wikibase\DataModel\Services\Lookup\LabelDescriptionLookup;
 use Wikibase\LanguageFallbackChain;
@@ -98,8 +99,12 @@ return [
 		'entity-id-builder' => function( $serialization ) {
 			return new MediaInfoId( $serialization );
 		},
-		'entity-id-composer' => function( $uniquePart ) {
-			return new MediaInfoId( 'M' . $uniquePart );
+		'entity-id-composer-callback' => function( $repositoryName, $uniquePart ) {
+			return new MediaInfoId( EntityId::joinSerialization( [
+				$repositoryName,
+				'',
+				'M' . $uniquePart
+			] ) );
 		},
 		'entity-differ-strategy-builder' => function() {
 			return new MediaInfoDiffer();

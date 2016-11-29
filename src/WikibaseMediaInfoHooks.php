@@ -91,6 +91,7 @@ class WikibaseMediaInfoHooks {
 
 		$wikibaseRepo = WikibaseRepo::getDefaultInstance();
 		$entityId = $wikibaseRepo->getEntityIdComposer()->composeEntityId(
+			'',
 			MediaInfo::ENTITY_TYPE,
 			$pageId
 		);

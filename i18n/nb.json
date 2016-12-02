@@ -1,0 +1,9 @@
+{
+	"@metadata": {
+		"authors": [
+			"Jon Harald Søby"
+		]
+	},
+	"wikibase-entity-mediainfo": "medieinformasjon",
+	"wikibasemediainfo-desc": "Wikibase-utvidelse for å behandle strukturerte metadata for mediefiler"
+}

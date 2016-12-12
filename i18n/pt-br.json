@@ -1,0 +1,9 @@
+{
+	"@metadata": {
+		"authors": [
+			"!Silent"
+		]
+	},
+	"wikibase-entity-mediainfo": "informação multimídia",
+	"wikibasemediainfo-desc": "Extensão Wikibase para gerenciar metadados estruturados de arquivos de mídia"
+}

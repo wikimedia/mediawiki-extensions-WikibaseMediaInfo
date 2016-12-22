@@ -13,7 +13,7 @@ return [
 		$nsLookup = WikibaseRepo::getDefaultInstance()->getEntityNamespaceLookup();
 		$mediaInfoNamespace = $nsLookup->getEntityNamespace( MediaInfo::ENTITY_TYPE );
 
-		if ( $mediaInfoNamespace === false ) {
+		if ( !is_int( $mediaInfoNamespace ) ) {
 			throw new MWException( 'No namespace configured for MediaInfo entities!' );
 		}
 

@@ -80,17 +80,6 @@ class MediaInfoContent extends EntityContent {
 	}
 
 	/**
-	 * @see EntityContent::isStub
-	 *
-	 * @return bool
-	 */
-	public function isStub() {
-		return !$this->isRedirect()
-		       && !$this->getMediaInfo()->isEmpty()
-		       && $this->getMediaInfo()->getStatements()->isEmpty();
-	}
-
-	/**
 	 * @see EntityContent::isCountable
 	 *
 	 * @param bool|null $hasLinks

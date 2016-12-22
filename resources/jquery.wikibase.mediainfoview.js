@@ -14,7 +14,6 @@
 	 * @param {Function} options.buildStatementGroupListView
 	 *
 	 * @constructor
-	 *
 	 */
 	$.widget( 'wikibase.mediainfoview', PARENT, {
 		/**

@@ -1,8 +1,10 @@
 {
 	"@metadata": {
 		"authors": [
-			"Macofe"
+			"Macofe",
+			"Dgstranz"
 		]
 	},
+	"wikibase-entity-mediainfo": "información multimedia",
 	"wikibasemediainfo-desc": "Extensión de Wikibase para gestionar metadatos estructurados de archivos multimedia"
 }

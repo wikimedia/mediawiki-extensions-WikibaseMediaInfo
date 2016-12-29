@@ -145,9 +145,6 @@ class MediaInfoViewTest extends PHPUnit_Framework_TestCase {
 			)
 			->will( $this->returnValue( 'entityTermsView->getHtml' ) );
 
-		$entityTermsView->expects( $this->never() )
-			->method( 'getEntityTermsForLanguageListView' );
-
 		$statementSectionsView = $this->newStatementSectionsViewMock();
 		$statementSectionsView->expects( $this->once() )
 			->method( 'getHtml' )

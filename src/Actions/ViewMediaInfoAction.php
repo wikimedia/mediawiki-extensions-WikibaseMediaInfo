@@ -14,8 +14,12 @@ use Wikibase\ViewEntityAction;
  */
 class ViewMediaInfoAction extends ViewEntityAction {
 
-	function show() {
+	/**
+	 * @see ViewEntityAction::show
+	 */
+	public function show() {
 		parent::show();
+
 		$this->getOutput()->addModules( 'wikibase.mediainfo.mediainfoview' );
 	}
 

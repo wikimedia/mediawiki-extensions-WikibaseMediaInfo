@@ -1,0 +1,9 @@
+{
+	"@metadata": {
+		"authors": [
+			"Mainframe98"
+		]
+	},
+	"wikibase-entity-mediainfo": "media informatie",
+	"wikibasemediainfo-desc": "Wikibase uitbreiding voor het beheren van gestructureerde metadata van mediabestanden"
+}

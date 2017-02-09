@@ -157,8 +157,7 @@ class MediaInfo implements EntityDocument, LabelsProvider, DescriptionsProvider,
 	public function __clone() {
 		$this->labels = clone $this->labels;
 		$this->descriptions = clone $this->descriptions;
-		// TODO: DataModel 5.1 is needed to be able to use clone for the statements.
-		$this->statements = unserialize( serialize( $this->statements ) );
+		$this->statements = clone $this->statements;
 	}
 
 }

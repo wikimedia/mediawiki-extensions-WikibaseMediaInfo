@@ -5,6 +5,7 @@ namespace Wikibase\MediaInfo\Content;
 use Hooks;
 use InvalidArgumentException;
 use Wikibase\Content\EntityHolder;
+use Wikibase\DataModel\Term\Fingerprint;
 use Wikibase\EntityContent;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\Repo\FingerprintSearchTextGenerator;
@@ -99,8 +100,11 @@ class MediaInfoContent extends EntityContent {
 			return '';
 		}
 
+		$mediaInfo = $this->getMediaInfo();
+		$fingerprint = new Fingerprint( $mediaInfo->getLabels(), $mediaInfo->getDescriptions() );
+
 		$searchTextGenerator = new FingerprintSearchTextGenerator();
-		$text = $searchTextGenerator->generate( $this->getMediaInfo() );
+		$text = $searchTextGenerator->generate( $fingerprint );
 
 		if ( !Hooks::run( 'WikibaseTextForSearchIndex', [ $this, &$text ] ) ) {
 			return '';

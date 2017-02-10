@@ -22,7 +22,7 @@ use Wikibase\Repo\ParserOutput\EntityParserOutputGeneratorFactory;
  * @group WikibaseMediaInfo
  *
  * @license GPL-2.0+
- * @author DanielKinzler
+ * @author Daniel Kinzler
  */
 class MissingMediaInfoHandlerTest extends \PHPUnit_Framework_TestCase {
 

@@ -10,16 +10,20 @@
 	"type": "wikibase",
 	"load_composer_autoloader": true,
 	"config": {
-		"MediaInfoNamespace": 144,
-		"MediaInfoTalkNamespace": 145
+		"MediaInfoNamespace": 144
 	},
+	"namespaces": [
+		{
+			"id": 144,
+			"constant": "NS_MEDIAINFO",
+			"name": "MediaInfo",
+			"defaultcontentmodel": "wikibase-mediainfo"
+		}
+	],
 	"ExtensionMessagesFiles": {
 		"WikibaseMediaInfoAlias": "WikibaseMediaInfo.i18n.alias.php"
 	},
 	"Hooks": {
-		"SetupAfterCache": [
-			"Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onSetupAfterCache"
-		],
 		"WikibaseEntityNamespaces": [
 			"Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onWikibaseEntityNamespaces"
 		],

@@ -3,6 +3,7 @@
 namespace Wikibase\MediaInfo\Tests\MediaWiki;
 
 use Hooks;
+use Language;
 use MediaWiki\MediaWikiServices;
 use PHPUnit_Framework_TestCase;
 use Title;
@@ -16,7 +17,7 @@ use Wikibase\Repo\WikibaseRepo;
  * @license GPL-2.0+
  * @author Bene* < benestar.wikimedia@gmail.com >
  */
-class WikibaseMediaInfoHooksTest extends \PHPUnit_Framework_TestCase {
+class WikibaseMediaInfoHooksTest extends PHPUnit_Framework_TestCase {
 
 	public function testOnWikibaseEntityNamespaces() {
 		global $wgNamespaceContentModels;
@@ -40,36 +41,14 @@ class WikibaseMediaInfoHooksTest extends \PHPUnit_Framework_TestCase {
 		$this->assertSame( $entityNamespace, $namespace );
 	}
 
-	public function testOnSetupAfterCache() {
-		global $wgExtraNamespaces;
-
-		// The SetupAfterCache hook already ran.
-		// We now just check that it did what it should.
+	public function testNamespaceRegistration() {
 		$config = MediaWikiServices::getInstance()->getMainConfig();
-		$entityNamespace = $config->get( 'MediaInfoNamespace' );
 
-		if ( $entityNamespace === false ) {
-			$this->markTestSkipped( 'MediaInfoNamespace is set to false,' .
-				' disabling automatic namespace registration.' );
-		}
+		$language = Language::factory( 'en' );
+		$namespaces = $language->getNamespaces();
 
-		$this->assertArrayHasKey( $entityNamespace, $wgExtraNamespaces );
-	}
-
-	public function testOnSetupAfterCache_talk() {
-		global $wgExtraNamespaces;
-
-		// The SetupAfterCache hook already ran.
-		// We now just check that it did what it should.
-		$config = MediaWikiServices::getInstance()->getMainConfig();
-		$talkNamespace = $config->get( 'MediaInfoTalkNamespace' );
-
-		if ( $talkNamespace === false ) {
-			$this->markTestSkipped( 'MediaInfoTalkNamespace is set to false,' .
-				' disabling automatic namespace registration.' );
-		}
-
-		$this->assertArrayHasKey( $talkNamespace, $wgExtraNamespaces );
+		$mediaInfoNS = $config->get( 'MediaInfoNamespace' );
+		$this->assertArrayHasKey( $mediaInfoNS, $namespaces, 'MediaInfo namespace' );
 	}
 
 	public function provideWikibaseEntityTypesHooks() {

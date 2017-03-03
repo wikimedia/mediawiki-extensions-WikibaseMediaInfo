@@ -138,8 +138,8 @@ class MediaInfoViewTest extends PHPUnit_Framework_TestCase {
 			->method( 'getHtml' )
 			->with(
 				$contentLanguageCode,
-				$entity,
-				$entity,
+				$entity->getLabels(),
+				$entity->getDescriptions(),
 				null,
 				$entityId
 			)

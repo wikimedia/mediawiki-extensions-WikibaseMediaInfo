@@ -42,6 +42,15 @@ class MediaInfoChangeOpDeserializer implements ChangeOpDeserializer {
 	 * @throws ChangeOpDeserializationException
 	 */
 	public function createEntityChangeOp( array $changeRequest ) {
+		if ( array_key_exists( 'aliases', $changeRequest )
+			|| array_key_exists( 'sitelinks', $changeRequest )
+		) {
+			throw new ChangeOpDeserializationException(
+				'MediaInfo cannot have aliases or sitelinks',
+				'not-supported'
+			);
+		}
+
 		$changeOps = new ChangeOps();
 
 		if ( array_key_exists( 'labels', $changeRequest ) ) {
@@ -56,23 +65,9 @@ class MediaInfoChangeOpDeserializer implements ChangeOpDeserializer {
 			);
 		}
 
-		if ( array_key_exists( 'aliases', $changeRequest ) ) {
-			throw new ChangeOpDeserializationException(
-				'MediaInfo cannot have aliases',
-				'not-supported'
-			);
-		}
-
 		if ( array_key_exists( 'claims', $changeRequest ) ) {
 			$changeOps->add(
 				$this->claimsChangeOpDeserializer->createEntityChangeOp( $changeRequest )
-			);
-		}
-
-		if ( array_key_exists( 'sitelinks', $changeRequest ) ) {
-			throw new ChangeOpDeserializationException(
-				'MediaInfo cannot have sitelinks',
-				'not-supported'
 			);
 		}
 

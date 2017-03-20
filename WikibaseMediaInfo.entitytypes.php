@@ -19,6 +19,7 @@ use Wikibase\DataModel\Entity\EntityId;
 use Wikibase\DataModel\SerializerFactory;
 use Wikibase\DataModel\Services\Lookup\LabelDescriptionLookup;
 use Wikibase\LanguageFallbackChain;
+use Wikibase\MediaInfo\ChangeOp\Deserialization\MediaInfoChangeOpDeserializer;
 use Wikibase\MediaInfo\Content\MediaInfoContent;
 use Wikibase\MediaInfo\Content\MediaInfoHandler;
 use Wikibase\MediaInfo\Content\MissingMediaInfoHandler;
@@ -119,5 +120,15 @@ return [
 		// Identifier of a resource loader module that, when `require`d, returns a function
 		// returning a deserializer
 		'js-deserializer-factory-function' => 'wikibase.mediainfo.getDeserializer',
+		'changeop-deserializer-callback' => function() {
+			$changeOpDeserializerFactory = WikibaseRepo::getDefaultInstance()
+				->getChangeOpDeserializerFactory();
+
+			return new MediaInfoChangeOpDeserializer(
+				$changeOpDeserializerFactory->getLabelsChangeOpDeserializer(),
+				$changeOpDeserializerFactory->getDescriptionsChangeOpDeserializer(),
+				$changeOpDeserializerFactory->getClaimsChangeOpDeserializer()
+			);
+		},
 	]
 ];

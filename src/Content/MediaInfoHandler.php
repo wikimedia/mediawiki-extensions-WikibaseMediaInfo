@@ -14,6 +14,7 @@ use Wikibase\Lib\Store\LanguageFallbackLabelDescriptionLookupFactory;
 use Wikibase\MediaInfo\Actions\ViewMediaInfoAction;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\MediaInfo\DataModel\MediaInfoId;
+use Wikibase\MediaInfo\Search\MediaInfoFieldDefinitions;
 use Wikibase\MediaInfo\Services\FilePageLookup;
 use Wikibase\Repo\Content\EntityHandler;
 use Wikibase\Repo\Store\EntityPerPage;
@@ -60,6 +61,7 @@ class MediaInfoHandler extends EntityHandler {
 	 * @param LanguageFallbackLabelDescriptionLookupFactory $labelLookupFactory
 	 * @param MissingMediaInfoHandler $missingMediaInfoHandler
 	 * @param FilePageLookup $filePageLookup
+	 * @param MediaInfoFieldDefinitions $fieldDefinitions
 	 * @param callable|null $legacyExportFormatDetector
 	 */
 	public function __construct(
@@ -73,6 +75,7 @@ class MediaInfoHandler extends EntityHandler {
 		LanguageFallbackLabelDescriptionLookupFactory $labelLookupFactory,
 		MissingMediaInfoHandler $missingMediaInfoHandler,
 		FilePageLookup $filePageLookup,
+		MediaInfoFieldDefinitions $fieldDefinitions,
 		$legacyExportFormatDetector = null
 	) {
 		parent::__construct(
@@ -83,6 +86,7 @@ class MediaInfoHandler extends EntityHandler {
 			$constraintProvider,
 			$errorLocalizer,
 			$entityIdParser,
+			$fieldDefinitions,
 			$legacyExportFormatDetector
 		);
 		$this->entityIdLookup = $entityIdLookup;

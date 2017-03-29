@@ -20,7 +20,10 @@ use Wikibase\MediaInfo\Content\MediaInfoHandler;
 use Wikibase\MediaInfo\Content\MissingMediaInfoHandler;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\MediaInfo\DataModel\MediaInfoId;
+use Wikibase\MediaInfo\Search\MediaInfoFieldDefinitions;
 use Wikibase\MediaInfo\Services\FilePageLookup;
+use Wikibase\Repo\Search\Elastic\Fields\DescriptionsProviderFieldDefinitions;
+use Wikibase\Repo\Search\Elastic\Fields\LabelsProviderFieldDefinitions;
 use Wikibase\Repo\Store\EntityPerPage;
 use Wikibase\Repo\Validators\EntityConstraintProvider;
 use Wikibase\Repo\Validators\ValidatorErrorLocalizer;
@@ -88,7 +91,11 @@ class MediaInfoHandlerTest extends PHPUnit_Framework_TestCase {
 			$this->getMock( EntityIdLookup::class ),
 			$labelLookupFactory,
 			$missingMediaInfoHandler,
-			$filePageLookup
+			$filePageLookup,
+			new MediaInfoFieldDefinitions(
+				new LabelsProviderFieldDefinitions( [ 'ar', 'de' ] ),
+				new DescriptionsProviderFieldDefinitions( [ 'ar', 'de' ] )
+			)
 		);
 	}
 

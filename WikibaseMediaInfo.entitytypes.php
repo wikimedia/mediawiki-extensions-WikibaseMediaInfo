@@ -29,6 +29,7 @@ use Wikibase\MediaInfo\DataModel\Serialization\MediaInfoDeserializer;
 use Wikibase\MediaInfo\DataModel\Serialization\MediaInfoSerializer;
 use Wikibase\MediaInfo\DataModel\Services\Diff\MediaInfoDiffer;
 use Wikibase\MediaInfo\DataModel\Services\Diff\MediaInfoPatcher;
+use Wikibase\MediaInfo\Search\MediaInfoFieldDefinitions;
 use Wikibase\MediaInfo\Services\MediaInfoServices;
 use Wikibase\MediaInfo\View\MediaInfoView;
 use Wikibase\Repo\MediaWikiLanguageDirectionalityLookup;
@@ -93,7 +94,11 @@ return [
 					MediaInfoServices::getFilePageLookup(),
 					$wikibaseRepo->getEntityParserOutputGeneratorFactory()
 				),
-				MediaInfoServices::getFilePageLookup()
+				MediaInfoServices::getFilePageLookup(),
+				new MediaInfoFieldDefinitions(
+					$wikibaseRepo->getLabelProviderDefinitions(),
+					$wikibaseRepo->getDescriptionProviderDefinitions()
+				)
 			);
 		},
 		'entity-id-pattern' => MediaInfoId::PATTERN,

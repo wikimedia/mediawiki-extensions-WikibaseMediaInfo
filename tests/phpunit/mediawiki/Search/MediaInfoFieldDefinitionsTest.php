@@ -21,7 +21,12 @@ class MediaInfoFieldDefinitionsTest extends PHPUnit_Framework_TestCase {
 			new DescriptionsProviderFieldDefinitions( $languageCodes )
 		);
 
-		$expectedKeys = [ 'label_count', 'statement_count' ];
+		$expectedKeys = [
+			'label_count',
+			'labels',
+			'labels_all',
+			'statement_count'
+		];
 
 		$this->assertSame( $expectedKeys, array_keys( $mediaInfoFieldDefinitions->getFields() ) );
 	}

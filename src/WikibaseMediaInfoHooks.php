@@ -45,13 +45,6 @@ class WikibaseMediaInfoHooks {
 		);
 	}
 
-	public static function onMediaWikiServices( MediaWikiServices $services ) {
-		// TODO: Use extension.json to put the wiring file into ($wg)ServiceWiringFiles.
-		// TODO: We need better support for relative pathes in the extension loader for that to work!
-		$wiringFile = __DIR__ . '/Services/MediaInfoServiceWiring.php';
-		$services->loadWiringFiles( [ $wiringFile ] );
-	}
-
 	public static function onImagePageAfterImageLinks( ImagePage $page, &$html ) {
 		$imgTitle = $page->getTitle();
 		$pageId = $imgTitle->getArticleID();

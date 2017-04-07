@@ -23,6 +23,9 @@
 	"ExtensionMessagesFiles": {
 		"WikibaseMediaInfoAlias": "WikibaseMediaInfo.i18n.alias.php"
 	},
+	"ServiceWiringFiles": [
+		"src/Services/MediaInfoServiceWiring.php"
+	],
 	"Hooks": {
 		"WikibaseEntityNamespaces": [
 			"Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onWikibaseEntityNamespaces"
@@ -32,9 +35,6 @@
 		],
 		"WikibaseClientEntityTypes": [
 			"Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onWikibaseEntityTypes"
-		],
-		"MediaWikiServices": [
-			"Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onMediaWikiServices"
 		],
 		"ImagePageAfterImageLinks": [
 			"Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onImagePageAfterImageLinks"

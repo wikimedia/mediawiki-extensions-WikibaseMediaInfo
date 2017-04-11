@@ -74,23 +74,6 @@ class WikibaseMediaInfoHooksTest extends PHPUnit_Framework_TestCase {
 		$this->assertArrayHasKey( 'mediainfo', $entityTypeDefinitions );
 	}
 
-	public function testOnMediaWikiServices() {
-		$services = $this->getMockBuilder( MediaWikiServices::class )
-			->disableOriginalConstructor()
-			->getMock();
-
-		$allFiles = [];
-		$services->expects( $this->atLeastOnce() )
-			->method( 'loadWiringFiles' )
-			->will( $this->returnCallback( function( $files ) use ( &$allFiles ) {
-				$allFiles = array_merge( $allFiles, $files );
-			} ) );
-
-		Hooks::run( 'MediaWikiServices', [ $services ] );
-
-		$this->assertRegExp( '@/MediaInfoServiceWiring\.php$@m', join( "\n", $allFiles ) );
-	}
-
 	public function testOnImagePageAfterImageLinks() {
 		$imgTitle = Title::makeTitle( NS_FILE, 'Foo.jpg' );
 		$imgTitle->resetArticleID( 23 );

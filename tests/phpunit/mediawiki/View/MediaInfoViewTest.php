@@ -4,6 +4,7 @@ namespace Wikibase\MediaInfo\Tests\MediaWiki\View;
 
 use InvalidArgumentException;
 use MediaWiki\Linker\LinkRenderer;
+use PHPUnit_Framework_MockObject_MockObject;
 use PHPUnit_Framework_TestCase;
 use Title;
 use Wikibase\DataModel\Entity\EntityDocument;
@@ -43,12 +44,10 @@ class MediaInfoViewTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * @return EntityTermsView
+	 * @return EntityTermsView|PHPUnit_Framework_MockObject_MockObject
 	 */
 	private function newEntityTermsViewMock() {
-		return $this->getMockBuilder( EntityTermsView::class )
-			->disableOriginalConstructor()
-			->getMock();
+		return $this->getMock( EntityTermsView::class );
 	}
 
 	/**

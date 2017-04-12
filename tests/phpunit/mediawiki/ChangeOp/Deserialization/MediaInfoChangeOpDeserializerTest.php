@@ -6,12 +6,20 @@ use PHPUnit_Framework_MockObject_MockObject;
 use Wikibase\ChangeOp\ChangeOpDescription;
 use Wikibase\ChangeOp\ChangeOpLabel;
 use Wikibase\ChangeOp\ChangeOpRemoveStatement;
+use Wikibase\ChangeOp\FingerprintChangeOpFactory;
+use Wikibase\Lib\StaticContentLanguages;
 use Wikibase\MediaInfo\ChangeOp\Deserialization\MediaInfoChangeOpDeserializer;
+use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\Repo\ChangeOp\Deserialization\ChangeOpDeserializationException;
 use Wikibase\Repo\ChangeOp\Deserialization\ClaimsChangeOpDeserializer;
 use Wikibase\Repo\ChangeOp\Deserialization\DescriptionsChangeOpDeserializer;
 use Wikibase\Repo\ChangeOp\Deserialization\LabelsChangeOpDeserializer;
+use Wikibase\Repo\ChangeOp\Deserialization\TermChangeOpSerializationValidator;
+use Wikibase\Repo\Tests\ChangeOp\ChangeOpTestMockProvider;
+use Wikibase\Repo\Tests\ChangeOp\Deserialization\DescriptionsChangeOpDeserializationTester;
+use Wikibase\Repo\Tests\ChangeOp\Deserialization\LabelsChangeOpDeserializationTester;
 use Wikibase\Repo\Validators\TermValidatorFactory;
+use Wikibase\StringNormalizer;
 
 /**
  * @covers Wikibase\MediaInfo\ChangeOp\Deserialization\MediaInfoChangeOpDeserializer
@@ -22,6 +30,9 @@ use Wikibase\Repo\Validators\TermValidatorFactory;
  * @author Katie Filbert < aude.wiki@gmail.com >
  */
 class MediaInfoChangeOpDeserializerTest extends \PHPUnit_Framework_TestCase {
+
+	use LabelsChangeOpDeserializationTester;
+	use DescriptionsChangeOpDeserializationTester;
 
 	public function testCreateEntityChangeOp() {
 		$changeRequest = [
@@ -40,54 +51,6 @@ class MediaInfoChangeOpDeserializerTest extends \PHPUnit_Framework_TestCase {
 			$this->getLabelsChangeOpDeserializerWithChangeRequest( $changeRequest ),
 			$this->getDescriptionsChangeOpDeserializerWithChangeRequest( $changeRequest ),
 			$this->getClaimsChangeOpDeserializerWithChangeRequest( $changeRequest )
-		);
-
-		$mediaInfoChangeOpDeserializer->createEntityChangeOp( $changeRequest );
-	}
-
-	public function testCreateEntityChangeOp_onlyLabelChange() {
-		$changeRequest = [
-			'labels' => [
-				'en' => [ 'language' => 'en', 'value' => 'kitten' ],
-			],
-		];
-
-		$descriptionsChangeOpDeserializer = $this->getDescriptionsChangeOpDeserializer();
-		$descriptionsChangeOpDeserializer->expects( $this->never() )
-			->method( 'createEntityChangeOp' );
-
-		$claimsChangeOpDeserializer = $this->getClaimsChangeOpDeserializer();
-		$claimsChangeOpDeserializer->expects( $this->never() )
-			->method( 'createEntityChangeOp' );
-
-		$mediaInfoChangeOpDeserializer = new MediaInfoChangeOpDeserializer(
-			$this->getLabelsChangeOpDeserializerWithChangeRequest( $changeRequest ),
-			$descriptionsChangeOpDeserializer,
-			$claimsChangeOpDeserializer
-		);
-
-		$mediaInfoChangeOpDeserializer->createEntityChangeOp( $changeRequest );
-	}
-
-	public function testCreateEntityChangeOp_onlyDescriptionChange() {
-		$changeRequest = [
-			'descriptions' => [
-				'en' => [ 'language' => 'en', 'value' => 'young cat' ],
-			],
-		];
-
-		$labelsChangeOpDeserializer = $this->getLabelsChangeOpDeserializer();
-		$labelsChangeOpDeserializer->expects( $this->never() )
-			->method( 'createEntityChangeOp' );
-
-		$claimsChangeOpDeserializer = $this->getClaimsChangeOpDeserializer();
-		$claimsChangeOpDeserializer->expects( $this->never() )
-			->method( 'createEntityChangeOp' );
-
-		$mediaInfoChangeOpDeserializer = new MediaInfoChangeOpDeserializer(
-			$labelsChangeOpDeserializer,
-			$this->getDescriptionsChangeOpDeserializerWithChangeRequest( $changeRequest ),
-			$claimsChangeOpDeserializer
 		);
 
 		$mediaInfoChangeOpDeserializer->createEntityChangeOp( $changeRequest );
@@ -226,6 +189,34 @@ class MediaInfoChangeOpDeserializerTest extends \PHPUnit_Framework_TestCase {
 		return $this->getMockBuilder( TermValidatorFactory::class )
 			->disableOriginalConstructor()
 			->getMock();
+	}
+
+	/**
+	 * @return MediaInfoChangeOpDeserializer
+	 */
+	public function getChangeOpDeserializer() {
+		$mockProvider = new ChangeOpTestMockProvider( $this );
+
+		return new MediaInfoChangeOpDeserializer(
+			new LabelsChangeOpDeserializer(
+				new FingerprintChangeOpFactory( $mockProvider->getMockTermValidatorFactory() ),
+				new StringNormalizer(),
+				new TermChangeOpSerializationValidator( new StaticContentLanguages( [ 'en' ] ) )
+			),
+			new DescriptionsChangeOpDeserializer(
+				new FingerprintChangeOpFactory( $mockProvider->getMockTermValidatorFactory() ),
+				new StringNormalizer(),
+				new TermChangeOpSerializationValidator( new StaticContentLanguages( [ 'en' ] ) )
+			),
+			$this->getClaimsChangeOpDeserializer()
+		);
+	}
+
+	/**
+	 * @return MediaInfo
+	 */
+	public function getEntity() {
+		return new MediaInfo();
 	}
 
 }

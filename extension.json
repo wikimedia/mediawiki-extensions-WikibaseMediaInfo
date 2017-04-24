@@ -26,9 +26,6 @@
 			"name": "MediaInfo_talk"
 		}
 	],
-	"ExtensionMessagesFiles": {
-		"WikibaseMediaInfoAlias": "WikibaseMediaInfo.i18n.alias.php"
-	},
 	"ServiceWiringFiles": [
 		"src/Services/MediaInfoServiceWiring.php"
 	],

@@ -6,6 +6,7 @@ use Wikibase\Repo\Search\Elastic\Fields\DescriptionsProviderFieldDefinitions;
 use Wikibase\Repo\Search\Elastic\Fields\FieldDefinitions;
 use Wikibase\Repo\Search\Elastic\Fields\LabelsProviderFieldDefinitions;
 use Wikibase\Repo\Search\Elastic\Fields\StatementCountField;
+use Wikibase\Repo\Search\Elastic\Fields\WikibaseIndexField;
 
 /**
  * @license GPL-2.0+
@@ -23,10 +24,6 @@ class MediaInfoFieldDefinitions implements FieldDefinitions {
 	 */
 	private $descriptionsProviderFieldDefinitions;
 
-	/**
-	 * @param LabelsProviderFieldDefinitions $labelsProviderFieldDefinitions
-	 * @param DescriptionsProviderFieldDefinitions $descriptionsProviderFieldDefinitions
-	 */
 	public function __construct(
 		LabelsProviderFieldDefinitions $labelsProviderFieldDefinitions,
 		DescriptionsProviderFieldDefinitions $descriptionsProviderFieldDefinitions
@@ -36,7 +33,9 @@ class MediaInfoFieldDefinitions implements FieldDefinitions {
 	}
 
 	/**
-	 * @return SearchIndexField[]
+	 * @see FieldDefinitions::getFields
+	 *
+	 * @return WikibaseIndexField[]
 	 */
 	public function getFields() {
 		$fields = array_merge(

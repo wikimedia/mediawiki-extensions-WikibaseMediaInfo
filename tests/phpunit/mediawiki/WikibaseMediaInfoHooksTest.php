@@ -48,7 +48,10 @@ class WikibaseMediaInfoHooksTest extends PHPUnit_Framework_TestCase {
 		$namespaces = $language->getNamespaces();
 
 		$mediaInfoNS = $config->get( 'MediaInfoNamespace' );
+		$mediaInfoTalkNS = $config->get( 'MediaInfoNamespaceTalk' );
+
 		$this->assertArrayHasKey( $mediaInfoNS, $namespaces, 'MediaInfo namespace' );
+		$this->assertArrayHasKey( $mediaInfoTalkNS, $namespaces, 'MediaInfo talk namespace' );
 	}
 
 	public function provideWikibaseEntityTypesHooks() {

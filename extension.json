@@ -10,7 +10,8 @@
 	"type": "wikibase",
 	"load_composer_autoloader": true,
 	"config": {
-		"MediaInfoNamespace": 144
+		"MediaInfoNamespace": 144,
+		"MediaInfoNamespaceTalk": 145
 	},
 	"namespaces": [
 		{
@@ -18,6 +19,11 @@
 			"constant": "NS_MEDIAINFO",
 			"name": "MediaInfo",
 			"defaultcontentmodel": "wikibase-mediainfo"
+		},
+		{
+			"id": 145,
+			"constant": "NS_MEDIAINFO_TALK",
+			"name": "MediaInfo_talk"
 		}
 	],
 	"ExtensionMessagesFiles": {

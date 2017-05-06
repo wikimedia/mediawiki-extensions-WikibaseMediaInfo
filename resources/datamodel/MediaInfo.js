@@ -1,4 +1,4 @@
-( function( wb, util ) {
+( function ( wb, util ) {
 	'use strict';
 
 	var PARENT = wb.datamodel.Entity;
@@ -21,7 +21,7 @@
 	var SELF = wb.datamodel.MediaInfo = util.inherit(
 		'WbDataModelMediaInfo',
 		PARENT,
-		function( mediaInfoId, labels, descriptions, statementGroupSet ) {
+		function ( mediaInfoId, labels, descriptions, statementGroupSet ) {
 			labels = labels || new wb.datamodel.TermMap();
 			descriptions = descriptions || new wb.datamodel.TermMap();
 			statementGroupSet = statementGroupSet || new wb.datamodel.StatementGroupSet();
@@ -50,28 +50,28 @@
 		/**
 		 * @return {wikibase.datamodel.StatementGroupSet}
 		 */
-		getStatements: function() {
+		getStatements: function () {
 			return this._statementGroupSet;
 		},
 
 		/**
 		 * @param {wikibase.datamodel.Statement} statement
 		 */
-		addStatement: function( statement ) {
+		addStatement: function ( statement ) {
 			this._statementGroupSet.addStatement( statement );
 		},
 
 		/**
 		 * @param {wikibase.datamodel.Statement} statement
 		 */
-		removeStatement: function( statement ) {
+		removeStatement: function ( statement ) {
 			this._statementGroupSet.removeStatement( statement );
 		},
 
 		/**
 		 * @return {boolean}
 		 */
-		isEmpty: function() {
+		isEmpty: function () {
 			return this._statementGroupSet.isEmpty() && this._fingerprint.isEmpty();
 		},
 
@@ -79,7 +79,7 @@
 		 * @param {*} mediaInfo
 		 * @return {boolean}
 		 */
-		equals: function( mediaInfo ) {
+		equals: function ( mediaInfo ) {
 			return mediaInfo === this ||
 				( mediaInfo instanceof SELF &&
 					this._id === mediaInfo.getId() &&

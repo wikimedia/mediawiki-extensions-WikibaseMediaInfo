@@ -1,4 +1,4 @@
-( function( wb, util ) {
+( function ( wb, util ) {
 	'use strict';
 
 	var MODULE = wb.mediainfo.serialization,
@@ -21,7 +21,7 @@
 		 *
 		 * @throws {Error} if serialization does not resolve to a serialized MediaInfo.
 		 */
-		deserialize: function( serialization ) {
+		deserialize: function ( serialization ) {
 			if ( serialization.type !== wb.datamodel.MediaInfo.TYPE ) {
 				throw new Error( 'Serialization does not resolve to an MediaInfo' );
 			}

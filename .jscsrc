@@ -26,26 +26,5 @@
 		"requireNewlineAfterDescription": true
 	},
 
-	"requireVarDeclFirst": null,
-
-	// No space after function
-	"disallowSpaceAfterKeywords": [
-		"function"
-	],
-
-	"requireSpaceAfterKeywords": [
-		"do",
-		"for",
-		"if",
-		"else",
-		"switch",
-		"case",
-		"try",
-		"catch",
-		"void",
-		"while",
-		"with",
-		"return",
-		"typeof"
-	]
+	"requireVarDeclFirst": null
 }

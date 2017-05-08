@@ -147,7 +147,7 @@ class MediaInfoDeserializerTest extends PHPUnit_Framework_TestCase {
 			[ '' ],
 			[ [] ],
 			[ [ 'foo' => 'bar' ] ],
-			[ [ 'type' => null ]],
+			[ [ 'type' => null ] ],
 			[ [ 'type' => 'item' ] ]
 		];
 	}

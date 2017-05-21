@@ -25,7 +25,7 @@ module.exports = function ( grunt ) {
 			all: [
 				'**/*.css',
 				'!node_modules/**',
-				'!vendor**'
+				'!vendor/**'
 			]
 		}
 	} );

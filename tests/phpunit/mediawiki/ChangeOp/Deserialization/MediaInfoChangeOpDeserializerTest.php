@@ -3,10 +3,10 @@
 namespace Wikibase\MediaInfo\Tests\MediaWiki\ChangeOp\Deserialization;
 
 use PHPUnit_Framework_MockObject_MockObject;
-use Wikibase\ChangeOp\ChangeOpDescription;
-use Wikibase\ChangeOp\ChangeOpLabel;
-use Wikibase\ChangeOp\ChangeOpRemoveStatement;
-use Wikibase\ChangeOp\FingerprintChangeOpFactory;
+use Wikibase\Repo\ChangeOp\ChangeOpDescription;
+use Wikibase\Repo\ChangeOp\ChangeOpLabel;
+use Wikibase\Repo\ChangeOp\ChangeOpRemoveStatement;
+use Wikibase\Repo\ChangeOp\FingerprintChangeOpFactory;
 use Wikibase\Lib\StaticContentLanguages;
 use Wikibase\MediaInfo\ChangeOp\Deserialization\MediaInfoChangeOpDeserializer;
 use Wikibase\MediaInfo\DataModel\MediaInfo;

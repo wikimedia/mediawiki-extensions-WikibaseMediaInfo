@@ -5,6 +5,7 @@ namespace Wikibase\MediaInfo\Content;
 use IContextSource;
 use Page;
 use Title;
+use Wikibase\Content\EntityHolder;
 use Wikibase\DataModel\Entity\EntityId;
 use Wikibase\DataModel\Entity\EntityIdParser;
 use Wikibase\EditEntityAction;
@@ -117,17 +118,21 @@ class MediaInfoHandler extends EntityHandler {
 	}
 
 	/**
-	 * @return string
-	 */
-	protected function getContentClass() {
-		return MediaInfoContent::class;
-	}
-
-	/**
 	 * @return MediaInfo
 	 */
 	public function makeEmptyEntity() {
 		return new MediaInfo();
+	}
+
+	/**
+	 * @see EntityHandler::makeEntityContent
+	 *
+	 * @param EntityHolder $entityHolder
+	 *
+	 * @return MediaInfoContent
+	 */
+	public function makeEntityContent( EntityHolder $entityHolder ) {
+		return new MediaInfoContent( $entityHolder );
 	}
 
 	/**

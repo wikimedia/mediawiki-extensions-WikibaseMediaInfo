@@ -125,13 +125,13 @@ class MediaInfoHandler extends EntityHandler {
 	}
 
 	/**
-	 * @see EntityHandler::makeEntityContent
+	 * @see EntityHandler::newEntityContent
 	 *
-	 * @param EntityHolder $entityHolder
+	 * @param EntityHolder|null $entityHolder
 	 *
 	 * @return MediaInfoContent
 	 */
-	public function makeEntityContent( EntityHolder $entityHolder ) {
+	public function newEntityContent( EntityHolder $entityHolder = null ) {
 		return new MediaInfoContent( $entityHolder );
 	}
 

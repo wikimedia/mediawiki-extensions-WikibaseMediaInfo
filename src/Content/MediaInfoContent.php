@@ -4,6 +4,7 @@ namespace Wikibase\MediaInfo\Content;
 
 use Hooks;
 use InvalidArgumentException;
+use LogicException;
 use Wikibase\Content\EntityHolder;
 use Wikibase\EntityContent;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
@@ -18,7 +19,7 @@ class MediaInfoContent extends EntityContent {
 	const CONTENT_MODEL_ID = 'wikibase-mediainfo';
 
 	/**
-	 * @var EntityHolder
+	 * @var EntityHolder|null
 	 */
 	private $mediaInfoHolder;
 
@@ -31,13 +32,15 @@ class MediaInfoContent extends EntityContent {
 	 *
 	 * @protected
 	 *
-	 * @param EntityHolder $mediaInfoHolder
+	 * @param EntityHolder|null $mediaInfoHolder
 	 * @throws InvalidArgumentException
 	 */
-	public function __construct( EntityHolder $mediaInfoHolder ) {
+	public function __construct( EntityHolder $mediaInfoHolder = null ) {
 		parent::__construct( self::CONTENT_MODEL_ID );
 
-		if ( $mediaInfoHolder->getEntityType() !== MediaInfo::ENTITY_TYPE ) {
+		if ( $mediaInfoHolder !== null
+			&& $mediaInfoHolder->getEntityType() !== MediaInfo::ENTITY_TYPE
+		) {
 			throw new InvalidArgumentException( '$mediaInfoHolder must contain a MediaInfo entity' );
 		}
 
@@ -48,6 +51,10 @@ class MediaInfoContent extends EntityContent {
 	 * @return MediaInfo
 	 */
 	public function getMediaInfo() {
+		if ( !$this->mediaInfoHolder ) {
+			throw new LogicException( 'This content object is empty!' );
+		}
+
 		return $this->mediaInfoHolder->getEntity( MediaInfo::class );
 	}
 
@@ -63,7 +70,7 @@ class MediaInfoContent extends EntityContent {
 	/**
 	 * @see EntityContent::getEntityHolder
 	 *
-	 * @return EntityHolder
+	 * @return EntityHolder|null
 	 */
 	protected function getEntityHolder() {
 		return $this->mediaInfoHolder;

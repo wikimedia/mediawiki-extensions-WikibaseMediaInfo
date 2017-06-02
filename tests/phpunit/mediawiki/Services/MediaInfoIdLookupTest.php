@@ -8,7 +8,7 @@ use Wikibase\MediaInfo\DataModel\MediaInfoId;
 use Wikibase\MediaInfo\Services\MediaInfoIdLookup;
 
 /**
- * @covers Wikibase\MediaInfo\IdLookup\MediaInfoIdLookup
+ * @covers Wikibase\MediaInfo\Services\MediaInfoIdLookup
  *
  * @group WikibaseMediaInfo
  *

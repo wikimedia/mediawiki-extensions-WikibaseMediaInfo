@@ -9,7 +9,7 @@ use Wikibase\MediaInfo\DataModel\MediaInfoId;
 use Wikibase\MediaInfo\Services\FilePageLookup;
 
 /**
- * @covers Wikibase\MediaInfo\IdLookup\FilePageLookup
+ * @covers Wikibase\MediaInfo\Services\FilePageLookup
  *
  * @group WikibaseMediaInfo
  *

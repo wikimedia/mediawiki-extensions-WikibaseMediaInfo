@@ -34,8 +34,6 @@ class MissingMediaInfoHandler {
 	private $outputGeneratorFactory;
 
 	/**
-	 * MissingMediaInfoHandler constructor.
-	 *
 	 * @param MediaInfoIdLookup $idLookup
 	 * @param FilePageLookup $filePageLookup
 	 * @param EntityParserOutputGeneratorFactory $outputGeneratorFactory

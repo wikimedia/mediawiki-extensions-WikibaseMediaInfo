@@ -4,8 +4,7 @@ namespace Wikibase\MediaInfo\Tests\MediaWiki\Search;
 
 use PHPUnit_Framework_TestCase;
 use Wikibase\MediaInfo\Search\MediaInfoFieldDefinitions;
-use Wikibase\Repo\Search\Elastic\Fields\DescriptionsProviderFieldDefinitions;
-use Wikibase\Repo\Search\Elastic\Fields\LabelsProviderFieldDefinitions;
+use Wikibase\Repo\Search\Elastic\Fields\FieldDefinitions;
 
 /**
  * @license GPL-2.0+
@@ -14,17 +13,26 @@ use Wikibase\Repo\Search\Elastic\Fields\LabelsProviderFieldDefinitions;
 class MediaInfoFieldDefinitionsTest extends PHPUnit_Framework_TestCase {
 
 	public function testGetFields() {
-		$languageCodes = [ 'ar', 'de', 'es' ];
+		$labelsProviderFieldDefinitions = $this->getMock( FieldDefinitions::class );
+		$labelsProviderFieldDefinitions->method( 'getFields' )
+			->willReturn( [
+				'test_only_labels' => null,
+			] );
+
+		$descriptionsProviderFieldDefinitions = $this->getMock( FieldDefinitions::class );
+		$descriptionsProviderFieldDefinitions->method( 'getFields' )
+			->willReturn( [
+				'test_only_descriptions' => null,
+			] );
 
 		$mediaInfoFieldDefinitions = new MediaInfoFieldDefinitions(
-			new LabelsProviderFieldDefinitions( $languageCodes ),
-			new DescriptionsProviderFieldDefinitions( $languageCodes )
+			$labelsProviderFieldDefinitions,
+			$descriptionsProviderFieldDefinitions
 		);
 
 		$expectedKeys = [
-			'label_count',
-			'labels',
-			'labels_all',
+			'test_only_labels',
+			'test_only_descriptions',
 			'statement_count'
 		];
 

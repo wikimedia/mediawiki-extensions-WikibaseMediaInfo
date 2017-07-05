@@ -2,9 +2,7 @@
 
 namespace Wikibase\MediaInfo\Search;
 
-use Wikibase\Repo\Search\Elastic\Fields\DescriptionsProviderFieldDefinitions;
 use Wikibase\Repo\Search\Elastic\Fields\FieldDefinitions;
-use Wikibase\Repo\Search\Elastic\Fields\LabelsProviderFieldDefinitions;
 use Wikibase\Repo\Search\Elastic\Fields\StatementCountField;
 use Wikibase\Repo\Search\Elastic\Fields\WikibaseIndexField;
 
@@ -15,18 +13,18 @@ use Wikibase\Repo\Search\Elastic\Fields\WikibaseIndexField;
 class MediaInfoFieldDefinitions implements FieldDefinitions {
 
 	/**
-	 * @var LabelsProviderFieldDefinitions
+	 * @var FieldDefinitions
 	 */
 	private $labelsProviderFieldDefinitions;
 
 	/**
-	 * @var DescriptionsProviderFieldDefinitions
+	 * @var FieldDefinitions
 	 */
 	private $descriptionsProviderFieldDefinitions;
 
 	public function __construct(
-		LabelsProviderFieldDefinitions $labelsProviderFieldDefinitions,
-		DescriptionsProviderFieldDefinitions $descriptionsProviderFieldDefinitions
+		FieldDefinitions $labelsProviderFieldDefinitions,
+		FieldDefinitions $descriptionsProviderFieldDefinitions
 	) {
 		$this->labelsProviderFieldDefinitions = $labelsProviderFieldDefinitions;
 		$this->descriptionsProviderFieldDefinitions = $descriptionsProviderFieldDefinitions;

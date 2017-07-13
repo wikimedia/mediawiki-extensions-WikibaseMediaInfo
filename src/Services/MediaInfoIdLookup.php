@@ -21,8 +21,6 @@ class MediaInfoIdLookup {
 	private $mediaInfoNamespace;
 
 	/**
-	 * MediaInfoIdLookup constructor.
-	 *
 	 * @param int $mediaInfoNamespace numeric namespace ID of the namespace in which MediaInfo
 	 * entities reside.
 	 */

@@ -1,8 +1,11 @@
 {
 	"@metadata": {
 		"authors": [
-			"Rachmat.Wahidi"
+			"Rachmat.Wahidi",
+			"Beeyan",
+			"Rachmat04"
 		]
 	},
-	"wikibase-entity-mediainfo": "info media"
+	"wikibase-entity-mediainfo": "info media",
+	"wikibasemediainfo-desc": "Ekstensi Wikibase untuk mengatur metadata terstruktur dari berkas media"
 }

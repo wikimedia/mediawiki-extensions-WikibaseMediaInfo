@@ -40,6 +40,12 @@ use Wikibase\View\Template\TemplateFactory;
 
 return [
 	'mediainfo' => [
+		'storage-serializer-factory-callback' => function( SerializerFactory $serializerFactory ) {
+			return new MediaInfoSerializer(
+				$serializerFactory->newTermListSerializer(),
+				$serializerFactory->newStatementListSerializer()
+			);
+		},
 		'serializer-factory-callback' => function( SerializerFactory $serializerFactory ) {
 			return new MediaInfoSerializer(
 				$serializerFactory->newTermListSerializer(),

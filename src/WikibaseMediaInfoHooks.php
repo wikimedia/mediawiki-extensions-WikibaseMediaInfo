@@ -2,6 +2,9 @@
 
 namespace Wikibase\MediaInfo;
 
+use DatabaseUpdater;
+use DeferredUpdates;
+use File;
 use ImagePage;
 use MediaWiki\MediaWikiServices;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
@@ -63,6 +66,56 @@ class WikibaseMediaInfoHooks {
 		$linkHtml = MediaWikiServices::getInstance()->getLinkRenderer()->makeKnownLink( $title );
 
 		$html .= '<h2>' . $linkHtml . '</h2>';
+	}
+
+	/**
+	 * Schema changes.
+	 * Hook: LoadExtensionSchemaUpdates
+	 *
+	 * @param DatabaseUpdater $updater
+	 */
+	public static function onLoadExtensionSchemaUpdates( DatabaseUpdater $updater ) {
+		$updater->addPostDatabaseUpdateMaintenance( 'Wikibase\\MediaInfo\\Maintenance\\CreatePageProps' );
+	}
+
+	/**
+	 * After file upload, insert a page_props entry referring to the MediaInfo entity id.
+	 * Hook: FileUpload
+	 *
+	 * @param File $file
+	 */
+	public static function onFileUpload( File $file ) {
+		// wrap creation of the page_props entry inside a deferred update or it'd
+		// get blasted away right after having been created as part of finishing
+		// up the upload process
+		DeferredUpdates::addCallableUpdate(
+			function () use ( $file ) {
+				$title = $file->getTitle();
+				if ( $title === null ) {
+					return;
+				}
+				$pageId = $title->getArticleID();
+
+				$wikibaseRepo = WikibaseRepo::getDefaultInstance();
+				$entityId = $wikibaseRepo->getEntityIdComposer()->composeEntityId(
+					'',
+					MediaInfo::ENTITY_TYPE,
+					$pageId
+				);
+
+				$file->getRepo()->getMasterDB()->insert(
+					'page_props',
+					[
+						'pp_page' => $pageId,
+						'pp_propname' => 'mediainfo_entity',
+						'pp_value' => $entityId->getLocalPart(),
+					],
+					__METHOD__
+				);
+			},
+			DeferredUpdates::POSTSEND,
+			wfGetDB( DB_MASTER )
+		);
 	}
 
 }

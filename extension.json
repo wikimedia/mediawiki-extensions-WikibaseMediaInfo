@@ -13,6 +13,7 @@
 	},
 	"AutoloadNamespaces": {
 		"Wikibase\\MediaInfo\\": "src/",
+		"Wikibase\\MediaInfo\\Maintenance\\": "maintenance/",
 		"Wikibase\\MediaInfo\\Tests\\": "tests/phpunit/composer/",
 		"Wikibase\\MediaInfo\\Tests\\MediaWiki\\": "tests/phpunit/mediawiki/"
 	},
@@ -52,6 +53,12 @@
 		],
 		"ImagePageAfterImageLinks": [
 			"Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onImagePageAfterImageLinks"
+		],
+		"LoadExtensionSchemaUpdates": [
+			"Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onLoadExtensionSchemaUpdates"
+		],
+		"FileUpload": [
+			"Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onFileUpload"
 		]
 	},
 	"MessagesDirs": {

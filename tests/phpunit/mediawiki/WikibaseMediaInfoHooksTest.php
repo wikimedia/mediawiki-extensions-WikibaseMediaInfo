@@ -95,4 +95,6 @@ class WikibaseMediaInfoHooksTest extends PHPUnit_Framework_TestCase {
 		$this->assertRegExp( '@<h2><a .*MediaInfo:M23.*>MediaInfo:M23</a></h2>@', $html );
 	}
 
+	// onFileUpload hook is tested in CreatePagePropsTest
+
 }

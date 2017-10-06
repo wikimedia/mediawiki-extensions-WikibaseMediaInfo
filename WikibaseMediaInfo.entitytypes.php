@@ -87,7 +87,6 @@ return [
 			$wikibaseRepo = WikibaseRepo::getDefaultInstance();
 
 			return new MediaInfoHandler(
-				$entityPerPage = $wikibaseRepo->getStore()->newEntityPerPage(),
 				$termIndex = $wikibaseRepo->getStore()->getTermIndex(),
 				$codec = $wikibaseRepo->getEntityContentDataCodec(),
 				$constraintProvider = $wikibaseRepo->getEntityConstraintProvider(),

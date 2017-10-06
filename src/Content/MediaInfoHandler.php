@@ -18,7 +18,6 @@ use Wikibase\MediaInfo\DataModel\MediaInfoId;
 use Wikibase\MediaInfo\Search\MediaInfoFieldDefinitions;
 use Wikibase\MediaInfo\Services\FilePageLookup;
 use Wikibase\Repo\Content\EntityHandler;
-use Wikibase\Repo\Store\EntityPerPage;
 use Wikibase\Repo\Validators\EntityConstraintProvider;
 use Wikibase\Repo\Validators\ValidatorErrorLocalizer;
 use Wikibase\Store\EntityIdLookup;
@@ -52,7 +51,6 @@ class MediaInfoHandler extends EntityHandler {
 	private $filePageLookup;
 
 	/**
-	 * @param EntityPerPage $entityPerPage
 	 * @param TermIndex $termIndex
 	 * @param EntityContentDataCodec $contentCodec
 	 * @param EntityConstraintProvider $constraintProvider
@@ -66,7 +64,6 @@ class MediaInfoHandler extends EntityHandler {
 	 * @param callable|null $legacyExportFormatDetector
 	 */
 	public function __construct(
-		EntityPerPage $entityPerPage,
 		TermIndex $termIndex,
 		EntityContentDataCodec $contentCodec,
 		EntityConstraintProvider $constraintProvider,
@@ -81,7 +78,6 @@ class MediaInfoHandler extends EntityHandler {
 	) {
 		parent::__construct(
 			MediaInfoContent::CONTENT_MODEL_ID,
-			$entityPerPage,
 			$termIndex,
 			$contentCodec,
 			$constraintProvider,

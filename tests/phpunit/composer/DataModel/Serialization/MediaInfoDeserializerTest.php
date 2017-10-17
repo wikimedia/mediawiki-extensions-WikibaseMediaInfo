@@ -57,7 +57,7 @@ class MediaInfoDeserializerTest extends PHPUnit_Framework_TestCase {
 
 		$serializations['empty'] = [
 			[ 'type' => 'mediainfo' ],
-		    new MediaInfo()
+			new MediaInfo()
 		];
 
 		$serializations['empty lists'] = [

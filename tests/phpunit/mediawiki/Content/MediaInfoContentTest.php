@@ -96,7 +96,7 @@ class MediaInfoContentTest extends PHPUnit_Framework_TestCase {
 	public function provideNotCountable() {
 		return [
 			[ new MediaInfo() ],
-		    [ new MediaInfo( new MediaInfoId( 'M1' ) ) ]
+			[ new MediaInfo( new MediaInfoId( 'M1' ) ) ],
 		];
 	}
 

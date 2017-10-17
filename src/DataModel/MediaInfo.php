@@ -132,9 +132,9 @@ class MediaInfo implements EntityDocument, LabelsProvider, DescriptionsProvider,
 		}
 
 		return $target instanceof self
-		       && $this->labels->equals( $target->labels )
-		       && $this->descriptions->equals( $target->descriptions )
-		       && $this->statements->equals( $target->statements );
+			&& $this->labels->equals( $target->labels )
+			&& $this->descriptions->equals( $target->descriptions )
+			&& $this->statements->equals( $target->statements );
 	}
 
 	/**

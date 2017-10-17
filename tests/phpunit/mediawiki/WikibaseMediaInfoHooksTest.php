@@ -57,7 +57,7 @@ class WikibaseMediaInfoHooksTest extends PHPUnit_Framework_TestCase {
 	public function provideWikibaseEntityTypesHooks() {
 		return [
 			[ 'WikibaseRepoEntityTypes' ],
-		    [ 'WikibaseClientEntityTypes' ]
+			[ 'WikibaseClientEntityTypes' ],
 		];
 	}
 

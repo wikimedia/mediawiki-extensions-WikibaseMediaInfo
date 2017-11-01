@@ -2,8 +2,8 @@
 
 namespace Wikibase\MediaInfo\Content;
 
+use Article;
 use IContextSource;
-use Page;
 use Title;
 use Wikibase\Content\EntityHolder;
 use Wikibase\DataModel\Entity\EntityId;
@@ -99,7 +99,7 @@ class MediaInfoHandler extends EntityHandler {
 	 */
 	public function getActionOverrides() {
 		return [
-			'history' => function( Page $page, IContextSource $context = null ) {
+			'history' => function( Article $page, IContextSource $context = null ) {
 				return new HistoryEntityAction(
 					$page,
 					$context,

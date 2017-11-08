@@ -3,11 +3,11 @@
 namespace Wikibase\MediaInfo\Tests\MediaWiki\Content;
 
 use Action;
+use Article;
 use Closure;
 use FauxRequest;
 use IContextSource;
 use Language;
-use Page;
 use PHPUnit_Framework_TestCase;
 use RequestContext;
 use Title;
@@ -116,7 +116,11 @@ class MediaInfoHandlerTest extends PHPUnit_Framework_TestCase {
 				->method( 'getLanguage' )
 				->will( $this->returnValue( $this->getMockWithoutConstructor( Language::class ) ) );
 
-			$action = $override( $this->getMock( Page::class ), $context );
+			$article = $this->getMockBuilder( Article::class )
+				->disableOriginalConstructor()
+				->getMock();
+
+			$action = $override( $article, $context );
 			$this->assertInstanceOf( Action::class, $action );
 		} else {
 			$this->assertTrue( is_subclass_of( $override, Action::class ) );

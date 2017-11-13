@@ -8,8 +8,10 @@ use ImagePage;
 use MediaWiki\MediaWikiServices;
 use ParserOutput;
 use Title;
+use Wikibase\Lib\Store\EntityByLinkedTitleLookup;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\Repo\WikibaseRepo;
+use Wikibase\MediaInfo\Services\MediaInfoByLinkedTitleLookup;
 
 /**
  * MediaWiki hook handlers for the Wikibase MediaInfo extension.
@@ -121,6 +123,10 @@ class WikibaseMediaInfoHooks {
 		$output->setProperty( 'mediainfo_entity', $entityId->getLocalPart() );
 
 		return true;
+	}
+
+	public static function onGetEntityByLinkedTitleLookup( EntityByLinkedTitleLookup &$lookup ) {
+		$lookup = new MediaInfoByLinkedTitleLookup( $lookup );
 	}
 
 }

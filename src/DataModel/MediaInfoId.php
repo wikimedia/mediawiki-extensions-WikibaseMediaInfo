@@ -27,6 +27,9 @@ class MediaInfoId extends EntityId implements Int32EntityId {
 	public function __construct( $idSerialization ) {
 		$this->assertValidIdFormat( $idSerialization );
 		$this->serialization = strtoupper( $idSerialization );
+		list( $this->repositoryName, $this->localPart ) = self::extractRepositoryNameAndLocalPart(
+			$this->serialization
+		);
 	}
 
 	private function assertValidIdFormat( $idSerialization ) {
@@ -80,6 +83,9 @@ class MediaInfoId extends EntityId implements Int32EntityId {
 	 */
 	public function unserialize( $value ) {
 		$this->serialization = $value;
+		list( $this->repositoryName, $this->localPart ) = self::extractRepositoryNameAndLocalPart(
+			$value
+		);
 	}
 
 }

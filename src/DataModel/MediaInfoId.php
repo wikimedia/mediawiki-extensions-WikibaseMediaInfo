@@ -13,7 +13,7 @@ use Wikibase\DataModel\Entity\Int32EntityId;
  *
  * @license GPL-2.0+
  * @author Bene* < benestar.wikimedia@gmail.com >
- * @author Thiemo Mättig
+ * @author Thiemo Kreuz
  */
 class MediaInfoId extends EntityId implements Int32EntityId {
 

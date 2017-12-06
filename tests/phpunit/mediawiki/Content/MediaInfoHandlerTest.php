@@ -92,7 +92,7 @@ class MediaInfoHandlerTest extends PHPUnit_Framework_TestCase {
 			$filePageLookup,
 			new MediaInfoFieldDefinitions(
 				new LabelsProviderFieldDefinitions( [ 'ar', 'de' ] ),
-				new DescriptionsProviderFieldDefinitions( [ 'ar', 'de' ] )
+				new DescriptionsProviderFieldDefinitions( [ 'ar', 'de' ], [] )
 			)
 		);
 	}

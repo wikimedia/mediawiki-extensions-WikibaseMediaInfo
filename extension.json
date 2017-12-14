@@ -8,10 +8,21 @@
 	"descriptionmsg": "wikibasemediainfo-desc",
 	"license-name": "GPL-2.0+",
 	"type": "wikibase",
-	"load_composer_autoloader": true,
+	"requires": {
+		"MediaWiki": ">= 1.31.0"
+	},
+	"AutoloadNamespaces": {
+		"Wikibase\\MediaInfo\\": "src/",
+		"Wikibase\\MediaInfo\\Tests\\": "tests/phpunit/composer/",
+		"Wikibase\\MediaInfo\\Tests\\MediaWiki\\": "tests/phpunit/mediawiki/"
+	},
 	"config": {
-		"MediaInfoNamespace": 144,
-		"MediaInfoNamespaceTalk": 145
+		"MediaInfoNamespace": {
+			"value": 144
+		},
+		"MediaInfoNamespaceTalk": {
+			"value": 145
+		}
 	},
 	"namespaces": [
 		{
@@ -113,7 +124,7 @@
 	},
 	"SpecialPages": {
 	},
-	"manifest_version": 1,
+	"manifest_version": 2,
 	"GroupPermissions": {
 		"*": {
 			"mediainfo-term": true

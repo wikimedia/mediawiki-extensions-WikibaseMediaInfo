@@ -12,7 +12,7 @@ use PHPUnit_Framework_TestCase;
 use RequestContext;
 use Title;
 use Wikibase\DataModel\Entity\EntityId;
-use Wikibase\DataModel\Entity\EntityIdParser;
+use Wikibase\DataModel\Entity\ItemIdParser;
 use Wikibase\DataModel\Services\Lookup\LabelDescriptionLookup;
 use Wikibase\Lib\Store\EntityContentDataCodec;
 use Wikibase\Lib\Store\LanguageFallbackLabelDescriptionLookupFactory;
@@ -85,7 +85,7 @@ class MediaInfoHandlerTest extends PHPUnit_Framework_TestCase {
 			$this->getMockWithoutConstructor( EntityContentDataCodec::class ),
 			$this->getMockWithoutConstructor( EntityConstraintProvider::class ),
 			$this->getMock( ValidatorErrorLocalizer::class ),
-			$this->getMock( EntityIdParser::class ),
+			new ItemIdParser(),
 			$this->getMock( EntityIdLookup::class ),
 			$labelLookupFactory,
 			$missingMediaInfoHandler,

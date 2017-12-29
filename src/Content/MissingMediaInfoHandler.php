@@ -96,7 +96,7 @@ class MissingMediaInfoHandler {
 
 		// show an empty MediaInfo
 		$outputGenerator = $this->outputGeneratorFactory->
-			getEntityParserOutputGenerator( $userLanguage->getCode(), true );
+			getEntityParserOutputGenerator( $userLanguage->getCode() );
 
 		$mediaInfo = new MediaInfo( $mediaInfoId );
 		$parserOutput = $outputGenerator->getParserOutput( $mediaInfo, true );

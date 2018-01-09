@@ -1,5 +1,9 @@
 {
-	"@metadata": [],
-	"wikibase-entity-mediainfo": "How we refer to entities of type media info. See also the Wikidata glossary on [[d:Wikidata:Glossary#media info|media info]].\n{{Identical|MediaInfo}}",
+	"@metadata": {
+		"authors": [
+			"Liuxinyu970226"
+		]
+	},
+	"wikibase-entity-mediainfo": "How we refer to entities of type media info. See also the Wikidata glossary on [[d:Wikidata:Glossary#media info|media info]].",
 	"wikibasemediainfo-desc": "{{desc|name=WikibaseMediaInfo|url=https://www.mediawiki.org/wiki/Extension:WikibaseMediaInfo}}"
 }

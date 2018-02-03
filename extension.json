@@ -119,7 +119,6 @@
 			]
 		},
 		"wikibase.mediainfo.styles": {
-			"position": "top",
 			"styles": [
 				"resources/mediainfo.css"
 			]

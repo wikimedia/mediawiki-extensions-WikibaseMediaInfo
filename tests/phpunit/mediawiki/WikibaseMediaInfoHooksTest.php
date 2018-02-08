@@ -5,6 +5,7 @@ namespace Wikibase\MediaInfo\Tests\MediaWiki;
 use Hooks;
 use Language;
 use MediaWiki\MediaWikiServices;
+use ParserOutput;
 use PHPUnit_Framework_TestCase;
 use Title;
 use Wikibase\Repo\WikibaseRepo;
@@ -95,6 +96,18 @@ class WikibaseMediaInfoHooksTest extends PHPUnit_Framework_TestCase {
 		$this->assertRegExp( '@<h2><a .*MediaInfo:M23.*>MediaInfo:M23</a></h2>@', $html );
 	}
 
-	// onFileUpload hook is tested in CreatePagePropsTest
+	public function testOnContentAlterParserOutput() {
+		$content = new \WikitextContent( '' );
+		$title = Title::newFromText( 'File.jpg', NS_FILE );
+		$title->resetArticleID( 1 );
+		$parserOutput = new ParserOutput();
+
+		$this->assertArrayNotHasKey( 'mediainfo_entity', $parserOutput->getProperties() );
+
+		Hooks::run( 'ContentAlterParserOutput', [ $content, $title, $parserOutput ] );
+
+		$this->assertArrayHasKey( 'mediainfo_entity', $parserOutput->getProperties() );
+		$this->assertEquals( 'M1', $parserOutput->getProperty( 'mediainfo_entity' ) );
+	}
 
 }

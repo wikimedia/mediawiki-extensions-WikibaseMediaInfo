@@ -2,11 +2,12 @@
 
 namespace Wikibase\MediaInfo;
 
+use Content;
 use DatabaseUpdater;
-use DeferredUpdates;
-use File;
 use ImagePage;
 use MediaWiki\MediaWikiServices;
+use ParserOutput;
+use Title;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\Repo\WikibaseRepo;
 
@@ -79,43 +80,47 @@ class WikibaseMediaInfoHooks {
 	}
 
 	/**
-	 * After file upload, insert a page_props entry referring to the MediaInfo entity id.
-	 * Hook: FileUpload
+	 * Add a page_props referencing the MediaInfo entity.
+	 * LinksUpdate.php will fetch the props from ParserOutput & store them to DB right after
+	 * creating a page, so we just have to add the page_props entry there.
+	 * This is preferable to adding in DB after upload (say FileUpload hook), because it would get
+	 * wiped out once LinksUpdate runs...
 	 *
-	 * @param File $file
+	 * Hook: ContentAlterParserOutput
+	 *
+	 * @param Content $content
+	 * @param Title $title
+	 * @param ParserOutput $output
+	 * @return bool
 	 */
-	public static function onFileUpload( File $file ) {
-		// wrap creation of the page_props entry inside a deferred update or it'd
-		// get blasted away right after having been created as part of finishing
-		// up the upload process
-		DeferredUpdates::addCallableUpdate(
-			function () use ( $file ) {
-				$title = $file->getTitle();
-				if ( $title === null ) {
-					return;
-				}
-				$pageId = $title->getArticleID();
+	public static function onContentAlterParserOutput(
+		Content $content,
+		Title $title,
+		ParserOutput $output
+	) {
+		if ( !$title->inNamespace( NS_FILE ) ) {
+			return true;
+		}
 
-				$wikibaseRepo = WikibaseRepo::getDefaultInstance();
-				$entityId = $wikibaseRepo->getEntityIdComposer()->composeEntityId(
-					'',
-					MediaInfo::ENTITY_TYPE,
-					$pageId
-				);
+		if ( $output->getProperty( 'mediainfo_entity' ) !== false ) {
+			return true;
+		}
 
-				$file->getRepo()->getMasterDB()->insert(
-					'page_props',
-					[
-						'pp_page' => $pageId,
-						'pp_propname' => 'mediainfo_entity',
-						'pp_value' => $entityId->getLocalPart(),
-					],
-					__METHOD__
-				);
-			},
-			DeferredUpdates::POSTSEND,
-			wfGetDB( DB_MASTER )
+		$pageId = $title->getArticleID();
+		if ( $pageId === 0 ) {
+			return true;
+		}
+
+		$wikibaseRepo = WikibaseRepo::getDefaultInstance();
+		$entityId = $wikibaseRepo->getEntityIdComposer()->composeEntityId(
+			'',
+			MediaInfo::ENTITY_TYPE,
+			$pageId
 		);
+
+		$output->setProperty( 'mediainfo_entity', $entityId->getLocalPart() );
+
+		return true;
 	}
 
 }

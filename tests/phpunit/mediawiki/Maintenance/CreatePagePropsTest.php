@@ -2,12 +2,7 @@
 
 namespace Wikibase\MediaInfo\Tests\MediaWiki\Maintenance;
 
-use DeferredUpdates;
-use Hooks;
-use LocalFile;
 use MediaWikiTestCase;
-use Title;
-use RepoGroup;
 use Wikibase\MediaInfo\Maintenance\CreatePageProps;
 
 /**
@@ -24,37 +19,6 @@ class CreatePagePropsTest extends MediaWikiTestCase {
 
 		$this->tablesUsed[] = 'page';
 		$this->tablesUsed[] = 'page_props';
-	}
-
-	public function testOnFileUploadHook() {
-		$db = wfGetDB( DB_REPLICA );
-
-		$pageId = $this->newPageId();
-		$title = Title::newFromText( 'File.jpg', NS_FILE );
-		$title->resetArticleID( $pageId );
-
-		// Create bogus File object to be fed to hook
-		$file = new LocalFile(
-			$title,
-			RepoGroup::singleton()->getLocalRepo()
-		);
-
-		// Verify that page_props entry does not yet exist
-		$row = $db->selectRow( 'page_props', '*', [ 'pp_page' => $pageId ] );
-		$this->assertFalse( $row );
-
-		// Trigger hook
-		Hooks::run( 'FileUpload', [ $file, false, false ] );
-		DeferredUpdates::doUpdates();
-
-		// Test that page_props entry has been created
-		$row = $db->selectRow( 'page_props', '*', [ 'pp_page' => $pageId ] );
-		$this->assertEquals( (object)[
-			'pp_page' => $pageId,
-			'pp_propname' => 'mediainfo_entity',
-			'pp_value' => 'M' . $pageId,
-			'pp_sortkey' => null,
-		], $row );
 	}
 
 	public function provideDBUpdatesData() {

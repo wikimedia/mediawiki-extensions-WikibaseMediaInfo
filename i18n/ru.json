@@ -1,9 +1,10 @@
 {
 	"@metadata": {
 		"authors": [
-			"Okras"
+			"Okras",
+			"Putnik"
 		]
 	},
 	"wikibase-entity-mediainfo": "медиаинформация",
-	"wikibasemediainfo-desc": "Расширение Wikibase для управления структурированными метаданными медиа-файлов"
+	"wikibasemediainfo-desc": "Расширение Wikibase для управления структурированными метаданными медиафайлов"
 }

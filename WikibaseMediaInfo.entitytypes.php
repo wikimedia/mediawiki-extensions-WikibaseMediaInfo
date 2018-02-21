@@ -14,6 +14,7 @@
  */
 
 use MediaWiki\MediaWikiServices;
+use Wikibase\Client\WikibaseClient;
 use Wikibase\DataModel\DeserializerFactory;
 use Wikibase\DataModel\Entity\EntityId;
 use Wikibase\DataModel\SerializerFactory;
@@ -103,7 +104,9 @@ return [
 				new MediaInfoFieldDefinitions(
 					$wikibaseRepo->getLabelProviderDefinitions(),
 					$wikibaseRepo->getDescriptionProviderDefinitions()
-				)
+				),
+				WikibaseClient::getDefaultInstance()->getStore()->getUsageUpdater(),
+				null
 			);
 		},
 		'entity-id-pattern' => MediaInfoId::PATTERN,

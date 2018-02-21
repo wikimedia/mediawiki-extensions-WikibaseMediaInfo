@@ -8,13 +8,18 @@ use Closure;
 use FauxRequest;
 use IContextSource;
 use Language;
+use MediaWiki\Storage\RevisionRecord;
 use RequestContext;
 use Title;
+use Wikibase\Client\Store\UsageUpdater;
+use Wikibase\Client\Usage\EntityUsage;
+use Wikibase\Content\EntityInstanceHolder;
 use Wikibase\DataModel\Entity\EntityId;
 use Wikibase\DataModel\Entity\ItemIdParser;
 use Wikibase\DataModel\Services\Lookup\LabelDescriptionLookup;
 use Wikibase\Lib\Store\EntityContentDataCodec;
 use Wikibase\Lib\Store\LanguageFallbackLabelDescriptionLookupFactory;
+use Wikibase\MediaInfo\Content\MediaInfoContent;
 use Wikibase\MediaInfo\Content\MediaInfoHandler;
 use Wikibase\MediaInfo\Content\MissingMediaInfoHandler;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
@@ -29,7 +34,7 @@ use Wikibase\Store\EntityIdLookup;
 use Wikibase\TermIndex;
 
 /**
- * @covers Wikibase\MediaInfo\Content\MediaInfoHandler
+ * @covers \Wikibase\MediaInfo\Content\MediaInfoHandler
  *
  * @group WikibaseMediaInfo
  *
@@ -44,7 +49,7 @@ class MediaInfoHandlerTest extends \PHPUnit\Framework\TestCase {
 			->getMock();
 	}
 
-	private function newMediaInfoHandler() {
+	private function newMediaInfoHandler( array $replacements = [] ) {
 		$m17 = new MediaInfoId( 'M17' );
 
 		$labelLookupFactory = $this->getMockWithoutConstructor(
@@ -79,6 +84,10 @@ class MediaInfoHandlerTest extends \PHPUnit\Framework\TestCase {
 				return Title::makeTitle( NS_FILE, 'Test-' . $id->getSerialization() . '.png' );
 			} ) );
 
+		$mockUsageUpdater = $this->getMockBuilder( UsageUpdater::class )
+			->disableOriginalConstructor()
+			->getMock();
+
 		return new MediaInfoHandler(
 			$this->getMock( TermIndex::class ),
 			$this->getMockWithoutConstructor( EntityContentDataCodec::class ),
@@ -88,11 +97,15 @@ class MediaInfoHandlerTest extends \PHPUnit\Framework\TestCase {
 			$this->getMock( EntityIdLookup::class ),
 			$labelLookupFactory,
 			$missingMediaInfoHandler,
-			$filePageLookup,
+			!empty( $replacements[ 'filePageLookup' ] )
+				? $replacements[ 'filePageLookup' ] : $filePageLookup,
 			new MediaInfoFieldDefinitions(
 				new LabelsProviderFieldDefinitions( [ 'ar', 'de' ] ),
 				new DescriptionsProviderFieldDefinitions( [ 'ar', 'de' ], [] )
-			)
+			),
+			!empty( $replacements[ 'usageUpdater' ] )
+				? $replacements[ 'usageUpdater' ] : $mockUsageUpdater,
+			null
 		);
 	}
 
@@ -177,6 +190,163 @@ class MediaInfoHandlerTest extends \PHPUnit\Framework\TestCase {
 		$mediaInfoHandler = $this->newMediaInfoHandler();
 
 		$this->assertSame( $expected, $mediaInfoHandler->canCreateWithCustomId( $id ) );
+	}
+
+	public function testGetDataForFilePageSearchIndex() {
+		$testRevisionId = 999;
+
+		$content = new MediaInfoContent(
+			new EntityInstanceHolder(
+				new MediaInfo(
+					new MediaInfoId( 'M1' )
+				)
+			)
+		);
+
+		$mockRevision = $this->getMockBuilder( RevisionRecord::class )
+			->disableOriginalConstructor()
+			->getMock();
+		$mockRevision->expects( $this->atLeastOnce() )
+			->method( 'getId' )
+			->willReturn( $testRevisionId );
+
+		$mockPage = $this->getMockBuilder( \WikiPage::class )
+			->disableOriginalConstructor()
+			->getMock();
+		$mockPage->expects( $this->atLeastOnce() )
+			->method( 'getContent' )
+			->willReturn( $content );
+		$mockPage->expects( $this->atLeastOnce() )
+			->method( 'getRevision' )
+			->willReturn( $mockRevision );
+
+		$data = $this->newMediaInfoHandler()
+			->getDataForFilePageSearchIndex(
+				$mockPage,
+				new \ParserOutput(),
+				new \CirrusSearch()
+			);
+
+		$this->assertArrayHasKey( MediaInfoHandler::FILE_PAGE_SEARCH_INDEX_KEY_MEDIAINFO_TEXT, $data );
+		$this->assertArrayHasKey( MediaInfoHandler::FILE_PAGE_SEARCH_INDEX_KEY_MEDIAINFO_VERSION, $data );
+		$this->assertEquals(
+			$testRevisionId,
+			$data[ MediaInfoHandler::FILE_PAGE_SEARCH_INDEX_KEY_MEDIAINFO_VERSION ]
+		);
+		$this->assertArrayHasKey( 'labels', $data );
+		$this->assertArrayNotHasKey( 'text', $data );
+	}
+
+	public function testGetEntityModificationUpdates() {
+		$testArticleId = '999';
+		$testEntityId = new MediaInfoId( 'M999' );
+
+		// Create expectations for the calls made by the MediaInfoHandler
+		$mockFilePage = $this->getMockBuilder( Title::class )
+			->disableOriginalConstructor()
+			->getMock();
+		$mockFilePage->method( 'getArticleID' )
+			->willReturn( $testArticleId );
+
+		$mockFilePageLookup = $this->getMockBuilder( FilePageLookup::class )
+			->disableOriginalConstructor()
+			->getMock();
+		$mockFilePageLookup->method( 'getFilePage' )
+			->with( $testEntityId )
+			->willReturn( $mockFilePage );
+
+		// This is the key part of the test - making sure that addUsagesForPage
+		// is called on the UsageUpdater with the right data
+		$mockUsageUpdater = $this->getMockBuilder( UsageUpdater::class )
+			->disableOriginalConstructor()
+			->getMock();
+		$mockUsageUpdater->expects( $this->once() )
+			->method( 'addUsagesForPage' )
+			->with(
+				$testArticleId,
+				$this->callback( function( $usageArray ) use ( $testEntityId ) {
+					if ( !is_array( $usageArray ) ) {
+						return false;
+					}
+					if ( count( $usageArray ) != 1 ) {
+						return false;
+					}
+					$usage = $usageArray[0];
+					if ( $usage->getEntityId() != $testEntityId ) {
+						return false;
+					}
+					if ( $usage->getAspect() != EntityUsage::ALL_USAGE ) {
+						return false;
+					}
+					return true;
+				} )
+			);
+
+		// Create the SUT with the mocked dependencies containing the expectations
+		$mediaInfoHandler = $this->newMediaInfoHandler(
+			[
+				'filePageLookup' => $mockFilePageLookup,
+				'usageUpdater' => $mockUsageUpdater
+			]
+		);
+
+		$entityContent = new MediaInfoContent(
+			new EntityInstanceHolder(
+				new MediaInfo(
+					$testEntityId
+				)
+			)
+		);
+		$updates = $mediaInfoHandler->getEntityModificationUpdates(
+			$entityContent,
+			new \Title()
+		);
+
+		$this->assertGreaterThanOrEqual( 1, count( $updates ) );
+
+		foreach ( $updates as $update ) {
+			$update->doUpdate();
+		}
+	}
+
+	public function testGetEntityModificationUpdateWithMissingFilePage() {
+		$mockFilePageLookup = $this->getMockBuilder( FilePageLookup::class )
+			->disableOriginalConstructor()
+			->getMock();
+		$mockFilePageLookup->method( 'getFilePage' )
+			->willReturn( null );
+
+		$mockUsageUpdater = $this->getMockBuilder( UsageUpdater::class )
+			->disableOriginalConstructor()
+			->getMock();
+		$mockUsageUpdater->expects( $this->never() )
+			->method( 'addUsagesForPage' );
+
+		// Create the SUT with the mocked objects containing the expectations
+		$mediaInfoHandler = $this->newMediaInfoHandler(
+			[
+				'filePageLookup' => $mockFilePageLookup,
+				'usageUpdater' => $mockUsageUpdater
+			]
+		);
+
+		$entityContent = new MediaInfoContent(
+			new EntityInstanceHolder(
+				new MediaInfo(
+					new MediaInfoId( 'M999' )
+				)
+			)
+		);
+		$updates = $mediaInfoHandler->getEntityModificationUpdates(
+			$entityContent,
+			new \Title()
+		);
+
+		$this->assertGreaterThanOrEqual( 1, count( $updates ) );
+
+		foreach ( $updates as $update ) {
+			$update->doUpdate();
+		}
 	}
 
 }

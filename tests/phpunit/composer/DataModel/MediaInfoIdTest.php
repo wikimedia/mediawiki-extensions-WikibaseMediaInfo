@@ -3,7 +3,6 @@
 namespace Wikibase\MediaInfo\Tests\DataModel;
 
 use InvalidArgumentException;
-use PHPUnit_Framework_TestCase;
 use Wikibase\MediaInfo\DataModel\MediaInfoId;
 
 /**
@@ -14,7 +13,7 @@ use Wikibase\MediaInfo\DataModel\MediaInfoId;
  * @license GPL-2.0+
  * @author Bene* < benestar.wikimedia@gmail.com >
  */
-class MediaInfoIdTest extends PHPUnit_Framework_TestCase {
+class MediaInfoIdTest extends \PHPUnit\Framework\TestCase {
 
 	public function provideValidIds() {
 		return [

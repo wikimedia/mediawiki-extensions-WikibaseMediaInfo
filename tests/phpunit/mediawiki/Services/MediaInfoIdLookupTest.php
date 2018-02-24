@@ -15,7 +15,7 @@ use Wikibase\MediaInfo\Services\MediaInfoIdLookup;
  * @license GPL-2.0+
  * @author Daniel Kinzler
  */
-class MediaInfoIdLookupTest extends \PHPUnit_Framework_TestCase {
+class MediaInfoIdLookupTest extends \PHPUnit\Framework\TestCase {
 
 	public function provideGetIdFromLinkTarget() {
 		return [

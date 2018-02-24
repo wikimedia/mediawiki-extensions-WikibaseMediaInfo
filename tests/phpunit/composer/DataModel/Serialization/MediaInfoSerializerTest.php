@@ -2,7 +2,6 @@
 
 namespace Wikibase\MediaInfo\Tests\DataModel\Serialization;
 
-use PHPUnit_Framework_TestCase;
 use Serializers\Exceptions\SerializationException;
 use Serializers\Serializer;
 use Wikibase\DataModel\Entity\Item;
@@ -21,7 +20,7 @@ use Wikibase\MediaInfo\DataModel\Serialization\MediaInfoSerializer;
  * @license GPL-2.0+
  * @author Bene* < benestar.wikimedia@gmail.com >
  */
-class MediaInfoSerializerTest extends PHPUnit_Framework_TestCase {
+class MediaInfoSerializerTest extends \PHPUnit\Framework\TestCase {
 
 	private function newSerializer() {
 		$termListSerializer = $this->getMock( Serializer::class );

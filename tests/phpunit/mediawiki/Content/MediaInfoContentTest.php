@@ -3,7 +3,6 @@
 namespace Wikibase\MediaInfo\Tests\MediaWiki\Content;
 
 use InvalidArgumentException;
-use PHPUnit_Framework_TestCase;
 use Wikibase\Content\EntityInstanceHolder;
 use Wikibase\DataModel\Entity\Item;
 use Wikibase\DataModel\Snak\PropertyNoValueSnak;
@@ -19,7 +18,7 @@ use Wikibase\MediaInfo\DataModel\MediaInfoId;
  * @license GPL-2.0+
  * @author Bene* < benestar.wikimedia@gmail.com >
  */
-class MediaInfoContentTest extends PHPUnit_Framework_TestCase {
+class MediaInfoContentTest extends \PHPUnit\Framework\TestCase {
 
 	public function testInvalidEntityType() {
 		$this->setExpectedException( InvalidArgumentException::class );

@@ -14,7 +14,7 @@ use Wikibase\MediaInfo\Services\MediaInfoServices;
  * @license GPL-2.0+
  * @author Daniel Kinzler
  */
-class MediaInfoServicesTest extends \PHPUnit_Framework_TestCase {
+class MediaInfoServicesTest extends \PHPUnit\Framework\TestCase {
 
 	public function testGetMediaInfoIdLookup() {
 		$this->assertInstanceOf(

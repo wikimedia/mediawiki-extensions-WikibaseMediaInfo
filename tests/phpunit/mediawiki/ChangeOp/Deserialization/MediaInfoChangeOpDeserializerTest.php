@@ -29,7 +29,7 @@ use Wikibase\StringNormalizer;
  * @license GPL-2.0+
  * @author Katie Filbert < aude.wiki@gmail.com >
  */
-class MediaInfoChangeOpDeserializerTest extends \PHPUnit_Framework_TestCase {
+class MediaInfoChangeOpDeserializerTest extends \PHPUnit\Framework\TestCase {
 
 	use LabelsChangeOpDeserializationTester;
 	use DescriptionsChangeOpDeserializationTester;

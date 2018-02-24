@@ -6,7 +6,6 @@ use Hooks;
 use Language;
 use MediaWiki\MediaWikiServices;
 use ParserOutput;
-use PHPUnit_Framework_TestCase;
 use Title;
 use Wikibase\Repo\WikibaseRepo;
 
@@ -18,7 +17,7 @@ use Wikibase\Repo\WikibaseRepo;
  * @license GPL-2.0+
  * @author Bene* < benestar.wikimedia@gmail.com >
  */
-class WikibaseMediaInfoHooksTest extends PHPUnit_Framework_TestCase {
+class WikibaseMediaInfoHooksTest extends \PHPUnit\Framework\TestCase {
 
 	public function testOnWikibaseEntityNamespaces() {
 		global $wgNamespaceContentModels;

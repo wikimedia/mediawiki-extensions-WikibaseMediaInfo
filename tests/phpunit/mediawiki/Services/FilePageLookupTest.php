@@ -16,7 +16,7 @@ use Wikibase\MediaInfo\Services\FilePageLookup;
  * @license GPL-2.0+
  * @author Daniel Kinzler
  */
-class FilePageLookupTest extends \PHPUnit_Framework_TestCase {
+class FilePageLookupTest extends \PHPUnit\Framework\TestCase {
 
 	/**
 	 * @return TitleFactory

@@ -5,7 +5,6 @@ namespace Wikibase\MediaInfo\Tests\DataModel\Services\Diff;
 use Diff\DiffOp\Diff\Diff;
 use Diff\DiffOp\DiffOpAdd;
 use Diff\DiffOp\DiffOpChange;
-use PHPUnit_Framework_TestCase;
 use Wikibase\DataModel\Services\Diff\EntityDiff;
 use Wikibase\DataModel\Snak\PropertySomeValueSnak;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
@@ -20,7 +19,7 @@ use Wikibase\MediaInfo\DataModel\Services\Diff\MediaInfoDiffer;
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  * @author Thiemo Kreuz
  */
-class MediaInfoDifferTest extends PHPUnit_Framework_TestCase {
+class MediaInfoDifferTest extends \PHPUnit\Framework\TestCase {
 
 	public function testGivenTwoEmptyMediaInfos_emptyMediaInfoDiffIsReturned() {
 		$differ = new MediaInfoDiffer();

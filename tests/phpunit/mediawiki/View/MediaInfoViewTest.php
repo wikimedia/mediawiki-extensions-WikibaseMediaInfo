@@ -5,7 +5,6 @@ namespace Wikibase\MediaInfo\Tests\MediaWiki\View;
 use InvalidArgumentException;
 use MediaWiki\Linker\LinkRenderer;
 use PHPUnit_Framework_MockObject_MockObject;
-use PHPUnit_Framework_TestCase;
 use Title;
 use Wikibase\DataModel\Entity\EntityDocument;
 use Wikibase\DataModel\Entity\PropertyId;
@@ -32,7 +31,7 @@ use Wikibase\View\Template\TemplateFactory;
  * @license GPL-2.0+
  * @author Adrian Heine < adrian.heine@wikimedia.de >
  */
-class MediaInfoViewTest extends PHPUnit_Framework_TestCase {
+class MediaInfoViewTest extends \PHPUnit\Framework\TestCase {
 
 	/**
 	 * @return StatementSectionsView

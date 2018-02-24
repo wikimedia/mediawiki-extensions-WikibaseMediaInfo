@@ -8,7 +8,6 @@ use Closure;
 use FauxRequest;
 use IContextSource;
 use Language;
-use PHPUnit_Framework_TestCase;
 use RequestContext;
 use Title;
 use Wikibase\DataModel\Entity\EntityId;
@@ -37,7 +36,7 @@ use Wikibase\TermIndex;
  * @license GPL-2.0+
  * @author Bene* < benestar.wikimedia@gmail.com >
  */
-class MediaInfoHandlerTest extends PHPUnit_Framework_TestCase {
+class MediaInfoHandlerTest extends \PHPUnit\Framework\TestCase {
 
 	private function getMockWithoutConstructor( $className ) {
 		return $this->getMockBuilder( $className )

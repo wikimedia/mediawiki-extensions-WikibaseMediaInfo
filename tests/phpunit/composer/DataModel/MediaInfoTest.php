@@ -3,7 +3,6 @@
 namespace Wikibase\MediaInfo\Tests\DataModel;
 
 use InvalidArgumentException;
-use PHPUnit_Framework_TestCase;
 use Wikibase\DataModel\Entity\Item;
 use Wikibase\DataModel\Entity\ItemId;
 use Wikibase\DataModel\Snak\PropertyNoValueSnak;
@@ -21,7 +20,7 @@ use Wikibase\MediaInfo\DataModel\MediaInfoId;
  * @license GPL-2.0+
  * @author Bene* < benestar.wikimedia@gmail.com >
  */
-class MediaInfoTest extends PHPUnit_Framework_TestCase {
+class MediaInfoTest extends \PHPUnit\Framework\TestCase {
 
 	public function testConstructor() {
 		$id = new MediaInfoId( 'M1' );

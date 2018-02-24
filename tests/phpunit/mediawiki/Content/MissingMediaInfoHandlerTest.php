@@ -24,7 +24,7 @@ use Wikibase\Repo\ParserOutput\EntityParserOutputGeneratorFactory;
  * @license GPL-2.0+
  * @author Daniel Kinzler
  */
-class MissingMediaInfoHandlerTest extends \PHPUnit_Framework_TestCase {
+class MissingMediaInfoHandlerTest extends \PHPUnit\Framework\TestCase {
 
 	/**
 	 * @return TitleFactory

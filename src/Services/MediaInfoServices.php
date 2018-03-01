@@ -3,6 +3,8 @@
 namespace Wikibase\MediaInfo\Services;
 
 use MediaWiki\MediaWikiServices;
+use Wikibase\Repo\WikibaseRepo;
+use Wikibase\MediaInfo\DataModel\MediaInfo;
 
 /**
  * @license GPL-2.0+
@@ -14,7 +16,14 @@ class MediaInfoServices {
 	 * @return MediaInfoIdLookup
 	 */
 	public static function getMediaInfoIdLookup() {
-		return MediaWikiServices::getInstance()->getService( 'MediaInfoIdLookup' );
+		$nsLookup = WikibaseRepo::getDefaultInstance()->getEntityNamespaceLookup();
+		$mediaInfoNamespace = $nsLookup->getEntityNamespace( MediaInfo::ENTITY_TYPE );
+
+		if ( !is_int( $mediaInfoNamespace ) ) {
+			throw new MWException( 'No namespace configured for MediaInfo entities!' );
+		}
+
+		return new MediaInfoIdLookup( $mediaInfoNamespace );
 	}
 
 	/**

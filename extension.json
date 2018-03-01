@@ -59,6 +59,9 @@
 		],
 		"ContentAlterParserOutput": [
 			"Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onContentAlterParserOutput"
+		],
+		"GetEntityByLinkedTitleLookup": [
+			"Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onGetEntityByLinkedTitleLookup"
 		]
 	},
 	"MessagesDirs": {

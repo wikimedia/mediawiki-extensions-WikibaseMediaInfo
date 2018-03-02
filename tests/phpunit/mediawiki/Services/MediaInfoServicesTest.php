@@ -11,7 +11,7 @@ use Wikibase\MediaInfo\Services\MediaInfoServices;
  *
  * @group WikibaseMediaInfo
  *
- * @license GPL-2.0+
+ * @license GPL-2.0-or-later
  * @author Daniel Kinzler
  */
 class MediaInfoServicesTest extends \PHPUnit\Framework\TestCase {

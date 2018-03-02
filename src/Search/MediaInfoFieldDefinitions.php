@@ -7,7 +7,7 @@ use Wikibase\Repo\Search\Elastic\Fields\StatementCountField;
 use Wikibase\Repo\Search\Elastic\Fields\WikibaseIndexField;
 
 /**
- * @license GPL-2.0+
+ * @license GPL-2.0-or-later
  * @author Katie Filbert < aude.wiki@gmail.com >
  */
 class MediaInfoFieldDefinitions implements FieldDefinitions {

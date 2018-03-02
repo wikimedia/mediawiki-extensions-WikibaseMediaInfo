@@ -19,7 +19,7 @@ use Wikibase\View\EntityTermsView;
 /**
  * @group WikibaseMediaInfo
  *
- * @license GPL-2.0+
+ * @license GPL-2.0-or-later
  * @author Bene* < benestar.wikimedia@gmail.com >
  */
 class EntityTypesTest extends \PHPUnit\Framework\TestCase {

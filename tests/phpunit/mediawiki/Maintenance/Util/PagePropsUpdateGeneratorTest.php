@@ -12,7 +12,7 @@ use Wikibase\Repo\WikibaseRepo;
  * @group Database
  * @group WikibaseMediaInfo
  *
- * @license GPL-2.0+
+ * @license GPL-2.0-or-later
  */
 class PagePropsUpdateGeneratorTest extends MediaWikiTestCase {
 

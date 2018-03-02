@@ -25,7 +25,7 @@ use Wikibase\SubmitEntityAction;
 use Wikibase\TermIndex;
 
 /**
- * @license GPL-2.0+
+ * @license GPL-2.0-or-later
  * @author Bene* < benestar.wikimedia@gmail.com >
  */
 class MediaInfoHandler extends EntityHandler {

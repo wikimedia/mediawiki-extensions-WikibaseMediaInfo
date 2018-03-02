@@ -14,7 +14,7 @@ use Wikibase\Repo\WikibaseRepo;
  *
  * @group WikibaseMediaInfo
  *
- * @license GPL-2.0+
+ * @license GPL-2.0-or-later
  * @author Bene* < benestar.wikimedia@gmail.com >
  */
 class WikibaseMediaInfoHooksTest extends \PHPUnit\Framework\TestCase {

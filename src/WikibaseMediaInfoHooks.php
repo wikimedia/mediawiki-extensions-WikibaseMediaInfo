@@ -16,7 +16,7 @@ use Wikibase\MediaInfo\Services\MediaInfoByLinkedTitleLookup;
 /**
  * MediaWiki hook handlers for the Wikibase MediaInfo extension.
  *
- * @license GPL-2.0+
+ * @license GPL-2.0-or-later
  * @author Bene* < benestar.wikimedia@gmail.com >
  */
 class WikibaseMediaInfoHooks {

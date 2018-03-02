@@ -9,7 +9,7 @@ use Serializers\Serializer;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 
 /**
- * @license GPL-2.0+
+ * @license GPL-2.0-or-later
  * @author Bene* < benestar.wikimedia@gmail.com >
  */
 class MediaInfoSerializer implements DispatchableSerializer {

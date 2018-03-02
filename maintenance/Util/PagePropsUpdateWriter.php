@@ -8,7 +8,7 @@ use MediaWiki\MediaWikiServices;
 /**
  * Writes updates to DB for CreatePageProps maintenance script.
  *
- * @license GPL-2.0+
+ * @license GPL-2.0-or-later
  */
 class PagePropsUpdateWriter extends BatchRowWriter {
 

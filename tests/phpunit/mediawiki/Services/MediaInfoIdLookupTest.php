@@ -12,7 +12,7 @@ use Wikibase\MediaInfo\Services\MediaInfoIdLookup;
  *
  * @group WikibaseMediaInfo
  *
- * @license GPL-2.0+
+ * @license GPL-2.0-or-later
  * @author Daniel Kinzler
  */
 class MediaInfoIdLookupTest extends \PHPUnit\Framework\TestCase {

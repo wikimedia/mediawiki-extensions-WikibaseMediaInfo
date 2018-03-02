@@ -3,7 +3,7 @@
 	"type": "mediawiki-extension",
 	"description": "Wikibase extension to manage structured metadata of media files",
 	"homepage": "http://wikiba.se",
-	"license": "GPL-2.0+",
+	"license": "GPL-2.0-or-later",
 	"authors": [
 		{
 			"name": "The Wikidata team"

@@ -18,7 +18,7 @@ require_once $basePath . '/maintenance/Maintenance.php';
 /**
  * Maintenance script for populating page_props mediainfo_entity for existing media files.
  *
- * @license GPL-2.0+
+ * @license GPL-2.0-or-later
  */
 class CreatePageProps extends LoggedUpdateMaintenance {
 

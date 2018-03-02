@@ -9,7 +9,7 @@ use Wikibase\MediaInfo\DataModel\MediaInfo;
 /**
  * Generates update rows for CreatePageProps maintenance script.
  *
- * @license GPL-2.0+
+ * @license GPL-2.0-or-later
  */
 class PagePropsUpdateGenerator implements RowUpdateGenerator {
 

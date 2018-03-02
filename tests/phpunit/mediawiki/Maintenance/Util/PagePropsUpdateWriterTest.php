@@ -11,7 +11,7 @@ use Wikibase\MediaInfo\Maintenance\Util\PagePropsUpdateWriter;
  * @group Database
  * @group WikibaseMediaInfo
  *
- * @license GPL-2.0+
+ * @license GPL-2.0-or-later
  */
 class PagePropsUpdateWriterTest extends MediaWikiTestCase {
 

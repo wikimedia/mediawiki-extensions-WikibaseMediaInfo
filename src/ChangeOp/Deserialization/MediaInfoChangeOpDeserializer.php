@@ -13,7 +13,7 @@ use Wikibase\Repo\ChangeOp\Deserialization\LabelsChangeOpDeserializer;
 /**
  * Constructs ChangeOp objects for MediaInfo change requests
  *
- * @license GPL-2.0+
+ * @license GPL-2.0-or-later
  */
 class MediaInfoChangeOpDeserializer implements ChangeOpDeserializer {
 

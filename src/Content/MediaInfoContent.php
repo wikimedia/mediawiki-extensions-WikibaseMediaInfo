@@ -11,7 +11,7 @@ use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\Repo\FingerprintSearchTextGenerator;
 
 /**
- * @license GPL-2.0+
+ * @license GPL-2.0-or-later
  * @author Bene* < benestar.wikimedia@gmail.com >
  */
 class MediaInfoContent extends EntityContent {

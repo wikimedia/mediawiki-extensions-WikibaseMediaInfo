@@ -16,7 +16,7 @@ use Wikibase\DataModel\Term\TermList;
  *
  * @since 0.1
  *
- * @license GPL-2.0+
+ * @license GPL-2.0-or-later
  * @author Bene* < benestar.wikimedia@gmail.com >
  */
 class MediaInfo implements EntityDocument, LabelsProvider, DescriptionsProvider,

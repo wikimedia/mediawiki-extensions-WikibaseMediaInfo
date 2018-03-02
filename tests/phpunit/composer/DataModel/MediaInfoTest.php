@@ -17,7 +17,7 @@ use Wikibase\MediaInfo\DataModel\MediaInfoId;
  *
  * @group WikibaseMediaInfo
  *
- * @license GPL-2.0+
+ * @license GPL-2.0-or-later
  * @author Bene* < benestar.wikimedia@gmail.com >
  */
 class MediaInfoTest extends \PHPUnit\Framework\TestCase {

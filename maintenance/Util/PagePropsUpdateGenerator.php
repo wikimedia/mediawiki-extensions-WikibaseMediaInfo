@@ -3,7 +3,7 @@
 namespace Wikibase\MediaInfo\Maintenance\Util;
 
 use RowUpdateGenerator;
-use Wikibase\Lib\EntityIdComposer;
+use Wikibase\DataModel\Services\EntityId\EntityIdComposer;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 
 /**

@@ -10,7 +10,7 @@ use Wikimedia\Assert\Assert;
 /**
  * Lookup service for getting the MediaInfoId that corresponds to a LinkTarget.
  *
- * @license GPL 2+
+ * @license GPL-2.0-or-later
  * @author Daniel Kinzler
  */
 class MediaInfoIdLookup {

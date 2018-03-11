@@ -10,7 +10,7 @@ use Wikibase\Repo\WikibaseRepo;
 /**
  * Lookup class for getting the MediaInfoId that corresponds to a file page.
  *
- * @license GPL 2+
+ * @license GPL-2.0-or-later
  * @author Mark Holmquist
  */
 class MediaInfoByLinkedTitleLookup implements EntityByLinkedTitleLookup {

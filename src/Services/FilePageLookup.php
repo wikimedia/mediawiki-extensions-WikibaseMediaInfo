@@ -11,7 +11,7 @@ use Wikibase\MediaInfo\DataModel\MediaInfoId;
  * Lookup service for getting the Title of the page in the File namespace that corresponds
  * to a given MediaInfoId.
  *
- * @license GPL 2+
+ * @license GPL-2.0-or-later
  * @author Daniel Kinzler
  */
 class FilePageLookup {

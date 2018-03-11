@@ -8,7 +8,7 @@
 	/**
 	 * @class wikibase.serialization.MediaInfoDeserializer
 	 * @extends wikibase.serialization.Deserializer
-	 * @license GNU GPL v2+
+	 * @license GPL-2.0-or-later
 	 * @author Adrian Heine <adrian.heine@wikimedia.de>
 	 *
 	 * @constructor

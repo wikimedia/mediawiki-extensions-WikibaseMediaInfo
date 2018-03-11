@@ -87,10 +87,10 @@ return [
 			$wikibaseRepo = WikibaseRepo::getDefaultInstance();
 
 			return new MediaInfoHandler(
-				$termIndex = $wikibaseRepo->getStore()->getTermIndex(),
-				$codec = $wikibaseRepo->getEntityContentDataCodec(),
-				$constraintProvider = $wikibaseRepo->getEntityConstraintProvider(),
-				$errorLocalizer = $wikibaseRepo->getValidatorErrorLocalizer(),
+				$wikibaseRepo->getStore()->getTermIndex(),
+				$wikibaseRepo->getEntityContentDataCodec(),
+				$wikibaseRepo->getEntityConstraintProvider(),
+				$wikibaseRepo->getValidatorErrorLocalizer(),
 				$wikibaseRepo->getEntityIdParser(),
 				$wikibaseRepo->getEntityIdLookup(),
 				$wikibaseRepo->getLanguageFallbackLabelDescriptionLookupFactory(),

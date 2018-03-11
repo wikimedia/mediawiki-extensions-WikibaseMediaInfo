@@ -1,6 +1,8 @@
 <?xml version="1.0"?>
-<ruleset name="WikibaseMediaInfo">
-	<rule ref="./vendor/wikibase/wikibase-codesniffer/Wikibase" />
+<ruleset>
+	<rule ref="./vendor/wikibase/wikibase-codesniffer/Wikibase">
+		<exclude name="Wikibase.Namespaces.FullQualifiedClassName" />
+	</rule>
 
 	<rule ref="Generic.Metrics.CyclomaticComplexity" />
 	<rule ref="Generic.Metrics.NestingLevel" />

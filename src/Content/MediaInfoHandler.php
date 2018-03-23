@@ -5,10 +5,13 @@ namespace Wikibase\MediaInfo\Content;
 use Article;
 use IContextSource;
 use Title;
+use Wikibase\Client\Store\UsageUpdater;
+use Wikibase\Client\Usage\EntityUsage;
 use Wikibase\Content\EntityHolder;
 use Wikibase\DataModel\Entity\EntityId;
 use Wikibase\DataModel\Entity\EntityIdParser;
 use Wikibase\EditEntityAction;
+use Wikibase\EntityContent;
 use Wikibase\HistoryEntityAction;
 use Wikibase\Lib\Store\EntityContentDataCodec;
 use Wikibase\Lib\Store\LanguageFallbackLabelDescriptionLookupFactory;
@@ -16,6 +19,7 @@ use Wikibase\MediaInfo\Actions\ViewMediaInfoAction;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\MediaInfo\DataModel\MediaInfoId;
 use Wikibase\MediaInfo\Services\FilePageLookup;
+use Wikibase\Repo\Content\DataUpdateAdapter;
 use Wikibase\Repo\Content\EntityHandler;
 use Wikibase\Repo\Search\Elastic\Fields\FieldDefinitions;
 use Wikibase\Repo\Validators\EntityConstraintProvider;
@@ -23,12 +27,16 @@ use Wikibase\Repo\Validators\ValidatorErrorLocalizer;
 use Wikibase\Store\EntityIdLookup;
 use Wikibase\SubmitEntityAction;
 use Wikibase\TermIndex;
+use Wikipage;
 
 /**
  * @license GPL-2.0-or-later
  * @author Bene* < benestar.wikimedia@gmail.com >
  */
 class MediaInfoHandler extends EntityHandler {
+
+	const FILE_PAGE_SEARCH_INDEX_KEY_MEDIAINFO_TEXT = 'opening_text';
+	const FILE_PAGE_SEARCH_INDEX_KEY_MEDIAINFO_VERSION = 'mediaInfoVersion';
 
 	/**
 	 * @var EntityIdLookup
@@ -51,6 +59,11 @@ class MediaInfoHandler extends EntityHandler {
 	private $filePageLookup;
 
 	/**
+	* @var UsageUpdater
+	*/
+	private $usageUpdater;
+
+	/**
 	 * @param TermIndex $termIndex
 	 * @param EntityContentDataCodec $contentCodec
 	 * @param EntityConstraintProvider $constraintProvider
@@ -61,6 +74,7 @@ class MediaInfoHandler extends EntityHandler {
 	 * @param MissingMediaInfoHandler $missingMediaInfoHandler
 	 * @param FilePageLookup $filePageLookup
 	 * @param FieldDefinitions $mediaInfoFieldDefinitions
+	 * @param UsageUpdater $usageUpdater
 	 * @param callable|null $legacyExportFormatDetector
 	 */
 	public function __construct(
@@ -74,6 +88,7 @@ class MediaInfoHandler extends EntityHandler {
 		MissingMediaInfoHandler $missingMediaInfoHandler,
 		FilePageLookup $filePageLookup,
 		FieldDefinitions $mediaInfoFieldDefinitions,
+		UsageUpdater $usageUpdater,
 		$legacyExportFormatDetector = null
 	) {
 		parent::__construct(
@@ -90,6 +105,7 @@ class MediaInfoHandler extends EntityHandler {
 		$this->labelLookupFactory = $labelLookupFactory;
 		$this->missingMediaInfoHandler = $missingMediaInfoHandler;
 		$this->filePageLookup = $filePageLookup;
+		$this->usageUpdater = $usageUpdater;
 	}
 
 	/**
@@ -184,6 +200,64 @@ class MediaInfoHandler extends EntityHandler {
 	 */
 	public function allowAutomaticIds() {
 		return false;
+	}
+
+	/**
+	 * Returns data for writing to the search index for File page corresponding to
+	 * the MediaInfo item
+	 *
+	 * @param WikiPage $page
+	 * @return array
+	 * @todo Replace the part where the entity data is populated with a
+	 *  call to parent::getEntityDataForSearchIndex
+	 */
+	public function getDataForFilePageSearchIndex(
+		WikiPage $page
+	) {
+		$fieldsData = [];
+		$content = $page->getContent();
+		if ( ( $content instanceof EntityContent ) && !$content->isRedirect() ) {
+			$entity = $content->getEntity();
+			$fields = $this->fieldDefinitions->getFields();
+
+			foreach ( $fields as $fieldName => $field ) {
+				$fieldsData[$fieldName] = $field->getFieldData( $entity );
+			}
+		}
+
+		$fieldsData[self::FILE_PAGE_SEARCH_INDEX_KEY_MEDIAINFO_TEXT] = $content->getTextForSearchIndex();
+		// Add the MediaInfo revision id, so that we can add a revision check for it when updating
+		// the File page data
+		$fieldsData[self::FILE_PAGE_SEARCH_INDEX_KEY_MEDIAINFO_VERSION] = $page->getRevision()->getId();
+
+		return $fieldsData;
+	}
+
+	/**
+	 * Notify File page that the MediaInfo item has been modified
+	 *
+	 * @see Content::getSecondaryDataUpdates
+	 *
+	 * @param EntityContent $content
+	 * @param Title $title
+	 *
+	 * @return \DataUpdate[]
+	 */
+	public function getEntityModificationUpdates( EntityContent $content, Title $title ) {
+		$updates = parent::getEntityModificationUpdates( $content, $title );
+		$updates[] = new DataUpdateAdapter(
+			function () use ( $content ) {
+				$filePageTitle = $this->filePageLookup->getFilePage( $content->getEntityId() );
+				if ( $filePageTitle ) {
+					$usage = new EntityUsage( $content->getEntityId(), EntityUsage::ALL_USAGE );
+					$this->usageUpdater->addUsagesForPage(
+						$filePageTitle->getArticleID(),
+						[ $usage ]
+					);
+				}
+			}
+		);
+		return $updates;
 	}
 
 }

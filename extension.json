@@ -62,6 +62,9 @@
 		],
 		"GetEntityByLinkedTitleLookup": [
 			"Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onGetEntityByLinkedTitleLookup"
+		],
+		"CirrusSearchBuildDocumentParse": [
+			"Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onCirrusSearchBuildDocumentParse"
 		]
 	},
 	"MessagesDirs": {

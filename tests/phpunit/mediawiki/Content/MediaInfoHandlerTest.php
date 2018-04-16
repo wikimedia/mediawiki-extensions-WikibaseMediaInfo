@@ -28,6 +28,7 @@ use Wikibase\MediaInfo\Search\MediaInfoFieldDefinitions;
 use Wikibase\MediaInfo\Services\FilePageLookup;
 use Wikibase\Repo\Search\Elastic\Fields\DescriptionsProviderFieldDefinitions;
 use Wikibase\Repo\Search\Elastic\Fields\LabelsProviderFieldDefinitions;
+use Wikibase\Repo\Search\Elastic\Fields\StatementProviderFieldDefinitions;
 use Wikibase\Repo\Validators\EntityConstraintProvider;
 use Wikibase\Repo\Validators\ValidatorErrorLocalizer;
 use Wikibase\Store\EntityIdLookup;
@@ -101,7 +102,8 @@ class MediaInfoHandlerTest extends \PHPUnit\Framework\TestCase {
 				? $replacements[ 'filePageLookup' ] : $filePageLookup,
 			new MediaInfoFieldDefinitions(
 				new LabelsProviderFieldDefinitions( [ 'ar', 'de' ] ),
-				new DescriptionsProviderFieldDefinitions( [ 'ar', 'de' ], [] )
+				new DescriptionsProviderFieldDefinitions( [ 'ar', 'de' ], [] ),
+				new StatementProviderFieldDefinitions( [ 'ar', 'de' ], [] )
 			),
 			!empty( $replacements[ 'usageUpdater' ] )
 				? $replacements[ 'usageUpdater' ] : $mockUsageUpdater,

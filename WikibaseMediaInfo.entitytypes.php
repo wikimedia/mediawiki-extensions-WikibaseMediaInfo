@@ -103,7 +103,8 @@ return [
 				MediaInfoServices::getFilePageLookup(),
 				new MediaInfoFieldDefinitions(
 					$wikibaseRepo->getLabelProviderDefinitions(),
-					$wikibaseRepo->getDescriptionProviderDefinitions()
+					$wikibaseRepo->getDescriptionProviderDefinitions(),
+					$wikibaseRepo->getStatementProviderDefinitions()
 				),
 				WikibaseClient::getDefaultInstance()->getStore()->getUsageUpdater(),
 				null

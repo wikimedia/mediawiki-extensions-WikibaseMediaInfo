@@ -2,6 +2,7 @@
 
 namespace Wikibase\MediaInfo\Tests\MediaWiki\Search;
 
+use PHPUnit4And6Compat;
 use Wikibase\MediaInfo\Search\MediaInfoFieldDefinitions;
 use Wikibase\Repo\Search\Elastic\Fields\FieldDefinitions;
 
@@ -10,6 +11,7 @@ use Wikibase\Repo\Search\Elastic\Fields\FieldDefinitions;
  * @author Katie Filbert < aude.wiki@gmail.com >
  */
 class MediaInfoFieldDefinitionsTest extends \PHPUnit\Framework\TestCase {
+	use PHPUnit4And6Compat;
 
 	public function testGetFields() {
 		$labelsProviderFieldDefinitions = $this->getMock( FieldDefinitions::class );

@@ -4,6 +4,7 @@ namespace Wikibase\MediaInfo\Tests\DataModel\Serialization;
 
 use Deserializers\Deserializer;
 use Deserializers\Exceptions\DeserializationException;
+use PHPUnit4And6Compat;
 use Wikibase\DataModel\Snak\PropertyNoValueSnak;
 use Wikibase\DataModel\Statement\StatementList;
 use Wikibase\DataModel\Term\TermList;
@@ -20,6 +21,7 @@ use Wikibase\MediaInfo\DataModel\Serialization\MediaInfoDeserializer;
  * @author Bene* < benestar.wikimedia@gmail.com >
  */
 class MediaInfoDeserializerTest extends \PHPUnit\Framework\TestCase {
+	use PHPUnit4And6Compat;
 
 	private function newDeserializer() {
 		$termListDeserializer = $this->getMock( Deserializer::class );

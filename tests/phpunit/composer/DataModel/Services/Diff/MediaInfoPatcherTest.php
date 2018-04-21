@@ -7,6 +7,7 @@ use Diff\DiffOp\DiffOpAdd;
 use Diff\DiffOp\DiffOpChange;
 use Diff\DiffOp\DiffOpRemove;
 use InvalidArgumentException;
+use PHPUnit4And6Compat;
 use Wikibase\DataModel\Entity\Item;
 use Wikibase\DataModel\Services\Diff\EntityDiff;
 use Wikibase\DataModel\Snak\PropertyNoValueSnak;
@@ -24,6 +25,7 @@ use Wikibase\MediaInfo\DataModel\Services\Diff\MediaInfoPatcher;
  * @author Thiemo Kreuz
  */
 class MediaInfoPatcherTest extends \PHPUnit\Framework\TestCase {
+	use PHPUnit4And6Compat;
 
 	public function testGivenEmptyDiff_mediaInfoIsReturnedAsIs() {
 		$mediaInfo = new MediaInfo();

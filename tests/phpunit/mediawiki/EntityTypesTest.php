@@ -4,6 +4,7 @@ namespace Wikibase\MediaInfo\Tests\MediaWiki;
 
 use Deserializers\Deserializer;
 use Serializers\Serializer;
+use PHPUnit4And6Compat;
 use Wikibase\DataModel\DeserializerFactory;
 use Wikibase\DataModel\SerializerFactory;
 use Wikibase\DataModel\Services\Lookup\LabelDescriptionLookup;
@@ -23,6 +24,7 @@ use Wikibase\View\EntityTermsView;
  * @author Bene* < benestar.wikimedia@gmail.com >
  */
 class EntityTypesTest extends \PHPUnit\Framework\TestCase {
+	use PHPUnit4And6Compat;
 
 	private function getRegistry() {
 		return require __DIR__ . '/../../../WikibaseMediaInfo.entitytypes.php';

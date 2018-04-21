@@ -4,6 +4,7 @@ namespace Wikibase\MediaInfo\Tests\DataModel\Serialization;
 
 use Serializers\Exceptions\SerializationException;
 use Serializers\Serializer;
+use PHPUnit4And6Compat;
 use Wikibase\DataModel\Entity\Item;
 use Wikibase\DataModel\Snak\PropertyNoValueSnak;
 use Wikibase\DataModel\Statement\StatementList;
@@ -21,6 +22,7 @@ use Wikibase\MediaInfo\DataModel\Serialization\MediaInfoSerializer;
  * @author Bene* < benestar.wikimedia@gmail.com >
  */
 class MediaInfoSerializerTest extends \PHPUnit\Framework\TestCase {
+	use PHPUnit4And6Compat;
 
 	private function newSerializer() {
 		$termListSerializer = $this->getMock( Serializer::class );

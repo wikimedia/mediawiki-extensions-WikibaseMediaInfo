@@ -26,14 +26,22 @@ class MediaInfoFieldDefinitionsTest extends \PHPUnit\Framework\TestCase {
 				'test_only_descriptions' => null,
 			] );
 
+		$statementProviderFieldDefinitions = $this->getMock( FieldDefinitions::class );
+		$statementProviderFieldDefinitions->method( 'getFields' )
+			->willReturn( [
+				'test_only_statements' => null,
+			] );
+
 		$mediaInfoFieldDefinitions = new MediaInfoFieldDefinitions(
 			$labelsProviderFieldDefinitions,
-			$descriptionsProviderFieldDefinitions
+			$descriptionsProviderFieldDefinitions,
+			$statementProviderFieldDefinitions
 		);
 
 		$expectedKeys = [
 			'test_only_labels',
 			'test_only_descriptions',
+			'test_only_statements',
 			'statement_count'
 		];
 

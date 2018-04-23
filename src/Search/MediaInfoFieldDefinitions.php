@@ -22,12 +22,19 @@ class MediaInfoFieldDefinitions implements FieldDefinitions {
 	 */
 	private $descriptionsProviderFieldDefinitions;
 
+	/**
+	 * @var FieldDefinitions
+	 */
+	private $statementProviderDefinitions;
+
 	public function __construct(
 		FieldDefinitions $labelsProviderFieldDefinitions,
-		FieldDefinitions $descriptionsProviderFieldDefinitions
+		FieldDefinitions $descriptionsProviderFieldDefinitions,
+		FieldDefinitions $statementProviderDefinitions
 	) {
 		$this->labelsProviderFieldDefinitions = $labelsProviderFieldDefinitions;
 		$this->descriptionsProviderFieldDefinitions = $descriptionsProviderFieldDefinitions;
+		$this->statementProviderDefinitions = $statementProviderDefinitions;
 	}
 
 	/**
@@ -38,7 +45,8 @@ class MediaInfoFieldDefinitions implements FieldDefinitions {
 	public function getFields() {
 		$fields = array_merge(
 			$this->labelsProviderFieldDefinitions->getFields(),
-			$this->descriptionsProviderFieldDefinitions->getFields()
+			$this->descriptionsProviderFieldDefinitions->getFields(),
+			$this->statementProviderDefinitions->getFields()
 		);
 
 		$fields['statement_count'] = new StatementCountField();

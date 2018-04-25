@@ -65,6 +65,9 @@
 		],
 		"CirrusSearchBuildDocumentParse": [
 			"Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onCirrusSearchBuildDocumentParse"
+		],
+		"BeforePageDisplay": [
+			"Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onBeforePageDisplay"
 		]
 	},
 	"MessagesDirs": {
@@ -77,6 +80,14 @@
 			"scripts": "resources/jquery.wikibase.mediainfoview.js",
 			"dependencies": [
 				"jquery.wikibase.entityview"
+			]
+		},
+		"wikibase.mediainfo.filePageDisplay": {
+			"dependencies": [
+				"wikibase.mediainfo",
+				"wikibase.mediainfo.mediainfoview",
+				"wikibase.ui.entityViewInit",
+				"wikibase.entityPage.entityLoaded"
 			]
 		},
 		"wikibase.mediainfo": {

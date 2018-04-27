@@ -5,5 +5,6 @@
 		]
 	},
 	"wikibase-entity-mediainfo": "media info",
-	"wikibasemediainfo-desc": "Wikibase extension to manage structured metadata of media files"
+	"wikibasemediainfo-desc": "Wikibase extension to manage structured metadata of media files",
+	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Caption"
 }

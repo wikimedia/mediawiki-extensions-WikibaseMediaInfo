@@ -4,6 +4,12 @@
 		<exclude name="Wikibase.Namespaces.FullQualifiedClassName" />
 	</rule>
 
+	<rule ref="Generic.Files.LineLength">
+		<properties>
+			<property name="lineLimit" value="140" />
+		</properties>
+	</rule>
+
 	<rule ref="Generic.Metrics.CyclomaticComplexity" />
 	<rule ref="Generic.Metrics.NestingLevel" />
 

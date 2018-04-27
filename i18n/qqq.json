@@ -5,5 +5,6 @@
 		]
 	},
 	"wikibase-entity-mediainfo": "How we refer to entities of type media info. See also the Wikidata glossary on [[d:Wikidata:Glossary#media info|media info]].",
-	"wikibasemediainfo-desc": "{{desc|name=WikibaseMediaInfo|url=https://www.mediawiki.org/wiki/Extension:WikibaseMediaInfo}}"
+	"wikibasemediainfo-desc": "{{desc|name=WikibaseMediaInfo|url=https://www.mediawiki.org/wiki/Extension:WikibaseMediaInfo}}",
+	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "List of labels, aliases and descriptions in one or more languages: Heading of the \"caption\" column.\n{{Identical|Caption}}"
 }

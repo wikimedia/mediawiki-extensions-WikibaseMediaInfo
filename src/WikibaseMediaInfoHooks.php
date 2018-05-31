@@ -103,6 +103,9 @@ class WikibaseMediaInfoHooks {
 	 */
 	public static function onBeforePageDisplay( &$out, &$skin ) {
 		$imgTitle = $out->getTitle();
+		if ( !$imgTitle->exists() ) {
+			return true;
+		}
 		$pageIsFilePage = $imgTitle->inNamespace( NS_FILE );
 
 		if ( $pageIsFilePage ) {

@@ -210,6 +210,10 @@ class MediaInfoHandlerTest extends \PHPUnit\Framework\TestCase {
 	}
 
 	public function testGetDataForFilePageSearchIndex() {
+		if ( !class_exists( 'CirrusSearch' ) ) {
+			$this->markTestSkipped( 'CirrusSearch not installed, skipping' );
+		}
+
 		$testRevisionId = 999;
 
 		$content = new MediaInfoContent(

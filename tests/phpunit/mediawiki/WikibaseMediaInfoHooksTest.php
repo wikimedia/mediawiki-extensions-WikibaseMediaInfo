@@ -127,6 +127,10 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 	}
 
 	public function testOnCirrusSearchBuildDocumentParseWithNonFilePage() {
+		if ( !class_exists( 'CirrusSearch' ) ) {
+			$this->markTestSkipped( 'CirrusSearch not installed, skipping' );
+		}
+
 		$args = $this->getArgsForCirrusSearchBuildDocumentParse();
 
 		WikibaseMediaInfoHooks::onCirrusSearchBuildDocumentParse(
@@ -146,6 +150,10 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 	}
 
 	public function testOnCirrusSearchBuildDocumentParseWithNonWikitextContent() {
+		if ( !class_exists( 'CirrusSearch' ) ) {
+			$this->markTestSkipped( 'CirrusSearch not installed, skipping' );
+		}
+
 		$args = $this->getArgsForCirrusSearchBuildDocumentParse();
 
 		WikibaseMediaInfoHooks::onCirrusSearchBuildDocumentParse(
@@ -188,6 +196,10 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 	public function testOnCirrusSearchBuildDocumentParseWithFileWhereMediaInfoItemDoesNotExist(
 		$searchIndexData, $engineHints
 	) {
+		if ( !class_exists( 'CirrusSearch' ) ) {
+			$this->markTestSkipped( 'CirrusSearch not installed, skipping' );
+		}
+
 		$args = $this->getArgsForCirrusSearchBuildDocumentParse();
 		$this->injectMockContentHandler( $searchIndexData, $engineHints );
 
@@ -214,6 +226,10 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 	 * @dataProvider provideTestCSBDP
 	 */
 	public function testOnCirrusSearchBuildDocumentParseWithFile( $searchIndexData, $engineHints ) {
+		if ( !class_exists( 'CirrusSearch' ) ) {
+			$this->markTestSkipped( 'CirrusSearch not installed, skipping' );
+		}
+
 		$args = $this->getArgsForCirrusSearchBuildDocumentParse();
 		$this->injectMockContentHandler( $searchIndexData, $engineHints );
 
@@ -256,6 +272,10 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 	}
 
 	public function provideTestCSBDP() {
+		if ( !class_exists( 'CirrusSearch' ) ) {
+			return [];
+		}
+
 		return [
 			'no data' => [
 				'searchIndexData' => [],

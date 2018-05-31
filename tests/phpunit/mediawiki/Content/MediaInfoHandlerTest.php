@@ -18,6 +18,7 @@ use Wikibase\Content\EntityInstanceHolder;
 use Wikibase\DataModel\Entity\EntityId;
 use Wikibase\DataModel\Entity\ItemIdParser;
 use Wikibase\DataModel\Services\Lookup\LabelDescriptionLookup;
+use Wikibase\DataModel\Services\Lookup\PropertyDataTypeLookup;
 use Wikibase\Lib\Store\EntityContentDataCodec;
 use Wikibase\Lib\Store\LanguageFallbackLabelDescriptionLookupFactory;
 use Wikibase\MediaInfo\Content\MediaInfoContent;
@@ -62,6 +63,11 @@ class MediaInfoHandlerTest extends \PHPUnit\Framework\TestCase {
 			->method( 'newLabelDescriptionLookup' )
 			->will( $this->returnValue( $this->getMock( LabelDescriptionLookup::class ) ) );
 
+		$propertyLookup = $this->getMock( PropertyDataTypeLookup::class );
+		$propertyLookup->expects( $this->any() )
+			->method( 'getDataTypeIdForProperty' )
+			->willReturn( 'string' );
+
 		$missingMediaInfoHandler = $this->getMockWithoutConstructor(
 			MissingMediaInfoHandler::class
 		);
@@ -105,7 +111,13 @@ class MediaInfoHandlerTest extends \PHPUnit\Framework\TestCase {
 			new MediaInfoFieldDefinitions(
 				new LabelsProviderFieldDefinitions( [ 'ar', 'de' ] ),
 				new DescriptionsProviderFieldDefinitions( [ 'ar', 'de' ], [] ),
-				new StatementProviderFieldDefinitions( [ 'ar', 'de' ], [] )
+				new StatementProviderFieldDefinitions(
+					$propertyLookup,
+					[ 'ar', 'de' ],
+					[],
+					[],
+					[]
+				)
 			),
 			!empty( $replacements[ 'usageUpdater' ] )
 				? $replacements[ 'usageUpdater' ] : $mockUsageUpdater,

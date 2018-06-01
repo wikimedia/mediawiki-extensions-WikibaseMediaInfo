@@ -46,6 +46,7 @@ class WikibaseMediaInfoHooks {
 	 * @var EntityIdComposer
 	 */
 	private $entityIdComposer;
+
 	/**
 	 * @var EntityTitleStoreLookup
 	 */
@@ -100,79 +101,80 @@ class WikibaseMediaInfoHooks {
 
 	/**
 	 * Check if we're on a file page, add Wikibase modules if so
+	 *
+	 * @param \OutputPage $out
+	 * @param \Skin $skin
 	 */
-	public static function onBeforePageDisplay( &$out, &$skin ) {
+	public static function onBeforePageDisplay( $out, $skin ) {
 		$imgTitle = $out->getTitle();
-		if ( !$imgTitle->exists() ) {
-			return true;
-		}
-		$pageIsFilePage = $imgTitle->inNamespace( NS_FILE );
-
-		if ( $pageIsFilePage ) {
-			$pageId = $imgTitle->getArticleID();
-			$wikibaseRepo = WikibaseRepo::getDefaultInstance();
-			$entityId = $wikibaseRepo->getEntityIdComposer()->composeEntityId(
-				'',
-				MediaInfo::ENTITY_TYPE,
-				$pageId
-			);
-
-			$entityRevisionLookup = $wikibaseRepo->getEntityRevisionLookup();
-			$entityRevision = $entityRevisionLookup->getEntityRevision(
-				$entityId
-			);
-
-			if ( $entityRevision === null ) {
-				$entityRevisionId = 0;
-			} else {
-				$entityRevisionId = $entityRevision->getRevisionId();
-			}
-
-			$entityLookup = $wikibaseRepo->getEntityLookup();
-			$entity = $entityLookup->getEntity( $entityId );
-
-			if ( $entity !== null ) {
-				$entitySerializer = $wikibaseRepo->getCompactEntitySerializer();
-				$serializedEntity = $entitySerializer->serialize( $entity );
-			} else {
-				$serializedEntity = [
-					'type' => MediaInfo::ENTITY_TYPE,
-					'id' => $entityId->getSerialization(),
-					'labels' => [],
-					'descriptions' => [],
-					'statements' => [],
-				];
-			}
-
-			$entityJson = FormatJson::encode( $serializedEntity );
-
-			$request = RequestContext::getMain();
-			$language = $request->getLanguage();
-			$languageFallbackChainFactory = $wikibaseRepo->getLanguageFallbackChainFactory();
-			$languageFallbackChain = $languageFallbackChainFactory->newFromLanguage( $language );
-
-			$out->addJsConfigVars( [
-				'wbEntity' => $entityJson,
-				'wbIsEditView' => true,
-				'wbUserSpecifiedLanguages' => $languageFallbackChain->getFetchLanguageCodes(),
-				'wbCurrentRevision' => $entityRevisionId,
-			] );
-
-			$out->addModuleStyles( [
-				'wikibase.common',
-				'jquery.ui.core.styles',
-				'jquery.wikibase.statementview.RankSelector.styles',
-				'jquery.wikibase.toolbar.styles',
-				'jquery.wikibase.toolbarbutton.styles',
-			] );
-
-			$out->addModules( 'wikibase.mediainfo.filePageDisplay' );
-
+		if ( !$imgTitle->exists() || !$imgTitle->inNamespace( NS_FILE ) ) {
+			return;
 		}
 
-		return true;
+		$pageId = $imgTitle->getArticleID();
+		$wikibaseRepo = WikibaseRepo::getDefaultInstance();
+		$entityId = $wikibaseRepo->getEntityIdComposer()->composeEntityId(
+			'',
+			MediaInfo::ENTITY_TYPE,
+			$pageId
+		);
+
+		$entityRevisionLookup = $wikibaseRepo->getEntityRevisionLookup();
+		$entityRevision = $entityRevisionLookup->getEntityRevision(
+			$entityId
+		);
+
+		if ( $entityRevision === null ) {
+			$entityRevisionId = 0;
+		} else {
+			$entityRevisionId = $entityRevision->getRevisionId();
+		}
+
+		$entityLookup = $wikibaseRepo->getEntityLookup();
+		$entity = $entityLookup->getEntity( $entityId );
+
+		if ( $entity !== null ) {
+			$entitySerializer = $wikibaseRepo->getCompactEntitySerializer();
+			$serializedEntity = $entitySerializer->serialize( $entity );
+		} else {
+			$serializedEntity = [
+				'type' => MediaInfo::ENTITY_TYPE,
+				'id' => $entityId->getSerialization(),
+				'labels' => [],
+				'descriptions' => [],
+				'statements' => [],
+			];
+		}
+
+		$entityJson = FormatJson::encode( $serializedEntity );
+
+		$request = RequestContext::getMain();
+		$language = $request->getLanguage();
+		$languageFallbackChainFactory = $wikibaseRepo->getLanguageFallbackChainFactory();
+		$languageFallbackChain = $languageFallbackChainFactory->newFromLanguage( $language );
+
+		$out->addJsConfigVars( [
+			'wbEntity' => $entityJson,
+			'wbIsEditView' => true,
+			'wbUserSpecifiedLanguages' => $languageFallbackChain->getFetchLanguageCodes(),
+			'wbCurrentRevision' => $entityRevisionId,
+		] );
+
+		$out->addModuleStyles( [
+			'wikibase.common',
+			'jquery.ui.core.styles',
+			'jquery.wikibase.statementview.RankSelector.styles',
+			'jquery.wikibase.toolbar.styles',
+			'jquery.wikibase.toolbarbutton.styles',
+		] );
+
+		$out->addModules( 'wikibase.mediainfo.filePageDisplay' );
 	}
 
+	/**
+	 * @param ImagePage $page
+	 * @param string &$html
+	 */
 	public static function onImagePageAfterImageLinks( ImagePage $page, &$html ) {
 		$imgTitle = $page->getTitle();
 		$pageId = $imgTitle->getArticleID();
@@ -194,7 +196,6 @@ class WikibaseMediaInfoHooks {
 		$html .= '<h2>' . $linkHtml . '</h2>';
 
 		$entityLookup = $wikibaseRepo->getEntityLookup();
-		$contentFactory = $wikibaseRepo->getEntityContentFactory();
 		$entity = $entityLookup->getEntity( $entityId );
 
 		$request = RequestContext::getMain();
@@ -299,7 +300,6 @@ class WikibaseMediaInfoHooks {
 	 * @param Content $content
 	 * @param Title $title
 	 * @param ParserOutput $output
-	 * @return bool
 	 */
 	public static function onContentAlterParserOutput(
 		Content $content,
@@ -307,16 +307,16 @@ class WikibaseMediaInfoHooks {
 		ParserOutput $output
 	) {
 		if ( !$title->inNamespace( NS_FILE ) ) {
-			return true;
+			return;
 		}
 
 		if ( $output->getProperty( 'mediainfo_entity' ) !== false ) {
-			return true;
+			return;
 		}
 
 		$pageId = $title->getArticleID();
 		if ( $pageId === 0 ) {
-			return true;
+			return;
 		}
 
 		$wikibaseRepo = WikibaseRepo::getDefaultInstance();
@@ -327,8 +327,6 @@ class WikibaseMediaInfoHooks {
 		);
 
 		$output->setProperty( 'mediainfo_entity', $entityId->getLocalPart() );
-
-		return true;
 	}
 
 	public static function onGetEntityByLinkedTitleLookup( EntityByLinkedTitleLookup &$lookup ) {

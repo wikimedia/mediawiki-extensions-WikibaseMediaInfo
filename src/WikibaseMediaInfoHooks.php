@@ -22,6 +22,7 @@ use Wikibase\Lib\Store\LanguageFallbackLabelDescriptionLookup;
 use Wikibase\MediaInfo\Content\MediaInfoHandler;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\MediaInfo\Services\MediaInfoByLinkedTitleLookup;
+use Wikibase\MediaInfo\View\MediaInfoTermsListView;
 use Wikibase\Repo\MediaWikiLanguageDirectionalityLookup;
 use Wikibase\Repo\MediaWikiLocalizedTextProvider;
 use Wikibase\Repo\ParserOutput\FallbackHintHtmlTermRenderer;
@@ -30,7 +31,6 @@ use Wikibase\Repo\View\RepoSpecialPageLinker;
 use Wikibase\Repo\WikibaseRepo;
 use Wikibase\View\SimpleEntityTermsView;
 use Wikibase\View\Template\TemplateFactory;
-use Wikibase\View\TermsListView;
 use Wikibase\View\ToolbarEditSectionGenerator;
 use WikiPage;
 
@@ -246,7 +246,7 @@ class WikibaseMediaInfoHooks {
 
 		$languageDirectionalityLookup = new MediaWikiLanguageDirectionalityLookup();
 		$languageNameLookup = new LanguageNameLookup( $languageCode );
-		$termsListView = new TermsListView(
+		$termsListView = new MediaInfoTermsListView(
 			$templateFactory,
 			$languageNameLookup,
 			$textProvider,

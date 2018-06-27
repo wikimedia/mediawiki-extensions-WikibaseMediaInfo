@@ -5,5 +5,6 @@
 		]
 	},
 	"wikibase-entity-mediainfo": "多媒體資訊",
-	"wikibasemediainfo-desc": "管理結構化多媒體檔案詮釋資料的 Wikibase 擴充"
+	"wikibasemediainfo-desc": "管理結構化多媒體檔案詮釋資料的 Wikibase 擴充",
+	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "說明"
 }

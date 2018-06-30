@@ -4,5 +4,6 @@
 			"WikiPhoenix"
 		]
 	},
-	"wikibase-entity-mediainfo": "mediainformation"
+	"wikibase-entity-mediainfo": "mediainformation",
+	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Undertext"
 }

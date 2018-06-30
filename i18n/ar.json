@@ -2,9 +2,11 @@
 	"@metadata": {
 		"authors": [
 			"محمد أحمد عبد الفتاح",
-			"Mr. Ibrahem"
+			"Mr. Ibrahem",
+			"ديفيد"
 		]
 	},
 	"wikibase-entity-mediainfo": "معلومات الوسائط",
-	"wikibasemediainfo-desc": "امتداد Wikibase لإدارة البيانات الوصفية المهيكلة لملفات الوسائط"
+	"wikibasemediainfo-desc": "امتداد Wikibase لإدارة البيانات الوصفية المهيكلة لملفات الوسائط",
+	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "الشرح"
 }

@@ -2,9 +2,11 @@
 	"@metadata": {
 		"authors": [
 			"Okras",
-			"Putnik"
+			"Putnik",
+			"Vlad5250"
 		]
 	},
 	"wikibase-entity-mediainfo": "медиаинформация",
-	"wikibasemediainfo-desc": "Расширение Wikibase для управления структурированными метаданными медиафайлов"
+	"wikibasemediainfo-desc": "Расширение Wikibase для управления структурированными метаданными медиафайлов",
+	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Подпись"
 }

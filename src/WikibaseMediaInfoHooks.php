@@ -106,6 +106,11 @@ class WikibaseMediaInfoHooks {
 	 * @param \Skin $skin
 	 */
 	public static function onBeforePageDisplay( $out, $skin ) {
+		// Exit if the extension is disabled.
+		if ( !MediaWikiServices::getInstance()->getMainConfig()->get( 'MediaInfoEnable' ) ) {
+			return;
+		}
+
 		$imgTitle = $out->getTitle();
 		if ( !$imgTitle->exists() || !$imgTitle->inNamespace( NS_FILE ) ) {
 			return;
@@ -176,6 +181,11 @@ class WikibaseMediaInfoHooks {
 	 * @param string &$html
 	 */
 	public static function onImagePageAfterImageLinks( ImagePage $page, &$html ) {
+		// Exit if the extension is disabled.
+		if ( !MediaWikiServices::getInstance()->getMainConfig()->get( 'MediaInfoEnable' ) ) {
+			return;
+		}
+
 		$imgTitle = $page->getTitle();
 		$pageId = $imgTitle->getArticleID();
 
@@ -306,6 +316,11 @@ class WikibaseMediaInfoHooks {
 		Title $title,
 		ParserOutput $output
 	) {
+		// Exit if the extension is disabled.
+		if ( !MediaWikiServices::getInstance()->getMainConfig()->get( 'MediaInfoEnable' ) ) {
+			return;
+		}
+
 		if ( !$title->inNamespace( NS_FILE ) ) {
 			return;
 		}

@@ -18,6 +18,9 @@
 		"Wikibase\\MediaInfo\\Tests\\MediaWiki\\": "tests/phpunit/mediawiki/"
 	},
 	"config": {
+		"MediaInfoEnable": {
+			"value": true
+		},
 		"MediaInfoNamespace": {
 			"value": 144
 		},

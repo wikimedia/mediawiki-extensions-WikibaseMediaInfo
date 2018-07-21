@@ -5,5 +5,6 @@
 		]
 	},
 	"wikibase-entity-mediainfo": "medieinformasjon",
-	"wikibasemediainfo-desc": "Wikibase-utvidelse for å behandle strukturerte metadata for mediefiler"
+	"wikibasemediainfo-desc": "Wikibase-utvidelse for å behandle strukturerte metadata for mediefiler",
+	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Bildetekst"
 }

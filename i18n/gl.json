@@ -6,5 +6,6 @@
 		]
 	},
 	"wikibase-entity-mediainfo": "información multimedia",
-	"wikibasemediainfo-desc": "Extensión de Wikibase para manexar metadatos estruturados de ficheiros multimedia"
+	"wikibasemediainfo-desc": "Extensión de Wikibase para manexar metadatos estruturados de ficheiros multimedia",
+	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Pé de imaxe"
 }

@@ -217,7 +217,7 @@ class WikibaseMediaInfoHooks {
 		$textProvider = new MediaWikiLocalizedTextProvider( $languageCode );
 
 		$epogf = $wikibaseRepo->getEntityParserOutputGeneratorFactory();
-		$epog = $epogf->getEntityParserOutputGenerator( $languageCode );
+		$epog = $epogf->getEntityParserOutputGenerator( $language );
 
 		if ( $entity === null ) {
 			$entityFactory = $wikibaseRepo->getEntityFactory();
@@ -231,17 +231,8 @@ class WikibaseMediaInfoHooks {
 			$entityIds = [];
 		}
 
-		$entityInfoBuilderFactory = $store->getEntityInfoBuilderFactory();
-		$entityInfoBuilder = $entityInfoBuilderFactory->newEntityInfoBuilder( $entityIds );
-		$entityInfoBuilder->resolveRedirects();
-		$entityInfoBuilder->collectTerms(
-			[ 'label', 'description' ],
-			$languageFallbackChain->getFetchLanguageCodes()
-		);
-		$entityInfoBuilder->removeMissing();
-		$entityInfoBuilder->collectDataTypes();
-		$entityInfoBuilder->retainEntityInfo( $entityIds );
-		$entityInfo = $entityInfoBuilder->getEntityInfo();
+		$entityInfoBuilder = $store->getEntityInfoBuilder();
+		$entityInfo = $entityInfoBuilder->collectEntityInfo( $entityIds, $languageFallbackChain->getFetchLanguageCodes() );
 
 		$labelDescriptionLookup = new LanguageFallbackLabelDescriptionLookup(
 			new EntityInfoTermLookup( $entityInfo ),

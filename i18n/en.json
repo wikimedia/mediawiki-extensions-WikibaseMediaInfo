@@ -4,6 +4,7 @@
 			"Bene*"
 		]
 	},
+	"right-mediainfo-term": "Change media info terms (captions, summaries)",
 	"wikibase-entity-mediainfo": "media info",
 	"wikibasemediainfo-desc": "Wikibase extension to manage structured metadata of media files",
 	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Caption"

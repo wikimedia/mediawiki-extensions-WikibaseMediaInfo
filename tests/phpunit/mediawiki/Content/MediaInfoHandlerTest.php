@@ -113,7 +113,8 @@ class MediaInfoHandlerTest extends \PHPUnit\Framework\TestCase {
 				new DescriptionsProviderFieldDefinitions( [ 'ar', 'de' ], [] ),
 				new StatementProviderFieldDefinitions(
 					$propertyLookup,
-					[ 'ar', 'de' ],
+					[],
+					[],
 					[],
 					[],
 					[]

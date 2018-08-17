@@ -5,6 +5,7 @@
 			"Hamilton Abreu"
 		]
 	},
+	"right-mediainfo-term": "Alterar os termos da informação de ficheiros multimédia (legendas, resumos)",
 	"wikibase-entity-mediainfo": "informação multimédia",
 	"wikibasemediainfo-desc": "Extensão Wikibase para gerir metadados estruturados de ficheiros multimédia",
 	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Legenda"

@@ -2,9 +2,11 @@
 	"@metadata": {
 		"authors": [
 			"Gomoko",
-			"Trial"
+			"Trial",
+			"Wladek92"
 		]
 	},
+	"right-mediainfo-term": "Modifier les termes d'information du média (légendes, résumés)",
 	"wikibase-entity-mediainfo": "Infos média",
 	"wikibasemediainfo-desc": "Extension de Wikibase pour gérer les métadonnées structurées des fichiers de média",
 	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Légende"

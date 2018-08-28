@@ -5,6 +5,7 @@
 			"BadDog"
 		]
 	},
+	"right-mediainfo-term": "Промена услова за информације медија (натписи, резимеи)",
 	"wikibase-entity-mediainfo": "медија инфо",
 	"wikibasemediainfo-desc": "Есктензија Wikibase за управљање структурисаним метаподацима медијских датотека",
 	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Натпис"

@@ -4,6 +4,7 @@
 			"Jon Harald Søby"
 		]
 	},
+	"right-mediainfo-term": "Endre medieinfobegreper (undertekster, sammendrag)",
 	"wikibase-entity-mediainfo": "medieinformasjon",
 	"wikibasemediainfo-desc": "Wikibase-utvidelse for å behandle strukturerte metadata for mediefiler",
 	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Bildetekst"

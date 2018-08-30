@@ -9,17 +9,21 @@ use Language;
 use MediaWiki\MediaWikiServices;
 use ParserOutput;
 use Title;
+use User;
 use Wikibase\Content\EntityInstanceHolder;
-use Wikibase\DataModel\Entity\EntityId;
 use Wikibase\DataModel\Services\EntityId\EntityIdComposer;
+use Wikibase\DataModel\Services\Lookup\EntityLookup;
 use Wikibase\MediaInfo\Content\MediaInfoContent;
 use Wikibase\MediaInfo\Content\MediaInfoHandler;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\MediaInfo\DataModel\MediaInfoId;
 use Wikibase\MediaInfo\WikibaseMediaInfoHooks;
+use Wikibase\Repo\BabelUserLanguageLookup;
 use Wikibase\Repo\Search\Elastic\Fields\TermIndexField;
 use Wikibase\Repo\Store\EntityTitleStoreLookup;
 use Wikibase\Repo\WikibaseRepo;
+use Wikibase\View\Template\TemplateFactory;
+use Wikibase\View\Template\TemplateRegistry;
 
 /**
  * @covers \Wikibase\MediaInfo\WikibaseMediaInfoHooks
@@ -95,21 +99,77 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 	}
 
 	public function testOnImagePageAfterImageLinks() {
+
 		$imgTitle = Title::makeTitle( NS_FILE, 'Foo.jpg' );
 		$imgTitle->resetArticleID( 23 );
+		$testEntity = new MediaInfo( new MediaInfoId( 'M23' ) );
 
 		$imgPage = $this->getMockBuilder( \ImagePage::class )
 			->disableOriginalConstructor()
 			->getMock();
-
-		$imgPage->expects( $this->any() )
+		$imgPage->expects( $this->once() )
 			->method( 'getTitle' )
 			->will( $this->returnValue( $imgTitle ) );
+		$this->setOOUIExpectations( $imgPage );
+
+		$mockEntityLookup = $this->getMockBuilder( EntityLookup::class )
+			->disableOriginalConstructor()
+			->getMock();
+		$mockEntityLookup->expects( $this->atLeastOnce() )
+			->method( 'getEntity' )
+			->willReturn( $testEntity );
+
+		$mockEntityTitleStoreLookup = $this->getMockBuilder( EntityTitleStoreLookup::class )
+			->disableOriginalConstructor()
+			->getMock();
+
+		$mockUserLanguageLookup = $this->getMockBuilder( BabelUserLanguageLookup::class )
+			->disableOriginalConstructor()
+			->getMock();
+		$mockUserLanguageLookup->expects( $this->once() )
+			->method( 'getAllUserLanguages' )
+			->willReturn( [ 'en' ] );
 
 		$html = '';
-		Hooks::run( 'ImagePageAfterImageLinks', [ $imgPage, &$html ] );
+		$hookObject = new WikibaseMediaInfoHooks(
+			$this->getMockEntityIdComposer(),
+			$mockEntityTitleStoreLookup
+		);
 
-		$this->assertRegExp( '@<h2><a .*MediaInfo:M23.*>MediaInfo:M23</a></h2>@', $html );
+		$templateFactory = new TemplateFactory(
+			new TemplateRegistry( include __DIR__ . '/../../../resources/templates.php' )
+		);
+
+		$hookObject->doImagePageAfterImageLinks(
+			$imgPage,
+			$html,
+			$templateFactory,
+			$mockEntityLookup,
+			'en',
+			$mockUserLanguageLookup
+		);
+
+		$this->assertRegExp( '@mediainfo-M23@', $html );
+	}
+
+	private function setOOUIExpectations( $imgPage ) {
+		$out = $this->getMockBuilder( \OutputPage::class )
+			->disableOriginalConstructor()
+			->getMock();
+		$out->expects( $this->atLeastOnce() )
+			->method( 'enableOOUI' );
+		$out->expects( $this->atLeastOnce() )
+			->method( 'getUser' )
+			->willReturn( new User() );
+		$pageContext = $this->getMockBuilder( \IContextSource::class )
+			->disableOriginalConstructor()
+			->getMock();
+		$pageContext->method( 'getOutput' )
+			->willReturn( $out );
+		$imgPage->method( 'getContext' )
+			->willReturn( $pageContext );
+		//OOUI needs to be set up manually, as the code is just calling mocks
+		\OutputPage::setupOOUI();
 	}
 
 	public function testOnContentAlterParserOutput() {

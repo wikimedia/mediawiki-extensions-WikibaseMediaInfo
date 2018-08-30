@@ -7,5 +7,15 @@
 	"right-mediainfo-term": "Change media info terms (captions, summaries)",
 	"wikibase-entity-mediainfo": "media info",
 	"wikibasemediainfo-desc": "Wikibase extension to manage structured metadata of media files",
-	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Caption"
+	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Captions",
+	"wikibasemediainfo-filepage-structured-data-heading": "Structured data",
+	"wikibasemediainfo-filepage-more-languages": "See $1 more {{PLURAL:$1|language|languages}}",
+	"wikibasemediainfo-filepage-fewer-languages": "See fewer languages",
+	"wikibasemediainfo-filepage-add-caption": "Add a caption",
+	"wikibasemediainfo-filepage-edit-captions": "Edit captions",
+	"wikibasemediainfo-filepage-cancel": "Cancel",
+	"wikibasemediainfo-filepage-publish": "Publish changes",
+	"wikibasemediainfo-filepage-caption-empty": "No caption defined",
+	"wikibasemediainfo-filepage-caption-too-long": "$1 {{PLURAL:$1|character|characters}} over the limit",
+	"wikibasemediainfo-filepage-caption-approaching-limit": "$1 {{PLURAL:$1|character|characters|0=characters}} left"
 }

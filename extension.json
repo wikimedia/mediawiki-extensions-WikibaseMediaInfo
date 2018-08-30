@@ -9,7 +9,10 @@
 	"license-name": "GPL-2.0-or-later",
 	"type": "wikibase",
 	"requires": {
-		"MediaWiki": ">= 1.31.0"
+		"MediaWiki": ">= 1.31.0",
+		"extensions": {
+			"UniversalLanguageSelector": "*"
+		}
 	},
 	"AutoloadNamespaces": {
 		"Wikibase\\MediaInfo\\": "src/",
@@ -86,11 +89,39 @@
 			]
 		},
 		"wikibase.mediainfo.filePageDisplay": {
+			"scripts": [
+				"resources/filepage/__namespace.js",
+				"resources/filepage/EditToggle.js",
+				"resources/filepage/LanguagesViewWidget.js",
+				"resources/filepage/EditActionsWidget.js",
+				"resources/filepage/UlsWidget.js",
+				"resources/filepage/CaptionData.js",
+				"resources/filepage/CaptionsPanel.js",
+				"resources/filepage/init.js"
+			],
 			"dependencies": [
-				"wikibase.mediainfo",
-				"wikibase.mediainfo.mediainfoview",
-				"wikibase.ui.entityViewInit",
-				"wikibase.entityPage.entityLoaded"
+				"oojs",
+				"oojs-ui-core",
+				"oojs-ui-widgets",
+				"oojs-ui.styles.icons-editing-core",
+				"oojs-ui.styles.icons-movement",
+				"wikibase.mediainfo.filepagestyles",
+				"wikibase",
+				"wikibase.api.getLocationAgnosticMwApi",
+				"wikibase.api.RepoApi",
+				"wikibase.api.RepoApiError",
+				"ext.uls.mediawiki"
+			],
+			"messages": [
+				"wikibasemediainfo-filepage-more-languages",
+				"wikibasemediainfo-filepage-fewer-languages",
+				"wikibasemediainfo-filepage-add-caption",
+				"wikibasemediainfo-filepage-edit-captions",
+				"wikibasemediainfo-filepage-cancel",
+				"wikibasemediainfo-filepage-publish",
+				"wikibasemediainfo-filepage-caption-empty",
+				"wikibasemediainfo-filepage-caption-too-long",
+				"wikibasemediainfo-filepage-caption-approaching-limit"
 			]
 		},
 		"wikibase.mediainfo": {
@@ -141,6 +172,11 @@
 		"wikibase.mediainfo.styles": {
 			"styles": [
 				"resources/mediainfo.css"
+			]
+		},
+		"wikibase.mediainfo.filepagestyles": {
+			"styles": [
+				"resources/mediainfo_filepage.css"
 			]
 		}
 	},

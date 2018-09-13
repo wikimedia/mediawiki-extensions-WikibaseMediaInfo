@@ -4,6 +4,7 @@ namespace Wikibase\MediaInfo\Content;
 
 use Article;
 use IContextSource;
+use Page;
 use Title;
 use Wikibase\Client\Store\UsageUpdater;
 use Wikibase\Client\Usage\EntityUsage;
@@ -115,7 +116,13 @@ class MediaInfoHandler extends EntityHandler {
 	 */
 	public function getActionOverrides() {
 		return [
-			'history' => function( Article $page, IContextSource $context = null ) {
+			'history' => function( Page $page, IContextSource $context ) {
+				// NOTE: for now, the callback must work with a WikiPage as well as an Article
+				// object. Once I0335100b2 is merged, this is no longer needed.
+				if ( $page instanceof WikiPage ) {
+					$page = Article::newFromWikiPage( $page, $context );
+				}
+
 				return new HistoryEntityAction(
 					$page,
 					$context,

@@ -155,4 +155,10 @@ class MediaInfo implements EntityDocument, LabelsProvider, DescriptionsProvider,
 		$this->statements = clone $this->statements;
 	}
 
+	public function clear() {
+		$this->labels = new TermList();
+		$this->descriptions = new TermList();
+		$this->statements = new StatementList();
+	}
+
 }

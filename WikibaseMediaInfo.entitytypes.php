@@ -18,6 +18,7 @@ use Wikibase\Client\WikibaseClient;
 use Wikibase\DataModel\DeserializerFactory;
 use Wikibase\DataModel\Entity\EntityId;
 use Wikibase\DataModel\SerializerFactory;
+use Wikibase\DataModel\Services\Lookup\InProcessCachingDataTypeLookup;
 use Wikibase\DataModel\Services\Lookup\LabelDescriptionLookup;
 use Wikibase\LanguageFallbackChain;
 use Wikibase\MediaInfo\ChangeOp\Deserialization\MediaInfoChangeOpDeserializer;
@@ -34,7 +35,11 @@ use Wikibase\MediaInfo\Search\MediaInfoFieldDefinitions;
 use Wikibase\MediaInfo\Services\MediaInfoServices;
 use Wikibase\MediaInfo\View\MediaInfoView;
 use Wikibase\Repo\MediaWikiLanguageDirectionalityLookup;
+use Wikibase\Repo\Search\Elastic\Fields\DescriptionsProviderFieldDefinitions;
+use Wikibase\Repo\Search\Elastic\Fields\LabelsProviderFieldDefinitions;
+use Wikibase\Repo\Search\Elastic\Fields\StatementProviderFieldDefinitions;
 use Wikibase\Repo\WikibaseRepo;
+use Wikibase\SettingsArray;
 use Wikibase\View\EditSectionGenerator;
 use Wikibase\View\EntityTermsView;
 use Wikibase\View\Template\TemplateFactory;
@@ -84,6 +89,19 @@ return [
 			);
 		},
 		'content-model-id' => MediaInfoContent::CONTENT_MODEL_ID,
+		'search-field-definitions' => function ( array $languageCodes, SettingsArray $searchSettings ) {
+			$repo = WikibaseRepo::getDefaultInstance();
+			return new MediaInfoFieldDefinitions(
+				new LabelsProviderFieldDefinitions( $languageCodes ),
+				new DescriptionsProviderFieldDefinitions( $languageCodes,
+					$searchSettings->getSetting( 'entitySearch' ) ),
+				StatementProviderFieldDefinitions::newFromSettings(
+					new InProcessCachingDataTypeLookup( $repo->getPropertyDataTypeLookup() ),
+					$repo->getDataTypeDefinitions()->getSearchIndexDataFormatterCallbacks(),
+					$searchSettings
+				)
+			);
+		},
 		'content-handler-factory-callback' => function() {
 			$wikibaseRepo = WikibaseRepo::getDefaultInstance();
 
@@ -101,11 +119,7 @@ return [
 					$wikibaseRepo->getEntityParserOutputGeneratorFactory()
 				),
 				MediaInfoServices::getFilePageLookup(),
-				new MediaInfoFieldDefinitions(
-					$wikibaseRepo->getLabelProviderDefinitions(),
-					$wikibaseRepo->getDescriptionProviderDefinitions(),
-					$wikibaseRepo->getStatementProviderDefinitions()
-				),
+				$wikibaseRepo->getFieldDefinitionsByType( MediaInfo::ENTITY_TYPE ),
 				WikibaseClient::getDefaultInstance()->getStore()->getUsageUpdater(),
 				null
 			);

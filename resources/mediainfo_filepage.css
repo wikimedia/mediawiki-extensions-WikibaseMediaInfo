@@ -1,58 +1,58 @@
-.filepage-entitytermsview {
+.filepage-mediainfo-entitytermsview {
 	padding-top: 0.6em;
 }
 
-.filepage-entitytermsview h3 {
+.filepage-mediainfo-entitytermsview h3 {
 	border-bottom: 1px solid #a2a9b1;
 	padding: 0.8em 0.8em 0.4em 1em;
 	font-size: 1em;
 	margin: 0;
 }
 
-.filepage-entitytermsview h3 .editButton {
+.filepage-mediainfo-entitytermsview h3 .editButton {
 	float: right;
 }
 
-.filepage-entitytermstable {
+.filepage-mediainfo-entitytermstable {
 	padding: 1em 2em;
 	width: 100%;
 }
 
-.filepage-entitytermstable td {
+.filepage-mediainfo-entitytermstable td {
 	margin: 0;
 	border-right: 0;
-	border-bottom: 1px solid #a2a9b1;
+	border-bottom: 1px solid #c8ccd1;
 	padding: 0.8em 0;
 	vertical-align: top;
 }
 
-.filepage-entitytermstable.editable td {
+.filepage-mediainfo-entitytermstable.editable td {
 	border-bottom: 0;
 }
 
-.filepage-entitytermstable tr:last-of-type td {
+.filepage-mediainfo-entitytermstable tr:last-of-type td {
 	border: 0;
 	padding-bottom: 1em;
 }
 
-.filepage-entitytermstable td.language {
+.filepage-mediainfo-entitytermstable td.language {
 	padding-right: 2em;
 }
 
-.filepage-entitytermstable td.caption {
+.filepage-mediainfo-entitytermstable td.caption {
 	width: 85%;
 }
 
-.filepage-entitytermstable td.caption .textInput {
+.filepage-mediainfo-entitytermstable td.caption .textInput {
 	float: left;
 	width: 94%;
 }
 
-.filepage-entitytermstable td.caption .deleter {
+.filepage-mediainfo-entitytermstable td.caption .deleter {
 	float: left;
 }
 
-.filepage-entitytermstable tr.entity-terms div.error {
+.filepage-mediainfo-entitytermstable tr.entity-terms div.error {
 	padding: 0.2em 0.5em;
 	font-size: 0.9em;
 	font-weight: bold;
@@ -60,7 +60,7 @@
 	clear: left;
 }
 
-.filepage-entitytermstable tr.entity-terms div.warning {
+.filepage-mediainfo-entitytermstable tr.entity-terms div.warning {
 	padding: 0.2em 0.5em;
 	font-size: 0.9em;
 	font-weight: bold;

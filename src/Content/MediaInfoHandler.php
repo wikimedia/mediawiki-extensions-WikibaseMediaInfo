@@ -6,12 +6,10 @@ use IContextSource;
 use Page;
 use Title;
 use Wikibase\Client\Store\UsageUpdater;
-use Wikibase\Client\Usage\EntityUsage;
 use Wikibase\Content\EntityHolder;
 use Wikibase\DataModel\Entity\EntityId;
 use Wikibase\DataModel\Entity\EntityIdParser;
 use Wikibase\EditEntityAction;
-use Wikibase\EntityContent;
 use Wikibase\HistoryEntityAction;
 use Wikibase\Lib\Store\EntityContentDataCodec;
 use Wikibase\Lib\Store\LanguageFallbackLabelDescriptionLookupFactory;
@@ -19,7 +17,6 @@ use Wikibase\MediaInfo\Actions\ViewMediaInfoAction;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\MediaInfo\DataModel\MediaInfoId;
 use Wikibase\MediaInfo\Services\FilePageLookup;
-use Wikibase\Repo\Content\DataUpdateAdapter;
 use Wikibase\Repo\Content\EntityHandler;
 use Wikibase\Repo\Search\Elastic\Fields\FieldDefinitions;
 use Wikibase\Repo\Validators\EntityConstraintProvider;
@@ -27,7 +24,6 @@ use Wikibase\Repo\Validators\ValidatorErrorLocalizer;
 use Wikibase\Store\EntityIdLookup;
 use Wikibase\SubmitEntityAction;
 use Wikibase\TermIndex;
-use WikiPage;
 
 /**
  * @license GPL-2.0-or-later
@@ -203,61 +199,39 @@ class MediaInfoHandler extends EntityHandler {
 	}
 
 	/**
-	 * Returns data for writing to the search index for File page corresponding to
-	 * the MediaInfo item
+	 * Returns data for writing to the search index for a MediaInfo slot
 	 *
-	 * @param WikiPage $page
+	 * @param MediaInfoContent $content
 	 * @return array
-	 * @todo Replace the part where the entity data is populated with a
-	 *  call to parent::getEntityDataForSearchIndex
 	 */
-	public function getDataForFilePageSearchIndex(
-		WikiPage $page
+	public function getSlotDataForSearchIndex(
+		MediaInfoContent $content
 	) {
 		$fieldsData = [];
-		$content = $page->getContent();
-		if ( ( $content instanceof EntityContent ) && !$content->isRedirect() ) {
+		if ( !$content->isRedirect() ) {
 			$entity = $content->getEntity();
 			$fields = $this->fieldDefinitions->getFields();
 
 			foreach ( $fields as $fieldName => $field ) {
 				$fieldsData[$fieldName] = $field->getFieldData( $entity );
 			}
-		}
 
-		$fieldsData[self::FILE_PAGE_SEARCH_INDEX_KEY_MEDIAINFO_TEXT] = $content->getTextForSearchIndex();
-		// Add the MediaInfo revision id, so that we can add a revision check for it when updating
-		// the File page data
-		$fieldsData[self::FILE_PAGE_SEARCH_INDEX_KEY_MEDIAINFO_VERSION] = $page->getRevision()->getId();
+			$fieldsData[self::FILE_PAGE_SEARCH_INDEX_KEY_MEDIAINFO_TEXT] =
+				$content->getTextForSearchIndex();
+		}
 
 		return $fieldsData;
 	}
 
 	/**
-	 * Notify File page that the MediaInfo item has been modified
+	 * Returns the Title of the page in which this MediaInfo item is a slot
 	 *
-	 * @see Content::getSecondaryDataUpdates
+	 * @param MediaInfoId $id
 	 *
-	 * @param EntityContent $content
-	 * @param Title $title
-	 *
-	 * @return \DataUpdate[]
+	 * @return Title
 	 */
-	public function getEntityModificationUpdates( EntityContent $content, Title $title ) {
-		$updates = parent::getEntityModificationUpdates( $content, $title );
-		$updates[] = new DataUpdateAdapter(
-			function () use ( $content ) {
-				$filePageTitle = $this->filePageLookup->getFilePage( $content->getEntityId() );
-				if ( $filePageTitle ) {
-					$usage = new EntityUsage( $content->getEntityId(), EntityUsage::ALL_USAGE );
-					$this->usageUpdater->addUsagesForPage(
-						$filePageTitle->getArticleID(),
-						[ $usage ]
-					);
-				}
-			}
-		);
-		return $updates;
+	public function getTitleForId( EntityId $id ) {
+		return Title::newFromID( $id->getNumericId() );
 	}
 
 }

@@ -1,12 +1,14 @@
-( function ( mw, sd, $ ) {
+( function ( mw, sd ) {
 
 	'use strict';
 
 	sd.captions = new sd.CaptionsPanel( {
-		header: $( '.mediainfo-captions-header' ),
-		table: $( '.mediainfo-captions-table' ),
+		headerClass: 'mediainfo-captions-header',
+		tableClass: 'mediainfo-captions-table',
+		entityViewClass: 'filepage-mediainfo-entityview',
+		entityViewAppendSelector: '.mw-parser-output',
 		warnWithinMaxCaptionLength: 20
 	} );
 	sd.captions.initialize();
 
-}( mediaWiki, mediaWiki.mediaInfo.structuredData, jQuery ) );
+}( mediaWiki, mediaWiki.mediaInfo.structuredData ) );

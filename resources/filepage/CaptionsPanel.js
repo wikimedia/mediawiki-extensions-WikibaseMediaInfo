@@ -15,16 +15,59 @@
 	sd.CaptionsPanel = function CaptionsPanel( config ) {
 
 		var currentRevision = mw.config.get( 'wbCurrentRevision' ),
-			languages = mw.config.get( 'wgULSLanguages' ),
+			languages = mw.config.get( 'wbTermsLanguages' ),
 			data = {},
 			languageSelectors = [],
 			textInputs = [],
 			editToggle = new sd.EditToggle( config, this ),
 			languagesViewWidget = new sd.LanguagesViewWidget( config ),
 			editActionsWidget = new sd.EditActionsWidget( config, this ),
-			api = new wb.api.RepoApi(
-				wb.api.getLocationAgnosticMwApi( mw.config.get( 'wbRepoApiUrl' ) )
-			);
+			api = wb.api.getLocationAgnosticMwApi( mw.config.get( 'wbRepoApiUrl' ) ),
+			tableSelector = '.' + config.tableClass;
+
+		var injectEmptyEntityView = function () {
+			$( config.entityViewAppendSelector )
+				.append(
+					$( '<h1>' )
+						.addClass( 'mw-slot-header' )
+						.html(
+							mw.message( 'wikibasemediainfo-filepage-structured-data-heading' )
+								.text()
+						),
+					$( '<div>' )
+						.addClass( config.entityViewClass )
+						.addClass( 'emptyEntity' )
+						.attr( 'dir', 'auto' )
+						.attr( 'id', 'wb-mediainfo-' + mw.config.get( 'wbEntityId' ) )
+				);
+		};
+
+		var injectEmptyCaptionsData = function () {
+			var $panelHeader = $( '<h3>' )
+				.addClass( config.headerClass )
+				.html( mw.message( 'wikibasemediainfo-filepage-captions-title' ).text() );
+			var $panelContent = $( '<table>' )
+				.addClass( config.tableClass )
+				.addClass( 'filepage-mediainfo-entitytermstable' )
+				.attr( 'cellspacing', 0 )
+				.attr( 'cellpadding', 0 );
+			var panelLayout = new OO.ui.PanelLayout( {
+				scrollable: false,
+				padded: false,
+				expanded: false,
+				framed: true,
+				$content: [ $panelHeader, $panelContent ]
+			} );
+
+			$( '.' + config.entityViewClass )
+				.append(
+					$( '<div>' )
+						.addClass( 'filepage-mediainfo-entitytermsview' )
+						.append(
+							panelLayout.$element
+						)
+				);
+		};
 
 		var readDataFromReadOnlyRow = function ( $tableRow ) {
 			var $languageTD = $tableRow.find( 'td.language' ),
@@ -98,7 +141,7 @@
 		};
 
 		var refreshTableRowIndices = function () {
-			config.table.find( 'tr.entity-terms' ).each( function ( index ) {
+			$( tableSelector ).find( 'tr.entity-terms' ).each( function ( index ) {
 				$( this ).attr( 'index', index );
 			} );
 		};
@@ -115,7 +158,7 @@
 							''
 						)
 					);
-					$( config.table ).prepend( tableRow );
+					$( tableSelector ).prepend( tableRow );
 				}
 			} );
 			refreshTableRowIndices();
@@ -317,15 +360,50 @@
 			} );
 		};
 
+		var entityIsEmpty = function () {
+			return $( '.emptyEntity' ).length > 0;
+		};
+
+		var markEntityAsNonEmpty = function () {
+			$( '.' + config.entityViewClass ).removeClass( 'emptyEntity' );
+		};
+
+		/**
+		 * Get a value object for sending to the api
+		 *
+		 * @param language
+		 * @param text
+		 * @returns {{bot: number, action: string, id, value: *, language: *}}
+		 */
+		var getApiParams = function ( language, text ) {
+			var apiParams = {
+				/*
+				 * Unconditionally set the bot parameter to match the UI behavior of core.
+				 * In normal page editing, if you have the "bot" user right and edit through the GUI
+				 * interface, your edit is marked as bot no matter what.
+				 * @see https://gerrit.wikimedia.org/r/71246
+				 * @see https://phabricator.wikimedia.org/T189477
+				 */
+				bot: 1,
+				action: 'wbsetlabel',
+				id: mw.config.get( 'wbEntityId' ),
+				value: text,
+				language: language
+			};
+			if ( !entityIsEmpty() ) {
+				apiParams.baserevid = currentRevision;
+			}
+			return apiParams;
+		};
+
 		var sendIndividualLabel = function ( index, language, text ) {
 			var deferred = $.Deferred();
-			api.setLabel(
-				mw.config.get( 'wbEntityId' ),
-				currentRevision,
-				text,
-				language
+			api.postWithToken(
+				'csrf',
+				getApiParams( language, text )
 			)
 				.done( function ( result ) {
+					markEntityAsNonEmpty();
 					data[ language ] = new sd.CaptionData(
 						language,
 						languages[ language ],
@@ -335,7 +413,7 @@
 					currentRevision = result.entity.lastrevid;
 					languageSelectors.splice( index, 1 );
 					textInputs.splice( index, 1 );
-					config.table.find( 'tr.entity-terms[index="' + index + '"]' ).replaceWith(
+					$( tableSelector ).find( 'tr.entity-terms[index="' + index + '"]' ).replaceWith(
 						createIndexedReadOnlyRow( index, data[ language ] )
 					);
 					deferred.resolve();
@@ -350,7 +428,7 @@
 
 		var updateData = function ( chain ) {
 			var rowsWithoutLanguage = [];
-			config.table.find( 'tr.entity-terms' ).each( function () {
+			$( tableSelector ).find( 'tr.entity-terms' ).each( function () {
 				var index = $( this ).attr( 'index' ),
 					languageCode = languageSelectors[ index ].getValue(),
 					text = textInputs[ index ].getValue(),
@@ -386,15 +464,15 @@
 		};
 
 		var deleteIndividualLabel = function ( languageCode ) {
-			var deferred = $.Deferred();
-			api.setLabel(
-				mw.config.get( 'wbEntityId' ),
-				currentRevision,
-				'',
-				languageCode
+			var deferred = $.Deferred(),
+				$captionsTable = $( tableSelector );
+			api.postWithToken(
+				'csrf',
+				getApiParams( languageCode, '' )
 			)
-				.done( function () {
+				.done( function ( result ) {
 					delete data[ languageCode ];
+					currentRevision = result.entity.lastrevid;
 					deferred.resolve();
 				} )
 				.fail( function ( errorCode, error ) {
@@ -403,17 +481,17 @@
 						newIndex,
 						errorRow,
 						rejection;
-					config.table.find( 'tr.entity-terms' ).each( function () {
+					$captionsTable.find( 'tr.entity-terms' ).each( function () {
 						var dataInRow = readDataFromReadOnlyRow( $( this ) );
 						currentlyDisplayedLanguages.push( dataInRow.languageCode );
 					} );
-					newIndex = config.table.find( 'tr.entity-terms' ).length;
+					newIndex = $captionsTable.find( 'tr.entity-terms' ).length;
 					errorRow = createIndexedEditableRow(
 						newIndex,
 						currentlyDisplayedLanguages,
 						data[ languageCode ]
 					);
-					errorRow.insertBefore( config.table.find( '.editActions' ) );
+					errorRow.insertBefore( $captionsTable.find( '.editActions' ) );
 					rejection = wb.api.RepoApiError.newFromApiResponse( error, 'save' );
 					rejection.index = newIndex;
 					deferred.reject( rejection );
@@ -433,16 +511,17 @@
 		};
 
 		this.makeEditable = function () {
-			config.table.addClass( 'editable' );
+			var $captionsTable = $( tableSelector );
+			$captionsTable.addClass( 'editable' );
 			editToggle.hide();
 			languagesViewWidget.hide();
 			editActionsWidget.show();
 			var captionLangCodes = [];
-			config.table.find( 'tr.entity-terms' ).each( function () {
+			$captionsTable.find( 'tr.entity-terms' ).each( function () {
 				var dataInRow = readDataFromReadOnlyRow( $( this ) );
 				captionLangCodes.push( dataInRow.languageCode );
 			} );
-			config.table.find( 'tr.entity-terms' ).each( function ( index ) {
+			$captionsTable.find( 'tr.entity-terms' ).each( function ( index ) {
 				$( this ).replaceWith(
 					createIndexedEditableRow(
 						index,
@@ -454,13 +533,14 @@
 		};
 
 		this.makeReadOnly = function () {
-			config.table.removeClass( 'editable' );
+			var $captionsTable = $( tableSelector );
+			$captionsTable.removeClass( 'editable' );
 			editActionsWidget.hide();
-			config.table.find( 'tr.entity-terms' ).each( function () {
+			$captionsTable.find( 'tr.entity-terms' ).each( function () {
 				$( this ).remove();
 			} );
 			$.each( data, function ( index, captionData ) {
-				config.table.append(
+				$captionsTable.append(
 					createIndexedReadOnlyRow( index, captionData )
 				);
 			} );
@@ -471,10 +551,11 @@
 		};
 
 		this.addNewEditableLanguageRow = function () {
+			var $captionsTable = $( tableSelector );
 			var tableRow = createIndexedEditableRow(
-				config.table.find( 'tr.entity-terms' ).length
+				$captionsTable.find( 'tr.entity-terms' ).length
 			);
-			tableRow.insertBefore( config.table.find( '.editActions' ) );
+			tableRow.insertBefore( $captionsTable.find( '.editActions' ) );
 			refreshLanguageSelectorsOptions();
 		};
 
@@ -495,7 +576,9 @@
 					var $captionTD;
 					enableAllFormInputs();
 					$captionTD =
-						config.table.find( 'tr.entity-terms[index="' + error.index + '"] .caption' );
+						$( tableSelector ).find(
+							'tr.entity-terms[index="' + error.index + '"] .caption'
+						);
 					$captionTD.find( 'div.error' ).remove();
 					$captionTD.find( 'div.warning' ).remove();
 					$captionTD.append(
@@ -510,7 +593,14 @@
 		};
 
 		this.initialize = function () {
-			config.table.find( 'tr.entity-terms' ).each( function ( index ) {
+			if ( $( '.' + config.entityViewClass ).length === 0 ) {
+				injectEmptyEntityView();
+			}
+			if ( $( '.' + config.tableClass ).length === 0 ) {
+				injectEmptyCaptionsData();
+			}
+			editToggle.initialize();
+			$( tableSelector ).find( 'tr.entity-terms' ).each( function ( index ) {
 				var captionData;
 				$( this ).attr( 'index', index );
 				captionData = readDataFromReadOnlyRow( $( this ) );

@@ -21,6 +21,8 @@ use Wikibase\DataModel\SerializerFactory;
 use Wikibase\DataModel\Services\Lookup\InProcessCachingDataTypeLookup;
 use Wikibase\DataModel\Services\Lookup\LabelDescriptionLookup;
 use Wikibase\LanguageFallbackChain;
+use Wikibase\Lib\LanguageNameLookup;
+use Wikibase\Lib\Store\Sql\WikiPageEntityMetaDataLookup;
 use Wikibase\MediaInfo\ChangeOp\Deserialization\MediaInfoChangeOpDeserializer;
 use Wikibase\MediaInfo\Content\MediaInfoContent;
 use Wikibase\MediaInfo\Content\MediaInfoHandler;
@@ -33,8 +35,11 @@ use Wikibase\MediaInfo\DataModel\Services\Diff\MediaInfoDiffer;
 use Wikibase\MediaInfo\DataModel\Services\Diff\MediaInfoPatcher;
 use Wikibase\MediaInfo\Search\MediaInfoFieldDefinitions;
 use Wikibase\MediaInfo\Services\MediaInfoServices;
+use Wikibase\MediaInfo\Services\MediaInfoEntityQuery;
+use Wikibase\MediaInfo\View\MediaInfoEntityTermsView;
 use Wikibase\MediaInfo\View\MediaInfoView;
 use Wikibase\Repo\MediaWikiLanguageDirectionalityLookup;
+use Wikibase\Repo\MediaWikiLocalizedTextProvider;
 use Wikibase\Repo\Search\Elastic\Fields\DescriptionsProviderFieldDefinitions;
 use Wikibase\Repo\Search\Elastic\Fields\LabelsProviderFieldDefinitions;
 use Wikibase\Repo\Search\Elastic\Fields\StatementProviderFieldDefinitions;
@@ -43,9 +48,10 @@ use Wikibase\SettingsArray;
 use Wikibase\View\EditSectionGenerator;
 use Wikibase\View\EntityTermsView;
 use Wikibase\View\Template\TemplateFactory;
+use Wikibase\View\Template\TemplateRegistry;
 
 return [
-	'mediainfo' => [
+	MediaInfo::ENTITY_TYPE => [
 		'storage-serializer-factory-callback' => function( SerializerFactory $serializerFactory ) {
 			return new MediaInfoSerializer(
 				$serializerFactory->newTermListSerializer(),
@@ -71,21 +77,24 @@ return [
 			EditSectionGenerator $editSectionGenerator,
 			EntityTermsView $entityTermsView
 		) {
-			$viewFactory = WikibaseRepo::getDefaultInstance()->getViewFactory();
+			$templateFactory = new TemplateFactory(
+				new TemplateRegistry( include __DIR__ . '/resources/templates.php' )
+			);
+
+			// Use a MediaInfo-specific EntityTermsView class instead of the default one
+			$mediaInfoEntityTermsView = new MediaInfoEntityTermsView(
+				$templateFactory,
+				new LanguageNameLookup( $languageCode ),
+				new MediaWikiLanguageDirectionalityLookup(),
+				new MediaWikiLocalizedTextProvider( $languageCode ),
+				[ $languageCode ]
+			);
 
 			return new MediaInfoView(
-				TemplateFactory::getDefaultInstance(),
-				$entityTermsView,
-				$viewFactory->newStatementSectionsView(
-					$languageCode,
-					$labelDescriptionLookup,
-					$fallbackChain,
-					$editSectionGenerator
-				),
+				$templateFactory,
+				$mediaInfoEntityTermsView,
 				new MediaWikiLanguageDirectionalityLookup(),
-				$languageCode,
-				MediaWikiServices::getInstance()->getLinkRenderer(),
-				MediaInfoServices::getFilePageLookup()
+				$languageCode
 			);
 		},
 		'content-model-id' => MediaInfoContent::CONTENT_MODEL_ID,
@@ -158,5 +167,18 @@ return [
 				$changeOpDeserializerFactory->getClaimsChangeOpDeserializer()
 			);
 		},
+		'entity-metadata-accessor-callback' => function( $dbName, $repoName ) {
+			$entityNamespaceLookup = WikibaseRepo::getDefaultInstance()->getEntityNamespaceLookup();
+			$entityQuery = new MediaInfoEntityQuery(
+				$entityNamespaceLookup,
+				MediaWikiServices::getInstance()->getSlotRoleStore()
+			);
+			return new WikiPageEntityMetaDataLookup(
+				$entityNamespaceLookup,
+				$entityQuery,
+				$dbName,
+				$repoName
+			);
+		}
 	]
 ];

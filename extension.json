@@ -9,7 +9,7 @@
 	"license-name": "GPL-2.0-or-later",
 	"type": "wikibase",
 	"requires": {
-		"MediaWiki": ">= 1.31.0",
+		"MediaWiki": ">= 1.32.0",
 		"extensions": {
 			"UniversalLanguageSelector": "*"
 		}
@@ -23,27 +23,8 @@
 	"config": {
 		"MediaInfoEnable": {
 			"value": true
-		},
-		"MediaInfoNamespace": {
-			"value": 144
-		},
-		"MediaInfoNamespaceTalk": {
-			"value": 145
 		}
 	},
-	"namespaces": [
-		{
-			"id": 144,
-			"constant": "NS_MEDIAINFO",
-			"name": "MediaInfo",
-			"defaultcontentmodel": "wikibase-mediainfo"
-		},
-		{
-			"id": 145,
-			"constant": "NS_MEDIAINFO_TALK",
-			"name": "MediaInfo_talk"
-		}
-	],
 	"ServiceWiringFiles": [
 		"src/Services/MediaInfoServiceWiring.php"
 	],
@@ -57,9 +38,6 @@
 		"WikibaseClientEntityTypes": [
 			"Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onWikibaseEntityTypes"
 		],
-		"ImagePageAfterImageLinks": [
-			"Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onImagePageAfterImageLinks"
-		],
 		"LoadExtensionSchemaUpdates": [
 			"Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onLoadExtensionSchemaUpdates"
 		],
@@ -69,11 +47,14 @@
 		"GetEntityByLinkedTitleLookup": [
 			"Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onGetEntityByLinkedTitleLookup"
 		],
-		"CirrusSearchBuildDocumentParse": [
-			"Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onCirrusSearchBuildDocumentParse"
-		],
 		"BeforePageDisplay": [
 			"Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onBeforePageDisplay"
+		],
+		"SearchDataForIndex": [
+			"Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onSearchDataForIndex"
+		],
+		"ParserOutputPostCacheTransform": [
+			"Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onParserOutputPostCacheTransform"
 		]
 	},
 	"MessagesDirs": {
@@ -113,6 +94,8 @@
 				"ext.uls.mediawiki"
 			],
 			"messages": [
+				"wikibasemediainfo-filepage-structured-data-heading",
+				"wikibasemediainfo-filepage-captions-title",
 				"wikibasemediainfo-filepage-more-languages",
 				"wikibasemediainfo-filepage-fewer-languages",
 				"wikibasemediainfo-filepage-add-caption",

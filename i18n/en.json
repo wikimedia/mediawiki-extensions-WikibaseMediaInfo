@@ -12,6 +12,7 @@
 	"wikibasemediainfo-desc": "Wikibase extension to manage structured metadata of media files",
 	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Captions",
 	"wikibasemediainfo-filepage-structured-data-heading": "Structured data",
+	"wikibasemediainfo-filepage-captions-title": "Captions",
 	"wikibasemediainfo-filepage-more-languages": "See $1 more {{PLURAL:$1|language|languages}}",
 	"wikibasemediainfo-filepage-fewer-languages": "See fewer languages",
 	"wikibasemediainfo-filepage-add-caption": "Add a caption",

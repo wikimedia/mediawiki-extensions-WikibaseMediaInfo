@@ -6,7 +6,7 @@ use Wikibase\DataModel\Term\Term;
 use Wikibase\DataModel\Term\TermList;
 use Wikibase\Lib\LanguageNameLookup;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
-use Wikibase\MediaInfo\View\FilePageEntityTermsView;
+use Wikibase\MediaInfo\View\MediaInfoEntityTermsView;
 use Wikibase\View\LanguageDirectionalityLookup;
 use Wikibase\View\LocalizedTextProvider;
 use Wikibase\View\Template\TemplateFactory;
@@ -18,7 +18,7 @@ use Wikibase\View\Template\TemplateFactory;
  *
  * @license GPL-2.0-or-later
  */
-class FilePageEntityTermsViewTest extends \PHPUnit\Framework\TestCase {
+class MediaInfoEntityTermsViewTest extends \PHPUnit\Framework\TestCase {
 
 	/** @var  TemplateFactory */
 	private $templateFactory;
@@ -42,9 +42,6 @@ class FilePageEntityTermsViewTest extends \PHPUnit\Framework\TestCase {
 		$this->textProvider = $this->getMockBuilder( LocalizedTextProvider::class )
 			->disableOriginalConstructor()
 			->getMock();
-
-		//OOUI needs to be set up manually, as the code is just calling mocks
-		\OutputPage::setupOOUI();
 	}
 
 	public function testGetHtml() {
@@ -84,7 +81,7 @@ class FilePageEntityTermsViewTest extends \PHPUnit\Framework\TestCase {
 			->method( 'getLabels' )
 			->willReturn( $testLabels );
 
-		$sut = new FilePageEntityTermsView(
+		$sut = new MediaInfoEntityTermsView(
 			$this->templateFactory,
 			$this->langNameLookup,
 			$this->langDirLookup,

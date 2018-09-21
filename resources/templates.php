@@ -16,14 +16,14 @@ return call_user_func( function() {
 
 	$templates['filepage-entityview'] =
 		<<<HTML
-<div id="wb-$1-$2" class="filepage-entityview" dir="$3">
+<div id="wb-$1-$2" class="filepage-mediainfo-entityview" dir="$3">
 	$4
 </div>
 HTML;
 
 	$templates['filepage-entitytermsview'] =
 		<<<HTML
-<div class="filepage-entitytermsview">
+<div class="filepage-mediainfo-entitytermsview">
 	<!-- filepage-entitytermstable -->$1
 </div>
 HTML;
@@ -31,7 +31,7 @@ HTML;
 	$templates['filepage-entitytermstable'] =
 		<<<HTML
 <h3 class="mediainfo-$1-header">$2</h3>
-<table class="filepage-entitytermstable mediainfo-$1-table" cellpadding="0" cellspacing="0">
+<table class="filepage-mediainfo-entitytermstable mediainfo-$1-table" cellpadding="0" cellspacing="0">
 	<!-- filepage-entitytermstablerow -->$3
 </table>
 HTML;

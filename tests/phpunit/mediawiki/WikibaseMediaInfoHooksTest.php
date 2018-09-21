@@ -2,28 +2,24 @@
 
 namespace Wikibase\MediaInfo\Tests\MediaWiki;
 
-use CirrusSearch\Search\CirrusIndexField;
-use Elastica\Document;
 use Hooks;
 use Language;
-use MediaWiki\MediaWikiServices;
+use MediaWiki\Storage\RevisionRecord;
+use MediaWiki\Storage\SlotRecord;
 use ParserOutput;
 use Title;
 use User;
-use Wikibase\Content\EntityInstanceHolder;
 use Wikibase\DataModel\Services\EntityId\EntityIdComposer;
-use Wikibase\DataModel\Services\Lookup\EntityLookup;
+use Wikibase\Lib\Store\EntityByLinkedTitleLookup;
+use Wikibase\Lib\UserLanguageLookup;
 use Wikibase\MediaInfo\Content\MediaInfoContent;
 use Wikibase\MediaInfo\Content\MediaInfoHandler;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\MediaInfo\DataModel\MediaInfoId;
+use Wikibase\MediaInfo\Services\MediaInfoByLinkedTitleLookup;
 use Wikibase\MediaInfo\WikibaseMediaInfoHooks;
 use Wikibase\Repo\BabelUserLanguageLookup;
-use Wikibase\Repo\Search\Elastic\Fields\TermIndexField;
 use Wikibase\Repo\Store\EntityTitleStoreLookup;
-use Wikibase\Repo\WikibaseRepo;
-use Wikibase\View\Template\TemplateFactory;
-use Wikibase\View\Template\TemplateRegistry;
 
 /**
  * @covers \Wikibase\MediaInfo\WikibaseMediaInfoHooks
@@ -35,44 +31,10 @@ use Wikibase\View\Template\TemplateRegistry;
  */
 class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 
-	/**
-	 * @var bool Set to true if a ContentHandler has been injected into $wgContentHandlers
-	 */
-	private $contentHandlerInjected = false;
-
 	public function testOnWikibaseEntityNamespaces() {
-		global $wgNamespaceContentModels;
-
-		// The SetupAfterCache hook already ran.
-		// We now just check that it did what it should.
-		$config = MediaWikiServices::getInstance()->getMainConfig();
-		$entityNamespace = $config->get( 'MediaInfoNamespace' );
-
-		if ( $entityNamespace === false ) {
-			$this->markTestSkipped( 'MediaInfoNamespace is set to false,' .
-				' disabling automatic namespace registration.' );
-		}
-
-		$this->assertArrayHasKey( $entityNamespace, $wgNamespaceContentModels );
-		$this->assertSame( 'wikibase-mediainfo', $wgNamespaceContentModels[$entityNamespace] );
-
-		$namespaceLookup = WikibaseRepo::getDefaultInstance()->getEntityNamespaceLookup();
-		$namespace = $namespaceLookup->getEntityNamespace( 'mediainfo' );
-
-		$this->assertSame( $entityNamespace, $namespace );
-	}
-
-	public function testNamespaceRegistration() {
-		$config = MediaWikiServices::getInstance()->getMainConfig();
-
-		$language = Language::factory( 'en' );
-		$namespaces = $language->getNamespaces();
-
-		$mediaInfoNS = $config->get( 'MediaInfoNamespace' );
-		$mediaInfoTalkNS = $config->get( 'MediaInfoNamespaceTalk' );
-
-		$this->assertArrayHasKey( $mediaInfoNS, $namespaces, 'MediaInfo namespace' );
-		$this->assertArrayHasKey( $mediaInfoTalkNS, $namespaces, 'MediaInfo talk namespace' );
+		$entityNamespaces = [];
+		WikibaseMediaInfoHooks::onWikibaseEntityNamespaces( $entityNamespaces );
+		$this->assertArrayHasKey( MediaInfo::ENTITY_TYPE, $entityNamespaces );
 	}
 
 	public function provideWikibaseEntityTypesHooks() {
@@ -98,78 +60,32 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 		$this->assertArrayHasKey( 'mediainfo', $entityTypeDefinitions );
 	}
 
-	public function testOnImagePageAfterImageLinks() {
-
-		$imgTitle = Title::makeTitle( NS_FILE, 'Foo.jpg' );
-		$imgTitle->resetArticleID( 23 );
-		$testEntity = new MediaInfo( new MediaInfoId( 'M23' ) );
-
-		$imgPage = $this->getMockBuilder( \ImagePage::class )
-			->disableOriginalConstructor()
-			->getMock();
-		$imgPage->expects( $this->once() )
-			->method( 'getTitle' )
-			->will( $this->returnValue( $imgTitle ) );
-		$this->setOOUIExpectations( $imgPage );
-
-		$mockEntityLookup = $this->getMockBuilder( EntityLookup::class )
-			->disableOriginalConstructor()
-			->getMock();
-		$mockEntityLookup->expects( $this->atLeastOnce() )
-			->method( 'getEntity' )
-			->willReturn( $testEntity );
-
-		$mockEntityTitleStoreLookup = $this->getMockBuilder( EntityTitleStoreLookup::class )
-			->disableOriginalConstructor()
-			->getMock();
-
-		$mockUserLanguageLookup = $this->getMockBuilder( BabelUserLanguageLookup::class )
-			->disableOriginalConstructor()
-			->getMock();
-		$mockUserLanguageLookup->expects( $this->once() )
-			->method( 'getAllUserLanguages' )
-			->willReturn( [ 'en' ] );
-
-		$html = '';
-		$hookObject = new WikibaseMediaInfoHooks(
-			$this->getMockEntityIdComposer(),
-			$mockEntityTitleStoreLookup
-		);
-
-		$templateFactory = new TemplateFactory(
-			new TemplateRegistry( include __DIR__ . '/../../../resources/templates.php' )
-		);
-
-		$hookObject->doImagePageAfterImageLinks(
-			$imgPage,
-			$html,
-			$templateFactory,
-			$mockEntityLookup,
-			'en',
-			$mockUserLanguageLookup
-		);
-
-		$this->assertRegExp( '@mediainfo-M23@', $html );
+	public function providePostCacheTransformInput() {
+		return [
+			'no placeholder' => [
+				'original' => 'SOME_TEXT',
+				'expected' => 'SOME_TEXT'
+			],
+			'placeholder' => [
+				'original' => 'STRING_1<mw:slotheader>STRING_2</mw:slotheader>STRING_3',
+				'expected' => 'STRING_1<mw:mediainfoslotheader />STRING_3',
+			],
+		];
 	}
 
-	private function setOOUIExpectations( $imgPage ) {
-		$out = $this->getMockBuilder( \OutputPage::class )
+	/**
+	 * @dataProvider providePostCacheTransformInput
+	 */
+	public function testOnParserOutputPostCacheTransform( $original, $expected ) {
+		$parserOutput = $this->getMockBuilder( ParserOutput::class )
 			->disableOriginalConstructor()
 			->getMock();
-		$out->expects( $this->atLeastOnce() )
-			->method( 'enableOOUI' );
-		$out->expects( $this->atLeastOnce() )
-			->method( 'getUser' )
-			->willReturn( new User() );
-		$pageContext = $this->getMockBuilder( \IContextSource::class )
-			->disableOriginalConstructor()
-			->getMock();
-		$pageContext->method( 'getOutput' )
-			->willReturn( $out );
-		$imgPage->method( 'getContext' )
-			->willReturn( $pageContext );
-		//OOUI needs to be set up manually, as the code is just calling mocks
-		\OutputPage::setupOOUI();
+		WikibaseMediaInfoHooks::onParserOutputPostCacheTransform(
+			$parserOutput,
+			$original,
+			[]
+		);
+		$this->assertEquals( $expected, $original );
 	}
 
 	public function testOnContentAlterParserOutput() {
@@ -186,233 +102,111 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 		$this->assertEquals( 'M1', $parserOutput->getProperty( 'mediainfo_entity' ) );
 	}
 
-	public function testOnCirrusSearchBuildDocumentParseWithNonFilePage() {
-		if ( !class_exists( 'CirrusSearch' ) ) {
-			$this->markTestSkipped( 'CirrusSearch not installed, skipping' );
-		}
+	public function testOnBeforePageDisplay() {
+		$imgTitle = Title::makeTitle( NS_FILE, 'Foo.jpg' );
+		$imgTitle->resetArticleID( 23 );
 
-		$args = $this->getArgsForCirrusSearchBuildDocumentParse();
+		$userLanguageLookup = $this->getMockBuilder( UserLanguageLookup::class )
+			->disableOriginalConstructor()
+			->getMock();
+		$userLanguageLookup->method( 'getAllUserLanguages' )
+			->willReturn( [ 'TEST_USER_LANGUAGE' ] );
 
-		WikibaseMediaInfoHooks::onCirrusSearchBuildDocumentParse(
-			$args['document'],
-			Title::makeTitle( NS_MEDIA, 'TEST_TITLE' ),
-			$args['contentObject'],
-			$args['parserOutput'],
-			$args['connection']
-		);
+		$skin = $this->getMockBuilder( \Skin::class )
+			->disableOriginalConstructor()
+			->getMock();
 
-		$this->assertEmpty( $args['document']->getData() );
-		// verify version check not added
-		$this->verifyDocumentMetadataAbsent(
-			$args['document'],
-			MediaInfoHandler::FILE_PAGE_SEARCH_INDEX_KEY_MEDIAINFO_VERSION
-		);
-	}
+		$revision = $this->getMockBuilder( RevisionRecord::class )
+			->disableOriginalConstructor()
+			->getMock();
+		$revision->method( 'getId' )
+			->willReturn( 999 );
 
-	public function testOnCirrusSearchBuildDocumentParseWithNonWikitextContent() {
-		if ( !class_exists( 'CirrusSearch' ) ) {
-			$this->markTestSkipped( 'CirrusSearch not installed, skipping' );
-		}
+		$wikiPage = $this->getMockBuilder( \WikiPage::class )
+			->disableOriginalConstructor()
+			->getMock();
+		$wikiPage->method( 'getRevision' )
+			->willReturn( $revision );
 
-		$args = $this->getArgsForCirrusSearchBuildDocumentParse();
+		$out = $this->getMockBuilder( \OutputPage::class )
+			->disableOriginalConstructor()
+			->getMock();
 
-		WikibaseMediaInfoHooks::onCirrusSearchBuildDocumentParse(
-			$args['document'],
-			$args['title'],
-			new MediaInfoContent(
-				new EntityInstanceHolder(
-					new MediaInfo(
-						new MediaInfoId( 'M999' )
-					)
-				)
-			),
-			$args['parserOutput'],
-			$args['connection']
-		);
+		$out->method( 'getTitle' )
+			->willReturn( $imgTitle );
+		$out->method( 'getLanguage' )
+			->willReturn( new Language() );
+		$out->method( 'getUser' )
+			->willReturn( new User() );
+		$out->method( 'getWikiPage' )
+			->willReturn( $wikiPage );
 
-		$this->assertEmpty( $args['document']->getData() );
-		// verify version check not added
-		$this->verifyDocumentMetadataAbsent(
-			$args['document'],
-			MediaInfoHandler::FILE_PAGE_SEARCH_INDEX_KEY_MEDIAINFO_VERSION
-		);
-	}
+		$out->expects( $this->once() )
+			->method( 'addJsConfigVars' );
+		$out->expects( $this->once() )
+			->method( 'addModuleStyles' );
+		$out->expects( $this->once() )
+			->method( 'addModules' );
 
-	private function getArgsForCirrusSearchBuildDocumentParse() {
-		return [
-			'document' => new Document(),
-			'title' => Title::makeTitle( NS_FILE, 'TEST_TITLE' ),
-			'contentObject' => new \WikitextContent( 'TEST_CONTENT' ),
-			'parserOutput' => new ParserOutput( 'TEST_PARSER_OUTPUT' ),
-			'connection' => $this->getMockBuilder( \CirrusSearch\Connection::class )
+		$hookObject = new WikibaseMediaInfoHooks(
+			$this->getMockEntityIdComposer(),
+			$this->getMockBuilder( EntityTitleStoreLookup::class )
 				->disableOriginalConstructor()
 				->getMock()
-		];
+		);
+
+		$hookObject->doBeforePageDisplay(
+			$out,
+			$skin,
+			[],
+			$userLanguageLookup
+		);
 	}
 
-	/**
-	 * @dataProvider provideTestCSBDP
-	 */
-	public function testOnCirrusSearchBuildDocumentParseWithFileWhereMediaInfoItemDoesNotExist(
-		$searchIndexData, $engineHints
-	) {
-		if ( !class_exists( 'CirrusSearch' ) ) {
-			$this->markTestSkipped( 'CirrusSearch not installed, skipping' );
-		}
+	public function testOnBeforePageDisplayWithMissingTitle() {
+		$imgTitle = $this->getMockBuilder( \ImagePage::class )
+			->disableOriginalConstructor()
+			->getMock();
+		$imgTitle->method( 'exists' )
+			->willReturn( false );
 
-		$args = $this->getArgsForCirrusSearchBuildDocumentParse();
-		$this->injectMockContentHandler( $searchIndexData, $engineHints );
+		$skin = $this->getMockBuilder( \Skin::class )
+			->disableOriginalConstructor()
+			->getMock();
+
+		$out = $this->getMockBuilder( \OutputPage::class )
+			->disableOriginalConstructor()
+			->getMock();
+		$out->method( 'getTitle' )
+			->willReturn( $imgTitle );
+		$out->expects( $this->never() )
+			->method( 'addJsConfigVars' );
 
 		$hookObject = new WikibaseMediaInfoHooks(
-			$this->getMockEntityIdComposer(),
-			$this->getMockEntityTitleStoreLookup( $this->getMockMediaInfoTitle( false ) )
+			$this->getMockBuilder( EntityIdComposer::class )
+				->disableOriginalConstructor()
+				->getMock(),
+			$this->getMockBuilder( EntityTitleStoreLookup::class )
+				->disableOriginalConstructor()
+				->getMock()
 		);
 
-		$hookObject->doCirrusSearchBuildDocumentParse(
-			$args['document'],
-			$args['title'],
-			$args['contentObject']
-		);
-
-		$this->assertEmpty( $args['document']->getData() );
-		// verify version check not added
-		$this->verifyDocumentMetadataAbsent(
-			$args['document'],
-			MediaInfoHandler::FILE_PAGE_SEARCH_INDEX_KEY_MEDIAINFO_VERSION
+		$hookObject->doBeforePageDisplay(
+			$out,
+			$skin,
+			[],
+			new BabelUserLanguageLookup()
 		);
 	}
 
-	/**
-	 * @dataProvider provideTestCSBDP
-	 */
-	public function testOnCirrusSearchBuildDocumentParseWithFile( $searchIndexData, $engineHints ) {
-		if ( !class_exists( 'CirrusSearch' ) ) {
-			$this->markTestSkipped( 'CirrusSearch not installed, skipping' );
-		}
-
-		$args = $this->getArgsForCirrusSearchBuildDocumentParse();
-		$this->injectMockContentHandler( $searchIndexData, $engineHints );
-
-		$hookObject = new WikibaseMediaInfoHooks(
-			$this->getMockEntityIdComposer(),
-			$this->getMockEntityTitleStoreLookup( $this->getMockMediaInfoTitle( true ) )
-		);
-
-		$hookObject->doCirrusSearchBuildDocumentParse(
-			$args['document'],
-			$args['title'],
-			$args['contentObject']
-		);
-
-		// Test data added to Document
-		foreach ( $searchIndexData as $key => $value ) {
-			$this->assertTrue( $args['document']->has( $key ) );
-			$this->assertEquals( $value, $args['document']->get( $key ) );
-		}
-
-		// Test indexing hints added
-		foreach ( $engineHints as $key => $value ) {
-			if ( isset( $searchIndexData[$key] ) ) {
-				$this->verifyDocumentMetadata(
-					$args['document'],
-					$key,
-					$value[ CirrusIndexField::NOOP_HINT ]
-				);
-			} else {
-				$this->verifyDocumentMetadataAbsent( $args['document'], $key );
-			}
-		}
-
-		// Test version check added
-		$this->verifyDocumentMetadata(
-			$args['document'],
-			MediaInfoHandler::FILE_PAGE_SEARCH_INDEX_KEY_MEDIAINFO_VERSION,
-			'documentVersion'
-		);
-	}
-
-	public function provideTestCSBDP() {
-		if ( !class_exists( 'CirrusSearch' ) ) {
-			return [];
-		}
-
-		return [
-			'no data' => [
-				'searchIndexData' => [],
-				'engineHints' => [],
-			],
-			'index data, no hints' => [
-				'searchIndexData' => [
-					'field_1' => 'test data 1',
-					'field_2' => 'test data 2',
-				],
-				'engineHints' => [],
-			],
-			'index data, some hints' => [
-				'searchIndexData' => [
-					'field_1' => 'test data 1',
-					'field_2' => 'test data 2',
-				],
-				'engineHints' => [
-					'field_1' => [ CirrusIndexField::NOOP_HINT => 'hint test 1' ]
-				],
-			],
-			'index data, all hints' => [
-				'searchIndexData' => [
-					'field_1' => 'test data 1',
-					'field_2' => 'test data 2',
-				],
-				'engineHints' => [
-					'field_1' => [ CirrusIndexField::NOOP_HINT => 'hint test 1' ],
-					'field_2' => [ CirrusIndexField::NOOP_HINT => 'hint test 2' ]
-				],
-			]
-		];
-	}
-
-	/**
-	 * Because the calls to add the indexing hints and the version check are static I can't mock
-	 * them, so I'm testing the effect of the static call on the elastic Document object
-	 *
-	 * I realise that means I'm not testing the Hooks class in total isolation, but it's the best
-	 * I can think of atm
-	 *
-	 */
-	private function verifyDocumentMetadata( Document $document, $field, $handler ) {
-		if ( !$document->hasParam( CirrusIndexField::DOC_HINT_PARAM ) ) {
-			$this->fail( 'Missing metadata for field ' . $field );
-			return;
-		}
-		$hints = $document->getParam( CirrusIndexField::DOC_HINT_PARAM );
-		if ( !is_array( $hints ) ) {
-			$this->fail( 'Missing metadata for field ' . $field );
-			return;
-		}
-		if ( !is_array( $hints[CirrusIndexField::NOOP_HINT] ) ) {
-			$this->fail( 'Missing metadata for field ' . $field );
-			return;
-		}
-		$this->assertEquals(
-			$handler,
-			$hints[CirrusIndexField::NOOP_HINT][$field],
-			'Missing metadata for field ' . $field
-		);
-	}
-
-	private function verifyDocumentMetadataAbsent( Document $document, $field ) {
-		if ( !$document->hasParam( CirrusIndexField::DOC_HINT_PARAM ) ) {
-			return;
-		}
-		$hints = $document->getParam( CirrusIndexField::DOC_HINT_PARAM );
-		if ( !is_array( $hints ) ) {
-			return;
-		}
-		if ( !is_array( $hints[CirrusIndexField::NOOP_HINT] ) ) {
-			return;
-		}
-		$this->assertFalse(
-			isset( $hints[CirrusIndexField::NOOP_HINT][$field] ),
-			'Found metadata for field ' . $field . ' when none expected'
+	public function testOnGetEntityByLinkedTitleLookup() {
+		$lookup = $this->getMockBuilder( EntityByLinkedTitleLookup::class )
+			->disableOriginalConstructor()
+			->getMock();
+		WikibaseMediaInfoHooks::onGetEntityByLinkedTitleLookup( $lookup );
+		$this->assertInstanceOf(
+			MediaInfoByLinkedTitleLookup::class,
+			$lookup
 		);
 	}
 
@@ -444,96 +238,144 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 		return $mockEntityIdComposer;
 	}
 
-	/**
-	 * @param Title $getTitleForIdReturnValue
-	 * @return EntityTitleStoreLookup
-	 */
-	private function getMockEntityTitleStoreLookup( $getTitleForIdReturnValue ) {
-		$mockEntityTitleStoreLookup = $this->getMockBuilder( EntityTitleStoreLookup::class )
-			->disableOriginalConstructor()
-			->getMock();
-		$mockEntityTitleStoreLookup->expects( $this->once() )
-			->method( 'getTitleForId' )
-			->with( $this->getTestEntityId() )
-			->willReturn( $getTitleForIdReturnValue );
+	public function testOnSearchDataForIndex() {
+		$extraFieldsData = [
+			'field_1' => 'field_1_data',
+			'field_2' => 'field_2_data',
+		];
 
-		return $mockEntityTitleStoreLookup;
-	}
-
-	/**
-	 * @param bool $existsReturnValue
-	 * @return Title
-	 */
-	private function getMockMediaInfoTitle( $existsReturnValue ) {
-		$mediaInfoTitle = $this->getMockBuilder( Title::class )
-			->disableOriginalConstructor()
-			->getMock();
-		$mediaInfoTitle->expects( $this->once() )
-			->method( 'exists' )
-			->willReturn( $existsReturnValue );
-		$mediaInfoTitle->method( 'getContentModel' )
-			->willReturn( 'wikibase-mediainfo' );
-		return $mediaInfoTitle;
-	}
-
-	/**
-	 * @param array $searchIndexData
-	 * @param array $engineHints
-	 * @return MediaInfoHandler
-	 */
-	private function getMockContentHandler( $searchIndexData, $engineHints ) {
-		$mockContentHandler = $this->getMockBuilder( MediaInfoHandler::class )
+		$content = $this->getMockBuilder( MediaInfoContent::class )
 			->disableOriginalConstructor()
 			->getMock();
 
-		// Fields for search index, with engine hints
-		$fieldsForSearchIndex = [];
-		foreach ( $engineHints as $key => $value ) {
-			$mockField = $this->getMockBuilder( TermIndexField::class )
+		$slot = $this->getMockBuilder( SlotRecord::class )
+			->disableOriginalConstructor()
+			->getMock();
+		$slot->method( 'getModel' )
+			->willReturn( MediaInfo::ENTITY_TYPE );
+		$slot->method( 'getContent' )
+			->willReturn( $content );
+
+		$revisionRecord = $this->getMockBuilder( RevisionRecord::class )
+			->disableOriginalConstructor()
+			->getMock();
+		$revisionRecord->method( 'hasSlot' )
+			->willReturn( true );
+		$revisionRecord->method( 'getSlot' )
+			->willReturn( $slot );
+
+		$page = $this->getMockBuilder( \WikiPage::class )
+			->disableOriginalConstructor()
+			->getMock();
+		$page->method( 'getRevisionRecord' )
+			->willReturn( $revisionRecord );
+
+		$mediaInfoHandler = $this->getMockBuilder( MediaInfoHandler::class )
+			->disableOriginalConstructor()
+			->getMock();
+		$mediaInfoHandler->expects( $this->atLeastOnce() )
+			->method( 'getSlotDataForSearchIndex' )
+			->with( $content )
+			->willReturn( $extraFieldsData );
+
+		$hookObject = new WikibaseMediaInfoHooks(
+			$this->getMockBuilder( EntityIdComposer::class )
 				->disableOriginalConstructor()
-				->getMock();
-			$mockField->method( 'getEngineHints' )
-				->willReturn( $value );
-			$fieldsForSearchIndex[$key] = $mockField;
-		}
-		$mockContentHandler->expects( $this->once() )
-			->method( 'getFieldsForSearchIndex' )
-			->with( $this->isInstanceOf( \CirrusSearch::class ) )
-			->willReturn( $fieldsForSearchIndex );
-
-		// Data
-		$mockContentHandler->expects( $this->once() )
-			->method( 'getDataForFilePageSearchIndex' )
-			->with( $this->isInstanceOf( \WikiPage::class ) )
-			->willReturn( $searchIndexData );
-
-		return $mockContentHandler;
-	}
-
-	/**
-	 * @param array $searchIndexData
-	 * @param array $engineHints
-	 */
-	private function injectMockContentHandler( $searchIndexData, $engineHints ) {
-		global $wgContentHandlers;
-		$mockContentHandler = function () use ( $searchIndexData, $engineHints ) {
-			return $this->getMockContentHandler( $searchIndexData, $engineHints );
-		};
-		$this->setMwGlobals(
-			[
-				'wgContentHandlers' =>
-					array_merge( $wgContentHandlers, [ 'wikibase-mediainfo' => $mockContentHandler ] )
-			]
+				->getMock(),
+			$this->getMockBuilder( EntityTitleStoreLookup::class )
+				->disableOriginalConstructor()
+				->getMock()
 		);
-		$this->contentHandlerInjected = true;
+		$fieldsData = $hookObject->doSearchDataForIndex(
+			$page,
+			[ 'index' => 'value' ],
+			$mediaInfoHandler
+		);
+
+		$this->assertArraySubset( $extraFieldsData, $fieldsData );
 	}
 
-	public function tearDown() {
-		if ( $this->contentHandlerInjected ) {
-			\ContentHandler::cleanupHandlersCache();
-		}
+	public function testOnSearchDataForIndexWithEmptySlot() {
+		$originalFieldsData = [ 'index' => 'value' ];
+		$extraFieldsData = [
+			'field_1' => 'field_1_data',
+			'field_2' => 'field_2_data',
+		];
 
-		parent::tearDown();
+		$revisionRecord = $this->getMockBuilder( RevisionRecord::class )
+			->disableOriginalConstructor()
+			->getMock();
+		$revisionRecord->method( 'hasSlot' )
+			->willReturn( false );
+
+		$page = $this->getMockBuilder( \WikiPage::class )
+			->disableOriginalConstructor()
+			->getMock();
+		$page->method( 'getRevisionRecord' )
+			->willReturn( $revisionRecord );
+
+		$mediaInfoHandler = $this->getMockBuilder( MediaInfoHandler::class )
+			->disableOriginalConstructor()
+			->getMock();
+		$mediaInfoHandler->expects( $this->never() )
+			->method( 'getSlotDataForSearchIndex' )
+			->willReturn( $extraFieldsData );
+
+		$hookObject = new WikibaseMediaInfoHooks(
+			$this->getMockBuilder( EntityIdComposer::class )
+				->disableOriginalConstructor()
+				->getMock(),
+			$this->getMockBuilder( EntityTitleStoreLookup::class )
+				->disableOriginalConstructor()
+				->getMock()
+		);
+		$fieldsData = $hookObject->doSearchDataForIndex(
+			$page,
+			$originalFieldsData,
+			$mediaInfoHandler
+		);
+
+		$this->assertEquals( $originalFieldsData, $fieldsData );
+	}
+
+	public function testOnSearchDataStatic() {
+		$fieldsData = $originalFieldsData = [ 'index' => 'value' ];
+
+		$content = $this->getMockBuilder( MediaInfoContent::class )
+			->disableOriginalConstructor()
+			->getMock();
+
+		$slot = $this->getMockBuilder( SlotRecord::class )
+			->disableOriginalConstructor()
+			->getMock();
+		$slot->method( 'getModel' )
+			->willReturn( MediaInfo::ENTITY_TYPE );
+		$slot->method( 'getContent' )
+			->willReturn( $content );
+
+		$revisionRecord = $this->getMockBuilder( RevisionRecord::class )
+			->disableOriginalConstructor()
+			->getMock();
+		$revisionRecord->method( 'hasSlot' )
+			->willReturn( false );
+		$revisionRecord->method( 'getSlot' )
+			->willReturn( $slot );
+
+		$page = $this->getMockBuilder( \WikiPage::class )
+			->disableOriginalConstructor()
+			->getMock();
+		$page->method( 'getRevisionRecord' )
+			->willReturn( $revisionRecord );
+
+		WikibaseMediaInfoHooks::onSearchDataForIndex(
+			$fieldsData,
+			\ContentHandler::getForModelID( MediaInfoContent::CONTENT_MODEL_ID ),
+			$page,
+			new ParserOutput(),
+			new \CirrusSearch()
+		);
+
+		$this->assertEquals( $originalFieldsData, $fieldsData );
 	}
 
 }

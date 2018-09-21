@@ -8,13 +8,10 @@ use Closure;
 use FauxRequest;
 use IContextSource;
 use Language;
-use MediaWiki\Storage\RevisionRecord;
 use PHPUnit4And6Compat;
 use RequestContext;
 use Title;
 use Wikibase\Client\Store\UsageUpdater;
-use Wikibase\Client\Usage\EntityUsage;
-use Wikibase\Content\EntityInstanceHolder;
 use Wikibase\DataModel\Entity\EntityId;
 use Wikibase\DataModel\Entity\ItemIdParser;
 use Wikibase\DataModel\Services\Lookup\LabelDescriptionLookup;
@@ -29,8 +26,10 @@ use Wikibase\MediaInfo\DataModel\MediaInfoId;
 use Wikibase\MediaInfo\Search\MediaInfoFieldDefinitions;
 use Wikibase\MediaInfo\Services\FilePageLookup;
 use Wikibase\Repo\Search\Elastic\Fields\DescriptionsProviderFieldDefinitions;
+use Wikibase\Repo\Search\Elastic\Fields\FieldDefinitions;
 use Wikibase\Repo\Search\Elastic\Fields\LabelsProviderFieldDefinitions;
 use Wikibase\Repo\Search\Elastic\Fields\StatementProviderFieldDefinitions;
+use Wikibase\Repo\Search\Elastic\Fields\WikibaseIndexField;
 use Wikibase\Repo\Validators\EntityConstraintProvider;
 use Wikibase\Repo\Validators\ValidatorErrorLocalizer;
 use Wikibase\Store\EntityIdLookup;
@@ -209,165 +208,66 @@ class MediaInfoHandlerTest extends \PHPUnit\Framework\TestCase {
 		$this->assertSame( $expected, $mediaInfoHandler->canCreateWithCustomId( $id ) );
 	}
 
-	public function testGetDataForFilePageSearchIndex() {
-		if ( !class_exists( 'CirrusSearch' ) ) {
-			$this->markTestSkipped( 'CirrusSearch not installed, skipping' );
-		}
+	public function testGetSlotDataForSearchIndex() {
+		$textForSearchIndex = 'TEXT_FOR_SEARCH_INDEX';
+		$fieldName = 'TEST_FIELD_NAME';
+		$fieldData = 'TEST_FIELD_DATA';
 
-		$testRevisionId = 999;
-
-		$content = new MediaInfoContent(
-			new EntityInstanceHolder(
-				new MediaInfo(
-					new MediaInfoId( 'M1' )
-				)
-			)
-		);
-
-		$mockRevision = $this->getMockBuilder( RevisionRecord::class )
+		$mediaInfo = $this->getMockBuilder( MediaInfo::class )
 			->disableOriginalConstructor()
 			->getMock();
-		$mockRevision->expects( $this->atLeastOnce() )
-			->method( 'getId' )
-			->willReturn( $testRevisionId );
 
-		$mockPage = $this->getMockBuilder( \WikiPage::class )
+		$content = $this->getMockBuilder( MediaInfoContent::class )
 			->disableOriginalConstructor()
 			->getMock();
-		$mockPage->expects( $this->atLeastOnce() )
-			->method( 'getContent' )
-			->willReturn( $content );
-		$mockPage->expects( $this->atLeastOnce() )
-			->method( 'getRevision' )
-			->willReturn( $mockRevision );
+		$content->method( 'getEntity' )
+			->willReturn( $mediaInfo );
+		$content->method( 'getTextForSearchIndex' )
+			->willReturn( $textForSearchIndex );
 
-		$data = $this->newMediaInfoHandler()
-			->getDataForFilePageSearchIndex(
-				$mockPage,
-				new \ParserOutput(),
-				new \CirrusSearch()
-			);
+		$field = $this->getMockBuilder( WikibaseIndexField::class )
+			->disableOriginalConstructor()
+			->getMock();
+		$field->method( 'getFieldData' )
+			->with( $mediaInfo )
+			->willReturn( $fieldData );
 
-		$this->assertArrayHasKey( MediaInfoHandler::FILE_PAGE_SEARCH_INDEX_KEY_MEDIAINFO_TEXT, $data );
-		$this->assertArrayHasKey( MediaInfoHandler::FILE_PAGE_SEARCH_INDEX_KEY_MEDIAINFO_VERSION, $data );
+		$fieldDefinitions = $this->getMockBuilder( FieldDefinitions::class )
+			->disableOriginalConstructor()
+			->getMock();
+		$fieldDefinitions->method( 'getFields' )
+			->willReturn( [ $fieldName => $field ] );
+
+		$mediaInfoHandler = $this->newMediaInfoHandler();
+		$reflection = new \ReflectionClass( $mediaInfoHandler );
+		$fieldDefinitionsProperty = $reflection->getProperty( 'fieldDefinitions' );
+		$fieldDefinitionsProperty->setAccessible( true );
+		$fieldDefinitionsProperty->setValue( $mediaInfoHandler, $fieldDefinitions );
+
+		$fieldsData = $mediaInfoHandler->getSlotDataForSearchIndex( $content );
 		$this->assertEquals(
-			$testRevisionId,
-			$data[ MediaInfoHandler::FILE_PAGE_SEARCH_INDEX_KEY_MEDIAINFO_VERSION ]
+			$textForSearchIndex,
+			$fieldsData[ MediaInfoHandler::FILE_PAGE_SEARCH_INDEX_KEY_MEDIAINFO_TEXT ]
 		);
-		$this->assertArrayHasKey( 'labels', $data );
-		$this->assertArrayNotHasKey( 'text', $data );
+		$this->assertEquals(
+			$fieldData,
+			$fieldsData[ $fieldName ]
+		);
 	}
 
-	public function testGetEntityModificationUpdates() {
-		$testArticleId = '999';
-		$testEntityId = new MediaInfoId( 'M999' );
+	public function testGetTitleForId() {
+		$testId = 999;
+		$testTitle = Title::newFromID( $testId );
 
-		// Create expectations for the calls made by the MediaInfoHandler
-		$mockFilePage = $this->getMockBuilder( Title::class )
+		$mediaInfoHandler = $this->newMediaInfoHandler();
+
+		$mockId = $this->getMockBuilder( MediaInfoId::class )
 			->disableOriginalConstructor()
 			->getMock();
-		$mockFilePage->method( 'getArticleID' )
-			->willReturn( $testArticleId );
+		$mockId->method( 'getNumericId' )
+			->willReturn( $testId );
 
-		$mockFilePageLookup = $this->getMockBuilder( FilePageLookup::class )
-			->disableOriginalConstructor()
-			->getMock();
-		$mockFilePageLookup->method( 'getFilePage' )
-			->with( $testEntityId )
-			->willReturn( $mockFilePage );
-
-		// This is the key part of the test - making sure that addUsagesForPage
-		// is called on the UsageUpdater with the right data
-		$mockUsageUpdater = $this->getMockBuilder( UsageUpdater::class )
-			->disableOriginalConstructor()
-			->getMock();
-		$mockUsageUpdater->expects( $this->once() )
-			->method( 'addUsagesForPage' )
-			->with(
-				$testArticleId,
-				$this->callback( function( $usageArray ) use ( $testEntityId ) {
-					if ( !is_array( $usageArray ) ) {
-						return false;
-					}
-					if ( count( $usageArray ) != 1 ) {
-						return false;
-					}
-					$usage = $usageArray[0];
-					if ( $usage->getEntityId() != $testEntityId ) {
-						return false;
-					}
-					if ( $usage->getAspect() != EntityUsage::ALL_USAGE ) {
-						return false;
-					}
-					return true;
-				} )
-			);
-
-		// Create the SUT with the mocked dependencies containing the expectations
-		$mediaInfoHandler = $this->newMediaInfoHandler(
-			[
-				'filePageLookup' => $mockFilePageLookup,
-				'usageUpdater' => $mockUsageUpdater
-			]
-		);
-
-		$entityContent = new MediaInfoContent(
-			new EntityInstanceHolder(
-				new MediaInfo(
-					$testEntityId
-				)
-			)
-		);
-		$updates = $mediaInfoHandler->getEntityModificationUpdates(
-			$entityContent,
-			new \Title()
-		);
-
-		$this->assertGreaterThanOrEqual( 1, count( $updates ) );
-
-		foreach ( $updates as $update ) {
-			$update->doUpdate();
-		}
-	}
-
-	public function testGetEntityModificationUpdateWithMissingFilePage() {
-		$mockFilePageLookup = $this->getMockBuilder( FilePageLookup::class )
-			->disableOriginalConstructor()
-			->getMock();
-		$mockFilePageLookup->method( 'getFilePage' )
-			->willReturn( null );
-
-		$mockUsageUpdater = $this->getMockBuilder( UsageUpdater::class )
-			->disableOriginalConstructor()
-			->getMock();
-		$mockUsageUpdater->expects( $this->never() )
-			->method( 'addUsagesForPage' );
-
-		// Create the SUT with the mocked objects containing the expectations
-		$mediaInfoHandler = $this->newMediaInfoHandler(
-			[
-				'filePageLookup' => $mockFilePageLookup,
-				'usageUpdater' => $mockUsageUpdater
-			]
-		);
-
-		$entityContent = new MediaInfoContent(
-			new EntityInstanceHolder(
-				new MediaInfo(
-					new MediaInfoId( 'M999' )
-				)
-			)
-		);
-		$updates = $mediaInfoHandler->getEntityModificationUpdates(
-			$entityContent,
-			new \Title()
-		);
-
-		$this->assertGreaterThanOrEqual( 1, count( $updates ) );
-
-		foreach ( $updates as $update ) {
-			$update->doUpdate();
-		}
+		$this->assertEquals( $testTitle, $mediaInfoHandler->getTitleForId( $mockId ) );
 	}
 
 }

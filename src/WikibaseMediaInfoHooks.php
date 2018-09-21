@@ -2,38 +2,24 @@
 
 namespace Wikibase\MediaInfo;
 
-use AbstractContent;
-use CirrusSearch\Search\CirrusIndexField;
 use Content;
 use DatabaseUpdater;
-use CirrusSearch\Connection;
-use Elastica\Document;
-use FormatJson;
-use ImagePage;
 use MediaWiki\MediaWikiServices;
 use OutputPage;
 use ParserOutput;
-use RequestContext;
 use Title;
 use Wikibase\DataModel\Entity\EntityId;
 use Wikibase\DataModel\Services\EntityId\EntityIdComposer;
-use Wikibase\DataModel\Services\Lookup\EntityLookup;
-use Wikibase\Lib\LanguageNameLookup;
 use Wikibase\Lib\Store\EntityByLinkedTitleLookup;
 use Wikibase\Lib\UserLanguageLookup;
+use Wikibase\MediaInfo\Content\MediaInfoContent;
 use Wikibase\MediaInfo\Content\MediaInfoHandler;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\MediaInfo\Services\MediaInfoByLinkedTitleLookup;
-use Wikibase\MediaInfo\View\FilePageEntityTermsView;
-use Wikibase\MediaInfo\View\FilePageMediaInfoView;
 use Wikibase\Repo\BabelUserLanguageLookup;
-use Wikibase\Repo\MediaWikiLanguageDirectionalityLookup;
 use Wikibase\Repo\MediaWikiLocalizedTextProvider;
 use Wikibase\Repo\Store\EntityTitleStoreLookup;
 use Wikibase\Repo\WikibaseRepo;
-use Wikibase\View\LocalizedTextProvider;
-use Wikibase\View\Template\TemplateFactory;
-use Wikibase\View\Template\TemplateRegistry;
 use WikiPage;
 
 /**
@@ -63,6 +49,12 @@ class WikibaseMediaInfoHooks {
 		);
 	}
 
+	/**
+	 * WikibaseMediaInfoHooks constructor.
+	 * @param EntityIdComposer $entityIdComposer
+	 * @param EntityTitleStoreLookup $entityTitleStoreLookup
+	 * @codeCoverageIgnore
+	 */
 	public function __construct(
 		EntityIdComposer $entityIdComposer,
 		EntityTitleStoreLookup $entityTitleStoreLookup
@@ -74,14 +66,15 @@ class WikibaseMediaInfoHooks {
 	/**
 	 * Hook to register the MediaInfo entity namespaces for EntityNamespaceLookup.
 	 *
-	 * @param int[] $entityNamespacesSetting
+	 * @param array $entityNamespacesSetting
 	 */
 	public static function onWikibaseEntityNamespaces( &$entityNamespacesSetting ) {
-		// XXX: ExtensionProcessor should define an extra config object for every extension.
-		$config = MediaWikiServices::getInstance()->getMainConfig();
+		// Exit if the extension is disabled.
+		if ( !MediaWikiServices::getInstance()->getMainConfig()->get( 'MediaInfoEnable' ) ) {
+			return;
+		}
 
-		// Setting the namespace to false disabled automatic registration.
-		$entityNamespacesSetting['mediainfo'] = $config->get( 'MediaInfoNamespace' );
+		$entityNamespacesSetting[ MediaInfo::ENTITY_TYPE ] = NS_FILE . '/' . MediaInfo::ENTITY_TYPE;
 	}
 
 	/**
@@ -95,6 +88,11 @@ class WikibaseMediaInfoHooks {
 	 * @param array[] $entityTypeDefinitions
 	 */
 	public static function onWikibaseEntityTypes( array &$entityTypeDefinitions ) {
+		// Exit if the extension is disabled.
+		if ( !MediaWikiServices::getInstance()->getMainConfig()->get( 'MediaInfoEnable' ) ) {
+			return;
+		}
+
 		$entityTypeDefinitions = array_merge(
 			$entityTypeDefinitions,
 			require __DIR__ . '/../WikibaseMediaInfo.entitytypes.php'
@@ -102,7 +100,38 @@ class WikibaseMediaInfoHooks {
 	}
 
 	/**
-	 * Check if we're on a file page, add Wikibase modules if so
+	 * DIRTY HACK PART ONE that won't be necessary when T205444 is done
+	 * @see https://phabricator.wikimedia.org/T205444
+	 *
+	 * The placeholder mw:slotheader is replaced by default with the name of the slot
+	 *
+	 * Replace it with a different placeholder so we can replace it with a message later
+	 * (can't replace it directly because accessing the RequestContext here throws
+	 * an exception)
+	 *
+	 * @param ParserOutput $parserOutput
+	 * @param $text
+	 * @param array $options
+	 */
+	public static function onParserOutputPostCacheTransform(
+		ParserOutput $parserOutput,
+		&$text,
+		array $options
+	) {
+		// Exit if the extension is disabled.
+		if ( !MediaWikiServices::getInstance()->getMainConfig()->get( 'MediaInfoEnable' ) ) {
+			return;
+		}
+
+		$text = preg_replace(
+			'#<mw:slotheader>(.*?)</mw:slotheader>#',
+			'<mw:mediainfoslotheader />',
+			$text
+		);
+	}
+
+	/**
+	 * Check if we're on a file page, add data and modules if so
 	 *
 	 * @param \OutputPage $out
 	 * @param \Skin $skin
@@ -113,61 +142,73 @@ class WikibaseMediaInfoHooks {
 			return;
 		}
 
+		$allLanguages = \Language::fetchLanguageNames();
+		$termsLanguages = WikibaseRepo::getDefaultInstance()->getTermsLanguages()->getLanguages();
+
+		self::newFromGlobalState()->doBeforePageDisplay(
+			$out,
+			$skin,
+			array_intersect_key(
+				$allLanguages,
+				array_flip( $termsLanguages )
+			),
+			new BabelUserLanguageLookup()
+		);
+	}
+
+	/**
+	 * DIRTY HACK PART TWO that won't be necessary when T205444 is done
+	 * @see https://phabricator.wikimedia.org/T205444
+	 * @param OutputPage $out
+	 * @return OutputPage $out
+	 */
+	private function replaceMediaInfoSlotHeader( OutputPage $out ) {
+		$textProvider = new MediaWikiLocalizedTextProvider(
+			$out->getLanguage()->getCode()
+		);
+
+		$html = $out->getHTML();
+		$out->clearHTML();
+		$html = str_replace(
+			'<mw:mediainfoslotheader />',
+			$textProvider->get( 'wikibasemediainfo-filepage-structured-data-heading' ),
+			$html
+		);
+		$out->addHTML( $html );
+		return $out;
+	}
+
+	/**
+	 * @param \OutputPage $out
+	 * @param \Skin $skin
+	 * @param string[] $termsLanguages Array with language codes as keys and autonyms as values
+	 * @param UserLanguageLookup $userLanguageLookup
+	 */
+	public function doBeforePageDisplay(
+		$out,
+		$skin,
+		array $termsLanguages,
+		UserLanguageLookup $userLanguageLookup
+	) {
 		$imgTitle = $out->getTitle();
 		if ( !$imgTitle->exists() || !$imgTitle->inNamespace( NS_FILE ) ) {
 			return;
 		}
 
+		$out = $this->replaceMediaInfoSlotHeader( $out );
+
 		$pageId = $imgTitle->getArticleID();
-		$wikibaseRepo = WikibaseRepo::getDefaultInstance();
-		$entityId = $wikibaseRepo->getEntityIdComposer()->composeEntityId(
-			'',
-			MediaInfo::ENTITY_TYPE,
-			$pageId
-		);
-
-		$entityRevisionLookup = $wikibaseRepo->getEntityRevisionLookup();
-		$entityRevision = $entityRevisionLookup->getEntityRevision(
-			$entityId
-		);
-
-		if ( $entityRevision === null ) {
-			$entityRevisionId = 0;
-		} else {
-			$entityRevisionId = $entityRevision->getRevisionId();
-		}
-
-		$entityLookup = $wikibaseRepo->getEntityLookup();
-		$entity = $entityLookup->getEntity( $entityId );
-
-		if ( $entity !== null ) {
-			$entitySerializer = $wikibaseRepo->getCompactEntitySerializer();
-			$serializedEntity = $entitySerializer->serialize( $entity );
-		} else {
-			$serializedEntity = [
-				'type' => MediaInfo::ENTITY_TYPE,
-				'id' => $entityId->getSerialization(),
-				'labels' => [],
-				'descriptions' => [],
-				'statements' => [],
-			];
-		}
-
-		$entityJson = FormatJson::encode( $serializedEntity );
-
-		$request = RequestContext::getMain();
-		$language = $request->getLanguage();
-		$languageFallbackChainFactory = $wikibaseRepo->getLanguageFallbackChainFactory();
-		$languageFallbackChain = $languageFallbackChainFactory->newFromLanguage( $language );
+		$entityId = $this->entityIdFromPageId( $pageId );
 
 		$out->addJsConfigVars( [
-			'wbEntity' => $entityJson,
-			'wbIsEditView' => true,
-			'wbUserSpecifiedLanguages' => $languageFallbackChain->getFetchLanguageCodes(),
-			'wbCurrentRevision' => $entityRevisionId,
+			'wbUserSpecifiedLanguages' => $userLanguageLookup->getAllUserLanguages(
+				$out->getUser()
+			),
+			'wbCurrentRevision' => $out->getWikiPage()->getRevision()->getId(),
 			'wbEntityId' => $entityId->getSerialization(),
+			'wbTermsLanguages' => $termsLanguages,
 			'wbRepoApiUrl' => self::getApiUrl(),
-			'maxCaptionLength' => self::getMaxCaptionLength()
+			'maxCaptionLength' => self::getMaxCaptionLength(),
 		] );
 
 		$out->addModuleStyles( [
@@ -185,91 +226,6 @@ class WikibaseMediaInfoHooks {
 	private static function getApiUrl() {
 		global $wgServer, $wgScriptPath;
 		return $wgServer . $wgScriptPath . '/api.php';
-	}
-
-	public static function onImagePageAfterImageLinks( ImagePage $page, &$html ) {
-		// Exit if the extension is disabled.
-		if ( !MediaWikiServices::getInstance()->getMainConfig()->get( 'MediaInfoEnable' ) ) {
-			return;
-		}
-		$templateFactory = new TemplateFactory(
-			new TemplateRegistry( include __DIR__ . '/../resources/templates.php' )
-		);
-
-		self::newFromGlobalState()->doImagePageAfterImageLinks(
-			$page,
-			$html,
-			$templateFactory,
-			WikibaseRepo::getDefaultInstance()->getEntityLookup(),
-			self::getRequestLanguageCode(),
-			new BabelUserLanguageLookup()
-		);
-	}
-
-	private static function getRequestLanguageCode() {
-		return RequestContext::getMain()->getLanguage()->getCode();
-	}
-
-	public function doImagePageAfterImageLinks(
-		ImagePage $page,
-		&$html,
-		TemplateFactory $templateFactory,
-		EntityLookup $entityLookup,
-		$languageCode,
-		UserLanguageLookup $userLanguageLookup
-	) {
-		$pageId = $page->getTitle()->getArticleID();
-		if ( !$pageId ) {
-			return;
-		}
-
-		$textProvider = new MediaWikiLocalizedTextProvider( $languageCode );
-		$page->getContext()->getOutput()->enableOOUI();
-		$html .= '<h2>' .
-				 $textProvider->get( 'wikibasemediainfo-filepage-structured-data-heading' ) .
-				 '</h2>';
-
-		$entityId = $this->entityIdFromPageId( $pageId );
-		$entity = $entityLookup->getEntity( $entityId );
-
-		$html .= $this->getCaptionsPanel(
-			$entity,
-			$templateFactory,
-			$languageCode,
-			$textProvider,
-			$userLanguageLookup->getAllUserLanguages(
-				$page->getContext()->getOutput()->getUser()
-			)
-		);
-	}
-
-	private function getCaptionsPanel(
-		$entity,
-		TemplateFactory $templateFactory,
-		$languageCode,
-		LocalizedTextProvider $textProvider,
-		$userLanguages
-	) {
-		$languageDirectionalityLookup = new MediaWikiLanguageDirectionalityLookup();
-		$entityTermsView = new FilePageEntityTermsView(
-			$templateFactory,
-			new LanguageNameLookup( $languageCode ),
-			$languageDirectionalityLookup,
-			$textProvider,
-			$userLanguages
-		);
-
-		$entityView = new FilePageMediaInfoView(
-			$templateFactory,
-			$entityTermsView,
-			new MediaWikiLanguageDirectionalityLookup(),
-			$languageCode
-		);
-
-		if ( is_null( $entity ) ) {
-			return $entityView->getHtmlForEmptyEntity();
-		}
-		return $entityView->getHtml( $entity );
 	}
 
 	/**
@@ -347,75 +303,38 @@ class WikibaseMediaInfoHooks {
 		$lookup = new MediaInfoByLinkedTitleLookup( $lookup );
 	}
 
-	public static function onCirrusSearchBuildDocumentParse(
-		Document $document,
-		Title $title,
-		\AbstractContent $contentObject,
-		ParserOutput $parserOutput,
-		Connection $connection
+	public static function onSearchDataForIndex(
+		array &$fieldsData,
+		\ContentHandler $handler,
+		WikiPage $page,
+		ParserOutput $output,
+		\SearchEngine $engine
 	) {
-		self::newFromGlobalState()->doCirrusSearchBuildDocumentParse(
-			$document,
-			$title,
-			$contentObject
+		// Exit if the extension is disabled.
+		if ( !MediaWikiServices::getInstance()->getMainConfig()->get( 'MediaInfoEnable' ) ) {
+			return;
+		}
+
+		$fieldsData = self::newFromGlobalState()->doSearchDataForIndex(
+			$page,
+			$fieldsData,
+			$handler->getForModelId( MediaInfoContent::CONTENT_MODEL_ID )
 		);
 	}
 
-	public function doCirrusSearchBuildDocumentParse(
-		Document $document,
-		Title $title,
-		AbstractContent $contentObject
+	public function doSearchDataForIndex(
+		WikiPage $page,
+		array $fieldsData,
+		MediaInfoHandler $mediaInfoHandler
 	) {
-		if ( $contentObject instanceof \WikitextContent && $title->inNamespace( NS_FILE ) ) {
-			$this->updateFilePageIndexWithMediaInfoData(
-				$title,
-				$document
+		if ( $page->getRevisionRecord()->hasSlot( MediaInfo::ENTITY_TYPE ) ) {
+			$mediaInfoSlot = $page->getRevisionRecord()->getSlot( MediaInfo::ENTITY_TYPE );
+			$slotData = $mediaInfoHandler->getSlotDataForSearchIndex(
+				$mediaInfoSlot->getContent()
 			);
+			$fieldsData = array_merge( $fieldsData, $slotData );
 		}
-	}
-
-	private function updateFilePageIndexWithMediaInfoData(
-		Title $filePageTitle,
-		Document $document
-	) {
-		$mediaInfoPage = $this->getMediaInfoPageForFilePageTitle( $filePageTitle );
-		if ( !is_null( $mediaInfoPage ) ) {
-			$engine = new \CirrusSearch();
-			/** @var MediaInfoHandler $contentHandler */
-			$contentHandler = $mediaInfoPage->getContentHandler();
-
-			$fieldDefinitions = $contentHandler->getFieldsForSearchIndex( $engine );
-			$dataForFilePageIndex = $contentHandler->getDataForFilePageSearchIndex( $mediaInfoPage );
-
-			foreach ( $dataForFilePageIndex as $field => $fieldData ) {
-				$document->set( $field, $fieldData );
-				if ( isset( $fieldDefinitions[$field] ) ) {
-					$hints = $fieldDefinitions[$field]->getEngineHints( $engine );
-					CirrusIndexField::addIndexingHints( $document, $field, $hints );
-				}
-			}
-
-			// Add a version check so this search index update will be discarded if the MediaInfo
-			// revision id is lower that the stored one
-			CirrusIndexField::addNoopHandler(
-				$document,
-				MediaInfoHandler::FILE_PAGE_SEARCH_INDEX_KEY_MEDIAINFO_VERSION,
-				'documentVersion'
-			);
-		}
-	}
-
-	/**
-	 * @param Title $filePageTitle
-	 * @return WikiPage|null Returns null if there is no corresponding File page for MediaInfo item
-	 */
-	private function getMediaInfoPageForFilePageTitle( Title $filePageTitle ) {
-		$entityId = $this->entityIdFromPageId( $filePageTitle->getArticleID() );
-		$mediaInfoTitle = $this->entityTitleStoreLookup->getTitleForId( $entityId );
-		if ( $mediaInfoTitle->exists() ) {
-			return WikiPage::factory( $mediaInfoTitle );
-		}
-		return null;
+		return $fieldsData;
 	}
 
 }

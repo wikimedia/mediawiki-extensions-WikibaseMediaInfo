@@ -65,7 +65,7 @@
 		};
 
 		this.show = function () {
-			config.table.append( $element );
+			$( '.' + config.tableClass ).append( $element );
 		};
 
 		this.disablePublish = function () {

@@ -4,6 +4,7 @@ namespace Wikibase\MediaInfo\View;
 
 use OOUI\HtmlSnippet;
 use OOUI\PanelLayout;
+use OutputPage;
 use Wikibase\DataModel\Term\TermList;
 use Wikibase\Lib\LanguageNameLookup;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
@@ -12,11 +13,11 @@ use Wikibase\View\LocalizedTextProvider;
 use Wikibase\View\Template\TemplateFactory;
 
 /**
- * Generates HTML to display the terms of an entity on the File page
+ * Generates HTML to display the terms of a MediaInfo entity
  *
  * @license GPL-2.0-or-later
  */
-class FilePageEntityTermsView {
+class MediaInfoEntityTermsView {
 
 	/**
 	 * @var TemplateFactory
@@ -45,6 +46,15 @@ class FilePageEntityTermsView {
 	 */
 	private $userLanguages;
 
+	/**
+	 * MediaInfoEntityTermsView constructor.
+	 * @param TemplateFactory $templateFactory
+	 * @param LanguageNameLookup $languageNameLookup
+	 * @param LanguageDirectionalityLookup $languageDirectionalityLookup
+	 * @param LocalizedTextProvider $textProvider
+	 * @param array $userLanguages
+	 * @codeCoverageIgnore
+	 */
 	public function __construct(
 		TemplateFactory $templateFactory,
 		LanguageNameLookup $languageNameLookup,
@@ -52,6 +62,8 @@ class FilePageEntityTermsView {
 		LocalizedTextProvider $textProvider,
 		array $userLanguages
 	) {
+		OutputPage::setupOOUI();
+
 		$this->templateFactory = $templateFactory;
 		$this->languageNameLookup = $languageNameLookup;
 		$this->languageDirectionalityLookup = $languageDirectionalityLookup;
@@ -73,16 +85,6 @@ class FilePageEntityTermsView {
 				$entity->getLabels(),
 				$this->getLanguagesWithUsersLanguagesFirst( $entity )
 			)
-		);
-	}
-
-	/**
-	* @return string HTML
-	 */
-	public function getHtmlForEmptyEntity() {
-		return $this->templateFactory->render(
-			'filepage-entitytermsview',
-			$this->getLabelsPlusContext( '' )
 		);
 	}
 

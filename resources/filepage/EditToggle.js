@@ -23,7 +23,12 @@
 			} )
 			.$element;
 
-		config.header.append( $element );
+		this.initialize = function () {
+			// Only allow editing if we're NOT on a diff page or viewing an older revision
+			if ( $( '.diff' ).length === 0 && $( '.mw-revision' ).length === 0 ) {
+				$( '.' + config.headerClass ).append( $element );
+			}
+		};
 
 		this.show = function () {
 			$element.show();

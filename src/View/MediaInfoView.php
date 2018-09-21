@@ -3,13 +3,10 @@
 namespace Wikibase\MediaInfo\View;
 
 use InvalidArgumentException;
-use MediaWiki\Linker\LinkRenderer;
 use Wikibase\DataModel\Entity\EntityDocument;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
-use Wikibase\MediaInfo\DataModel\MediaInfoId;
-use Wikibase\MediaInfo\Services\FilePageLookup;
+use Wikibase\View\EntityDocumentView;
 use Wikibase\View\EntityTermsView;
-use Wikibase\View\EntityView;
 use Wikibase\View\LanguageDirectionalityLookup;
 use Wikibase\View\StatementSectionsView;
 use Wikibase\View\Template\TemplateFactory;
@@ -19,7 +16,27 @@ use Wikibase\View\Template\TemplateFactory;
  *
  * @license GPL-2.0-or-later
  */
-class MediaInfoView extends EntityView {
+class MediaInfoView implements EntityDocumentView {
+
+	/**
+	 * @var TemplateFactory
+	 */
+	protected $templateFactory;
+
+	/**
+	 * @var EntityTermsView
+	 */
+	private $entityTermsView;
+
+	/**
+	 * @var LanguageDirectionalityLookup
+	 */
+	private $languageDirectionalityLookup;
+
+	/**
+	 * @var string
+	 */
+	protected $languageCode;
 
 	/**
 	 * @var StatementSectionsView
@@ -27,93 +44,63 @@ class MediaInfoView extends EntityView {
 	private $statementSectionsView;
 
 	/**
-	 * @var LinkRenderer
-	 */
-	private $linkRenderer;
-
-	/**
-	 * @var FilePageLookup
-	 */
-	private $filePageLookup;
-
-	/**
 	 * @param TemplateFactory $templateFactory
-	 * @param EntityTermsView $entityTermsView
-	 * @param StatementSectionsView $statementSectionsView
+	 * @param MediaInfoEntityTermsView $entityTermsView
 	 * @param LanguageDirectionalityLookup $languageDirectionalityLookup
 	 * @param string $languageCode
-	 * @param LinkRenderer $linkRenderer
-	 * @param FilePageLookup $filePageLookup
+	 * @param StatementSectionsView $statementSectionsView
+	 * @codeCoverageIgnore
 	 */
 	public function __construct(
 		TemplateFactory $templateFactory,
-		EntityTermsView $entityTermsView,
-		StatementSectionsView $statementSectionsView,
+		MediaInfoEntityTermsView $entityTermsView,
 		LanguageDirectionalityLookup $languageDirectionalityLookup,
 		$languageCode,
-		LinkRenderer $linkRenderer,
-		FilePageLookup $filePageLookup
+		StatementSectionsView $statementSectionsView = null
 	) {
-		parent::__construct(
-			$templateFactory,
-			$entityTermsView,
-			$languageDirectionalityLookup,
-			$languageCode
-		);
+		$this->entityTermsView = $entityTermsView;
+		$this->languageDirectionalityLookup = $languageDirectionalityLookup;
+		$this->languageCode = $languageCode;
 
+		$this->templateFactory = $templateFactory;
 		$this->statementSectionsView = $statementSectionsView;
-		$this->linkRenderer = $linkRenderer;
-		$this->filePageLookup = $filePageLookup;
 	}
 
 	/**
-	 * @see EntityView::getMainHtml
-	 *
 	 * @param EntityDocument $entity
-	 *
-	 * @throws InvalidArgumentException
-	 * @return string HTML
+	 * @return string
+	 * @codeCoverageIgnore
 	 */
-	protected function getMainHtml( EntityDocument $entity ) {
+	public function getTitleHtml( EntityDocument $entity ) {
+		return '';
+	}
+
+	public function getHtml( EntityDocument $entity ) {
 		if ( !( $entity instanceof MediaInfo ) ) {
 			throw new InvalidArgumentException( '$entity must be a MediaInfo entity.' );
 		}
 
-		$html = $this->getFileLinkHtml( $entity->getId() );
-
-		$html .= $this->getHtmlForTerms( $entity )
-			. $this->statementSectionsView->getHtml( $entity->getStatements() );
-
-		return $html;
+		return $this->templateFactory->render(
+			'filepage-entityview',
+			$entity->getType(),
+			$entity->getId(),
+			$this->languageDirectionalityLookup->getDirectionality( $this->languageCode ) ?: 'auto',
+			$this->getTermsHtml( $entity ) . $this->getStatementsHtml( $entity )
+		);
 	}
 
-	/**
-	 * @see EntityView::getSideHtml
-	 *
-	 * @param EntityDocument $entity
-	 *
-	 * @return string HTML
+	private function getTermsHtml( MediaInfo $entity ) {
+		return $this->entityTermsView->getHtml(
+			$entity
+		);
+	}
+
+	/*
+	 * @todo T204264 - will probably look something like
+	 * 		return $this->statementSectionsView->getHtml( $entity->getStatements() );
 	 */
-	protected function getSideHtml( EntityDocument $entity ) {
+	private function getStatementsHtml( MediaInfo $entity ) {
 		return '';
-	}
-
-	/**
-	 * @param MediaInfoId $id
-	 * @return string HTML
-	 */
-	private function getFileLinkHtml( MediaInfoId $id = null ) {
-		$html = '';
-
-		if ( $id ) {
-			$title = $this->filePageLookup->getFilePage( $id );
-
-			if ( $title ) {
-				$html = $this->linkRenderer->makeKnownLink( $title );
-			}
-		}
-
-		return $html;
 	}
 
 }

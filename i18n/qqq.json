@@ -7,5 +7,15 @@
 	"right-mediainfo-term": "{{doc-right|mediainfo-term}}\nRight to alter the [[d:Special:MyLanguage/Wikidata:Glossary#Term|terms]] of [[d:Wikidata:Glossary#media info|media info]] entities.",
 	"wikibase-entity-mediainfo": "How we refer to entities of type media info. See also the Wikidata glossary on [[d:Wikidata:Glossary#media info|media info]].",
 	"wikibasemediainfo-desc": "{{desc|name=WikibaseMediaInfo|url=https://www.mediawiki.org/wiki/Extension:WikibaseMediaInfo}}",
-	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "List of labels, aliases and descriptions in one or more languages: Heading of the \"caption\" column.\n{{Identical|Caption}}"
+	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "List of labels, aliases and descriptions in one or more languages: Heading of the \"caption\" column.\n{{Identical|Caption}}",
+	"wikibasemediainfo-filepage-structured-data-heading": "Label for the 'Structured data' section of the File page",
+	"wikibasemediainfo-filepage-more-languages": "Text for link for expanding structured data to see more languages. Parameters:\n* $1 - Number of languages, for PLURAL support",
+	"wikibasemediainfo-filepage-fewer-languages": "Text for link for collapsing structured data to see fewer languages",
+	"wikibasemediainfo-filepage-add-caption": "Text for link for adding a caption",
+	"wikibasemediainfo-filepage-edit-captions": "Label text for edit captions icon",
+	"wikibasemediainfo-filepage-cancel": "Label for 'cancel' button for editing structured data on file page",
+	"wikibasemediainfo-filepage-publish": "Label for 'publish' button for editing structured data on file page",
+	"wikibasemediainfo-filepage-caption-empty": "Text to display when a caption is missing for a language",
+	"wikibasemediainfo-filepage-caption-too-long": "Error text for when a caption is too long. Parameters:\n* $1 - Number of characters over maximum, for PLURAL support",
+	"wikibasemediainfo-filepage-caption-approaching-limit": "Warning text when a caption is approaching the length limit. Parameters:\n* $1 - Number of characters left before reaching max character count, for PLURAL support"
 }

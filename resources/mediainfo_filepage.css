@@ -1,0 +1,90 @@
+.filepage-entitytermsview {
+	padding-top: 0.6em;
+}
+
+.filepage-entitytermsview h3 {
+	border-bottom: 1px solid #a2a9b1;
+	padding: 0.8em 0.8em 0.4em 1em;
+	font-size: 1em;
+	margin: 0;
+}
+
+.filepage-entitytermsview h3 .editButton {
+	float: right;
+}
+
+.filepage-entitytermstable {
+	padding: 1em 2em;
+	width: 100%;
+}
+
+.filepage-entitytermstable td {
+	margin: 0;
+	border-right: 0;
+	border-bottom: 1px solid #a2a9b1;
+	padding: 0.8em 0;
+	vertical-align: top;
+}
+
+.filepage-entitytermstable.editable td {
+	border-bottom: 0;
+}
+
+.filepage-entitytermstable tr:last-of-type td {
+	border: 0;
+	padding-bottom: 1em;
+}
+
+.filepage-entitytermstable td.language {
+	padding-right: 2em;
+}
+
+.filepage-entitytermstable td.caption {
+	width: 85%;
+}
+
+.filepage-entitytermstable td.caption .textInput {
+	float: left;
+	width: 94%;
+}
+
+.filepage-entitytermstable td.caption .deleter {
+	float: left;
+}
+
+.filepage-entitytermstable tr.entity-terms div.error {
+	padding: 0.2em 0.5em;
+	font-size: 0.9em;
+	font-weight: bold;
+	float: left;
+	clear: left;
+}
+
+.filepage-entitytermstable tr.entity-terms div.warning {
+	padding: 0.2em 0.5em;
+	font-size: 0.9em;
+	font-weight: bold;
+	float: left;
+	clear: left;
+}
+
+.editActions .addMore {
+	float: left;
+}
+
+.editActions .addMore label {
+	padding-top: 0.2em;
+}
+
+.editActions .cancelAndPublish {
+	float: right;
+}
+
+.editActions .cancel {
+	float: left;
+	padding-right: 0.8em;
+}
+
+.editActions .publish {
+	float: right;
+}

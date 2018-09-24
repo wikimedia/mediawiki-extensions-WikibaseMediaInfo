@@ -11,27 +11,29 @@ use Elastica\Document;
 use FormatJson;
 use ImagePage;
 use MediaWiki\MediaWikiServices;
+use OutputPage;
 use ParserOutput;
 use RequestContext;
 use Title;
+use Wikibase\DataModel\Entity\EntityId;
 use Wikibase\DataModel\Services\EntityId\EntityIdComposer;
+use Wikibase\DataModel\Services\Lookup\EntityLookup;
 use Wikibase\Lib\LanguageNameLookup;
 use Wikibase\Lib\Store\EntityByLinkedTitleLookup;
-use Wikibase\Lib\Store\EntityInfoTermLookup;
-use Wikibase\Lib\Store\LanguageFallbackLabelDescriptionLookup;
+use Wikibase\Lib\UserLanguageLookup;
 use Wikibase\MediaInfo\Content\MediaInfoHandler;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\MediaInfo\Services\MediaInfoByLinkedTitleLookup;
-use Wikibase\MediaInfo\View\MediaInfoTermsListView;
+use Wikibase\MediaInfo\View\FilePageEntityTermsView;
+use Wikibase\MediaInfo\View\FilePageMediaInfoView;
+use Wikibase\Repo\BabelUserLanguageLookup;
 use Wikibase\Repo\MediaWikiLanguageDirectionalityLookup;
 use Wikibase\Repo\MediaWikiLocalizedTextProvider;
-use Wikibase\Repo\ParserOutput\FallbackHintHtmlTermRenderer;
 use Wikibase\Repo\Store\EntityTitleStoreLookup;
-use Wikibase\Repo\View\RepoSpecialPageLinker;
 use Wikibase\Repo\WikibaseRepo;
-use Wikibase\View\SimpleEntityTermsView;
+use Wikibase\View\LocalizedTextProvider;
 use Wikibase\View\Template\TemplateFactory;
-use Wikibase\View\ToolbarEditSectionGenerator;
+use Wikibase\View\Template\TemplateRegistry;
 use WikiPage;
 
 /**
@@ -163,120 +165,126 @@ class WikibaseMediaInfoHooks {
 			'wbIsEditView' => true,
 			'wbUserSpecifiedLanguages' => $languageFallbackChain->getFetchLanguageCodes(),
 			'wbCurrentRevision' => $entityRevisionId,
+			'wbEntityId' => $entityId->getSerialization(),
+			'wbRepoApiUrl' => self::getApiUrl(),
+			'maxCaptionLength' => self::getMaxCaptionLength()
 		] );
 
 		$out->addModuleStyles( [
-			'wikibase.common',
-			'jquery.ui.core.styles',
-			'jquery.wikibase.statementview.RankSelector.styles',
-			'jquery.wikibase.toolbar.styles',
-			'jquery.wikibase.toolbarbutton.styles',
+			'wikibase.mediainfo.filepagestyles',
 		] );
 
 		$out->addModules( 'wikibase.mediainfo.filePageDisplay' );
 	}
 
-	/**
-	 * @param ImagePage $page
-	 * @param string &$html
-	 */
+	private static function getMaxCaptionLength() {
+		global $wgWBRepoSettings;
+		return $wgWBRepoSettings['multilang-limits']['length'];
+	}
+
+	private static function getApiUrl() {
+		global $wgServer, $wgScriptPath;
+		return $wgServer . $wgScriptPath . '/api.php';
+	}
+
 	public static function onImagePageAfterImageLinks( ImagePage $page, &$html ) {
 		// Exit if the extension is disabled.
 		if ( !MediaWikiServices::getInstance()->getMainConfig()->get( 'MediaInfoEnable' ) ) {
 			return;
 		}
+		$templateFactory = new TemplateFactory(
+			new TemplateRegistry( include __DIR__ . '/../resources/templates.php' )
+		);
 
-		$imgTitle = $page->getTitle();
-		$pageId = $imgTitle->getArticleID();
+		self::newFromGlobalState()->doImagePageAfterImageLinks(
+			$page,
+			$html,
+			$templateFactory,
+			WikibaseRepo::getDefaultInstance()->getEntityLookup(),
+			self::getRequestLanguageCode(),
+			new BabelUserLanguageLookup()
+		);
+	}
 
+	private static function getRequestLanguageCode() {
+		return RequestContext::getMain()->getLanguage()->getCode();
+	}
+
+	public function doImagePageAfterImageLinks(
+		ImagePage $page,
+		&$html,
+		TemplateFactory $templateFactory,
+		EntityLookup $entityLookup,
+		$languageCode,
+		UserLanguageLookup $userLanguageLookup
+	) {
+		$pageId = $page->getTitle()->getArticleID();
 		if ( !$pageId ) {
 			return;
 		}
 
-		$wikibaseRepo = WikibaseRepo::getDefaultInstance();
-		$store = $wikibaseRepo->getStore();
-		$entityId = $wikibaseRepo->getEntityIdComposer()->composeEntityId(
+		$textProvider = new MediaWikiLocalizedTextProvider( $languageCode );
+		$page->getContext()->getOutput()->enableOOUI();
+		$html .= '<h2>' .
+				 $textProvider->get( 'wikibasemediainfo-filepage-structured-data-heading' ) .
+				 '</h2>';
+
+		$entityId = $this->entityIdFromPageId( $pageId );
+		$entity = $entityLookup->getEntity( $entityId );
+
+		$html .= $this->getCaptionsPanel(
+			$entity,
+			$templateFactory,
+			$languageCode,
+			$textProvider,
+			$userLanguageLookup->getAllUserLanguages(
+				$page->getContext()->getOutput()->getUser()
+			)
+		);
+	}
+
+	private function getCaptionsPanel(
+		$entity,
+		TemplateFactory $templateFactory,
+		$languageCode,
+		LocalizedTextProvider $textProvider,
+		$userLanguages
+	) {
+		$languageDirectionalityLookup = new MediaWikiLanguageDirectionalityLookup();
+		$entityTermsView = new FilePageEntityTermsView(
+			$templateFactory,
+			new LanguageNameLookup( $languageCode ),
+			$languageDirectionalityLookup,
+			$textProvider,
+			$userLanguages
+		);
+
+		$entityView = new FilePageMediaInfoView(
+			$templateFactory,
+			$entityTermsView,
+			new MediaWikiLanguageDirectionalityLookup(),
+			$languageCode
+		);
+
+		if ( is_null( $entity ) ) {
+			return $entityView->getHtmlForEmptyEntity();
+		}
+		return $entityView->getHtml( $entity );
+	}
+
+	/**
+	 * The ID for a MediaInfo item is the same as the ID of its associated File page, with an
+	 * 'M' prepended - this is encapsulated by EntityIdComposer::composeEntityId()
+	 *
+	 * @param int $pageId
+	 * @return EntityId
+	 */
+	private function entityIdFromPageId( $pageId ) {
+		return $this->entityIdComposer->composeEntityId(
 			'',
 			MediaInfo::ENTITY_TYPE,
 			$pageId
 		);
-		$title = $wikibaseRepo->getEntityTitleLookup()->getTitleForId( $entityId );
-		$linkHtml = MediaWikiServices::getInstance()->getLinkRenderer()->makeKnownLink( $title );
-
-		$html .= '<h2>' . $linkHtml . '</h2>';
-
-		$entityLookup = $wikibaseRepo->getEntityLookup();
-		$entity = $entityLookup->getEntity( $entityId );
-
-		$request = RequestContext::getMain();
-		$language = $request->getLanguage();
-		$languageCode = $language->getCode();
-		$languageFallbackChainFactory = $wikibaseRepo->getLanguageFallbackChainFactory();
-		$languageFallbackChain = $languageFallbackChainFactory->newFromLanguage( $language );
-		$templateFactory = TemplateFactory::getDefaultInstance();
-		$textProvider = new MediaWikiLocalizedTextProvider( $languageCode );
-
-		$epogf = $wikibaseRepo->getEntityParserOutputGeneratorFactory();
-		$epog = $epogf->getEntityParserOutputGenerator( $language );
-
-		if ( $entity === null ) {
-			$entityFactory = $wikibaseRepo->getEntityFactory();
-			$entity = $entityFactory->newEmpty( MediaInfo::ENTITY_TYPE );
-		}
-
-		$parserOutput = $epog->getParserOutput( $entity, false );
-		$entityIds = $parserOutput->getExtensionData( 'referenced-entities' );
-
-		if ( !is_array( $entityIds ) ) {
-			$entityIds = [];
-		}
-
-		$entityInfoBuilder = $store->getEntityInfoBuilder();
-		$entityInfo = $entityInfoBuilder->collectEntityInfo( $entityIds, $languageFallbackChain->getFetchLanguageCodes() );
-
-		$labelDescriptionLookup = new LanguageFallbackLabelDescriptionLookup(
-			new EntityInfoTermLookup( $entityInfo ),
-			$languageFallbackChain
-		);
-
-		$editSectionGenerator = new ToolbarEditSectionGenerator(
-			new RepoSpecialPageLinker(),
-			$templateFactory,
-			$textProvider
-		);
-
-		$languageDirectionalityLookup = new MediaWikiLanguageDirectionalityLookup();
-		$languageNameLookup = new LanguageNameLookup( $languageCode );
-		$termsListView = new MediaInfoTermsListView(
-			$templateFactory,
-			$languageNameLookup,
-			$textProvider,
-			$languageDirectionalityLookup
-		);
-
-		$entityTermsView = new SimpleEntityTermsView(
-			new FallbackHintHtmlTermRenderer(
-				$languageDirectionalityLookup,
-				$languageNameLookup
-			),
-			$labelDescriptionLookup,
-			$templateFactory,
-			$editSectionGenerator,
-			$termsListView,
-			$textProvider
-		);
-
-		$entityViewFactory = $wikibaseRepo->getEntityViewFactory();
-		$entityView = $entityViewFactory->newEntityView(
-			MediaInfo::ENTITY_TYPE,
-			$languageCode,
-			$labelDescriptionLookup,
-			$languageFallbackChain,
-			$editSectionGenerator,
-			$entityTermsView
-		);
-
-		$html .= $entityView->getHtml( $entity );
 	}
 
 	/**
@@ -398,18 +406,11 @@ class WikibaseMediaInfoHooks {
 	}
 
 	/**
-	 * The ID for a MediaInfo item is the same as the ID of its associated File page, with an
-	 * 'M' prepended - this is encapsulated by EntityIdComposer::composeEntityId()
-	 *
 	 * @param Title $filePageTitle
 	 * @return WikiPage|null Returns null if there is no corresponding File page for MediaInfo item
 	 */
 	private function getMediaInfoPageForFilePageTitle( Title $filePageTitle ) {
-		$entityId = $this->entityIdComposer->composeEntityId(
-			'',
-			MediaInfo::ENTITY_TYPE,
-			$filePageTitle->getArticleID()
-		);
+		$entityId = $this->entityIdFromPageId( $filePageTitle->getArticleID() );
 		$mediaInfoTitle = $this->entityTitleStoreLookup->getTitleForId( $entityId );
 		if ( $mediaInfoTitle->exists() ) {
 			return WikiPage::factory( $mediaInfoTitle );

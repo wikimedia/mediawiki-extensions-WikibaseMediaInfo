@@ -18,7 +18,6 @@ use Wikibase\View\Template\TemplateFactory;
  * Class for creating HTML views for MediaInfo instances.
  *
  * @license GPL-2.0-or-later
- * @author Adrian Heine < adrian.heine@wikimedia.de >
  */
 class MediaInfoView extends EntityView {
 
@@ -83,7 +82,6 @@ class MediaInfoView extends EntityView {
 		$html = $this->getFileLinkHtml( $entity->getId() );
 
 		$html .= $this->getHtmlForTerms( $entity )
-			. $this->templateFactory->render( 'wikibase-toc' )
 			. $this->statementSectionsView->getHtml( $entity->getStatements() );
 
 		return $html;

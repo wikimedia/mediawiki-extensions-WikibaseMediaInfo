@@ -39,41 +39,41 @@
 			this._statementGroupSet = statementGroupSet;
 			this._fingerprint = new wb.datamodel.Fingerprint( labels, descriptions );
 		},
-	{
+		{
 
-		/**
-		 * @property {wikibase.datamodel.StatementGroupSet}
-		 * @private
-		 */
-		_statementGroupSet: null,
+			/**
+			 * @property {wikibase.datamodel.StatementGroupSet}
+			 * @private
+			 */
+			_statementGroupSet: null,
 
-		/**
-		 * @return {wikibase.datamodel.StatementGroupSet}
-		 */
-		getStatements: function () {
-			return this._statementGroupSet;
-		},
+			/**
+			 * @return {wikibase.datamodel.StatementGroupSet}
+			 */
+			getStatements: function () {
+				return this._statementGroupSet;
+			},
 
-		/**
-		 * @return {boolean}
-		 */
-		isEmpty: function () {
-			return this._statementGroupSet.isEmpty() && this._fingerprint.isEmpty();
-		},
+			/**
+			 * @return {boolean}
+			 */
+			isEmpty: function () {
+				return this._statementGroupSet.isEmpty() && this._fingerprint.isEmpty();
+			},
 
-		/**
-		 * @param {*} mediaInfo
-		 * @return {boolean}
-		 */
-		equals: function ( mediaInfo ) {
-			return mediaInfo === this ||
+			/**
+			 * @param {*} mediaInfo
+			 * @return {boolean}
+			 */
+			equals: function ( mediaInfo ) {
+				return mediaInfo === this ||
 				( mediaInfo instanceof SELF &&
 					this._id === mediaInfo.getId() &&
 					this._statementGroupSet.equals( mediaInfo.getStatements() ) &&
 					this._fingerprint.equals( mediaInfo.getFingerprint() )
 				);
-		}
-	} );
+			}
+		} );
 
 	/**
 	 * @inheritdoc

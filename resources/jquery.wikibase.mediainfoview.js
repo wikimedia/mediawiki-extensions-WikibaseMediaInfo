@@ -64,9 +64,9 @@
 
 			// This is here to be sure there is never a duplicate id:
 			$( '.wikibase-statementgrouplistview' )
-			.prev( '.wb-section-heading' )
-			.first()
-			.attr( 'id', 'claims' );
+				.prev( '.wb-section-heading' )
+				.first()
+				.attr( 'id', 'claims' );
 		},
 
 		/**
@@ -79,24 +79,24 @@
 			var self = this;
 
 			this.element
-			.on( [
-				'statementviewafterstartediting.' + this.widgetName,
-				'referenceviewafterstartediting.' + this.widgetName
-			].join( ' ' ),
-			function () {
-				self._trigger( 'afterstartediting' );
-			} );
+				.on( [
+					'statementviewafterstartediting.' + this.widgetName,
+					'referenceviewafterstartediting.' + this.widgetName
+				].join( ' ' ),
+				function () {
+					self._trigger( 'afterstartediting' );
+				} );
 
 			this.element
-			.on( [
-				'statementlistviewafterremove.' + this.widgetName,
-				'statementviewafterstopediting.' + this.widgetName,
-				'statementviewafterremove.' + this.widgetName,
-				'referenceviewafterstopediting.' + this.widgetName
-			].join( ' ' ),
-			function ( event, dropValue ) {
-				self._trigger( 'afterstopediting', null, [ dropValue ] );
-			} );
+				.on( [
+					'statementlistviewafterremove.' + this.widgetName,
+					'statementviewafterstopediting.' + this.widgetName,
+					'statementviewafterremove.' + this.widgetName,
+					'referenceviewafterstopediting.' + this.widgetName
+				].join( ' ' ),
+				function ( event, dropValue ) {
+					self._trigger( 'afterstopediting', null, [ dropValue ] );
+				} );
 		},
 
 		/**

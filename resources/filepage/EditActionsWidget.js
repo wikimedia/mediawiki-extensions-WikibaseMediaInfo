@@ -19,9 +19,9 @@
 			classes: [ 'addMore' ],
 			framed: false
 		} )
-		.on( 'click', function () {
-			captionsPanel.addNewEditableLanguageRow();
-		} );
+			.on( 'click', function () {
+				captionsPanel.addNewEditableLanguageRow();
+			} );
 
 		var cancelButton = new OO.ui.ButtonWidget( {
 			framed: false,
@@ -30,9 +30,9 @@
 			],
 			label: mw.message( 'wikibasemediainfo-filepage-cancel' ).text()
 		} )
-		.on( 'click', function () {
-			captionsPanel.makeReadOnly();
-		} );
+			.on( 'click', function () {
+				captionsPanel.makeReadOnly();
+			} );
 
 		var publishButton = new OO.ui.ButtonInputWidget( {
 			type: 'submit',
@@ -43,9 +43,9 @@
 				'progressive'
 			]
 		} )
-		.on( 'click', function () {
-			captionsPanel.sendData();
-		} );
+			.on( 'click', function () {
+				captionsPanel.sendData();
+			} );
 
 		var $element = $( '<tr>' )
 			.addClass( 'editActions' )

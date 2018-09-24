@@ -13,7 +13,6 @@
 	},
 	"rules": {
 		"dot-notation": [ "error", { "allowKeywords": true } ],
-		"indent": "off",
 		"no-underscore-dangle": "off",
 		"one-var": "off",
 		"vars-on-top": "off",

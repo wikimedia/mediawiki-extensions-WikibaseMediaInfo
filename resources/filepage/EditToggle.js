@@ -18,10 +18,10 @@
 			title: mw.message( 'wikibasemediainfo-filepage-edit-captions' ).text(),
 			classes: [ 'editButton' ]
 		} )
-		.on( 'click', function () {
-			captionsPanel.makeEditable();
-		} )
-		.$element;
+			.on( 'click', function () {
+				captionsPanel.makeEditable();
+			} )
+			.$element;
 
 		config.header.append( $element );
 

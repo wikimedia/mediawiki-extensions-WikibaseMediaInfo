@@ -21,12 +21,12 @@
 			).text(),
 			framed: false
 		} )
-		.on(
-			'click',
-			function () {
-				self.expand();
-			}
-		);
+			.on(
+				'click',
+				function () {
+					self.expand();
+				}
+			);
 
 		var $viewMoreRow = $( '<tr>' )
 			.addClass( 'viewMore' )
@@ -52,13 +52,13 @@
 							).text(),
 							framed: false
 						} )
-						.on(
-							'click',
-							function () {
-								self.collapse();
-							}
-						)
-						.$element
+							.on(
+								'click',
+								function () {
+									self.collapse();
+								}
+							)
+							.$element
 					)
 			);
 

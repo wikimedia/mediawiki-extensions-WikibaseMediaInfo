@@ -9,7 +9,8 @@
 	 * @param {Object} [config]
 	 * @cfg {Object} header jquery element containing the panel header
 	 * @cfg {Object} table jquery table element containing the existing data
-	 * @cfg {int} warnWithinMaxCaptionLength Show a warning when the caption length is within X characters of the max
+	 * @cfg {int} warnWithinMaxCaptionLength Show a warning when the caption length is within X
+	 *   characters of the max
 	 */
 	sd.CaptionsPanel = function CaptionsPanel( config ) {
 
@@ -57,7 +58,9 @@
 			return false;
 		};
 
-		var createTableRow = function ( index, languageCode, direction, languageContent, captionContent ) {
+		var createTableRow = function (
+			index, languageCode, direction, languageContent, captionContent
+		) {
 			var $languageTD = $( '<td>' )
 				.addClass( 'language' )
 				.append( languageContent );
@@ -213,7 +216,7 @@
 			return deleter;
 		};
 
-		var createIndexedEditableRow = function ( index, allCurrentCaptionLangCodes, captionData ) {
+		var createIndexedEditableRow = function ( index, captionLangCodes, captionData ) {
 			var languageSelector,
 				textInput,
 				$tableRow;
@@ -223,7 +226,7 @@
 			}
 
 			languageSelector = new sd.UlsWidget( {
-				languages: getAvailableLanguages( allCurrentCaptionLangCodes, captionData.languageCode )
+				languages: getAvailableLanguages( captionLangCodes, captionData.languageCode )
 			} );
 			if ( captionData.languageCode !== '' ) {
 				languageSelector.setValue( captionData.languageCode );
@@ -434,16 +437,16 @@
 			editToggle.hide();
 			languagesViewWidget.hide();
 			editActionsWidget.show();
-			var allCurrentCaptionLangCodes = [];
+			var captionLangCodes = [];
 			config.table.find( 'tr.entity-terms' ).each( function () {
 				var dataInRow = readDataFromReadOnlyRow( $( this ) );
-				allCurrentCaptionLangCodes.push( dataInRow.languageCode );
+				captionLangCodes.push( dataInRow.languageCode );
 			} );
 			config.table.find( 'tr.entity-terms' ).each( function ( index ) {
 				$( this ).replaceWith(
 					createIndexedEditableRow(
 						index,
-						allCurrentCaptionLangCodes,
+						captionLangCodes,
 						readDataFromReadOnlyRow( $( this ) )
 					)
 				);

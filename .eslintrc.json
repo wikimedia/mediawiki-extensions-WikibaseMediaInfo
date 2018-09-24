@@ -16,7 +16,6 @@
 		"no-underscore-dangle": "off",
 		"one-var": "off",
 		"vars-on-top": "off",
-		"max-len": 0,
 		"valid-jsdoc": 0
 	}
 }

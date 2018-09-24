@@ -14,7 +14,8 @@
 	 * @param {string} mediaInfoId
 	 * @param {wikibase.datamodel.TermMap|null} [labels=new wikibase.datamodel.TermMap()]
 	 * @param {wikibase.datamodel.TermMap|null} [descriptions=new wikibase.datamodel.TermMap()]
-	 * @param {wikibase.datamodel.StatementGroupSet|null} [statementGroupSet=new wikibase.datamodel.StatementGroupSet()]
+	 * @param {wikibase.datamodel.StatementGroupSet|null}
+	 *   [statementGroupSet=new wikibase.datamodel.StatementGroupSet()]
 	 *
 	 * @throws {Error} if a required parameter is not specified properly.
 	 */

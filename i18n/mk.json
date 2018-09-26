@@ -7,5 +7,15 @@
 	"right-mediainfo-term": "Менување на инфорамциски поими за слики и снимки (описи, кратки прегледи во текст)",
 	"wikibase-entity-mediainfo": "инфо за снимка",
 	"wikibasemediainfo-desc": "Додаток на Викибазата за управување со структурирани метаподатоци на слики и снимки",
-	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Опис"
+	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Описи",
+	"wikibasemediainfo-filepage-structured-data-heading": "Структурирани податоци",
+	"wikibasemediainfo-filepage-more-languages": "Погл. $1 уште {{PLURAL:$1|јазик|јазици}}",
+	"wikibasemediainfo-filepage-fewer-languages": "Погл. помалку јазици",
+	"wikibasemediainfo-filepage-add-caption": "Додај опис",
+	"wikibasemediainfo-filepage-edit-captions": "Уреди описи",
+	"wikibasemediainfo-filepage-cancel": "Откажи",
+	"wikibasemediainfo-filepage-publish": "Објави промени",
+	"wikibasemediainfo-filepage-caption-empty": "Нема зададено опис",
+	"wikibasemediainfo-filepage-caption-too-long": "$1 {{PLURAL:$1|знак|знаци}} над границата",
+	"wikibasemediainfo-filepage-caption-approaching-limit": "{{PLURAL:$1|преостанува уште $1 знак|преостануваат уште $1 знаци|0=преостануваат уште $1 знаци}}"
 }

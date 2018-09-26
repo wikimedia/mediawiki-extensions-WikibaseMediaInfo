@@ -5,5 +5,15 @@
 		]
 	},
 	"wikibase-entity-mediainfo": "mediainformation",
-	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Undertext"
+	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Bildtexter",
+	"wikibasemediainfo-filepage-structured-data-heading": "Strukturerad data",
+	"wikibasemediainfo-filepage-more-languages": "Se $1 {{PLURAL:$1|till språk|fler språk}}",
+	"wikibasemediainfo-filepage-fewer-languages": "Se färre språk",
+	"wikibasemediainfo-filepage-add-caption": "Lägg till en bildtext",
+	"wikibasemediainfo-filepage-edit-captions": "Redigera bildtexter",
+	"wikibasemediainfo-filepage-cancel": "Avbryt",
+	"wikibasemediainfo-filepage-publish": "Publicera ändringar",
+	"wikibasemediainfo-filepage-caption-empty": "Ingen bildtext har definierats",
+	"wikibasemediainfo-filepage-caption-too-long": "$1 {{PLURAL:$1|tecken}} över gränsen",
+	"wikibasemediainfo-filepage-caption-approaching-limit": "$1 {{PLURAL:$1|tecken|0=tecken}} kvar"
 }

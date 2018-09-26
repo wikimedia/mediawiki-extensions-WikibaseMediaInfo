@@ -9,5 +9,11 @@
 	"right-mediainfo-term": "Modifier les termes d'information du média (légendes, résumés)",
 	"wikibase-entity-mediainfo": "Infos média",
 	"wikibasemediainfo-desc": "Extension de Wikibase pour gérer les métadonnées structurées des fichiers de média",
-	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Légende"
+	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Légendes",
+	"wikibasemediainfo-filepage-structured-data-heading": "Données structurées",
+	"wikibasemediainfo-filepage-add-caption": "Ajouter une légende",
+	"wikibasemediainfo-filepage-edit-captions": "Modifier les légendes",
+	"wikibasemediainfo-filepage-cancel": "Annuler",
+	"wikibasemediainfo-filepage-publish": "Publier les modifications",
+	"wikibasemediainfo-filepage-caption-empty": "Aucune description fournie"
 }

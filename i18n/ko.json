@@ -9,5 +9,14 @@
 	"right-mediainfo-term": "미디어 정보 용어(설명, 요약) 변경",
 	"wikibase-entity-mediainfo": "미디어 정보",
 	"wikibasemediainfo-desc": "미디어 파일의 구조화된 메타데이터를 관리하는 위키베이스 확장 기능",
-	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "설명"
+	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "설명",
+	"wikibasemediainfo-filepage-structured-data-heading": "구조화된 데이터",
+	"wikibasemediainfo-filepage-more-languages": "$1개 {{PLURAL:$1|언어}} 더 보기",
+	"wikibasemediainfo-filepage-add-caption": "설명 추가",
+	"wikibasemediainfo-filepage-edit-captions": "설명 편집",
+	"wikibasemediainfo-filepage-cancel": "취소",
+	"wikibasemediainfo-filepage-publish": "변경사항 게시",
+	"wikibasemediainfo-filepage-caption-empty": "정의된 설명이 없음",
+	"wikibasemediainfo-filepage-caption-too-long": "$1{{PLURAL:$1|자}} 제한 초과",
+	"wikibasemediainfo-filepage-caption-approaching-limit": "$1{{PLURAL:$1|자}} 남음"
 }

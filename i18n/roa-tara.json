@@ -7,5 +7,15 @@
 	"right-mediainfo-term": "Cange le termine de le 'mbormaziune de le media ('ndestaziune, riepileghe)",
 	"wikibase-entity-mediainfo": "'mbormaziune multimediale",
 	"wikibasemediainfo-desc": "Estenzione Uicchibase pe gestì le metadate strutturate de file multimediale",
-	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "'Ndestazione"
+	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "'Ndestaziune",
+	"wikibasemediainfo-filepage-structured-data-heading": "Date strutturate",
+	"wikibasemediainfo-filepage-more-languages": "'Ndruche $1 cchiù {{PLURAL:$1|lènghe}}",
+	"wikibasemediainfo-filepage-fewer-languages": "'Ndruche mene lènghe",
+	"wikibasemediainfo-filepage-add-caption": "Aggiunge 'na 'ndestazione",
+	"wikibasemediainfo-filepage-edit-captions": "Cange le 'ndestaziune",
+	"wikibasemediainfo-filepage-cancel": "Annulle",
+	"wikibasemediainfo-filepage-publish": "Pubbleche le cangiaminde",
+	"wikibasemediainfo-filepage-caption-empty": "Nisciuna 'ndestazione angore definite",
+	"wikibasemediainfo-filepage-caption-too-long": "$1 {{PLURAL:$1|carattere}} sus a 'u limite",
+	"wikibasemediainfo-filepage-caption-approaching-limit": "$1 {{PLURAL:$1|carattere|0=carattere}} rumaste"
 }

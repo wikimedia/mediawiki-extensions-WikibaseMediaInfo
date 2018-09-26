@@ -8,5 +8,15 @@
 	"right-mediainfo-term": "Промена услова за информације медија (натписи, резимеи)",
 	"wikibase-entity-mediainfo": "медија инфо",
 	"wikibasemediainfo-desc": "Есктензија Wikibase за управљање структурисаним метаподацима медијских датотека",
-	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Натпис"
+	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Натписи",
+	"wikibasemediainfo-filepage-structured-data-heading": "Структурирани подаци",
+	"wikibasemediainfo-filepage-more-languages": "Још $1 {{PLURAL:$1|језик|језика}}",
+	"wikibasemediainfo-filepage-fewer-languages": "Мање језика",
+	"wikibasemediainfo-filepage-add-caption": "Додај натпис",
+	"wikibasemediainfo-filepage-edit-captions": "Уреди натписе",
+	"wikibasemediainfo-filepage-cancel": "Откажи",
+	"wikibasemediainfo-filepage-publish": "Објави промене",
+	"wikibasemediainfo-filepage-caption-empty": "Натпис није дефинисан",
+	"wikibasemediainfo-filepage-caption-too-long": "$1 {{PLURAL:$1|знак|знака|знакова}} преко ограничења",
+	"wikibasemediainfo-filepage-caption-approaching-limit": "{{PLURAL:$1|Остао је $1 знак|Остала су $1 знака|Остало је $1 знакова|0=Није остало знакова}}"
 }

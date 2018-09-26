@@ -2,11 +2,22 @@
 	"@metadata": {
 		"authors": [
 			"Vitorvicentevalente",
-			"Hamilton Abreu"
+			"Hamilton Abreu",
+			"Ruila"
 		]
 	},
 	"right-mediainfo-term": "Alterar os termos da informação de ficheiros multimédia (legendas, resumos)",
 	"wikibase-entity-mediainfo": "informação multimédia",
 	"wikibasemediainfo-desc": "Extensão Wikibase para gerir metadados estruturados de ficheiros multimédia",
-	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Legenda"
+	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Legendas",
+	"wikibasemediainfo-filepage-structured-data-heading": "Dados estruturados",
+	"wikibasemediainfo-filepage-more-languages": "Ver mais $1 {{PLURAL:$1|idioma|idiomas}}",
+	"wikibasemediainfo-filepage-fewer-languages": "Ver menos idiomas",
+	"wikibasemediainfo-filepage-add-caption": "Adicionar uma legenda",
+	"wikibasemediainfo-filepage-edit-captions": "Editar legendas",
+	"wikibasemediainfo-filepage-cancel": "Cancelar",
+	"wikibasemediainfo-filepage-publish": "Publicar alterações",
+	"wikibasemediainfo-filepage-caption-empty": "Nenhuma legenda definida",
+	"wikibasemediainfo-filepage-caption-too-long": "$1 {{PLURAL:$1|caractere|caracteres}} para além do limite",
+	"wikibasemediainfo-filepage-caption-approaching-limit": "$1 {{PLURAL:$1|caractere|caracteres|0=caracteres}} restantes"
 }

@@ -1,10 +1,14 @@
 {
 	"@metadata": {
 		"authors": [
-			"Liuxinyu970226"
+			"Liuxinyu970226",
+			"Phenolla"
 		]
 	},
 	"wikibase-entity-mediainfo": "媒体信息",
 	"wikibasemediainfo-desc": "管理结构化的媒体文件元数据的Wikibase扩展",
-	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "字幕"
+	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "说明",
+	"wikibasemediainfo-filepage-edit-captions": "编辑说明文字",
+	"wikibasemediainfo-filepage-cancel": "取消",
+	"wikibasemediainfo-filepage-publish": "发布更改"
 }

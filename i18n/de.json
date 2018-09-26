@@ -7,5 +7,15 @@
 	"right-mediainfo-term": "Medieninformationsbegriffe ändern (Beschriftungen, Zusammenfassungen)",
 	"wikibase-entity-mediainfo": "Medieninformationen",
 	"wikibasemediainfo-desc": "Wikibase-Erweiterung zur Verwaltung strukturierter Metadaten von Mediendateien",
-	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Überschrift"
+	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Überschriften",
+	"wikibasemediainfo-filepage-structured-data-heading": "Strukturierte Daten",
+	"wikibasemediainfo-filepage-more-languages": "{{PLURAL:$1|Eine weitere Sprache|$1 weitere Sprachen}} ansehen",
+	"wikibasemediainfo-filepage-fewer-languages": "Weniger Sprachen ansehen",
+	"wikibasemediainfo-filepage-add-caption": "Eine Überschrift hinzufügen",
+	"wikibasemediainfo-filepage-edit-captions": "Überschriften bearbeiten",
+	"wikibasemediainfo-filepage-cancel": "Abbrechen",
+	"wikibasemediainfo-filepage-publish": "Änderungen veröffentlichen",
+	"wikibasemediainfo-filepage-caption-empty": "Keine Überschrift definiert",
+	"wikibasemediainfo-filepage-caption-too-long": "{{PLURAL:$1|Ein|$1}} Zeichen über der Grenze",
+	"wikibasemediainfo-filepage-caption-approaching-limit": "Noch {{PLURAL:$1|ein|$1|0=$1}} Zeichen"
 }

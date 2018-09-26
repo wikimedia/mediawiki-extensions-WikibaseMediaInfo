@@ -6,5 +6,11 @@
 	},
 	"right-mediainfo-term": "Αλλαγή μέσων σε όρους (λεζάντες, περιλήψεις)",
 	"wikibase-entity-mediainfo": "πληροφορίες πολυμέσου",
-	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Λεζάντα"
+	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Λεζάντες",
+	"wikibasemediainfo-filepage-structured-data-heading": "Δομημένα δεδομένα",
+	"wikibasemediainfo-filepage-add-caption": "Προσθήκη λεζάντας",
+	"wikibasemediainfo-filepage-edit-captions": "Επεξεργασία λεζάντων",
+	"wikibasemediainfo-filepage-cancel": "Ακύρωση",
+	"wikibasemediainfo-filepage-publish": "Δημοσίευση αλλαγών",
+	"wikibasemediainfo-filepage-caption-empty": "Δεν ορίστηκε λεζάντα"
 }

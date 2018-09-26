@@ -7,5 +7,15 @@
 	},
 	"wikibase-entity-mediainfo": "informazioni multimediali",
 	"wikibasemediainfo-desc": "Estensione Wikibase per gestire i metadati strutturati di file multimediali",
-	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Didascalia"
+	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Didascalie",
+	"wikibasemediainfo-filepage-structured-data-heading": "Dati strutturati",
+	"wikibasemediainfo-filepage-more-languages": "Vedi $1 {{PLURAL:$1|altra lingua|altre lingue}}",
+	"wikibasemediainfo-filepage-fewer-languages": "Vedi meno lingue",
+	"wikibasemediainfo-filepage-add-caption": "Aggiungi una didascalia",
+	"wikibasemediainfo-filepage-edit-captions": "Modifica didascalie",
+	"wikibasemediainfo-filepage-cancel": "Annulla",
+	"wikibasemediainfo-filepage-publish": "Pubblica modifiche",
+	"wikibasemediainfo-filepage-caption-empty": "Nessuna didascalia definita",
+	"wikibasemediainfo-filepage-caption-too-long": "$1 {{PLURAL:$1|carattere|caratteri}} oltre il limite",
+	"wikibasemediainfo-filepage-caption-approaching-limit": "$1 {{PLURAL:$1|carattere rimasto|caratteri rimasti|0=caratteri rimasti}}"
 }

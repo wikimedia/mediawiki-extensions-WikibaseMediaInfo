@@ -7,5 +7,15 @@
 	"right-mediainfo-term": "更改多媒體資訊項目（說明、摘要等）",
 	"wikibase-entity-mediainfo": "多媒體資訊",
 	"wikibasemediainfo-desc": "管理結構化多媒體檔案詮釋資料的 Wikibase 擴充",
-	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "說明"
+	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "說明",
+	"wikibasemediainfo-filepage-structured-data-heading": "結構化資料",
+	"wikibasemediainfo-filepage-more-languages": "查看更多 $1 種{{PLURAL:$1|語言|語言}}",
+	"wikibasemediainfo-filepage-fewer-languages": "查看一些語言",
+	"wikibasemediainfo-filepage-add-caption": "新增說明",
+	"wikibasemediainfo-filepage-edit-captions": "編輯說明",
+	"wikibasemediainfo-filepage-cancel": "取消",
+	"wikibasemediainfo-filepage-publish": "發佈更改",
+	"wikibasemediainfo-filepage-caption-empty": "未定義說明",
+	"wikibasemediainfo-filepage-caption-too-long": "超過 $1 個{{PLURAL:$1|字元|字元}}限制",
+	"wikibasemediainfo-filepage-caption-approaching-limit": "還剩 $1 個{{PLURAL:$1|字元|字元|0=characters}}"
 }

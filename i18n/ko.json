@@ -12,6 +12,7 @@
 	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "설명",
 	"wikibasemediainfo-filepage-structured-data-heading": "구조화된 데이터",
 	"wikibasemediainfo-filepage-more-languages": "$1개 {{PLURAL:$1|언어}} 더 보기",
+	"wikibasemediainfo-filepage-fewer-languages": "언어 덜 보기",
 	"wikibasemediainfo-filepage-add-caption": "설명 추가",
 	"wikibasemediainfo-filepage-edit-captions": "설명 편집",
 	"wikibasemediainfo-filepage-cancel": "취소",

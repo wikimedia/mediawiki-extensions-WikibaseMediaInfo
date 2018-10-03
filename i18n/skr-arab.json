@@ -4,5 +4,9 @@
 			"Saraiki"
 		]
 	},
-	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "عنوان"
+	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "عنوان",
+	"wikibasemediainfo-filepage-add-caption": "عنوان شامل کرو",
+	"wikibasemediainfo-filepage-edit-captions": "عنوان وچ تبدیلی کرو",
+	"wikibasemediainfo-filepage-cancel": "منسوخ",
+	"wikibasemediainfo-filepage-publish": "تبدیلیاں شائع کرو"
 }

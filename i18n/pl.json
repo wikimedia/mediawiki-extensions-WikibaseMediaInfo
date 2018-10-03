@@ -4,6 +4,8 @@
 			"Chrumps"
 		]
 	},
+	"wikibasemediainfo-filepage-structured-data-heading": "Dane strukturalne",
 	"wikibasemediainfo-filepage-more-languages": "Zobacz $1 {{PLURAL:$1|język|języki|języków}} więcej",
-	"wikibasemediainfo-filepage-cancel": "Anuluj"
+	"wikibasemediainfo-filepage-cancel": "Anuluj",
+	"wikibasemediainfo-filepage-publish": "Opublikuj zmiany"
 }

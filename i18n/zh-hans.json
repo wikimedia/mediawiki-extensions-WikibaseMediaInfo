@@ -8,7 +8,11 @@
 	"wikibase-entity-mediainfo": "媒体信息",
 	"wikibasemediainfo-desc": "管理结构化的媒体文件元数据的Wikibase扩展",
 	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "说明",
+	"wikibasemediainfo-filepage-structured-data-heading": "结构化数据",
+	"wikibasemediainfo-filepage-fewer-languages": "查看更少语言",
+	"wikibasemediainfo-filepage-add-caption": "添加说明文字",
 	"wikibasemediainfo-filepage-edit-captions": "编辑说明文字",
 	"wikibasemediainfo-filepage-cancel": "取消",
-	"wikibasemediainfo-filepage-publish": "发布更改"
+	"wikibasemediainfo-filepage-publish": "发布更改",
+	"wikibasemediainfo-filepage-caption-empty": "未定义说明文字"
 }

@@ -11,9 +11,13 @@
 	"wikibasemediainfo-desc": "Extension de Wikibase pour gérer les métadonnées structurées des fichiers de média",
 	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Légendes",
 	"wikibasemediainfo-filepage-structured-data-heading": "Données structurées",
+	"wikibasemediainfo-filepage-more-languages": "Voir $1 langue{{PLURAL:$1||s}} supplémentaire{{PLURAL:$1||s}}",
+	"wikibasemediainfo-filepage-fewer-languages": "Voir moins de langues",
 	"wikibasemediainfo-filepage-add-caption": "Ajouter une légende",
 	"wikibasemediainfo-filepage-edit-captions": "Modifier les légendes",
 	"wikibasemediainfo-filepage-cancel": "Annuler",
 	"wikibasemediainfo-filepage-publish": "Publier les modifications",
-	"wikibasemediainfo-filepage-caption-empty": "Aucune description fournie"
+	"wikibasemediainfo-filepage-caption-empty": "Aucune description fournie",
+	"wikibasemediainfo-filepage-caption-too-long": "$1 {{PLURAL:$1|caractère|caractères}} après la limite",
+	"wikibasemediainfo-filepage-caption-approaching-limit": "Il reste $1 {{PLURAL:$1|caractère|caractères|0=caractères}}"
 }

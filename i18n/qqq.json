@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"Liuxinyu970226"
+			"Liuxinyu970226",
+			"Robby"
 		]
 	},
 	"right-mediainfo-term": "{{doc-right|mediainfo-term}}\nRight to alter the [[d:Special:MyLanguage/Wikidata:Glossary#Term|terms]] of [[d:Wikidata:Glossary#media info|media info]] entities.",
@@ -13,7 +14,7 @@
 	"wikibasemediainfo-filepage-fewer-languages": "Text for link for collapsing structured data to see fewer languages",
 	"wikibasemediainfo-filepage-add-caption": "Text for link for adding a caption",
 	"wikibasemediainfo-filepage-edit-captions": "Label text for edit captions icon",
-	"wikibasemediainfo-filepage-cancel": "Label for 'cancel' button for editing structured data on file page",
+	"wikibasemediainfo-filepage-cancel": "Label for 'cancel' button for editing structured data on file page\n{{Identical|Cancel}}",
 	"wikibasemediainfo-filepage-publish": "Label for 'publish' button for editing structured data on file page",
 	"wikibasemediainfo-filepage-caption-empty": "Text to display when a caption is missing for a language",
 	"wikibasemediainfo-filepage-caption-too-long": "Error text for when a caption is too long. Parameters:\n* $1 - Number of characters over maximum, for PLURAL support",

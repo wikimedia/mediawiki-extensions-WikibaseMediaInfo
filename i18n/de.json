@@ -12,6 +12,7 @@
 	"wikibasemediainfo-desc": "Wikibase-Erweiterung zur Verwaltung strukturierter Metadaten von Mediendateien",
 	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Überschriften",
 	"wikibasemediainfo-filepage-structured-data-heading": "Strukturierte Daten",
+	"wikibasemediainfo-filepage-captions-title": "Überschriften",
 	"wikibasemediainfo-filepage-more-languages": "{{PLURAL:$1|Eine weitere Sprache|$1 weitere Sprachen}} ansehen",
 	"wikibasemediainfo-filepage-fewer-languages": "Weniger Sprachen ansehen",
 	"wikibasemediainfo-filepage-add-caption": "Eine Überschrift hinzufügen",

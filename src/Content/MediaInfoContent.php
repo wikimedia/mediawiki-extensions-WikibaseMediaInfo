@@ -77,26 +77,6 @@ class MediaInfoContent extends EntityContent {
 	}
 
 	/**
-	 * @see EntityContent::isEmpty
-	 *
-	 * @return bool
-	 */
-	public function isEmpty() {
-		return !$this->isRedirect() && $this->getMediaInfo()->isEmpty();
-	}
-
-	/**
-	 * @see EntityContent::isCountable
-	 *
-	 * @param bool|null $hasLinks
-	 *
-	 * @return bool
-	 */
-	public function isCountable( $hasLinks = null ) {
-		return !$this->isRedirect() && !$this->getMediaInfo()->isEmpty();
-	}
-
-	/**
 	 * @see EntityContent::getTextForSearchIndex
 	 *
 	 * @return string

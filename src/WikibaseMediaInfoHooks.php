@@ -168,9 +168,7 @@ class WikibaseMediaInfoHooks {
 	 * @return OutputPage $out
 	 */
 	private function replaceMediaInfoSlotHeader( OutputPage $out ) {
-		$textProvider = new MediaWikiLocalizedTextProvider(
-			$out->getLanguage()->getCode()
-		);
+		$textProvider = new MediaWikiLocalizedTextProvider( $out->getLanguage() );
 
 		$html = $out->getHTML();
 		$out->clearHTML();

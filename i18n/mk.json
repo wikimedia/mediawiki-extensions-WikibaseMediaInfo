@@ -12,6 +12,7 @@
 	"wikibasemediainfo-desc": "Додаток на Викибазата за управување со структурирани метаподатоци на слики и снимки",
 	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Описи",
 	"wikibasemediainfo-filepage-structured-data-heading": "Структурирани податоци",
+	"wikibasemediainfo-filepage-captions-title": "Описи",
 	"wikibasemediainfo-filepage-more-languages": "Погл. $1 уште {{PLURAL:$1|јазик|јазици}}",
 	"wikibasemediainfo-filepage-fewer-languages": "Погл. помалку јазици",
 	"wikibasemediainfo-filepage-add-caption": "Додај опис",

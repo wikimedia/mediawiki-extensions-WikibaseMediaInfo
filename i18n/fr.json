@@ -14,6 +14,7 @@
 	"wikibasemediainfo-desc": "Extension de Wikibase pour gérer les métadonnées structurées des fichiers de média",
 	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Légendes",
 	"wikibasemediainfo-filepage-structured-data-heading": "Données structurées",
+	"wikibasemediainfo-filepage-captions-title": "Légendes",
 	"wikibasemediainfo-filepage-more-languages": "Voir $1 langue{{PLURAL:$1||s}} supplémentaire{{PLURAL:$1||s}}",
 	"wikibasemediainfo-filepage-fewer-languages": "Voir moins de langues",
 	"wikibasemediainfo-filepage-add-caption": "Ajouter une légende",

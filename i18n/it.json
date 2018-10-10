@@ -12,6 +12,7 @@
 	"wikibasemediainfo-desc": "Estensione Wikibase per gestire i metadati strutturati di file multimediali",
 	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Didascalie",
 	"wikibasemediainfo-filepage-structured-data-heading": "Dati strutturati",
+	"wikibasemediainfo-filepage-captions-title": "Didascalie",
 	"wikibasemediainfo-filepage-more-languages": "Vedi $1 {{PLURAL:$1|altra lingua|altre lingue}}",
 	"wikibasemediainfo-filepage-fewer-languages": "Vedi meno lingue",
 	"wikibasemediainfo-filepage-add-caption": "Aggiungi una didascalia",

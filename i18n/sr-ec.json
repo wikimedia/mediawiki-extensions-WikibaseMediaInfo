@@ -14,6 +14,7 @@
 	"wikibasemediainfo-desc": "Есктензија Wikibase за управљање структурисаним метаподацима медијских датотека",
 	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Натписи",
 	"wikibasemediainfo-filepage-structured-data-heading": "Структурирани подаци",
+	"wikibasemediainfo-filepage-captions-title": "Натписи",
 	"wikibasemediainfo-filepage-more-languages": "Још $1 {{PLURAL:$1|језик|језика}}",
 	"wikibasemediainfo-filepage-fewer-languages": "Мање језика",
 	"wikibasemediainfo-filepage-add-caption": "Додај натпис",

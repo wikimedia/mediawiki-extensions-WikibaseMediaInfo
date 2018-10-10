@@ -15,6 +15,7 @@
 	"wikibasemediainfo-desc": "امتداد Wikibase لإدارة البيانات الوصفية المهيكلة لملفات الوسائط",
 	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "الشروحات",
 	"wikibasemediainfo-filepage-structured-data-heading": "البيانات الهيكلية",
+	"wikibasemediainfo-filepage-captions-title": "التعليقات",
 	"wikibasemediainfo-filepage-more-languages": "انظر $1 {{PLURAL:$1|لغة|لغات}} أخرى",
 	"wikibasemediainfo-filepage-fewer-languages": "عرض لغات أقل",
 	"wikibasemediainfo-filepage-add-caption": "إضافة شرح",

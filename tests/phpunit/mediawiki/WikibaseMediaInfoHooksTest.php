@@ -4,8 +4,8 @@ namespace Wikibase\MediaInfo\Tests\MediaWiki;
 
 use Hooks;
 use Language;
-use MediaWiki\Storage\RevisionRecord;
-use MediaWiki\Storage\SlotRecord;
+use MediaWiki\Revision\RevisionRecord;
+use MediaWiki\Revision\SlotRecord;
 use ParserOutput;
 use Title;
 use User;

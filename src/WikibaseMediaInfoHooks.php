@@ -171,7 +171,9 @@ class WikibaseMediaInfoHooks {
 		$out->clearHTML();
 		$html = str_replace(
 			'<mw:mediainfoslotheader />',
-			$textProvider->get( 'wikibasemediainfo-filepage-structured-data-heading' ),
+			htmlspecialchars(
+				$textProvider->get( 'wikibasemediainfo-filepage-structured-data-heading' )
+			),
 			$html
 		);
 		$out->addHTML( $html );
@@ -190,6 +192,7 @@ class WikibaseMediaInfoHooks {
 		array $termsLanguages,
 		UserLanguageLookup $userLanguageLookup
 	) {
+		$out->preventClickjacking();
 		$imgTitle = $out->getTitle();
 		if ( !$imgTitle->exists() || !$imgTitle->inNamespace( NS_FILE ) ) {
 			return;
@@ -207,7 +210,7 @@ class WikibaseMediaInfoHooks {
 			'wbCurrentRevision' => $out->getWikiPage()->getRevision()->getId(),
 			'wbEntityId' => $entityId->getSerialization(),
 			'wbTermsLanguages' => $termsLanguages,
-			'wbRepoApiUrl' => self::getApiUrl(),
+			'wbRepoApiUrl' => wfScript( 'api' ),
 			'maxCaptionLength' => self::getMaxCaptionLength(),
 		] );
 
@@ -221,11 +224,6 @@ class WikibaseMediaInfoHooks {
 	private static function getMaxCaptionLength() {
 		global $wgWBRepoSettings;
 		return $wgWBRepoSettings['multilang-limits']['length'];
-	}
-
-	private static function getApiUrl() {
-		global $wgServer, $wgScriptPath;
-		return $wgServer . $wgScriptPath . '/api.php';
 	}
 
 	/**

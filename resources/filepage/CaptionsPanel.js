@@ -30,7 +30,7 @@
 				.append(
 					$( '<h1>' )
 						.addClass( 'mw-slot-header' )
-						.html(
+						.text(
 							mw.message( 'wikibasemediainfo-filepage-structured-data-heading' )
 								.text()
 						),
@@ -45,7 +45,7 @@
 		var injectEmptyCaptionsData = function () {
 			var $panelHeader = $( '<h3>' )
 				.addClass( config.headerClass )
-				.html( mw.message( 'wikibasemediainfo-filepage-captions-title' ).text() );
+				.text( mw.message( 'wikibasemediainfo-filepage-captions-title' ).text() );
 			var $panelContent = $( '<table>' )
 				.addClass( config.tableClass )
 				.addClass( 'filepage-mediainfo-entitytermstable' )
@@ -74,9 +74,9 @@
 				$captionTD = $tableRow.find( 'td.caption' );
 			return new sd.CaptionData(
 				$languageTD.attr( 'lang' ),
-				$languageTD.html(),
+				$languageTD.text(),
 				$languageTD.attr( 'dir' ),
-				$captionTD.hasClass( 'wbmi-empty' ) ? '' : $captionTD.html()
+				$captionTD.hasClass( 'wbmi-empty' ) ? '' : $captionTD.text()
 			);
 		};
 
@@ -121,7 +121,7 @@
 
 			if ( captionContent === '' ) {
 				$captionTD.addClass( 'wbmi-empty' );
-				$captionTD.html( mw.message( 'wikibasemediainfo-filepage-caption-empty' ).text() );
+				$captionTD.text( mw.message( 'wikibasemediainfo-filepage-caption-empty' ).text() );
 			}
 
 			return $( '<tr>' )
@@ -133,10 +133,10 @@
 		var createIndexedReadOnlyRow = function ( index, captionData ) {
 			return createTableRow(
 				index,
-				captionData.languageCode,
-				captionData.direction,
-				captionData.languageText,
-				captionData.text
+				mw.html.escape( captionData.languageCode ),
+				mw.html.escape( captionData.direction ),
+				mw.html.escape( captionData.languageText ),
+				mw.html.escape( captionData.text )
 			);
 		};
 
@@ -198,7 +198,7 @@
 				$captionTD.append(
 					$( '<div>' )
 						.addClass( 'warning' )
-						.html(
+						.text(
 							mw.message(
 								'wikibasemediainfo-filepage-caption-approaching-limit',
 								lengthDiff
@@ -223,7 +223,7 @@
 							$captionTD.append(
 								$( '<div>' )
 									.addClass( 'error' )
-									.html(
+									.text(
 										mw.message(
 											'wikibasemediainfo-filepage-caption-too-long',
 											textInput.getValue().length - mw.config.get( 'maxCaptionLength' )
@@ -313,8 +313,8 @@
 
 			$tableRow = createTableRow(
 				index,
-				captionData.languageCode,
-				captionData.direction,
+				mw.html.escape( captionData.languageCode ),
+				mw.html.escape( captionData.direction ),
 				languageSelectors[ index ].$element,
 				textInputs[ index ].$element
 			);
@@ -584,7 +584,7 @@
 					$captionTD.append(
 						$( '<div>' )
 							.addClass( 'error' )
-							.html( error.detailedMessage )
+							.text( error.detailedMessage )
 					);
 				} )
 				.always( function () {

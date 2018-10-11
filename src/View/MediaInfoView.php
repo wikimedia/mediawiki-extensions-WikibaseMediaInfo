@@ -82,9 +82,11 @@ class MediaInfoView implements EntityDocumentView {
 
 		return $this->templateFactory->render(
 			'filepage-entityview',
-			$entity->getType(),
-			$entity->getId(),
-			$this->languageDirectionalityLookup->getDirectionality( $this->languageCode ) ?: 'auto',
+			htmlspecialchars( $entity->getType() ),
+			htmlspecialchars( $entity->getId() ),
+			htmlspecialchars(
+				$this->languageDirectionalityLookup->getDirectionality( $this->languageCode ) ?: 'auto'
+			),
 			$this->getTermsHtml( $entity ) . $this->getStatementsHtml( $entity )
 		);
 	}

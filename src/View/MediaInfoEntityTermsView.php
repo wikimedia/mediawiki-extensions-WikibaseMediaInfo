@@ -136,9 +136,9 @@ class MediaInfoEntityTermsView {
 
 		$languageElement = $this->templateFactory->render(
 			'filepage-entitytermslanguageelement',
-			$languageName,
-			$dir,
-			$languageCode
+			htmlspecialchars( $languageName ),
+			htmlspecialchars( $dir ),
+			htmlspecialchars( $languageCode )
 		);
 		$labelElement = $this->renderLabelForLanguage(
 			$labels,
@@ -167,7 +167,11 @@ class MediaInfoEntityTermsView {
 				$this->templateFactory->render(
 					'filepage-entitytermstable',
 					'captions',
-					$this->textProvider->get( 'wikibasemediainfo-entitytermsforlanguagelistview-caption' ),
+					htmlspecialchars(
+						$this->textProvider->get(
+							'wikibasemediainfo-entitytermsforlanguagelistview-caption'
+						)
+					),
 					$contentHtml
 				)
 			),
@@ -178,9 +182,11 @@ class MediaInfoEntityTermsView {
 	private function renderLabelForLanguage( TermList $termList, $languageCode ) {
 		return $this->templateFactory->render(
 			'filepage-entitytermscaptionelement',
-			$termList->getByLanguage( $languageCode )->getText(),
-			$this->languageDirectionalityLookup->getDirectionality( $languageCode ) ?: 'auto',
-			$languageCode
+			htmlspecialchars( $termList->getByLanguage( $languageCode )->getText() ),
+			htmlspecialchars(
+				$this->languageDirectionalityLookup->getDirectionality( $languageCode ) ?: 'auto'
+			),
+			htmlspecialchars( $languageCode )
 		);
 	}
 

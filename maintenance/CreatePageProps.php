@@ -5,9 +5,10 @@ namespace Wikibase\MediaInfo\Maintenance;
 use BatchRowIterator;
 use BatchRowUpdate;
 use LoggedUpdateMaintenance;
+use Wikibase\DataModel\Services\EntityId\EntityIdComposer;
+use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\MediaInfo\Maintenance\Util\PagePropsUpdateWriter;
 use Wikibase\MediaInfo\Maintenance\Util\PagePropsUpdateGenerator;
-use Wikibase\Repo\WikibaseRepo;
 
 $basePath = getenv( 'MW_INSTALL_PATH' ) !== false
 	? getenv( 'MW_INSTALL_PATH' )
@@ -38,12 +39,25 @@ class CreatePageProps extends LoggedUpdateMaintenance {
 	}
 
 	/**
+	 * HACK: Don't ask. T208043. I'm not that evil...
+	 * @return EntityIdComposer
+	 */
+	private function getEntityIdComposer() {
+		$entityDef = require __DIR__ . '/../WikibaseMediaInfo.entitytypes.php';
+		return new EntityIdComposer(
+			[
+				MediaInfo::ENTITY_TYPE =>
+					$entityDef[MediaInfo::ENTITY_TYPE]['entity-id-composer-callback']
+			]
+		);
+	}
+
+	/**
 	 * @inheritDoc
 	 */
 	public function doDBUpdates() {
 		$dbr = wfGetDB( DB_REPLICA );
 		$dbw = wfGetDB( DB_MASTER );
-		$entityIdComposer = WikibaseRepo::getDefaultInstance()->getEntityIdComposer();
 
 		// find all pages in NS_FILE that don't have a page_props.pp_propname='mediainfo_entity' yet
 		$iterator = new BatchRowIterator(
@@ -70,7 +84,7 @@ class CreatePageProps extends LoggedUpdateMaintenance {
 		$updater = new BatchRowUpdate(
 			$iterator,
 			new PagePropsUpdateWriter( $dbw, 'page_props' ),
-			new PagePropsUpdateGenerator( $entityIdComposer )
+			new PagePropsUpdateGenerator( $this->getEntityIdComposer() )
 		);
 		$updater->execute();
 

@@ -31,9 +31,9 @@ use Wikibase\Repo\Store\EntityTitleStoreLookup;
  */
 class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 
-	public function testOnWikibaseEntityNamespaces() {
+	public function testOnWikibaseRepoEntityNamespaces() {
 		$entityNamespaces = [];
-		WikibaseMediaInfoHooks::onWikibaseEntityNamespaces( $entityNamespaces );
+		WikibaseMediaInfoHooks::onWikibaseRepoEntityNamespaces( $entityNamespaces );
 		$this->assertArrayHasKey( MediaInfo::ENTITY_TYPE, $entityNamespaces );
 	}
 

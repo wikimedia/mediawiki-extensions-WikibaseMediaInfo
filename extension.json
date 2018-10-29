@@ -29,8 +29,11 @@
 		"src/Services/MediaInfoServiceWiring.php"
 	],
 	"Hooks": {
+		"WikibaseRepoEntityNamespaces": [
+			"Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onWikibaseRepoEntityNamespaces"
+		],
 		"WikibaseEntityNamespaces": [
-			"Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onWikibaseEntityNamespaces"
+			"Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onWikibaseRepoEntityNamespaces"
 		],
 		"WikibaseRepoEntityTypes": [
 			"Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onWikibaseEntityTypes"

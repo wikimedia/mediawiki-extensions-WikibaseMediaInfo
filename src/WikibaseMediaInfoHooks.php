@@ -68,7 +68,7 @@ class WikibaseMediaInfoHooks {
 	 *
 	 * @param array $entityNamespacesSetting
 	 */
-	public static function onWikibaseEntityNamespaces( &$entityNamespacesSetting ) {
+	public static function onWikibaseRepoEntityNamespaces( &$entityNamespacesSetting ) {
 		// Exit if the extension is disabled.
 		if ( !MediaWikiServices::getInstance()->getMainConfig()->get( 'MediaInfoEnable' ) ) {
 			return;

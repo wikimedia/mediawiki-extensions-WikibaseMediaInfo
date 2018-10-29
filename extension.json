@@ -32,9 +32,6 @@
 		"WikibaseRepoEntityNamespaces": [
 			"Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onWikibaseRepoEntityNamespaces"
 		],
-		"WikibaseEntityNamespaces": [
-			"Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onWikibaseRepoEntityNamespaces"
-		],
 		"WikibaseRepoEntityTypes": [
 			"Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onWikibaseEntityTypes"
 		],

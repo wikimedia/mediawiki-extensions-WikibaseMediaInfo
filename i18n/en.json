@@ -19,7 +19,7 @@
 	"wikibasemediainfo-filepage-edit-captions": "Edit captions",
 	"wikibasemediainfo-filepage-cancel": "Cancel",
 	"wikibasemediainfo-filepage-publish": "Publish changes",
-	"wikibasemediainfo-filepage-caption-empty": "No caption defined",
+	"wikibasemediainfo-filepage-caption-empty": "Add a one-line explanation of what this file represents",
 	"wikibasemediainfo-filepage-caption-too-long": "$1 {{PLURAL:$1|character|characters}} over the limit",
 	"wikibasemediainfo-filepage-caption-approaching-limit": "$1 {{PLURAL:$1|character|characters|0=characters}} left"
 }

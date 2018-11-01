@@ -18,6 +18,8 @@ use Wikibase\View\EditSectionGenerator;
 use Wikibase\View\EntityTermsView;
 
 /**
+ * @coversNothing
+ *
  * @group WikibaseMediaInfo
  *
  * @license GPL-2.0-or-later

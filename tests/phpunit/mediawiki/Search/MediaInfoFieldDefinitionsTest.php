@@ -7,6 +7,8 @@ use Wikibase\MediaInfo\Search\MediaInfoFieldDefinitions;
 use Wikibase\Repo\Search\Elastic\Fields\FieldDefinitions;
 
 /**
+ * @covers \Wikibase\MediaInfo\Search\MediaInfoFieldDefinitions
+ *
  * @license GPL-2.0-or-later
  * @author Katie Filbert < aude.wiki@gmail.com >
  */

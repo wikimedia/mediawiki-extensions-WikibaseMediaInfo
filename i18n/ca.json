@@ -1,0 +1,19 @@
+{
+	"@metadata": {
+		"authors": [
+			"Toniher"
+		]
+	},
+	"wikibase-entity-mediainfo": "informació multimèdia",
+	"wikibase-mediainfo-summary-wbsetlabel-add": "S'ha afegit la llegenda [$1]",
+	"wikibase-mediainfo-summary-wbsetlabel-remove": "S'ha suprimit la llegenda [$1]",
+	"wikibase-mediainfo-summary-wbsetlabel-set": "S'ha modificat la llegenda [$1]",
+	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Llegendes",
+	"wikibasemediainfo-filepage-structured-data-heading": "Dades estructurades",
+	"wikibasemediainfo-filepage-captions-title": "Llegendes",
+	"wikibasemediainfo-filepage-add-caption": "Afegeix una llegenda",
+	"wikibasemediainfo-filepage-edit-captions": "Modifica les llegendes",
+	"wikibasemediainfo-filepage-cancel": "Cancel·la",
+	"wikibasemediainfo-filepage-publish": "Publica els canvis",
+	"wikibasemediainfo-filepage-caption-empty": "No s'ha definit cap llegenda"
+}

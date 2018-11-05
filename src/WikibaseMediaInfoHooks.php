@@ -223,7 +223,7 @@ class WikibaseMediaInfoHooks {
 
 	private static function getMaxCaptionLength() {
 		global $wgWBRepoSettings;
-		return $wgWBRepoSettings['multilang-limits']['length'];
+		return $wgWBRepoSettings['string-limits']['multilang']['length'];
 	}
 
 	/**

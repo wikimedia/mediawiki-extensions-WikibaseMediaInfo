@@ -10,6 +10,7 @@ use Wikibase\View\EntityTermsView;
 use Wikibase\View\LanguageDirectionalityLookup;
 use Wikibase\View\StatementSectionsView;
 use Wikibase\View\Template\TemplateFactory;
+use Wikibase\View\ViewContent;
 
 /**
  * Class for creating HTML views for MediaInfo instances.
@@ -75,19 +76,21 @@ class MediaInfoView implements EntityDocumentView {
 		return '';
 	}
 
-	public function getHtml( EntityDocument $entity ) {
+	public function getContent( EntityDocument $entity ): ViewContent {
 		if ( !( $entity instanceof MediaInfo ) ) {
 			throw new InvalidArgumentException( '$entity must be a MediaInfo entity.' );
 		}
 
-		return $this->templateFactory->render(
-			'filepage-entityview',
-			htmlspecialchars( $entity->getType() ),
-			htmlspecialchars( $entity->getId() ),
-			htmlspecialchars(
-				$this->languageDirectionalityLookup->getDirectionality( $this->languageCode ) ?: 'auto'
-			),
-			$this->getTermsHtml( $entity ) . $this->getStatementsHtml( $entity )
+		return new ViewContent(
+			$this->templateFactory->render(
+				'filepage-entityview',
+				htmlspecialchars( $entity->getType() ),
+				htmlspecialchars( $entity->getId() ),
+				htmlspecialchars(
+					$this->languageDirectionalityLookup->getDirectionality( $this->languageCode ) ?: 'auto'
+				),
+				$this->getTermsHtml( $entity ) . $this->getStatementsHtml( $entity )
+			)
 		);
 	}
 

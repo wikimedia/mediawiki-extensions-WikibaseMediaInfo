@@ -75,7 +75,7 @@ class MediaInfoViewTest extends \PHPUnit\Framework\TestCase {
 		);
 	}
 
-	public function testGetHtml() {
+	public function testGetContent() {
 		$this->createMocks();
 
 		$langDir = 'TEST_DIR';
@@ -100,13 +100,16 @@ class MediaInfoViewTest extends \PHPUnit\Framework\TestCase {
 				$entityTermsViewHtml
 			)->willReturn( $renderedContent );
 
-		$this->assertEquals( $renderedContent, $this->sut->getHtml( $this->entity ) );
+		$viewContent = $this->sut->getContent( $this->entity );
+
+		$this->assertEquals( $renderedContent, $viewContent->getHtml() );
+		$this->assertSame( [], $viewContent->getPlaceholders() );
 	}
 
-	public function testGetHtmlException() {
+	public function testGetContentException() {
 		$this->createMocks();
 		try {
-			$this->sut->getHtml( new Property( new PropertyId( 'P999' ), null, 'string' ) );
+			$this->sut->getContent( new Property( new PropertyId( 'P999' ), null, 'string' ) );
 			$this->assertFalse(
 				true,
 				'Expected exception not thrown when invalid type passed'

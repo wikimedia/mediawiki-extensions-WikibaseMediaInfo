@@ -16,12 +16,13 @@
 use MediaWiki\MediaWikiServices;
 use Wikibase\Client\WikibaseClient;
 use Wikibase\DataModel\DeserializerFactory;
+use Wikibase\DataModel\Entity\EntityDocument;
 use Wikibase\DataModel\Entity\EntityId;
 use Wikibase\DataModel\SerializerFactory;
 use Wikibase\DataModel\Services\Lookup\InProcessCachingDataTypeLookup;
-use Wikibase\DataModel\Services\Lookup\LabelDescriptionLookup;
 use Wikibase\LanguageFallbackChain;
 use Wikibase\Lib\LanguageNameLookup;
+use Wikibase\Lib\Store\EntityInfo;
 use Wikibase\Lib\Store\Sql\WikiPageEntityMetaDataLookup;
 use Wikibase\MediaInfo\ChangeOp\Deserialization\MediaInfoChangeOpDeserializer;
 use Wikibase\MediaInfo\Content\MediaInfoContent;
@@ -45,8 +46,6 @@ use Wikibase\Repo\Search\Elastic\Fields\LabelsProviderFieldDefinitions;
 use Wikibase\Repo\Search\Elastic\Fields\StatementProviderFieldDefinitions;
 use Wikibase\Repo\WikibaseRepo;
 use Wikibase\SettingsArray;
-use Wikibase\View\EditSectionGenerator;
-use Wikibase\View\EntityTermsView;
 use Wikibase\View\Template\TemplateFactory;
 use Wikibase\View\Template\TemplateRegistry;
 
@@ -71,15 +70,16 @@ return [
 			);
 		},
 		'view-factory-callback' => function(
-			$languageCode,
-			LabelDescriptionLookup $labelDescriptionLookup,
+			Language $language,
 			LanguageFallbackChain $fallbackChain,
-			EditSectionGenerator $editSectionGenerator,
-			EntityTermsView $entityTermsView
+			EntityDocument $entity,
+			EntityInfo $entityInfo
 		) {
 			$templateFactory = new TemplateFactory(
 				new TemplateRegistry( include __DIR__ . '/resources/templates.php' )
 			);
+
+			$languageCode = $language->getCode();
 
 			// Use a MediaInfo-specific EntityTermsView class instead of the default one
 			$mediaInfoEntityTermsView = new MediaInfoEntityTermsView(

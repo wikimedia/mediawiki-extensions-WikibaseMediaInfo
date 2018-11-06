@@ -3,19 +3,19 @@
 namespace Wikibase\MediaInfo\Tests\MediaWiki;
 
 use Deserializers\Deserializer;
+use Language;
 use Serializers\Serializer;
 use PHPUnit4And6Compat;
 use Wikibase\DataModel\DeserializerFactory;
 use Wikibase\DataModel\SerializerFactory;
-use Wikibase\DataModel\Services\Lookup\LabelDescriptionLookup;
 use Wikibase\LanguageFallbackChain;
+use Wikibase\Lib\Store\EntityInfo;
 use Wikibase\MediaInfo\Content\MediaInfoContent;
 use Wikibase\MediaInfo\Content\MediaInfoHandler;
+use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\MediaInfo\DataModel\Serialization\MediaInfoDeserializer;
 use Wikibase\MediaInfo\DataModel\Serialization\MediaInfoSerializer;
 use Wikibase\MediaInfo\View\MediaInfoView;
-use Wikibase\View\EditSectionGenerator;
-use Wikibase\View\EntityTermsView;
 
 /**
  * @coversNothing
@@ -113,11 +113,10 @@ class EntityTypesTest extends \PHPUnit\Framework\TestCase {
 
 		$mediaInfoView = call_user_func(
 			$callback,
-			'de',
-			$this->getMock( LabelDescriptionLookup::class ),
+			Language::factory( 'en' ),
 			new LanguageFallbackChain( [] ),
-			$this->getMock( EditSectionGenerator::class ),
-			$this->getMock( EntityTermsView::class )
+			new MediaInfo(),
+			new EntityInfo( [] )
 		);
 
 		$this->assertInstanceOf( MediaInfoView::class, $mediaInfoView );

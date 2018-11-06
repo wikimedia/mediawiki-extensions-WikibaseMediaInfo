@@ -20,7 +20,7 @@
 	"wikibasemediainfo-filepage-edit-captions": "Label text for edit captions icon",
 	"wikibasemediainfo-filepage-cancel": "Label for 'cancel' button for editing structured data on file page\n{{Identical|Cancel}}",
 	"wikibasemediainfo-filepage-publish": "Label for 'publish' button for editing structured data on file page",
-	"wikibasemediainfo-filepage-caption-empty": "Text to display when a caption is missing for a language",
+	"wikibasemediainfo-filepage-caption-empty": "Text to display when a caption is missing for a language, as a call-to-action for the user to add a caption",
 	"wikibasemediainfo-filepage-caption-too-long": "Error text for when a caption is too long. Parameters:\n* $1 - Number of characters over maximum, for PLURAL support",
 	"wikibasemediainfo-filepage-caption-approaching-limit": "Warning text when a caption is approaching the length limit. Parameters:\n* $1 - Number of characters left before reaching max character count, for PLURAL support"
 }

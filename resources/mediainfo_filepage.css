@@ -52,6 +52,11 @@
 	float: left;
 }
 
+/* T208849: Style empty captions as WMUI's @color-placeholder === @wmui-color-base30 */
+.filepage-mediainfo-entitytermstable td.wbmi-empty {
+	color: #72777d;
+}
+
 .filepage-mediainfo-entitytermstable tr.entity-terms div.error {
 	padding: 0.2em 0.5em;
 	font-size: 0.9em;

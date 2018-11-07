@@ -50,8 +50,8 @@
 		"BeforePageDisplay": [
 			"Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onBeforePageDisplay"
 		],
-		"SearchDataForIndex": [
-			"Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onSearchDataForIndex"
+		"CirrusSearchBuildDocumentParse": [
+			"Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onCirrusSearchBuildDocumentParse"
 		],
 		"ParserOutputPostCacheTransform": [
 			"Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onParserOutputPostCacheTransform"

@@ -2,9 +2,14 @@
 
 namespace Wikibase\MediaInfo;
 
+use AbstractContent;
+use CirrusSearch\Connection;
+use CirrusSearch\Search\CirrusIndexField;
 use Content;
 use DatabaseUpdater;
+use Elastica\Document;
 use MediaWiki\MediaWikiServices;
+use MediaWiki\Revision\SlotRecord;
 use OutputPage;
 use ParserOutput;
 use Title;
@@ -301,38 +306,49 @@ class WikibaseMediaInfoHooks {
 		$lookup = new MediaInfoByLinkedTitleLookup( $lookup );
 	}
 
-	public static function onSearchDataForIndex(
-		array &$fieldsData,
-		\ContentHandler $handler,
-		WikiPage $page,
-		ParserOutput $output,
-		\SearchEngine $engine
+	public static function onCirrusSearchBuildDocumentParse(
+		Document $document,
+		Title $title,
+		AbstractContent $contentObject,
+		ParserOutput $parserOutput,
+		Connection $connection
 	) {
 		// Exit if the extension is disabled.
 		if ( !MediaWikiServices::getInstance()->getMainConfig()->get( 'MediaInfoEnable' ) ) {
 			return;
 		}
-
-		$fieldsData = self::newFromGlobalState()->doSearchDataForIndex(
-			$page,
-			$fieldsData,
-			$handler->getForModelId( MediaInfoContent::CONTENT_MODEL_ID )
+		self::newFromGlobalState()->doCirrusSearchBuildDocumentParse(
+			$document,
+			WikiPage::factory( $title ),
+			\ContentHandler::getForModelID( MediaInfoContent::CONTENT_MODEL_ID )
 		);
 	}
 
-	public function doSearchDataForIndex(
+	public function doCirrusSearchBuildDocumentParse(
+		Document $document,
 		WikiPage $page,
-		array $fieldsData,
-		MediaInfoHandler $mediaInfoHandler
+		MediaInfoHandler $handler
 	) {
-		if ( $page->getRevisionRecord()->hasSlot( MediaInfo::ENTITY_TYPE ) ) {
+		$revisionRecord = $page->getRevisionRecord();
+		if (
+			!is_null( $revisionRecord ) && $revisionRecord->hasSlot( MediaInfo::ENTITY_TYPE )
+		) {
+			/** @var SlotRecord $mediaInfoSlot */
 			$mediaInfoSlot = $page->getRevisionRecord()->getSlot( MediaInfo::ENTITY_TYPE );
-			$slotData = $mediaInfoHandler->getSlotDataForSearchIndex(
+
+			$engine = new \CirrusSearch();
+			$fieldDefinitions = $handler->getFieldsForSearchIndex( $engine );
+			$slotData = $handler->getSlotDataForSearchIndex(
 				$mediaInfoSlot->getContent()
 			);
-			$fieldsData = array_merge( $fieldsData, $slotData );
+			foreach ( $slotData as $field => $fieldData ) {
+				$document->set( $field, $fieldData );
+				if ( isset( $fieldDefinitions[$field] ) ) {
+					$hints = $fieldDefinitions[$field]->getEngineHints( $engine );
+					CirrusIndexField::addIndexingHints( $document, $field, $hints );
+				}
+			}
 		}
-		return $fieldsData;
 	}
 
 }

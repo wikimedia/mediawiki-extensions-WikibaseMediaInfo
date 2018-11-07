@@ -19,7 +19,7 @@
 	"wikibasemediainfo-filepage-edit-captions": "Cange le 'ndestaziune",
 	"wikibasemediainfo-filepage-cancel": "Annulle",
 	"wikibasemediainfo-filepage-publish": "Pubbleche le cangiaminde",
-	"wikibasemediainfo-filepage-caption-empty": "Nisciuna 'ndestazione angore definite",
+	"wikibasemediainfo-filepage-caption-empty": "Aggiunge 'na spiegazione sus a 'na linèe de ce rappresende stu file",
 	"wikibasemediainfo-filepage-caption-too-long": "$1 {{PLURAL:$1|carattere}} sus a 'u limite",
 	"wikibasemediainfo-filepage-caption-approaching-limit": "$1 {{PLURAL:$1|carattere|0=carattere}} rumaste"
 }

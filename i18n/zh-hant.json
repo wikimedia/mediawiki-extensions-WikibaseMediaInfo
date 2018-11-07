@@ -19,7 +19,7 @@
 	"wikibasemediainfo-filepage-edit-captions": "編輯說明",
 	"wikibasemediainfo-filepage-cancel": "取消",
 	"wikibasemediainfo-filepage-publish": "發佈更改",
-	"wikibasemediainfo-filepage-caption-empty": "未定義說明",
+	"wikibasemediainfo-filepage-caption-empty": "添加單行說明來描述出檔案所代表的內容",
 	"wikibasemediainfo-filepage-caption-too-long": "超過 $1 個{{PLURAL:$1|字元|字元}}限制",
 	"wikibasemediainfo-filepage-caption-approaching-limit": "還剩 $1 個{{PLURAL:$1|字元|字元|0=characters}}"
 }

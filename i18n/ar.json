@@ -22,7 +22,7 @@
 	"wikibasemediainfo-filepage-edit-captions": "عدل الشروحات",
 	"wikibasemediainfo-filepage-cancel": "إلغاء",
 	"wikibasemediainfo-filepage-publish": "نشر التغييرات",
-	"wikibasemediainfo-filepage-caption-empty": "لا شرح تم تعريفه",
+	"wikibasemediainfo-filepage-caption-empty": "أضف شرحا من سطر واحد لما يمثله هذا الملف",
 	"wikibasemediainfo-filepage-caption-too-long": "$1 {{PLURAL:$1|حرف|حروف}} فوق الحد",
 	"wikibasemediainfo-filepage-caption-approaching-limit": "$1 {{PLURAL:$1|حرف|حروف|0=حروف}} متبقي"
 }

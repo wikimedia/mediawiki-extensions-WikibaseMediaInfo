@@ -21,7 +21,7 @@
 	"wikibasemediainfo-filepage-edit-captions": "Modifier les légendes",
 	"wikibasemediainfo-filepage-cancel": "Annuler",
 	"wikibasemediainfo-filepage-publish": "Publier les modifications",
-	"wikibasemediainfo-filepage-caption-empty": "Aucune description fournie",
+	"wikibasemediainfo-filepage-caption-empty": "Ajoutez une ligne de description disant ce que représente ce fichier",
 	"wikibasemediainfo-filepage-caption-too-long": "$1 {{PLURAL:$1|caractère|caractères}} après la limite",
 	"wikibasemediainfo-filepage-caption-approaching-limit": "Il reste $1 {{PLURAL:$1|caractère|caractères|0=caractères}}"
 }

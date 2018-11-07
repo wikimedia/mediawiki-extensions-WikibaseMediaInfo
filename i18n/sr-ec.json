@@ -21,7 +21,7 @@
 	"wikibasemediainfo-filepage-edit-captions": "Уреди натписе",
 	"wikibasemediainfo-filepage-cancel": "Откажи",
 	"wikibasemediainfo-filepage-publish": "Објави промене",
-	"wikibasemediainfo-filepage-caption-empty": "Натпис није дефинисан",
+	"wikibasemediainfo-filepage-caption-empty": "Додајте објашњење у једном реду о томе шта ова датотека представља",
 	"wikibasemediainfo-filepage-caption-too-long": "$1 {{PLURAL:$1|знак|знака|знакова}} преко ограничења",
 	"wikibasemediainfo-filepage-caption-approaching-limit": "{{PLURAL:$1|Остао је $1 знак|Остала су $1 знака|Остало је $1 знакова|0=Није остало знакова}}"
 }

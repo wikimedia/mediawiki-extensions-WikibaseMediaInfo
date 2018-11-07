@@ -19,7 +19,7 @@
 	"wikibasemediainfo-filepage-edit-captions": "Modifica didascalie",
 	"wikibasemediainfo-filepage-cancel": "Annulla",
 	"wikibasemediainfo-filepage-publish": "Pubblica modifiche",
-	"wikibasemediainfo-filepage-caption-empty": "Nessuna didascalia definita",
+	"wikibasemediainfo-filepage-caption-empty": "Aggiungi una brevissima spiegazione di ciò che questo file rappresenta",
 	"wikibasemediainfo-filepage-caption-too-long": "$1 {{PLURAL:$1|carattere|caratteri}} oltre il limite",
 	"wikibasemediainfo-filepage-caption-approaching-limit": "$1 {{PLURAL:$1|carattere rimasto|caratteri rimasti|0=caratteri rimasti}}"
 }

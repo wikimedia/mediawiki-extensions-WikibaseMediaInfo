@@ -20,7 +20,7 @@
 	"wikibasemediainfo-filepage-edit-captions": "Editar legendas",
 	"wikibasemediainfo-filepage-cancel": "Cancelar",
 	"wikibasemediainfo-filepage-publish": "Publicar alterações",
-	"wikibasemediainfo-filepage-caption-empty": "Nenhuma legenda definida",
+	"wikibasemediainfo-filepage-caption-empty": "Adicione uma explicação de uma linha do que este arquivo representa",
 	"wikibasemediainfo-filepage-caption-too-long": "$1 {{PLURAL:$1|caracter|caracteres}} acima do limite",
 	"wikibasemediainfo-filepage-caption-approaching-limit": "$1 {{PLURAL:$1|caracter|caracteres|0=caracteres}} restantes"
 }

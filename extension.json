@@ -105,6 +105,10 @@
 				"wikibasemediainfo-filepage-caption-empty",
 				"wikibasemediainfo-filepage-caption-too-long",
 				"wikibasemediainfo-filepage-caption-approaching-limit"
+			],
+			"targets": [
+				"desktop",
+				"mobile"
 			]
 		},
 		"wikibase.mediainfo": {
@@ -160,6 +164,10 @@
 		"wikibase.mediainfo.filepagestyles": {
 			"styles": [
 				"resources/mediainfo-filepage.less"
+			],
+			"targets": [
+				"desktop",
+				"mobile"
 			]
 		}
 	},

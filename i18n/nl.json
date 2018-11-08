@@ -5,5 +5,9 @@
 		]
 	},
 	"wikibase-entity-mediainfo": "media informatie",
-	"wikibasemediainfo-desc": "Wikibase uitbreiding voor het beheren van gestructureerde metadata van mediabestanden"
+	"wikibasemediainfo-desc": "Wikibase uitbreiding voor het beheren van gestructureerde metadata van mediabestanden",
+	"wikibasemediainfo-filepage-cancel": "Annuleren",
+	"wikibasemediainfo-filepage-publish": "Wijzigingen publiceren",
+	"wikibasemediainfo-filepage-caption-too-long": "$1 {{PLURAL:$1|teken|tekens}} over de limiet",
+	"wikibasemediainfo-filepage-caption-approaching-limit": "$1 {{PLURAL:$1|teken|tekens|0=tekens}} over"
 }

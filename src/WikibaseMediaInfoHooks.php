@@ -306,6 +306,11 @@ class WikibaseMediaInfoHooks {
 		$lookup = new MediaInfoByLinkedTitleLookup( $lookup );
 	}
 
+	/**
+	 * Note that this is a workaround until all slots are passed automatically to CirrusSearch
+	 *
+	 * @see https://phabricator.wikimedia.org/T190066
+	 */
 	public static function onCirrusSearchBuildDocumentParse(
 		Document $document,
 		Title $title,

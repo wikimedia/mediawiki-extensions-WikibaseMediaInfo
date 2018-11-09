@@ -45,12 +45,12 @@ HTML;
 
 	$templates['filepage-entitytermslanguageelement'] =
 		<<<HTML
-<td class="language" lang="$3" dir="$2">$1</td>
+<td class="language" lang="$3" dir="$2">$1 </td>
 HTML;
 
 	$templates['filepage-entitytermscaptionelement'] =
 		<<<HTML
-<td class="caption" lang="$3" dir="$2">$1</td>
+<td class="caption" lang="$3" dir="$2">$1 </td>
 HTML;
 
 	return $templates;

@@ -8,5 +8,6 @@
 	},
 	"wikibase-entity-mediainfo": "медиаинформация",
 	"wikibasemediainfo-desc": "Расширение Wikibase для управления структурированными метаданными медиафайлов",
-	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Подпись"
+	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Подпись",
+	"wikibasemediainfo-filepage-caption-empty": "Добавьте объяснение в одной строке, что представляет этот файл"
 }

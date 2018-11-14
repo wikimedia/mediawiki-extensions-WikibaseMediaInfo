@@ -1,4 +1,4 @@
 'use strict';
 
-mediaWiki.mediaInfo = mediaWiki.mediaInfo || {};
-mediaWiki.mediaInfo.structuredData = mediaWiki.mediaInfo.structuredData || {};
+mw.mediaInfo = mw.mediaInfo || {};
+mw.mediaInfo.structuredData = mw.mediaInfo.structuredData || {};

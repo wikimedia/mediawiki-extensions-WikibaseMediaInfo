@@ -1,4 +1,4 @@
-( function ( mw, sd, $, OO ) {
+( function ( sd, OO ) {
 
 	/**
 	 * A ULS widget for the captions section of the structured data in a File page
@@ -82,4 +82,4 @@
 		return this.languageValue;
 	};
 
-}( mediaWiki, mediaWiki.mediaInfo.structuredData, jQuery, OO ) );
+}( mw.mediaInfo.structuredData, OO ) );

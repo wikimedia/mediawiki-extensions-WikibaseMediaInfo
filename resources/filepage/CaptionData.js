@@ -18,4 +18,4 @@
 		this.text = captionText;
 	};
 
-}( mediaWiki.mediaInfo.structuredData ) );
+}( mw.mediaInfo.structuredData ) );

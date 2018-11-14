@@ -1,4 +1,4 @@
-( function ( mw, sd ) {
+( function ( sd ) {
 
 	'use strict';
 
@@ -39,4 +39,4 @@
 		};
 	};
 
-}( mediaWiki, mediaWiki.mediaInfo.structuredData ) );
+}( mw.mediaInfo.structuredData ) );

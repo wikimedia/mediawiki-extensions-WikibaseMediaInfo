@@ -1,4 +1,4 @@
-( function ( mw, sd, wb, $ ) {
+( function ( sd, wb ) {
 
 	'use strict';
 
@@ -613,4 +613,4 @@
 
 	};
 
-}( mediaWiki, mediaWiki.mediaInfo.structuredData, wikibase, jQuery ) );
+}( mw.mediaInfo.structuredData, wikibase ) );

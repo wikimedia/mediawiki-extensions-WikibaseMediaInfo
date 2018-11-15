@@ -1,4 +1,4 @@
-( function ( mw, sd ) {
+( function ( sd ) {
 
 	'use strict';
 
@@ -11,4 +11,4 @@
 	} );
 	sd.captions.initialize();
 
-}( mediaWiki, mediaWiki.mediaInfo.structuredData ) );
+}( mw.mediaInfo.structuredData ) );

@@ -1,4 +1,4 @@
-( function ( $ ) {
+( function () {
 	'use strict';
 
 	var PARENT = $.wikibase.entityview;
@@ -110,4 +110,4 @@
 		}
 	} );
 
-}( jQuery ) );
+}() );

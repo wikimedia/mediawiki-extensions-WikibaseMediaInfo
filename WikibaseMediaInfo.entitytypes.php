@@ -86,7 +86,7 @@ return [
 				$templateFactory,
 				new LanguageNameLookup( $languageCode ),
 				new MediaWikiLanguageDirectionalityLookup(),
-				new MediaWikiLocalizedTextProvider( $languageCode ),
+				new MediaWikiLocalizedTextProvider( $language ),
 				[ $languageCode ]
 			);
 

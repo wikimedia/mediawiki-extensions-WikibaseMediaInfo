@@ -584,7 +584,7 @@
 					$captionTD.append(
 						$( '<div>' )
 							.addClass( 'error' )
-							.text( error.detailedMessage )
+							.html( error.detailedMessage )
 					);
 				} )
 				.always( function () {

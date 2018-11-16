@@ -47,6 +47,16 @@ class MediaInfoContent extends EntityContent {
 		$this->mediaInfoHolder = $mediaInfoHolder;
 	}
 
+	protected function getIgnoreKeysForFilters() {
+		// FIXME: This should be updated before actually being deployed on commons to avoid
+		// having to do a similar thing to https://phabricator.wikimedia.org/T205254
+		return [
+			'language',
+			'site',
+			'type',
+		];
+	}
+
 	/**
 	 * @return MediaInfo
 	 */

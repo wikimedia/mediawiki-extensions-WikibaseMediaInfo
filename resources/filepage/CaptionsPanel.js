@@ -16,7 +16,7 @@
 
 		var currentRevision = mw.config.get( 'wbCurrentRevision' ),
 			languages = mw.config.get( 'wbTermsLanguages' ),
-			data = {},
+			labelsData = {},
 			languageSelectors = [],
 			textInputs = [],
 			editToggle = new sd.EditToggle( config, this ),
@@ -87,8 +87,8 @@
 				$.uls.data.getDir( languageCode ),
 				''
 			);
-			if ( data[ languageCode ] !== undefined ) {
-				captionData = data[ languageCode ];
+			if ( labelsData[ languageCode ] !== undefined ) {
+				captionData = labelsData[ languageCode ];
 			}
 			return captionData;
 		};
@@ -325,7 +325,7 @@
 
 		var findRemovedLanguages = function () {
 			var langCodesWithoutData = [];
-			$.each( data, function ( i, captionData ) {
+			$.each( labelsData, function ( i, captionData ) {
 				var langCodeHasData = false;
 				$.each( languageSelectors, function ( j, languageSelector ) {
 					if ( languageSelector.getValue() === captionData.languageCode ) {
@@ -369,13 +369,13 @@
 		};
 
 		/**
-		 * Get a value object for sending to the api
+		 * Get a value object for sending data to the api
 		 *
 		 * @param language
 		 * @param text
 		 * @returns {{bot: number, action: string, id, value: *, language: *}}
 		 */
-		var getApiParams = function ( language, text ) {
+		var getWbSetLabelParams = function ( language, text ) {
 			var apiParams = {
 				/*
 				 * Unconditionally set the bot parameter to match the UI behavior of core.
@@ -400,11 +400,11 @@
 			var deferred = $.Deferred();
 			api.postWithToken(
 				'csrf',
-				getApiParams( language, text )
+				getWbSetLabelParams( language, text )
 			)
 				.done( function ( result ) {
 					markEntityAsNonEmpty();
-					data[ language ] = new sd.CaptionData(
+					labelsData[ language ] = new sd.CaptionData(
 						language,
 						languages[ language ],
 						$.uls.data.getDir( language ),
@@ -414,7 +414,7 @@
 					languageSelectors.splice( index, 1 );
 					textInputs.splice( index, 1 );
 					$( tableSelector ).find( 'tr.entity-terms[index="' + index + '"]' ).replaceWith(
-						createIndexedReadOnlyRow( index, data[ language ] )
+						createIndexedReadOnlyRow( index, labelsData[ language ] )
 					);
 					deferred.resolve();
 				} )
@@ -426,7 +426,7 @@
 			return deferred.promise();
 		};
 
-		var updateData = function ( chain ) {
+		var sendDataToAPI = function ( chain ) {
 			var rowsWithoutLanguage = [];
 			$( tableSelector ).find( 'tr.entity-terms' ).each( function () {
 				var index = $( this ).attr( 'index' ),
@@ -468,10 +468,10 @@
 				$captionsTable = $( tableSelector );
 			api.postWithToken(
 				'csrf',
-				getApiParams( languageCode, '' )
+				getWbSetLabelParams( languageCode, '' )
 			)
 				.done( function ( result ) {
-					delete data[ languageCode ];
+					delete labelsData[ languageCode ];
 					currentRevision = result.entity.lastrevid;
 					deferred.resolve();
 				} )
@@ -489,7 +489,7 @@
 					errorRow = createIndexedEditableRow(
 						newIndex,
 						currentlyDisplayedLanguages,
-						data[ languageCode ]
+						labelsData[ languageCode ]
 					);
 					errorRow.insertBefore( $captionsTable.find( '.editActions' ) );
 					rejection = wb.api.RepoApiError.newFromApiResponse( error, 'save' );
@@ -510,42 +510,83 @@
 			return chain;
 		};
 
-		this.makeEditable = function () {
-			var $captionsTable = $( tableSelector );
-			$captionsTable.addClass( 'editable' );
-			editToggle.hide();
-			languagesViewWidget.hide();
-			editActionsWidget.show();
-			var captionLangCodes = [];
-			$captionsTable.find( 'tr.entity-terms' ).each( function () {
-				var dataInRow = readDataFromReadOnlyRow( $( this ) );
-				captionLangCodes.push( dataInRow.languageCode );
-			} );
-			$captionsTable.find( 'tr.entity-terms' ).each( function ( index ) {
-				$( this ).replaceWith(
-					createIndexedEditableRow(
-						index,
-						captionLangCodes,
-						readDataFromReadOnlyRow( $( this ) )
-					)
-				);
-			} );
+		var refreshDataFromApi = function () {
+			var deferred = $.Deferred();
+			var entityId = mw.config.get( 'wbEntityId' );
+			api
+				.get( {
+					action: 'wbgetentities',
+					props: 'info|labels',
+					ids: entityId
+				} )
+				.done( function ( result ) {
+					currentRevision = result.entities[ entityId ].lastrevid;
+					labelsData = {};
+					$.each(
+						result.entities[ entityId ].labels,
+						function ( languageCode, labelObject ) {
+							labelsData[ languageCode ] = new sd.CaptionData(
+								languageCode,
+								languages[ languageCode ],
+								$.uls.data.getDir( languageCode ),
+								labelObject.value
+							);
+						}
+					);
+					deferred.resolve();
+				} )
+				.fail( function () {
+					// Ignore the failure and just make do with the data we already have
+					deferred.reject();
+				} );
+			return deferred.promise();
 		};
 
-		this.makeReadOnly = function () {
+		var refreshCaptionsTable = function ( labelsData ) {
 			var $captionsTable = $( tableSelector );
-			$captionsTable.removeClass( 'editable' );
-			editActionsWidget.hide();
 			$captionsTable.find( 'tr.entity-terms' ).each( function () {
 				$( this ).remove();
 			} );
-			$.each( data, function ( index, captionData ) {
+			$.each( labelsData, function ( index, captionData ) {
 				$captionsTable.append(
 					createIndexedReadOnlyRow( index, captionData )
 				);
 			} );
 			addUserLanguageRowsIfNotPresent();
 			languagesViewWidget.refreshLabel();
+		};
+
+		this.refreshAndMakeEditable = function () {
+			refreshDataFromApi()
+				.always( function () {
+					refreshCaptionsTable( labelsData );
+					var $captionsTable = $( tableSelector );
+					$captionsTable.addClass( 'editable' );
+					editToggle.hide();
+					languagesViewWidget.hide();
+					editActionsWidget.show();
+					var captionLangCodes = [];
+					$captionsTable.find( 'tr.entity-terms' ).each( function () {
+						var dataInRow = readDataFromReadOnlyRow( $( this ) );
+						captionLangCodes.push( dataInRow.languageCode );
+					} );
+					$captionsTable.find( 'tr.entity-terms' ).each( function ( index ) {
+						$( this ).replaceWith(
+							createIndexedEditableRow(
+								index,
+								captionLangCodes,
+								readDataFromReadOnlyRow( $( this ) )
+							)
+						);
+					} );
+				} );
+		};
+
+		this.makeReadOnly = function () {
+			var $captionsTable = $( tableSelector );
+			$captionsTable.removeClass( 'editable' );
+			editActionsWidget.hide();
+			refreshCaptionsTable( labelsData );
 			languagesViewWidget.expand();
 			editToggle.show();
 		};
@@ -566,7 +607,7 @@
 			editActionsWidget.setStateSending();
 			disableAllFormInputs();
 
-			chain = updateData( chain );
+			chain = sendDataToAPI( chain );
 			chain = deleteRemovedData( chain, removedLanguages );
 			chain
 				.then( function () {
@@ -604,7 +645,7 @@
 				var captionData;
 				$( this ).attr( 'index', index );
 				captionData = readDataFromReadOnlyRow( $( this ) );
-				data[ captionData.languageCode ] = captionData;
+				labelsData[ captionData.languageCode ] = captionData;
 			} );
 			addUserLanguageRowsIfNotPresent();
 			languagesViewWidget.refreshLabel();

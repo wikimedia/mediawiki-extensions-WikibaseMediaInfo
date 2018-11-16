@@ -19,7 +19,7 @@
 			classes: [ 'editButton' ]
 		} )
 			.on( 'click', function () {
-				captionsPanel.makeEditable();
+				captionsPanel.refreshAndMakeEditable();
 			} )
 			.$element;
 

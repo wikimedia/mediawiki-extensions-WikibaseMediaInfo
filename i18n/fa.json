@@ -1,9 +1,16 @@
 {
 	"@metadata": {
 		"authors": [
-			"Reza1615"
+			"Reza1615",
+			"درفش کاویانی"
 		]
 	},
 	"wikibase-entity-mediainfo": "اطلاعات رسانه",
-	"wikibasemediainfo-desc": "افزونه ویکی‌بیس برای مدیریت ساختار متادیتای پرونده‌های رسانه"
+	"wikibasemediainfo-desc": "افزونه ویکی‌بیس برای مدیریت ساختار متادیتای پرونده‌های رسانه",
+	"wikibasemediainfo-filepage-captions-title": "گزینه‌ها",
+	"wikibasemediainfo-filepage-fewer-languages": "دیدن زبان‌های کمتر",
+	"wikibasemediainfo-filepage-add-caption": "افزودن یک توضیح",
+	"wikibasemediainfo-filepage-edit-captions": "ویرایش توضیحات",
+	"wikibasemediainfo-filepage-cancel": "لغو",
+	"wikibasemediainfo-filepage-publish": "انتشار تغییرات"
 }

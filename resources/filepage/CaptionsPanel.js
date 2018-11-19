@@ -5,6 +5,7 @@
 	 * Panel for displaying/editing structured data multi-lingual captions
 	 *
 	 * @extends OO.ui.Element
+	 * @mixins OO.ui.mixin.PendingElement
 	 *
 	 * @constructor
 	 * @param {Object} [config]
@@ -18,6 +19,9 @@
 
 		// Parent constructor
 		sd.CaptionsPanel.super.apply( this, arguments );
+
+		// Mixin constructors
+		OO.ui.mixin.PendingElement.call( this, this.config );
 
 		this.currentRevision = mw.config.get( 'wbCurrentRevision' );
 		this.languages = mw.config.get( 'wbTermsLanguages' );
@@ -33,6 +37,7 @@
 
 	/* Inheritance */
 	OO.inheritClass( sd.CaptionsPanel, OO.ui.Element );
+	OO.mixinClass( sd.CaptionsPanel, OO.ui.mixin.PendingElement );
 
 	sd.CaptionsPanel.prototype.injectEmptyEntityView = function () {
 		var captionsPanel = this;
@@ -600,6 +605,10 @@
 	sd.CaptionsPanel.prototype.refreshAndMakeEditable = function () {
 		var captionsPanel = this;
 
+		// Set the target pending element to the layout box
+		this.$pending = $( '.' + this.config.headerClass ).parent();
+		this.pushPending();
+
 		this.refreshDataFromApi()
 			.always( function () {
 				captionsPanel.refreshCaptionsTable( captionsPanel.labelsData );
@@ -622,6 +631,7 @@
 						)
 					);
 				} );
+				captionsPanel.popPending();
 			} );
 	};
 

@@ -4,6 +4,26 @@
 	/**
 	 * Panel for displaying/editing structured data multi-lingual captions
 	 *
+	 * RULES FOR LANGUAGE ORDERING/DISPLAY
+	 *
+	 * Order
+	 * -----
+	 *
+	 * 1. Show a caption for the interface language of the page (whether or not it has a value)
+	 * 2. If there is no caption for the interface language, show the first caption in the fallback
+	 *    chain that has a value (if any)
+	 * 3. If the logged-in user has Babel languages, and they haven’t already been shown, then show
+	 *    captions for all of them next, whether or not they have values
+	 * 4. Show everything else with a value
+	 *
+	 * Display
+	 * -------
+	 *
+	 * 1, 2, 3 are always displayed
+	 * 4 are hidden/shown by the languagesViewWidget
+	 * ... or, in other words - the first caption is always shown, the first non-blank caption
+	 * is always shown, all user languages are always shown, and everything else may be hidden.
+	 *
 	 * @extends OO.ui.Element
 	 *
 	 * @constructor
@@ -14,6 +34,7 @@
 	 *   characters of the max
 	 */
 	sd.CaptionsPanel = function CaptionsPanel( config ) {
+		var self = this;
 		this.config = config || {};
 
 		// Parent constructor
@@ -21,7 +42,7 @@
 
 		this.currentRevision = mw.config.get( 'wbCurrentRevision' );
 		this.languages = mw.config.get( 'wbTermsLanguages' );
-		this.labelsData = {};
+		this.captionsData = {};
 		this.languageSelectors = [];
 		this.textInputs = [];
 		this.editToggle = new sd.EditToggle( this.config, this );
@@ -29,56 +50,16 @@
 		this.editActionsWidget = new sd.EditActionsWidget( config, this );
 		this.api = wb.api.getLocationAgnosticMwApi( mw.config.get( 'wbRepoApiUrl' ) );
 		this.tableSelector = '.' + this.config.tableClass;
+		this.captionLanguagesDataAttr = 'data-label-languages';
+
+		this.userLanguages = [];
+		$.each( mw.config.get( 'wbUserSpecifiedLanguages' ), function ( index, langCode ) {
+			self.userLanguages.push( langCode );
+		} );
 	};
 
 	/* Inheritance */
 	OO.inheritClass( sd.CaptionsPanel, OO.ui.Element );
-
-	sd.CaptionsPanel.prototype.injectEmptyEntityView = function () {
-		var captionsPanel = this;
-
-		$( this.config.entityViewAppendSelector )
-			.append(
-				$( '<h1>' )
-					.addClass( 'mw-slot-header' )
-					.text(
-						mw.message( 'wikibasemediainfo-filepage-structured-data-heading' )
-							.text()
-					),
-				$( '<div>' )
-					.addClass( captionsPanel.config.entityViewClass )
-					.addClass( 'emptyEntity' )
-					.attr( 'dir', 'auto' )
-					.attr( 'id', 'wb-mediainfo-' + mw.config.get( 'wbEntityId' ) )
-			);
-	};
-
-	sd.CaptionsPanel.prototype.injectEmptyCaptionsData = function () {
-		var $panelHeader = $( '<h3>' )
-			.addClass( this.config.headerClass )
-			.text( mw.message( 'wikibasemediainfo-filepage-captions-title' ).text() );
-		var $panelContent = $( '<table>' )
-			.addClass( this.config.tableClass )
-			.addClass( 'filepage-mediainfo-entitytermstable' )
-			.attr( 'cellspacing', 0 )
-			.attr( 'cellpadding', 0 );
-		var panelLayout = new OO.ui.PanelLayout( {
-			scrollable: false,
-			padded: false,
-			expanded: false,
-			framed: true,
-			$content: [ $panelHeader, $panelContent ]
-		} );
-
-		$( '.' + this.config.entityViewClass )
-			.append(
-				$( '<div>' )
-					.addClass( 'filepage-mediainfo-entitytermsview' )
-					.append(
-						panelLayout.$element
-					)
-			);
-	};
 
 	sd.CaptionsPanel.prototype.readDataFromReadOnlyRow = function ( $tableRow ) {
 		var $languageTD = $tableRow.find( 'td.language' ),
@@ -98,8 +79,8 @@
 			$.uls.data.getDir( languageCode ),
 			''
 		);
-		if ( this.labelsData[ languageCode ] !== undefined ) {
-			captionData = this.labelsData[ languageCode ];
+		if ( this.captionsData[ languageCode ] !== undefined ) {
+			captionData = this.captionsData[ languageCode ];
 		}
 		return captionData;
 	};
@@ -113,7 +94,7 @@
 	};
 
 	sd.CaptionsPanel.prototype.createTableRow = function (
-		index, languageCode, direction, languageContent, captionContent
+		index, languageCode, direction, languageContent, captionContent, showCaption
 	) {
 		var $languageTD = $( '<td>' )
 			.addClass( 'language' )
@@ -135,46 +116,113 @@
 			$captionTD.text( mw.message( 'wikibasemediainfo-filepage-caption-empty' ).text() );
 		}
 
-		return $( '<tr>' )
+		var $row = $( '<tr>' )
 			.addClass( 'entity-terms' )
-			.attr( 'index', index )
+			.attr( 'data-index', index )
 			.append( $languageTD, $captionTD );
+		if ( showCaption ) {
+			$row.addClass( 'showLabel' );
+		}
+		return $row;
 	};
 
-	sd.CaptionsPanel.prototype.createIndexedReadOnlyRow = function ( index, captionData ) {
+	sd.CaptionsPanel.prototype.createIndexedReadOnlyRow = function (
+		index,
+		captionData,
+		showCaption
+	) {
 		return this.createTableRow(
 			index,
 			mw.html.escape( captionData.languageCode ),
 			mw.html.escape( captionData.direction ),
 			mw.html.escape( captionData.languageText ),
-			mw.html.escape( captionData.text )
+			mw.html.escape( captionData.text ),
+			showCaption
 		);
 	};
 
 	sd.CaptionsPanel.prototype.refreshTableRowIndices = function () {
 		$( this.tableSelector ).find( 'tr.entity-terms' ).each( function ( index ) {
-			$( this ).attr( 'index', index );
+			$( this ).attr( 'data-index', index );
 		} );
 	};
 
-	sd.CaptionsPanel.prototype.addUserLanguageRowsIfNotPresent = function () {
-		var captionsPanel = this;
+	/**
+	 * Should only be called on initialisation, because it relies on only the interface language
+	 * (and possible the first fallback, if the interface language has no caption) having the
+	 * 'showLabel' class
+	 */
+	sd.CaptionsPanel.prototype.addCaptionsDataForUserLanguages = function () {
+		var self = this,
+			captionsOrderHasChanged = false;
 
-		$.each( mw.config.get( 'wbUserSpecifiedLanguages' ), function ( index, langCode ) {
-			if ( captionsPanel.dataExistsForLangCode( langCode ) === false ) {
-				var tableRow = captionsPanel.createIndexedReadOnlyRow(
-					0,
-					new sd.CaptionData(
-						langCode,
-						captionsPanel.languages[ langCode ],
-						$.uls.data.getDir( langCode ),
-						''
-					)
+		// Create CaptionData objects for user languages that we don't already have on the screen
+		this.userLanguages.forEach( function ( langCode ) {
+			if (
+				Object.prototype.hasOwnProperty.call( self.captionsData, langCode ) === false
+			) {
+				var caption = new sd.CaptionData(
+					langCode,
+					self.languages[ langCode ],
+					$.uls.data.getDir( langCode ),
+					''
 				);
-				$( captionsPanel.tableSelector ).prepend( tableRow );
+				self.captionsData[ langCode ] = caption;
 			}
 		} );
+
+		captionsOrderHasChanged = this.reorderLanguageList();
+		if ( captionsOrderHasChanged ) {
+			this.redrawCaptionsTable();
+		}
 		this.refreshTableRowIndices();
+	};
+
+	/**
+	 * Create a re-arranged list of languages, based on the rules specified in the class
+	 * comments
+	 *
+	 * Should only be called on initialisation, because it relies on only the interface language
+	 * (and possible the first fallback, if the interface language has no caption) having the
+	 * 'showLabel' class
+	 *
+	 * @return bool True if the language list order has changed
+	 */
+	sd.CaptionsPanel.prototype.reorderLanguageList = function () {
+		var captionLanguages = this.getCaptionLanguagesList(),
+			$visibleLanguageNodes = $( '.showLabel .language' ),
+			rearrangedCaptionLanguages = [];
+
+		$.each( $visibleLanguageNodes, function ( index, node ) {
+			rearrangedCaptionLanguages.push( $( node ).attr( 'lang' ) );
+		} );
+		this.userLanguages.forEach( function ( langCode ) {
+			if ( rearrangedCaptionLanguages.indexOf( langCode ) === -1 ) {
+				rearrangedCaptionLanguages.push( langCode );
+			}
+		} );
+		captionLanguages.forEach( function ( langCode ) {
+			if ( rearrangedCaptionLanguages.indexOf( langCode ) === -1 ) {
+				rearrangedCaptionLanguages.push( langCode );
+			}
+		} );
+		// Save the re-arranged list in the DOM
+		this.setCaptionLanguagesList( rearrangedCaptionLanguages );
+		if ( rearrangedCaptionLanguages !== captionLanguages ) {
+			return true;
+		}
+		return false;
+	};
+
+	sd.CaptionsPanel.prototype.getCaptionLanguagesList = function () {
+		return $( this.tableSelector ).attr( this.captionLanguagesDataAttr ).split( ',' );
+	};
+
+	sd.CaptionsPanel.prototype.setCaptionLanguagesList = function ( languagesList ) {
+		return $( this.tableSelector ).attr(
+			this.captionLanguagesDataAttr,
+			languagesList.join( ',' )
+		);
 	};
 
 	sd.CaptionsPanel.prototype.getAvailableLanguages = function (
@@ -264,11 +312,11 @@
 
 		deleter.$element.on( 'click', function () {
 			captionsPanel.languageSelectors.splice(
-				$tableRow.attr( 'index' ),
+				$tableRow.attr( 'data-index' ),
 				1
 			);
 			captionsPanel.textInputs.splice(
-				$tableRow.attr( 'index' ),
+				$tableRow.attr( 'data-index' ),
 				1
 			);
 			$tableRow.remove();
@@ -287,7 +335,7 @@
 			$tableRow;
 
 		if ( captionData === undefined ) {
-			captionData = new sd.CaptionData( '', '', '', '', '' );
+			captionData = new sd.CaptionData( '', '', '', '' );
 		}
 
 		languageSelector = new sd.UlsWidget( {
@@ -338,7 +386,8 @@
 			mw.html.escape( captionData.languageCode ),
 			mw.html.escape( captionData.direction ),
 			this.languageSelectors[ index ].$element,
-			this.textInputs[ index ].$element
+			this.textInputs[ index ].$element,
+			false
 		);
 		$tableRow.find( 'td.caption' )
 			.append( this.createTableRowDeleter( $tableRow ).$element );
@@ -349,7 +398,7 @@
 		var captionsPanel = this,
 			langCodesWithoutData = [];
 
-		$.each( this.labelsData, function ( i, captionData ) {
+		$.each( this.captionsData, function ( i, captionData ) {
 			var langCodeHasData = false;
 			$.each( captionsPanel.languageSelectors, function ( j, languageSelector ) {
 				if ( languageSelector.getValue() === captionData.languageCode ) {
@@ -357,7 +406,7 @@
 					return false;
 				}
 			} );
-			if ( langCodeHasData === false ) {
+			if ( langCodeHasData === false && captionData.text !== '' ) {
 				langCodesWithoutData.push( captionData.languageCode );
 			}
 		} );
@@ -429,8 +478,10 @@
 			this.getWbSetLabelParams( language, text )
 		)
 			.done( function ( result ) {
+				var showCaptionFlags = captionsPanel.getShowCaptionFlagsByLangCode(),
+					captionLanguages = captionsPanel.getCaptionLanguagesList();
 				captionsPanel.markEntityAsNonEmpty();
-				captionsPanel.labelsData[ language ] = new sd.CaptionData(
+				captionsPanel.captionsData[ language ] = new sd.CaptionData(
 					language,
 					captionsPanel.languages[ language ],
 					$.uls.data.getDir( language ),
@@ -440,12 +491,18 @@
 				captionsPanel.languageSelectors.splice( index, 1 );
 				captionsPanel.textInputs.splice( index, 1 );
 				$( captionsPanel.tableSelector )
-					.find( 'tr.entity-terms[index="' + index + '"]' )
+					.find( 'tr.entity-terms[data-index="' + index + '"]' )
 					.replaceWith(
 						captionsPanel.createIndexedReadOnlyRow(
-							index, captionsPanel.labelsData[ language ]
+							index,
+							captionsPanel.captionsData[ language ],
+							showCaptionFlags[ language ]
 						)
 					);
+				if ( captionLanguages.indexOf( language ) === -1 ) {
+					captionLanguages.push( language );
+					captionsPanel.setCaptionLanguagesList( captionLanguages );
+				}
 				deferred.resolve();
 			} )
 			.fail( function ( errorCode, error ) {
@@ -462,7 +519,7 @@
 			rowsWithoutLanguage = [];
 
 		$( this.tableSelector ).find( 'tr.entity-terms' ).each( function () {
-			var index = $( this ).attr( 'index' ),
+			var index = $( this ).attr( 'data-index' ),
 				languageCode = captionsPanel.languageSelectors[ index ].getValue(),
 				text = captionsPanel.textInputs[ index ].getValue(),
 				existingDataForLanguage = captionsPanel.getDataForLangCode( languageCode );
@@ -482,10 +539,12 @@
 					);
 				} );
 			} else {
+				var showCaptionFlags = captionsPanel.getShowCaptionFlagsByLangCode();
 				$( this ).replaceWith(
 					captionsPanel.createIndexedReadOnlyRow(
 						index,
-						existingDataForLanguage
+						existingDataForLanguage,
+						showCaptionFlags[ languageCode ]
 					)
 				);
 			}
@@ -496,18 +555,42 @@
 		return chain;
 	};
 
-	sd.CaptionsPanel.prototype.deleteIndividualLabel = function ( languageCode ) {
-		var captionsPanel = this,
+	sd.CaptionsPanel.prototype.deleteIndividualLabel = function ( langCodeToDelete ) {
+		var self = this,
 			deferred = $.Deferred(),
 			$captionsTable = $( this.tableSelector );
 
 		this.api.postWithToken(
 			'csrf',
-			this.getWbSetLabelParams( languageCode, '' )
+			this.getWbSetLabelParams( langCodeToDelete, '' )
 		)
 			.done( function ( result ) {
-				delete captionsPanel.labelsData[ languageCode ];
-				captionsPanel.currentRevision = result.entity.lastrevid;
+				var captionLanguages = self.getCaptionLanguagesList();
+
+				// Update revision id
+				self.currentRevision = result.entity.lastrevid;
+
+				// Update the captions data, and the language list if necessary
+				if (
+					captionLanguages[ 0 ] === langCodeToDelete ||
+					self.userLanguages.indexOf( langCodeToDelete ) !== -1
+				) {
+					// Blank the data if the language is either the first in the language list
+					// (i.e. it's the interface language) or it's one of the user's languages
+					self.captionsData[ langCodeToDelete ].text = '';
+				} else {
+					// Otherwise delete the data
+					delete self.captionsData[ langCodeToDelete ];
+					// ... and delete the language from the language list
+					var updatedCaptionLanguages = [];
+					$.each( captionLanguages, function ( index, langCode ) {
+						if ( langCode !== langCodeToDelete ) {
+							updatedCaptionLanguages.push( langCode );
+						}
+					} );
+					self.setCaptionLanguagesList( updatedCaptionLanguages );
+				}
+
 				deferred.resolve();
 			} )
 			.fail( function ( errorCode, error ) {
@@ -517,14 +600,14 @@
 					errorRow,
 					rejection;
 				$captionsTable.find( 'tr.entity-terms' ).each( function () {
-					var dataInRow = captionsPanel.readDataFromReadOnlyRow( $( this ) );
+					var dataInRow = self.readDataFromReadOnlyRow( $( this ) );
 					currentlyDisplayedLanguages.push( dataInRow.languageCode );
 				} );
 				newIndex = $captionsTable.find( 'tr.entity-terms' ).length;
-				errorRow = captionsPanel.createIndexedEditableRow(
+				errorRow = self.createIndexedEditableRow(
 					newIndex,
 					currentlyDisplayedLanguages,
-					captionsPanel.labelsData[ languageCode ]
+					self.captionsData[ langCodeToDelete ]
 				);
 				errorRow.insertBefore( $captionsTable.find( '.editActions' ) );
 				rejection = wb.api.RepoApiError.newFromApiResponse( error, 'save' );
@@ -559,12 +642,19 @@
 				ids: entityId
 			} )
 			.done( function ( result ) {
+				var refreshedLabelsData = {};
 				captionsPanel.currentRevision = result.entities[ entityId ].lastrevid;
-				captionsPanel.labelsData = {};
+				// Add any empty CaptionData objects to the list first, as they won't be returned
+				// from the api
+				$.each( captionsPanel.captionsData, function ( index, captionData ) {
+					if ( captionData.text === '' ) {
+						refreshedLabelsData[ captionData.languageCode ] = captionData;
+					}
+				} );
 				$.each(
 					result.entities[ entityId ].labels,
 					function ( languageCode, labelObject ) {
-						captionsPanel.labelsData[ languageCode ] = new sd.CaptionData(
+						refreshedLabelsData[ languageCode ] = new sd.CaptionData(
 							languageCode,
 							captionsPanel.languages[ languageCode ],
 							$.uls.data.getDir( languageCode ),
@@ -572,6 +662,7 @@
 						);
 					}
 				);
+				captionsPanel.captionsData = refreshedLabelsData;
 				deferred.resolve();
 			} )
 			.fail( function () {
@@ -581,20 +672,65 @@
 		return deferred.promise();
 	};
 
-	sd.CaptionsPanel.prototype.refreshCaptionsTable = function ( labelsData ) {
-		var captionsPanel = this,
-			$captionsTable = $( this.tableSelector );
+	sd.CaptionsPanel.prototype.redrawCaptionsTable = function () {
+		var self = this,
+			$captionsTable = $( this.tableSelector ),
+			showCaptionFlags = this.getShowCaptionFlagsByLangCode(),
+			count = 0,
+			languageCodesInOrder = this.getCaptionLanguagesList();
 
 		$captionsTable.find( 'tr.entity-terms' ).each( function () {
 			$( this ).remove();
 		} );
-		$.each( labelsData, function ( index, captionData ) {
+
+		languageCodesInOrder.forEach( function ( langCode ) {
+			var captionData = self.captionsData[ langCode ];
 			$captionsTable.append(
-				captionsPanel.createIndexedReadOnlyRow( index, captionData )
+				self.createIndexedReadOnlyRow(
+					count,
+					captionData,
+					showCaptionFlags[ captionData.languageCode ]
+				)
 			);
+			count++;
 		} );
-		this.addUserLanguageRowsIfNotPresent();
 		this.languagesViewWidget.refreshLabel();
+	};
+
+	/**
+	 * Returns an array of showCaption flags for each element of labelsData, indexed by langCode
+	 *
+	 * See class comments for rules on when to show/hide captions
+	 *
+	 */
+	sd.CaptionsPanel.prototype.getShowCaptionFlagsByLangCode = function () {
+		var self = this,
+			captionLanguages = this.getCaptionLanguagesList(),
+			firstCaptionIsBlank,
+			indexedShowCaptionFlags = {};
+
+		$.each( captionLanguages, function ( index, langCode ) {
+			var captionData = self.captionsData[ langCode ],
+				showCaption;
+			if ( index === 0 ) {
+				showCaption = true;
+				firstCaptionIsBlank = ( captionData.text === '' );
+			} else if (
+				index === 1 &&
+				firstCaptionIsBlank &&
+				captionData.text !== ''
+			) {
+				showCaption = true;
+			} else {
+				if ( self.userLanguages.indexOf( langCode ) === -1 ) {
+					showCaption = false;
+				} else {
+					showCaption = true;
+				}
+			}
+			indexedShowCaptionFlags[ langCode ] = showCaption;
+		} );
+		return indexedShowCaptionFlags;
 	};
 
 	sd.CaptionsPanel.prototype.refreshAndMakeEditable = function () {
@@ -602,7 +738,7 @@
 
 		this.refreshDataFromApi()
 			.always( function () {
-				captionsPanel.refreshCaptionsTable( captionsPanel.labelsData );
+				captionsPanel.redrawCaptionsTable();
 				var $captionsTable = $( captionsPanel.tableSelector );
 				$captionsTable.addClass( 'editable' );
 				captionsPanel.editToggle.hide();
@@ -614,11 +750,13 @@
 					captionLangCodes.push( dataInRow.languageCode );
 				} );
 				$captionsTable.find( 'tr.entity-terms' ).each( function ( index ) {
+					var captionData = captionsPanel.readDataFromReadOnlyRow( $( this ) );
+
 					$( this ).replaceWith(
 						captionsPanel.createIndexedEditableRow(
 							index,
 							captionLangCodes,
-							captionsPanel.readDataFromReadOnlyRow( $( this ) )
+							captionData
 						)
 					);
 				} );
@@ -629,7 +767,7 @@
 		var $captionsTable = $( this.tableSelector );
 		$captionsTable.removeClass( 'editable' );
 		this.editActionsWidget.hide();
-		this.refreshCaptionsTable( this.labelsData );
+		this.redrawCaptionsTable();
 		this.languagesViewWidget.expand();
 		this.editToggle.show();
 	};
@@ -663,7 +801,7 @@
 				captionsPanel.enableAllFormInputs();
 				$captionTD =
 					$( captionsPanel.tableSelector ).find(
-						'tr.entity-terms[index="' + error.index + '"] .caption'
+						'tr.entity-terms[data-index="' + error.index + '"] .caption'
 					);
 				$captionTD.find( 'div.error' ).remove();
 				$captionTD.find( 'div.warning' ).remove();
@@ -681,20 +819,14 @@
 	sd.CaptionsPanel.prototype.initialize = function () {
 		var captionsPanel = this;
 
-		if ( $( '.' + this.config.entityViewClass ).length === 0 ) {
-			this.injectEmptyEntityView();
-		}
-		if ( $( '.' + this.config.tableClass ).length === 0 ) {
-			this.injectEmptyCaptionsData();
-		}
 		this.editToggle.initialize();
 		$( this.tableSelector ).find( 'tr.entity-terms' ).each( function ( index ) {
 			var captionData;
-			$( this ).attr( 'index', index );
+			$( this ).attr( 'data-index', index );
 			captionData = captionsPanel.readDataFromReadOnlyRow( $( this ) );
-			captionsPanel.labelsData[ captionData.languageCode ] = captionData;
+			captionsPanel.captionsData[ captionData.languageCode ] = captionData;
 		} );
-		this.addUserLanguageRowsIfNotPresent();
+		this.addCaptionsDataForUserLanguages();
 		this.languagesViewWidget.refreshLabel();
 		this.languagesViewWidget.collapse();
 	};

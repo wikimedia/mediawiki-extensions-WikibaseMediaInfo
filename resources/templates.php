@@ -16,9 +16,11 @@ return call_user_func( function() {
 
 	$templates['filepage-entityview'] =
 		<<<HTML
+<mw:mediainfoView>
 <div id="wb-$1-$2" class="filepage-mediainfo-entityview" dir="$3">
 	$4
 </div>
+</mw:mediainfoView>
 HTML;
 
 	$templates['filepage-entitytermsview'] =
@@ -31,14 +33,14 @@ HTML;
 	$templates['filepage-entitytermstable'] =
 		<<<HTML
 <h3 class="mediainfo-$1-header">$2</h3>
-<table class="filepage-mediainfo-entitytermstable mediainfo-$1-table" cellpadding="0" cellspacing="0">
+<table class="filepage-mediainfo-entitytermstable mediainfo-$1-table" cellpadding="0" cellspacing="0" data-label-languages="$4">
 	<!-- filepage-entitytermstablerow -->$3
 </table>
 HTML;
 
 	$templates['filepage-entitytermstablerow'] =
 		<<<HTML
-<tr class="entity-terms">
+<tr class="entity-terms $3" $2>
 	<!-- filepage-entitytermstableelement -->$1
 </tr>
 HTML;
@@ -50,7 +52,7 @@ HTML;
 
 	$templates['filepage-entitytermscaptionelement'] =
 		<<<HTML
-<td class="caption" lang="$3" dir="$2">$1 </td>
+<td class="caption $4" lang="$3" dir="$2">$1 </td>
 HTML;
 
 	return $templates;

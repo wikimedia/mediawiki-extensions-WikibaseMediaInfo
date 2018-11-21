@@ -15,7 +15,9 @@ use ParserOutput;
 use Title;
 use Wikibase\DataModel\Entity\EntityId;
 use Wikibase\DataModel\Services\EntityId\EntityIdComposer;
+use Wikibase\LanguageFallbackChainFactory;
 use Wikibase\Lib\Store\EntityByLinkedTitleLookup;
+use Wikibase\Lib\Store\EntityInfo;
 use Wikibase\Lib\UserLanguageLookup;
 use Wikibase\MediaInfo\Content\MediaInfoContent;
 use Wikibase\MediaInfo\Content\MediaInfoHandler;
@@ -105,14 +107,16 @@ class WikibaseMediaInfoHooks {
 	}
 
 	/**
-	 * DIRTY HACK PART ONE that won't be necessary when T205444 is done
-	 * @see https://phabricator.wikimedia.org/T205444
-	 *
 	 * The placeholder mw:slotheader is replaced by default with the name of the slot
 	 *
 	 * Replace it with a different placeholder so we can replace it with a message later
-	 * (can't replace it directly because accessing the RequestContext here throws
-	 * an exception)
+	 * on in onBeforePageDisplay() - can't replace it here because RequestContext (and therefore
+	 * the language) is not available
+	 *
+	 * Won't be necessary when T205444 is done
+	 *
+	 * @see https://phabricator.wikimedia.org/T205444
+	 * @see onBeforePageDisplay()
 	 *
 	 * @param ParserOutput $parserOutput
 	 * @param $text
@@ -130,13 +134,17 @@ class WikibaseMediaInfoHooks {
 
 		$text = preg_replace(
 			'#<mw:slotheader>(.*?)</mw:slotheader>#',
-			'<mw:mediainfoslotheader />',
+			self::getMediaInfoSlotHeaderPlaceholder(),
 			$text
 		);
 	}
 
+	private static function getMediaInfoSlotHeaderPlaceholder() {
+		return '<mw:mediainfoslotheader />';
+	}
+
 	/**
-	 * Check if we're on a file page, add data and modules if so
+	 * Replace mediainfo-specific placeholders (if any), move structured data, add data and modules
 	 *
 	 * @param \OutputPage $out
 	 * @param \Skin $skin
@@ -152,7 +160,6 @@ class WikibaseMediaInfoHooks {
 
 		self::newFromGlobalState()->doBeforePageDisplay(
 			$out,
-			$skin,
 			array_intersect_key(
 				$allLanguages,
 				array_flip( $termsLanguages )
@@ -162,36 +169,12 @@ class WikibaseMediaInfoHooks {
 	}
 
 	/**
-	 * DIRTY HACK PART TWO that won't be necessary when T205444 is done
-	 * @see https://phabricator.wikimedia.org/T205444
-	 * @param OutputPage $out
-	 * @return OutputPage $out
-	 */
-	private function replaceMediaInfoSlotHeader( OutputPage $out ) {
-		$textProvider = new MediaWikiLocalizedTextProvider( $out->getLanguage() );
-
-		$html = $out->getHTML();
-		$out->clearHTML();
-		$html = str_replace(
-			'<mw:mediainfoslotheader />',
-			htmlspecialchars(
-				$textProvider->get( 'wikibasemediainfo-filepage-structured-data-heading' )
-			),
-			$html
-		);
-		$out->addHTML( $html );
-		return $out;
-	}
-
-	/**
 	 * @param \OutputPage $out
-	 * @param \Skin $skin
 	 * @param string[] $termsLanguages Array with language codes as keys and autonyms as values
 	 * @param UserLanguageLookup $userLanguageLookup
 	 */
 	public function doBeforePageDisplay(
 		$out,
-		$skin,
 		array $termsLanguages,
 		UserLanguageLookup $userLanguageLookup
 	) {
@@ -201,7 +184,7 @@ class WikibaseMediaInfoHooks {
 			return;
 		}
 
-		$out = $this->replaceMediaInfoSlotHeader( $out );
+		$out = $this->moveMediaInfoData( $out );
 
 		$pageId = $imgTitle->getArticleID();
 		$entityId = $this->entityIdFromPageId( $pageId );
@@ -222,6 +205,100 @@ class WikibaseMediaInfoHooks {
 		] );
 
 		$out->addModules( 'wikibase.mediainfo.filePageDisplay' );
+	}
+
+	/**
+	 * @param OutputPage $out
+	 * @return OutputPage $out
+	 */
+	private function moveMediaInfoData( OutputPage $out ) {
+		$html = $out->getHTML();
+		$out->clearHTML();
+		$html = $this->moveCaptions( $html, $out );
+		$html = $this->moveStructuredDataHeader( $html, $out );
+		$out->addHTML( $html );
+		return $out;
+	}
+
+	/**
+	 * Move the structured data multi-lingual captions to the place we want them
+	 *
+	 * If there are no captions to be displayed, inject an empty MediaInfoView
+	 *
+	 * @param $text
+	 * @param OutputPage $out
+	 * @return string
+	 */
+	private function moveCaptions( $text, $out ) {
+		if ( preg_match(
+			'/<mw:mediainfoView>(.*)<\/mw:mediainfoView>/is',
+			$text,
+			$matches
+		) ) {
+			$captionsHtml = $matches[1];
+			$text = str_replace( $matches[0], '', $text );
+		} else {
+			$factory = new LanguageFallbackChainFactory();
+			$emptyMediaInfo = new MediaInfo();
+			$view = WikibaseRepo::getDefaultInstance()->getEntityViewFactory()->newEntityView(
+				$out->getLanguage(),
+				$factory->newFromLanguage( $out->getLanguage() ),
+				$emptyMediaInfo,
+				new EntityInfo( [] )
+			);
+			$captionsHtml = $view->getContent( $emptyMediaInfo )->getHtml();
+		}
+
+		return preg_replace(
+			'/<div class="mw-parser-output">/',
+			'<div class="mw-parser-output">' . $captionsHtml,
+			$text
+		);
+	}
+
+	/**
+	 * Move the structured data header to the place we want it
+	 *
+	 * Also replace the mediainfo-specific placeholder added in onParserOutputPostCacheTransform
+	 *
+	 * @see onParserOutputPostCacheTransform()
+	 *
+	 * The placeholder should no longer be necessary when T205444 is done
+	 * @see https://phabricator.wikimedia.org/T205444
+	 *
+	 * @param $text
+	 * @param OutputPage $out
+	 * @return string
+	 */
+	private function moveStructuredDataHeader( $text, $out ) {
+
+		// First do the move
+		if (
+			preg_match(
+				'#<h1\b[^>]*\bclass=(\'|")mw-slot-header\\1[^>]*>' .
+				$this->getMediaInfoSlotHeaderPlaceholder() . '</h1>#iU',
+				$text,
+				$matches
+			)
+		) {
+			$text = preg_replace(
+				'/<div class="mw-parser-output">/',
+				'<div class="mw-parser-output">' . $matches[0],
+				$text
+			);
+		}
+
+		// Now replace the placeholder
+		$textProvider = new MediaWikiLocalizedTextProvider( $out->getLanguage() );
+		$text = str_replace(
+			$this->getMediaInfoSlotHeaderPlaceholder(),
+			htmlspecialchars(
+				$textProvider->get( 'wikibasemediainfo-filepage-structured-data-heading' )
+			),
+			$text
+		);
+
+		return $text;
 	}
 
 	private static function getMaxCaptionLength() {

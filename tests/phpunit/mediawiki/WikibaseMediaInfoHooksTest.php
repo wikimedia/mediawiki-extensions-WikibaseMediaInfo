@@ -65,11 +65,11 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 
 	public function providePostCacheTransformInput() {
 		return [
-			'no placeholder' => [
+			'no placeholder, no change' => [
 				'original' => 'SOME_TEXT',
-				'expected' => 'SOME_TEXT'
+				'expected' => 'SOME_TEXT',
 			],
-			'placeholder' => [
+			'placeholder replaced' => [
 				'original' => 'STRING_1<mw:slotheader>STRING_2</mw:slotheader>STRING_3',
 				'expected' => 'STRING_1<mw:mediainfoslotheader />STRING_3',
 			],
@@ -160,7 +160,6 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 
 		$hookObject->doBeforePageDisplay(
 			$out,
-			$skin,
 			[],
 			$userLanguageLookup
 		);
@@ -196,7 +195,41 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 
 		$hookObject->doBeforePageDisplay(
 			$out,
-			$skin,
+			[],
+			new BabelUserLanguageLookup()
+		);
+	}
+
+	public function testOnBeforePageDisplay_replaceSlotDataPlaceholder() {
+		$imgTitle = $this->getMockBuilder( \ImagePage::class )
+			->disableOriginalConstructor()
+			->getMock();
+		$imgTitle->method( 'exists' )
+			->willReturn( false );
+
+		$skin = $this->getMockBuilder( \Skin::class )
+			->disableOriginalConstructor()
+			->getMock();
+
+		$out = $this->getMockBuilder( \OutputPage::class )
+			->disableOriginalConstructor()
+			->getMock();
+		$out->method( 'getTitle' )
+			->willReturn( $imgTitle );
+		$out->expects( $this->never() )
+			->method( 'addJsConfigVars' );
+
+		$hookObject = new WikibaseMediaInfoHooks(
+			$this->getMockBuilder( EntityIdComposer::class )
+				->disableOriginalConstructor()
+				->getMock(),
+			$this->getMockBuilder( EntityTitleStoreLookup::class )
+				->disableOriginalConstructor()
+				->getMock()
+		);
+
+		$hookObject->doBeforePageDisplay(
+			$out,
 			[],
 			new BabelUserLanguageLookup()
 		);

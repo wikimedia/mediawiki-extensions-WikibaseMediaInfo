@@ -93,3 +93,9 @@
 .editActions .publish {
 	float: right;
 }
+
+/* Some OOUI styles are loaded inline - add some here to prevent FOUC */
+.oo-ui-panelLayout-framed {
+	border: 1px solid #a2a9b1;
+	border-radius: 2px;
+}

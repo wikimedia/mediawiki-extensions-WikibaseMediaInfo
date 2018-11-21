@@ -6,6 +6,7 @@
 		headerClass: 'mediainfo-captions-header',
 		tableClass: 'mediainfo-captions-table',
 		entityViewClass: 'filepage-mediainfo-entityview',
+		entityTermsClass: 'entity-terms',
 		entityViewAppendSelector: '.mw-parser-output',
 		warnWithinMaxCaptionLength: 20
 	} );

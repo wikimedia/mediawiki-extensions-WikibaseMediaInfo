@@ -1,9 +1,10 @@
 {
 	"@metadata": {
 		"authors": [
-			"Guycn2"
+			"Guycn2",
+			"Amire80"
 		]
 	},
 	"wikibase-entity-mediainfo": "מידע על המדיה",
-	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "כיתוב"
+	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "כיתובים"
 }

@@ -180,7 +180,15 @@ class WikibaseMediaInfoHooks {
 	) {
 		$out->preventClickjacking();
 		$imgTitle = $out->getTitle();
-		if ( !$imgTitle->exists() || !$imgTitle->inNamespace( NS_FILE ) ) {
+		// Don't load …
+		if (
+			// … for files that don't exist
+			!$imgTitle->exists() ||
+			// … for pages that aren't files
+			!$imgTitle->inNamespace( NS_FILE ) ||
+			// … for page views that aren't reads
+			\Action::getActionName( $out->getContext() ) !== 'view'
+		) {
 			return;
 		}
 

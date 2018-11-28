@@ -144,6 +144,10 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 		$out->method( 'getWikiPage' )
 			->willReturn( $wikiPage );
 
+		// TODO: Test that this doesn't appear on action=history etc. contexts
+		$out->method( 'getContext' )
+			->willReturn( new \RequestContext() );
+
 		$out->expects( $this->once() )
 			->method( 'addJsConfigVars' );
 		$out->expects( $this->once() )

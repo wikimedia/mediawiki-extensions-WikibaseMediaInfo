@@ -64,10 +64,12 @@
 			);
 
 		this.refreshLabel = function () {
+			var hideableRowCount = $( tableSelector )
+				.find( 'tr.entity-terms:not(.showLabel)' ).length;
 			viewMoreButton.setLabel(
 				mw.message(
 					'wikibasemediainfo-filepage-more-languages',
-					$( tableSelector ).find( 'tr.entity-terms' ).length - 1
+					hideableRowCount
 				).text()
 			);
 		};
@@ -76,22 +78,21 @@
 			var $captionsTable = $( tableSelector );
 			$viewMoreRow.detach();
 			$captionsTable.find( 'tr' ).show();
-			if ( $captionsTable.find( 'tr' ).length > 1 ) {
+			if ( $captionsTable.find( 'tr.entity-terms:not(.showLabel)' ).length > 0 ) {
 				$captionsTable.append( $viewLessRow );
 			}
 		};
 
 		this.collapse = function () {
-			var $captionsTable = $( tableSelector );
-			var rowCount = $captionsTable.find( 'tr' ).length;
-			if ( rowCount <= 1 ) {
+			var $captionsTable = $( tableSelector ),
+				$rows = $captionsTable.find( 'tr.entity-terms:not(.showLabel)' );
+			var rowCount = $rows.length;
+			if ( rowCount < 1 ) {
 				return;
 			}
 			$viewLessRow.detach();
-			if ( rowCount > 1 ) {
-				$captionsTable.find( 'tr:not(:first)' ).hide();
-				$captionsTable.append( $viewMoreRow );
-			}
+			$rows.hide();
+			$captionsTable.append( $viewMoreRow );
 		};
 
 		this.hide = function () {

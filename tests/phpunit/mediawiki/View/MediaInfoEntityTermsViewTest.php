@@ -4,6 +4,8 @@ namespace Wikibase\MediaInfo\Tests\MediaWiki\View;
 
 use Wikibase\DataModel\Term\Term;
 use Wikibase\DataModel\Term\TermList;
+use Wikibase\LanguageFallbackChain;
+use Wikibase\LanguageWithConversion;
 use Wikibase\Lib\LanguageNameLookup;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\MediaInfo\View\MediaInfoEntityTermsView;
@@ -86,7 +88,7 @@ class MediaInfoEntityTermsViewTest extends \PHPUnit\Framework\TestCase {
 			$this->langNameLookup,
 			$this->langDirLookup,
 			$this->textProvider,
-			[ 'en' ]
+			new LanguageFallbackChain( [ LanguageWithConversion::factory( 'en' ) ] )
 		);
 		$this->assertEquals(
 			$templateFactoryReturnValue,

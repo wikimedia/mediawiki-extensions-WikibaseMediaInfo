@@ -87,7 +87,7 @@ return [
 				new LanguageNameLookup( $languageCode ),
 				new MediaWikiLanguageDirectionalityLookup(),
 				new MediaWikiLocalizedTextProvider( $language ),
-				[ $languageCode ]
+				$fallbackChain
 			);
 
 			return new MediaInfoView(

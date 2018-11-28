@@ -5,7 +5,6 @@ namespace Wikibase\MediaInfo\Services;
 use InvalidArgumentException;
 use MediaWiki\Linker\LinkTarget;
 use Wikibase\MediaInfo\DataModel\MediaInfoId;
-use Wikimedia\Assert\Assert;
 
 /**
  * Lookup service for getting the MediaInfoId that corresponds to a LinkTarget.
@@ -25,9 +24,6 @@ class MediaInfoIdLookup {
 	 * entities reside.
 	 */
 	public function __construct( $mediaInfoNamespace ) {
-		Assert::parameterType( 'integer', $mediaInfoNamespace, '$mediaInfoNamespace' );
-		Assert::parameter( $mediaInfoNamespace >= 0, '$mediaInfoNamespace', 'Must not be negative' );
-
 		$this->mediaInfoNamespace = $mediaInfoNamespace;
 	}
 

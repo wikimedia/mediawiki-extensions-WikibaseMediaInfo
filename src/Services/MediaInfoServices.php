@@ -3,7 +3,6 @@
 namespace Wikibase\MediaInfo\Services;
 
 use MediaWiki\MediaWikiServices;
-use MWException;
 use Wikibase\Repo\WikibaseRepo;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 
@@ -17,14 +16,11 @@ class MediaInfoServices {
 	 * @return MediaInfoIdLookup
 	 */
 	public static function getMediaInfoIdLookup() {
-		$nsLookup = WikibaseRepo::getDefaultInstance()->getEntityNamespaceLookup();
-		$mediaInfoNamespace = $nsLookup->getEntityNamespace( MediaInfo::ENTITY_TYPE );
-
-		if ( !is_int( $mediaInfoNamespace ) ) {
-			throw new MWException( 'No namespace configured for MediaInfo entities!' );
-		}
-
-		return new MediaInfoIdLookup( $mediaInfoNamespace );
+		return new MediaInfoIdLookup(
+			WikibaseRepo::getDefaultInstance()->getEntityNamespaceLookup()->getEntityNamespace(
+				MediaInfo::ENTITY_TYPE
+			)
+		);
 	}
 
 	/**

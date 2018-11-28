@@ -3,6 +3,7 @@
 namespace Wikibase\MediaInfo\Services;
 
 use MediaWiki\MediaWikiServices;
+use MWException;
 use Wikibase\Repo\WikibaseRepo;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 

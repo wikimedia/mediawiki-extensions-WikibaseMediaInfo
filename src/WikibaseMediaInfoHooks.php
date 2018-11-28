@@ -357,20 +357,20 @@ class WikibaseMediaInfoHooks {
 		Title $title,
 		ParserOutput $output
 	) {
-		// Exit if the extension is disabled.
-		if ( !MediaWikiServices::getInstance()->getMainConfig()->get( 'MediaInfoEnable' ) ) {
-			return;
-		}
-
-		if ( !$title->inNamespace( NS_FILE ) ) {
-			return;
-		}
-
-		if ( $output->getProperty( 'mediainfo_entity' ) !== false ) {
+		// Exit if …
+		if (
+			// … the extension is disabled
+			!MediaWikiServices::getInstance()->getMainConfig()->get( 'MediaInfoEnable' ) ||
+			// … we're operating on a non-file
+			!$title->inNamespace( NS_FILE ) ||
+			// … the file we're operating on doesn't have the structured data page property set
+			$output->getProperty( 'mediainfo_entity' ) !== false
+		) {
 			return;
 		}
 
 		$pageId = $title->getArticleID();
+		// Exit if we're operating on a file that doesn't exist yet
 		if ( $pageId === 0 ) {
 			return;
 		}

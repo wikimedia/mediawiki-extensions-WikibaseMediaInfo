@@ -6,6 +6,20 @@
 	},
 	"right-mediainfo-term": "Endre medieinfobegreper (undertekster, sammendrag)",
 	"wikibase-entity-mediainfo": "medieinformasjon",
+	"wikibase-mediainfo-summary-wbsetlabel-add": "La til bildetekst [$1]",
+	"wikibase-mediainfo-summary-wbsetlabel-remove": "Fjernet bildetekst [$1]",
+	"wikibase-mediainfo-summary-wbsetlabel-set": "Redigerte bildetekst [$1]",
 	"wikibasemediainfo-desc": "Wikibase-utvidelse for å behandle strukturerte metadata for mediefiler",
-	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Bildetekst"
+	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Bildetekster",
+	"wikibasemediainfo-filepage-structured-data-heading": "Strukturerte data",
+	"wikibasemediainfo-filepage-captions-title": "Bildetekster",
+	"wikibasemediainfo-filepage-more-languages": "Se $1 {{PLURAL:$1|språk}} til",
+	"wikibasemediainfo-filepage-fewer-languages": "Se færre språk",
+	"wikibasemediainfo-filepage-add-caption": "Legg til bildetekst",
+	"wikibasemediainfo-filepage-edit-captions": "Rediger bildetekster",
+	"wikibasemediainfo-filepage-cancel": "Avbryt",
+	"wikibasemediainfo-filepage-publish": "Publiser endringer",
+	"wikibasemediainfo-filepage-caption-empty": "Legg til en kort forklaring på hva filen representerer",
+	"wikibasemediainfo-filepage-caption-too-long": "$1 {{PLURAL:$1|tegn}} over grensen",
+	"wikibasemediainfo-filepage-caption-approaching-limit": "{{PLURAL:$1|$1|0=Ingen}} tegn igjen"
 }

@@ -28,6 +28,9 @@
 	"ServiceWiringFiles": [
 		"src/Services/MediaInfoServiceWiring.php"
 	],
+	"ExtensionFunctions": [
+		"Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onExtensionLoad"
+	],
 	"Hooks": {
 		"WikibaseRepoEntityNamespaces": [
 			"Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onWikibaseRepoEntityNamespaces"

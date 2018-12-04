@@ -70,6 +70,16 @@ class WikibaseMediaInfoHooks {
 		$this->entityTitleStoreLookup = $entityTitleStoreLookup;
 	}
 
+	public static function onExtensionLoad() {
+		// Tell MediaWiki where to put our entity content.
+		MediaWikiServices::getInstance()->getSlotRoleRegistry()->defineRole(
+			'mediainfo',
+			function () {
+				return new Services\WikibaseMediaInfoSlotRoleHandler();
+			}
+		);
+	}
+
 	/**
 	 * Hook to register the MediaInfo entity namespaces for EntityNamespaceLookup.
 	 *
@@ -81,6 +91,7 @@ class WikibaseMediaInfoHooks {
 			return;
 		}
 
+		// Tell Wikibase where to put our entity content.
 		$entityNamespacesSetting[ MediaInfo::ENTITY_TYPE ] = NS_FILE . '/' . MediaInfo::ENTITY_TYPE;
 	}
 

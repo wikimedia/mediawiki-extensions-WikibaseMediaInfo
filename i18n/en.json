@@ -5,6 +5,7 @@
 		]
 	},
 	"right-mediainfo-term": "Change media info terms (captions, summaries)",
+	"slot-name-mediainfo": "Structured media info",
 	"wikibase-entity-mediainfo": "media info",
 	"wikibase-mediainfo-summary-wbsetlabel-add": "Added [$1] caption",
 	"wikibase-mediainfo-summary-wbsetlabel-remove": "Removed [$1] caption",

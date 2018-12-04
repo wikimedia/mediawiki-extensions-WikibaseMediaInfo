@@ -91,20 +91,6 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 		$this->assertEquals( $expected, $original );
 	}
 
-	public function testOnContentAlterParserOutput() {
-		$content = new \WikitextContent( '' );
-		$title = Title::newFromText( 'File.jpg', NS_FILE );
-		$title->resetArticleID( 1 );
-		$parserOutput = new ParserOutput();
-
-		$this->assertArrayNotHasKey( 'mediainfo_entity', $parserOutput->getProperties() );
-
-		Hooks::run( 'ContentAlterParserOutput', [ $content, $title, $parserOutput ] );
-
-		$this->assertArrayHasKey( 'mediainfo_entity', $parserOutput->getProperties() );
-		$this->assertEquals( 'M1', $parserOutput->getProperty( 'mediainfo_entity' ) );
-	}
-
 	public function testOnBeforePageDisplay() {
 		$imgTitle = Title::makeTitle( NS_FILE, 'Foo.jpg' );
 		$imgTitle->resetArticleID( 23 );

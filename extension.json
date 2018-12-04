@@ -16,7 +16,6 @@
 	},
 	"AutoloadNamespaces": {
 		"Wikibase\\MediaInfo\\": "src/",
-		"Wikibase\\MediaInfo\\Maintenance\\": "maintenance/",
 		"Wikibase\\MediaInfo\\Tests\\": "tests/phpunit/composer/",
 		"Wikibase\\MediaInfo\\Tests\\MediaWiki\\": "tests/phpunit/mediawiki/"
 	},
@@ -40,12 +39,6 @@
 		],
 		"WikibaseClientEntityTypes": [
 			"Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onWikibaseEntityTypes"
-		],
-		"LoadExtensionSchemaUpdates": [
-			"Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onLoadExtensionSchemaUpdates"
-		],
-		"ContentAlterParserOutput": [
-			"Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onContentAlterParserOutput"
 		],
 		"GetEntityByLinkedTitleLookup": [
 			"Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onGetEntityByLinkedTitleLookup"

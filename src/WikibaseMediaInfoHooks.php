@@ -6,7 +6,6 @@ use AbstractContent;
 use CirrusSearch\Connection;
 use CirrusSearch\Search\CirrusIndexField;
 use Content;
-use DatabaseUpdater;
 use Elastica\Document;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\Revision\SlotRecord;
@@ -338,62 +337,6 @@ class WikibaseMediaInfoHooks {
 			MediaInfo::ENTITY_TYPE,
 			$pageId
 		);
-	}
-
-	/**
-	 * Schema changes.
-	 * Hook: LoadExtensionSchemaUpdates
-	 *
-	 * @param DatabaseUpdater $updater
-	 */
-	public static function onLoadExtensionSchemaUpdates( DatabaseUpdater $updater ) {
-		$updater->addPostDatabaseUpdateMaintenance( 'Wikibase\\MediaInfo\\Maintenance\\CreatePageProps' );
-	}
-
-	/**
-	 * Add a page_props referencing the MediaInfo entity.
-	 * LinksUpdate.php will fetch the props from ParserOutput & store them to DB right after
-	 * creating a page, so we just have to add the page_props entry there.
-	 * This is preferable to adding in DB after upload (say FileUpload hook), because it would get
-	 * wiped out once LinksUpdate runs...
-	 *
-	 * Hook: ContentAlterParserOutput
-	 *
-	 * @param Content $content
-	 * @param Title $title
-	 * @param ParserOutput $output
-	 */
-	public static function onContentAlterParserOutput(
-		Content $content,
-		Title $title,
-		ParserOutput $output
-	) {
-		// Exit if …
-		if (
-			// … the extension is disabled
-			!MediaWikiServices::getInstance()->getMainConfig()->get( 'MediaInfoEnable' ) ||
-			// … we're operating on a non-file
-			!$title->inNamespace( NS_FILE ) ||
-			// … the file we're operating on doesn't have the structured data page property set
-			$output->getProperty( 'mediainfo_entity' ) !== false
-		) {
-			return;
-		}
-
-		$pageId = $title->getArticleID();
-		// Exit if we're operating on a file that doesn't exist yet
-		if ( $pageId === 0 ) {
-			return;
-		}
-
-		$wikibaseRepo = WikibaseRepo::getDefaultInstance();
-		$entityId = $wikibaseRepo->getEntityIdComposer()->composeEntityId(
-			'',
-			MediaInfo::ENTITY_TYPE,
-			$pageId
-		);
-
-		$output->setProperty( 'mediainfo_entity', $entityId->getLocalPart() );
 	}
 
 	public static function onGetEntityByLinkedTitleLookup( EntityByLinkedTitleLookup &$lookup ) {

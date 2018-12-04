@@ -29,7 +29,6 @@
 	"autoload": {
 		"psr-4": {
 			"Wikibase\\MediaInfo\\": "src/",
-			"Wikibase\\MediaInfo\\Maintenance\\": "maintenance/",
 			"Wikibase\\MediaInfo\\Tests\\": "tests/phpunit/composer/",
 			"Wikibase\\MediaInfo\\Tests\\MediaWiki\\": "tests/phpunit/mediawiki/"
 		}

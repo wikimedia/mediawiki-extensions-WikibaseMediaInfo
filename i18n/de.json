@@ -5,6 +5,7 @@
 		]
 	},
 	"right-mediainfo-term": "Medieninformationsbegriffe ändern (Bildtexte, Zusammenfassungen)",
+	"slot-name-mediainfo": "Strukturierte Medieninformationen",
 	"wikibase-entity-mediainfo": "Medieninformationen",
 	"wikibase-mediainfo-summary-wbsetlabel-add": "Bildtext [$1] hinzugefügt",
 	"wikibase-mediainfo-summary-wbsetlabel-remove": "Überschrift [$1] entfernt",

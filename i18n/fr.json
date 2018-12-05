@@ -7,6 +7,7 @@
 		]
 	},
 	"right-mediainfo-term": "Modifier les termes d'information du média (légendes, résumés)",
+	"slot-name-mediainfo": "Information structurée de média",
 	"wikibase-entity-mediainfo": "Infos média",
 	"wikibase-mediainfo-summary-wbsetlabel-add": "Légende [$1] ajoutée",
 	"wikibase-mediainfo-summary-wbsetlabel-remove": "Légende [$1] supprimée",

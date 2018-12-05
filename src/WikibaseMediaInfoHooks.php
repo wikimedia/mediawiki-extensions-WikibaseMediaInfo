@@ -299,6 +299,10 @@ class WikibaseMediaInfoHooks {
 				$matches
 			)
 		) {
+			// Take from the old place
+			$text = str_replace( $matches[0], '', $text );
+
+			// Add at the new place
 			$text = preg_replace(
 				'/<div class="mw-parser-output">/',
 				'<div class="mw-parser-output">' . $matches[0],

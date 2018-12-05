@@ -27,10 +27,10 @@
 	"ServiceWiringFiles": [
 		"src/Services/MediaInfoServiceWiring.php"
 	],
-	"ExtensionFunctions": [
-		"Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onExtensionLoad"
-	],
 	"Hooks": {
+		"MediaWikiServices": [
+			"Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onMediaWikiServices"
+		],
 		"WikibaseRepoEntityNamespaces": [
 			"Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onWikibaseRepoEntityNamespaces"
 		],

@@ -9,6 +9,7 @@ use Content;
 use Elastica\Document;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\Revision\SlotRecord;
+use MediaWiki\Revision\SlotRoleRegistry;
 use OutputPage;
 use ParserOutput;
 use Title;
@@ -69,14 +70,19 @@ class WikibaseMediaInfoHooks {
 		$this->entityTitleStoreLookup = $entityTitleStoreLookup;
 	}
 
-	public static function onExtensionLoad() {
-		// Tell MediaWiki where to put our entity content.
-		MediaWikiServices::getInstance()->getSlotRoleRegistry()->defineRole(
-			'mediainfo',
-			function () {
-				return new Services\WikibaseMediaInfoSlotRoleHandler();
-			}
-		);
+	/**
+	 * Hook to register the MediaInfo slot role.
+	 *
+	 * @param MediaWikiServices $services
+	 */
+	public static function onMediaWikiServices( MediaWikiServices $services ) {
+		$services->addServiceManipulator( 'SlotRoleRegistry', function ( SlotRoleRegistry $registry ) {
+			$registry->defineRoleWithModel(
+				/* role */ 'mediainfo',
+				/* content handler */ \Wikibase\MediaInfo\Content\MediaInfoContent::CONTENT_MODEL_ID
+				/*, layout – we want to set "prepend" in future, once MediaWiki supports that */
+			);
+		} );
 	}
 
 	/**

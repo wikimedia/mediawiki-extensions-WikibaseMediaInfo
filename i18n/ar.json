@@ -8,6 +8,7 @@
 		]
 	},
 	"right-mediainfo-term": "تغيير مصطلحات معلومات الوسائط (التسميات التوضيحية والملخصات)",
+	"slot-name-mediainfo": "معلومات الوسائط الهيكلية",
 	"wikibase-entity-mediainfo": "معلومات الوسائط",
 	"wikibase-mediainfo-summary-wbsetlabel-add": "تمت إضافة التسمية التوضيحية [$1]",
 	"wikibase-mediainfo-summary-wbsetlabel-remove": "تمت إزالة التسمية التوضيحية [$1]",

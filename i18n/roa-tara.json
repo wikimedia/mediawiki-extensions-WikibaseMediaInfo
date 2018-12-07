@@ -5,6 +5,7 @@
 		]
 	},
 	"right-mediainfo-term": "Cange le termine de le 'mbormaziune de le media ('ndestaziune, riepileghe)",
+	"slot-name-mediainfo": "'Mbormaziune de le media strutturate",
 	"wikibase-entity-mediainfo": "'mbormaziune multimediale",
 	"wikibase-mediainfo-summary-wbsetlabel-add": "Aggiunde 'ndestazione [$1]",
 	"wikibase-mediainfo-summary-wbsetlabel-remove": "Luate 'ndestazione [$1]",

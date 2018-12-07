@@ -5,6 +5,23 @@
 			"আফতাবুজ্জামান"
 		]
 	},
+	"right-mediainfo-term": "মিডিয়ার তথ্যের শর্তাবলী পরিবর্তন করে (ক্যাপশন, সারাংশ)",
+	"slot-name-mediainfo": "কাঠামোবদ্ধ মিডিয়ার তথ্য",
 	"wikibase-entity-mediainfo": "মিডিয়ার তথ্য",
-	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "ক্যাপশন"
+	"wikibase-mediainfo-summary-wbsetlabel-add": "ক্যাপশন যোগ হয়েছে [$1]",
+	"wikibase-mediainfo-summary-wbsetlabel-remove": "ক্যাপশন সরানো হয়েছে [$1]",
+	"wikibase-mediainfo-summary-wbsetlabel-set": "ক্যাপশন সম্পাদিত হয়েছে [$1]",
+	"wikibasemediainfo-desc": "মিডিয়া ফাইলগুলির কাঠামোবদ্ধ অধিউপাত্ত পরিচালনা করতে উইকিবেস এক্সটেনশন",
+	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "ক্যাপশন",
+	"wikibasemediainfo-filepage-structured-data-heading": "কাঠামোবদ্ধ উপাত্ত",
+	"wikibasemediainfo-filepage-captions-title": "ক্যাপশনসমূহ",
+	"wikibasemediainfo-filepage-more-languages": "আরও $1টি {{PLURAL:$1|ভাষায়}} দেখুন",
+	"wikibasemediainfo-filepage-fewer-languages": "কম ভাষায় দেখুন",
+	"wikibasemediainfo-filepage-add-caption": "একটি ক্যাপশন যোগ করুন",
+	"wikibasemediainfo-filepage-edit-captions": "ক্যাপশন সম্পাদনা করছেন",
+	"wikibasemediainfo-filepage-cancel": "বাতিল",
+	"wikibasemediainfo-filepage-publish": "পরিবর্তন প্রকাশ করুন",
+	"wikibasemediainfo-filepage-caption-empty": "এই ফাইল কি প্রতিনিধিত্ব করছে তার এক লাইন ব্যাখ্যা যোগ করুন",
+	"wikibasemediainfo-filepage-caption-too-long": "$1টি {{PLURAL:$1|অক্ষর}} সীমা অতিক্রম করেছে",
+	"wikibasemediainfo-filepage-caption-approaching-limit": "$1টি {{PLURAL:$1|অক্ষর|0=অক্ষর}} বাকি"
 }

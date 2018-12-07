@@ -7,6 +7,7 @@
 		]
 	},
 	"right-mediainfo-term": "Alterar os termos da informação de ficheiros multimédia (legendas, resumos)",
+	"slot-name-mediainfo": "Informação estruturada de multimédia",
 	"wikibase-entity-mediainfo": "informação multimédia",
 	"wikibase-mediainfo-summary-wbsetlabel-add": "Legenda [$1] adicionada",
 	"wikibase-mediainfo-summary-wbsetlabel-remove": "Legenda [$1] removida",

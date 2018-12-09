@@ -5,6 +5,23 @@
 			"Amire80"
 		]
 	},
+	"right-mediainfo-term": "שינוי מושגים במידע על המדיה (כיתובים, סיכומים)",
+	"slot-name-mediainfo": "מידע מובנה על מדיה",
 	"wikibase-entity-mediainfo": "מידע על המדיה",
-	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "כיתובים"
+	"wikibase-mediainfo-summary-wbsetlabel-add": "נוסף כיתוב [$1]",
+	"wikibase-mediainfo-summary-wbsetlabel-remove": "נוסר כיתוב [$1]",
+	"wikibase-mediainfo-summary-wbsetlabel-set": "נערך כיתוב [$1]",
+	"wikibasemediainfo-desc": "הרחבה לוויקיבייס לניהול מטא־נתונים מובְנים של קובצי מדיה",
+	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "כיתובים",
+	"wikibasemediainfo-filepage-structured-data-heading": "נתונים מובְנים",
+	"wikibasemediainfo-filepage-captions-title": "כיתובים",
+	"wikibasemediainfo-filepage-more-languages": "לראות {{PLURAL:$1|עוד שפה אחת|עוד $1 שפות}}",
+	"wikibasemediainfo-filepage-fewer-languages": "לראות פחות שפות",
+	"wikibasemediainfo-filepage-add-caption": "להוסיף כיתוב",
+	"wikibasemediainfo-filepage-edit-captions": "לערוך כיתובים",
+	"wikibasemediainfo-filepage-cancel": "ביטול",
+	"wikibasemediainfo-filepage-publish": "פרסום השינויים",
+	"wikibasemediainfo-filepage-caption-empty": "הוספת הסבר בן שורה אחת על מה הקובץ הזה מייצג",
+	"wikibasemediainfo-filepage-caption-too-long": "{{PLURAL:$1|תו אחד|$1 תווים}} מעבר למגבלה",
+	"wikibasemediainfo-filepage-caption-approaching-limit": "{{PLURAL:$1|נותר תו אחד|נותרת $1 תווים}}"
 }

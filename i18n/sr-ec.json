@@ -7,6 +7,7 @@
 		]
 	},
 	"right-mediainfo-term": "Промена услова за информације медија (натписи, резимеи)",
+	"slot-name-mediainfo": "Структуриране информације о медијима",
 	"wikibase-entity-mediainfo": "медија инфо",
 	"wikibase-mediainfo-summary-wbsetlabel-add": "Додати натписи ([$1])",
 	"wikibase-mediainfo-summary-wbsetlabel-remove": "Уклоњен натпис ([$1])",

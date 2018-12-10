@@ -25,6 +25,7 @@ use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\MediaInfo\Services\MediaInfoByLinkedTitleLookup;
 use Wikibase\Repo\BabelUserLanguageLookup;
 use Wikibase\Repo\MediaWikiLocalizedTextProvider;
+use Wikibase\Repo\ParserOutput\DispatchingEntityViewFactory;
 use Wikibase\Repo\Store\EntityTitleStoreLookup;
 use Wikibase\Repo\WikibaseRepo;
 use WikiPage;
@@ -36,6 +37,8 @@ use WikiPage;
  * @author Bene* < benestar.wikimedia@gmail.com >
  */
 class WikibaseMediaInfoHooks {
+
+	const MEDIAINFO_SLOT_HEADER_PLACEHOLDER = '<mw:mediainfoslotheader />';
 
 	/**
 	 * @var EntityIdComposer
@@ -150,13 +153,9 @@ class WikibaseMediaInfoHooks {
 
 		$text = preg_replace(
 			'#<mw:slotheader>(.*?)</mw:slotheader>#',
-			self::getMediaInfoSlotHeaderPlaceholder(),
+			self::MEDIAINFO_SLOT_HEADER_PLACEHOLDER,
 			$text
 		);
-	}
-
-	private static function getMediaInfoSlotHeaderPlaceholder() {
-		return '<mw:mediainfoslotheader />';
 	}
 
 	/**
@@ -180,7 +179,8 @@ class WikibaseMediaInfoHooks {
 				$allLanguages,
 				array_flip( $termsLanguages )
 			),
-			new BabelUserLanguageLookup()
+			new BabelUserLanguageLookup(),
+			WikibaseRepo::getDefaultInstance()->getEntityViewFactory()
 		);
 	}
 
@@ -188,11 +188,13 @@ class WikibaseMediaInfoHooks {
 	 * @param \OutputPage $out
 	 * @param string[] $termsLanguages Array with language codes as keys and autonyms as values
 	 * @param UserLanguageLookup $userLanguageLookup
+	 * @param DispatchingEntityViewFactory $entityViewFactory
 	 */
 	public function doBeforePageDisplay(
 		$out,
 		array $termsLanguages,
-		UserLanguageLookup $userLanguageLookup
+		UserLanguageLookup $userLanguageLookup,
+		DispatchingEntityViewFactory $entityViewFactory
 	) {
 		$out->preventClickjacking();
 		$imgTitle = $out->getTitle();
@@ -208,7 +210,7 @@ class WikibaseMediaInfoHooks {
 			return;
 		}
 
-		$out = $this->moveMediaInfoData( $out );
+		$out = $this->moveMediaInfoData( $out, $entityViewFactory );
 
 		$pageId = $imgTitle->getArticleID();
 		$entityId = $this->entityIdFromPageId( $pageId );
@@ -233,12 +235,16 @@ class WikibaseMediaInfoHooks {
 
 	/**
 	 * @param OutputPage $out
+	 * @param DispatchingEntityViewFactory $entityViewFactory
 	 * @return OutputPage $out
 	 */
-	private function moveMediaInfoData( OutputPage $out ) {
+	private function moveMediaInfoData(
+		OutputPage $out,
+		DispatchingEntityViewFactory $entityViewFactory
+	) {
 		$html = $out->getHTML();
 		$out->clearHTML();
-		$html = $this->moveCaptions( $html, $out );
+		$html = $this->moveCaptions( $html, $out, $entityViewFactory );
 		$html = $this->moveStructuredDataHeader( $html, $out );
 		$out->addHTML( $html );
 		return $out;
@@ -251,9 +257,10 @@ class WikibaseMediaInfoHooks {
 	 *
 	 * @param $text
 	 * @param OutputPage $out
+	 * @param DispatchingEntityViewFactory $entityViewFactory
 	 * @return string
 	 */
-	private function moveCaptions( $text, $out ) {
+	private function moveCaptions( $text, $out, $entityViewFactory ) {
 		if ( preg_match(
 			'/<mw:mediainfoView>(.*)<\/mw:mediainfoView>/is',
 			$text,
@@ -262,11 +269,11 @@ class WikibaseMediaInfoHooks {
 			$captionsHtml = $matches[1];
 			$text = str_replace( $matches[0], '', $text );
 		} else {
-			$factory = new LanguageFallbackChainFactory();
 			$emptyMediaInfo = new MediaInfo();
-			$view = WikibaseRepo::getDefaultInstance()->getEntityViewFactory()->newEntityView(
+			$fallbackChainFactory = new LanguageFallbackChainFactory();
+			$view = $entityViewFactory->newEntityView(
 				$out->getLanguage(),
-				$factory->newFromLanguage( $out->getLanguage() ),
+				$fallbackChainFactory->newFromLanguage( $out->getLanguage() ),
 				$emptyMediaInfo,
 				new EntityInfo( [] )
 			);
@@ -300,7 +307,7 @@ class WikibaseMediaInfoHooks {
 		if (
 			preg_match(
 				'#<h1\b[^>]*\bclass=(\'|")mw-slot-header\\1[^>]*>' .
-				$this->getMediaInfoSlotHeaderPlaceholder() . '</h1>#iU',
+				self::MEDIAINFO_SLOT_HEADER_PLACEHOLDER . '</h1>#iU',
 				$text,
 				$matches
 			)
@@ -319,7 +326,7 @@ class WikibaseMediaInfoHooks {
 		// Now replace the placeholder
 		$textProvider = new MediaWikiLocalizedTextProvider( $out->getLanguage() );
 		$text = str_replace(
-			$this->getMediaInfoSlotHeaderPlaceholder(),
+			self::MEDIAINFO_SLOT_HEADER_PLACEHOLDER,
 			htmlspecialchars(
 				$textProvider->get( 'wikibasemediainfo-filepage-structured-data-heading' )
 			),

@@ -115,7 +115,10 @@ class MediaInfoEntityTermsView {
 					)
 				)
 			);
-		if ( !in_array( $fbChainLanguages[0], $orderedLangCodes ) ) {
+		if (
+			count( $fbChainLanguages ) > 0 &&
+			!in_array( $fbChainLanguages[0], $orderedLangCodes )
+		) {
 			array_unshift( $orderedLangCodes,  $fbChainLanguages[0] );
 		}
 		return $orderedLangCodes;

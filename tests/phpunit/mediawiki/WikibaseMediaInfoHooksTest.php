@@ -11,18 +11,21 @@ use MediaWiki\Revision\SlotRecord;
 use ParserOutput;
 use Title;
 use User;
+use Wikibase\DataModel\Entity\EntityId;
 use Wikibase\DataModel\Services\EntityId\EntityIdComposer;
 use Wikibase\Lib\Store\EntityByLinkedTitleLookup;
-use Wikibase\Lib\UserLanguageLookup;
 use Wikibase\MediaInfo\Content\MediaInfoContent;
 use Wikibase\MediaInfo\Content\MediaInfoHandler;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\MediaInfo\DataModel\MediaInfoId;
 use Wikibase\MediaInfo\Services\MediaInfoByLinkedTitleLookup;
+use Wikibase\MediaInfo\View\MediaInfoView;
 use Wikibase\MediaInfo\WikibaseMediaInfoHooks;
 use Wikibase\Repo\BabelUserLanguageLookup;
+use Wikibase\Repo\ParserOutput\DispatchingEntityViewFactory;
 use Wikibase\Repo\Search\Elastic\Fields\TermIndexField;
 use Wikibase\Repo\Store\EntityTitleStoreLookup;
+use Wikibase\View\ViewContent;
 
 /**
  * @covers \Wikibase\MediaInfo\WikibaseMediaInfoHooks
@@ -91,20 +94,7 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 		$this->assertEquals( $expected, $original );
 	}
 
-	public function testOnBeforePageDisplay() {
-		$imgTitle = Title::makeTitle( NS_FILE, 'Foo.jpg' );
-		$imgTitle->resetArticleID( 23 );
-
-		$userLanguageLookup = $this->getMockBuilder( UserLanguageLookup::class )
-			->disableOriginalConstructor()
-			->getMock();
-		$userLanguageLookup->method( 'getAllUserLanguages' )
-			->willReturn( [ 'TEST_USER_LANGUAGE' ] );
-
-		$skin = $this->getMockBuilder( \Skin::class )
-			->disableOriginalConstructor()
-			->getMock();
-
+	private function getMockOutputPage( Title $title ) {
 		$revision = $this->getMockBuilder( RevisionRecord::class )
 			->disableOriginalConstructor()
 			->getMock();
@@ -119,12 +109,22 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 
 		$out = $this->getMockBuilder( \OutputPage::class )
 			->disableOriginalConstructor()
+			->setMethods( [
+				'getTitle',
+				'getLanguage',
+				'getUser',
+				'getWikiPage',
+				'getContext',
+				'addJsConfigVars',
+				'addModuleStyles',
+				'addModules',
+			] )
 			->getMock();
 
 		$out->method( 'getTitle' )
-			->willReturn( $imgTitle );
+			->willReturn( $title );
 		$out->method( 'getLanguage' )
-			->willReturn( new Language() );
+			->willReturn( Language::factory( 'en' ) );
 		$out->method( 'getUser' )
 			->willReturn( new User() );
 		$out->method( 'getWikiPage' )
@@ -133,7 +133,18 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 		// TODO: Test that this doesn't appear on action=history etc. contexts
 		$out->method( 'getContext' )
 			->willReturn( new \RequestContext() );
+		return $out;
+	}
 
+	public function testOnBeforePageDisplay() {
+		$imgTitle = Title::makeTitle( NS_FILE, 'Foo.jpg' );
+		$imgTitle->resetArticleID( 23 );
+
+		$skin = $this->getMockBuilder( \Skin::class )
+			->disableOriginalConstructor()
+			->getMock();
+
+		$out = $this->getMockOutputPage( $imgTitle );
 		$out->expects( $this->once() )
 			->method( 'addJsConfigVars' );
 		$out->expects( $this->once() )
@@ -141,87 +152,168 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 		$out->expects( $this->once() )
 			->method( 'addModules' );
 
-		$hookObject = new WikibaseMediaInfoHooks(
-			$this->getMockEntityIdComposer(),
-			$this->getMockBuilder( EntityTitleStoreLookup::class )
-				->disableOriginalConstructor()
-				->getMock()
-		);
-
-		$hookObject->doBeforePageDisplay(
-			$out,
-			[],
-			$userLanguageLookup
-		);
+		WikibaseMediaInfoHooks::onBeforePageDisplay( $out, $skin );
 	}
 
 	public function testOnBeforePageDisplayWithMissingTitle() {
-		$imgTitle = $this->getMockBuilder( \ImagePage::class )
+		$imgTitle = $this->getMockBuilder( \Title::class )
 			->disableOriginalConstructor()
 			->getMock();
 		$imgTitle->method( 'exists' )
 			->willReturn( false );
 
+		$out = $this->getMockOutputPage( $imgTitle );
+		$out->expects( $this->never() )
+			->method( 'addJsConfigVars' );
+
 		$skin = $this->getMockBuilder( \Skin::class )
 			->disableOriginalConstructor()
 			->getMock();
 
-		$out = $this->getMockBuilder( \OutputPage::class )
+		WikibaseMediaInfoHooks::onBeforePageDisplay( $out, $skin );
+	}
+
+	/**
+	 * If there is captions data in the output, it should be moved to just after the
+	 * "mw-parser-output" div
+	 */
+	public function testOnBeforePageDisplay_moveExistingCaptions() {
+		$skin = $this->getMockBuilder( \Skin::class )
 			->disableOriginalConstructor()
 			->getMock();
-		$out->method( 'getTitle' )
-			->willReturn( $imgTitle );
-		$out->expects( $this->never() )
-			->method( 'addJsConfigVars' );
+		$imgTitle = Title::makeTitle( NS_FILE, 'Foo.jpg' );
+		$imgTitle->resetArticleID( 23 );
+		$out = $this->getMockOutputPage( $imgTitle );
 
-		$hookObject = new WikibaseMediaInfoHooks(
-			$this->getMockBuilder( EntityIdComposer::class )
-				->disableOriginalConstructor()
-				->getMock(),
-			$this->getMockBuilder( EntityTitleStoreLookup::class )
-				->disableOriginalConstructor()
-				->getMock()
+		$parserOutputTag = '<div class="mw-parser-output">';
+		$mediaInfoViewOpeningTag = '<mw:mediainfoView>';
+		$captions = 'SOME_CAPTIONS';
+		$mediaInfoViewClosingTag = '</mw:mediainfoView>';
+		$extraHtml = 'SOME_HTML';
+		$out->clearHTML();
+		$out->addHTML(
+			$parserOutputTag .
+			$extraHtml  .
+			$mediaInfoViewOpeningTag .
+			$captions .
+			$mediaInfoViewClosingTag
 		);
 
-		$hookObject->doBeforePageDisplay(
-			$out,
-			[],
-			new BabelUserLanguageLookup()
+		$skin = $this->getMockBuilder( \Skin::class )
+			->disableOriginalConstructor()
+			->getMock();
+
+		WikibaseMediaInfoHooks::onBeforePageDisplay( $out, $skin );
+
+		$this->assertEquals(
+			$parserOutputTag .  $captions . $extraHtml,
+			$out->getHTML()
 		);
 	}
 
-	public function testOnBeforePageDisplay_replaceSlotDataPlaceholder() {
-		$imgTitle = $this->getMockBuilder( \ImagePage::class )
+	/**
+	 * If there is no captions data in the output, then an empty caption is created in
+	 * the appropriate spot
+	 */
+	public function testOnBeforePageDisplay_moveAbsentCaptions() {
+		$imgTitle = Title::makeTitle( NS_FILE, 'Foo.jpg' );
+		$imgTitle->resetArticleID( 23 );
+		$out = $this->getMockOutputPage( $imgTitle );
+
+		$parserOutputTag = '<div class="mw-parser-output">';
+		$extraHtml = 'SOME_HTML';
+		$out->clearHTML();
+		$out->addHTML(
+			$parserOutputTag .
+			$extraHtml
+		);
+
+		$hookObject = new WikibaseMediaInfoHooks(
+			new EntityIdComposer( [
+				'mediainfo' => function( $repositoryName, $uniquePart ) {
+					return new MediaInfoId( EntityId::joinSerialization( [
+						$repositoryName,
+						'',
+						'M' . $uniquePart
+					] ) );
+				}
+			] ),
+			$this->getMockBuilder( EntityTitleStoreLookup::class )
+				->disableOriginalConstructor()
+				->getMock()
+		);
+
+		// Set up mocks for creation of html for empty entity captions
+		$entityHtml = 'HTML_FOR_ENTITY';
+		$mockViewContent = $this->getMockBuilder( ViewContent::class )
 			->disableOriginalConstructor()
 			->getMock();
-		$imgTitle->method( 'exists' )
-			->willReturn( false );
+		$mockViewContent->expects( $this->atLeastOnce() )
+			->method( 'getHtml' )
+			->willReturn( $entityHtml );
+		$mockView = $this->getMockBuilder( MediaInfoView::class )
+			->disableOriginalConstructor()
+			->getMock();
+		$mockView->expects( $this->atLeastOnce() )
+			->method( 'getContent' )
+			->willReturn( $mockViewContent );
+		$mockViewFactory = $this->getMockBuilder( DispatchingEntityViewFactory::class )
+			->disableOriginalConstructor()
+			->getMock();
+		$mockViewFactory->expects( $this->atLeastOnce() )
+			->method( 'newEntityView' )
+			->willReturn( $mockView );
+
+		$hookObject->doBeforePageDisplay(
+			$out,
+			[],
+			new BabelUserLanguageLookup(),
+			$mockViewFactory
+		);
+
+		$this->assertEquals(
+			$parserOutputTag .  $entityHtml . $extraHtml,
+			$out->getHTML()
+		);
+	}
+
+	public function testOnBeforePageDisplay_moveSDHeader() {
+		$imgTitle = Title::makeTitle( NS_FILE, 'Foo.jpg' );
+		$imgTitle->resetArticleID( 23 );
+		$out = $this->getMockOutputPage( $imgTitle );
+
+		$parserOutputTag = '<div class="mw-parser-output">';
+		$extraHtml = 'SOME_HTML';
+		$captionsHeader = '<h1 class="mw-slot-header">' .
+			WikibaseMediaInfoHooks::MEDIAINFO_SLOT_HEADER_PLACEHOLDER .
+			'</h1>';
+		$out->clearHTML();
+		$out->addHTML(
+			$parserOutputTag .
+			$extraHtml .
+			$captionsHeader
+		);
 
 		$skin = $this->getMockBuilder( \Skin::class )
 			->disableOriginalConstructor()
 			->getMock();
 
-		$out = $this->getMockBuilder( \OutputPage::class )
-			->disableOriginalConstructor()
-			->getMock();
-		$out->method( 'getTitle' )
-			->willReturn( $imgTitle );
-		$out->expects( $this->never() )
-			->method( 'addJsConfigVars' );
+		WikibaseMediaInfoHooks::onBeforePageDisplay( $out, $skin );
 
-		$hookObject = new WikibaseMediaInfoHooks(
+		$this->assertRegExp(
+		'#' . $parserOutputTag . '<h1 class="mw-slot-header">[^<]+</h1>.*'  . $extraHtml . '#is',
+			$out->getHTML()
+		);
+	}
+
+	private function createHookObjectWithMocks() {
+		return new WikibaseMediaInfoHooks(
 			$this->getMockBuilder( EntityIdComposer::class )
 				->disableOriginalConstructor()
 				->getMock(),
 			$this->getMockBuilder( EntityTitleStoreLookup::class )
 				->disableOriginalConstructor()
 				->getMock()
-		);
-
-		$hookObject->doBeforePageDisplay(
-			$out,
-			[],
-			new BabelUserLanguageLookup()
 		);
 	}
 
@@ -271,14 +363,7 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 		$page->method( 'getRevisionRecord' )
 			->willReturn( null );
 
-		$hookObject = new WikibaseMediaInfoHooks(
-			$this->getMockBuilder( EntityIdComposer::class )
-				->disableOriginalConstructor()
-				->getMock(),
-			$this->getMockBuilder( EntityTitleStoreLookup::class )
-				->disableOriginalConstructor()
-				->getMock()
-		);
+		$hookObject = $this->createHookObjectWithMocks();
 
 		$document = $this->getMockBuilder( Document::class )
 			->disableOriginalConstructor()
@@ -308,14 +393,7 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 		$page->method( 'getRevisionRecord' )
 			->willReturn( $revisionRecord );
 
-		$hookObject = new WikibaseMediaInfoHooks(
-			$this->getMockBuilder( EntityIdComposer::class )
-				->disableOriginalConstructor()
-				->getMock(),
-			$this->getMockBuilder( EntityTitleStoreLookup::class )
-				->disableOriginalConstructor()
-				->getMock()
-		);
+		$hookObject = $this->createHookObjectWithMocks();
 
 		$document = $this->getMockBuilder( Document::class )
 			->disableOriginalConstructor()
@@ -387,14 +465,7 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 		$page->method( 'getContentHandler' )
 			->willReturn( $mediaInfoHandler );
 
-		$hookObject = new WikibaseMediaInfoHooks(
-			$this->getMockBuilder( EntityIdComposer::class )
-				->disableOriginalConstructor()
-				->getMock(),
-			$this->getMockBuilder( EntityTitleStoreLookup::class )
-				->disableOriginalConstructor()
-				->getMock()
-		);
+		$hookObject = $this->createHookObjectWithMocks();
 
 		$testDocument = new Document();
 

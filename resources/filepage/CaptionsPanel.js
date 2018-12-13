@@ -29,8 +29,10 @@
 	 *
 	 * @constructor
 	 * @param {Object} [config]
-	 * @cfg {Object} header jquery element containing the panel header
-	 * @cfg {Object} table jquery table element containing the existing data
+	 * @cfg {string} headerClass CSS class of captions header element
+	 * @cfg {string} contentClass CSS class of captions content container
+	 * @cfg {string} entityViewClass CSS class of entire entity view
+	 * @cfg {string} entityTermClass CSS class of individual caption
 	 * @cfg {int} warnWithinMaxCaptionLength Show a warning when the caption length is within X
 	 *   characters of the max
 	 */
@@ -53,8 +55,9 @@
 		this.languagesViewWidget = new sd.LanguagesViewWidget( this.config );
 		this.editActionsWidget = new sd.EditActionsWidget( config, this );
 		this.api = wb.api.getLocationAgnosticMwApi( mw.config.get( 'wbRepoApiUrl' ) );
-		this.tableSelector = '.' + this.config.tableClass;
-		this.captionLanguagesDataAttr = 'data-label-languages';
+		this.contentSelector = '.' + this.config.contentClass;
+		this.entityTermSelector = '.' + this.config.entityTermClass;
+		this.captionLanguagesDataAttr = 'data-caption-languages';
 
 		this.userLanguages = [];
 		$.each( mw.config.get( 'wbUserSpecifiedLanguages' ), function ( index, langCode ) {
@@ -66,14 +69,14 @@
 	OO.inheritClass( sd.CaptionsPanel, OO.ui.Element );
 	OO.mixinClass( sd.CaptionsPanel, OO.ui.mixin.PendingElement );
 
-	sd.CaptionsPanel.prototype.readDataFromReadOnlyRow = function ( $tableRow ) {
-		var $languageTD = $tableRow.find( 'td.language' ),
-			$captionTD = $tableRow.find( 'td.caption' );
+	sd.CaptionsPanel.prototype.readDataFromReadOnlyRow = function ( $row ) {
+		var $language = $row.find( '.language' ),
+			$caption = $row.find( '.caption' );
 		return new sd.CaptionData(
-			$languageTD.attr( 'lang' ),
-			$languageTD.text(),
-			$languageTD.attr( 'dir' ),
-			$captionTD.hasClass( 'wbmi-empty' ) ? '' : $captionTD.text()
+			$language.attr( 'lang' ),
+			$language.text(),
+			$language.attr( 'dir' ),
+			$caption.hasClass( 'wbmi-empty' ) ? '' : $caption.text()
 		);
 	};
 
@@ -98,37 +101,44 @@
 		return false;
 	};
 
-	sd.CaptionsPanel.prototype.createTableRow = function (
+	sd.CaptionsPanel.prototype.createCaptionRow = function (
 		index, languageCode, direction, languageContent, captionContent, showCaption
 	) {
-		var $languageTD = $( '<td>' )
-			.addClass( 'language' )
-			.append( languageContent );
-		var $captionTD = $( '<td>' )
-			.addClass( 'caption' )
-			.append( captionContent );
+		var language, caption, row, rowClasses;
+
+		language = new OO.ui.Element( {
+			content: [ languageContent ],
+			classes: [ 'language' ]
+		} );
+		caption = new OO.ui.Element( {
+			content: [ captionContent ],
+			classes: [ 'caption' ]
+		} );
+
 		if ( languageCode !== '' ) {
-			$languageTD.attr( 'lang', languageCode );
-			$captionTD.attr( 'lang', languageCode );
+			language.$element.attr( 'lang', languageCode );
+			caption.$element.attr( 'lang', languageCode );
 		}
 		if ( direction !== '' ) {
-			$languageTD.attr( 'dir', direction );
-			$captionTD.attr( 'dir', direction );
+			language.$element.attr( 'dir', direction );
+			caption.$element.attr( 'dir', direction );
 		}
 
 		if ( captionContent === '' ) {
-			$captionTD.addClass( 'wbmi-empty' );
-			$captionTD.text( mw.message( 'wikibasemediainfo-filepage-caption-empty' ).text() );
+			caption.$element.addClass( 'wbmi-empty' );
+			caption.$element.text( mw.message( 'wikibasemediainfo-filepage-caption-empty' ).text() );
 		}
 
-		var $row = $( '<tr>' )
-			.addClass( 'entity-terms' )
-			.attr( 'data-index', index )
-			.append( $languageTD, $captionTD );
+		rowClasses = [ this.config.entityTermClass ];
 		if ( showCaption ) {
-			$row.addClass( 'showLabel' );
+			rowClasses.push( 'showLabel' );
 		}
-		return $row;
+		row = new OO.ui.HorizontalLayout( {
+			items: [ language, caption ],
+			classes: rowClasses
+		} );
+		row.$element.attr( 'data-index', index );
+		return row.$element;
 	};
 
 	sd.CaptionsPanel.prototype.createIndexedReadOnlyRow = function (
@@ -136,18 +146,18 @@
 		captionData,
 		showCaption
 	) {
-		return this.createTableRow(
+		return this.createCaptionRow(
 			index,
 			mw.html.escape( captionData.languageCode ),
 			mw.html.escape( captionData.direction ),
 			mw.html.escape( captionData.languageText ),
-			mw.html.escape( captionData.text ),
+			captionData.text,
 			showCaption
 		);
 	};
 
-	sd.CaptionsPanel.prototype.refreshTableRowIndices = function () {
-		$( this.tableSelector ).find( 'tr.entity-terms' ).each( function ( index ) {
+	sd.CaptionsPanel.prototype.refreshRowIndices = function () {
+		$( this.contentSelector ).find( this.entityTermSelector ).each( function ( index ) {
 			$( this ).attr( 'data-index', index );
 		} );
 	};
@@ -178,9 +188,9 @@
 
 		captionsOrderHasChanged = this.reorderLanguageList();
 		if ( captionsOrderHasChanged ) {
-			this.redrawCaptionsTable();
+			this.redrawCaptionsContent();
 		}
-		this.refreshTableRowIndices();
+		this.refreshRowIndices();
 	};
 
 	/**
@@ -220,11 +230,11 @@
 	};
 
 	sd.CaptionsPanel.prototype.getCaptionLanguagesList = function () {
-		return $( this.tableSelector ).attr( this.captionLanguagesDataAttr ).split( ',' );
+		return $( this.contentSelector ).attr( this.captionLanguagesDataAttr ).split( ',' );
 	};
 
 	sd.CaptionsPanel.prototype.setCaptionLanguagesList = function ( languagesList ) {
-		return $( this.tableSelector ).attr(
+		return $( this.contentSelector ).attr(
 			this.captionLanguagesDataAttr,
 			languagesList.join( ',' )
 		);
@@ -261,11 +271,11 @@
 	};
 
 	sd.CaptionsPanel.prototype.warnIfTextApproachingLimit = function ( textInput ) {
-		var $captionTD = textInput.$element.parents( 'td.caption' ),
+		var $caption = textInput.$element.parents( '.caption' ),
 			lengthDiff = mw.config.get( 'maxCaptionLength' ) - textInput.getValue().length;
-		$captionTD.find( 'div.warning' ).remove();
+		$caption.find( 'div.warning' ).remove();
 		if ( lengthDiff >= 0 && lengthDiff < this.config.warnWithinMaxCaptionLength ) {
-			$captionTD.append(
+			$caption.append(
 				$( '<div>' )
 					.addClass( 'warning' )
 					.text(
@@ -284,13 +294,13 @@
 			textInputChecks.push(
 				textInput.getValidity()
 					.done( function () {
-						textInput.$element.parents( 'td.caption' ).find( 'div.error' ).remove();
+						textInput.$element.parents( '.caption' ).find( 'div.error' ).remove();
 					} )
 					.fail( function () {
-						var $captionTD = textInput.$element.parents( 'td.caption' );
-						$captionTD.find( 'div.warning' ).remove();
-						$captionTD.find( 'div.error' ).remove();
-						$captionTD.append(
+						var $caption = textInput.$element.parents( '.caption' );
+						$caption.find( 'div.warning' ).remove();
+						$caption.find( 'div.error' ).remove();
+						$caption.append(
 							$( '<div>' )
 								.addClass( 'error' )
 								.text(
@@ -306,7 +316,7 @@
 		return textInputChecks;
 	};
 
-	sd.CaptionsPanel.prototype.createTableRowDeleter = function ( $tableRow ) {
+	sd.CaptionsPanel.prototype.createRowDeleter = function ( $row ) {
 		var captionsPanel = this,
 			deleter = new OO.ui.ButtonWidget( {
 				icon: 'trash',
@@ -317,15 +327,15 @@
 
 		deleter.$element.on( 'click', function () {
 			captionsPanel.languageSelectors.splice(
-				$tableRow.attr( 'data-index' ),
+				$row.attr( 'data-index' ),
 				1
 			);
 			captionsPanel.textInputs.splice(
-				$tableRow.attr( 'data-index' ),
+				$row.attr( 'data-index' ),
 				1
 			);
-			$tableRow.remove();
-			captionsPanel.refreshTableRowIndices();
+			$row.remove();
+			captionsPanel.refreshRowIndices();
 			captionsPanel.refreshLanguageSelectorsOptions();
 		} );
 		return deleter;
@@ -337,7 +347,7 @@
 		var captionsPanel = this,
 			languageSelector,
 			textInput,
-			$tableRow;
+			$row;
 
 		if ( captionData === undefined ) {
 			captionData = new sd.CaptionData( '', '', '', '' );
@@ -351,13 +361,13 @@
 		}
 		languageSelector.on( 'select', function () {
 			var dir,
-				$parentTableRow;
+				$parentRow;
 			captionsPanel.refreshLanguageSelectorsOptions();
 			dir = $.uls.data.getDir( languageSelector.getValue() );
-			$parentTableRow = languageSelector.$element.parents( 'tr.entity-terms' );
-			$parentTableRow.find( 'td.language' ).attr( 'dir', dir );
-			$parentTableRow.find( 'td.caption' ).attr( 'dir', dir );
-			$parentTableRow.find( 'td.caption textarea' ).attr( 'dir', dir );
+			$parentRow = languageSelector.$element.parents( captionsPanel.entityTermSelector );
+			$parentRow.find( '.language' ).attr( 'dir', dir );
+			$parentRow.find( '.caption' ).attr( 'dir', dir );
+			$parentRow.find( '.caption textarea' ).attr( 'dir', dir );
 		} );
 		this.languageSelectors[ index ] = languageSelector;
 
@@ -386,7 +396,7 @@
 		} );
 		this.textInputs[ index ] = textInput;
 
-		$tableRow = this.createTableRow(
+		$row = this.createCaptionRow(
 			index,
 			mw.html.escape( captionData.languageCode ),
 			mw.html.escape( captionData.direction ),
@@ -394,9 +404,9 @@
 			this.textInputs[ index ].$element,
 			false
 		);
-		$tableRow.find( 'td.caption' )
-			.append( this.createTableRowDeleter( $tableRow ).$element );
-		return $tableRow;
+		$row.find( '.caption' )
+			.append( this.createRowDeleter( $row ).$element );
+		return $row;
 	};
 
 	sd.CaptionsPanel.prototype.findRemovedLanguages = function () {
@@ -495,8 +505,8 @@
 				captionsPanel.currentRevision = result.entity.lastrevid;
 				captionsPanel.languageSelectors.splice( index, 1 );
 				captionsPanel.textInputs.splice( index, 1 );
-				$( captionsPanel.tableSelector )
-					.find( 'tr.entity-terms[data-index="' + index + '"]' )
+				$( captionsPanel.contentSelector )
+					.find( captionsPanel.entityTermSelector + '[data-index="' + index + '"]' )
 					.replaceWith(
 						captionsPanel.createIndexedReadOnlyRow(
 							index,
@@ -523,7 +533,7 @@
 		var captionsPanel = this,
 			rowsWithoutLanguage = [];
 
-		$( this.tableSelector ).find( 'tr.entity-terms' ).each( function () {
+		$( this.contentSelector ).find( this.entityTermSelector ).each( function () {
 			var index = $( this ).attr( 'data-index' ),
 				languageCode = captionsPanel.languageSelectors[ index ].getValue(),
 				text = captionsPanel.textInputs[ index ].getValue(),
@@ -563,7 +573,7 @@
 	sd.CaptionsPanel.prototype.deleteIndividualLabel = function ( langCodeToDelete ) {
 		var self = this,
 			deferred = $.Deferred(),
-			$captionsTable = $( this.tableSelector );
+			$captionsContent = $( this.contentSelector );
 
 		this.api.postWithToken(
 			'csrf',
@@ -604,17 +614,17 @@
 					newIndex,
 					errorRow,
 					rejection;
-				$captionsTable.find( 'tr.entity-terms' ).each( function () {
+				$captionsContent.find( this.entityTermSelector ).each( function () {
 					var dataInRow = self.readDataFromReadOnlyRow( $( this ) );
 					currentlyDisplayedLanguages.push( dataInRow.languageCode );
 				} );
-				newIndex = $captionsTable.find( 'tr.entity-terms' ).length;
+				newIndex = $captionsContent.find( '.entity-term' ).length;
 				errorRow = self.createIndexedEditableRow(
 					newIndex,
 					currentlyDisplayedLanguages,
 					self.captionsData[ langCodeToDelete ]
 				);
-				errorRow.insertBefore( $captionsTable.find( '.editActions' ) );
+				errorRow.insertBefore( $captionsContent.find( '.editActions' ) );
 				rejection = wb.api.RepoApiError.newFromApiResponse( error, 'save' );
 				rejection.index = newIndex;
 				deferred.reject( rejection );
@@ -677,20 +687,20 @@
 		return deferred.promise();
 	};
 
-	sd.CaptionsPanel.prototype.redrawCaptionsTable = function () {
+	sd.CaptionsPanel.prototype.redrawCaptionsContent = function () {
 		var self = this,
-			$captionsTable = $( this.tableSelector ),
+			$captionsContent = $( this.contentSelector ),
 			showCaptionFlags = this.getShowCaptionFlagsByLangCode(),
 			count = 0,
 			languageCodesInOrder = this.getCaptionLanguagesList();
 
-		$captionsTable.find( 'tr.entity-terms' ).each( function () {
+		$captionsContent.find( '.entity-term' ).each( function () {
 			$( this ).remove();
 		} );
 
 		languageCodesInOrder.forEach( function ( langCode ) {
 			var captionData = self.captionsData[ langCode ];
-			$captionsTable.append(
+			$captionsContent.append(
 				self.createIndexedReadOnlyRow(
 					count,
 					captionData,
@@ -747,18 +757,18 @@
 
 		this.refreshDataFromApi()
 			.always( function () {
-				captionsPanel.redrawCaptionsTable();
-				var $captionsTable = $( captionsPanel.tableSelector );
-				$captionsTable.addClass( 'editable' );
+				captionsPanel.redrawCaptionsContent();
+				var $captionsContent = $( captionsPanel.contentSelector );
+				$captionsContent.addClass( 'editable' );
 				captionsPanel.editToggle.hide();
 				captionsPanel.languagesViewWidget.hide();
 				captionsPanel.editActionsWidget.show();
 				var captionLangCodes = [];
-				$captionsTable.find( 'tr.entity-terms' ).each( function () {
+				$captionsContent.find( '.entity-term' ).each( function () {
 					var dataInRow = captionsPanel.readDataFromReadOnlyRow( $( this ) );
 					captionLangCodes.push( dataInRow.languageCode );
 				} );
-				$captionsTable.find( 'tr.entity-terms' ).each( function ( index ) {
+				$captionsContent.find( '.entity-term' ).each( function ( index ) {
 					var captionData = captionsPanel.readDataFromReadOnlyRow( $( this ) );
 
 					$( this ).replaceWith(
@@ -774,20 +784,20 @@
 	};
 
 	sd.CaptionsPanel.prototype.makeReadOnly = function () {
-		var $captionsTable = $( this.tableSelector );
-		$captionsTable.removeClass( 'editable' );
+		var $captionsContent = $( this.contentSelector );
+		$captionsContent.removeClass( 'editable' );
 		this.editActionsWidget.hide();
-		this.redrawCaptionsTable();
+		this.redrawCaptionsContent();
 		this.languagesViewWidget.expand();
 		this.editToggle.show();
 	};
 
 	sd.CaptionsPanel.prototype.addNewEditableLanguageRow = function () {
-		var $captionsTable = $( this.tableSelector );
-		var tableRow = this.createIndexedEditableRow(
-			$captionsTable.find( 'tr.entity-terms' ).length
+		var $captionsContent = $( this.contentSelector );
+		var row = this.createIndexedEditableRow(
+			$captionsContent.find( '.entity-term' ).length
 		);
-		tableRow.insertBefore( $captionsTable.find( '.editActions' ) );
+		row.insertBefore( $captionsContent.find( '.editActions' ) );
 		this.refreshLanguageSelectorsOptions();
 	};
 
@@ -807,15 +817,15 @@
 				self.makeReadOnly();
 			} )
 			.catch( function ( error ) {
-				var $captionTD;
+				var $caption;
 				captionsPanel.enableAllFormInputs();
-				$captionTD =
-					$( captionsPanel.tableSelector ).find(
-						'tr.entity-terms[data-index="' + error.index + '"] .caption'
+				$caption =
+					$( captionsPanel.contentSelector ).find(
+						'.entity-term[data-index="' + error.index + '"] .caption'
 					);
-				$captionTD.find( 'div.error' ).remove();
-				$captionTD.find( 'div.warning' ).remove();
-				$captionTD.append(
+				$caption.find( 'div.error' ).remove();
+				$caption.find( 'div.warning' ).remove();
+				$caption.append(
 					$( '<div>' )
 						.addClass( 'error' )
 						.html( error.detailedMessage )
@@ -830,7 +840,7 @@
 		var captionsPanel = this;
 
 		this.editToggle.initialize();
-		$( this.tableSelector ).find( 'tr.entity-terms' ).each( function ( index ) {
+		$( this.contentSelector ).find( '.entity-term' ).each( function ( index ) {
 			var captionData;
 			$( this ).attr( 'data-index', index );
 			captionData = captionsPanel.readDataFromReadOnlyRow( $( this ) );

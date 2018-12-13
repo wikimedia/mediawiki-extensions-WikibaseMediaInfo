@@ -7,18 +7,18 @@
 	 *
 	 * @constructor
 	 * @param {Object} [config]
-	 * @cfg {Object} table jquery table element containing the existing data
+	 * @cfg {Object} contentClass CSS class of captions container
 	 */
 	sd.LanguagesViewWidget = function LanguagesViewWidget( config ) {
 		var self = this,
-			tableSelector = '.' + config.tableClass;
+			contentSelector = '.' + config.contentClass;
 
 		var viewMoreButton = new OO.ui.ButtonWidget( {
 			icon: 'expand',
 			flags: 'progressive',
 			label: mw.message(
 				'wikibasemediainfo-filepage-more-languages',
-				$( tableSelector ).find( 'tr' ).length - 1
+				$( contentSelector ).find( '.entity-term' ).length - 1
 			).text(),
 			framed: false
 		} )
@@ -29,43 +29,34 @@
 				}
 			);
 
-		var $viewMoreRow = $( '<tr>' )
-			.addClass( 'viewMore' )
-			.append(
-				$( '<td>' )
-					.attr( 'colspan', 2 )
-					.append(
-						viewMoreButton.$element
-					)
+		var viewMore = new OO.ui.Element( {
+			content: [ viewMoreButton ],
+			classes: [ 'viewMore' ]
+		} );
+
+		var viewLessButton = new OO.ui.ButtonWidget( {
+			icon: 'collapse',
+			flags: 'progressive',
+			label: mw.message(
+				'wikibasemediainfo-filepage-fewer-languages'
+			).text(),
+			framed: false
+		} )
+			.on(
+				'click',
+				function () {
+					self.collapse();
+				}
 			);
 
-		var $viewLessRow = $( '<tr>' )
-			.addClass( 'viewLess' )
-			.append(
-				$( '<td>' )
-					.attr( 'colspan', 2 )
-					.append(
-						new OO.ui.ButtonWidget( {
-							icon: 'collapse',
-							flags: 'progressive',
-							label: mw.message(
-								'wikibasemediainfo-filepage-fewer-languages'
-							).text(),
-							framed: false
-						} )
-							.on(
-								'click',
-								function () {
-									self.collapse();
-								}
-							)
-							.$element
-					)
-			);
+		var viewLess = new OO.ui.Element( {
+			content: [ viewLessButton ],
+			classes: [ 'viewLess' ]
+		} );
 
 		this.refreshLabel = function () {
-			var hideableRowCount = $( tableSelector )
-				.find( 'tr.entity-terms:not(.showLabel)' ).length;
+			var hideableRowCount = $( contentSelector )
+				.find( '.entity-term:not(.showLabel)' ).length;
 			viewMoreButton.setLabel(
 				mw.message(
 					'wikibasemediainfo-filepage-more-languages',
@@ -75,30 +66,30 @@
 		};
 
 		this.expand = function () {
-			var $captionsTable = $( tableSelector );
-			$viewMoreRow.detach();
-			$captionsTable.find( 'tr' ).show();
-			if ( $captionsTable.find( 'tr.entity-terms:not(.showLabel)' ).length > 0 ) {
-				$captionsTable.append( $viewLessRow );
+			var $captionsContent = $( contentSelector );
+			viewMore.$element.detach();
+			$captionsContent.find( '.entity-term' ).show();
+			if ( $captionsContent.find( '.entity-term:not(.showLabel)' ).length > 0 ) {
+				$captionsContent.append( viewLess.$element );
 			}
 		};
 
 		this.collapse = function () {
-			var $captionsTable = $( tableSelector ),
-				$rows = $captionsTable.find( 'tr.entity-terms:not(.showLabel)' );
+			var $captionsContent = $( contentSelector ),
+				$rows = $captionsContent.find( '.entity-term:not(.showLabel)' );
 			var rowCount = $rows.length;
 			if ( rowCount < 1 ) {
 				return;
 			}
-			$viewLessRow.detach();
+			viewLess.$element.detach();
 			$rows.hide();
-			$captionsTable.append( $viewMoreRow );
+			$captionsContent.append( viewMore.$element );
 		};
 
 		this.hide = function () {
-			$( tableSelector ).find( 'tr' ).show();
-			$viewLessRow.detach();
-			$viewMoreRow.detach();
+			$( contentSelector ).find( '.entity-term' ).show();
+			viewLess.$element.detach();
+			viewMore.$element.detach();
 		};
 	};
 

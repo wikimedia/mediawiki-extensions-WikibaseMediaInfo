@@ -2,8 +2,11 @@
 
 namespace Wikibase\MediaInfo\View;
 
-use OOUI\HtmlSnippet;
+use OOUI\Element;
+use OOUI\HorizontalLayout;
+use OOUI\LabelWidget;
 use OOUI\PanelLayout;
+use OOUI\Tag;
 use OutputPage;
 use Wikibase\DataModel\Term\TermList;
 use Wikibase\LanguageFallbackChain;
@@ -11,7 +14,6 @@ use Wikibase\Lib\LanguageNameLookup;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\View\LanguageDirectionalityLookup;
 use Wikibase\View\LocalizedTextProvider;
-use Wikibase\View\Template\TemplateFactory;
 
 /**
  * Generates HTML to display the terms of a MediaInfo entity
@@ -19,11 +21,6 @@ use Wikibase\View\Template\TemplateFactory;
  * @license GPL-2.0-or-later
  */
 class MediaInfoEntityTermsView {
-
-	/**
-	 * @var TemplateFactory
-	 */
-	private $templateFactory;
 
 	/**
 	 * @var LanguageNameLookup
@@ -45,12 +42,11 @@ class MediaInfoEntityTermsView {
 	 */
 	private $fallbackChain;
 
-	const LABEL_EMPTY_CLASS = 'wbmi-empty';
-	const SHOW_LABEL_CLASS = 'showLabel';
+	const CAPTION_EMPTY_CLASS = 'wbmi-empty';
+	const SHOW_CAPTION_CLASS = 'showLabel';
 
 	/**
 	 * MediaInfoEntityTermsView constructor.
-	 * @param TemplateFactory $templateFactory
 	 * @param LanguageNameLookup $languageNameLookup
 	 * @param LanguageDirectionalityLookup $languageDirectionalityLookup
 	 * @param LocalizedTextProvider $textProvider
@@ -58,7 +54,6 @@ class MediaInfoEntityTermsView {
 	 * @codeCoverageIgnore
 	 */
 	public function __construct(
-		TemplateFactory $templateFactory,
 		LanguageNameLookup $languageNameLookup,
 		LanguageDirectionalityLookup $languageDirectionalityLookup,
 		LocalizedTextProvider $textProvider,
@@ -66,7 +61,6 @@ class MediaInfoEntityTermsView {
 	) {
 		OutputPage::setupOOUI();
 
-		$this->templateFactory = $templateFactory;
 		$this->languageNameLookup = $languageNameLookup;
 		$this->languageDirectionalityLookup = $languageDirectionalityLookup;
 		$this->textProvider = $textProvider;
@@ -81,13 +75,36 @@ class MediaInfoEntityTermsView {
 	public function getHtml(
 		MediaInfo $entity
 	) {
-		return $this->templateFactory->render(
-			'filepage-entitytermsview',
-			$this->getLabelsHtml(
+		$layout = new PanelLayout( [
+			'classes' => [ 'filepage-mediainfo-entitytermsview' ],
+			'scrollable' => false,
+			'padded' => false,
+			'expanded' => false,
+			'framed' => true,
+		] );
+		$layout->appendContent( $this->getCaptionsHeader() );
+		$layout->appendContent(
+			$this->getCaptionsContent(
 				$entity->getLabels(),
 				$this->getLanguagesOrderedByFallbackChain( $entity )
 			)
 		);
+		$layout->setAttributes( [
+			'data-caption-languages' =>
+				implode( ',', $this->getLanguagesOrderedByFallbackChain( $entity ) )
+		] );
+		return $layout->toString();
+	}
+
+	private function getCaptionsHeader() {
+		$header = new Tag( 'h3' );
+		$header->addClasses( [ 'mediainfo-captions-header' ] );
+		$header->appendContent(
+			$this->textProvider->get(
+				'wikibasemediainfo-entitytermsforlanguagelistview-caption'
+			)
+		);
+		return $header;
 	}
 
 	/**
@@ -125,124 +142,115 @@ class MediaInfoEntityTermsView {
 	}
 
 	/**
-	 * The following labels get a SHOW_LABEL_CLASS html class:
+	 * The following captions get a SHOW_CAPTION_CLASS html class:
 	 *
-	 * - the first label
-	 * - The first non-empty label in the fallback chain IF AND ONLY IF the first label has no
+	 * - the first caption
+	 * - The first non-empty caption in the fallback chain IF AND ONLY IF the first caption has no
 	 *   value
 	 *
-	 * @param TermList $labels
+	 * @param TermList $captions
 	 * @param string[] $languageCodes
-	 * @return string HTML
+	 * @return Tag[]
 	 */
-	private function getLabelsHtml(
-		TermList $labels,
+	private function getCaptionsContent(
+		TermList $captions,
 		array $languageCodes
 	) {
-		$labelsHtml = '';
+		$captionLayouts = [];
 
-		$firstLabelHasNoValue = false;
+		$firstCaptionHasNoValue = false;
 		foreach ( $languageCodes as $index => $languageCode ) {
 			if ( $index == 0 ) {
-				$showLabel = true;
-				$firstLabelHasNoValue = !$labels->hasTermForLanguage( $languageCode );
+				$showCaption = true;
+				$firstCaptionHasNoValue = !$captions->hasTermForLanguage( $languageCode );
 			} elseif (
 				$index == 1 &&
-				$firstLabelHasNoValue &&
+				$firstCaptionHasNoValue &&
 				in_array( $languageCode, $this->fallbackChain->getFetchLanguageCodes() )
 			) {
-				$showLabel = true;
+				$showCaption = true;
 			} else {
-				$showLabel = false;
+				$showCaption = false;
 			}
-			$labelsHtml .= $this->getSingleLabelHtml(
-				$labels,
+			$captionLayouts[] = $this->getSingleCaptionLayout(
+				$captions,
 				$languageCode,
-				$showLabel
+				$showCaption
 			);
 		}
 
-		return $this->getLabelsPlusContext( $labelsHtml, $languageCodes );
+		return $captionLayouts;
 	}
 
 	/**
 	 * @param TermList $labels
 	 * @param string $languageCode
-	 * @param bool $showLabel Hide the label (via styling) if false
+	 * @param bool $showCaption Hide the label (via styling) if false
 	 *
-	 * @return string HTML
+	 * @return HorizontalLayout
 	 */
-	public function getSingleLabelHtml(
+	public function getSingleCaptionLayout(
 		TermList $labels,
 		$languageCode,
-		$showLabel
+		$showCaption
 	) {
 		$languageName = $this->languageNameLookup->getName( $languageCode );
 		$dir = $this->languageDirectionalityLookup->getDirectionality( $languageCode );
 
-		$languageElement = $this->templateFactory->render(
-			'filepage-entitytermslanguageelement',
-			htmlspecialchars( $languageName ),
-			htmlspecialchars( $dir ),
-			htmlspecialchars( $languageCode )
-		);
-		$labelElement = $this->renderLabelForLanguage(
+		$languageElement = new LabelWidget( [
+			'label' => $languageName,
+			'classes' => [ 'language' ]
+		] );
+		$languageElement->setAttributes( [
+			'lang' => $languageCode,
+			'dir' => $dir,
+		] );
+
+		$captionElement = $this->getCaptionElementForLanguage(
 			$labels,
 			$languageCode
 		);
 
-		return $this->templateFactory->render(
-			'filepage-entitytermstablerow',
-			$languageElement . $labelElement,
-			$showLabel ? '' : 'style="display: none;"',
-			$showLabel ? self::SHOW_LABEL_CLASS : ''
-		);
-	}
-
-	private function getLabelsPlusContext( $contentHtml, array $languageCodes ) {
-
-		$layout = new PanelLayout( [
-			'scrollable' => false,
-			'padded' => false,
-			'expanded' => false,
-			'framed' => true,
-			'content' => new HtmlSnippet(
-				$this->templateFactory->render(
-					'filepage-entitytermstable',
-					'captions',
-					htmlspecialchars(
-						$this->textProvider->get(
-							'wikibasemediainfo-entitytermsforlanguagelistview-caption'
-						)
-					),
-					$contentHtml,
-					implode( ',', $languageCodes )
-				)
-			),
+		$classes = [ 'entity-term' ];
+		if ( $showCaption ) {
+			$classes[] = self::SHOW_CAPTION_CLASS;
+		}
+		$layout = new HorizontalLayout( [
+			'items' => [
+				$languageElement,
+				$captionElement,
+			],
+			'classes' => $classes,
 		] );
-		return $layout->toString();
+		if ( !$showCaption ) {
+			$layout->setAttributes( [
+				'style' => "display:none;",
+			] );
+		}
+		return $layout;
 	}
 
-	private function renderLabelForLanguage( TermList $termList, $languageCode ) {
+	private function getCaptionElementForLanguage( TermList $termList, $languageCode ) {
+		$classes = [ 'caption' ];
 		try {
-			$labelText = $termList->getByLanguage( $languageCode )->getText();
-			$labelClass = '';
+			$captionText = $termList->getByLanguage( $languageCode )->getText();
 		} catch ( \OutOfBoundsException $e ) {
-			$labelText = htmlspecialchars(
+			$captionText = htmlspecialchars(
 				$this->textProvider->get( 'wikibasemediainfo-filepage-caption-empty' )
 			);
-			$labelClass = self::LABEL_EMPTY_CLASS;
+			$classes[] = self::CAPTION_EMPTY_CLASS;
 		}
 
-		return $this->templateFactory->render(
-			'filepage-entitytermscaptionelement',
-			$labelText,
-			htmlspecialchars(
-				$this->languageDirectionalityLookup->getDirectionality( $languageCode ) ?: 'auto'
-			),
-			htmlspecialchars( $languageCode ),
-			$labelClass
-		);
+		$captionElement = new Element( [
+			'content' => $captionText,
+			'classes' => $classes,
+		] );
+		$captionElement->setAttributes( [
+			'lang' => $languageCode,
+			'dir' =>
+				$this->languageDirectionalityLookup->getDirectionality( $languageCode ) ?: 'auto',
+		] );
+		return $captionElement;
 	}
 
 }

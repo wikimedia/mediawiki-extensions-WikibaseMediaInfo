@@ -7,7 +7,7 @@
 	 *
 	 * @constructor
 	 * @param {Object} [config]
-	 * @cfg {Object} header jquery element containing the panel header
+	 * @cfg {Object} headerClass CSS class of captions header element
 	 * @param {object} captionsPanel CaptionsPanel object
 	 */
 	sd.EditToggle = function EditToggle( config, captionsPanel ) {

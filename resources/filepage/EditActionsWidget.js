@@ -7,21 +7,10 @@
 	 *
 	 * @constructor
 	 * @param {Object} [config]
-	 * @cfg {Object} table jquery table element containing the existing data
+	 * @cfg {Object} contentClass CSS class of captions content container
 	 * @param {object} captionsPanel CaptionsPanel object
 	 */
 	sd.EditActionsWidget = function EditActionsWidget( config, captionsPanel ) {
-
-		var addCaptionButton = new OO.ui.ButtonWidget( {
-			icon: 'add',
-			label: mw.message( 'wikibasemediainfo-filepage-add-caption' ).text(),
-			flags: 'progressive',
-			classes: [ 'addMore' ],
-			framed: false
-		} )
-			.on( 'click', function () {
-				captionsPanel.addNewEditableLanguageRow();
-			} );
 
 		var cancelButton = new OO.ui.ButtonWidget( {
 			framed: false,
@@ -47,25 +36,33 @@
 				captionsPanel.sendData();
 			} );
 
-		var $element = $( '<tr>' )
-			.addClass( 'editActions' )
-			.append(
-				$( '<td>' )
-					.attr( 'colspan', 2 )
-					.append(
-						addCaptionButton.$element,
-						$( '<div>' )
-							.addClass( 'cancelAndPublish' )
-							.append( cancelButton.$element, publishButton.$element )
-					)
-			);
+		var cancelAndPublish = new OO.ui.Element( {
+			content: [ cancelButton, publishButton ],
+			classes: [ 'cancelAndPublish' ]
+		} );
+
+		var addCaptionButton = new OO.ui.ButtonWidget( {
+			icon: 'add',
+			label: mw.message( 'wikibasemediainfo-filepage-add-caption' ).text(),
+			flags: 'progressive',
+			classes: [ 'addMore' ],
+			framed: false
+		} )
+			.on( 'click', function () {
+				captionsPanel.addNewEditableLanguageRow();
+			} );
+
+		var editActions = new OO.ui.Element( {
+			content: [ addCaptionButton, cancelAndPublish ],
+			classes: [ 'editActions' ]
+		} );
 
 		this.hide = function () {
-			$element.detach();
+			editActions.$element.detach();
 		};
 
 		this.show = function () {
-			$( '.' + config.tableClass ).append( $element );
+			$( '.' + config.contentClass ).append( editActions.$element );
 		};
 
 		this.disablePublish = function () {

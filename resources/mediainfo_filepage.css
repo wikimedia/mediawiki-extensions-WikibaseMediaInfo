@@ -19,6 +19,8 @@
 
 .filepage-mediainfo-entitytermsview h3 .editButton {
 	float: right;
+	margin-top: -0.75em;
+	margin-right: -0.25em;
 }
 
 .filepage-mediainfo-entitytermsview .viewMore,
@@ -35,7 +37,7 @@
 	width: 92%;
 }
 
-.filepage-mediainfo-entitytermsview .entity-term {
+.filepage-mediainfo-entitytermsview .entity-term:not( :last-child ) {
 	border-bottom: 1px solid #c8ccd1;
 }
 

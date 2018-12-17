@@ -4,10 +4,9 @@
 
 	sd.captions = new sd.CaptionsPanel( {
 		headerClass: 'mediainfo-captions-header',
-		tableClass: 'mediainfo-captions-table',
+		contentClass: 'filepage-mediainfo-entitytermsview',
 		entityViewClass: 'filepage-mediainfo-entityview',
-		entityTermsClass: 'entity-terms',
-		entityViewAppendSelector: '.mw-parser-output',
+		entityTermClass: 'entity-term',
 		warnWithinMaxCaptionLength: 20
 	} );
 	sd.captions.initialize();

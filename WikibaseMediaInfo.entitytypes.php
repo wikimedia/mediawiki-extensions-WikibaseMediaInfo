@@ -83,7 +83,6 @@ return [
 
 			// Use a MediaInfo-specific EntityTermsView class instead of the default one
 			$mediaInfoEntityTermsView = new MediaInfoEntityTermsView(
-				$templateFactory,
 				new LanguageNameLookup( $languageCode ),
 				new MediaWikiLanguageDirectionalityLookup(),
 				new MediaWikiLocalizedTextProvider( $language ),

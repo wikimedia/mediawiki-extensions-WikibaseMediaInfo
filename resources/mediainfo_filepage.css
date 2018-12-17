@@ -1,63 +1,77 @@
+.mw-body-content h2 {
+	clear: both;
+}
+
 .filepage-mediainfo-entitytermsview {
 	padding-top: 0.6em;
+	float: left;
+	clear: both;
+	width: 99%;
+	margin-bottom: 2em;
 }
 
 .filepage-mediainfo-entitytermsview h3 {
 	border-bottom: 1px solid #a2a9b1;
 	padding: 0.8em 0.8em 0.4em 1em;
 	font-size: 1em;
-	margin: 0;
+	margin: 0 0 1.4em 0;
 }
 
 .filepage-mediainfo-entitytermsview h3 .editButton {
 	float: right;
 }
 
-.filepage-mediainfo-entitytermstable {
-	padding: 1em 2em;
-	width: 100%;
-}
-
-.filepage-mediainfo-entitytermstable td {
-	margin: 0;
-	border-right: 0;
-	border-bottom: 1px solid #c8ccd1;
+.filepage-mediainfo-entitytermsview .viewMore,
+.filepage-mediainfo-entitytermsview .viewLess,
+.filepage-mediainfo-entitytermsview .entity-term,
+.filepage-mediainfo-entitytermsview .editActions
+{
 	padding: 0.8em 0;
+	border: 0;
+	margin: 0 4%;
 	vertical-align: top;
+	float: left;
+	clear: both;
+	width: 92%;
 }
 
-.filepage-mediainfo-entitytermstable.editable td {
+.filepage-mediainfo-entitytermsview .entity-term {
+	border-bottom: 1px solid #c8ccd1;
+}
+
+.filepage-mediainfo-entitytermsview.editable .entity-term {
 	border-bottom: 0;
 }
 
-.filepage-mediainfo-entitytermstable tr:last-of-type td {
-	border: 0;
-	padding-bottom: 1em;
-}
-
-.filepage-mediainfo-entitytermstable td.language {
-	padding-right: 2em;
-}
-
-.filepage-mediainfo-entitytermstable td.caption {
-	width: 85%;
-}
-
-.filepage-mediainfo-entitytermstable td.caption .textInput {
+.filepage-mediainfo-entitytermsview .entity-term .language {
 	float: left;
-	width: 94%;
+	min-width: 9em;
+	width: 18%;
+	padding-right: 4%;
+	height: 100%;
 }
 
-.filepage-mediainfo-entitytermstable td.caption .deleter {
+.filepage-mediainfo-entitytermsview .entity-term .caption {
+	float: left;
+	min-width: 9em;
+	width: 78%;
+}
+
+.filepage-mediainfo-entitytermsview .caption .textInput {
+	width: 90%;
+	float: left;
+}
+
+.filepage-mediainfo-entitytermsview .caption .deleter {
 	float: left;
 }
 
 /* T208849: Style empty captions as WMUI's @color-placeholder === @wmui-color-base30 */
-.filepage-mediainfo-entitytermstable td.wbmi-empty {
+.filepage-mediainfo-entitytermsview .wbmi-empty {
 	color: #72777d;
 }
 
-.filepage-mediainfo-entitytermstable tr.entity-terms div.error {
+.filepage-mediainfo-entitytermsview .entity-term div.error {
 	padding: 0.2em 0.5em;
 	font-size: 0.9em;
 	font-weight: bold;
@@ -65,7 +79,7 @@
 	clear: left;
 }
 
-.filepage-mediainfo-entitytermstable tr.entity-terms div.warning {
+.filepage-mediainfo-entitytermsview .entity-term div.warning {
 	padding: 0.2em 0.5em;
 	font-size: 0.9em;
 	font-weight: bold;

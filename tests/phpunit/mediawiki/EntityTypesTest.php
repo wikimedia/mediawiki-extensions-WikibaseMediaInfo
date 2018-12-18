@@ -79,6 +79,10 @@ class EntityTypesTest extends \PHPUnit\Framework\TestCase {
 			->getMock();
 
 		$deserializerFactory->expects( $this->once() )
+			->method( 'newEntityIdDeserializer' )
+			->will( $this->returnValue( $this->getMock( Deserializer::class ) ) );
+
+		$deserializerFactory->expects( $this->once() )
 			->method( 'newTermListDeserializer' )
 			->will( $this->returnValue( $this->getMock( Deserializer::class ) ) );
 

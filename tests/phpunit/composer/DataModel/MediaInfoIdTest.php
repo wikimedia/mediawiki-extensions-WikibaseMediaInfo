@@ -19,20 +19,22 @@ class MediaInfoIdTest extends \PHPUnit\Framework\TestCase {
 
 	public function provideValidIds() {
 		return [
-			[ 'm1' ],
-			[ 'M2' ],
-			[ 'm2147483647' ],
-			[ 'M2147483647' ],
+			[ 'm1', 'M1' ],
+			[ 'M2', 'M2' ],
+			[ 'm2147483647', 'M2147483647' ],
+			[ 'M2147483647', 'M2147483647' ],
+			[ ':m17', 'M17' ],
+			[ 'foo:m17', 'foo:M17' ],
 		];
 	}
 
 	/**
 	 * @dataProvider provideValidIds
 	 */
-	public function testValidIds( $serialization ) {
+	public function testValidIds( $serialization, $expected ) {
 		$id = new MediaInfoId( $serialization );
 
-		$this->assertSame( strtoupper( $serialization ), $id->getSerialization() );
+		$this->assertSame( $expected, $id->getSerialization() );
 	}
 
 	public function provideInvalidIds() {

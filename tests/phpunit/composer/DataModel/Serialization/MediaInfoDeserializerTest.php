@@ -24,6 +24,13 @@ class MediaInfoDeserializerTest extends \PHPUnit\Framework\TestCase {
 	use PHPUnit4And6Compat;
 
 	private function newDeserializer() {
+		$idDeserializer = $this->getMock( Deserializer::class );
+		$idDeserializer->expects( $this->any() )
+			->method( 'deserialize' )
+			->will( $this->returnCallback( function( $serialization ) {
+				return new MediaInfoId( $serialization );
+			} ) );
+
 		$termListDeserializer = $this->getMock( Deserializer::class );
 		$termListDeserializer->expects( $this->any() )
 			->method( 'deserialize' )
@@ -50,7 +57,11 @@ class MediaInfoDeserializerTest extends \PHPUnit\Framework\TestCase {
 				return $statementList;
 			} ) );
 
-		return new MediaInfoDeserializer( $termListDeserializer, $statementListDeserializer );
+		return new MediaInfoDeserializer(
+			$idDeserializer,
+			$termListDeserializer,
+			$statementListDeserializer
+		);
 	}
 
 	public function provideObjectSerializations() {

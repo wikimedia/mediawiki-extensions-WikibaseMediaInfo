@@ -65,6 +65,7 @@ return [
 		},
 		'deserializer-factory-callback' => function( DeserializerFactory $deserializerFactory ) {
 			return new MediaInfoDeserializer(
+				$deserializerFactory->newEntityIdDeserializer(),
 				$deserializerFactory->newTermListDeserializer(),
 				$deserializerFactory->newStatementListDeserializer()
 			);

@@ -5,6 +5,7 @@ namespace Wikibase\MediaInfo\DataModel\Serialization;
 use Deserializers\Deserializer;
 use Deserializers\Exceptions\DeserializationException;
 use Deserializers\TypedObjectDeserializer;
+use InvalidArgumentException;
 use Wikibase\DataModel\Statement\StatementList;
 use Wikibase\DataModel\Term\TermList;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
@@ -15,6 +16,10 @@ use Wikibase\MediaInfo\DataModel\MediaInfoId;
  * @author Bene* < benestar.wikimedia@gmail.com >
  */
 class MediaInfoDeserializer extends TypedObjectDeserializer {
+	/**
+	 * @var Deserializer
+	 */
+	private $idDeserializer;
 
 	/**
 	 * @var Deserializer
@@ -27,15 +32,18 @@ class MediaInfoDeserializer extends TypedObjectDeserializer {
 	private $statementListDeserializer;
 
 	/**
+	 * @param Deserializer $idDeserializer
 	 * @param Deserializer $termListDeserializer
 	 * @param Deserializer $statementListDeserializer
 	 */
 	public function __construct(
+		Deserializer $idDeserializer,
 		Deserializer $termListDeserializer,
 		Deserializer $statementListDeserializer
 	) {
 		parent::__construct( 'mediainfo', 'type' );
 
+		$this->idDeserializer = $idDeserializer;
 		$this->termListDeserializer = $termListDeserializer;
 		$this->statementListDeserializer = $statementListDeserializer;
 	}
@@ -64,7 +72,16 @@ class MediaInfoDeserializer extends TypedObjectDeserializer {
 	 */
 	private function deserializeId( array $serialization ) {
 		if ( array_key_exists( 'id', $serialization ) ) {
-			return new MediaInfoId( $serialization['id'] );
+			$id = $this->idDeserializer->deserialize( $serialization['id'] );
+
+			if ( ! $id instanceof MediaInfoId ) {
+				throw new InvalidArgumentException(
+					'Expected MediaInfoId, deserializing '
+					. $serialization . ' yielded a ' . get_class( $id )
+				);
+			}
+
+			return $id;
 		}
 
 		return null;

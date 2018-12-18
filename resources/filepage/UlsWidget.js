@@ -69,7 +69,8 @@
 	sd.UlsWidget.prototype.setValue = function ( value ) {
 		var current = this.languageValue;
 		this.languageValue = value;
-		this.dropdown.setLabel( this.languages[ value ] );
+		// T209380: We want this to be the language autonym for the display value
+		this.dropdown.setLabel( $.uls.data.getAutonym( value ) );
 		if ( current !== value ) {
 			this.emit( 'select' );
 		}

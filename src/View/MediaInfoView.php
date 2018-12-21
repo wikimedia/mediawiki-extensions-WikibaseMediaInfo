@@ -3,12 +3,11 @@
 namespace Wikibase\MediaInfo\View;
 
 use InvalidArgumentException;
+use MediaWiki\MediaWikiServices;
 use Wikibase\DataModel\Entity\EntityDocument;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\View\EntityDocumentView;
-use Wikibase\View\EntityTermsView;
 use Wikibase\View\LanguageDirectionalityLookup;
-use Wikibase\View\StatementSectionsView;
 use Wikibase\View\Template\TemplateFactory;
 use Wikibase\View\ViewContent;
 
@@ -25,9 +24,9 @@ class MediaInfoView implements EntityDocumentView {
 	protected $templateFactory;
 
 	/**
-	 * @var EntityTermsView
+	 * @var MediaInfoEntityTermsView
 	 */
-	private $entityTermsView;
+	private $captionsView;
 
 	/**
 	 * @var LanguageDirectionalityLookup
@@ -40,31 +39,31 @@ class MediaInfoView implements EntityDocumentView {
 	protected $languageCode;
 
 	/**
-	 * @var StatementSectionsView
+	 * @var MediaInfoEntityStatementsView
 	 */
-	private $statementSectionsView;
+	private $statementsView;
 
 	/**
 	 * @param TemplateFactory $templateFactory
-	 * @param MediaInfoEntityTermsView $entityTermsView
+	 * @param MediaInfoEntityTermsView $captionsView
 	 * @param LanguageDirectionalityLookup $languageDirectionalityLookup
 	 * @param string $languageCode
-	 * @param StatementSectionsView|null $statementSectionsView
+	 * @param MediaInfoEntityStatementsView $statementsView
 	 * @codeCoverageIgnore
 	 */
 	public function __construct(
 		TemplateFactory $templateFactory,
-		MediaInfoEntityTermsView $entityTermsView,
+		MediaInfoEntityTermsView $captionsView,
 		LanguageDirectionalityLookup $languageDirectionalityLookup,
 		$languageCode,
-		StatementSectionsView $statementSectionsView = null
+		MediaInfoEntityStatementsView $statementsView
 	) {
-		$this->entityTermsView = $entityTermsView;
+		$this->captionsView = $captionsView;
 		$this->languageDirectionalityLookup = $languageDirectionalityLookup;
 		$this->languageCode = $languageCode;
 
 		$this->templateFactory = $templateFactory;
-		$this->statementSectionsView = $statementSectionsView;
+		$this->statementsView = $statementsView;
 	}
 
 	/**
@@ -89,23 +88,24 @@ class MediaInfoView implements EntityDocumentView {
 				htmlspecialchars(
 					$this->languageDirectionalityLookup->getDirectionality( $this->languageCode ) ?: 'auto'
 				),
-				$this->getTermsHtml( $entity ) . $this->getStatementsHtml( $entity )
+				$this->getCaptionsHtml( $entity ) . $this->getStatementsHtml( $entity )
 			)
 		);
 	}
 
-	private function getTermsHtml( MediaInfo $entity ) {
-		return $this->entityTermsView->getHtml(
+	private function getCaptionsHtml( MediaInfo $entity ) {
+		return $this->captionsView->getHtml(
 			$entity
 		);
 	}
 
-	/*
-	 * @todo T204264 - will probably look something like
-	 * 		return $this->statementSectionsView->getHtml( $entity->getStatements() );
-	 */
 	private function getStatementsHtml( MediaInfo $entity ) {
-		return '';
+		if ( !MediaWikiServices::getInstance()->getMainConfig()->get( 'MediaInfoEnableFilePageDepicts' ) ) {
+			return '';
+		}
+		return $this->statementsView->getHtml(
+			$entity
+		);
 	}
 
 }

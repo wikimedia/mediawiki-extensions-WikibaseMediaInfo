@@ -22,8 +22,11 @@ use Wikibase\DataModel\SerializerFactory;
 use Wikibase\DataModel\Services\EntityId\EntityIdFormatter;
 use Wikibase\DataModel\Services\Lookup\InProcessCachingDataTypeLookup;
 use Wikibase\LanguageFallbackChain;
+use Wikibase\Lib\LanguageFallbackIndicator;
 use Wikibase\Lib\LanguageNameLookup;
+use Wikibase\Lib\Store\CachingPropertyOrderProvider;
 use Wikibase\Lib\Store\EntityInfo;
+use Wikibase\Lib\Store\WikiPagePropertyOrderProvider;
 use Wikibase\Lib\Store\Sql\WikiPageEntityMetaDataLookup;
 use Wikibase\MediaInfo\ChangeOp\Deserialization\MediaInfoChangeOpDeserializer;
 use Wikibase\MediaInfo\Content\MediaInfoContent;
@@ -40,6 +43,7 @@ use Wikibase\MediaInfo\Search\MediaInfoFieldDefinitions;
 use Wikibase\MediaInfo\Services\MediaInfoServices;
 use Wikibase\MediaInfo\Services\MediaInfoEntityQuery;
 use Wikibase\MediaInfo\View\MediaInfoEntityTermsView;
+use Wikibase\MediaInfo\View\MediaInfoEntityStatementsView;
 use Wikibase\MediaInfo\View\MediaInfoView;
 use Wikibase\Repo\Diff\ClaimDiffer;
 use Wikibase\Repo\Diff\ClaimDifferenceVisualizer;
@@ -87,18 +91,41 @@ return [
 			$languageCode = $language->getCode();
 
 			// Use a MediaInfo-specific EntityTermsView class instead of the default one
+			$langDirLookup = new MediaWikiLanguageDirectionalityLookup();
+			$textProvider = new MediaWikiLocalizedTextProvider( $language );
 			$mediaInfoEntityTermsView = new MediaInfoEntityTermsView(
 				new LanguageNameLookup( $languageCode ),
-				new MediaWikiLanguageDirectionalityLookup(),
-				new MediaWikiLocalizedTextProvider( $language ),
+				$langDirLookup,
+				$textProvider,
 				$fallbackChain
+			);
+
+			// Use a MediaInfo-specific EntityStatementView class
+			$wbRepo = WikibaseRepo::getDefaultInstance();
+			$propertyOrderProvider = new CachingPropertyOrderProvider(
+				new WikiPagePropertyOrderProvider(
+					Title::newFromText( 'MediaWiki:Wikibase-SortedProperties' )
+				),
+				ObjectCache::getLocalClusterInstance()
+			);
+
+			$statementsView = new MediaInfoEntityStatementsView(
+				$propertyOrderProvider,
+				$langDirLookup,
+				$textProvider,
+				$fallbackChain,
+				$wbRepo->getLanguageFallbackLabelDescriptionLookupFactory()
+					->newLabelDescriptionLookup( $language ),
+				$wbRepo->getEntityTitleLookup(),
+				new LanguageFallbackIndicator( $wbRepo->getLanguageNameLookup() )
 			);
 
 			return new MediaInfoView(
 				$templateFactory,
 				$mediaInfoEntityTermsView,
 				new MediaWikiLanguageDirectionalityLookup(),
-				$languageCode
+				$languageCode,
+				$statementsView
 			);
 		},
 		'content-model-id' => MediaInfoContent::CONTENT_MODEL_ID,

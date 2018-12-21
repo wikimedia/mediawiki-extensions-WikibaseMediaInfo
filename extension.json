@@ -22,6 +22,9 @@
 	"config": {
 		"MediaInfoEnable": {
 			"value": true
+		},
+		"MediaInfoEnableFilePageDepicts": {
+			"value": true
 		}
 	},
 	"ServiceWiringFiles": [

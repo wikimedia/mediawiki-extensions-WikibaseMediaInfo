@@ -1,3 +1,5 @@
+@import 'mediawiki.mixins';
+
 /* Clear content after the entity view because it transitively floats */
 .wbmi-entityview + * {
 	clear: both;
@@ -6,7 +8,8 @@
 /* Old name for cache back-compatibility */
 /* stylelint-disable-next-line selector-class-pattern */
 .filepage-mediainfo-entitytermsview,
-.wbmi-entityview-content {
+.wbmi-entityview-content,
+.wbmi-entityview-statementsGroup {
 	padding-top: 0.6em;
 	float: left;
 	clear: both;
@@ -112,6 +115,57 @@
 	.wbmi-entityview-emptyCaption {
 		color: #72777d;
 	}
+}
+
+.wbmi-entityview-statementsGroup {
+	padding-bottom: 2em;
+}
+
+.wbmi-entityview-statement {
+	vertical-align: top;
+	clear: both;
+	width: 100%;
+
+	> div {
+		padding: 0.8em 1em;
+		margin: 0 1em;
+		background-color: #f8f9fa;
+		border: 2px solid #fff;
+	}
+
+	.wbmi-entityview-statement-qualifier {
+		font-size: 95%;
+		padding: 1em 0 0 1em;
+	}
+
+	.wbmi-statement-no-value,
+	.wbmi-statement-some-value {
+		color: #808080;
+	}
+
+	.wbmi-statement-error {
+		color: #f00;
+	}
+}
+
+.wbmi-entityview-statementsGroup-header h4 {
+	padding: 0.8em 1em 0.4em 1em;
+	font-size: 1em;
+}
+
+a.wbmi-entity-link {
+	float: right;
+	font-weight: normal;
+	color: #36c;
+	padding-left: 25px;
+	background-repeat: no-repeat;
+	background-size: 20px auto;
+
+	&-foreign-repo-wikidata,
+	&-foreign-repo-wd {
+		.background-image-svg('Wikidata-logo-small.svg', 'Wikidata-logo-small.png');
+	}
+
 }
 
 /* Some OOUI styles are loaded inline - add some here to prevent FOUC */

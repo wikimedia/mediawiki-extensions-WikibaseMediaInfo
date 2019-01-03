@@ -49,7 +49,7 @@ class MediaInfoView implements EntityDocumentView {
 	 * @param MediaInfoEntityTermsView $entityTermsView
 	 * @param LanguageDirectionalityLookup $languageDirectionalityLookup
 	 * @param string $languageCode
-	 * @param StatementSectionsView $statementSectionsView
+	 * @param StatementSectionsView|null $statementSectionsView
 	 * @codeCoverageIgnore
 	 */
 	public function __construct(

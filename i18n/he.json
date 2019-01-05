@@ -2,7 +2,8 @@
 	"@metadata": {
 		"authors": [
 			"Guycn2",
-			"Amire80"
+			"Amire80",
+			"Strayblues"
 		]
 	},
 	"right-mediainfo-term": "שינוי מושגים במידע על המדיה (כיתובים, סיכומים)",
@@ -17,11 +18,11 @@
 	"wikibasemediainfo-filepage-captions-title": "כיתובים",
 	"wikibasemediainfo-filepage-more-languages": "לראות {{PLURAL:$1|עוד שפה אחת|עוד $1 שפות}}",
 	"wikibasemediainfo-filepage-fewer-languages": "לראות פחות שפות",
-	"wikibasemediainfo-filepage-add-caption": "להוסיף כיתוב",
-	"wikibasemediainfo-filepage-edit-captions": "לערוך כיתובים",
+	"wikibasemediainfo-filepage-add-caption": "הוספת כיתוב",
+	"wikibasemediainfo-filepage-edit-captions": "עריכת הכיתובים",
 	"wikibasemediainfo-filepage-cancel": "ביטול",
 	"wikibasemediainfo-filepage-publish": "פרסום השינויים",
-	"wikibasemediainfo-filepage-caption-empty": "הוספת הסבר בן שורה אחת על מה הקובץ הזה מייצג",
+	"wikibasemediainfo-filepage-caption-empty": "הוספת משפט שמסביר מה הקובץ מייצג",
 	"wikibasemediainfo-filepage-caption-too-long": "{{PLURAL:$1|תו אחד|$1 תווים}} מעבר למגבלה",
 	"wikibasemediainfo-filepage-caption-approaching-limit": "{{PLURAL:$1|נותר תו אחד|נותרת $1 תווים}}"
 }

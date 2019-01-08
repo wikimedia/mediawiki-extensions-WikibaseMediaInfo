@@ -6,6 +6,7 @@ use CirrusSearch\Search\CirrusIndexField;
 use Elastica\Document;
 use Hooks;
 use Language;
+use MediaWiki\MediaWikiServices;
 use MediaWiki\Revision\RevisionRecord;
 use MediaWiki\Revision\SlotRecord;
 use ParserOutput;
@@ -137,6 +138,14 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 	}
 
 	public function testOnBeforePageDisplay() {
+		if ( !MediaWikiServices::getInstance()->getMainConfig()->get( 'MediaInfoEnable' ) ) {
+			$this->markTestSkipped(
+				'OutputPage calls in onBeforePageDisplay not tested as do not happen if ' .
+				'extension is disabled'
+			);
+			return;
+		}
+
 		$imgTitle = Title::makeTitle( NS_FILE, 'Foo.jpg' );
 		$imgTitle->resetArticleID( 23 );
 
@@ -153,6 +162,48 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 			->method( 'addModules' );
 
 		WikibaseMediaInfoHooks::onBeforePageDisplay( $out, $skin );
+	}
+
+	public function testOnBeforePageDisplay_extensionDisabled() {
+		if ( MediaWikiServices::getInstance()->getMainConfig()->get( 'MediaInfoEnable' ) ) {
+			$this->markTestSkipped(
+				'onBeforePageDisplay() not tested with MediaInfoEnable set to false'
+			);
+			return;
+		}
+		$imgTitle = Title::makeTitle( NS_FILE, 'Foo.jpg' );
+		$imgTitle->resetArticleID( 23 );
+		$out = $this->getMockOutputPage( $imgTitle );
+
+		$parserOutputTag = '<div class="mw-parser-output">';
+		$mediaInfoViewOpeningTag = '<mw:mediainfoView>';
+		$captions = 'SOME_CAPTIONS';
+		$mediaInfoViewClosingTag = '</mw:mediainfoView>';
+		$extraHtml = 'SOME_HTML';
+		$captionsHeader = '<h1 class="mw-slot-header">' .
+			WikibaseMediaInfoHooks::MEDIAINFO_SLOT_HEADER_PLACEHOLDER .
+			'</h1>';
+		$out->clearHTML();
+		$out->addHTML(
+			$parserOutputTag .
+			$captionsHeader .
+			$extraHtml  .
+			$mediaInfoViewOpeningTag .
+			$captions .
+			$mediaInfoViewClosingTag
+		);
+
+		$skin = $this->getMockBuilder( \Skin::class )
+			->disableOriginalConstructor()
+			->getMock();
+
+		WikibaseMediaInfoHooks::onBeforePageDisplay( $out, $skin );
+
+		$this->assertNotRegExp( '/mediainfoView/is', $out->getHtml() );
+		$this->assertNotRegExp(
+			'/mw-slot-header/is',
+			$out->getHtml()
+		);
 	}
 
 	public function testOnBeforePageDisplayWithMissingTitle() {
@@ -178,9 +229,14 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 	 * "mw-parser-output" div
 	 */
 	public function testOnBeforePageDisplay_moveExistingCaptions() {
-		$skin = $this->getMockBuilder( \Skin::class )
-			->disableOriginalConstructor()
-			->getMock();
+		if ( !MediaWikiServices::getInstance()->getMainConfig()->get( 'MediaInfoEnable' ) ) {
+			$this->markTestSkipped(
+				'Existing captions move in onBeforePageDisplay not tested as it does not happen ' .
+				'if extension is disabled'
+			);
+			return;
+		}
+
 		$imgTitle = Title::makeTitle( NS_FILE, 'Foo.jpg' );
 		$imgTitle->resetArticleID( 23 );
 		$out = $this->getMockOutputPage( $imgTitle );
@@ -278,6 +334,14 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 	}
 
 	public function testOnBeforePageDisplay_moveSDHeader() {
+		if ( !MediaWikiServices::getInstance()->getMainConfig()->get( 'MediaInfoEnable' ) ) {
+			$this->markTestSkipped(
+				'Header move in onBeforePageDisplay not tested as it does not happen if ' .
+				'extension is disabled'
+			);
+			return;
+		}
+
 		$imgTitle = Title::makeTitle( NS_FILE, 'Foo.jpg' );
 		$imgTitle->resetArticleID( 23 );
 		$out = $this->getMockOutputPage( $imgTitle );
@@ -337,23 +401,6 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 			$testEntityId = new MediaInfoId( 'M999' );
 		}
 		return $testEntityId;
-	}
-
-	/**
-	 * @return EntityIdComposer
-	 */
-	private function getMockEntityIdComposer() {
-		$mockEntityIdComposer = $this->getMockBuilder( EntityIdComposer::class )
-			->disableOriginalConstructor()
-			->getMock();
-		$mockEntityIdComposer->expects( $this->once() )
-			->method( 'composeEntityId' )
-			->with(
-				$this->equalTo( '' ),
-				$this->equalTo( MediaInfo::ENTITY_TYPE ),
-				$this->isType( 'int' )
-			)->willReturn( $this->getTestEntityId() );
-		return $mockEntityIdComposer;
 	}
 
 	public function testOnCirrusSearchBuildDocumentParse_NoRevision() {

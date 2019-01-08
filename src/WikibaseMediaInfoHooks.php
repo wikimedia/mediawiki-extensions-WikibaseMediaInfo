@@ -94,11 +94,6 @@ class WikibaseMediaInfoHooks {
 	 * @param array $entityNamespacesSetting
 	 */
 	public static function onWikibaseRepoEntityNamespaces( &$entityNamespacesSetting ) {
-		// Exit if the extension is disabled.
-		if ( !MediaWikiServices::getInstance()->getMainConfig()->get( 'MediaInfoEnable' ) ) {
-			return;
-		}
-
 		// Tell Wikibase where to put our entity content.
 		$entityNamespacesSetting[ MediaInfo::ENTITY_TYPE ] = NS_FILE . '/' . MediaInfo::ENTITY_TYPE;
 	}
@@ -114,11 +109,6 @@ class WikibaseMediaInfoHooks {
 	 * @param array[] $entityTypeDefinitions
 	 */
 	public static function onWikibaseEntityTypes( array &$entityTypeDefinitions ) {
-		// Exit if the extension is disabled.
-		if ( !MediaWikiServices::getInstance()->getMainConfig()->get( 'MediaInfoEnable' ) ) {
-			return;
-		}
-
 		$entityTypeDefinitions = array_merge(
 			$entityTypeDefinitions,
 			require __DIR__ . '/../WikibaseMediaInfo.entitytypes.php'
@@ -146,11 +136,6 @@ class WikibaseMediaInfoHooks {
 		&$text,
 		array $options
 	) {
-		// Exit if the extension is disabled.
-		if ( !MediaWikiServices::getInstance()->getMainConfig()->get( 'MediaInfoEnable' ) ) {
-			return;
-		}
-
 		$text = preg_replace(
 			'#<mw:slotheader>(.*?)</mw:slotheader>#',
 			self::MEDIAINFO_SLOT_HEADER_PLACEHOLDER,
@@ -167,6 +152,7 @@ class WikibaseMediaInfoHooks {
 	public static function onBeforePageDisplay( $out, $skin ) {
 		// Exit if the extension is disabled.
 		if ( !MediaWikiServices::getInstance()->getMainConfig()->get( 'MediaInfoEnable' ) ) {
+			$out = self::deleteMediaInfoData( $out );
 			return;
 		}
 
@@ -262,7 +248,7 @@ class WikibaseMediaInfoHooks {
 	 */
 	private function moveCaptions( $text, $out, $entityViewFactory ) {
 		if ( preg_match(
-			'/<mw:mediainfoView>(.*)<\/mw:mediainfoView>/is',
+			self::getMediaInfoViewRegex(),
 			$text,
 			$matches
 		) ) {
@@ -288,6 +274,25 @@ class WikibaseMediaInfoHooks {
 	}
 
 	/**
+	 * Delete all MediaInfo data from the output
+	 *
+	 * @param OutputPage $out
+	 * @return OutputPage
+	 */
+	private static function deleteMediaInfoData( $out ) {
+		$html = $out->getHTML();
+		$out->clearHTML();
+		$html = preg_replace( self::getMediaInfoViewRegex(), '', $html );
+		$html = preg_replace( self::getStructuredDataHeaderRegex(), '', $html );
+		$out->addHTML( $html );
+		return $out;
+	}
+
+	private static function getMediaInfoViewRegex() {
+		return '/<mw:mediainfoView>(.*)<\/mw:mediainfoView>/is';
+	}
+
+	/**
 	 * Move the structured data header to the place we want it
 	 *
 	 * Also replace the mediainfo-specific placeholder added in onParserOutputPostCacheTransform
@@ -306,8 +311,7 @@ class WikibaseMediaInfoHooks {
 		// First do the move
 		if (
 			preg_match(
-				'#<h1\b[^>]*\bclass=(\'|")mw-slot-header\\1[^>]*>' .
-				self::MEDIAINFO_SLOT_HEADER_PLACEHOLDER . '</h1>#iU',
+				self::getStructuredDataHeaderRegex(),
 				$text,
 				$matches
 			)
@@ -334,6 +338,11 @@ class WikibaseMediaInfoHooks {
 		);
 
 		return $text;
+	}
+
+	private static function getStructuredDataHeaderRegex() {
+		return '#<h1\b[^>]*\bclass=(\'|")mw-slot-header\\1[^>]*>' .
+			   self::MEDIAINFO_SLOT_HEADER_PLACEHOLDER . '</h1>#iU';
 	}
 
 	private static function getMaxCaptionLength() {

@@ -1,8 +1,14 @@
 {
 	"@metadata": {
 		"authors": [
-			"Pyscowicz"
+			"Pyscowicz",
+			"Nike"
 		]
 	},
-	"wikibase-entity-mediainfo": "mediatieto"
+	"wikibase-entity-mediainfo": "mediatieto",
+	"wikibasemediainfo-filepage-more-languages": "Näytä $1 {{PLURAL:$1|kieli|kieltä}} lisää",
+	"wikibasemediainfo-filepage-fewer-languages": "Näytä vähemmän kieliä",
+	"wikibasemediainfo-filepage-cancel": "Peru",
+	"wikibasemediainfo-filepage-publish": "Julkaise muutokset",
+	"wikibasemediainfo-filepage-caption-empty": "Lisää yhden rivin pituinen kuvaus tästä tiedostosta"
 }

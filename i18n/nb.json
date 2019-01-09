@@ -4,7 +4,8 @@
 			"Jon Harald Søby"
 		]
 	},
-	"right-mediainfo-term": "Endre medieinfobegreper (undertekster, sammendrag)",
+	"right-mediainfo-term": "Endre medieinfobegreper (bildetekster, sammendrag)",
+	"slot-name-mediainfo": "Strukturert medieinformasjon",
 	"wikibase-entity-mediainfo": "medieinformasjon",
 	"wikibase-mediainfo-summary-wbsetlabel-add": "La til bildetekst [$1]",
 	"wikibase-mediainfo-summary-wbsetlabel-remove": "Fjernet bildetekst [$1]",

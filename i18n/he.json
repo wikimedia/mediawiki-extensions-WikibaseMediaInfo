@@ -10,7 +10,7 @@
 	"slot-name-mediainfo": "מידע מובנה על מדיה",
 	"wikibase-entity-mediainfo": "מידע על המדיה",
 	"wikibase-mediainfo-summary-wbsetlabel-add": "נוסף כיתוב [$1]",
-	"wikibase-mediainfo-summary-wbsetlabel-remove": "נוסר כיתוב [$1]",
+	"wikibase-mediainfo-summary-wbsetlabel-remove": "הוסר כיתוב [$1]",
 	"wikibase-mediainfo-summary-wbsetlabel-set": "נערך כיתוב [$1]",
 	"wikibasemediainfo-desc": "הרחבה לוויקיבייס לניהול מטא־נתונים מובְנים של קובצי מדיה",
 	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "כיתובים",
@@ -22,7 +22,7 @@
 	"wikibasemediainfo-filepage-edit-captions": "עריכת הכיתובים",
 	"wikibasemediainfo-filepage-cancel": "ביטול",
 	"wikibasemediainfo-filepage-publish": "פרסום השינויים",
-	"wikibasemediainfo-filepage-caption-empty": "הוספת משפט שמסביר מה הקובץ מייצג",
+	"wikibasemediainfo-filepage-caption-empty": "נא להוסיף משפט שמסביר מה הקובץ מייצג",
 	"wikibasemediainfo-filepage-caption-too-long": "{{PLURAL:$1|תו אחד|$1 תווים}} מעבר למגבלה",
-	"wikibasemediainfo-filepage-caption-approaching-limit": "{{PLURAL:$1|נותר תו אחד|נותרת $1 תווים}}"
+	"wikibasemediainfo-filepage-caption-approaching-limit": "{{PLURAL:$1|נותר תו אחד|נותרו $1 תווים}}"
 }

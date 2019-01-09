@@ -5,6 +5,23 @@
 			"Base"
 		]
 	},
+	"right-mediainfo-term": "зміна термінів медіа-інформації (підписів, описів)",
+	"slot-name-mediainfo": "Структурована медіа-інформація",
 	"wikibase-entity-mediainfo": "медіа-інформація",
-	"wikibasemediainfo-desc": "Розширення Вікібази для управління структурованими метаданими медіафайлів"
+	"wikibase-mediainfo-summary-wbsetlabel-add": "Додано підпис [$1]",
+	"wikibase-mediainfo-summary-wbsetlabel-remove": "Вилучено підпис [$1]",
+	"wikibase-mediainfo-summary-wbsetlabel-set": "Змінено підпис [$1]",
+	"wikibasemediainfo-desc": "Розширення Вікібази для управління структурованими метаданими медіафайлів",
+	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Підписи",
+	"wikibasemediainfo-filepage-structured-data-heading": "Структуровані дані",
+	"wikibasemediainfo-filepage-captions-title": "Підписи",
+	"wikibasemediainfo-filepage-more-languages": "Див. $1 {{PLURAL:$1|іншу мову|інші мови|інших мов}}",
+	"wikibasemediainfo-filepage-fewer-languages": "Менше мов",
+	"wikibasemediainfo-filepage-add-caption": "Додати підпис",
+	"wikibasemediainfo-filepage-edit-captions": "Редагувати підписи",
+	"wikibasemediainfo-filepage-cancel": "Скасувати",
+	"wikibasemediainfo-filepage-publish": "Опублікувати зміни",
+	"wikibasemediainfo-filepage-caption-empty": "Додайте однорядкове пояснення, що саме репрезентує цей файл",
+	"wikibasemediainfo-filepage-caption-too-long": "Ліміт перевищено на $1 {{PLURAL:$1|символ|символи|символів}}",
+	"wikibasemediainfo-filepage-caption-approaching-limit": "{{PLURAL:$1|Залишився $1 символ|Залишилося $1 символи|Залишилось $1 символів}}"
 }

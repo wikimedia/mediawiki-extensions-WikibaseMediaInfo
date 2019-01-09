@@ -1,0 +1,22 @@
+{
+	"@metadata": {
+		"authors": [
+			"פוילישער"
+		]
+	},
+	"right-mediainfo-term": "ענדערן מעדיע אינפארמאציע־באגריפן (בילדקעפלעך, רעזומעס)",
+	"slot-name-mediainfo": "סטרוקטורירטע מעדיע־אינפֿא",
+	"wikibase-entity-mediainfo": "מעדיע־אינפֿא",
+	"wikibase-mediainfo-summary-wbsetlabel-add": "צוגעלייגט [$1] בילדקעפל",
+	"wikibase-mediainfo-summary-wbsetlabel-remove": "אַראָפּגענומען [$1] בילדקעפל",
+	"wikibase-mediainfo-summary-wbsetlabel-set": "רעדאקטירט [$1] בילדקעפל",
+	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "בילדקעפלעך",
+	"wikibasemediainfo-filepage-structured-data-heading": "סטרוקטורירטע דאטן",
+	"wikibasemediainfo-filepage-captions-title": "בילדקעפלעך",
+	"wikibasemediainfo-filepage-more-languages": "זעט נאך $1 {{PLURAL:$1|שפראך|שפראכן}}",
+	"wikibasemediainfo-filepage-fewer-languages": "זען ווייניגער שפראכן",
+	"wikibasemediainfo-filepage-add-caption": "צולייגן א בילדקעפל",
+	"wikibasemediainfo-filepage-edit-captions": "רעדאקטירן בילדקעפלעך",
+	"wikibasemediainfo-filepage-cancel": "אַנולירן",
+	"wikibasemediainfo-filepage-publish": "פובליקירן ענדערונגען"
+}

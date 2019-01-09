@@ -2,26 +2,27 @@
 	"@metadata": {
 		"authors": [
 			"!Silent",
-			"Eduardo Addad de Oliveira"
+			"Eduardo Addad de Oliveira",
+			"TheEduGobi"
 		]
 	},
-	"right-mediainfo-term": "Alterar os termos da informação de arquivos multimédia (legendas, resumos)",
-	"slot-name-mediainfo": "Informação estruturada de multimédia",
+	"right-mediainfo-term": "Alterar os termos da informação de arquivos multimídia (legendas, resumos)",
+	"slot-name-mediainfo": "Informação estruturada de multimídia",
 	"wikibase-entity-mediainfo": "informação multimídia",
-	"wikibase-mediainfo-summary-wbsetlabel-add": "[$1] legenda adicionada",
-	"wikibase-mediainfo-summary-wbsetlabel-remove": "Removido o título de [$1]",
-	"wikibase-mediainfo-summary-wbsetlabel-set": "Legenda de [$1] editada",
+	"wikibase-mediainfo-summary-wbsetlabel-add": "Adicionada legenda em [$1]",
+	"wikibase-mediainfo-summary-wbsetlabel-remove": "Removida legenda em [$1]",
+	"wikibase-mediainfo-summary-wbsetlabel-set": "Editada legenda em [$1]",
 	"wikibasemediainfo-desc": "Extensão Wikibase para gerenciar metadados estruturados de arquivos de mídia",
 	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Legendas",
 	"wikibasemediainfo-filepage-structured-data-heading": "Dados estruturados",
 	"wikibasemediainfo-filepage-captions-title": "Legendas",
-	"wikibasemediainfo-filepage-more-languages": "Ver mais $1 {{PLURAL:$1|idioma|idiomas}}",
-	"wikibasemediainfo-filepage-fewer-languages": "Veja menos idiomas",
-	"wikibasemediainfo-filepage-add-caption": "Adicione uma legenda",
+	"wikibasemediainfo-filepage-more-languages": "Ver mais {{PLURAL:$1|um idioma|$1 idiomas}}",
+	"wikibasemediainfo-filepage-fewer-languages": "Ver menos idiomas",
+	"wikibasemediainfo-filepage-add-caption": "Adicionar uma legenda",
 	"wikibasemediainfo-filepage-edit-captions": "Editar legendas",
 	"wikibasemediainfo-filepage-cancel": "Cancelar",
 	"wikibasemediainfo-filepage-publish": "Publicar alterações",
-	"wikibasemediainfo-filepage-caption-empty": "Adicione uma explicação de uma linha do que este arquivo representa",
-	"wikibasemediainfo-filepage-caption-too-long": "$1 {{PLURAL:$1|caracter|caracteres}} acima do limite",
-	"wikibasemediainfo-filepage-caption-approaching-limit": "$1 {{PLURAL:$1|caracter|caracteres|0=caracteres}} restantes"
+	"wikibasemediainfo-filepage-caption-empty": "Adicione uma explicação em uma linha sobre o que este arquivo representa",
+	"wikibasemediainfo-filepage-caption-too-long": "$1 {{PLURAL:$1|caractere|caracteres}} acima do limite",
+	"wikibasemediainfo-filepage-caption-approaching-limit": "$1 {{PLURAL:$1|caractere|caracteres|0=caracteres}} restantes"
 }

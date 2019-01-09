@@ -5,6 +5,13 @@
 			"Mormegil"
 		]
 	},
+	"slot-name-mediainfo": "Strukturované informace o souboru",
 	"wikibase-entity-mediainfo": "Informace o souboru",
-	"wikibasemediainfo-desc": "Rozšíření Wikibase pro správu strukturovaných metadat k mediálním souborům"
+	"wikibasemediainfo-desc": "Rozšíření Wikibase pro správu strukturovaných metadat k mediálním souborům",
+	"wikibasemediainfo-filepage-structured-data-heading": "Strukturovaná data",
+	"wikibasemediainfo-filepage-fewer-languages": "Zobrazit méně jazyků",
+	"wikibasemediainfo-filepage-cancel": "Storno",
+	"wikibasemediainfo-filepage-publish": "Zveřejnit změny",
+	"wikibasemediainfo-filepage-caption-too-long": "$1 {{PLURAL:$1|znak|znaky|znaků}} přes limit",
+	"wikibasemediainfo-filepage-caption-approaching-limit": "Zbývá $1 {{PLURAL:$1|znak|znaky|znaků}}"
 }

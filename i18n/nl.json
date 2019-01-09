@@ -1,13 +1,19 @@
 {
 	"@metadata": {
 		"authors": [
-			"Mainframe98"
+			"Mainframe98",
+			"Jdforrester"
 		]
 	},
 	"wikibase-entity-mediainfo": "media informatie",
 	"wikibasemediainfo-desc": "Wikibase uitbreiding voor het beheren van gestructureerde metadata van mediabestanden",
+	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Bijschriften",
+	"wikibasemediainfo-filepage-captions-title": "Bijschriften",
+	"wikibasemediainfo-filepage-add-caption": "Voeg een bijschrift toe",
+	"wikibasemediainfo-filepage-edit-captions": "Bewerken bijschriften",
 	"wikibasemediainfo-filepage-cancel": "Annuleren",
 	"wikibasemediainfo-filepage-publish": "Wijzigingen publiceren",
+	"wikibasemediainfo-filepage-caption-empty": "Voeg een eenregelige uitleg toe van wat dit bestand vertegenwoordigt",
 	"wikibasemediainfo-filepage-caption-too-long": "$1 {{PLURAL:$1|teken|tekens}} over de limiet",
 	"wikibasemediainfo-filepage-caption-approaching-limit": "$1 {{PLURAL:$1|teken|tekens|0=tekens}} over"
 }

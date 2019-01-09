@@ -48,12 +48,23 @@ class MediaInfoContent extends EntityContent {
 	}
 
 	protected function getIgnoreKeysForFilters() {
-		// FIXME: This should be updated before actually being deployed on commons to avoid
-		// having to do a similar thing to https://phabricator.wikimedia.org/T205254
+		// We explicitly want to allow the 'labels' block's 'language' keys through, so that AbuseFilters
+		// can be written that check if e.g. Latin characters are written in a zh-hans label slot.
 		return [
-			'language',
+			// pageid, ns, title, lastrevid, & modified are injected in the API but not AF, so don't list
+			// MediaInfo entities don't have a "site" attribute, so this shouldn't show up, but for safety
 			'site',
-			'type',
+			// MediaInfo is not going to use descriptions but they currently appear in the
+			// serialization. These should not be checked for filter text.
+			'descriptions',
+			// Probably wont be used, could be added back if requested
+			'rank',
+			'snaktype', // Options: value, somevalue, novalue
+			// Probably pointless in filter text
+			'hash',
+			'id', // Statement guid
+			'type', // Hits a few different things
+			'datatype', // Hits a few different things
 		];
 	}
 

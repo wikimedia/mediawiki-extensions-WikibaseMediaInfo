@@ -11,6 +11,7 @@
 	"wikibase-mediainfo-summary-wbsetlabel-remove": "Removed [$1] caption",
 	"wikibase-mediainfo-summary-wbsetlabel-set": "Edited [$1] caption",
 	"wikibasemediainfo-desc": "Wikibase extension to manage structured metadata of media files",
+	"wikibasemediainfo-diffview-label": "caption",
 	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Captions",
 	"wikibasemediainfo-filepage-structured-data-heading": "Structured data",
 	"wikibasemediainfo-filepage-captions-title": "Captions",

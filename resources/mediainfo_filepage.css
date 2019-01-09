@@ -45,7 +45,7 @@
 	border-bottom: 0;
 }
 
-.filepage-mediainfo-entitytermsview .entity-term .language {
+.filepage-mediainfo-entitytermsview .entity-term .filepage-mediainfo-language {
 	float: left;
 	min-width: 9em;
 	width: 18%;
@@ -53,18 +53,18 @@
 	height: 100%;
 }
 
-.filepage-mediainfo-entitytermsview .entity-term .caption {
+.filepage-mediainfo-entitytermsview .entity-term .filepage-mediainfo-caption {
 	float: left;
 	min-width: 9em;
 	width: 78%;
 }
 
-.filepage-mediainfo-entitytermsview .caption .textInput {
+.filepage-mediainfo-entitytermsview .filepage-mediainfo-caption .filepage-mediainfo-textInput {
 	width: 90%;
 	float: left;
 }
 
-.filepage-mediainfo-entitytermsview .caption .deleter {
+.filepage-mediainfo-entitytermsview .filepage-mediainfo-caption .deleter {
 	float: left;
 }
 

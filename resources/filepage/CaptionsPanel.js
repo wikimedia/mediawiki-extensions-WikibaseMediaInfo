@@ -70,8 +70,8 @@
 	OO.mixinClass( sd.CaptionsPanel, OO.ui.mixin.PendingElement );
 
 	sd.CaptionsPanel.prototype.readDataFromReadOnlyRow = function ( $row ) {
-		var $language = $row.find( '.language' ),
-			$caption = $row.find( '.caption' );
+		var $language = $row.find( '.filepage-mediainfo-language' ),
+			$caption = $row.find( '.filepage-mediainfo-caption' );
 		return new sd.CaptionData(
 			$language.attr( 'lang' ),
 			$language.text(),
@@ -108,11 +108,11 @@
 
 		language = new OO.ui.Element( {
 			content: [ languageContent ],
-			classes: [ 'language' ]
+			classes: [ 'filepage-mediainfo-language' ]
 		} );
 		caption = new OO.ui.Element( {
 			content: [ captionContent ],
-			classes: [ 'caption' ]
+			classes: [ 'filepage-mediainfo-caption' ]
 		} );
 
 		if ( languageCode !== '' ) {
@@ -205,7 +205,7 @@
 	 */
 	sd.CaptionsPanel.prototype.reorderLanguageList = function () {
 		var captionLanguages = this.getCaptionLanguagesList(),
-			$visibleLanguageNodes = $( '.showLabel .language' ),
+			$visibleLanguageNodes = $( '.showLabel .filepage-mediainfo-language' ),
 			rearrangedCaptionLanguages = [];
 
 		$.each( $visibleLanguageNodes, function ( index, node ) {
@@ -271,7 +271,7 @@
 	};
 
 	sd.CaptionsPanel.prototype.warnIfTextApproachingLimit = function ( textInput ) {
-		var $caption = textInput.$element.parents( '.caption' ),
+		var $caption = textInput.$element.parents( '.filepage-mediainfo-caption' ),
 			lengthDiff = mw.config.get( 'maxCaptionLength' ) - textInput.getValue().length;
 		$caption.find( 'div.warning' ).remove();
 		if ( lengthDiff >= 0 && lengthDiff < this.config.warnWithinMaxCaptionLength ) {
@@ -294,10 +294,10 @@
 			textInputChecks.push(
 				textInput.getValidity()
 					.done( function () {
-						textInput.$element.parents( '.caption' ).find( 'div.error' ).remove();
+						textInput.$element.parents( '.filepage-mediainfo-caption' ).find( 'div.error' ).remove();
 					} )
 					.fail( function () {
-						var $caption = textInput.$element.parents( '.caption' );
+						var $caption = textInput.$element.parents( '.filepage-mediainfo-caption' );
 						$caption.find( 'div.warning' ).remove();
 						$caption.find( 'div.error' ).remove();
 						$caption.append(
@@ -365,22 +365,20 @@
 			captionsPanel.refreshLanguageSelectorsOptions();
 			dir = $.uls.data.getDir( languageSelector.getValue() );
 			$parentRow = languageSelector.$element.parents( captionsPanel.entityTermSelector );
-			$parentRow.find( '.language' ).attr( 'dir', dir );
-			$parentRow.find( '.caption' ).attr( 'dir', dir );
-			$parentRow.find( '.caption textarea' ).attr( 'dir', dir );
+			$parentRow.find( '.filepage-mediainfo-language' ).attr( 'dir', dir );
+			$parentRow.find( '.filepage-mediainfo-caption' ).attr( 'dir', dir );
+			$parentRow.find( '.filepage-mediainfo-textInput' ).attr( 'dir', dir );
 		} );
 		this.languageSelectors[ index ] = languageSelector;
 
-		textInput = new OO.ui.MultilineTextInputWidget( {
-			rows: 1,
-			autosize: true,
+		textInput = new OO.ui.TextInputWidget( {
 			validate: function ( value ) {
 				return value.length <= mw.config.get( 'maxCaptionLength' );
 			},
 			value: captionData.text,
 			dir: captionData.direction,
 			placeholder: captionData.text === '' ? mw.message( 'wikibasemediainfo-filepage-caption-empty' ).text() : '',
-			classes: [ 'textInput' ]
+			classes: [ 'filepage-mediainfo-textInput' ]
 		} );
 		textInput.on( 'change', function () {
 			captionsPanel.warnIfTextApproachingLimit( textInput );
@@ -394,6 +392,9 @@
 					}
 				);
 		} );
+		textInput.on( 'enter', function () {
+			captionsPanel.sendData();
+		} );
 		this.textInputs[ index ] = textInput;
 
 		$row = this.createCaptionRow(
@@ -404,7 +405,7 @@
 			this.textInputs[ index ].$element,
 			false
 		);
-		$row.find( '.caption' )
+		$row.find( '.filepage-mediainfo-caption' )
 			.append( this.createRowDeleter( $row ).$element );
 		return $row;
 	};
@@ -434,7 +435,7 @@
 		} );
 		$.each( this.textInputs, function ( index, textInput ) {
 			textInput.setDisabled( true );
-			textInput.$element.parents( '.caption' ).find( '.deleter' ).hide();
+			textInput.$element.parents( '.filepage-mediainfo-caption' ).find( '.deleter' ).hide();
 		} );
 	};
 
@@ -444,7 +445,7 @@
 		} );
 		$.each( this.textInputs, function ( index, textInput ) {
 			textInput.setDisabled( false );
-			textInput.$element.parents( '.caption' ).find( '.deleter' ).show();
+			textInput.$element.parents( '.filepage-mediainfo-caption' ).find( '.deleter' ).show();
 		} );
 	};
 
@@ -821,7 +822,7 @@
 				captionsPanel.enableAllFormInputs();
 				$caption =
 					$( captionsPanel.contentSelector ).find(
-						'.entity-term[data-index="' + error.index + '"] .caption'
+						'.entity-term[data-index="' + error.index + '"] .filepage-mediainfo-caption'
 					);
 				$caption.find( 'div.error' ).remove();
 				$caption.find( 'div.warning' ).remove();

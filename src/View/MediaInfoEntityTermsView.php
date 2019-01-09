@@ -199,7 +199,7 @@ class MediaInfoEntityTermsView {
 
 		$languageElement = new LabelWidget( [
 			'label' => $languageName,
-			'classes' => [ 'language' ]
+			'classes' => [ 'filepage-mediainfo-language' ]
 		] );
 		$languageElement->setAttributes( [
 			'lang' => $languageCode,
@@ -224,14 +224,14 @@ class MediaInfoEntityTermsView {
 		] );
 		if ( !$showCaption ) {
 			$layout->setAttributes( [
-				'style' => "display:none;",
+				'style' => 'display:none;',
 			] );
 		}
 		return $layout;
 	}
 
 	private function getCaptionElementForLanguage( TermList $termList, $languageCode ) {
-		$classes = [ 'caption' ];
+		$classes = [ 'filepage-mediainfo-caption' ];
 		try {
 			$captionText = $termList->getByLanguage( $languageCode )->getText();
 		} catch ( \OutOfBoundsException $e ) {

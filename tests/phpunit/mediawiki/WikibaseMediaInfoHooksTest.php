@@ -261,8 +261,8 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 
 		WikibaseMediaInfoHooks::onBeforePageDisplay( $out, $skin );
 
-		$this->assertEquals(
-			$parserOutputTag .  $captions . $extraHtml,
+		$this->assertRegExp(
+			'/' . $parserOutputTag . '.*' . $captions . $extraHtml . '/',
 			$out->getHTML()
 		);
 	}
@@ -271,7 +271,7 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 	 * If there is no captions data in the output, then an empty caption is created in
 	 * the appropriate spot
 	 */
-	public function testOnBeforePageDisplay_moveAbsentCaptions() {
+	public function testOnBeforePageDisplay_moveAbsentCaptionsAndHeader() {
 		$imgTitle = Title::makeTitle( NS_FILE, 'Foo.jpg' );
 		$imgTitle->resetArticleID( 23 );
 		$out = $this->getMockOutputPage( $imgTitle );
@@ -327,8 +327,10 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 			$mockViewFactory
 		);
 
-		$this->assertEquals(
-			$parserOutputTag .  $entityHtml . $extraHtml,
+		$this->assertRegExp(
+			'/' . $parserOutputTag .
+			'<h1 class="mw-slot-header">[^<]+<\/h1>' .
+			$entityHtml . $extraHtml . '/',
 			$out->getHTML()
 		);
 	}

@@ -309,6 +309,7 @@ class WikibaseMediaInfoHooks {
 	private function moveStructuredDataHeader( $text, $out ) {
 
 		// First do the move
+		$header = '<h1 class="mw-slot-header">' . self::MEDIAINFO_SLOT_HEADER_PLACEHOLDER . '</h1>';
 		if (
 			preg_match(
 				self::getStructuredDataHeaderRegex(),
@@ -316,16 +317,16 @@ class WikibaseMediaInfoHooks {
 				$matches
 			)
 		) {
-			// Take from the old place
-			$text = str_replace( $matches[0], '', $text );
-
-			// Add at the new place
-			$text = preg_replace(
-				'/<div class="mw-parser-output">/',
-				'<div class="mw-parser-output">' . $matches[0],
-				$text
-			);
+			$header = $matches[0];
+			// Delete from the old place
+			$text = str_replace( $header, '', $text );
 		}
+		// Add at the new place
+		$text = preg_replace(
+			'/<div class="mw-parser-output">/',
+			'<div class="mw-parser-output">' . $header,
+			$text
+		);
 
 		// Now replace the placeholder
 		$textProvider = new MediaWikiLocalizedTextProvider( $out->getLanguage() );

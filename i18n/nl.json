@@ -2,18 +2,27 @@
 	"@metadata": {
 		"authors": [
 			"Mainframe98",
-			"Jdforrester"
+			"Jdforrester",
+			"Spinster"
 		]
 	},
-	"wikibase-entity-mediainfo": "media informatie",
-	"wikibasemediainfo-desc": "Wikibase uitbreiding voor het beheren van gestructureerde metadata van mediabestanden",
+	"right-mediainfo-term": "Pas de media-informatietermen aan (onderschriften, samenvattingen)",
+	"slot-name-mediainfo": "Gestructureerde media-informatie",
+	"wikibase-entity-mediainfo": "media-informatie",
+	"wikibase-mediainfo-summary-wbsetlabel-add": "[$1] bijschrift toegevoegd",
+	"wikibase-mediainfo-summary-wbsetlabel-remove": "[$1] bijschrift verwijderd",
+	"wikibase-mediainfo-summary-wbsetlabel-set": "[$1] bijschrift aangepast",
+	"wikibasemediainfo-desc": "Wikibase-uitbreiding om gestructureerde metadata van mediabestanden te beheren",
 	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Bijschriften",
+	"wikibasemediainfo-filepage-structured-data-heading": "Gestructureerde data",
 	"wikibasemediainfo-filepage-captions-title": "Bijschriften",
+	"wikibasemediainfo-filepage-more-languages": "Zie $1 extra {{PLURAL:$1|taal|talen}}",
+	"wikibasemediainfo-filepage-fewer-languages": "Zie minder talen",
 	"wikibasemediainfo-filepage-add-caption": "Voeg een bijschrift toe",
-	"wikibasemediainfo-filepage-edit-captions": "Bewerken bijschriften",
+	"wikibasemediainfo-filepage-edit-captions": "Bewerk de bijschriften",
 	"wikibasemediainfo-filepage-cancel": "Annuleren",
 	"wikibasemediainfo-filepage-publish": "Wijzigingen publiceren",
-	"wikibasemediainfo-filepage-caption-empty": "Voeg een eenregelige uitleg toe van wat dit bestand vertegenwoordigt",
+	"wikibasemediainfo-filepage-caption-empty": "Beschrijf in één regel wat dit bestand voorstelt",
 	"wikibasemediainfo-filepage-caption-too-long": "$1 {{PLURAL:$1|teken|tekens}} over de limiet",
 	"wikibasemediainfo-filepage-caption-approaching-limit": "$1 {{PLURAL:$1|teken|tekens|0=tekens}} over"
 }

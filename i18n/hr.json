@@ -1,0 +1,26 @@
+{
+	"@metadata": {
+		"authors": [
+			"MaGa"
+		]
+	},
+	"right-mediainfo-term": "Promjena podataka o mediju (opisi, sažetci)",
+	"slot-name-mediainfo": "Strukturirane informacije o mediju",
+	"wikibase-entity-mediainfo": "informacije o mediju",
+	"wikibase-mediainfo-summary-wbsetlabel-add": "Dodan [$1] opis",
+	"wikibase-mediainfo-summary-wbsetlabel-remove": "Uklonjen [$1] opis",
+	"wikibase-mediainfo-summary-wbsetlabel-set": "Uređen [$1] opis",
+	"wikibasemediainfo-desc": "Wikibase proširenje za upravljanje strukturiranim metapodatcima medijskih datoteka",
+	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Opisi",
+	"wikibasemediainfo-filepage-structured-data-heading": "Strukturirani podatci",
+	"wikibasemediainfo-filepage-captions-title": "Opisi",
+	"wikibasemediainfo-filepage-more-languages": "Vidi još $1 {{PLURAL:$1|jezik|jezika}}",
+	"wikibasemediainfo-filepage-fewer-languages": "Vidi manje jezika",
+	"wikibasemediainfo-filepage-add-caption": "Dodaj opis",
+	"wikibasemediainfo-filepage-edit-captions": "Uredi opise",
+	"wikibasemediainfo-filepage-cancel": "Otkaži",
+	"wikibasemediainfo-filepage-publish": "Objavi izmjene",
+	"wikibasemediainfo-filepage-caption-empty": "Dodajte kratko objašnjenje što predstavlja ova datoteka",
+	"wikibasemediainfo-filepage-caption-too-long": "$1 {{PLURAL:$1|znak prekoračen|znaka prekoračena|znakova prekoračeno}}",
+	"wikibasemediainfo-filepage-caption-approaching-limit": "Preostaje $1 {{PLURAL:$1|znak|znaka|0=znakova}}"
+}

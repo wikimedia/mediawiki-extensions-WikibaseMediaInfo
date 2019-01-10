@@ -11,6 +11,7 @@
 	"wikibase-mediainfo-summary-wbsetlabel-remove": "Überschrift [$1] entfernt",
 	"wikibase-mediainfo-summary-wbsetlabel-set": "Bildtext [$1] bearbeitet",
 	"wikibasemediainfo-desc": "Wikibase-Erweiterung zur Verwaltung strukturierter Metadaten von Mediendateien",
+	"wikibasemediainfo-diffview-label": "Beschreibung",
 	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Bildtexte",
 	"wikibasemediainfo-filepage-structured-data-heading": "Strukturierte Daten",
 	"wikibasemediainfo-filepage-captions-title": "Bildtexte",

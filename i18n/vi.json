@@ -2,10 +2,27 @@
 	"@metadata": {
 		"authors": [
 			"Minh Nguyen",
-			"Leduyquang753"
+			"Leduyquang753",
+			"Vinhtantran"
 		]
 	},
-	"slot-name-mediainfo": "Thông tin phương tiện có hệ thống",
+	"right-mediainfo-term": "Thay đổi các mục thông tin phương tiện (chú thích, tóm lược)",
+	"slot-name-mediainfo": "Thông tin tập tin phương tiện có cấu trúc",
 	"wikibase-entity-mediainfo": "thông tin phương tiện",
-	"wikibasemediainfo-desc": "Phần mở rộng Wikibase để quản lý siêu dữ liệu có cấu trúc của tập tin phương tiện"
+	"wikibase-mediainfo-summary-wbsetlabel-add": "Thêm chú thích bằng [$1]",
+	"wikibase-mediainfo-summary-wbsetlabel-remove": "Xóa chú thích bằng [$1]",
+	"wikibase-mediainfo-summary-wbsetlabel-set": "Sửa chú thích bằng [$1]",
+	"wikibasemediainfo-desc": "Phần mở rộng Wikibase để quản lý siêu dữ liệu có cấu trúc của tập tin phương tiện",
+	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Chú thích",
+	"wikibasemediainfo-filepage-structured-data-heading": "Dữ liệu có cấu trúc",
+	"wikibasemediainfo-filepage-captions-title": "Chú thích",
+	"wikibasemediainfo-filepage-more-languages": "Xem thêm $2 {{PLURAL:$1}}ngôn ngữ khác",
+	"wikibasemediainfo-filepage-fewer-languages": "Xem ít ngôn ngữ lại",
+	"wikibasemediainfo-filepage-add-caption": "Thêm chú thích",
+	"wikibasemediainfo-filepage-edit-captions": "Sửa chú thích",
+	"wikibasemediainfo-filepage-cancel": "Hủy bỏ",
+	"wikibasemediainfo-filepage-publish": "Đăng thay đổi",
+	"wikibasemediainfo-filepage-caption-empty": "Ghi một dòng giải thích những gì có trong tập tin này",
+	"wikibasemediainfo-filepage-caption-too-long": "Bị quá $1 {{PLURAL:$1}}ký tự",
+	"wikibasemediainfo-filepage-caption-approaching-limit": "Còn $1 {{PLURAL:$1}}ký tự"
 }

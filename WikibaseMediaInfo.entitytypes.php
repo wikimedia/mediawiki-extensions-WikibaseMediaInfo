@@ -19,6 +19,7 @@ use Wikibase\DataModel\DeserializerFactory;
 use Wikibase\DataModel\Entity\EntityDocument;
 use Wikibase\DataModel\Entity\EntityId;
 use Wikibase\DataModel\SerializerFactory;
+use Wikibase\DataModel\Services\EntityId\EntityIdFormatter;
 use Wikibase\DataModel\Services\Lookup\InProcessCachingDataTypeLookup;
 use Wikibase\LanguageFallbackChain;
 use Wikibase\Lib\LanguageNameLookup;
@@ -34,11 +35,14 @@ use Wikibase\MediaInfo\DataModel\Serialization\MediaInfoDeserializer;
 use Wikibase\MediaInfo\DataModel\Serialization\MediaInfoSerializer;
 use Wikibase\MediaInfo\DataModel\Services\Diff\MediaInfoDiffer;
 use Wikibase\MediaInfo\DataModel\Services\Diff\MediaInfoPatcher;
+use Wikibase\MediaInfo\Diff\BasicMediaInfoDiffVisualizer;
 use Wikibase\MediaInfo\Search\MediaInfoFieldDefinitions;
 use Wikibase\MediaInfo\Services\MediaInfoServices;
 use Wikibase\MediaInfo\Services\MediaInfoEntityQuery;
 use Wikibase\MediaInfo\View\MediaInfoEntityTermsView;
 use Wikibase\MediaInfo\View\MediaInfoView;
+use Wikibase\Repo\Diff\ClaimDiffer;
+use Wikibase\Repo\Diff\ClaimDifferenceVisualizer;
 use Wikibase\Repo\MediaWikiLanguageDirectionalityLookup;
 use Wikibase\Repo\MediaWikiLocalizedTextProvider;
 use Wikibase\Repo\Search\Elastic\Fields\DescriptionsProviderFieldDefinitions;
@@ -165,6 +169,21 @@ return [
 				$changeOpDeserializerFactory->getLabelsChangeOpDeserializer(),
 				$changeOpDeserializerFactory->getDescriptionsChangeOpDeserializer(),
 				$changeOpDeserializerFactory->getClaimsChangeOpDeserializer()
+			);
+		},
+		'entity-diff-visualizer-callback' => function (
+			MessageLocalizer $messageLocalizer,
+			ClaimDiffer $claimDiffer,
+			ClaimDifferenceVisualizer $claimDiffView,
+			SiteLookup $siteLookup,
+			EntityIdFormatter $entityIdFormatter
+		) {
+			return new BasicMediaInfoDiffVisualizer(
+				$messageLocalizer,
+				$claimDiffer,
+				$claimDiffView,
+				$siteLookup,
+				$entityIdFormatter
 			);
 		},
 		'entity-metadata-accessor-callback' => function( $dbName, $repoName ) {

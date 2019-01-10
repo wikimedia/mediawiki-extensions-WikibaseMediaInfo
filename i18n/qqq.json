@@ -12,6 +12,7 @@
 	"wikibase-mediainfo-summary-wbsetlabel-remove": "{{wikibase summary messages|entity|Automatic edit summary generated when removing a file's caption, which appears in the ''captions'' block underneath the thumbnail on the image page. Example edit summary is \"Removed [en] label\".}}",
 	"wikibase-mediainfo-summary-wbsetlabel-set": "{{wikibase summary messages|entity|Automatic edit summary generated when editing an file's caption, which appears in the ''captions'' block underneath the thumbnail on the image page. Example of a full edit summary is \"Updated [en] caption: A domestic cat relaxes in the sunshine.\".}}",
 	"wikibasemediainfo-desc": "{{desc|name=WikibaseMediaInfo|url=https://www.mediawiki.org/wiki/Extension:WikibaseMediaInfo}}",
+	"wikibasemediainfo-diffview-label": "Sub heading for caption changes in a diff.",
 	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "List of labels, aliases and descriptions in one or more languages: Heading of the \"caption\" column.\n{{Identical|Caption}}",
 	"wikibasemediainfo-filepage-structured-data-heading": "Label for the 'Structured data' section of the File page",
 	"wikibasemediainfo-filepage-captions-title": "Title for the section displaying multi-lingual file captions",

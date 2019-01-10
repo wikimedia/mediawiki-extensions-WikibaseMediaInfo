@@ -47,7 +47,6 @@
 		OO.ui.mixin.PendingElement.call( this, this.config );
 
 		this.currentRevision = mw.config.get( 'wbCurrentRevision' );
-		this.languages = mw.config.get( 'wbTermsLanguages' );
 		this.captionsData = {};
 		this.languageSelectors = [];
 		this.textInputs = [];
@@ -83,7 +82,7 @@
 	sd.CaptionsPanel.prototype.getDataForLangCode = function ( languageCode ) {
 		var captionData = new sd.CaptionData(
 			languageCode,
-			this.languages[ languageCode ],
+			$.uls.data.getAutonym( languageCode ),
 			$.uls.data.getDir( languageCode ),
 			''
 		);
@@ -178,7 +177,7 @@
 			) {
 				var caption = new sd.CaptionData(
 					langCode,
-					self.languages[ langCode ],
+					$.uls.data.getAutonym( langCode ),
 					$.uls.data.getDir( langCode ),
 					''
 				);
@@ -499,7 +498,7 @@
 				captionsPanel.markEntityAsNonEmpty();
 				captionsPanel.captionsData[ language ] = new sd.CaptionData(
 					language,
-					captionsPanel.languages[ language ],
+					$.uls.data.getAutonym( language ),
 					$.uls.data.getDir( language ),
 					text
 				);
@@ -672,7 +671,7 @@
 					function ( languageCode, labelObject ) {
 						refreshedLabelsData[ languageCode ] = new sd.CaptionData(
 							languageCode,
-							captionsPanel.languages[ languageCode ],
+							$.uls.data.getAutonym( languageCode ),
 							$.uls.data.getDir( languageCode ),
 							labelObject.value
 						);

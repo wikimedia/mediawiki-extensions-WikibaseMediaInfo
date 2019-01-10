@@ -6,16 +6,14 @@
 	 * A value object holding all data for a caption
 	 *
 	 * @constructor
-	 * @param {string} langCode 2-letter language code
-	 * @param {string} langText Language autonym
-	 * @param {string} langDir rtl or ltr
-	 * @param {string} captionText
+	 * @param {string} [langCode] 2-letter language code
+	 * @param {string} [captionText]
 	 */
-	sd.CaptionData = function CaptionData( langCode, langText, langDir, captionText ) {
-		this.languageCode = langCode;
-		this.languageText = langText;
-		this.direction = langDir;
-		this.text = captionText;
+	sd.CaptionData = function CaptionData( langCode, captionText ) {
+		this.languageCode = langCode || '';
+		this.languageText = $.uls.data.getAutonym( langCode );
+		this.direction = $.uls.data.getDir( langCode );
+		this.text = captionText || '';
 	};
 
 }( mw.mediaInfo.structuredData ) );

@@ -73,19 +73,12 @@
 			$caption = $row.find( '.filepage-mediainfo-caption' );
 		return new sd.CaptionData(
 			$language.attr( 'lang' ),
-			$language.text(),
-			$language.attr( 'dir' ),
 			$caption.hasClass( 'wbmi-empty' ) ? '' : $caption.text()
 		);
 	};
 
 	sd.CaptionsPanel.prototype.getDataForLangCode = function ( languageCode ) {
-		var captionData = new sd.CaptionData(
-			languageCode,
-			$.uls.data.getAutonym( languageCode ),
-			$.uls.data.getDir( languageCode ),
-			''
-		);
+		var captionData = new sd.CaptionData( languageCode, '' );
 		if ( this.captionsData[ languageCode ] !== undefined ) {
 			captionData = this.captionsData[ languageCode ];
 		}
@@ -175,12 +168,7 @@
 			if (
 				Object.prototype.hasOwnProperty.call( self.captionsData, langCode ) === false
 			) {
-				var caption = new sd.CaptionData(
-					langCode,
-					$.uls.data.getAutonym( langCode ),
-					$.uls.data.getDir( langCode ),
-					''
-				);
+				var caption = new sd.CaptionData( langCode, '' );
 				self.captionsData[ langCode ] = caption;
 			}
 		} );
@@ -349,7 +337,7 @@
 			$row;
 
 		if ( captionData === undefined ) {
-			captionData = new sd.CaptionData( '', '', '', '' );
+			captionData = new sd.CaptionData();
 		}
 
 		languageSelector = new sd.UlsWidget( {
@@ -496,12 +484,7 @@
 				var showCaptionFlags = captionsPanel.getShowCaptionFlagsByLangCode(),
 					captionLanguages = captionsPanel.getCaptionLanguagesList();
 				captionsPanel.markEntityAsNonEmpty();
-				captionsPanel.captionsData[ language ] = new sd.CaptionData(
-					language,
-					$.uls.data.getAutonym( language ),
-					$.uls.data.getDir( language ),
-					text
-				);
+				captionsPanel.captionsData[ language ] = new sd.CaptionData( language, text );
 				captionsPanel.currentRevision = result.entity.lastrevid;
 				captionsPanel.languageSelectors.splice( index, 1 );
 				captionsPanel.textInputs.splice( index, 1 );
@@ -671,8 +654,6 @@
 					function ( languageCode, labelObject ) {
 						refreshedLabelsData[ languageCode ] = new sd.CaptionData(
 							languageCode,
-							$.uls.data.getAutonym( languageCode ),
-							$.uls.data.getDir( languageCode ),
 							labelObject.value
 						);
 					}

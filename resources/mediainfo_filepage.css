@@ -23,6 +23,11 @@
 	margin-right: -0.25em;
 }
 
+/* Clear content after the entity view because it transitively floats */
+.filepage-mediainfo-entityview + * {
+	clear: both;
+}
+
 .filepage-mediainfo-entitytermsview .viewMore,
 .filepage-mediainfo-entitytermsview .viewLess,
 .filepage-mediainfo-entitytermsview .entity-term,

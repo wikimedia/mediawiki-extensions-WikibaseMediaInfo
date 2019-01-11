@@ -300,6 +300,21 @@
 		return textInputChecks;
 	};
 
+	// TODO: Re-write to be simpler and merge in doTextInputChecks (which is only called by this)?
+	sd.CaptionsPanel.prototype.refreshPublishState = function () {
+		var captionsPanel = this;
+
+		$.when.apply( null, this.doTextInputChecks() )
+			.then(
+				function () {
+					captionsPanel.editActionsWidget.enablePublish();
+				},
+				function () {
+					captionsPanel.editActionsWidget.disablePublish();
+				}
+			);
+	};
+
 	sd.CaptionsPanel.prototype.createRowDeleter = function ( $row ) {
 		var captionsPanel = this,
 			deleter = new OO.ui.ButtonWidget( {
@@ -321,6 +336,7 @@
 			$row.remove();
 			captionsPanel.refreshRowIndices();
 			captionsPanel.refreshLanguageSelectorsOptions();
+			captionsPanel.refreshPublishState();
 		} );
 		return deleter;
 	};
@@ -366,15 +382,7 @@
 		} );
 		textInput.on( 'change', function () {
 			captionsPanel.warnIfTextApproachingLimit( textInput );
-			$.when.apply( null, captionsPanel.doTextInputChecks() )
-				.then(
-					function () {
-						captionsPanel.editActionsWidget.enablePublish();
-					},
-					function () {
-						captionsPanel.editActionsWidget.disablePublish();
-					}
-				);
+			captionsPanel.refreshPublishState();
 		} );
 		textInput.on( 'enter', function () {
 			captionsPanel.sendData();

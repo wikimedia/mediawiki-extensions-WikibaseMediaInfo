@@ -63,6 +63,7 @@
 			this.options.buildStatementGroupListView( this.options.value, this.$statements );
 
 			// This is here to be sure there is never a duplicate id:
+			// eslint-disable-next-line jquery/no-global-selector
 			$( '.wikibase-statementgrouplistview' )
 				.prev( '.wb-section-heading' )
 				.first()

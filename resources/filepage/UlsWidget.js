@@ -20,7 +20,7 @@
 		// Show the ULS when a user tabs into the language selection field
 		this.dropdown.$handle.on( 'keyup', function ( e ) {
 			if ( e.key === 'Tab' ) {
-				$( this ).click();
+				$( this ).trigger( 'click' );
 			}
 		} );
 

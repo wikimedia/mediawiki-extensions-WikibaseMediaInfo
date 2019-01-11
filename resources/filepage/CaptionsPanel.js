@@ -37,7 +37,6 @@
 	 *   characters of the max
 	 */
 	sd.CaptionsPanel = function CaptionsPanel( config ) {
-		var self = this;
 		this.config = config || {};
 
 		// Parent constructor
@@ -58,10 +57,7 @@
 		this.entityTermSelector = '.' + this.config.entityTermClass;
 		this.captionLanguagesDataAttr = 'data-caption-languages';
 
-		this.userLanguages = [];
-		$.each( mw.config.get( 'wbUserSpecifiedLanguages' ), function ( index, langCode ) {
-			self.userLanguages.push( langCode );
-		} );
+		this.userLanguages = mw.config.get( 'wbUserSpecifiedLanguages' ).slice();
 	};
 
 	/* Inheritance */
@@ -192,11 +188,12 @@
 	 */
 	sd.CaptionsPanel.prototype.reorderLanguageList = function () {
 		var captionLanguages = this.getCaptionLanguagesList(),
+			// eslint-disable-next-line jquery/no-global-selector
 			$visibleLanguageNodes = $( '.showLabel .filepage-mediainfo-language' ),
 			rearrangedCaptionLanguages = [];
 
-		$.each( $visibleLanguageNodes, function ( index, node ) {
-			rearrangedCaptionLanguages.push( $( node ).attr( 'lang' ) );
+		$visibleLanguageNodes.each( function () {
+			rearrangedCaptionLanguages.push( $( this ).attr( 'lang' ) );
 		} );
 		this.userLanguages.forEach( function ( langCode ) {
 			if ( rearrangedCaptionLanguages.indexOf( langCode ) === -1 ) {
@@ -232,7 +229,7 @@
 	) {
 		var languages = {};
 		$.extend( languages, mw.config.get( 'wgULSLanguages' ) );
-		$.each( excludeLanguages, function ( index, languageCode ) {
+		excludeLanguages.forEach( function ( languageCode ) {
 			if ( languageCode !== includeLanguage ) {
 				delete languages[ languageCode ];
 			}
@@ -244,10 +241,10 @@
 		var captionsPanel = this,
 			currentlySelectedLanguages = [];
 
-		$.each( this.languageSelectors, function ( index, languageSelector ) {
+		this.languageSelectors.forEach( function ( languageSelector ) {
 			currentlySelectedLanguages.push( languageSelector.getValue() );
 		} );
-		$.each( this.languageSelectors, function ( index, languageSelector ) {
+		this.languageSelectors.forEach( function ( languageSelector ) {
 			languageSelector.updateLanguages(
 				captionsPanel.getAvailableLanguages(
 					currentlySelectedLanguages,
@@ -277,7 +274,7 @@
 
 	sd.CaptionsPanel.prototype.doTextInputChecks = function () {
 		var textInputChecks = [];
-		$.each( this.textInputs, function ( index, textInput ) {
+		this.textInputs.forEach( function ( textInput ) {
 			textInputChecks.push(
 				textInput.getValidity()
 					.done( function () {
@@ -401,9 +398,10 @@
 		var captionsPanel = this,
 			langCodesWithoutData = [];
 
+		// eslint-disable-next-line jquery/no-each-util
 		$.each( this.captionsData, function ( i, captionData ) {
 			var langCodeHasData = false;
-			$.each( captionsPanel.languageSelectors, function ( j, languageSelector ) {
+			captionsPanel.languageSelectors.forEach( function ( languageSelector ) {
 				if ( languageSelector.getValue() === captionData.languageCode ) {
 					langCodeHasData = true;
 					return false;
@@ -417,26 +415,27 @@
 	};
 
 	sd.CaptionsPanel.prototype.disableAllFormInputs = function () {
-		$.each( this.languageSelectors, function ( index, languageSelector ) {
+		this.languageSelectors.forEach( function ( languageSelector ) {
 			languageSelector.setDisabled( true );
 		} );
-		$.each( this.textInputs, function ( index, textInput ) {
+		this.textInputs.forEach( function ( textInput ) {
 			textInput.setDisabled( true );
 			textInput.$element.parents( '.filepage-mediainfo-caption' ).find( '.deleter' ).hide();
 		} );
 	};
 
 	sd.CaptionsPanel.prototype.enableAllFormInputs = function () {
-		$.each( this.languageSelectors, function ( index, languageSelector ) {
+		this.languageSelectors.forEach( function ( languageSelector ) {
 			languageSelector.setDisabled( false );
 		} );
-		$.each( this.textInputs, function ( index, textInput ) {
+		this.textInputs.forEach( function ( textInput ) {
 			textInput.setDisabled( false );
 			textInput.$element.parents( '.filepage-mediainfo-caption' ).find( '.deleter' ).show();
 		} );
 	};
 
 	sd.CaptionsPanel.prototype.entityIsEmpty = function () {
+		// eslint-disable-next-line jquery/no-global-selector
 		return $( '.emptyEntity' ).length > 0;
 	};
 
@@ -547,7 +546,7 @@
 				);
 			}
 		} );
-		$.each( rowsWithoutLanguage, function ( index, row ) {
+		rowsWithoutLanguage.forEach( function ( row ) {
 			row.remove();
 		} );
 		return chain;
@@ -581,7 +580,7 @@
 					delete self.captionsData[ langCodeToDelete ];
 					// ... and delete the language from the language list
 					var updatedCaptionLanguages = [];
-					$.each( captionLanguages, function ( index, langCode ) {
+					captionLanguages.forEach( function ( langCode ) {
 						if ( langCode !== langCodeToDelete ) {
 							updatedCaptionLanguages.push( langCode );
 						}
@@ -618,7 +617,7 @@
 	sd.CaptionsPanel.prototype.deleteRemovedData = function ( chain, removedLanguages ) {
 		var captionsPanel = this;
 
-		$.each( removedLanguages, function ( i, languageCode ) {
+		removedLanguages.forEach( function ( languageCode ) {
 			chain = chain.then( function () {
 				return captionsPanel.deleteIndividualLabel(
 					languageCode
@@ -644,11 +643,13 @@
 				captionsPanel.currentRevision = result.entities[ entityId ].lastrevid;
 				// Add any empty CaptionData objects to the list first, as they won't be returned
 				// from the api
+				// eslint-disable-next-line jquery/no-each-util
 				$.each( captionsPanel.captionsData, function ( index, captionData ) {
 					if ( captionData.text === '' ) {
 						refreshedLabelsData[ captionData.languageCode ] = captionData;
 					}
 				} );
+				// eslint-disable-next-line jquery/no-each-util
 				$.each(
 					result.entities[ entityId ].labels,
 					function ( languageCode, labelObject ) {
@@ -705,7 +706,7 @@
 			firstCaptionIsBlank,
 			indexedShowCaptionFlags = {};
 
-		$.each( captionLanguages, function ( index, langCode ) {
+		captionLanguages.forEach( function ( langCode, index ) {
 			var captionData = self.captionsData[ langCode ],
 				showCaption;
 			if ( index === 0 ) {

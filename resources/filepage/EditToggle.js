@@ -25,6 +25,7 @@
 
 		this.initialize = function () {
 			// Only allow editing if we're NOT on a diff page or viewing an older revision
+			// eslint-disable-next-line jquery/no-global-selector
 			if ( $( '.diff' ).length === 0 && $( '.mw-revision' ).length === 0 ) {
 				$( '.' + config.headerClass ).append( $element );
 			}

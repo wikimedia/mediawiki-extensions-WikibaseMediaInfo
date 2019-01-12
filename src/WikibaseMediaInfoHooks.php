@@ -150,8 +150,13 @@ class WikibaseMediaInfoHooks {
 	 * @param \Skin $skin
 	 */
 	public static function onBeforePageDisplay( $out, $skin ) {
-		// Exit if the extension is disabled.
-		if ( !MediaWikiServices::getInstance()->getMainConfig()->get( 'MediaInfoEnable' ) ) {
+		// Hide any MediaInfo content and UI on a page, if either …
+		if (
+			// the extension is disabled, or
+			!MediaWikiServices::getInstance()->getMainConfig()->get( 'MediaInfoEnable' ) ||
+			// the target page is a redirect.
+			$out->getTitle()->isRedirect()
+		) {
 			$out = self::deleteMediaInfoData( $out );
 			return;
 		}

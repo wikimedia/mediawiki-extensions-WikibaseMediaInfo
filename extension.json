@@ -27,6 +27,7 @@
 	"ServiceWiringFiles": [
 		"src/Services/MediaInfoServiceWiring.php"
 	],
+	"callback": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onRegistration",
 	"Hooks": {
 		"MediaWikiServices": [
 			"Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onMediaWikiServices"

@@ -143,6 +143,17 @@ class WikibaseMediaInfoHooks {
 		);
 	}
 
+	public static function onRegistration() {
+		if ( !class_exists( \Wikibase\EntityContent::class ) ) {
+			// HACK: Declaring a depency on Wikibase in extension.json requires Wikibase to have its own extension.json
+			throw new \ExtensionDependencyError( [ [
+				'msg' => 'WikibaseMediaInfo requires Wikibase to be installed.',
+				'type' => 'missing-phpExtension',
+				'missing' => 'Wikibase',
+			] ] );
+		}
+	}
+
 	/**
 	 * Replace mediainfo-specific placeholders (if any), move structured data, add data and modules
 	 *

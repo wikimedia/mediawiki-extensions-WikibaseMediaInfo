@@ -12,6 +12,7 @@
 	"wikibase-mediainfo-summary-wbsetlabel-remove": "Вилучено підпис [$1]",
 	"wikibase-mediainfo-summary-wbsetlabel-set": "Змінено підпис [$1]",
 	"wikibasemediainfo-desc": "Розширення Вікібази для управління структурованими метаданими медіафайлів",
+	"wikibasemediainfo-diffview-label": "підпис",
 	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Підписи",
 	"wikibasemediainfo-filepage-structured-data-heading": "Структуровані дані",
 	"wikibasemediainfo-filepage-captions-title": "Підписи",

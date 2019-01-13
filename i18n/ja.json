@@ -1,0 +1,27 @@
+{
+	"@metadata": {
+		"authors": [
+			"Omotecho"
+		]
+	},
+	"right-mediainfo-term": "メディアの情報項目を変更（キャプション、概要等）",
+	"slot-name-mediainfo": "構造化したメディア情報",
+	"wikibase-entity-mediainfo": "メディア情報",
+	"wikibase-mediainfo-summary-wbsetlabel-add": "キャプション[$1]件を追加",
+	"wikibase-mediainfo-summary-wbsetlabel-remove": "キャプション[$1]件を除去",
+	"wikibase-mediainfo-summary-wbsetlabel-set": "キャプション[$1]件を編集",
+	"wikibasemediainfo-desc": "ウィキベース拡張機能でメディアファイルの構造化メタデータを管理",
+	"wikibasemediainfo-diffview-label": "キャプション",
+	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "キャプション",
+	"wikibasemediainfo-filepage-structured-data-heading": "構造化データ",
+	"wikibasemediainfo-filepage-captions-title": "キャプション",
+	"wikibasemediainfo-filepage-more-languages": "$1件の{{PLURAL:$1|言語版|言語版}}表示を増やす",
+	"wikibasemediainfo-filepage-fewer-languages": "言語版表示を減らす",
+	"wikibasemediainfo-filepage-add-caption": "キャプションを追加する",
+	"wikibasemediainfo-filepage-edit-captions": "キャプションを編集する",
+	"wikibasemediainfo-filepage-cancel": "キャンセル",
+	"wikibasemediainfo-filepage-publish": "変更を公開",
+	"wikibasemediainfo-filepage-caption-empty": "このファイルの内容を1行で説明する",
+	"wikibasemediainfo-filepage-caption-too-long": "制限より$1 {{PLURAL:$1|文字}}超過",
+	"wikibasemediainfo-filepage-caption-approaching-limit": "残り $1 {{PLURAL:$1|文字}}"
+}

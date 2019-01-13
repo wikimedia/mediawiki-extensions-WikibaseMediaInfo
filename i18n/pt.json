@@ -13,6 +13,7 @@
 	"wikibase-mediainfo-summary-wbsetlabel-remove": "Legenda [$1] removida",
 	"wikibase-mediainfo-summary-wbsetlabel-set": "Legenda [$1] editada",
 	"wikibasemediainfo-desc": "Extensão Wikibase para gerir metadados estruturados de ficheiros multimédia",
+	"wikibasemediainfo-diffview-label": "legenda",
 	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Legendas",
 	"wikibasemediainfo-filepage-structured-data-heading": "Dados estruturados",
 	"wikibasemediainfo-filepage-captions-title": "Legendas",

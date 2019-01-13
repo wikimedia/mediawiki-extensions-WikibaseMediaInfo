@@ -13,6 +13,7 @@
 	"wikibase-mediainfo-summary-wbsetlabel-remove": "Légende [$1] supprimée",
 	"wikibase-mediainfo-summary-wbsetlabel-set": "Légende [$1] modifiée",
 	"wikibasemediainfo-desc": "Extension de Wikibase pour gérer les métadonnées structurées des fichiers de média",
+	"wikibasemediainfo-diffview-label": "légende",
 	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Légendes",
 	"wikibasemediainfo-filepage-structured-data-heading": "Données structurées",
 	"wikibasemediainfo-filepage-captions-title": "Légendes",
@@ -22,7 +23,7 @@
 	"wikibasemediainfo-filepage-edit-captions": "Modifier les légendes",
 	"wikibasemediainfo-filepage-cancel": "Annuler",
 	"wikibasemediainfo-filepage-publish": "Publier les modifications",
-	"wikibasemediainfo-filepage-caption-empty": "Ajoutez une ligne de description disant ce que représente ce fichier",
+	"wikibasemediainfo-filepage-caption-empty": "Ajoutez la description en une ligne de ce que représente ce fichier",
 	"wikibasemediainfo-filepage-caption-too-long": "$1 {{PLURAL:$1|caractère|caractères}} après la limite",
 	"wikibasemediainfo-filepage-caption-approaching-limit": "Il reste $1 {{PLURAL:$1|caractère|caractères|0=caractères}}"
 }

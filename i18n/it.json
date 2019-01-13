@@ -13,6 +13,7 @@
 	"wikibase-mediainfo-summary-wbsetlabel-remove": "Rimossa didascalia [$1]",
 	"wikibase-mediainfo-summary-wbsetlabel-set": "Modificata didascalia [$1]",
 	"wikibasemediainfo-desc": "Estensione Wikibase per gestire i metadati strutturati di file multimediali",
+	"wikibasemediainfo-diffview-label": "didascalia",
 	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Didascalie",
 	"wikibasemediainfo-filepage-structured-data-heading": "Dati strutturati",
 	"wikibasemediainfo-filepage-captions-title": "Didascalie",

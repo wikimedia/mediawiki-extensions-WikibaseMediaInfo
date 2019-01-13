@@ -1,8 +1,10 @@
 {
 	"@metadata": {
 		"authors": [
-			"StanProg"
+			"StanProg",
+			"Vlad5250"
 		]
 	},
+	"wikibasemediainfo-diffview-label": "описание",
 	"wikibasemediainfo-filepage-cancel": "Отказ"
 }

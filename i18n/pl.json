@@ -1,11 +1,28 @@
 {
 	"@metadata": {
 		"authors": [
-			"Chrumps"
+			"Chrumps",
+			"Woytecr"
 		]
 	},
+	"right-mediainfo-term": "Zmiana stwierdzeń w informacjach o pliku (opisy, podsumowania)",
+	"slot-name-mediainfo": "Informacje strukturyzowane o pliku",
+	"wikibase-entity-mediainfo": "informacje o pliku",
+	"wikibase-mediainfo-summary-wbsetlabel-add": "Dodano [$1] podpis",
+	"wikibase-mediainfo-summary-wbsetlabel-remove": "Usunięto [$1] podpis",
+	"wikibase-mediainfo-summary-wbsetlabel-set": "Zmieniono [$1] podpis",
+	"wikibasemediainfo-desc": "Rozszerzenie Wikibase do zarządzania strukturalizowanymi metadanymi plików multimedialnych",
+	"wikibasemediainfo-diffview-label": "podpis",
+	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Podpisy",
 	"wikibasemediainfo-filepage-structured-data-heading": "Dane strukturalne",
+	"wikibasemediainfo-filepage-captions-title": "Podpisy",
 	"wikibasemediainfo-filepage-more-languages": "Zobacz $1 {{PLURAL:$1|język|języki|języków}} więcej",
+	"wikibasemediainfo-filepage-fewer-languages": "Pokaż mniej języków",
+	"wikibasemediainfo-filepage-add-caption": "Dodaj podpis",
+	"wikibasemediainfo-filepage-edit-captions": "Zmień podpisy",
 	"wikibasemediainfo-filepage-cancel": "Anuluj",
-	"wikibasemediainfo-filepage-publish": "Opublikuj zmiany"
+	"wikibasemediainfo-filepage-publish": "Opublikuj zmiany",
+	"wikibasemediainfo-filepage-caption-empty": "Dodaj jednolinijkowe objaśnienie tego, co ten plik pokazuje",
+	"wikibasemediainfo-filepage-caption-too-long": "Przekroczono limit o $1 {{PLURAL:$1|znak|znaki|znaków}}",
+	"wikibasemediainfo-filepage-caption-approaching-limit": "Pozostał{{PLURAL:$1|y|o}} $1 {{PLURAL:$1|znak|znaki|znaków}}"
 }

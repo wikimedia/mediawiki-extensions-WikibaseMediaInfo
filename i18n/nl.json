@@ -13,6 +13,7 @@
 	"wikibase-mediainfo-summary-wbsetlabel-remove": "[$1] bijschrift verwijderd",
 	"wikibase-mediainfo-summary-wbsetlabel-set": "[$1] bijschrift aangepast",
 	"wikibasemediainfo-desc": "Wikibase-uitbreiding om gestructureerde metadata van mediabestanden te beheren",
+	"wikibasemediainfo-diffview-label": "bijschrift",
 	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Bijschriften",
 	"wikibasemediainfo-filepage-structured-data-heading": "Gestructureerde data",
 	"wikibasemediainfo-filepage-captions-title": "Bijschriften",

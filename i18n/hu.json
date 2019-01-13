@@ -1,0 +1,26 @@
+{
+	"@metadata": {
+		"authors": [
+			"Tacsipacsi"
+		]
+	},
+	"slot-name-mediainfo": "Strukturált médiainformációk",
+	"wikibase-entity-mediainfo": "médiainformációk",
+	"wikibase-mediainfo-summary-wbsetlabel-add": "[$1] képaláírás hozzáadása",
+	"wikibase-mediainfo-summary-wbsetlabel-remove": "[$1] képaláírás eltávolítása",
+	"wikibase-mediainfo-summary-wbsetlabel-set": "[$1] képaláírás szerkesztése",
+	"wikibasemediainfo-desc": "Wikibase-kiterjesztés médiafájlok strukturált metaadatainak kezeléséhez",
+	"wikibasemediainfo-diffview-label": "képaláírás",
+	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Képaláírások",
+	"wikibasemediainfo-filepage-structured-data-heading": "Strukturált adatok",
+	"wikibasemediainfo-filepage-captions-title": "Képaláírások",
+	"wikibasemediainfo-filepage-more-languages": "$1 további nyelv megjelenítése",
+	"wikibasemediainfo-filepage-fewer-languages": "Kevesebb nyelv megjelenítése",
+	"wikibasemediainfo-filepage-add-caption": "Képaláírás hozzáadása",
+	"wikibasemediainfo-filepage-edit-captions": "Képaláírások szerkesztése",
+	"wikibasemediainfo-filepage-cancel": "Mégse",
+	"wikibasemediainfo-filepage-publish": "Változtatások közzététele",
+	"wikibasemediainfo-filepage-caption-empty": "Adj meg egy egysoros magyarázatot arról, hogy mit mutat be ez a fájl",
+	"wikibasemediainfo-filepage-caption-too-long": "A megengedettnél $1 karakterrel több",
+	"wikibasemediainfo-filepage-caption-approaching-limit": "$1 karakter maradt"
+}

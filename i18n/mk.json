@@ -5,11 +5,13 @@
 		]
 	},
 	"right-mediainfo-term": "Менување на инфорамциски поими за слики и снимки (описи, кратки прегледи во текст)",
+	"slot-name-mediainfo": "Структурирани информации за сликата/снимката",
 	"wikibase-entity-mediainfo": "инфо за снимка",
 	"wikibase-mediainfo-summary-wbsetlabel-add": "Додаден [$1] титл",
 	"wikibase-mediainfo-summary-wbsetlabel-remove": "Отстранет [$1] титл",
 	"wikibase-mediainfo-summary-wbsetlabel-set": "Изменет [$1] титл",
 	"wikibasemediainfo-desc": "Додаток на Викибазата за управување со структурирани метаподатоци на слики и снимки",
+	"wikibasemediainfo-diffview-label": "опис",
 	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Описи",
 	"wikibasemediainfo-filepage-structured-data-heading": "Структурирани податоци",
 	"wikibasemediainfo-filepage-captions-title": "Описи",

@@ -14,6 +14,7 @@
 	"wikibase-mediainfo-summary-wbsetlabel-remove": "تمت إزالة التسمية التوضيحية [$1]",
 	"wikibase-mediainfo-summary-wbsetlabel-set": "تم تعديل التسمية التوضيحية [$1]",
 	"wikibasemediainfo-desc": "امتداد Wikibase لإدارة البيانات الوصفية المهيكلة لملفات الوسائط",
+	"wikibasemediainfo-diffview-label": "الشرح",
 	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "الشروحات",
 	"wikibasemediainfo-filepage-structured-data-heading": "البيانات الهيكلية",
 	"wikibasemediainfo-filepage-captions-title": "التعليقات",

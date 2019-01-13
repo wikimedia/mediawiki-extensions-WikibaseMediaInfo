@@ -13,6 +13,7 @@
 	"wikibase-mediainfo-summary-wbsetlabel-remove": "Уклоњен натпис ([$1])",
 	"wikibase-mediainfo-summary-wbsetlabel-set": "Уређени натписи ([$1])",
 	"wikibasemediainfo-desc": "Есктензија Wikibase за управљање структурисаним метаподацима медијских датотека",
+	"wikibasemediainfo-diffview-label": "натпис",
 	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Натписи",
 	"wikibasemediainfo-filepage-structured-data-heading": "Структурирани подаци",
 	"wikibasemediainfo-filepage-captions-title": "Натписи",

@@ -213,8 +213,10 @@ class WikibaseMediaInfoHooks {
 		$entityId = $this->entityIdFromPageId( $pageId );
 
 		$out->addJsConfigVars( [
-			'wbUserSpecifiedLanguages' => $userLanguageLookup->getAllUserLanguages(
-				$out->getUser()
+			'wbUserSpecifiedLanguages' => array_values(
+				$userLanguageLookup->getAllUserLanguages(
+					$out->getUser()
+				)
 			),
 			'wbCurrentRevision' => $out->getWikiPage()->getRevision()->getId(),
 			'wbEntityId' => $entityId->getSerialization(),

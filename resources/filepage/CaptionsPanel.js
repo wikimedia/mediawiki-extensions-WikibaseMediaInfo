@@ -229,7 +229,7 @@
 	) {
 		var languages = {};
 		$.extend( languages, mw.config.get( 'wgULSLanguages' ) );
-		excludeLanguages.forEach( function ( languageCode ) {
+		( excludeLanguages || [] ).forEach( function ( languageCode ) {
 			if ( languageCode !== includeLanguage ) {
 				delete languages[ languageCode ];
 			}

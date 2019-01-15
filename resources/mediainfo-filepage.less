@@ -2,6 +2,11 @@
 	clear: both;
 }
 
+/* Clear content after the entity view because it transitively floats */
+.filepage-mediainfo-entityview + * {
+	clear: both;
+}
+
 .filepage-mediainfo-entitytermsview {
 	padding-top: 0.6em;
 	float: left;
@@ -11,112 +16,110 @@
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
 	margin-bottom: 2em;
+
+	h3 {
+		border-bottom: 1px solid #a2a9b1;
+		padding: 0.8em 0.8em 0.4em 1em;
+		font-size: 1em;
+		margin: 0 0 1.4em 0;
+
+		.editButton {
+			float: right;
+			margin-top: -0.75em;
+			margin-right: -0.25em;
+		}
+	}
+
+	.viewMore,
+	.viewLess,
+	.entity-term,
+	.editActions
+	{
+		padding: 0.8em 0;
+		border: 0;
+		margin: 0 4%;
+		vertical-align: top;
+		float: left;
+		clear: both;
+		width: 92%;
+	}
+
+	.entity-term:not( :last-child ) {
+		border-bottom: 1px solid #c8ccd1;
+	}
+
+	&.editable .entity-term {
+		border-bottom: 0;
+	}
+
+	.entity-term .filepage-mediainfo-language {
+		float: left;
+		min-width: 9em;
+		width: 18%;
+		padding-right: 4%;
+		height: 100%;
+		text-align: left;
+	}
+
+	.entity-term .filepage-mediainfo-caption {
+		float: left;
+		min-width: 9em;
+		width: 78%;
+	}
+
+	.filepage-mediainfo-caption .filepage-mediainfo-textInput {
+		width: 90%;
+		float: left;
+	}
+
+	.filepage-mediainfo-caption .deleter {
+		float: left;
+	}
+
+	/* T208849: Style empty captions as WMUI's @color-placeholder === @wmui-color-base30 */
+	.wbmi-empty {
+		color: #72777d;
+	}
+
+	.entity-term div.error {
+		padding: 0.2em 0.5em;
+		font-size: 0.9em;
+		font-weight: bold;
+		float: left;
+		clear: left;
+	}
+
+	.entity-term div.warning {
+		padding: 0.2em 0.5em;
+		font-size: 0.9em;
+		font-weight: bold;
+		float: left;
+		clear: left;
+	}
 }
 
-.filepage-mediainfo-entitytermsview h3 {
-	border-bottom: 1px solid #a2a9b1;
-	padding: 0.8em 0.8em 0.4em 1em;
-	font-size: 1em;
-	margin: 0 0 1.4em 0;
-}
+/* stylelint-disable-next-line no-descending-specificity */
+.editActions {
+	.addMore {
+		float: left;
 
-.filepage-mediainfo-entitytermsview h3 .editButton {
-	float: right;
-	margin-top: -0.75em;
-	margin-right: -0.25em;
-}
+		label {
+			padding-top: 0.2em;
+		}
+	}
 
-/* Clear content after the entity view because it transitively floats */
-.filepage-mediainfo-entityview + * {
-	clear: both;
-}
+	.cancelAndPublish {
+		float: right;
+	}
 
-.filepage-mediainfo-entitytermsview .viewMore,
-.filepage-mediainfo-entitytermsview .viewLess,
-.filepage-mediainfo-entitytermsview .entity-term,
-.filepage-mediainfo-entitytermsview .editActions
-{
-	padding: 0.8em 0;
-	border: 0;
-	margin: 0 4%;
-	vertical-align: top;
-	float: left;
-	clear: both;
-	width: 92%;
-}
+	.cancel {
+		float: left;
+		padding-right: 0.8em;
+	}
 
-.filepage-mediainfo-entitytermsview .entity-term:not( :last-child ) {
-	border-bottom: 1px solid #c8ccd1;
-}
-
-.filepage-mediainfo-entitytermsview.editable .entity-term {
-	border-bottom: 0;
-}
-
-.filepage-mediainfo-entitytermsview .entity-term .filepage-mediainfo-language {
-	float: left;
-	min-width: 9em;
-	width: 18%;
-	padding-right: 4%;
-	height: 100%;
-	text-align: left;
-}
-
-.filepage-mediainfo-entitytermsview .entity-term .filepage-mediainfo-caption {
-	float: left;
-	min-width: 9em;
-	width: 78%;
-}
-
-.filepage-mediainfo-entitytermsview .filepage-mediainfo-caption .filepage-mediainfo-textInput {
-	width: 90%;
-	float: left;
-}
-
-.filepage-mediainfo-entitytermsview .filepage-mediainfo-caption .deleter {
-	float: left;
-}
-
-/* T208849: Style empty captions as WMUI's @color-placeholder === @wmui-color-base30 */
-.filepage-mediainfo-entitytermsview .wbmi-empty {
-	color: #72777d;
-}
-
-.filepage-mediainfo-entitytermsview .entity-term div.error {
-	padding: 0.2em 0.5em;
-	font-size: 0.9em;
-	font-weight: bold;
-	float: left;
-	clear: left;
-}
-
-.filepage-mediainfo-entitytermsview .entity-term div.warning {
-	padding: 0.2em 0.5em;
-	font-size: 0.9em;
-	font-weight: bold;
-	float: left;
-	clear: left;
-}
-
-.editActions .addMore {
-	float: left;
-}
-
-.editActions .addMore label {
-	padding-top: 0.2em;
-}
-
-.editActions .cancelAndPublish {
-	float: right;
-}
-
-.editActions .cancel {
-	float: left;
-	padding-right: 0.8em;
-}
-
-.editActions .publish {
-	float: right;
+	.publish {
+		float: right;
+	}
 }
 
 /* Some OOUI styles are loaded inline - add some here to prevent FOUC */

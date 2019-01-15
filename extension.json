@@ -151,12 +151,12 @@
 		},
 		"wikibase.mediainfo.styles": {
 			"styles": [
-				"resources/mediainfo.css"
+				"resources/mediainfo.less"
 			]
 		},
 		"wikibase.mediainfo.filepagestyles": {
 			"styles": [
-				"resources/mediainfo_filepage.css"
+				"resources/mediainfo-filepage.less"
 			]
 		}
 	},

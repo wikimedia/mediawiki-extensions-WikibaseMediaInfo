@@ -162,7 +162,7 @@ class MediaInfoContentTest extends \PHPUnit\Framework\TestCase {
 		$entity = new MediaInfo(
 			new MediaInfoId( 'M123' ),
 			new TermList( [ new Term( 'en', 'label1' ), new Term( 'de', 'label2' ) ] ),
-			new TermList( [ new Term( 'en', 'descen' ), new Term( 'de', 'descde' ) ] ),
+			new TermList( [ /* MediaInfo entities will not have descriptions */ ] ),
 			new StatementList(
 				new Statement(
 					new PropertyValueSnak(

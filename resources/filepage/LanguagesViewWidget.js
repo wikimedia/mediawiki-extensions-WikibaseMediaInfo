@@ -18,7 +18,7 @@
 			flags: 'progressive',
 			label: mw.message(
 				'wikibasemediainfo-filepage-more-languages',
-				$( contentSelector ).find( '.entity-term' ).length - 1
+				$( contentSelector ).find( '.wbmi-entityview-entitycontent' ).length - 1
 			).text(),
 			framed: false
 		} )
@@ -31,7 +31,7 @@
 
 		var viewMore = new OO.ui.Element( {
 			content: [ viewMoreButton ],
-			classes: [ 'viewMore' ]
+			classes: [ 'wbmi-entityview-viewMoreButton' ]
 		} );
 
 		var viewLessButton = new OO.ui.ButtonWidget( {
@@ -51,12 +51,12 @@
 
 		var viewLess = new OO.ui.Element( {
 			content: [ viewLessButton ],
-			classes: [ 'viewLess' ]
+			classes: [ 'wbmi-entityview-viewLessButton' ]
 		} );
 
 		this.refreshLabel = function () {
 			var hideableRowCount = $( contentSelector )
-				.find( '.entity-term:not(.showLabel)' ).length;
+				.find( '.wbmi-entityview-entitycontent:not(.wbmi-entityview-showLabel)' ).length;
 			viewMoreButton.setLabel(
 				mw.message(
 					'wikibasemediainfo-filepage-more-languages',
@@ -68,15 +68,15 @@
 		this.expand = function () {
 			var $captionsContent = $( contentSelector );
 			viewMore.$element.detach();
-			$captionsContent.find( '.entity-term' ).show();
-			if ( $captionsContent.find( '.entity-term:not(.showLabel)' ).length > 0 ) {
+			$captionsContent.find( '.wbmi-entityview-entitycontent' ).show();
+			if ( $captionsContent.find( '.wbmi-entityview-entitycontent:not(.wbmi-entityview-showLabel)' ).length > 0 ) {
 				$captionsContent.append( viewLess.$element );
 			}
 		};
 
 		this.collapse = function () {
 			var $captionsContent = $( contentSelector ),
-				$rows = $captionsContent.find( '.entity-term:not(.showLabel)' );
+				$rows = $captionsContent.find( '.wbmi-entityview-entitycontent:not(.wbmi-entityview-showLabel)' );
 			var rowCount = $rows.length;
 			if ( rowCount < 1 ) {
 				return;
@@ -87,7 +87,7 @@
 		};
 
 		this.hide = function () {
-			$( contentSelector ).find( '.entity-term' ).show();
+			$( contentSelector ).find( '.wbmi-entityview-entitycontent' ).show();
 			viewLess.$element.detach();
 			viewMore.$element.detach();
 		};

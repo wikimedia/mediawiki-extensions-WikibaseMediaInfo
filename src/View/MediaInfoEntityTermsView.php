@@ -42,8 +42,8 @@ class MediaInfoEntityTermsView {
 	 */
 	private $fallbackChain;
 
-	const CAPTION_EMPTY_CLASS = 'wbmi-empty';
-	const SHOW_CAPTION_CLASS = 'showLabel';
+	const CAPTION_EMPTY_CLASS = 'wbmi-entityview-emptyCaption';
+	const SHOW_CAPTION_CLASS = 'wbmi-entityview-showLabel';
 
 	/**
 	 * MediaInfoEntityTermsView constructor.
@@ -76,7 +76,7 @@ class MediaInfoEntityTermsView {
 		MediaInfo $entity
 	) {
 		$layout = new PanelLayout( [
-			'classes' => [ 'filepage-mediainfo-entitytermsview' ],
+			'classes' => [ 'wbmi-entityview-content', /* Temporary old classname for user gadget b/c */ 'filepage-mediainfo-entitytermsview' ],
 			'scrollable' => false,
 			'padded' => false,
 			'expanded' => false,
@@ -98,7 +98,7 @@ class MediaInfoEntityTermsView {
 
 	private function getCaptionsHeader() {
 		$header = new Tag( 'h3' );
-		$header->addClasses( [ 'mediainfo-captions-header' ] );
+		$header->addClasses( [ 'wbmi-entityview-captions-header' ] );
 		$header->appendContent(
 			$this->textProvider->get(
 				'wikibasemediainfo-entitytermsforlanguagelistview-caption'
@@ -199,7 +199,7 @@ class MediaInfoEntityTermsView {
 
 		$languageElement = new LabelWidget( [
 			'label' => $languageName,
-			'classes' => [ 'filepage-mediainfo-language' ]
+			'classes' => [ 'wbmi-language-label' ]
 		] );
 		$languageElement->setAttributes( [
 			'lang' => $languageCode,
@@ -211,7 +211,7 @@ class MediaInfoEntityTermsView {
 			$languageCode
 		);
 
-		$classes = [ 'entity-term' ];
+		$classes = [ 'wbmi-entityview-entitycontent' ];
 		if ( $showCaption ) {
 			$classes[] = self::SHOW_CAPTION_CLASS;
 		}
@@ -231,7 +231,7 @@ class MediaInfoEntityTermsView {
 	}
 
 	private function getCaptionElementForLanguage( TermList $termList, $languageCode ) {
-		$classes = [ 'filepage-mediainfo-caption' ];
+		$classes = [ 'wbmi-caption-value' ];
 		try {
 			$captionText = $termList->getByLanguage( $languageCode )->getText();
 		} catch ( \OutOfBoundsException $e ) {

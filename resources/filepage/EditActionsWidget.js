@@ -36,16 +36,16 @@
 				captionsPanel.sendData();
 			} );
 
-		var cancelAndPublish = new OO.ui.Element( {
+		var cancelAndPublishButtons = new OO.ui.Element( {
 			content: [ cancelButton, publishButton ],
-			classes: [ 'cancelAndPublish' ]
+			classes: [ 'wbmi-entityview-cancelAndPublishButtons' ]
 		} );
 
 		var addCaptionButton = new OO.ui.ButtonWidget( {
 			icon: 'add',
 			label: mw.message( 'wikibasemediainfo-filepage-add-caption' ).text(),
 			flags: 'progressive',
-			classes: [ 'addMore' ],
+			classes: [ 'wbmi-entityview-addCaptionButton' ],
 			framed: false
 		} )
 			.on( 'click', function () {
@@ -53,8 +53,8 @@
 			} );
 
 		var editActions = new OO.ui.Element( {
-			content: [ addCaptionButton, cancelAndPublish ],
-			classes: [ 'editActions' ]
+			content: [ addCaptionButton, cancelAndPublishButtons ],
+			classes: [ 'wbmi-entityview-editActions' ]
 		} );
 
 		this.hide = function () {

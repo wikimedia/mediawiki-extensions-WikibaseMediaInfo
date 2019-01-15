@@ -65,11 +65,11 @@
 	OO.mixinClass( sd.CaptionsPanel, OO.ui.mixin.PendingElement );
 
 	sd.CaptionsPanel.prototype.readDataFromReadOnlyRow = function ( $row ) {
-		var $language = $row.find( '.filepage-mediainfo-language' ),
-			$caption = $row.find( '.filepage-mediainfo-caption' );
+		var $language = $row.find( '.wbmi-language-label' ),
+			$caption = $row.find( '.wbmi-caption-value' );
 		return new sd.CaptionData(
 			$language.attr( 'lang' ),
-			$caption.hasClass( 'wbmi-empty' ) ? '' : $caption.text()
+			$caption.hasClass( 'wbmi-entityview-emptyCaption' ) ? '' : $caption.text()
 		);
 	};
 
@@ -96,11 +96,11 @@
 
 		language = new OO.ui.Element( {
 			content: [ languageContent ],
-			classes: [ 'filepage-mediainfo-language' ]
+			classes: [ 'wbmi-language-label' ]
 		} );
 		caption = new OO.ui.Element( {
 			content: [ captionContent ],
-			classes: [ 'filepage-mediainfo-caption' ]
+			classes: [ 'wbmi-caption-value' ]
 		} );
 
 		if ( languageCode !== '' ) {
@@ -113,13 +113,13 @@
 		}
 
 		if ( captionContent === '' ) {
-			caption.$element.addClass( 'wbmi-empty' );
+			caption.$element.addClass( 'wbmi-entityview-emptyCaption' );
 			caption.$element.text( mw.message( 'wikibasemediainfo-filepage-caption-empty' ).text() );
 		}
 
 		rowClasses = [ this.config.entityTermClass ];
 		if ( showCaption ) {
-			rowClasses.push( 'showLabel' );
+			rowClasses.push( 'wbmi-entityview-showLabel' );
 		}
 		row = new OO.ui.HorizontalLayout( {
 			items: [ language, caption ],
@@ -153,7 +153,7 @@
 	/**
 	 * Should only be called on initialisation, because it relies on only the interface language
 	 * (and possible the first fallback, if the interface language has no caption) having the
-	 * 'showLabel' class
+	 * 'wbmi-entityview-showLabel' class
 	 */
 	sd.CaptionsPanel.prototype.addCaptionsDataForUserLanguages = function () {
 		var self = this,
@@ -182,14 +182,14 @@
 	 *
 	 * Should only be called on initialisation, because it relies on only the interface language
 	 * (and possible the first fallback, if the interface language has no caption) having the
-	 * 'showLabel' class
+	 * 'wbmi-entityview-showLabel' class
 	 *
 	 * @return bool True if the language list order has changed
 	 */
 	sd.CaptionsPanel.prototype.reorderLanguageList = function () {
 		var captionLanguages = this.getCaptionLanguagesList(),
 			// eslint-disable-next-line jquery/no-global-selector
-			$visibleLanguageNodes = $( '.showLabel .filepage-mediainfo-language' ),
+			$visibleLanguageNodes = $( '.wbmi-entityview-showLabel .wbmi-language-label' ),
 			rearrangedCaptionLanguages = [];
 
 		$visibleLanguageNodes.each( function () {
@@ -255,13 +255,13 @@
 	};
 
 	sd.CaptionsPanel.prototype.warnIfTextApproachingLimit = function ( textInput ) {
-		var $caption = textInput.$element.parents( '.filepage-mediainfo-caption' ),
+		var $caption = textInput.$element.parents( '.wbmi-caption-value' ),
 			lengthDiff = mw.config.get( 'maxCaptionLength' ) - textInput.getValue().length;
-		$caption.find( 'div.warning' ).remove();
+		$caption.find( 'div.wbmi-caption-publishWarning' ).remove();
 		if ( lengthDiff >= 0 && lengthDiff < this.config.warnWithinMaxCaptionLength ) {
 			$caption.append(
 				$( '<div>' )
-					.addClass( 'warning' )
+					.addClass( 'wbmi-caption-publishWarning' )
 					.text(
 						mw.message(
 							'wikibasemediainfo-filepage-caption-approaching-limit',
@@ -278,15 +278,15 @@
 			textInputChecks.push(
 				textInput.getValidity()
 					.done( function () {
-						textInput.$element.parents( '.filepage-mediainfo-caption' ).find( 'div.error' ).remove();
+						textInput.$element.parents( '.wbmi-caption-value' ).find( 'div.wbmi-caption-publishError' ).remove();
 					} )
 					.fail( function () {
-						var $caption = textInput.$element.parents( '.filepage-mediainfo-caption' );
-						$caption.find( 'div.warning' ).remove();
-						$caption.find( 'div.error' ).remove();
+						var $caption = textInput.$element.parents( '.wbmi-caption-value' );
+						$caption.find( 'div.wbmi-caption-publishWarning' ).remove();
+						$caption.find( 'div.wbmi-caption-publishError' ).remove();
 						$caption.append(
 							$( '<div>' )
-								.addClass( 'error' )
+								.addClass( 'wbmi-caption-publishError' )
 								.text(
 									mw.message(
 										'wikibasemediainfo-filepage-caption-too-long',
@@ -321,7 +321,7 @@
 				icon: 'trash',
 				framed: false,
 				flags: 'destructive',
-				classes: [ 'deleter' ]
+				classes: [ 'wbmi-caption-deleteButton' ]
 			} );
 
 		deleter.$element.on( 'click', function () {
@@ -365,9 +365,9 @@
 			captionsPanel.refreshLanguageSelectorsOptions();
 			dir = $.uls.data.getDir( languageSelector.getValue() );
 			$parentRow = languageSelector.$element.parents( captionsPanel.entityTermSelector );
-			$parentRow.find( '.filepage-mediainfo-language' ).attr( 'dir', dir );
-			$parentRow.find( '.filepage-mediainfo-caption' ).attr( 'dir', dir );
-			$parentRow.find( '.filepage-mediainfo-textInput' ).attr( 'dir', dir );
+			$parentRow.find( '.wbmi-language-label' ).attr( 'dir', dir );
+			$parentRow.find( '.wbmi-caption-value' ).attr( 'dir', dir );
+			$parentRow.find( '.wbmi-caption-textInput' ).attr( 'dir', dir );
 		} );
 		this.languageSelectors[ index ] = languageSelector;
 
@@ -378,7 +378,7 @@
 			value: captionData.text,
 			dir: captionData.direction,
 			placeholder: captionData.text === '' ? mw.message( 'wikibasemediainfo-filepage-caption-empty' ).text() : '',
-			classes: [ 'filepage-mediainfo-textInput' ]
+			classes: [ 'wbmi-caption-textInput' ]
 		} );
 		textInput.on( 'change', function () {
 			captionsPanel.warnIfTextApproachingLimit( textInput );
@@ -397,7 +397,7 @@
 			this.textInputs[ index ].$element,
 			false
 		);
-		$row.find( '.filepage-mediainfo-caption' )
+		$row.find( '.wbmi-caption-value' )
 			.append( this.createRowDeleter( $row ).$element );
 		return $row;
 	};
@@ -428,7 +428,7 @@
 		} );
 		this.textInputs.forEach( function ( textInput ) {
 			textInput.setDisabled( true );
-			textInput.$element.parents( '.filepage-mediainfo-caption' ).find( '.deleter' ).hide();
+			textInput.$element.parents( '.wbmi-caption-value' ).find( '.wbmi-caption-deleteButton' ).hide();
 		} );
 	};
 
@@ -438,7 +438,7 @@
 		} );
 		this.textInputs.forEach( function ( textInput ) {
 			textInput.setDisabled( false );
-			textInput.$element.parents( '.filepage-mediainfo-caption' ).find( '.deleter' ).show();
+			textInput.$element.parents( '.wbmi-caption-value' ).find( '.wbmi-caption-deleteButton' ).show();
 		} );
 	};
 
@@ -608,13 +608,13 @@
 					var dataInRow = self.readDataFromReadOnlyRow( $( this ) );
 					currentlyDisplayedLanguages.push( dataInRow.languageCode );
 				} );
-				newIndex = $captionsContent.find( '.entity-term' ).length;
+				newIndex = $captionsContent.find( '.wbmi-entityview-entitycontent' ).length;
 				errorRow = self.createIndexedEditableRow(
 					newIndex,
 					currentlyDisplayedLanguages,
 					self.captionsData[ langCodeToDelete ]
 				);
-				errorRow.insertBefore( $captionsContent.find( '.editActions' ) );
+				errorRow.insertBefore( $captionsContent.find( '.wbmi-entityview-editActions' ) );
 				rejection = wb.api.RepoApiError.newFromApiResponse( error, 'save' );
 				rejection.index = newIndex;
 				deferred.reject( rejection );
@@ -684,7 +684,7 @@
 			count = 0,
 			languageCodesInOrder = this.getCaptionLanguagesList();
 
-		$captionsContent.find( '.entity-term' ).each( function () {
+		$captionsContent.find( '.wbmi-entityview-entitycontent' ).each( function () {
 			$( this ).remove();
 		} );
 
@@ -749,16 +749,16 @@
 			.always( function () {
 				captionsPanel.redrawCaptionsContent();
 				var $captionsContent = $( captionsPanel.contentSelector );
-				$captionsContent.addClass( 'editable' );
+				$captionsContent.addClass( 'wbmi-entityview-editable' );
 				captionsPanel.editToggle.hide();
 				captionsPanel.languagesViewWidget.hide();
 				captionsPanel.editActionsWidget.show();
 				var captionLangCodes = [];
-				$captionsContent.find( '.entity-term' ).each( function () {
+				$captionsContent.find( '.wbmi-entityview-entitycontent' ).each( function () {
 					var dataInRow = captionsPanel.readDataFromReadOnlyRow( $( this ) );
 					captionLangCodes.push( dataInRow.languageCode );
 				} );
-				$captionsContent.find( '.entity-term' ).each( function ( index ) {
+				$captionsContent.find( '.wbmi-entityview-entitycontent' ).each( function ( index ) {
 					var captionData = captionsPanel.readDataFromReadOnlyRow( $( this ) );
 
 					$( this ).replaceWith(
@@ -775,7 +775,7 @@
 
 	sd.CaptionsPanel.prototype.makeReadOnly = function () {
 		var $captionsContent = $( this.contentSelector );
-		$captionsContent.removeClass( 'editable' );
+		$captionsContent.removeClass( 'wbmi-entityview-editable' );
 		this.editActionsWidget.hide();
 		this.redrawCaptionsContent();
 		this.languagesViewWidget.expand();
@@ -785,9 +785,9 @@
 	sd.CaptionsPanel.prototype.addNewEditableLanguageRow = function () {
 		var $captionsContent = $( this.contentSelector );
 		var row = this.createIndexedEditableRow(
-			$captionsContent.find( '.entity-term' ).length
+			$captionsContent.find( '.wbmi-entityview-entitycontent' ).length
 		);
-		row.insertBefore( $captionsContent.find( '.editActions' ) );
+		row.insertBefore( $captionsContent.find( '.wbmi-entityview-editActions' ) );
 		this.refreshLanguageSelectorsOptions();
 	};
 
@@ -811,13 +811,13 @@
 				captionsPanel.enableAllFormInputs();
 				$caption =
 					$( captionsPanel.contentSelector ).find(
-						'.entity-term[data-index="' + error.index + '"] .filepage-mediainfo-caption'
+						'.wbmi-entityview-entitycontent[data-index="' + error.index + '"] .wbmi-caption-value'
 					);
-				$caption.find( 'div.error' ).remove();
-				$caption.find( 'div.warning' ).remove();
+				$caption.find( 'div.wbmi-caption-publishError' ).remove();
+				$caption.find( 'div.wbmi-caption-publishWarning' ).remove();
 				$caption.append(
 					$( '<div>' )
-						.addClass( 'error' )
+						.addClass( 'wbmi-caption-publishError' )
 						.html( error.detailedMessage )
 				);
 			} )
@@ -830,7 +830,7 @@
 		var captionsPanel = this;
 
 		this.editToggle.initialize();
-		$( this.contentSelector ).find( '.entity-term' ).each( function ( index ) {
+		$( this.contentSelector ).find( '.wbmi-entityview-entitycontent' ).each( function ( index ) {
 			var captionData;
 			$( this ).attr( 'data-index', index );
 			captionData = captionsPanel.readDataFromReadOnlyRow( $( this ) );

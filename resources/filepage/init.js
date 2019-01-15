@@ -3,10 +3,10 @@
 	'use strict';
 
 	sd.captions = new sd.CaptionsPanel( {
-		headerClass: 'mediainfo-captions-header',
-		contentClass: 'filepage-mediainfo-entitytermsview',
-		entityViewClass: 'filepage-mediainfo-entityview',
-		entityTermClass: 'entity-term',
+		headerClass: 'wbmi-entityview-captions-header',
+		contentClass: 'wbmi-entityview-content',
+		entityViewClass: 'wbmi-entityview',
+		entityTermClass: 'wbmi-entityview-entitycontent',
 		warnWithinMaxCaptionLength: 20
 	} );
 	sd.captions.initialize();

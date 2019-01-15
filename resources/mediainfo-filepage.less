@@ -1,13 +1,12 @@
-.mw-body-content h2 {
-	clear: both;
-}
-
 /* Clear content after the entity view because it transitively floats */
-.filepage-mediainfo-entityview + * {
+.wbmi-entityview + * {
 	clear: both;
 }
 
-.filepage-mediainfo-entitytermsview {
+/* Old name for cache back-compatibility */
+/* stylelint-disable-next-line selector-class-pattern */
+.filepage-mediainfo-entitytermsview,
+.wbmi-entityview-content {
 	padding-top: 0.6em;
 	float: left;
 	clear: both;
@@ -23,17 +22,17 @@
 		font-size: 1em;
 		margin: 0 0 1.4em 0;
 
-		.editButton {
+		.wbmi-entityview-editButton {
 			float: right;
 			margin-top: -0.75em;
 			margin-right: -0.25em;
 		}
 	}
 
-	.viewMore,
-	.viewLess,
-	.entity-term,
-	.editActions
+	.wbmi-entityview-viewMoreButton,
+	.wbmi-entityview-viewLessButton,
+	.wbmi-entityview-entitycontent,
+	.wbmi-entityview-editActions
 	{
 		padding: 0.8em 0;
 		border: 0;
@@ -44,85 +43,79 @@
 		width: 92%;
 	}
 
-	.entity-term:not( :last-child ) {
-		border-bottom: 1px solid #c8ccd1;
-	}
+	.wbmi-entityview-entitycontent {
+		&:not( :last-child ) {
+			border-bottom: 1px solid #c8ccd1;
+		}
 
-	&.editable .entity-term {
-		border-bottom: 0;
-	}
+		.wbmi-language-label {
+			float: left;
+			min-width: 9em;
+			width: 18%;
+			padding-right: 4%;
+			height: 100%;
+			text-align: left;
+		}
 
-	.entity-term .filepage-mediainfo-language {
-		float: left;
-		min-width: 9em;
-		width: 18%;
-		padding-right: 4%;
-		height: 100%;
-		text-align: left;
-	}
+		.wbmi-caption-value {
+			float: left;
+			min-width: 9em;
+			width: 78%;
 
-	.entity-term .filepage-mediainfo-caption {
-		float: left;
-		min-width: 9em;
-		width: 78%;
-	}
+			.wbmi-caption-textInput {
+				width: 90%;
+				float: left;
+			}
 
-	.filepage-mediainfo-caption .filepage-mediainfo-textInput {
-		width: 90%;
-		float: left;
-	}
+			.wbmi-caption-deleteButton {
+				float: left;
+			}
+		}
 
-	.filepage-mediainfo-caption .deleter {
-		float: left;
-	}
+		div.wbmi-caption-publishError {
+			padding: 0.2em 0.5em;
+			font-size: 0.9em;
+			font-weight: bold;
+			float: left;
+			clear: left;
+		}
 
-	/* T208849: Style empty captions as WMUI's @color-placeholder === @wmui-color-base30 */
-	.wbmi-empty {
-		color: #72777d;
-	}
-
-	.entity-term div.error {
-		padding: 0.2em 0.5em;
-		font-size: 0.9em;
-		font-weight: bold;
-		float: left;
-		clear: left;
-	}
-
-	.entity-term div.warning {
-		padding: 0.2em 0.5em;
-		font-size: 0.9em;
-		font-weight: bold;
-		float: left;
-		clear: left;
-	}
-}
-
-/* stylelint-disable-next-line no-descending-specificity */
-.editActions {
-	.addMore {
-		float: left;
-
-		label {
-			padding-top: 0.2em;
+		div.wbmi-caption-publishWarning {
+			padding: 0.2em 0.5em;
+			font-size: 0.9em;
+			font-weight: bold;
+			float: left;
+			clear: left;
 		}
 	}
 
-	.cancelAndPublish {
-		float: right;
+	.wbmi-entityview-editActions {
+		.wbmi-entityview-addCaptionButton {
+			float: left;
+
+			label {
+				padding-top: 0.2em;
+			}
+		}
+
+		.wbmi-entityview-cancelAndPublishButtons {
+			float: right;
+
+		}
 	}
 
-	.cancel {
-		float: left;
-		padding-right: 0.8em;
+	&.wbmi-entityview-editable .wbmi-entityview-entitycontent {
+		border-bottom: 0;
 	}
 
-	.publish {
-		float: right;
+	/* T208849: Style empty captions as WMUI's @color-placeholder === @wmui-color-base30 */
+	.wbmi-entityview-emptyCaption {
+		color: #72777d;
 	}
 }
 
 /* Some OOUI styles are loaded inline - add some here to prevent FOUC */
+/* stylelint-disable-next-line selector-class-pattern */
 .oo-ui-panelLayout-framed {
 	border: 1px solid #a2a9b1;
 	border-radius: 2px;

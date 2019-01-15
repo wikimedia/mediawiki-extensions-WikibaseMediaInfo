@@ -17,7 +17,7 @@ return call_user_func( function() {
 	$templates['filepage-entityview'] =
 		<<<HTML
 <mw:mediainfoView>
-<div id="wb-$1-$2" class="filepage-mediainfo-entityview" dir="$3">
+<div id="wb-$1-$2" class="wbmi-entityview" dir="$3">
 	$4
 </div>
 </mw:mediainfoView>

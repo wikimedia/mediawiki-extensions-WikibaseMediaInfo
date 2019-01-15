@@ -16,7 +16,7 @@
 			icon: 'edit',
 			framed: false,
 			title: mw.message( 'wikibasemediainfo-filepage-edit-captions' ).text(),
-			classes: [ 'editButton' ]
+			classes: [ 'wbmi-entityview-editButton' ]
 		} )
 			.on( 'click', function () {
 				captionsPanel.refreshAndMakeEditable();

@@ -25,6 +25,27 @@
 		},
 		"MediaInfoEnableFilePageDepicts": {
 			"value": true
+		},
+		"MediaInfoProperties": {
+			"description": "Relevant data for the depicts property. Keys: `id` is the property ID, `label` is the i18n key & `url` links to the property",
+			"value": {
+				"depicts": {
+					"id": "P1",
+					"label": "wikibasemediainfo-property-value-depicts",
+					"url": "#"
+				}
+			}
+		},
+		"DepictsQualifierProperties": {
+			"description": "Lists all available properties for properties dropdown for depicts qualifiers. Keys: `id` is the property ID, `label` is the i18n key & `input` defines the input type (entity, text or numeric)",
+			"value": {
+				"": {
+					"id": "",
+					"label": "wikibasemediainfo-property-placeholder",
+					"input": "string"
+				}
+			},
+			"merge_strategy": "array_plus_2d"
 		}
 	},
 	"ServiceWiringFiles": [
@@ -164,6 +185,61 @@
 		"wikibase.mediainfo.filepagestyles": {
 			"styles": [
 				"resources/mediainfo-filepage.less"
+			],
+			"targets": [
+				"desktop",
+				"mobile"
+			]
+		},
+		"wikibase.mediainfo.statements": {
+			"scripts": [
+				"resources/statements/__namespace.js",
+				"resources/statements/FormatValueElement.js",
+				"resources/statements/EntityLookupElement.js",
+				"resources/statements/EntityInputWidget.js",
+				"resources/statements/QualifierValueInputWidget.js",
+				"resources/statements/DepictsWidget.js",
+				"resources/statements/ItemInputWidget.js",
+				"resources/statements/ItemWidget.js",
+				"resources/statements/QualifierWidget.js"
+			],
+			"dependencies": [
+				"oojs",
+				"oojs-ui-core",
+				"oojs-ui-widgets",
+				"wikibase.mediainfo.statements.styles",
+				"wikibase.utilities.ClaimGuidGenerator"
+			],
+			"messages": [
+				"wikibasemediainfo-property-placeholder",
+				"wikibasemediainfo-property-value-features",
+				"wikibasemediainfo-property-value-color",
+				"wikibasemediainfo-property-value-wears",
+				"wikibasemediainfo-property-value-part",
+				"wikibasemediainfo-property-value-inscription",
+				"wikibasemediainfo-property-value-symbolizes",
+				"wikibasemediainfo-property-value-position",
+				"wikibasemediainfo-property-value-quantity",
+				"wikibasemediainfo-property-value-depicts",
+				"wikibasemediainfo-statements-depicts-title",
+				"wikibasemediainfo-statements-item-input-placeholder",
+				"wikibasemediainfo-statements-item-input-label",
+				"wikibasemediainfo-statements-item-is-primary",
+				"wikibasemediainfo-statements-item-make-primary",
+				"wikibasemediainfo-statements-item-remove",
+				"wikibasemediainfo-statements-item-add-qualifier",
+				"parentheses"
+			]
+		},
+		"wikibase.mediainfo.statements.styles": {
+			"styles": [
+				"resources/statements/EntityLookupElement.less",
+				"resources/statements/EntityInputWidget.less",
+				"resources/statements/QualifierValueInputWidget.less",
+				"resources/statements/DepictsWidget.less",
+				"resources/statements/ItemInputWidget.less",
+				"resources/statements/ItemWidget.less",
+				"resources/statements/QualifierWidget.less"
 			],
 			"targets": [
 				"desktop",

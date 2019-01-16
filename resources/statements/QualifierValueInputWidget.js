@@ -75,8 +75,6 @@
 				return {
 					// add leading '+' if no unit is present already
 					amount: this.input.getValue().replace( /^(?![+-])/, '+' ),
-					// @todo not currently required, but we might need to implement support
-					// for units some day...
 					unit: '1'
 				};
 			case 'string':
@@ -86,9 +84,6 @@
 		throw new Error( 'Unsupported type: ' + this.type );
 	};
 
-	/**
-	 * @return {dataValues.DataValue}
-	 */
 	statements.QualifierValueInputWidget.prototype.onChange = function () {
 		if ( this.allowEmitChange ) {
 			this.emit( 'change' );
@@ -96,7 +91,7 @@
 	};
 
 	/**
-	 * @return {Object}
+	 * @return {dataValues.DataValue}
 	 */
 	statements.QualifierValueInputWidget.prototype.getData = function () {
 		return dv.newDataValue( this.type, this.value || this.getInputValue() );
@@ -115,7 +110,7 @@
 		// temporarily save the value so that getValue() calls before below
 		// promise has resolved will already respond with the correct value,
 		// even though the input field doesn't have it yet...
-		this.value = data.getValue().toJSON();
+		this.value = data.toJSON();
 
 		this.emit( 'change' );
 
@@ -134,7 +129,7 @@
 					self.input.setData( data.toJSON().id );
 					break;
 				case 'quantity':
-					// replace thousands delimiter - that's only useful for display purposed
+					// replace thousands delimiter - that's only useful for display purposes
 					self.input.setValue( plain.replace( ',', '' ) );
 					break;
 				case 'string':

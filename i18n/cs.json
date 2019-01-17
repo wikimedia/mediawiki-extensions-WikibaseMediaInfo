@@ -5,13 +5,24 @@
 			"Mormegil"
 		]
 	},
+	"right-mediainfo-term": "Změny prvků informací o souborech (popisky, shrnutí)",
 	"slot-name-mediainfo": "Strukturované informace o souboru",
-	"wikibase-entity-mediainfo": "Informace o souboru",
+	"wikibase-entity-mediainfo": "informace o souboru",
+	"wikibase-mediainfo-summary-wbsetlabel-add": "Přidán popisek pro [$2]",
+	"wikibase-mediainfo-summary-wbsetlabel-remove": "Odstraněn popisek pro [$2]",
+	"wikibase-mediainfo-summary-wbsetlabel-set": "Editován popisek pro [$2]",
 	"wikibasemediainfo-desc": "Rozšíření Wikibase pro správu strukturovaných metadat k mediálním souborům",
+	"wikibasemediainfo-diffview-label": "popisek",
+	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Popisky",
 	"wikibasemediainfo-filepage-structured-data-heading": "Strukturovaná data",
+	"wikibasemediainfo-filepage-captions-title": "Popisky",
+	"wikibasemediainfo-filepage-more-languages": "Zobrazit $1 {{PLURAL:$1|další jazyk|další jazyky|dalších jazyků}}",
 	"wikibasemediainfo-filepage-fewer-languages": "Zobrazit méně jazyků",
+	"wikibasemediainfo-filepage-add-caption": "Přidat popisek",
+	"wikibasemediainfo-filepage-edit-captions": "Editovat popisky",
 	"wikibasemediainfo-filepage-cancel": "Storno",
 	"wikibasemediainfo-filepage-publish": "Zveřejnit změny",
+	"wikibasemediainfo-filepage-caption-empty": "Přidejte jednořádkové vysvětlení, co tento soubor představuje",
 	"wikibasemediainfo-filepage-caption-too-long": "$1 {{PLURAL:$1|znak|znaky|znaků}} přes limit",
 	"wikibasemediainfo-filepage-caption-approaching-limit": "Zbývá $1 {{PLURAL:$1|znak|znaky|znaků}}"
 }

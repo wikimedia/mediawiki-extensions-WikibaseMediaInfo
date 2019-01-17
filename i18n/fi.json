@@ -2,12 +2,19 @@
 	"@metadata": {
 		"authors": [
 			"Pyscowicz",
-			"Nike"
+			"Nike",
+			"Stryn"
 		]
 	},
 	"wikibase-entity-mediainfo": "mediatieto",
+	"wikibasemediainfo-diffview-label": "kuvateksti",
+	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Kuvatekstit",
+	"wikibasemediainfo-filepage-structured-data-heading": "Strukturoitu data",
+	"wikibasemediainfo-filepage-captions-title": "Kuvatekstit",
 	"wikibasemediainfo-filepage-more-languages": "Näytä $1 {{PLURAL:$1|kieli|kieltä}} lisää",
 	"wikibasemediainfo-filepage-fewer-languages": "Näytä vähemmän kieliä",
+	"wikibasemediainfo-filepage-add-caption": "Lisää kuvateksti",
+	"wikibasemediainfo-filepage-edit-captions": "Muokkaa kuvatekstejä",
 	"wikibasemediainfo-filepage-cancel": "Peru",
 	"wikibasemediainfo-filepage-publish": "Julkaise muutokset",
 	"wikibasemediainfo-filepage-caption-empty": "Lisää yhden rivin pituinen kuvaus tästä tiedostosta"

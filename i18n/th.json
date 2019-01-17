@@ -4,5 +4,8 @@
 			"B20180"
 		]
 	},
+	"wikibase-mediainfo-summary-wbsetlabel-add": "เพิ่มคำบรรยาย [$2]",
+	"wikibase-mediainfo-summary-wbsetlabel-remove": "นำคำบรรยาย [$2] ออกแล้ว",
+	"wikibase-mediainfo-summary-wbsetlabel-set": "แก้ไขคำบรรยาย [$2]",
 	"wikibasemediainfo-diffview-label": "คำอธิบาย"
 }

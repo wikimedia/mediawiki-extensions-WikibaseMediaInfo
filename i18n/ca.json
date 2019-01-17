@@ -5,9 +5,9 @@
 		]
 	},
 	"wikibase-entity-mediainfo": "informació multimèdia",
-	"wikibase-mediainfo-summary-wbsetlabel-add": "S'ha afegit la llegenda [$1]",
-	"wikibase-mediainfo-summary-wbsetlabel-remove": "S'ha suprimit la llegenda [$1]",
-	"wikibase-mediainfo-summary-wbsetlabel-set": "S'ha modificat la llegenda [$1]",
+	"wikibase-mediainfo-summary-wbsetlabel-add": "S'ha afegit la llegenda [$2]",
+	"wikibase-mediainfo-summary-wbsetlabel-remove": "S'ha suprimit la llegenda [$2]",
+	"wikibase-mediainfo-summary-wbsetlabel-set": "S'ha modificat la llegenda [$2]",
 	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Llegendes",
 	"wikibasemediainfo-filepage-structured-data-heading": "Dades estructurades",
 	"wikibasemediainfo-filepage-captions-title": "Llegendes",

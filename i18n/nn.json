@@ -5,9 +5,9 @@
 		]
 	},
 	"wikibase-entity-mediainfo": "medieinformasjon",
-	"wikibase-mediainfo-summary-wbsetlabel-add": "La til bilettekst for [$1]",
-	"wikibase-mediainfo-summary-wbsetlabel-remove": "Fjerna bilettekst for [$1]",
-	"wikibase-mediainfo-summary-wbsetlabel-set": "Endra bilettekst for [$1]",
+	"wikibase-mediainfo-summary-wbsetlabel-add": "La til bilettekst for [$2]",
+	"wikibase-mediainfo-summary-wbsetlabel-remove": "Fjerna bilettekst for [$2]",
+	"wikibase-mediainfo-summary-wbsetlabel-set": "Endra bilettekst for [$2]",
 	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Bilettekstar",
 	"wikibasemediainfo-filepage-structured-data-heading": "Strukturerte data",
 	"wikibasemediainfo-filepage-captions-title": "Bilettekstar",

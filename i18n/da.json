@@ -4,9 +4,9 @@
 			"Saederup92"
 		]
 	},
-	"wikibase-mediainfo-summary-wbsetlabel-add": "Tilføjede billedetekst [$1]",
-	"wikibase-mediainfo-summary-wbsetlabel-remove": "Fjernede billedteksten [$1]",
-	"wikibase-mediainfo-summary-wbsetlabel-set": "Redigerede billedeteksten [$1]",
+	"wikibase-mediainfo-summary-wbsetlabel-add": "Tilføjede billedetekst [$2]",
+	"wikibase-mediainfo-summary-wbsetlabel-remove": "Fjernede billedteksten [$2]",
+	"wikibase-mediainfo-summary-wbsetlabel-set": "Redigerede billedeteksten [$2]",
 	"wikibasemediainfo-filepage-fewer-languages": "Se færre sprog",
 	"wikibasemediainfo-filepage-cancel": "Annullér"
 }

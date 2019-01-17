@@ -7,9 +7,9 @@
 		]
 	},
 	"wikibase-entity-mediainfo": "媒体信息",
-	"wikibase-mediainfo-summary-wbsetlabel-add": "填加了[$1]的说明文字",
-	"wikibase-mediainfo-summary-wbsetlabel-remove": "删除了[$1]的说明文字",
-	"wikibase-mediainfo-summary-wbsetlabel-set": "编辑了[$1]的说明文字",
+	"wikibase-mediainfo-summary-wbsetlabel-add": "填加了[$2]的说明文字",
+	"wikibase-mediainfo-summary-wbsetlabel-remove": "删除了[$2]的说明文字",
+	"wikibase-mediainfo-summary-wbsetlabel-set": "编辑了[$2]的说明文字",
 	"wikibasemediainfo-desc": "管理结构化的媒体文件元数据的Wikibase扩展",
 	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "说明",
 	"wikibasemediainfo-filepage-structured-data-heading": "结构化数据",

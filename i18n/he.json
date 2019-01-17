@@ -3,16 +3,18 @@
 		"authors": [
 			"Guycn2",
 			"Amire80",
-			"Strayblues"
+			"Strayblues",
+			"Jdforrester"
 		]
 	},
 	"right-mediainfo-term": "שינוי מושגים במידע על המדיה (כיתובים, סיכומים)",
 	"slot-name-mediainfo": "מידע מובנה על מדיה",
 	"wikibase-entity-mediainfo": "מידע על המדיה",
-	"wikibase-mediainfo-summary-wbsetlabel-add": "נוסף כיתוב [$1]",
-	"wikibase-mediainfo-summary-wbsetlabel-remove": "הוסר כיתוב [$1]",
-	"wikibase-mediainfo-summary-wbsetlabel-set": "נערך כיתוב [$1]",
+	"wikibase-mediainfo-summary-wbsetlabel-add": "נוסף כיתוב [$2]",
+	"wikibase-mediainfo-summary-wbsetlabel-remove": "הוסר כיתוב [$2]",
+	"wikibase-mediainfo-summary-wbsetlabel-set": "נערך כיתוב [$2]",
 	"wikibasemediainfo-desc": "הרחבה לוויקיבייס לניהול מטא־נתונים מובְנים של קובצי מדיה",
+	"wikibasemediainfo-diffview-label": "כיתוב",
 	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "כיתובים",
 	"wikibasemediainfo-filepage-structured-data-heading": "נתונים מובְנים",
 	"wikibasemediainfo-filepage-captions-title": "כיתובים",

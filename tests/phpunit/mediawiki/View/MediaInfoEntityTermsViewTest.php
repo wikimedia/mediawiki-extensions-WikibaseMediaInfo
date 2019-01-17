@@ -15,7 +15,7 @@ use Wikibase\View\LanguageDirectionalityLookup;
 use Wikibase\View\LocalizedTextProvider;
 
 /**
- * @covers \Wikibase\MediaInfo\View\FilePageEntityTermsView
+ * @covers \Wikibase\MediaInfo\View\MediaInfoEntityTermsView
  *
  * @group WikibaseMediaInfo
  *

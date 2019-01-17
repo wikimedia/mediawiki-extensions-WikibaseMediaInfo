@@ -9,6 +9,7 @@ use PHPUnit4And6Compat;
 use Wikibase\DataModel\DeserializerFactory;
 use Wikibase\DataModel\SerializerFactory;
 use Wikibase\LanguageFallbackChain;
+use Wikibase\LanguageWithConversion;
 use Wikibase\Lib\Store\EntityInfo;
 use Wikibase\MediaInfo\Content\MediaInfoContent;
 use Wikibase\MediaInfo\Content\MediaInfoHandler;
@@ -118,7 +119,7 @@ class EntityTypesTest extends \PHPUnit\Framework\TestCase {
 		$mediaInfoView = call_user_func(
 			$callback,
 			Language::factory( 'en' ),
-			new LanguageFallbackChain( [] ),
+			new LanguageFallbackChain( [ LanguageWithConversion::factory( 'en' ) ] ),
 			new MediaInfo(),
 			new EntityInfo( [] )
 		);

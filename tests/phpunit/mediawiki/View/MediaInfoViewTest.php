@@ -7,11 +7,11 @@ use Wikibase\DataModel\Entity\Property;
 use Wikibase\DataModel\Entity\PropertyId;
 use Wikibase\DataModel\Term\TermList;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
+use Wikibase\MediaInfo\View\MediaInfoEntityStatementsView;
 use Wikibase\MediaInfo\View\MediaInfoEntityTermsView;
 use Wikibase\MediaInfo\View\MediaInfoView;
 use Wikibase\View\EntityTermsView;
 use Wikibase\View\LanguageDirectionalityLookup;
-use Wikibase\View\StatementSectionsView;
 use Wikibase\View\Template\TemplateFactory;
 
 /**
@@ -31,8 +31,8 @@ class MediaInfoViewTest extends \PHPUnit\Framework\TestCase {
 	private $templateFactory;
 	/** @var  EntityTermsView */
 	private $entityTermsView;
-	/** @var  StatementSectionsView */
-	private $statementSectionsView;
+	/** @var  MediaInfoEntityStatementsView */
+	private $statementsView;
 	/** @var  LanguageDirectionalityLookup */
 	private $languageDirectionalityLookup;
 	/** @var  EntityDocument */
@@ -53,6 +53,11 @@ class MediaInfoViewTest extends \PHPUnit\Framework\TestCase {
 			LanguageDirectionalityLookup::class
 			)->disableOriginalConstructor()
 			->getMock();
+		$this->statementsView = $this->getMockBuilder(
+			MediaInfoEntityStatementsView::class
+			)
+			->disableOriginalConstructor()
+			->getMock();
 
 		$this->entity = $this->getMockBuilder( MediaInfo::class )
 			->disableOriginalConstructor()
@@ -71,7 +76,7 @@ class MediaInfoViewTest extends \PHPUnit\Framework\TestCase {
 			$this->entityTermsView,
 			$this->languageDirectionalityLookup,
 			$this->languageCode,
-			null
+			$this->statementsView
 		);
 	}
 
@@ -79,7 +84,8 @@ class MediaInfoViewTest extends \PHPUnit\Framework\TestCase {
 		$this->createMocks();
 
 		$langDir = 'TEST_DIR';
-		$entityTermsViewHtml = 'TEST_HTML';
+		$termsViewHtml = 'TEST_TERMS_HTML';
+		$statementsViewHtml = 'TEST_STATEMENTS_HTML';
 		$renderedContent = 'TEST_RENDERED';
 
 		$this->languageDirectionalityLookup
@@ -87,7 +93,10 @@ class MediaInfoViewTest extends \PHPUnit\Framework\TestCase {
 			->willReturn( $langDir );
 		$this->entityTermsView
 			->method( 'getHtml' )
-			->willReturn( $entityTermsViewHtml );
+			->willReturn( $termsViewHtml );
+		$this->statementsView
+			->method( 'getHtml' )
+			->willReturn( $statementsViewHtml );
 
 		$this->templateFactory
 			->expects( $this->once() )
@@ -97,7 +106,7 @@ class MediaInfoViewTest extends \PHPUnit\Framework\TestCase {
 				$this->values['entityType'],
 				$this->values['entityId'],
 				$langDir,
-				$entityTermsViewHtml
+				$termsViewHtml . $statementsViewHtml
 			)->willReturn( $renderedContent );
 
 		$viewContent = $this->sut->getContent( $this->entity );

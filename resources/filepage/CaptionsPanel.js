@@ -214,7 +214,13 @@
 	};
 
 	sd.CaptionsPanel.prototype.getCaptionLanguagesList = function () {
-		return $( this.contentSelector ).attr( this.captionLanguagesDataAttr ).split( ',' );
+		var knownLanguages = Object.keys( $.uls.data.languages );
+
+		return $( this.contentSelector ).attr( this.captionLanguagesDataAttr ).split( ',' )
+			// Drop languages that ULS doesn't know about
+			.filter( function ( languageCode ) {
+				return ( knownLanguages.indexOf( languageCode ) !== -1 );
+			} );
 	};
 
 	sd.CaptionsPanel.prototype.setCaptionLanguagesList = function ( languagesList ) {

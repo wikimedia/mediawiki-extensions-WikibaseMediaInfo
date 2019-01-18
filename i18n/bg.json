@@ -5,6 +5,7 @@
 			"Vlad5250"
 		]
 	},
+	"wikibase-mediainfo-summary-wbsetlabel-add": "Добавяне на [$2] описание",
 	"wikibase-mediainfo-summary-wbsetlabel-remove": "Премахване на [$2] описание",
 	"wikibase-mediainfo-summary-wbsetlabel-set": "Променяне на [$2] описание",
 	"wikibasemediainfo-diffview-label": "описание",

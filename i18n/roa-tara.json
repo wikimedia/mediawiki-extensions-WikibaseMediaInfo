@@ -23,5 +23,8 @@
 	"wikibasemediainfo-filepage-publish": "Pubbleche le cangiaminde",
 	"wikibasemediainfo-filepage-caption-empty": "Aggiunge 'na spiegazione sus a 'na linèe de ce rappresende stu file",
 	"wikibasemediainfo-filepage-caption-too-long": "$1 {{PLURAL:$1|carattere}} sus a 'u limite",
-	"wikibasemediainfo-filepage-caption-approaching-limit": "$1 {{PLURAL:$1|carattere|0=carattere}} rumaste"
+	"wikibasemediainfo-filepage-caption-approaching-limit": "$1 {{PLURAL:$1|carattere|0=carattere}} rumaste",
+	"wikibasemediainfo-filepage-statement-no-value": "Non g'esiste nisciune valore pe sta probbietà",
+	"wikibasemediainfo-filepage-statement-some-value": "Sta probbietà tène 'nu valore, ma jè scanusciute",
+	"wikibasemediainfo-filepage-statement-error": "Ave assute 'n'errore duranne 'u recupere d'u valore pe sta probbietà"
 }

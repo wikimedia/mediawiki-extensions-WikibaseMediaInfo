@@ -23,5 +23,8 @@
 	"wikibasemediainfo-filepage-publish": "發佈更改",
 	"wikibasemediainfo-filepage-caption-empty": "添加單行說明來描述出檔案所代表的內容",
 	"wikibasemediainfo-filepage-caption-too-long": "超過 $1 個{{PLURAL:$1|字元|字元}}限制",
-	"wikibasemediainfo-filepage-caption-approaching-limit": "還剩 $1 個{{PLURAL:$1|字元|字元|0=characters}}"
+	"wikibasemediainfo-filepage-caption-approaching-limit": "還剩 $1 個{{PLURAL:$1|字元|字元|0=characters}}",
+	"wikibasemediainfo-filepage-statement-no-value": "此屬性沒有值",
+	"wikibasemediainfo-filepage-statement-some-value": "此屬性有值；但內容不明",
+	"wikibasemediainfo-filepage-statement-error": "當取得此屬性的值時發生錯誤"
 }

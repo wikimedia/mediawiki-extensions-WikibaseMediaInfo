@@ -25,5 +25,8 @@
 	"wikibasemediainfo-filepage-publish": "Publier les modifications",
 	"wikibasemediainfo-filepage-caption-empty": "Ajoutez la description en une ligne de ce que représente ce fichier",
 	"wikibasemediainfo-filepage-caption-too-long": "$1 {{PLURAL:$1|caractère|caractères}} après la limite",
-	"wikibasemediainfo-filepage-caption-approaching-limit": "Il reste $1 {{PLURAL:$1|caractère|caractères|0=caractères}}"
+	"wikibasemediainfo-filepage-caption-approaching-limit": "Il reste $1 {{PLURAL:$1|caractère|caractères|0=caractères}}",
+	"wikibasemediainfo-filepage-statement-no-value": "Aucune valeur n’existe pour cette propriété",
+	"wikibasemediainfo-filepage-statement-some-value": "Cette propriété a une valeur, mais elle est inconnue",
+	"wikibasemediainfo-filepage-statement-error": "Une erreur s’est produite en récupérant la valeur pour cette propriété"
 }

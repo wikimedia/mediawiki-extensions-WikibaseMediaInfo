@@ -20,5 +20,8 @@
 	"wikibasemediainfo-filepage-publish": "Publicera ändringar",
 	"wikibasemediainfo-filepage-caption-empty": "Ingen bildtext har definierats",
 	"wikibasemediainfo-filepage-caption-too-long": "$1 {{PLURAL:$1|tecken}} över gränsen",
-	"wikibasemediainfo-filepage-caption-approaching-limit": "$1 {{PLURAL:$1|tecken|0=tecken}} kvar"
+	"wikibasemediainfo-filepage-caption-approaching-limit": "$1 {{PLURAL:$1|tecken|0=tecken}} kvar",
+	"wikibasemediainfo-filepage-statement-no-value": "Inget värde finns för denna egenskap",
+	"wikibasemediainfo-filepage-statement-some-value": "Denna egenskap har ett värde, men det är okänt",
+	"wikibasemediainfo-filepage-statement-error": "Ett fel uppstod när värdet för denna egenskap hämtades"
 }

@@ -7,6 +7,10 @@
 	"wikibase-entity-mediainfo": "медиаинфо",
 	"wikibasemediainfo-diffview-label": "куьг",
 	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Куьг",
+	"wikibasemediainfo-filepage-more-languages": "Шадолу меттанаш",
+	"wikibasemediainfo-filepage-fewer-languages": "КӀезг меттанаш",
+	"wikibasemediainfo-filepage-add-caption": "ТӀетоха куьг",
 	"wikibasemediainfo-filepage-cancel": "Юхаяккха",
+	"wikibasemediainfo-filepage-publish": "Хийцамаш дӀаязбан",
 	"wikibasemediainfo-filepage-caption-empty": "ТӀетоха кху могӀанан тӀе хӀокху файлах лаьцна хаам"
 }

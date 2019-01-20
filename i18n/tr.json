@@ -1,8 +1,10 @@
 {
 	"@metadata": {
 		"authors": [
-			"Hedda"
+			"Hedda",
+			"Arbormedi"
 		]
 	},
-	"wikibasemediainfo-filepage-caption-empty": "Bu dosyanın temsil ettiği şeyin tek satırlık açıklamasını ekleyin."
+	"wikibasemediainfo-filepage-caption-empty": "Bu dosyanın temsil ettiği şeyin tek satırlık açıklamasını ekleyin.",
+	"wikibasemediainfo-filepage-statement-some-value": "Bu özelliğin bir değeri var ancak bilinmemektedir."
 }

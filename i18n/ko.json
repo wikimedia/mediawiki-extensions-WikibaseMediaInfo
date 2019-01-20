@@ -21,5 +21,8 @@
 	"wikibasemediainfo-filepage-publish": "변경사항 게시",
 	"wikibasemediainfo-filepage-caption-empty": "이 파일이 나타내는 바에 대한 한 줄 설명을 추가합니다",
 	"wikibasemediainfo-filepage-caption-too-long": "$1{{PLURAL:$1|자}} 제한 초과",
-	"wikibasemediainfo-filepage-caption-approaching-limit": "$1{{PLURAL:$1|자}} 남음"
+	"wikibasemediainfo-filepage-caption-approaching-limit": "$1{{PLURAL:$1|자}} 남음",
+	"wikibasemediainfo-filepage-statement-no-value": "이 속성에 대한 값이 존재하지 않습니다",
+	"wikibasemediainfo-filepage-statement-some-value": "이 속성에 값이 있으나 알려진 값이 아닙니다",
+	"wikibasemediainfo-filepage-statement-error": "이 속성의 값을 가져올 때 오류가 발생했습니다"
 }

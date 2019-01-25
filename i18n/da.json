@@ -9,5 +9,6 @@
 	"wikibase-mediainfo-summary-wbsetlabel-set": "Redigerede billedeteksten [$2]",
 	"wikibasemediainfo-filepage-fewer-languages": "Se færre sprog",
 	"wikibasemediainfo-filepage-cancel": "Annullér",
-	"wikibasemediainfo-filepage-statement-no-value": "Der findes ingen værdi for denne egenskab"
+	"wikibasemediainfo-filepage-statement-no-value": "Der findes ingen værdi for denne egenskab",
+	"wikibasemediainfo-filepage-statement-some-value": "Denne egenskab har en værdi, men den er ukendt"
 }

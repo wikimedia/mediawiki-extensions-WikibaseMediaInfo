@@ -23,5 +23,8 @@
 	"wikibasemediainfo-filepage-publish": "Објави промени",
 	"wikibasemediainfo-filepage-caption-empty": "Опишете во еден ред што претставува податотекава",
 	"wikibasemediainfo-filepage-caption-too-long": "$1 {{PLURAL:$1|знак|знаци}} над границата",
-	"wikibasemediainfo-filepage-caption-approaching-limit": "{{PLURAL:$1|преостанува уште $1 знак|преостануваат уште $1 знаци|0=преостануваат уште $1 знаци}}"
+	"wikibasemediainfo-filepage-caption-approaching-limit": "{{PLURAL:$1|преостанува уште $1 знак|преостануваат уште $1 знаци|0=преостануваат уште $1 знаци}}",
+	"wikibasemediainfo-filepage-statement-no-value": "Не постои вредност за ова својство",
+	"wikibasemediainfo-filepage-statement-some-value": "Ова својство има вредност, но не е познато",
+	"wikibasemediainfo-filepage-statement-error": "Се појави грешка при добивањето на вредноста за ова својство"
 }

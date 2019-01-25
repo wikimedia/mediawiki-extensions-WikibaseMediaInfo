@@ -26,5 +26,8 @@
 	"wikibasemediainfo-filepage-publish": "פרסום השינויים",
 	"wikibasemediainfo-filepage-caption-empty": "נא להוסיף משפט שמסביר מה הקובץ מייצג",
 	"wikibasemediainfo-filepage-caption-too-long": "{{PLURAL:$1|תו אחד|$1 תווים}} מעבר למגבלה",
-	"wikibasemediainfo-filepage-caption-approaching-limit": "{{PLURAL:$1|נותר תו אחד|נותרו $1 תווים}}"
+	"wikibasemediainfo-filepage-caption-approaching-limit": "{{PLURAL:$1|נותר תו אחד|נותרו $1 תווים}}",
+	"wikibasemediainfo-filepage-statement-no-value": "אין ערך למאפיין הזה",
+	"wikibasemediainfo-filepage-statement-some-value": "למאפיין הזה יש ערך, אבל הוא לא ידוע",
+	"wikibasemediainfo-filepage-statement-error": "אירעה שגיאה בעת אחזור הערך עבור המאפיין הזה"
 }

@@ -9,5 +9,8 @@
 	"wikibase-mediainfo-summary-wbsetlabel-remove": "Премахване на [$2] описание",
 	"wikibase-mediainfo-summary-wbsetlabel-set": "Променяне на [$2] описание",
 	"wikibasemediainfo-diffview-label": "описание",
-	"wikibasemediainfo-filepage-cancel": "Отказ"
+	"wikibasemediainfo-filepage-cancel": "Отказ",
+	"wikibasemediainfo-filepage-statement-no-value": "Не съществува стойност за това свойство",
+	"wikibasemediainfo-filepage-statement-some-value": "Това свойство има стойност, но не е познато",
+	"wikibasemediainfo-filepage-statement-error": "Възникна грешка при получаването на стойността за това свойство"
 }

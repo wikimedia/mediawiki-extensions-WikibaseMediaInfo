@@ -1,0 +1,30 @@
+{
+	"@metadata": {
+		"authors": [
+			"Janezdrilc"
+		]
+	},
+	"right-mediainfo-term": "Spremeni podatke o datoteki (podnapise, povzetke)",
+	"slot-name-mediainfo": "Strukturirane informacije o datoteki",
+	"wikibase-entity-mediainfo": "podatki o datoteki",
+	"wikibase-mediainfo-summary-wbsetlabel-add": "Dodan podnapis [$2]",
+	"wikibase-mediainfo-summary-wbsetlabel-remove": "Odstranjen podnapis [$2]",
+	"wikibase-mediainfo-summary-wbsetlabel-set": "Spremenjen podnapis [$2]",
+	"wikibasemediainfo-desc": "Razširitev Wikiosnove za urejanje strukturiranih metapodatkov predstavnostnih datotek",
+	"wikibasemediainfo-diffview-label": "podnapis",
+	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Podnapisi",
+	"wikibasemediainfo-filepage-structured-data-heading": "Strukturirani podatki",
+	"wikibasemediainfo-filepage-captions-title": "Podnapisi",
+	"wikibasemediainfo-filepage-more-languages": "Prikaži še $1 {{PLURAL:$1|jezik|jezika|jezike|jezikov}}",
+	"wikibasemediainfo-filepage-fewer-languages": "Prikaži manj jezikov",
+	"wikibasemediainfo-filepage-add-caption": "Dodaj podnapis",
+	"wikibasemediainfo-filepage-edit-captions": "Uredi podnapis",
+	"wikibasemediainfo-filepage-cancel": "Prekliči",
+	"wikibasemediainfo-filepage-publish": "Objavi spremembe",
+	"wikibasemediainfo-filepage-caption-empty": "Dodaj enovrstični opis, kaj ta datoteka predstavlja",
+	"wikibasemediainfo-filepage-caption-too-long": "$1 {{PLURAL:$1|znak|znaka|znaki|znakov}} preveč",
+	"wikibasemediainfo-filepage-caption-approaching-limit": "$1 {{PLURAL:$1|znak|znaka|znaki|znakov|0=znakov}} na voljo",
+	"wikibasemediainfo-filepage-statement-no-value": "Za to lastnost ne obstaja vrednost",
+	"wikibasemediainfo-filepage-statement-some-value": "Ta lastnost ima vrednost, vendar neznano",
+	"wikibasemediainfo-filepage-statement-error": "Pri pridobivanju vrednosti za to lastnost je prišlo do napake"
+}

@@ -2,9 +2,9 @@
 
 namespace Wikibase\MediaInfo\Search;
 
-use Wikibase\Repo\Search\Elastic\Fields\FieldDefinitions;
+use Wikibase\Repo\Search\Fields\FieldDefinitions;
 use Wikibase\Repo\Search\Elastic\Fields\StatementCountField;
-use Wikibase\Repo\Search\Elastic\Fields\WikibaseIndexField;
+use Wikibase\Repo\Search\Fields\WikibaseIndexField;
 
 /**
  * @license GPL-2.0-or-later

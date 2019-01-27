@@ -282,7 +282,8 @@ class WikibaseMediaInfoHooks {
 				new EntityInfo( [] )
 			);
 			$captionsHtml = $view->getContent( $emptyMediaInfo )->getHtml();
-			preg_replace( self::getMediaInfoViewRegex(), '$1', $captionsHtml );
+			// Strip out the surrounding <mw:mediainfoView> tag
+			$captionsHtml = preg_replace( self::getMediaInfoViewRegex(), '$1', $captionsHtml );
 		}
 
 		return preg_replace(

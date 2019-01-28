@@ -24,5 +24,8 @@
 	"wikibasemediainfo-filepage-publish": "Опублікувати зміни",
 	"wikibasemediainfo-filepage-caption-empty": "Додайте однорядкове пояснення, що саме репрезентує цей файл",
 	"wikibasemediainfo-filepage-caption-too-long": "Ліміт перевищено на $1 {{PLURAL:$1|символ|символи|символів}}",
-	"wikibasemediainfo-filepage-caption-approaching-limit": "{{PLURAL:$1|Залишився $1 символ|Залишилося $1 символи|Залишилось $1 символів}}"
+	"wikibasemediainfo-filepage-caption-approaching-limit": "{{PLURAL:$1|Залишився $1 символ|Залишилося $1 символи|Залишилось $1 символів}}",
+	"wikibasemediainfo-filepage-statement-no-value": "Для цієї властивості значення відсутнє",
+	"wikibasemediainfo-filepage-statement-some-value": "Ця властивість має значення, але воно невідоме",
+	"wikibasemediainfo-filepage-statement-error": "Сталася помилка при спробі отримати значення для цієї властивості"
 }

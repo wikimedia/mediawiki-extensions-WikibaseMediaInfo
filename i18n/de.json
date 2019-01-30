@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"Metalhead64"
+			"Metalhead64",
+			"Speravir"
 		]
 	},
 	"right-mediainfo-term": "Medieninformationsbegriffe ändern (Bildtexte, Zusammenfassungen)",
@@ -12,7 +13,7 @@
 	"wikibase-mediainfo-summary-wbsetlabel-set": "Bildtext [$2] bearbeitet",
 	"wikibasemediainfo-desc": "Wikibase-Erweiterung zur Verwaltung strukturierter Metadaten von Mediendateien",
 	"wikibasemediainfo-diffview-label": "Beschreibung",
-	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Bildtexte",
+	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Kurzbeschreibungen",
 	"wikibasemediainfo-filepage-structured-data-heading": "Strukturierte Daten",
 	"wikibasemediainfo-filepage-captions-title": "Bildtexte",
 	"wikibasemediainfo-filepage-more-languages": "{{PLURAL:$1|Eine weitere Sprache|$1 weitere Sprachen}} ansehen",

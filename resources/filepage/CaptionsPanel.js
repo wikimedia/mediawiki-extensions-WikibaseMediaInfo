@@ -49,9 +49,17 @@
 		this.captionsData = {};
 		this.languageSelectors = [];
 		this.textInputs = [];
-		this.editToggle = new sd.EditToggle( this.config, this );
+		this.editToggle = new sd.EditToggle(
+			{
+				titleKey: 'wikibasemediainfo-filepage-edit-captions'
+			},
+			this
+		);
 		this.languagesViewWidget = new sd.LanguagesViewWidget( this.config );
-		this.editActionsWidget = new sd.EditActionsWidget( config, this );
+		this.editActionsWidget = new sd.CaptionsEditActionsWidget(
+			{ appendToSelector: '.' + config.contentClass },
+			this
+		);
 		this.api = wb.api.getLocationAgnosticMwApi( mw.config.get( 'wbRepoApiUrl' ) );
 		this.contentSelector = '.' + this.config.contentClass;
 		this.entityTermSelector = '.' + this.config.entityTermClass;
@@ -614,7 +622,7 @@
 					var dataInRow = self.readDataFromReadOnlyRow( $( this ) );
 					currentlyDisplayedLanguages.push( dataInRow.languageCode );
 				} );
-				newIndex = $captionsContent.find( '.wbmi-entityview-entitycontent' ).length;
+				newIndex = $captionsContent.find( this.entityTermSelector ).length;
 				errorRow = self.createIndexedEditableRow(
 					newIndex,
 					currentlyDisplayedLanguages,
@@ -690,7 +698,7 @@
 			count = 0,
 			languageCodesInOrder = this.getCaptionLanguagesList();
 
-		$captionsContent.find( '.wbmi-entityview-entitycontent' ).each( function () {
+		$captionsContent.find( this.entityTermSelector ).each( function () {
 			$( this ).remove();
 		} );
 
@@ -744,7 +752,7 @@
 		return indexedShowCaptionFlags;
 	};
 
-	sd.CaptionsPanel.prototype.refreshAndMakeEditable = function () {
+	sd.CaptionsPanel.prototype.makeEditable = function () {
 		var captionsPanel = this;
 
 		// Set the target pending element to the layout box
@@ -760,11 +768,11 @@
 				captionsPanel.languagesViewWidget.hide();
 				captionsPanel.editActionsWidget.show();
 				var captionLangCodes = [];
-				$captionsContent.find( '.wbmi-entityview-entitycontent' ).each( function () {
+				$captionsContent.find( captionsPanel.entityTermSelector ).each( function () {
 					var dataInRow = captionsPanel.readDataFromReadOnlyRow( $( this ) );
 					captionLangCodes.push( dataInRow.languageCode );
 				} );
-				$captionsContent.find( '.wbmi-entityview-entitycontent' ).each( function ( index ) {
+				$captionsContent.find( captionsPanel.entityTermSelector ).each( function ( index ) {
 					var captionData = captionsPanel.readDataFromReadOnlyRow( $( this ) );
 
 					$( this ).replaceWith(
@@ -791,7 +799,7 @@
 	sd.CaptionsPanel.prototype.addNewEditableLanguageRow = function () {
 		var $captionsContent = $( this.contentSelector );
 		var row = this.createIndexedEditableRow(
-			$captionsContent.find( '.wbmi-entityview-entitycontent' ).length
+			$captionsContent.find( this.entityTermSelector ).length
 		);
 		row.insertBefore( $captionsContent.find( '.wbmi-entityview-editActions' ) );
 		this.refreshLanguageSelectorsOptions();
@@ -817,7 +825,7 @@
 				captionsPanel.enableAllFormInputs();
 				$caption =
 					$( captionsPanel.contentSelector ).find(
-						'.wbmi-entityview-entitycontent[data-index="' + error.index + '"] .wbmi-caption-value'
+						captionsPanel.entityTermSelector + '[data-index="' + error.index + '"] .wbmi-caption-value'
 					);
 				$caption.find( 'div.wbmi-caption-publishError' ).remove();
 				$caption.find( 'div.wbmi-caption-publishWarning' ).remove();
@@ -835,8 +843,13 @@
 	sd.CaptionsPanel.prototype.initialize = function () {
 		var captionsPanel = this;
 
-		this.editToggle.initialize();
-		$( this.contentSelector ).find( '.wbmi-entityview-entitycontent' ).each( function ( index ) {
+		// Only allow editing if we're NOT on a diff page or viewing an older revision
+		// eslint-disable-next-line jquery/no-global-selector
+		if ( $( '.diff' ).length === 0 && $( '.mw-revision' ).length === 0 ) {
+			$( '.' + this.config.headerClass ).append( this.editToggle.$element );
+		}
+
+		$( this.contentSelector ).find( this.entityTermSelector ).each( function ( index ) {
 			var captionData;
 			$( this ).attr( 'data-index', index );
 			captionData = captionsPanel.readDataFromReadOnlyRow( $( this ) );

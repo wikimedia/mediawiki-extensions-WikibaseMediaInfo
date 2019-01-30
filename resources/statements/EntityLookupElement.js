@@ -56,9 +56,10 @@
 	 *
 	 * @inheritdoc
 	 */
-	statements.EntityLookupElement.prototype.getLookupCacheDataFromResponse = function ( response ) {
-		return response.search;
-	};
+	statements.EntityLookupElement.prototype.getLookupCacheDataFromResponse =
+		function ( response ) {
+			return response.search;
+		};
 
 	/**
 	 * Construct menu options from transformed API data.

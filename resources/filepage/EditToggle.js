@@ -3,40 +3,33 @@
 	'use strict';
 
 	/**
-	 * Widget containing an element that makes a CaptionPanel editable when clicked
+	 * Widget containing an element that makes an SDC panel editable when clicked
 	 *
 	 * @constructor
 	 * @param {Object} [config]
-	 * @cfg {Object} headerClass CSS class of captions header element
-	 * @param {object} captionsPanel CaptionsPanel object
+	 * @cfg {string} prependToSelector Selector for element to append this to
+	 * @cfg {string} titleKey i18n key for title text for the link
+	 * @param {object} sdcPanel Structured Data Panel object (with makeEditable() method)
 	 */
-	sd.EditToggle = function EditToggle( config, captionsPanel ) {
+	sd.EditToggle = function EditToggle( config, sdcPanel ) {
 
-		var $element = new OO.ui.ButtonWidget( {
+		this.$element = new OO.ui.ButtonWidget( {
 			icon: 'edit',
 			framed: false,
-			title: mw.message( 'wikibasemediainfo-filepage-edit-captions' ).text(),
+			title: mw.message( config.titleKey ).text(),
 			classes: [ 'wbmi-entityview-editButton' ]
 		} )
 			.on( 'click', function () {
-				captionsPanel.refreshAndMakeEditable();
+				sdcPanel.makeEditable();
 			} )
 			.$element;
 
-		this.initialize = function () {
-			// Only allow editing if we're NOT on a diff page or viewing an older revision
-			// eslint-disable-next-line jquery/no-global-selector
-			if ( $( '.diff' ).length === 0 && $( '.mw-revision' ).length === 0 ) {
-				$( '.' + config.headerClass ).append( $element );
-			}
-		};
-
 		this.show = function () {
-			$element.show();
+			this.$element.show();
 		};
 
 		this.hide = function () {
-			$element.hide();
+			this.$element.hide();
 		};
 	};
 

@@ -337,7 +337,7 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 			new BabelUserLanguageLookup(),
 			$mockViewFactory,
 			[],
-			[ 'id' => 'P1', 'label' => '', 'input' => '#' ]
+			[]
 		);
 
 		$this->assertRegExp(

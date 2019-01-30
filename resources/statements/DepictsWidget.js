@@ -13,7 +13,7 @@
 
 		this.entityId = config.entityId;
 
-		this.input = new statements.ItemInputWidget();
+		this.input = new statements.ItemInputWidget( { classes: [ 'wbmi-depicts-input' ] } );
 		this.input.connect( this, { choose: 'addItemFromInput' } );
 
 		this.$element.append(

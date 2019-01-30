@@ -2,33 +2,27 @@
 
 namespace Wikibase\MediaInfo\View;
 
+use DataValues\StringValue;
 use Html;
 use OOUI\HtmlSnippet;
-use OOUI\Layout;
 use OOUI\PanelLayout;
 use OOUI\Tag;
 use OutputPage;
-use Title;
+use ValueFormatters\FormatterOptions;
 use Wikibase\DataModel\Entity\EntityId;
 use Wikibase\DataModel\Entity\EntityIdValue;
 use Wikibase\DataModel\Entity\PropertyId;
-use Wikibase\DataModel\Services\Lookup\LabelDescriptionLookup;
-use Wikibase\DataModel\Services\Lookup\LabelDescriptionLookupException;
-use Wikibase\DataModel\Snak\PropertyNoValueSnak;
-use Wikibase\DataModel\Snak\PropertySomeValueSnak;
 use Wikibase\DataModel\Snak\PropertyValueSnak;
 use Wikibase\DataModel\Snak\Snak;
 use Wikibase\DataModel\Snak\SnakList;
 use Wikibase\DataModel\Statement\Statement;
 use Wikibase\DataModel\Statement\StatementList;
-use Wikibase\DataModel\Term\Term;
-use Wikibase\DataModel\Term\TermFallback;
-use Wikibase\LanguageFallbackChain;
-use Wikibase\Lib\LanguageFallbackIndicator;
+use Wikibase\Lib\OutputFormatSnakFormatterFactory;
+use Wikibase\Lib\OutputFormatValueFormatterFactory;
+use Wikibase\Lib\SnakFormatter;
 use Wikibase\Lib\Store\EntityTitleLookup;
 use Wikibase\Lib\Store\PropertyOrderProvider;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
-use Wikibase\View\LanguageDirectionalityLookup;
 use Wikibase\View\LocalizedTextProvider;
 
 /**
@@ -39,39 +33,39 @@ use Wikibase\View\LocalizedTextProvider;
 class MediaInfoEntityStatementsView {
 
 	private $propertyOrderProvider;
-	private $dirLookup;
 	private $textProvider;
-	private $fallbackChain;
-	private $entityIdValueFormatter;
+	private $defaultPropertyIds;
+	private $snakFormatterFactory;
+	private $valueFormatterFactory;
+
+	const EMPTY_DEFAULT_PROPERTY_PLACEHOLDER = 'EMPTY_DEFAULT_PROPERTY_PLACEHOLDER';
 
 	/**
 	 * MediaInfoEntityStatementsView constructor.
 	 * @param PropertyOrderProvider $propertyOrderProvider
-	 * @param LanguageDirectionalityLookup $languageDirectionalityLookup
 	 * @param LocalizedTextProvider $textProvider
-	 * @param LanguageFallbackChain $fallbackChain
-	 * @param LabelDescriptionLookup $labelDescriptionLookup
 	 * @param EntityTitleLookup $entityTitleLookup
-	 * @param LanguageFallbackIndicator $languageFallbackIndicator
+	 * @param PropertyId[] $defaultPropertyIds Default values are displayed for these properties if
+	 * 	we don't have values for them
+	 * @param OutputFormatSnakFormatterFactory $snakFormatterFactory
+	 * @param OutputFormatValueFormatterFactory $valueFormatterFactory
 	 */
 	public function __construct(
 		PropertyOrderProvider $propertyOrderProvider,
-		LanguageDirectionalityLookup $languageDirectionalityLookup,
 		LocalizedTextProvider $textProvider,
-		LanguageFallbackChain $fallbackChain,
-		LabelDescriptionLookup $labelDescriptionLookup,
 		EntityTitleLookup $entityTitleLookup,
-		LanguageFallbackIndicator $languageFallbackIndicator
+		array $defaultPropertyIds,
+		OutputFormatSnakFormatterFactory $snakFormatterFactory,
+		OutputFormatValueFormatterFactory $valueFormatterFactory
 	) {
 		OutputPage::setupOOUI();
 
 		$this->propertyOrderProvider = $propertyOrderProvider;
-		$this->dirLookup = $languageDirectionalityLookup;
 		$this->textProvider = $textProvider;
-		$this->fallbackChain = $fallbackChain;
-		$this->labelLookup = $labelDescriptionLookup;
 		$this->entityTitleLookup = $entityTitleLookup;
-		$this->languageFallbackIndicator = $languageFallbackIndicator;
+		$this->defaultPropertyIds = $defaultPropertyIds;
+		$this->snakFormatterFactory = $snakFormatterFactory;
+		$this->valueFormatterFactory = $valueFormatterFactory;
 	}
 
 	/**
@@ -79,7 +73,6 @@ class MediaInfoEntityStatementsView {
 	 * @return string
 	 */
 	public function getHtml( MediaInfo $entity ) {
-
 		$statements = $this->statementsByPropertyId( $entity->getStatements() );
 
 		/** @var PanelLayout[] $panels */
@@ -95,120 +88,146 @@ class MediaInfoEntityStatementsView {
 		return $html;
 	}
 
-	private function getLayoutForProperty( $propertyId, array $statements ) {
+	public static function getHtmlContainerClass( $propertyIdString ) {
+		return 'wbmi-entityview-statementsGroup-' . str_replace( ':', '_', $propertyIdString );
+	}
 
-		$subsections = [ $this->createPropertyHeader( $propertyId ) ];
-
+	private function getLayoutForProperty( $propertyIdString, array $statements ) {
+		$itemsGroupDiv = new Tag( 'div' );
+		$itemsGroupDiv->addClasses( [ 'wbmi-content-items-group' ] );
 		foreach ( $statements as $statement ) {
-			$subsections[] = $this->createStatementLayout( $statement );
+			$itemsGroupDiv->appendContent( $this->createStatementDiv( $statement ) );
 		}
 
 		$panel = new PanelLayout( [
-			'classes' => [ 'wbmi-entityview-statementsGroup' ],
+			'classes' => [
+				'wbmi-entityview-statementsGroup',
+				self::getHtmlContainerClass( $propertyIdString ),
+			],
 			'scrollable' => false,
 			'padded' => false,
 			'expanded' => false,
 			'framed' => true,
-			'content' => $subsections
+			'content' => [
+				$this->createPropertyHeader( $propertyIdString ),
+				$itemsGroupDiv
+			]
 		] );
 		return $panel;
 	}
 
-	private function createPropertyHeader( $propertyId ) {
-		$propertyIdElement = new Tag( 'h4' );
-		$propertyIdElement->appendContent(
+	private function createPropertyHeader( $propertyIdString ) {
+		$propertyId = new PropertyId( $propertyIdString );
+		$header = new Tag( 'div' );
+		$header->appendContent(
 			new HtmlSnippet(
-				$this->getEntityHtmlPlusLink(
-					new PropertyId( $propertyId )
+				$this->decorateFormattedDataValue(
+					$this->formatEntityId( $propertyId ),
+					$propertyId
 				)
 			)
 		);
-		return new Layout( [
-			'classes' => [ 'wbmi-entityview-statementsGroup-header' ],
-			'content' => [ $propertyIdElement ]
-		] );
+		$header->addClasses( [ 'wbmi-entityview-statementsGroup-header' ] );
+		return $header;
 	}
 
-	private function getEntityHtml( EntityId $entityId ) {
-		$term = $this->lookupEntityLabel( $entityId );
-
-		if ( $term === null ) {
-			return $entityId->getSerialization();
-		}
-
-		$html = $term->getText();
-		if ( $term instanceof TermFallback ) {
-			$html .= $this->languageFallbackIndicator->getHtml( $term );
-		}
-
-		return $html;
+	private function formatEntityId( EntityId $entityId, $format = SnakFormatter::FORMAT_PLAIN ) {
+		$valueFormatter = $this->valueFormatterFactory->getValueFormatter(
+			$format,
+			new FormatterOptions()
+		);
+		return $valueFormatter->formatValue( new EntityIdValue( $entityId ) );
 	}
 
-	private function getEntityHtmlPlusLink( EntityId $entityId ) {
-		$linkClasses = [ 'wbmi-entity-link' ];
-		$title = $this->entityTitleLookup->getTitleForId( $entityId );
-
-		$html = $this->getEntityHtml( $entityId );
-
-		if ( $title !== null && !$title->exists() ) {
-				$linkClasses[] = 'new';
-		}
-
-		// Decorate the link with an icon for the relevant repository
-		if ( !empty( $entityId->getRepositoryName() ) ) {
-			$linkClasses[] = 'wbmi-entity-link-foreign-repo-' . $entityId->getRepositoryName();
-		}
-
-		$html .= Html::element(
-			'a',
-			$this->getAttributes( $title, $linkClasses ),
-			$entityId->getLocalPart()
+	private function decorateFormattedDataValue( $formattedValue, EntityId $entityId = null ) {
+		$links = '';
+		$label = Html::rawElement(
+			'h4',
+			[ 'class' => 'wbmi-entity-label' ],
+			$formattedValue
 		);
 
-		return $html;
-	}
+		if ( !( is_null( $entityId ) ) ) {
+			$linkClasses = [ 'wbmi-entity-link' ];
+			$title = $this->entityTitleLookup->getTitleForId( $entityId );
 
-	private function getAttributes( Title $title, $classes = [] ) {
-		$attributes = [
-			'title' => $title->getPrefixedText(),
-			'href' => $title->isLocal() ? $title->getLocalURL() : $title->getFullURL()
-		];
+			if ( $title !== null && !$title->exists() ) {
+				$linkClasses[] = 'new';
+			}
 
-		if ( $title->isLocal() && $title->isRedirect() ) {
-			$classes[] = 'mw-redirect';
+			// Decorate the link with an icon for the relevant repository
+			if ( !empty( $entityId->getRepositoryName() ) ) {
+				$linkClasses[] = 'wbmi-entity-link-foreign-repo-' . $entityId->getRepositoryName();
+			}
+
+			$links = Html::rawElement(
+				'div',
+				[ 'class' => 'wbmi-entity-label-extra' ],
+				Html::element(
+					'a',
+					[
+						'class' => implode( ' ', $linkClasses ),
+						'href' => $title->isLocal() ? $title->getLocalURL() : $title->getFullURL(),
+					],
+					$entityId->getLocalPart()
+				)
+			);
 		}
 
-		if ( !empty( $classes ) ) {
-			$attributes['class'] = implode( ' ', $classes );
-		}
-
-		return $attributes;
+		return Html::rawElement(
+			'div',
+			[ 'class' => 'wbmi-entity-title' ],
+			$label . $links
+		);
 	}
 
-	private function lookupEntityLabel( EntityId $entityId ) {
-		try {
-			return $this->labelLookup->getLabel( $entityId );
-		} catch ( LabelDescriptionLookupException $e ) {
-			return null;
-		}
+	private function createStatementDiv( Statement $statement ) {
+		$div = new Tag( 'div' );
+		$div->appendContent( $this->innerStatementDiv( $statement ) );
+		$div->addClasses( [ 'wbmi-item' ] );
+		return $div;
 	}
 
-	private function createStatementLayout( Statement $statement ) {
-		return new Layout( [
-			'classes' => [ 'wbmi-entityview-statement' ],
-			'content' => $this->createSnakLayout( $statement )
-		] );
-	}
-
-	private function createSnakLayout( Statement $statement ) {
+	private function innerStatementDiv( Statement $statement ) {
 		$mainSnak = $statement->getMainSnak();
-		$content = $this->getSnakValueHtml( $mainSnak, 'getEntityHtmlPlusLink' );
-		$snakLayout = new Layout( [ 'content' => $content, 'classes' => 'mediainfo-snak' ] );
-		$snakLayout->appendContent( $this->createQualifierLayouts( $statement->getQualifiers() ) );
-		return $snakLayout;
+
+		$statementDiv = new Tag( 'div' );
+		$statementDiv->addClasses( [ 'wbmi-item-container' ] );
+
+		$guid = $statement->getGuid();
+		if ( !is_null( $guid ) ) {
+			$statementDiv->setAttributes( [ 'data-guid' => $guid ] );
+		}
+
+		$mainSnakDiv = new Tag( 'div' );
+		$mainSnakValueEntityId = null;
+		if (
+			( $mainSnak instanceof PropertyValueSnak ) &&
+			( $mainSnak->getDataValue() instanceof EntityIdValue )
+		) {
+			$mainSnakValueEntityId = $mainSnak->getDataValue()->getEntityId();
+		}
+		$mainSnakDiv->appendContent(
+			new HtmlSnippet(
+				$this->decorateFormattedDataValue(
+					$this->formatSnakValue( $mainSnak ),
+					$mainSnakValueEntityId
+				)
+			)
+		);
+
+		$statementDiv->appendContent( $mainSnakDiv );
+		$qualifiers = $statement->getQualifiers();
+		if ( count( $qualifiers ) > 0 ) {
+			$statementDiv->appendContent( $this->createQualifiersDiv( $qualifiers ) );
+		}
+		return $statementDiv;
 	}
 
-	private function createQualifierLayouts( SnakList $snakList ) {
+	private function createQualifiersDiv( SnakList $snakList ) {
+		$container = new Tag( 'div' );
+		$container->addClasses( [ 'wbmi-item-content' ] );
+
 		$qualifierHtmlByPropertyId = [];
 		$propertyOrder = $this->propertyOrderProvider->getPropertyOrder();
 		if ( is_null( $propertyOrder ) ) {
@@ -223,54 +242,64 @@ class MediaInfoEntityStatementsView {
 		/** @var Snak $snak */
 		foreach ( $snakList as $snak ) {
 			$qualifierHtmlByPropertyId[$snak->getPropertyId()->getSerialization()][] =
-				$this->getSnakValueHtml( $snak, 'getEntityHtml' );
+				$this->formatSnakValue( $snak, SnakFormatter::FORMAT_PLAIN );
+		}
 
-		}
-		$layouts = [];
+		$qualifierDivs = [];
 		foreach ( $qualifierHtmlByPropertyId as $propertyIdString => $qualifierHtmlArray ) {
-			$content = $this->getEntityHtml( new PropertyId( $propertyIdString ) );
+			$content = $this->formatEntityId( new PropertyId( $propertyIdString ) );
 			$content .= $this->textProvider->get( 'colon-separator' );
-			$content .= implode( $this->textProvider->get( 'comma-separator' ), $qualifierHtmlArray );
-			$layouts[] = new Layout( [
-				'content' => new HtmlSnippet( $content ),
-				'classes' => [ 'wbmi-entityview-statement-qualifier' ],
-			] );
+			$content .= implode(
+				$this->textProvider->get( 'comma-separator' ),
+				$qualifierHtmlArray
+			);
+			$qualifierDiv = new Tag( 'div' );
+			$qualifierDiv->addClasses( [ 'wbmi-qualifier', 'wbmi-qualifier-read' ] );
+			$qualifierDiv->appendContent( $content );
+			$qualifierDivs[] = $qualifierDiv;
 		}
-		return $layouts;
+
+		$innerDiv = new Tag( 'div' );
+		$innerDiv->appendContent( $qualifierDivs );
+		$container->appendContent(
+			$innerDiv
+		);
+		return $container;
 	}
 
-	private function getSnakValueHtml( Snak $snak, $entityIdValueRenderer ) {
-		if ( $snak instanceof PropertyNoValueSnak ) {
-			$content = Html::element(
-				'em',
-				[ 'class' => 'wbmi-statement-no-value' ],
-				$this->textProvider->get( 'wikibasemediainfo-filepage-statement-no-value' )
-			);
-		} elseif ( $snak instanceof PropertySomeValueSnak ) {
-			$content = Html::element(
-				'em',
-				[ 'class' => 'wbmi-statement-some-value' ],
-				$this->textProvider->get( 'wikibasemediainfo-filepage-statement-some-value' )
-			);
-		} elseif ( $snak instanceof PropertyValueSnak ) {
-
+	/**
+	 * @param Snak $snak
+	 * @param string $format
+	 * @return HtmlSnippet
+	 * @throws \OOUI\Exception
+	 */
+	private function formatSnakValue( Snak $snak, $format = SnakFormatter::FORMAT_PLAIN ) {
+		// First handle the special case where a dummy snak has been added by default because
+		// there are no values at all for a property, but we want to display the property
+		// anyway (e.g. "depicts" is always displayed)
+		if ( $snak instanceof PropertyValueSnak ) {
 			$value = $snak->getDataValue();
-			if ( $value instanceof EntityIdValue ) {
-				$content = new HtmlSnippet(
-					call_user_func( [ $this, $entityIdValueRenderer ], $value->getEntityId() )
-				);
-			} else {
+			if ( !( $value instanceof EntityIdValue ) ) {
 				$content = $value->getValue();
+				if ( $content === self::EMPTY_DEFAULT_PROPERTY_PLACEHOLDER ) {
+					return new HtmlSnippet(
+						Html::element(
+							'em',
+							[ 'class' => 'wbmi-statement-empty-default-property' ],
+							$this->textProvider->get(
+								'wikibasemediainfo-filepage-statement-no-data'
+							)
+						)
+					);
+				}
 			}
-		} else {
-			// Error state; should not be reachable, but here just in case.
-			$content = Html::element(
-				'em',
-				[ 'class' => 'wbmi-statement-error' ],
-				$this->textProvider->get( 'wikibasemediainfo-filepage-statement-error' )
-			);
 		}
-		return new HtmlSnippet( (string)$content );
+
+		$formatter = $this->snakFormatterFactory->getSnakFormatter(
+			$format,
+			new FormatterOptions()
+		);
+		return new HtmlSnippet( $formatter->formatSnak( $snak ) );
 	}
 
 	/**
@@ -341,6 +370,26 @@ class MediaInfoEntityStatementsView {
 				$array[Statement::RANK_NORMAL],
 				$array[Statement::RANK_DEPRECATED]
 			);
+		}
+
+		$statementsByProperty = $this->addDefaultStatements( $statementsByProperty );
+
+		return $statementsByProperty;
+	}
+
+	private function addDefaultStatements( $statementsByProperty ) {
+		foreach ( $this->defaultPropertyIds as $propertyId ) {
+			if ( !isset( $statementsByProperty[ $propertyId->getSerialization() ] ) ) {
+				$statementsByProperty[ $propertyId->getSerialization() ] =
+					[
+						new Statement(
+							new PropertyValueSnak(
+								$propertyId,
+								new StringValue( self::EMPTY_DEFAULT_PROPERTY_PLACEHOLDER )
+							)
+						)
+					];
+			}
 		}
 		return $statementsByProperty;
 	}

@@ -20,11 +20,11 @@ use Wikibase\DataAccess\UnusableEntitySource;
 use Wikibase\DataModel\DeserializerFactory;
 use Wikibase\DataModel\Entity\EntityDocument;
 use Wikibase\DataModel\Entity\EntityId;
+use Wikibase\DataModel\Entity\PropertyId;
 use Wikibase\DataModel\SerializerFactory;
 use Wikibase\DataModel\Services\EntityId\EntityIdFormatter;
 use Wikibase\DataModel\Services\Lookup\InProcessCachingDataTypeLookup;
 use Wikibase\LanguageFallbackChain;
-use Wikibase\Lib\LanguageFallbackIndicator;
 use Wikibase\Lib\LanguageNameLookup;
 use Wikibase\Lib\Store\CachingPropertyOrderProvider;
 use Wikibase\Lib\Store\EntityInfo;
@@ -111,15 +111,21 @@ return [
 				ObjectCache::getLocalClusterInstance()
 			);
 
+			$defaultPropertyIdsForView = [];
+			$properties = MediaWikiServices::getInstance()
+				->getMainConfig()
+				->get( 'MediaInfoProperties' );
+			$depictsPropertyId = $properties['depicts']['id'];
+			if ( !empty( $depictsPropertyId ) ) {
+				$defaultPropertyIdsForView[] = new PropertyId( $depictsPropertyId );
+			}
 			$statementsView = new MediaInfoEntityStatementsView(
 				$propertyOrderProvider,
-				$langDirLookup,
 				$textProvider,
-				$fallbackChain,
-				$wbRepo->getLanguageFallbackLabelDescriptionLookupFactory()
-					->newLabelDescriptionLookup( $language ),
 				$wbRepo->getEntityTitleLookup(),
-				new LanguageFallbackIndicator( $wbRepo->getLanguageNameLookup() )
+				$defaultPropertyIdsForView,
+				$wbRepo->getSnakFormatterFactory(),
+				$wbRepo->getValueFormatterFactory()
 			);
 
 			return new MediaInfoView(

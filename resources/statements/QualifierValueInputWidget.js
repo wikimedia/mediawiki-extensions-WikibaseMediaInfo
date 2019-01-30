@@ -2,14 +2,15 @@
 
 	'use strict';
 
-	statements.QualifierValueInputWidget = function MediaInfoStatementsQualifierValueInputWidget( config ) {
-		this.config = $.extend( {}, config );
+	statements.QualifierValueInputWidget =
+		function MediaInfoStatementsQualifierValueInputWidget( config ) {
+			this.config = $.extend( {}, config );
 
-		statements.QualifierValueInputWidget.parent.call( this, this.config );
-		statements.FormatValueElement.call( this, $.extend( {}, config ) );
+			statements.QualifierValueInputWidget.parent.call( this, this.config );
+			statements.FormatValueElement.call( this, $.extend( {}, config ) );
 
-		this.setInputType( this.config.type || 'wikibase-entityid' );
-	};
+			this.setInputType( this.config.type || 'wikibase-entityid' );
+		};
 	OO.inheritClass( statements.QualifierValueInputWidget, OO.ui.Widget );
 	OO.mixinClass( statements.QualifierValueInputWidget, statements.FormatValueElement );
 
@@ -74,7 +75,8 @@
 				data.value = {
 					// add leading '+' if no unit is present already
 					amount: this.input.getValue().replace( /^(?![+-])/, '+' ),
-					// @todo not currently required, but we might need to implement support for units some day...
+					// @todo not currently required, but we might need to implement support
+					// for units some day...
 					unit: '1'
 				};
 				break;

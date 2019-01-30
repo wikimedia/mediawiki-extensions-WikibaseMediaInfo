@@ -3,14 +3,12 @@
 	'use strict';
 
 	/**
-	 * Widget containing other widgets to add a row, cancel, and save multi-lingual caption data
+	 * Widget containing 'cancel' and 'publish' buttons
 	 *
 	 * @constructor
-	 * @param {Object} [config]
-	 * @cfg {Object} contentClass CSS class of captions content container
-	 * @param {object} captionsPanel CaptionsPanel object
+	 * @param {object} sdcPanel Panel object with makeReadOnly() and sendData() methods
 	 */
-	sd.EditActionsWidget = function EditActionsWidget( config, captionsPanel ) {
+	sd.CancelPublishWidget = function CancelPublishWidget( sdcPanel ) {
 
 		var cancelButton = new OO.ui.ButtonWidget( {
 			framed: false,
@@ -20,7 +18,7 @@
 			label: mw.message( 'wikibasemediainfo-filepage-cancel' ).text()
 		} )
 			.on( 'click', function () {
-				captionsPanel.makeReadOnly();
+				sdcPanel.makeReadOnly();
 			} );
 
 		var publishButton = new OO.ui.ButtonInputWidget( {
@@ -33,36 +31,20 @@
 			]
 		} )
 			.on( 'click', function () {
-				captionsPanel.sendData();
+				sdcPanel.sendData();
 			} );
 
-		var cancelAndPublishButtons = new OO.ui.Element( {
+		var widget = new OO.ui.Element( {
 			content: [ cancelButton, publishButton ],
 			classes: [ 'wbmi-entityview-cancelAndPublishButtons' ]
 		} );
 
-		var addCaptionButton = new OO.ui.ButtonWidget( {
-			icon: 'add',
-			label: mw.message( 'wikibasemediainfo-filepage-add-caption' ).text(),
-			flags: 'progressive',
-			classes: [ 'wbmi-entityview-addCaptionButton' ],
-			framed: false
-		} )
-			.on( 'click', function () {
-				captionsPanel.addNewEditableLanguageRow();
-			} );
-
-		var editActions = new OO.ui.Element( {
-			content: [ addCaptionButton, cancelAndPublishButtons ],
-			classes: [ 'wbmi-entityview-editActions' ]
-		} );
-
 		this.hide = function () {
-			editActions.$element.detach();
+			widget.$element.hide();
 		};
 
 		this.show = function () {
-			$( '.' + config.contentClass ).append( editActions.$element );
+			widget.$element.show();
 		};
 
 		this.disablePublish = function () {
@@ -76,14 +58,14 @@
 		this.setStateSending = function () {
 			publishButton.setDisabled( true );
 			cancelButton.$element.hide();
-			addCaptionButton.$element.hide();
 		};
 
 		this.setStateReady = function () {
 			publishButton.setDisabled( false );
 			cancelButton.$element.show();
-			addCaptionButton.$element.show();
 		};
+
+		this.$element = widget.$element;
 	};
 
 }( mw.mediaInfo.structuredData ) );

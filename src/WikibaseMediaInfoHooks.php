@@ -5,7 +5,7 @@ namespace Wikibase\MediaInfo;
 use AbstractContent;
 use CirrusSearch\Connection;
 use CirrusSearch\Search\CirrusIndexField;
-use Content;
+use ContentHandler;
 use Elastica\Document;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\Revision\SlotRecord;
@@ -82,7 +82,7 @@ class WikibaseMediaInfoHooks {
 		$services->addServiceManipulator( 'SlotRoleRegistry', function ( SlotRoleRegistry $registry ) {
 			$registry->defineRoleWithModel(
 				/* role */ 'mediainfo',
-				/* content handler */ \Wikibase\MediaInfo\Content\MediaInfoContent::CONTENT_MODEL_ID
+				/* content handler */ MediaInfoContent::CONTENT_MODEL_ID
 				/*, layout – we want to set "prepend" in future, once MediaWiki supports that */
 			);
 		} );
@@ -216,7 +216,7 @@ class WikibaseMediaInfoHooks {
 	 * 			'input' => '<type of data the property holds - entity, numeric, text>'
 	 * 		]
 	 * 	]
-	 * @param array $properties Property details (id, label & url)
+	 * @param array $properties Property details (id, label and url)
 	 */
 	public function doBeforePageDisplay(
 		$out,
@@ -225,7 +225,7 @@ class WikibaseMediaInfoHooks {
 		UserLanguageLookup $userLanguageLookup,
 		DispatchingEntityViewFactory $entityViewFactory,
 		array $depictsQualifierProperties,
-		$properties
+		array $properties
 	) {
 		// Site-wide config
 		$modules = [];
@@ -239,11 +239,14 @@ class WikibaseMediaInfoHooks {
 			$out = $this->moveMediaInfoData( $out, $entityViewFactory );
 			$out->preventClickjacking();
 			$imgTitle = $out->getTitle();
+
 			$pageId = $imgTitle->getArticleID();
 			$entityId = $this->entityIdFromPageId( $pageId );
 
 			$modules[] = 'wikibase.mediainfo.filePageDisplay';
 			$moduleStyles[] = 'wikibase.mediainfo.filepagestyles';
+			$moduleStyles[] = 'wikibase.mediainfo.statements.styles';
+
 			$jsConfigVars += [
 				'wbUserSpecifiedLanguages' => array_values(
 					$userLanguageLookup->getAllUserLanguages(
@@ -274,7 +277,11 @@ class WikibaseMediaInfoHooks {
 	) {
 		$html = $out->getHTML();
 		$out->clearHTML();
-		$html = $this->moveCaptions( $html, $out, $entityViewFactory );
+		$html = $this->moveStructuredData(
+			$html,
+			$out,
+			$entityViewFactory
+		);
 		$html = $this->moveStructuredDataHeader( $html, $out );
 		$out->addHTML( $html );
 		return $out;
@@ -283,20 +290,24 @@ class WikibaseMediaInfoHooks {
 	/**
 	 * Move the structured data multi-lingual captions to the place we want them
 	 *
-	 * If there are no captions to be displayed, inject an empty MediaInfoView
+	 * If captions AND depicts are missing then an empty mediainfo view is injected
 	 *
 	 * @param $text
 	 * @param OutputPage $out
 	 * @param DispatchingEntityViewFactory $entityViewFactory
 	 * @return string
 	 */
-	private function moveCaptions( $text, $out, $entityViewFactory ) {
+	private function moveStructuredData(
+		$text,
+		$out,
+		$entityViewFactory
+	) {
 		if ( preg_match(
 			self::getMediaInfoViewRegex(),
 			$text,
 			$matches
 		) ) {
-			$captionsHtml = $matches[1];
+			$structuredDataHtml = $matches[1];
 			$text = str_replace( $matches[0], '', $text );
 		} else {
 			$emptyMediaInfo = new MediaInfo();
@@ -307,14 +318,18 @@ class WikibaseMediaInfoHooks {
 				$emptyMediaInfo,
 				new EntityInfo( [] )
 			);
-			$captionsHtml = $view->getContent( $emptyMediaInfo )->getHtml();
+			$structuredDataHtml = $view->getContent( $emptyMediaInfo )->getHtml();
 			// Strip out the surrounding <mw:mediainfoView> tag
-			$captionsHtml = preg_replace( self::getMediaInfoViewRegex(), '$1', $captionsHtml );
+			$structuredDataHtml = preg_replace(
+				self::getMediaInfoViewRegex(),
+				'$1',
+				$structuredDataHtml
+			);
 		}
 
 		return preg_replace(
 			'/<div class="mw-parser-output">/',
-			'<div class="mw-parser-output">' . $captionsHtml,
+			'<div class="mw-parser-output">' . $structuredDataHtml,
 			$text
 		);
 	}
@@ -435,7 +450,7 @@ class WikibaseMediaInfoHooks {
 		self::newFromGlobalState()->doCirrusSearchBuildDocumentParse(
 			$document,
 			WikiPage::factory( $title ),
-			\ContentHandler::getForModelID( MediaInfoContent::CONTENT_MODEL_ID )
+			ContentHandler::getForModelID( MediaInfoContent::CONTENT_MODEL_ID )
 		);
 	}
 

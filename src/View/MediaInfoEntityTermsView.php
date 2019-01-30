@@ -44,6 +44,7 @@ class MediaInfoEntityTermsView {
 
 	const CAPTION_EMPTY_CLASS = 'wbmi-entityview-emptyCaption';
 	const SHOW_CAPTION_CLASS = 'wbmi-entityview-showLabel';
+	const CAPTIONS_CONTAINER = 'wbmi-entityview-captionsPanel';
 
 	/**
 	 * MediaInfoEntityTermsView constructor.
@@ -76,7 +77,11 @@ class MediaInfoEntityTermsView {
 		MediaInfo $entity
 	) {
 		$layout = new PanelLayout( [
-			'classes' => [ 'wbmi-entityview-content', /* Temporary old classname for user gadget b/c */ 'filepage-mediainfo-entitytermsview' ],
+			'classes' => [
+				self::CAPTIONS_CONTAINER,
+				/* Temporary old classname for user gadget b/c */
+				'filepage-mediainfo-entitytermsview',
+			],
 			'scrollable' => false,
 			'padded' => false,
 			'expanded' => false,
@@ -211,7 +216,7 @@ class MediaInfoEntityTermsView {
 			$languageCode
 		);
 
-		$classes = [ 'wbmi-entityview-entitycontent' ];
+		$classes = [ 'wbmi-entityview-caption' ];
 		if ( $showCaption ) {
 			$classes[] = self::SHOW_CAPTION_CLASS;
 		}

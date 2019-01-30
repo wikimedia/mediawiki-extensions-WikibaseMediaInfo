@@ -9,6 +9,7 @@
 /* stylelint-disable-next-line selector-class-pattern */
 .filepage-mediainfo-entitytermsview,
 .wbmi-entityview-content,
+.wbmi-entityview-captionsPanel,
 .wbmi-entityview-statementsGroup {
 	padding-top: 0.6em;
 	float: left;
@@ -23,7 +24,7 @@
 		border-bottom: 1px solid #a2a9b1;
 		padding: 0.8em 0.8em 0.4em 1em;
 		font-size: 1em;
-		margin: 0 0 1.4em 0;
+		margin-bottom: 1em;
 
 		.wbmi-entityview-editButton {
 			float: right;
@@ -34,9 +35,8 @@
 
 	.wbmi-entityview-viewMoreButton,
 	.wbmi-entityview-viewLessButton,
-	.wbmi-entityview-entitycontent,
-	.wbmi-entityview-editActions
-	{
+	.wbmi-entityview-caption,
+	.wbmi-entityview-editActions {
 		padding: 0.8em 0;
 		border: 0;
 		margin: 0 4%;
@@ -46,7 +46,7 @@
 		width: 92%;
 	}
 
-	.wbmi-entityview-entitycontent {
+	.wbmi-entityview-caption {
 		&:not( :last-child ) {
 			border-bottom: 1px solid #c8ccd1;
 		}
@@ -100,14 +100,13 @@
 				padding-top: 0.2em;
 			}
 		}
-
-		.wbmi-entityview-cancelAndPublishButtons {
-			float: right;
-
-		}
 	}
 
-	&.wbmi-entityview-editable .wbmi-entityview-entitycontent {
+	.wbmi-entityview-cancelAndPublishButtons {
+		float: right;
+	}
+
+	&.wbmi-entityview-editable .wbmi-entityview-caption {
 		border-bottom: 0;
 	}
 
@@ -115,42 +114,25 @@
 	.wbmi-entityview-emptyCaption {
 		color: #72777d;
 	}
+
+	/* stylelint-disable-next-line selector-class-pattern */
+	.oo-ui-textInputWidget {
+		max-width: none;
+		width: auto;
+	}
 }
 
 .wbmi-entityview-statementsGroup {
-	padding-bottom: 2em;
+	padding: 1em;
 }
 
-.wbmi-entityview-statement {
-	vertical-align: top;
-	clear: both;
-	width: 100%;
+.wbmi-entityview-statementsGroup-header {
+	margin-left: -15px;
+	margin-right: -15px;
 
-	> div {
-		padding: 0.8em 1em;
-		margin: 0 1em;
-		background-color: #f8f9fa;
-		border: 2px solid #fff;
+	> .wbmi-entity-title {
+		background: none;
 	}
-
-	.wbmi-entityview-statement-qualifier {
-		font-size: 95%;
-		padding: 1em 0 0 1em;
-	}
-
-	.wbmi-statement-no-value,
-	.wbmi-statement-some-value {
-		color: #808080;
-	}
-
-	.wbmi-statement-error {
-		color: #f00;
-	}
-}
-
-.wbmi-entityview-statementsGroup-header h4 {
-	padding: 0.8em 1em 0.4em 1em;
-	font-size: 1em;
 }
 
 /* Some OOUI styles are loaded inline - add some here to prevent FOUC */

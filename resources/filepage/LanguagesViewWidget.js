@@ -11,14 +11,15 @@
 	 */
 	sd.LanguagesViewWidget = function LanguagesViewWidget( config ) {
 		var self = this,
-			contentSelector = '.' + config.contentClass;
+			contentSelector = '.' + config.contentClass,
+			entityTermSelector = '.' + config.entityTermClass;
 
 		var viewMoreButton = new OO.ui.ButtonWidget( {
 			icon: 'expand',
 			flags: 'progressive',
 			label: mw.message(
 				'wikibasemediainfo-filepage-more-languages',
-				$( contentSelector ).find( '.wbmi-entityview-entitycontent' ).length - 1
+				$( contentSelector ).find( entityTermSelector ).length - 1
 			).text(),
 			framed: false
 		} )
@@ -56,7 +57,7 @@
 
 		this.refreshLabel = function () {
 			var hideableRowCount = $( contentSelector )
-				.find( '.wbmi-entityview-entitycontent:not(.wbmi-entityview-showLabel)' ).length;
+				.find( entityTermSelector + ':not(.wbmi-entityview-showLabel)' ).length;
 			viewMoreButton.setLabel(
 				mw.message(
 					'wikibasemediainfo-filepage-more-languages',
@@ -68,15 +69,15 @@
 		this.expand = function () {
 			var $captionsContent = $( contentSelector );
 			viewMore.$element.detach();
-			$captionsContent.find( '.wbmi-entityview-entitycontent' ).show();
-			if ( $captionsContent.find( '.wbmi-entityview-entitycontent:not(.wbmi-entityview-showLabel)' ).length > 0 ) {
+			$captionsContent.find( entityTermSelector ).show();
+			if ( $captionsContent.find( entityTermSelector + ':not(.wbmi-entityview-showLabel)' ).length > 0 ) {
 				$captionsContent.append( viewLess.$element );
 			}
 		};
 
 		this.collapse = function () {
 			var $captionsContent = $( contentSelector ),
-				$rows = $captionsContent.find( '.wbmi-entityview-entitycontent:not(.wbmi-entityview-showLabel)' );
+				$rows = $captionsContent.find( entityTermSelector + ':not(.wbmi-entityview-showLabel)' );
 			var rowCount = $rows.length;
 			if ( rowCount < 1 ) {
 				return;
@@ -87,7 +88,7 @@
 		};
 
 		this.hide = function () {
-			$( contentSelector ).find( '.wbmi-entityview-entitycontent' ).show();
+			$( contentSelector ).find( entityTermSelector ).show();
 			viewLess.$element.detach();
 			viewMore.$element.detach();
 		};

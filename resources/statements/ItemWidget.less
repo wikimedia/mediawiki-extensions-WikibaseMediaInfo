@@ -17,95 +17,100 @@
 	// (escaped to prevent LESS from incorrectly calculating)
 	width: ~'calc( 100% - 2px - 35px )';
 	display: inline-block;
+}
 
-	.wbmi-entity-title {
-		background-color: #f8f9fa;
-		padding: 15px;
-	}
+.wbmi-entity-title {
+	background-color: #f8f9fa;
+	padding: 15px;
+}
 
-	.wbmi-entity-label {
-		display: inline-block;
-		margin: 0;
-		padding: 0;
+h4.wbmi-entity-label {
+	display: inline-block;
+	margin: 0;
+	padding: 0;
+	font-weight: bold;
+	line-height: inherit;
+}
+
+.wbmi-entity-label-extra {
+	font-weight: normal;
+	float: right;
+
+	.wbmi-entity-primary {
 		font-weight: bold;
-		line-height: inherit;
-	}
 
-	.wbmi-entity-label-extra {
-		font-weight: normal;
-		float: right;
+		&.wbmi-entity-is-primary {
+			color: #72777d;
 
-		.wbmi-entity-primary {
-			font-weight: bold;
-
-			&.wbmi-entity-is-primary {
-				color: #72777d;
-
-				/* stylelint-disable-next-line selector-class-pattern */
-				.oo-ui-iconElement {
-					min-height: 15px;
-					height: 15px;
-					background-size: 70%;
-					filter: opacity( 0.55 );
-				}
-			}
-		}
-
-		a {
-			margin: 0 10px;
-			&:first-child {
-				margin-left: 0;
-			}
-			&:last-child {
-				margin-right: 0;
+			/* stylelint-disable-next-line selector-class-pattern */
+			.oo-ui-iconElement {
+				min-height: 15px;
+				height: 15px;
+				background-size: 70%;
+				filter: opacity( 0.55 );
 			}
 		}
 	}
 
-	.wbmi-item-content {
-		padding: 15px;
-		padding-bottom: 10px;
-
-		// some messing around to get those quirky little leading lines to show
-		// below block will draw a vertical line that starts inside the title box
-		// down to the end of this content node, at 10px from the left border
-		position: relative;
-		&:before {
-			content: ' ';
-			position: absolute;
-			border-left: 1px solid #979797;
-			top: -5px;
-			bottom: 25px; // 10px padding-bottom + 15px margin-bottom of that last element
+	a {
+		margin: 0 10px;
+		&:first-child {
+			margin-left: 0;
 		}
-
-		// this block adds leading lines starting at the vertical line we just drew
-		// and going in the direction of the elements that'll follow it (on the right)
-		.wbmi-item-qualifier-add:before,
-		.wbmi-qualifier:before {
-			content: ' ';
-			width: 10px;
-			border-bottom: 1px solid #979797;
-			display: inline-block;
-			margin-right: 10px;
-			// middle-align the line, and then push it up slightly (because the elements
-			// that it aligns with have some (0.5em) margin-bottom, so the middle would
-			// appear to be slightly lower because of that whitespace
-			vertical-align: middle;
-			margin-bottom: 0.3em;
-		}
-
-		.wbmi-item-qualifier-add:before {
-			// ...HOWEVER! the very last element (the 'add qualifier' button) should
-			// not have a middle-aligned line: we need a fixed, deterministic end
-			// position, because we need it to match the end of the vertical line...
-			vertical-align: bottom;
-			margin-bottom: 15px;
+		&:last-child {
+			margin-right: 0;
 		}
 	}
+}
 
-	.wbmi-item-qualifier-add {
-		font-weight: normal;
+.wbmi-item-content {
+	padding: 15px;
+	padding-bottom: 10px;
+
+	.wbmi-qualifier-read {
+		line-height: 30px;
 	}
+
+	// some messing around to get those quirky little leading lines to show
+	// below block will draw a vertical line that starts inside the title box
+	// down to the end of this content node, at 10px from the left border
+	position: relative;
+	&:before {
+		content: ' ';
+		position: absolute;
+		border-left: 1px solid #979797;
+		top: -5px;
+		bottom: 25px; // 10px padding-bottom + 15px margin-bottom of that last element
+	}
+
+	// this block adds leading lines starting at the vertical line we just drew
+	// and going in the direction of the elements that'll follow it (on the right)
+	.wbmi-item-qualifier-add:before,
+	.wbmi-qualifier:before {
+		content: ' ';
+		width: 10px;
+		border-bottom: 1px solid #979797;
+		display: inline-block;
+		margin-right: 10px;
+		// middle-align the line, and then push it up slightly (because the elements
+		// that it aligns with have some (0.5em) margin-bottom, so the middle would
+		// appear to be slightly lower because of that whitespace
+		vertical-align: middle;
+		margin-bottom: 0.3em;
+	}
+
+	.wbmi-qualifier-read:last-child:before,
+	.wbmi-item-qualifier-add:last-child:before {
+		// ...HOWEVER! the very last element (the 'add qualifier' button) should
+		// not have a middle-aligned line: we need a fixed, deterministic end
+		// position, because we need it to match the end of the vertical line...
+		vertical-align: bottom;
+		margin-bottom: 15px;
+	}
+}
+
+.wbmi-item-qualifier-add {
+	font-weight: normal;
 }
 
 // undo one of the borders if the box is adjacent to another one - we don't
@@ -114,7 +119,7 @@
 	border-top: 0;
 }
 
-.wbmi-item-remove {
+span.wbmi-item-remove {
 	width: 35px;
 	vertical-align: top;
 	padding-top: 5px;

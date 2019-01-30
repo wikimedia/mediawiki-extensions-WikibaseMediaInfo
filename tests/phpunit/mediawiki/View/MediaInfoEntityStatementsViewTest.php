@@ -3,11 +3,10 @@
 namespace Wikibase\MediaInfo\Tests\MediaWiki\View;
 
 use DataValues\StringValue;
-use Wikibase\DataModel\Entity\EntityId;
+use ValueFormatters\FormatterOptions;
 use Wikibase\DataModel\Entity\EntityIdValue;
 use Wikibase\DataModel\Entity\ItemId;
 use Wikibase\DataModel\Entity\PropertyId;
-use Wikibase\DataModel\Services\Lookup\LabelDescriptionLookup;
 use Wikibase\DataModel\Snak\PropertyNoValueSnak;
 use Wikibase\DataModel\Snak\PropertySomeValueSnak;
 use Wikibase\DataModel\Snak\PropertyValueSnak;
@@ -15,19 +14,17 @@ use Wikibase\DataModel\Snak\Snak;
 use Wikibase\DataModel\Snak\SnakList;
 use Wikibase\DataModel\Statement\Statement;
 use Wikibase\DataModel\Statement\StatementList;
-use Wikibase\DataModel\Term\Term;
-use Wikibase\DataModel\Term\TermFallback;
-use Wikibase\LanguageFallbackChain;
 use Wikibase\LanguageWithConversion;
-use Wikibase\Lib\LanguageFallbackIndicator;
+use Wikibase\Lib\Formatters\DispatchingValueFormatter;
+use Wikibase\Lib\OutputFormatSnakFormatterFactory;
+use Wikibase\Lib\OutputFormatValueFormatterFactory;
+use Wikibase\Lib\SnakFormatter;
 use Wikibase\Lib\Store\EntityTitleLookup;
 use Wikibase\Lib\Store\PropertyOrderProvider;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\MediaInfo\View\MediaInfoEntityStatementsView;
-use Wikibase\Repo\MediaWikiLanguageDirectionalityLookup;
 use Wikibase\Repo\MediaWikiLocalizedTextProvider;
 use Wikibase\Repo\WikibaseRepo;
-use Wikibase\View\LanguageDirectionalityLookup;
 use Wikibase\View\LocalizedTextProvider;
 
 /**
@@ -40,25 +37,21 @@ use Wikibase\View\LocalizedTextProvider;
 class MediaInfoEntityStatementsViewTest extends \PHPUnit\Framework\TestCase {
 
 	/**
-	 * @var LanguageDirectionalityLookup
-	 */
-	private $langDirLookup;
-	/**
 	 * @var LocalizedTextProvider
 	 */
 	private $textProvider;
-	/**
-	 * @var LanguageFallbackChain
-	 */
-	private $fallbackChain;
 	/**
 	 * @var EntityTitleLookup
 	 */
 	private $entityTitleLookup;
 	/**
-	 * @var LanguageFallbackIndicator
+	 * @var OutputFormatSnakFormatterFactory
 	 */
-	private $languageFallbackIndicator;
+	private $snakFormatterFactory;
+	/**
+	 * @var OutputFormatValueFormatterFactory
+	 */
+	private $valueFormatterFactory;
 
 	private function createDependencies( array $langCodes = [ 'en' ] ) {
 		$wbRepo = WikibaseRepo::getDefaultInstance();
@@ -66,12 +59,74 @@ class MediaInfoEntityStatementsViewTest extends \PHPUnit\Framework\TestCase {
 		foreach ( $langCodes as $langCode ) {
 			$languages[] = LanguageWithConversion::factory( $langCode );
 		}
-		$this->langDirLookup = new MediaWikiLanguageDirectionalityLookup();
-		$this->fallbackChain = new LanguageFallbackChain( $languages );
 		$this->textProvider = new MediaWikiLocalizedTextProvider( $languages[0]->getLanguage() );
 		$this->entityTitleLookup = $wbRepo->getEntityTitleLookup();
-		$this->languageFallbackIndicator =
-			new LanguageFallbackIndicator( $wbRepo->getLanguageNameLookup() );
+
+		$snakFormatter = $this->getMockBuilder( SnakFormatter::class )
+			->disableOriginalConstructor()
+			->getMock();
+		$snakFormatter->method( 'formatSnak' )
+			->will(
+				$this->returnCallback( function( Snak $snak ) {
+					if ( $snak instanceof PropertyNoValueSnak ) {
+						return $this->textProvider->get(
+							'wikibase-snakview-snaktypeselector-novalue'
+						);
+					} elseif ( $snak instanceof PropertySomeValueSnak ) {
+						return $this->textProvider->get(
+							'wikibase-snakview-variations-somevalue-label'
+						);
+					} elseif ( $snak instanceof PropertyValueSnak ) {
+						$value = $snak->getDataValue();
+						if ( !( $value instanceof EntityIdValue ) ) {
+							return $value->getValue();
+						}
+						$map = [
+							'Q333' => 'ITEM Q333 LABEL',
+							'Q999' => 'ITEM Q999 LABEL',
+							'Q3333' => 'ITEM Q3333 LABEL',
+						];
+						if ( isset( $map[$value->getEntityId()->getSerialization()] ) ) {
+							return $map[$value->getEntityId()->getSerialization()];
+						}
+					}
+					return '';
+				} )
+			);
+		$this->snakFormatterFactory = $this->getMockBuilder(
+				OutputFormatSnakFormatterFactory::class
+			)
+			->disableOriginalConstructor()
+			->getMock();
+		$this->snakFormatterFactory->method( 'getSnakFormatter' )->willReturn( $snakFormatter );
+
+		$valueFormatter = $this->getMockBuilder( DispatchingValueFormatter::class )
+			->disableOriginalConstructor()
+			->getMock();
+		$valueFormatter->method( 'formatValue' )
+			->will(
+				$this->returnCallback( function( EntityIdValue $value ) {
+					$map = [
+						'P333' => 'PROPERTY P333 LABEL',
+						'P444' => 'PROPERTY P444 LABEL',
+						'P555' => 'PROPERTY P555 LABEL',
+						'P666' => 'PROPERTY P666 LABEL',
+						'P777' => 'PROPERTY P777 LABEL',
+						'P888' => 'PROPERTY P888 LABEL',
+						'P999' => 'PROPERTY P999 LABEL',
+					];
+					if ( isset( $map[$value->getEntityId()->getSerialization()] ) ) {
+						return $map[$value->getEntityId()->getSerialization()];
+					}
+					return null;
+				} )
+			);
+		$this->valueFormatterFactory = $this->getMockBuilder(
+			OutputFormatValueFormatterFactory::class
+		)
+			->disableOriginalConstructor()
+			->getMock();
+		$this->valueFormatterFactory->method( 'getValueFormatter' )->willReturn( $valueFormatter );
 	}
 
 	/**
@@ -95,33 +150,13 @@ class MediaInfoEntityStatementsViewTest extends \PHPUnit\Framework\TestCase {
 				'P333' => 7
 			] );
 
-		$labelLookup = $this->getMockBuilder( LabelDescriptionLookup::class )
-			->disableOriginalConstructor()
-			->getMock();
-		$labelLookup->method( 'getLabel' )
-			->will(
-				$this->returnCallback( function( EntityId $entityId ) {
-					$map = [
-						'Q333' => new Term( 'qqq', 'ITEM Q333 LABEL' ),
-						'P444' => new Term( 'qqq', 'PROPERTY P444 LABEL' ),
-						'P555' => new Term( 'qqq', 'PROPERTY P555 LABEL' ),
-						'P666' => new TermFallback( 'qqq', 'PROPERTY P666 LABEL', 'en', 'fr' ),
-					];
-					if ( isset( $map[$entityId->getSerialization()] ) ) {
-						return $map[$entityId->getSerialization()];
-					}
-					return null;
-				} )
-			);
-
 		$sut = new MediaInfoEntityStatementsView(
 			$orderProvider,
-			$this->langDirLookup,
 			$this->textProvider,
-			$this->fallbackChain,
-			$labelLookup,
 			$this->entityTitleLookup,
-			$this->languageFallbackIndicator
+			[ new PropertyId( 'P1' ) ],
+			$this->snakFormatterFactory,
+			$this->valueFormatterFactory
 		);
 		$html = $sut->getHtml(
 			new MediaInfo( null, null, null, $statementList )
@@ -132,15 +167,13 @@ class MediaInfoEntityStatementsViewTest extends \PHPUnit\Framework\TestCase {
 		$this->assertRegExp( $this->getPropertyIdRegex( $sortedStatementList ), $html );
 		$this->assertRegExp(
 			$this->getMainSnakValueRegex(
-				$sortedStatementList,
-				$labelLookup
+				$sortedStatementList
 			),
 			$html
 		);
 		$this->assertRegExp(
 			$this->getQualifiersRegex(
-				$sortedStatementList,
-				$labelLookup
+				$sortedStatementList
 			),
 			$html
 		);
@@ -163,83 +196,57 @@ class MediaInfoEntityStatementsViewTest extends \PHPUnit\Framework\TestCase {
 	 * @return string
 	 */
 	private function getMainSnakValueRegex(
-		StatementList $sortedStatementList,
-		LabelDescriptionLookup $labelLookup
+		StatementList $sortedStatementList
 	) {
 		$values = [];
 		foreach ( $sortedStatementList as $statement ) {
 			$mainSnak = $statement->getMainSnak();
-			$values[] = $this->getSnakValueRegexPart( $mainSnak, $labelLookup );
+			$values[] = $this->getSnakValueRegexPart( $mainSnak );
 		}
 		return '/' . implode( '.+', array_unique( $values ) ) . '/';
 	}
 
+	/**
+	 * @param StatementList $sortedStatementList The SORTED statement list
+	 * @return string
+	 */
 	private function getQualifiersRegex(
-		StatementList $sortedStatementList,
-		LabelDescriptionLookup $labelLookup
+		StatementList $sortedStatementList
 	) {
+		$snakFormatter = $this->snakFormatterFactory->getSnakFormatter(
+			null,
+			new FormatterOptions()
+		);
+		$valueFormatter = $this->valueFormatterFactory->getValueFormatter(
+			null,
+			new FormatterOptions()
+		);
 		$labels = [];
 		foreach ( $sortedStatementList as $statement ) {
+			$propertyIds = [];
 			$qualifiers = $statement->getQualifiers();
 			/** @var Snak $snak */
 			foreach ( $qualifiers as $snak ) {
-				$propertyIdLabel = $labelLookup->getLabel( $snak->getPropertyId() );
-				if ( is_null( $propertyIdLabel ) ) {
-					$labels[] = $snak->getPropertyId()->getSerialization();
-				} else {
-					$labels[] = $propertyIdLabel->getText();
-				}
-				if ( $snak instanceof PropertyNoValueSnak ) {
-					$labels[] = $this->textProvider->get(
-						'wikibasemediainfo-filepage-statement-no-value'
+				if ( !( in_array( $snak->getPropertyId(), $propertyIds ) ) ) {
+					$labels[] = $valueFormatter->formatValue(
+						new EntityIdValue( $snak->getPropertyId() )
 					);
-				} elseif ( $snak instanceof PropertySomeValueSnak ) {
-					$labels[] = $this->textProvider->get(
-						'wikibasemediainfo-filepage-statement-some-value'
-					);
-				} elseif ( $snak instanceof PropertyValueSnak ) {
-					$value = $snak->getDataValue();
-					if ( $value instanceof EntityIdValue ) {
-						$label = $labelLookup->getLabel( $value->getEntityId() );
-						if ( is_null( $label ) ) {
-							$labels[] = $value->getEntityId()->getSerialization();
-						} else {
-							$labels[] = $label->getText();
-						}
-					} else {
-						$labels[] = $value->getValue();
-					}
+					$propertyIds[] = $snak->getPropertyId();
 				}
+				$labels[] = $snakFormatter->formatSnak( $snak );
 			}
 		}
 		return '/' . implode( '.+', $labels ) . '/';
 	}
 
 	private function getSnakValueRegexPart(
-		Snak $snak,
-		LabelDescriptionLookup $labelDescriptionLookup
+		Snak $snak
 	) {
-		$regexPart = '';
-		if ( $snak instanceof PropertyValueSnak ) {
-			$value = $snak->getDataValue()->getValue();
-			if ( $value instanceof EntityIdValue ) {
-				$label = $labelDescriptionLookup->getLabel( $value->getEntityId() );
-				if ( !is_null( $label ) ) {
-					$regexPart = $label;
-				} else {
-					$regexPart = $value->getEntityId()->getSerialization();
-				}
-			} else {
-				$regexPart = $value;
-			}
-		} elseif ( $snak instanceof PropertySomeValueSnak ) {
-			$regexPart =
-				$this->textProvider->get( 'wikibasemediainfo-filepage-statement-some-value' );
-		} elseif ( $snak instanceof PropertyNoValueSnak ) {
-			$regexPart =
-				$this->textProvider->get( 'wikibasemediainfo-filepage-statement-no-value' );
-		}
-		return $regexPart;
+		$snakFormatter = $this->snakFormatterFactory->getSnakFormatter(
+			null,
+			new FormatterOptions()
+		);
+		return $snakFormatter->formatSnak( $snak );
 	}
 
 	/**

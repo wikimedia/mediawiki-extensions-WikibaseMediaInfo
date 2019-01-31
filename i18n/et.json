@@ -1,0 +1,30 @@
+{
+	"@metadata": {
+		"authors": [
+			"Pikne"
+		]
+	},
+	"right-mediainfo-term": "Muuta meediumiteabe terme (pealdised, kokkuvõtted)",
+	"slot-name-mediainfo": "Struktureeritud meediumiteave",
+	"wikibase-entity-mediainfo": "meediumiteave",
+	"wikibase-mediainfo-summary-wbsetlabel-add": "Lisatud [$2]-pealdis",
+	"wikibase-mediainfo-summary-wbsetlabel-remove": "Eemaldatud [$2]-pealdis",
+	"wikibase-mediainfo-summary-wbsetlabel-set": "Muudetud [$2]-pealdist",
+	"wikibasemediainfo-desc": "Vikibaasi lisa meediumifailide struktureeritud metaandmete haldamiseks",
+	"wikibasemediainfo-diffview-label": "pealdis",
+	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Pealdised",
+	"wikibasemediainfo-filepage-structured-data-heading": "Struktuurandmed",
+	"wikibasemediainfo-filepage-captions-title": "Pealdised",
+	"wikibasemediainfo-filepage-more-languages": "Näita veel {{PLURAL:$1|üht|$1}} keelt",
+	"wikibasemediainfo-filepage-fewer-languages": "Näita vähem keeli",
+	"wikibasemediainfo-filepage-add-caption": "Lisa pealdis",
+	"wikibasemediainfo-filepage-edit-captions": "Redigeeri pealdiseid",
+	"wikibasemediainfo-filepage-cancel": "Loobu",
+	"wikibasemediainfo-filepage-publish": "Avalda muudatused",
+	"wikibasemediainfo-filepage-caption-empty": "Lisa üherealine seletus sellest, mida fail esitab",
+	"wikibasemediainfo-filepage-caption-too-long": "{{PLURAL:$1|Üks märk|$1 märki}} üle piirmäära",
+	"wikibasemediainfo-filepage-caption-approaching-limit": "{{PLURAL:$1|Üks märk|$1 märki}} järel",
+	"wikibasemediainfo-filepage-statement-no-value": "Sellel omadusel puudub väärtus",
+	"wikibasemediainfo-filepage-statement-some-value": "Sellel omadusel on väärtus, aga see on teadmata",
+	"wikibasemediainfo-filepage-statement-error": "Selle omaduse väärtuse hankimisel esines tõrge"
+}

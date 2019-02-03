@@ -134,6 +134,8 @@ class MultiLingualCaptionsTest extends \ApiUploadTestCase {
 	}
 
 	public function testEditCaptions() {
+		$this->markTestSkipped( 'Temporarily skipped due to ongoing work in Wikibase' );
+
 		$testFilePage = \WikiPage::factory(
 			\Title::newFromText( $this->upload() )
 		);

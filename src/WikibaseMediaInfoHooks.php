@@ -161,6 +161,9 @@ class WikibaseMediaInfoHooks {
 	 * @param \Skin $skin
 	 */
 	public static function onBeforePageDisplay( $out, $skin ) {
+		global $wgDepictsQualifierProperties,
+			$wgMediaInfoProperties;
+
 		// Hide any MediaInfo content and UI on a page, if either …
 		if (
 			// the extension is disabled, or
@@ -174,67 +177,90 @@ class WikibaseMediaInfoHooks {
 
 		$allLanguages = \Language::fetchLanguageNames();
 		$termsLanguages = WikibaseRepo::getDefaultInstance()->getTermsLanguages()->getLanguages();
+		$imgTitle = $out->getTitle();
+
+		$isMediaInfoPage =
+			// Check if the page exists,
+			$imgTitle !== null &&
+			$imgTitle->exists() &&
+			// … the page is a file and
+			$imgTitle->inNamespace( NS_FILE ) &&
+			// … the page view is a read
+			\Action::getActionName( $out->getContext() ) === 'view';
 
 		self::newFromGlobalState()->doBeforePageDisplay(
 			$out,
+			$isMediaInfoPage,
 			array_intersect_key(
 				$allLanguages,
 				array_flip( $termsLanguages )
 			),
 			new BabelUserLanguageLookup(),
-			WikibaseRepo::getDefaultInstance()->getEntityViewFactory()
+			WikibaseRepo::getDefaultInstance()->getEntityViewFactory(),
+			$wgDepictsQualifierProperties,
+			$wgMediaInfoProperties
 		);
 	}
 
 	/**
 	 * @param \OutputPage $out
+	 * @param bool $isMediaInfoPage
 	 * @param string[] $termsLanguages Array with language codes as keys and autonyms as values
 	 * @param UserLanguageLookup $userLanguageLookup
 	 * @param DispatchingEntityViewFactory $entityViewFactory
+	 * @param array $depictsQualifierProperties Array of properties of allowed qualifiers
+	 * 	for depicts in the format [
+	 * 		[
+	 * 			'id' => '<id of the property>',
+	 * 			'label' => '<i8n key for the property name>',
+	 * 			'input' => '<type of data the property holds - entity, numeric, text>'
+	 * 		]
+	 * 	]
+	 * @param array $properties Property details (id, label & url)
 	 */
 	public function doBeforePageDisplay(
 		$out,
+		$isMediaInfoPage,
 		array $termsLanguages,
 		UserLanguageLookup $userLanguageLookup,
-		DispatchingEntityViewFactory $entityViewFactory
+		DispatchingEntityViewFactory $entityViewFactory,
+		array $depictsQualifierProperties,
+		$properties
 	) {
-		$out->preventClickjacking();
-		$imgTitle = $out->getTitle();
-		// Don't load …
-		if (
-			// … for files that don't exist
-			!$imgTitle->exists() ||
-			// … for pages that aren't files
-			!$imgTitle->inNamespace( NS_FILE ) ||
-			// … for page views that aren't reads
-			\Action::getActionName( $out->getContext() ) !== 'view'
-		) {
-			return;
+		// Site-wide config
+		$modules = [];
+		$moduleStyles = [];
+		$jsConfigVars = [
+			'wbmiDepictsQualifierProperties' => $depictsQualifierProperties,
+			'wbmiProperties' => $properties,
+		];
+
+		if ( $isMediaInfoPage ) {
+			$out = $this->moveMediaInfoData( $out, $entityViewFactory );
+			$out->preventClickjacking();
+			$imgTitle = $out->getTitle();
+			$pageId = $imgTitle->getArticleID();
+			$entityId = $this->entityIdFromPageId( $pageId );
+
+			$modules[] = 'wikibase.mediainfo.filePageDisplay';
+			$moduleStyles[] = 'wikibase.mediainfo.filepagestyles';
+			$jsConfigVars += [
+				'wbUserSpecifiedLanguages' => array_values(
+					$userLanguageLookup->getAllUserLanguages(
+						$out->getUser()
+					)
+				),
+				'wbCurrentRevision' => $out->getWikiPage()->getRevision()->getId(),
+				'wbEntityId' => $entityId->getSerialization(),
+				'wbTermsLanguages' => $termsLanguages,
+				'wbRepoApiUrl' => wfScript( 'api' ),
+				'maxCaptionLength' => self::getMaxCaptionLength(),
+			];
 		}
 
-		$out = $this->moveMediaInfoData( $out, $entityViewFactory );
-
-		$pageId = $imgTitle->getArticleID();
-		$entityId = $this->entityIdFromPageId( $pageId );
-
-		$out->addJsConfigVars( [
-			'wbUserSpecifiedLanguages' => array_values(
-				$userLanguageLookup->getAllUserLanguages(
-					$out->getUser()
-				)
-			),
-			'wbCurrentRevision' => $out->getWikiPage()->getRevision()->getId(),
-			'wbEntityId' => $entityId->getSerialization(),
-			'wbTermsLanguages' => $termsLanguages,
-			'wbRepoApiUrl' => wfScript( 'api' ),
-			'maxCaptionLength' => self::getMaxCaptionLength(),
-		] );
-
-		$out->addModuleStyles( [
-			'wikibase.mediainfo.filepagestyles',
-		] );
-
-		$out->addModules( 'wikibase.mediainfo.filePageDisplay' );
+		$out->addJsConfigVars( $jsConfigVars );
+		$out->addModuleStyles( $moduleStyles );
+		$out->addModules( $modules );
 	}
 
 	/**

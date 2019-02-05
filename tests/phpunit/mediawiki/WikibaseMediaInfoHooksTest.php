@@ -155,7 +155,12 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 
 		$out = $this->getMockOutputPage( $imgTitle );
 		$out->expects( $this->once() )
-			->method( 'addJsConfigVars' );
+			->method( 'addJsConfigVars' )
+			->will( $this->returnCallback(
+				function( $keys ) {
+					$this->assertArrayHasKey( 'wbCurrentRevision', $keys );
+				}
+			) );
 		$out->expects( $this->once() )
 			->method( 'addModuleStyles' );
 		$out->expects( $this->once() )
@@ -214,8 +219,13 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 			->willReturn( false );
 
 		$out = $this->getMockOutputPage( $imgTitle );
-		$out->expects( $this->never() )
-			->method( 'addJsConfigVars' );
+		$out->expects( $this->once() )
+			->method( 'addJsConfigVars' )
+			->will( $this->returnCallback(
+				function( $keys ) {
+					$this->assertArrayNotHasKey( 'wbCurrentRevision', $keys );
+				}
+			) );
 
 		$skin = $this->getMockBuilder( \Skin::class )
 			->disableOriginalConstructor()
@@ -322,9 +332,12 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 
 		$hookObject->doBeforePageDisplay(
 			$out,
+			true,
 			[],
 			new BabelUserLanguageLookup(),
-			$mockViewFactory
+			$mockViewFactory,
+			[],
+			[ 'id' => 'P1', 'label' => '', 'input' => '#' ]
 		);
 
 		$this->assertRegExp(

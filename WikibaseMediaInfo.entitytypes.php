@@ -15,6 +15,8 @@
 
 use MediaWiki\MediaWikiServices;
 use Wikibase\Client\WikibaseClient;
+use Wikibase\DataAccess\DataAccessSettings;
+use Wikibase\DataAccess\UnusableEntitySource;
 use Wikibase\DataModel\DeserializerFactory;
 use Wikibase\DataModel\Entity\EntityDocument;
 use Wikibase\DataModel\Entity\EntityId;
@@ -219,9 +221,19 @@ return [
 				$entityNamespaceLookup,
 				MediaWikiServices::getInstance()->getSlotRoleStore()
 			);
+			$settings = WikibaseRepo::getDefaultInstance()->getSettings();
+			$dataAccessSettings = new DataAccessSettings(
+				$settings->getSetting( 'maxSerializedEntitySize' ),
+				$settings->getSetting( 'useTermsTableSearchFields' ),
+				$settings->getSetting( 'forceWriteTermsTableSearchFields' ),
+					DataAccessSettings::USE_REPOSITORY_PREFIX_BASED_FEDERATION
+			);
+
 			return new WikiPageEntityMetaDataLookup(
 				$entityNamespaceLookup,
 				$entityQuery,
+				new UnusableEntitySource(),
+				$dataAccessSettings,
 				$dbName,
 				$repoName
 			);

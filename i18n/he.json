@@ -29,5 +29,9 @@
 	"wikibasemediainfo-filepage-caption-approaching-limit": "{{PLURAL:$1|נותר תו אחד|נותרו $1 תווים}}",
 	"wikibasemediainfo-filepage-statement-no-value": "אין ערך למאפיין הזה",
 	"wikibasemediainfo-filepage-statement-some-value": "למאפיין הזה יש ערך, אבל הוא לא ידוע",
-	"wikibasemediainfo-filepage-statement-error": "אירעה שגיאה בעת אחזור הערך עבור המאפיין הזה"
+	"wikibasemediainfo-filepage-statement-error": "אירעה שגיאה בעת אחזור הערך עבור המאפיין הזה",
+	"wikibasemediainfo-statements-depicts-title": "פריטים שמוצגים בתמונה הזאת",
+	"wikibasemediainfo-statements-item-input-placeholder": "חיפוש להוספת הפריטים המוצגים",
+	"wikibasemediainfo-statements-item-input-label": "מוויקינתונים",
+	"wikibasemediainfo-statements-item-is-primary": "ראשית"
 }

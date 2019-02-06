@@ -4,7 +4,7 @@ namespace Wikibase\MediaInfo\Tests\MediaWiki\Search;
 
 use PHPUnit4And6Compat;
 use Wikibase\MediaInfo\Search\MediaInfoFieldDefinitions;
-use Wikibase\Repo\Search\Elastic\Fields\FieldDefinitions;
+use Wikibase\Repo\Search\Fields\FieldDefinitions;
 
 /**
  * @covers \Wikibase\MediaInfo\Search\MediaInfoFieldDefinitions

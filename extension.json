@@ -88,6 +88,10 @@
 			"scripts": "resources/jquery.wikibase.mediainfoview.js",
 			"dependencies": [
 				"jquery.wikibase.entityview"
+			],
+			"targets": [
+				"desktop",
+				"mobile"
 			]
 		},
 		"wikibase.mediainfo.filePageDisplay": {
@@ -134,12 +138,20 @@
 		},
 		"wikibase.mediainfo": {
 			"scripts": "resources/__namespace.js",
-			"dependencies": "wikibase"
+			"dependencies": "wikibase",
+			"targets": [
+				"desktop",
+				"mobile"
+			]
 		},
 		"wikibase.mediainfo.mediainfoview": {
 			"dependencies": [
 				"jquery.wikibase.mediainfoview",
 				"wikibase.mediainfo.getDeserializer"
+			],
+			"targets": [
+				"desktop",
+				"mobile"
 			]
 		},
 		"wikibase.mediainfo.datamodel.MediaInfo": {
@@ -154,12 +166,20 @@
 				"wikibase.datamodel.StatementGroupSet",
 				"wikibase.datamodel.TermMap",
 				"wikibase.mediainfo"
+			],
+			"targets": [
+				"desktop",
+				"mobile"
 			]
 		},
 		"wikibase.mediainfo.getDeserializer": {
 			"scripts": "resources/getDeserializer.js",
 			"dependencies": [
 				"wikibase.mediainfo.serialization.MediaInfoDeserializer"
+			],
+			"targets": [
+				"desktop",
+				"mobile"
 			]
 		},
 		"wikibase.mediainfo.serialization.MediaInfoDeserializer": {
@@ -174,6 +194,10 @@
 				"wikibase.serialization.Deserializer",
 				"wikibase.serialization.StatementGroupSetDeserializer",
 				"wikibase.serialization.TermMapDeserializer"
+			],
+			"targets": [
+				"desktop",
+				"mobile"
 			]
 		},
 		"wikibase.mediainfo.filepagestyles": {
@@ -223,6 +247,10 @@
 				"wikibasemediainfo-statements-item-remove",
 				"wikibasemediainfo-statements-item-add-qualifier",
 				"parentheses"
+			],
+			"targets": [
+				"desktop",
+				"mobile"
 			]
 		},
 		"wikibase.mediainfo.statements.styles": {
@@ -245,8 +273,7 @@
 		"localBasePath": "",
 		"remoteExtPath": "WikibaseMediaInfo"
 	},
-	"SpecialPages": {
-	},
+	"SpecialPages": {},
 	"manifest_version": 2,
 	"GroupPermissions": {
 		"*": {

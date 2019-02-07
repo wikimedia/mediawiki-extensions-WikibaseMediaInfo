@@ -6,5 +6,11 @@
 	},
 	"wikibase-entity-mediainfo": "Medieninformatiounen",
 	"wikibasemediainfo-desc": "Wikibase-Erweiderung fir déi strukturéiert Meta-Donnéeë vu Medie-Fichieren zegeréieren",
-	"wikibasemediainfo-filepage-cancel": "Ofbriechen"
+	"wikibasemediainfo-filepage-cancel": "Ofbriechen",
+	"wikibasemediainfo-statements-item-input-label": "vu Wikidata",
+	"wikibasemediainfo-statements-item-is-primary": "Primär",
+	"wikibasemediainfo-statements-item-remove": "Ewechhuelen",
+	"wikibasemediainfo-property-value-color": "Faarf",
+	"wikibasemediainfo-property-value-inscription": "Aschreiwung",
+	"wikibasemediainfo-property-value-quantity": "Quantitéit"
 }

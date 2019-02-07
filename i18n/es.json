@@ -2,9 +2,17 @@
 	"@metadata": {
 		"authors": [
 			"Macofe",
-			"Dgstranz"
+			"Dgstranz",
+			"Fitoschido"
 		]
 	},
 	"wikibase-entity-mediainfo": "información multimedia",
-	"wikibasemediainfo-desc": "Extensión de Wikibase para gestionar metadatos estructurados de archivos multimedia"
+	"wikibasemediainfo-desc": "Extensión de Wikibase para gestionar metadatos estructurados de archivos multimedia",
+	"wikibasemediainfo-statements-item-input-label": "de Wikidata",
+	"wikibasemediainfo-statements-item-remove": "Quitar",
+	"wikibasemediainfo-property-placeholder": "Propiedad",
+	"wikibasemediainfo-property-value-color": "Color",
+	"wikibasemediainfo-property-value-part": "Se aplica a la parte",
+	"wikibasemediainfo-property-value-symbolizes": "Simboliza",
+	"wikibasemediainfo-property-value-quantity": "Cantidad"
 }

@@ -28,5 +28,8 @@
 	"wikibasemediainfo-filepage-caption-approaching-limit": "{{PLURAL:$1|Остао је $1 знак|Остала су $1 знака|Остало је $1 знакова|0=Није остало знакова}}",
 	"wikibasemediainfo-filepage-statement-no-value": "Нема вредности за ово својство",
 	"wikibasemediainfo-filepage-statement-some-value": "Ово својство има вредност, али је непозната",
-	"wikibasemediainfo-filepage-statement-error": "Дошло је до грешке при добављању вредности за ово својство"
+	"wikibasemediainfo-filepage-statement-error": "Дошло је до грешке при добављању вредности за ово својство",
+	"wikibasemediainfo-property-placeholder": "Својство",
+	"wikibasemediainfo-property-value-color": "Боја",
+	"wikibasemediainfo-property-value-quantity": "Количина"
 }

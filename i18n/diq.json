@@ -1,9 +1,14 @@
 {
 	"@metadata": {
 		"authors": [
-			"Orbot707"
+			"Orbot707",
+			"Mirzali"
 		]
 	},
 	"wikibasemediainfo-filepage-cancel": "Bıtexelne",
-	"wikibasemediainfo-filepage-publish": "Vırnayışan qeyd kerê"
+	"wikibasemediainfo-filepage-publish": "Vırnayışan qeyd kerê",
+	"wikibasemediainfo-statements-item-remove": "Wedare",
+	"wikibasemediainfo-property-placeholder": "Xısusiyet",
+	"wikibasemediainfo-property-value-color": "Reng",
+	"wikibasemediainfo-property-value-quantity": "Miqdar"
 }

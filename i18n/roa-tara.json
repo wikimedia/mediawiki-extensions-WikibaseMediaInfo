@@ -26,5 +26,16 @@
 	"wikibasemediainfo-filepage-caption-approaching-limit": "$1 {{PLURAL:$1|carattere|0=carattere}} rumaste",
 	"wikibasemediainfo-filepage-statement-no-value": "Non g'esiste nisciune valore pe sta probbietà",
 	"wikibasemediainfo-filepage-statement-some-value": "Sta probbietà tène 'nu valore, ma jè scanusciute",
-	"wikibasemediainfo-filepage-statement-error": "Ave assute 'n'errore duranne 'u recupere d'u valore pe sta probbietà"
+	"wikibasemediainfo-filepage-statement-error": "Ave assute 'n'errore duranne 'u recupere d'u valore pe sta probbietà",
+	"wikibasemediainfo-statements-depicts-title": "Eleminde rappresendate jndr'à st'immaggine",
+	"wikibasemediainfo-statements-item-input-placeholder": "Cirche de aggiungere le eleminde rappresendate",
+	"wikibasemediainfo-statements-item-input-label": "da Uicchidate",
+	"wikibasemediainfo-statements-item-is-primary": "Primarie",
+	"wikibasemediainfo-statements-item-remove": "Live",
+	"wikibasemediainfo-statements-item-add-qualifier": "Aggiunge 'nu qualificatore",
+	"wikibasemediainfo-property-depicts": "Rappresendaziune",
+	"wikibasemediainfo-property-placeholder": "Probbietà",
+	"wikibasemediainfo-property-value-color": "Culore",
+	"wikibasemediainfo-property-value-quantity": "Quantitate",
+	"wikibasemediainfo-property-value-depicts": "Rappresendaziune"
 }

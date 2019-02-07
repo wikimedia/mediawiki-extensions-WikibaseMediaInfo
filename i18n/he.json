@@ -33,5 +33,19 @@
 	"wikibasemediainfo-statements-depicts-title": "פריטים שמוצגים בתמונה הזאת",
 	"wikibasemediainfo-statements-item-input-placeholder": "חיפוש להוספת הפריטים המוצגים",
 	"wikibasemediainfo-statements-item-input-label": "מוויקינתונים",
-	"wikibasemediainfo-statements-item-is-primary": "ראשית"
+	"wikibasemediainfo-statements-item-is-primary": "ראשית",
+	"wikibasemediainfo-statements-item-make-primary": "להגדיר בתור ראשית",
+	"wikibasemediainfo-statements-item-remove": "הסרה",
+	"wikibasemediainfo-statements-item-add-qualifier": "הוספת מבחין",
+	"wikibasemediainfo-property-depicts": "מציגה",
+	"wikibasemediainfo-property-placeholder": "מאפיין",
+	"wikibasemediainfo-property-value-features": "מוצג עם מאפיינים",
+	"wikibasemediainfo-property-value-color": "צבע",
+	"wikibasemediainfo-property-value-wears": "לובש",
+	"wikibasemediainfo-property-value-part": "חל על חלק",
+	"wikibasemediainfo-property-value-inscription": "כתובת על חפץ",
+	"wikibasemediainfo-property-value-symbolizes": "מסמל",
+	"wikibasemediainfo-property-value-position": "מיקום יחסי בתוך התמונה",
+	"wikibasemediainfo-property-value-quantity": "כמות",
+	"wikibasemediainfo-property-value-depicts": "מציגה"
 }

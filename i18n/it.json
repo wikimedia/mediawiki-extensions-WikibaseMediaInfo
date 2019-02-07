@@ -28,5 +28,12 @@
 	"wikibasemediainfo-filepage-caption-approaching-limit": "$1 {{PLURAL:$1|carattere rimasto|caratteri rimasti|0=caratteri rimasti}}",
 	"wikibasemediainfo-filepage-statement-no-value": "Non esiste alcun valore per questa proprietà",
 	"wikibasemediainfo-filepage-statement-some-value": "Questa proprietà ha un valore, ma è sconosciuto",
-	"wikibasemediainfo-filepage-statement-error": "Si è verificato un errore durante il recupero del valore per questa proprietà"
+	"wikibasemediainfo-filepage-statement-error": "Si è verificato un errore durante il recupero del valore per questa proprietà",
+	"wikibasemediainfo-statements-item-input-label": "da Wikidata",
+	"wikibasemediainfo-statements-item-is-primary": "Primaria",
+	"wikibasemediainfo-statements-item-remove": "Rimuovi",
+	"wikibasemediainfo-statements-item-add-qualifier": "Aggiungi qualificatore",
+	"wikibasemediainfo-property-placeholder": "Proprietà",
+	"wikibasemediainfo-property-value-color": "Colore",
+	"wikibasemediainfo-property-value-quantity": "Quantità"
 }

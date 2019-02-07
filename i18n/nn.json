@@ -8,6 +8,7 @@
 	"wikibase-mediainfo-summary-wbsetlabel-add": "La til bilettekst for [$2]",
 	"wikibase-mediainfo-summary-wbsetlabel-remove": "Fjerna bilettekst for [$2]",
 	"wikibase-mediainfo-summary-wbsetlabel-set": "Endra bilettekst for [$2]",
+	"wikibasemediainfo-diffview-label": "bilettekst",
 	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Bilettekstar",
 	"wikibasemediainfo-filepage-structured-data-heading": "Strukturerte data",
 	"wikibasemediainfo-filepage-captions-title": "Bilettekstar",
@@ -19,5 +20,12 @@
 	"wikibasemediainfo-filepage-publish": "Publiser endringar",
 	"wikibasemediainfo-filepage-caption-empty": "Skriv inn ei line med tekst som skildrar fila",
 	"wikibasemediainfo-filepage-caption-too-long": "$1 {{PLURAL:$1|teikn}} over grensa",
-	"wikibasemediainfo-filepage-caption-approaching-limit": "{{PLURAL:$1|$1|0=Ingen}} teikn att"
+	"wikibasemediainfo-filepage-caption-approaching-limit": "{{PLURAL:$1|$1|0=Ingen}} teikn att",
+	"wikibasemediainfo-statements-depicts-title": "Element synlege på dette biletet",
+	"wikibasemediainfo-statements-item-is-primary": "Hovud",
+	"wikibasemediainfo-statements-item-make-primary": "Gjer til hovud",
+	"wikibasemediainfo-property-depicts": "Viser",
+	"wikibasemediainfo-property-placeholder": "Eigenskap",
+	"wikibasemediainfo-property-value-color": "Farge",
+	"wikibasemediainfo-property-value-wears": "Har på seg"
 }

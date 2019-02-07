@@ -139,8 +139,7 @@
 		"wikibase.mediainfo.mediainfoview": {
 			"dependencies": [
 				"jquery.wikibase.mediainfoview",
-				"wikibase.mediainfo.getDeserializer",
-				"wikibase.mediainfo.styles"
+				"wikibase.mediainfo.getDeserializer"
 			]
 		},
 		"wikibase.mediainfo.datamodel.MediaInfo": {
@@ -175,11 +174,6 @@
 				"wikibase.serialization.Deserializer",
 				"wikibase.serialization.StatementGroupSetDeserializer",
 				"wikibase.serialization.TermMapDeserializer"
-			]
-		},
-		"wikibase.mediainfo.styles": {
-			"styles": [
-				"resources/mediainfo.less"
 			]
 		},
 		"wikibase.mediainfo.filepagestyles": {

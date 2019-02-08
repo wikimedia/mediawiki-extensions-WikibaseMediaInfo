@@ -256,6 +256,7 @@
 				"wikibasemediainfo-statements-item-make-primary",
 				"wikibasemediainfo-statements-item-remove",
 				"wikibasemediainfo-statements-item-add-qualifier",
+				"colon-separator",
 				"parentheses"
 			],
 			"targets": [

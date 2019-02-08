@@ -26,6 +26,8 @@
 		this.contentSelector = '.' + this.config.contentClass;
 		this.currentRevision = mw.config.get( 'wbCurrentRevision' );
 
+		this.licenseDialogWidget = new sd.LicenseDialogWidget();
+
 		this.headerSelector = this.contentSelector + ' .' + config.headerClass;
 		this.editToggle = new OO.ui.ButtonWidget( {
 			icon: 'edit',
@@ -43,6 +45,7 @@
 		this.$depictsPropertyLink = $( this.headerSelector + ' a' );
 
 		this.depictsInput = new st.DepictsWidget( this.config );
+		this.depictsInput.connect( this, { 'manual-add': 'makeEditable' } );
 	};
 
 	/* Inheritance */
@@ -50,7 +53,6 @@
 	OO.mixinClass( sd.DepictsPanel, OO.ui.mixin.PendingElement );
 
 	sd.DepictsPanel.prototype.initialize = function () {
-
 		// Only allow editing if we're NOT on a diff page or viewing an older revision
 		// eslint-disable-next-line jquery/no-global-selector
 		if ( $( '.diff' ).length === 0 && $( '.mw-revision' ).length === 0 ) {
@@ -71,25 +73,36 @@
 	};
 
 	sd.DepictsPanel.prototype.makeEditable = function () {
-		var $content = $( this.contentSelector );
-		$content.addClass( 'wbmi-entityview-state-write' );
-		$content.removeClass( 'wbmi-entityview-state-read' );
-		this.editToggle.$element.hide();
-		this.cancelPublish.show();
-		this.$depictsPropertyLink.hide();
+		var self = this;
+
+		// show dialog informing user of licensing & store the returned promise
+		// in licenseAcceptance - submit won't be possible until dialog is closed
+		this.licenseDialogWidget.getConfirmation().then( function () {
+			self.cancelPublish.enablePublish();
+			self.cancelPublish.show();
+			self.editToggle.$element.hide();
+			self.$depictsPropertyLink.hide();
+
+			self.depictsInput.setEditing( true );
+		} );
 	};
 
 	sd.DepictsPanel.prototype.makeReadOnly = function () {
-		var $content = $( this.contentSelector );
-		$content.addClass( 'wbmi-entityview-state-read' );
-		$content.removeClass( 'wbmi-entityview-state-write' );
+		this.cancelPublish.disablePublish();
 		this.cancelPublish.hide();
 		this.editToggle.$element.show();
 		this.$depictsPropertyLink.show();
+
+		this.depictsInput.reset();
 	};
 
 	sd.DepictsPanel.prototype.sendData = function () {
+		this.cancelPublish.disablePublish();
+		this.cancelPublish.hide();
+		this.editToggle.$element.show();
+		this.$depictsPropertyLink.show();
 
+		this.depictsInput.submit();
 	};
 
 }( mw.mediaInfo.structuredData, wikibase, mw.mediaInfo.statements ) );

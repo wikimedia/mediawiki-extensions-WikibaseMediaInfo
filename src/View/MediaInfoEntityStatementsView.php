@@ -109,8 +109,7 @@ class MediaInfoEntityStatementsView {
 		$panel = new PanelLayout( [
 			'classes' => [
 				'wbmi-entityview-statementsGroup',
-				self::getHtmlContainerClass( $propertyIdString ),
-				'wbmi-entityview-state-read'
+				self::getHtmlContainerClass( $propertyIdString )
 			],
 			'scrollable' => false,
 			'padded' => false,
@@ -197,7 +196,7 @@ class MediaInfoEntityStatementsView {
 	private function createStatementDiv( Statement $statement ) {
 		$div = new Tag( 'div' );
 		$div->appendContent( $this->innerStatementDiv( $statement ) );
-		$div->addClasses( [ 'wbmi-item' ] );
+		$div->addClasses( [ 'wbmi-item', 'wbmi-item-read' ] );
 		return $div;
 	}
 
@@ -266,9 +265,14 @@ class MediaInfoEntityStatementsView {
 				$this->textProvider->get( 'comma-separator' ),
 				$qualifierHtmlArray
 			);
+			$qualifierValueDiv = new Tag( 'div' );
+			$qualifierValueDiv->addClasses( [ 'wbmi-qualifier-value' ] );
+			$qualifierValueDiv->appendContent( $content );
+
 			$qualifierDiv = new Tag( 'div' );
-			$qualifierDiv->addClasses( [ 'wbmi-qualifier', 'wbmi-qualifier-read' ] );
-			$qualifierDiv->appendContent( $content );
+			$qualifierDiv->addClasses( [ 'wbmi-qualifier' ] );
+			$qualifierDiv->appendContent( $qualifierValueDiv );
+
 			$qualifierDivs[] = $qualifierDiv;
 		}
 

@@ -11,6 +11,7 @@
 	 * @param {string} [config.label] Label for this item (e.g. 'cat')
 	 * @param {string} [config.url] URL to this item (e.g. /wiki/Item:Q1)
 	 * @param {string} [config.rank] Rank (e.g. 'normal' (default) or 'preferred')
+	 * @param {string} [config.editing] True for edit mode, False for read mode
 	 */
 	statements.ItemWidget = function MediaInfoStatementsItemWidget( config ) {
 		statements.ItemWidget.parent.call( this, $.extend( { classes: [ 'wbmi-item' ] }, config ) );
@@ -19,15 +20,14 @@
 
 		var guidGenerator = new wikibase.utilities.ClaimGuidGenerator( config.entityId );
 
+		this.editing = !!config.editing;
+
 		this.propertyId = config.propertyId;
 		this.value = config.value;
 		this.label = config.label;
 		this.url = config.url;
 		this.rank = config.rank || 'normal';
 		this.guid = guidGenerator.newGuid();
-
-		this.$label = $( '<div>' );
-		this.renderTitle();
 
 		this.removeButton = new OO.ui.ButtonWidget( {
 			classes: [ 'wbmi-item-remove' ],
@@ -46,103 +46,91 @@
 		} );
 		this.addQualifierButton.connect( this, { click: [ 'addQualifier' ] } );
 
-		this.$element.append(
-			$( '<div>' ).addClass( 'wbmi-item-container' ).append(
-				this.$label,
-				$( '<div>' ).addClass( 'wbmi-item-content' ).append(
-					this.$group,
-					this.addQualifierButton.$element
-				)
-			),
-			this.removeButton.$element
-		);
+		this.render();
 	};
 	OO.inheritClass( statements.ItemWidget, OO.ui.Widget );
 	OO.mixinClass( statements.ItemWidget, OO.ui.mixin.GroupElement );
 	OO.mixinClass( statements.ItemWidget, statements.FormatValueElement );
 
-	/**
-	 * @param {Object} data
-	 */
-	statements.ItemWidget.prototype.getLabelAndUrlFromData = function ( data ) {
-		var self = this;
-
-		$.when(
-			this.formatValue( data, 'text/plain' ),
-			this.formatValue( data, 'text/html' )
-		).then( function ( plain, html ) {
-			self.label = plain[ 0 ].result;
-			self.url = $( html[ 0 ].result ).attr( 'href' );
-		} );
-	};
-
-	statements.ItemWidget.prototype.renderTitle = function () {
+	statements.ItemWidget.prototype.render = function () {
 		var self = this,
 			promise = $.Deferred().resolve().promise();
 
 		if ( this.label === undefined || this.url === undefined ) {
-			promise = $.when( this.formatValue( this.value, 'text/plain' ), this.formatValue( this.value, 'text/html' ) ).then(
+			promise = $.when(
+				this.formatValue( this.value, 'text/plain' ),
+				this.formatValue( this.value, 'text/html' )
+			).then(
 				function ( plain, html ) {
 					self.label = plain[ 0 ].result;
 					self.url = $( html[ 0 ].result ).attr( 'href' );
 				}
 			);
 		}
-		promise.then( function () {
-			var $title = self.buildTitle( self.value.value.id, self.label, self.url, self.rank );
-			self.$label.empty().append( $title );
-		} );
+
+		promise.then( this.renderInternal.bind( this ) );
 	};
 
-	/**
-	 * @param {string} id
-	 * @param {string} label
-	 * @param {string} url
-	 * @param {string} rank
-	 * @return {jQuery}
-	 */
-	statements.ItemWidget.prototype.buildTitle = function ( id, label, url, rank ) {
+	statements.ItemWidget.prototype.renderInternal = function () {
 		var self = this,
+			id = this.value.value.id,
 			repo = id.indexOf( ':' ) >= 0 ? id.replace( /:.+$/, '' ) : '',
 			$label = $( '<h4>' )
 				.addClass( 'wbmi-entity-label' )
-				.text( label ),
+				.text( this.label ),
 			$link = $( '<a>' )
 				.addClass(
 					'wbmi-entity-link ' +
 					'wbmi-entity-link' + ( repo !== '' ? '-foreign-repo-' + repo : '-local-repo' )
 				)
-				.attr( 'href', url )
+				.attr( 'href', this.url )
 				.text( id.replace( /^.+:/, '' ) ),
 			icon = new OO.ui.IconWidget( { icon: 'check' } ),
 			$makePrimary = $( '<a>' )
 				.addClass(
 					'wbmi-entity-primary ' +
-					'wbmi-entity' + ( rank === 'preferred' ? '-is-primary' : '-make-primary' )
+					'wbmi-entity' + ( this.rank === 'preferred' ? '-is-primary' : '-make-primary' )
 				)
 				.attr( 'href', '#' )
 				.text(
-					rank === 'preferred' ?
+					this.rank === 'preferred' ?
 						mw.message( 'wikibasemediainfo-statements-item-is-primary' ).text() :
 						mw.message( 'wikibasemediainfo-statements-item-make-primary' ).text()
 				)
-				.prepend( rank === 'preferred' ? icon.$element : '' )
+				.prepend( this.rank === 'preferred' ? icon.$element : '' )
 				.on( 'click', function ( e ) {
 					e.preventDefault();
 					self.rank = self.rank === 'preferred' ? 'normal' : 'preferred';
-					self.renderTitle();
+					self.render();
 				} );
 
-		return $( '<div>' )
-			.addClass( 'wbmi-entity-title' )
-			.append(
-				$label,
-				$( '<div>' )
-					.addClass( 'wbmi-entity-label-extra' )
-					.html( '&bull;' )
-					.prepend( $link )
-					.append( $makePrimary )
-			);
+		this.$element.toggleClass( 'wbmi-item-edit', this.editing );
+		this.$element.toggleClass( 'wbmi-item-read', !this.editing );
+
+		// before we wipe out & re-build this entire thing, detach a few nodes that
+		// we'll be re-using...
+		this.$group.detach();
+		this.addQualifierButton.$element.detach();
+		this.removeButton.$element.detach();
+		this.$element.empty();
+
+		this.$element.append(
+			$( '<div>' ).addClass( 'wbmi-item-container' ).append(
+				$( '<div>' ).addClass( 'wbmi-entity-title' ).append(
+					$label,
+					$( '<div>' )
+						.addClass( 'wbmi-entity-label-extra' )
+						.html( '&bull;' )
+						.prepend( $link )
+						.append( $makePrimary )
+				),
+				$( '<div>' ).addClass( 'wbmi-item-content' ).append(
+					this.$group,
+					this.editing ? this.addQualifierButton.$element : undefined
+				)
+			),
+			this.editing ? this.removeButton.$element : undefined
+		);
 	};
 
 	/**
@@ -150,14 +138,27 @@
 	 */
 	statements.ItemWidget.prototype.addQualifier = function ( data ) {
 		var properties = mw.config.get( 'wbmiDepictsQualifierProperties' ),
-			widget = new statements.QualifierWidget( { properties: properties } );
+			widget = new statements.QualifierWidget( {
+				editing: this.editing,
+				properties: properties
+			} );
 
 		if ( data ) {
 			widget.setData( data );
 		}
 
-		this.insertItem( widget );
+		this.addItems( [ widget ] );
 		widget.connect( this, { delete: [ 'removeItems', [ widget ] ] } );
+	};
+
+	/**
+	 * @param {boolean} editing
+	 */
+	statements.ItemWidget.prototype.setEditing = function ( editing ) {
+		if ( this.editing !== editing ) {
+			this.editing = editing;
+			this.render();
+		}
 	};
 
 	/**
@@ -214,25 +215,21 @@
 			this.label = undefined;
 			this.url = undefined;
 
-			this.renderTitle();
+			this.render();
 		}
 
 		// remove existing qualifiers, then add new ones based on data passed in
 		this.clearItems();
-		if ( data.qualifiers !== undefined ) {
-			Object.keys( data.qualifiers )
+		Object.keys( data.qualifiers || {} )
 			// this is a workaround for Object.values not being supported in all browsers...
-				.map( function ( key ) {
-					return data.qualifiers[ key ];
-				} )
-				.forEach(
-					function ( qualifiers ) {
-						qualifiers.forEach( function ( qualifier ) {
-							self.addQualifier( qualifier );
-						} );
-					}
-				);
-		}
+			.map( function ( key ) {
+				return data.qualifiers[ key ];
+			} )
+			.forEach( function ( qualifiers ) {
+				qualifiers.forEach( function ( qualifier ) {
+					self.addQualifier( qualifier );
+				} );
+			} );
 	};
 
 }( mw.mediaInfo.statements, wikibase ) );

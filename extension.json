@@ -24,7 +24,7 @@
 			"value": true
 		},
 		"MediaInfoEnableFilePageDepicts": {
-			"value": true
+			"value": false
 		},
 		"MediaInfoProperties": {
 			"description": "Relevant data for the depicts property. Keys: `id` is the property ID, `label` is the i18n key & `url` links to the property",

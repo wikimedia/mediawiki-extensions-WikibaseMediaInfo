@@ -2,6 +2,7 @@
 
 namespace Wikibase\MediaInfo\Tests\MediaWiki\View;
 
+use MediaWiki\MediaWikiServices;
 use Wikibase\DataModel\Entity\EntityDocument;
 use Wikibase\DataModel\Entity\Property;
 use Wikibase\DataModel\Entity\PropertyId;
@@ -98,6 +99,14 @@ class MediaInfoViewTest extends \PHPUnit\Framework\TestCase {
 			->method( 'getHtml' )
 			->willReturn( $statementsViewHtml );
 
+		$html = $termsViewHtml;
+		if (
+			MediaWikiServices::getInstance()
+				->getMainConfig()->get( 'MediaInfoEnableFilePageDepicts' )
+		) {
+			$html .= $statementsViewHtml;
+		}
+
 		$this->templateFactory
 			->expects( $this->once() )
 			->method( 'render' )
@@ -106,7 +115,7 @@ class MediaInfoViewTest extends \PHPUnit\Framework\TestCase {
 				$this->values['entityType'],
 				$this->values['entityId'],
 				$langDir,
-				$termsViewHtml . $statementsViewHtml
+				$html
 			)->willReturn( $renderedContent );
 
 		$viewContent = $this->sut->getContent( $this->entity );

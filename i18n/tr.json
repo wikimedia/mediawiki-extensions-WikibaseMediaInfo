@@ -2,9 +2,19 @@
 	"@metadata": {
 		"authors": [
 			"Hedda",
-			"Arbormedi"
+			"Arbormedi",
+			"Mirzali"
 		]
 	},
+	"wikibasemediainfo-filepage-edit-depicts": "Resimleri düzenle",
 	"wikibasemediainfo-filepage-caption-empty": "Bu dosyanın temsil ettiği şeyin tek satırlık açıklamasını ekleyin.",
-	"wikibasemediainfo-filepage-statement-some-value": "Bu özelliğin bir değeri var ancak bilinmemektedir."
+	"wikibasemediainfo-filepage-statement-no-data": "Veri yok",
+	"wikibasemediainfo-filepage-statement-some-value": "Bu özelliğin bir değeri var ancak bilinmemektedir.",
+	"wikibasemediainfo-statements-item-is-primary": "Birincil",
+	"wikibasemediainfo-statements-item-remove": "Kaldır",
+	"wikibasemediainfo-statements-item-add-qualifier": "Niteleyici еkle",
+	"wikibasemediainfo-property-placeholder": "Özellik",
+	"wikibasemediainfo-property-value-color": "Renk",
+	"wikibasemediainfo-property-value-inscription": "Açıklama",
+	"wikibasemediainfo-property-value-quantity": "Nicelik"
 }

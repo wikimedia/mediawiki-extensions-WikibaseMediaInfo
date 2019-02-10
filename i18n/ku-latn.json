@@ -1,8 +1,17 @@
 {
 	"@metadata": {
 		"authors": [
-			"Ghybu"
+			"Ghybu",
+			"Mirzali"
 		]
 	},
-	"wikibasemediainfo-filepage-publish": "Guherandinan biweşîne"
+	"wikibasemediainfo-filepage-edit-depicts": "Wêne biguherîne",
+	"wikibasemediainfo-filepage-publish": "Guherandinan biweşîne",
+	"wikibasemediainfo-filepage-statement-no-data": "Naverok tune",
+	"wikibasemediainfo-statements-item-is-primary": "Bingehîn",
+	"wikibasemediainfo-statements-item-remove": "Jê bibe",
+	"wikibasemediainfo-property-placeholder": "Taybetmendî",
+	"wikibasemediainfo-property-value-color": "Reng",
+	"wikibasemediainfo-property-value-inscription": "Danasîn",
+	"wikibasemediainfo-property-value-quantity": "Jimarî"
 }

@@ -20,12 +20,14 @@
 	"wikibasemediainfo-filepage-fewer-languages": "Weniger Sprachen ansehen",
 	"wikibasemediainfo-filepage-add-caption": "Einen Bildtext hinzufügen",
 	"wikibasemediainfo-filepage-edit-captions": "Überschriften bearbeiten",
+	"wikibasemediainfo-filepage-edit-depicts": "Abbildungen bearbeiten",
 	"wikibasemediainfo-filepage-cancel": "Abbrechen",
 	"wikibasemediainfo-filepage-publish": "Änderungen veröffentlichen",
 	"wikibasemediainfo-filepage-caption-empty": "Ergänze eine einzeilige Erklärung, was diese Datei darstellt.",
 	"wikibasemediainfo-filepage-caption-too-long": "{{PLURAL:$1|Ein|$1}} Zeichen über der Grenze",
 	"wikibasemediainfo-filepage-caption-approaching-limit": "Noch {{PLURAL:$1|ein|$1|0=$1}} Zeichen",
 	"wikibasemediainfo-filepage-statement-no-value": "Für diese Eigenschaft ist kein Wert vorhanden",
+	"wikibasemediainfo-filepage-statement-no-data": "Keine Daten verfügbar",
 	"wikibasemediainfo-filepage-statement-some-value": "Diese Eigenschaft hat einen Wert, er ist jedoch unbekannt",
 	"wikibasemediainfo-filepage-statement-error": "Beim Abruf des Wertes für diese Eigenschaft ist ein Fehler aufgetreten",
 	"wikibasemediainfo-statements-depicts-title": "In diesem Bild abgebildete Objekte",
@@ -35,7 +37,7 @@
 	"wikibasemediainfo-statements-item-make-primary": "Primär machen",
 	"wikibasemediainfo-statements-item-remove": "Entfernen",
 	"wikibasemediainfo-statements-item-add-qualifier": "Qualifikator hinzufügen",
-	"wikibasemediainfo-property-depicts": "Depicts",
+	"wikibasemediainfo-property-depicts": "Abbildungen",
 	"wikibasemediainfo-property-placeholder": "Eigenschaft",
 	"wikibasemediainfo-property-value-features": "Mit Features angezeigt",
 	"wikibasemediainfo-property-value-color": "Farbe",
@@ -45,5 +47,5 @@
 	"wikibasemediainfo-property-value-symbolizes": "Symbolizes",
 	"wikibasemediainfo-property-value-position": "Relative Position innerhalb des Bildes",
 	"wikibasemediainfo-property-value-quantity": "Menge",
-	"wikibasemediainfo-property-value-depicts": "Depicts"
+	"wikibasemediainfo-property-value-depicts": "Abbildungen"
 }

@@ -23,5 +23,11 @@
 	"wikibasemediainfo-filepage-publish": "পরিবর্তন প্রকাশ করুন",
 	"wikibasemediainfo-filepage-caption-empty": "এই ফাইল কি প্রতিনিধিত্ব করছে তার এক লাইন ব্যাখ্যা যোগ করুন",
 	"wikibasemediainfo-filepage-caption-too-long": "$1টি {{PLURAL:$1|অক্ষর}} সীমা অতিক্রম করেছে",
-	"wikibasemediainfo-filepage-caption-approaching-limit": "$1টি {{PLURAL:$1|অক্ষর|0=অক্ষর}} বাকি"
+	"wikibasemediainfo-filepage-caption-approaching-limit": "$1টি {{PLURAL:$1|অক্ষর|0=অক্ষর}} বাকি",
+	"wikibasemediainfo-filepage-statement-no-data": "কোনো উপাত্ত উপলব্ধ নয়",
+	"wikibasemediainfo-statements-item-input-label": "উইকিউপাত্ত থেকে",
+	"wikibasemediainfo-statements-item-remove": "সরান",
+	"wikibasemediainfo-statements-item-add-qualifier": "বাছাই যোগ করুন",
+	"wikibasemediainfo-property-value-color": "রং",
+	"wikibasemediainfo-property-value-quantity": "পরিমাণ"
 }

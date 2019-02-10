@@ -3,7 +3,8 @@
 		"authors": [
 			"Mainframe98",
 			"Jdforrester",
-			"Spinster"
+			"Spinster",
+			"Optilete"
 		]
 	},
 	"right-mediainfo-term": "Pas de media-informatietermen aan (onderschriften, samenvattingen)",
@@ -25,5 +26,11 @@
 	"wikibasemediainfo-filepage-publish": "Wijzigingen publiceren",
 	"wikibasemediainfo-filepage-caption-empty": "Beschrijf in één regel wat dit bestand voorstelt",
 	"wikibasemediainfo-filepage-caption-too-long": "$1 {{PLURAL:$1|teken|tekens}} over de limiet",
-	"wikibasemediainfo-filepage-caption-approaching-limit": "$1 {{PLURAL:$1|teken|tekens|0=tekens}} over"
+	"wikibasemediainfo-filepage-caption-approaching-limit": "$1 {{PLURAL:$1|teken|tekens|0=tekens}} over",
+	"wikibasemediainfo-statements-item-input-label": "van Wikidata",
+	"wikibasemediainfo-statements-item-is-primary": "Primair",
+	"wikibasemediainfo-statements-item-remove": "Verwijderen",
+	"wikibasemediainfo-property-placeholder": "Eigenschap",
+	"wikibasemediainfo-property-value-color": "Kleur",
+	"wikibasemediainfo-property-value-quantity": "Hoeveelheid"
 }

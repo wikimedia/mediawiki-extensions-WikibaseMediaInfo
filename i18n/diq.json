@@ -5,10 +5,15 @@
 			"Mirzali"
 		]
 	},
+	"wikibasemediainfo-filepage-edit-depicts": "Resıman bıvurne",
 	"wikibasemediainfo-filepage-cancel": "Bıtexelne",
 	"wikibasemediainfo-filepage-publish": "Vırnayışan qeyd kerê",
+	"wikibasemediainfo-filepage-statement-no-data": "Tedeyi çıniyê",
+	"wikibasemediainfo-statements-item-input-label": "Beyanatê Wikiyi ra",
+	"wikibasemediainfo-statements-item-is-primary": "Bıngeyın",
 	"wikibasemediainfo-statements-item-remove": "Wedare",
 	"wikibasemediainfo-property-placeholder": "Xısusiyet",
 	"wikibasemediainfo-property-value-color": "Reng",
+	"wikibasemediainfo-property-value-inscription": "Şınasnayış",
 	"wikibasemediainfo-property-value-quantity": "Miqdar"
 }

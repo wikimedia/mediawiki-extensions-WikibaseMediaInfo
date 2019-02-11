@@ -4,7 +4,8 @@
 			"Mainframe98",
 			"Jdforrester",
 			"Spinster",
-			"Optilete"
+			"Optilete",
+			"Xbaked potatox"
 		]
 	},
 	"right-mediainfo-term": "Pas de media-informatietermen aan (onderschriften, samenvattingen)",
@@ -27,6 +28,7 @@
 	"wikibasemediainfo-filepage-caption-empty": "Beschrijf in één regel wat dit bestand voorstelt",
 	"wikibasemediainfo-filepage-caption-too-long": "$1 {{PLURAL:$1|teken|tekens}} over de limiet",
 	"wikibasemediainfo-filepage-caption-approaching-limit": "$1 {{PLURAL:$1|teken|tekens|0=tekens}} over",
+	"wikibasemediainfo-filepage-statement-no-data": "Geen gegevens beschikbaar",
 	"wikibasemediainfo-statements-item-input-label": "van Wikidata",
 	"wikibasemediainfo-statements-item-is-primary": "Primair",
 	"wikibasemediainfo-statements-item-remove": "Verwijderen",

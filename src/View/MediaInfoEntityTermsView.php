@@ -77,7 +77,7 @@ class MediaInfoEntityTermsView {
 		MediaInfo $entity
 	) {
 		$layout = new PanelLayout( [
-			'classes' => self::CAPTIONS_CONTAINER,
+			'classes' => [ self::CAPTIONS_CONTAINER ],
 			'scrollable' => false,
 			'padded' => false,
 			'expanded' => false,

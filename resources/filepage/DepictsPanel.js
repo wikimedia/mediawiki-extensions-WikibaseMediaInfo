@@ -27,12 +27,14 @@
 		this.currentRevision = mw.config.get( 'wbCurrentRevision' );
 
 		this.headerSelector = this.contentSelector + ' .' + config.headerClass;
-		this.editToggle = new sd.EditToggle(
-			{
-				titleKey: 'wikibasemediainfo-filepage-edit-depicts'
-			},
-			this
-		);
+		this.editToggle = new OO.ui.ButtonWidget( {
+			icon: 'edit',
+			framed: false,
+			title: mw.message( 'wikibasemediainfo-filepage-edit-depicts' ).text(),
+			classes: [ 'wbmi-entityview-editButton' ]
+		} );
+		this.editToggle.connect( this, { click: 'makeEditable' } );
+
 		this.cancelPublish = new sd.CancelPublishWidget(
 			this
 		);
@@ -66,7 +68,7 @@
 		var $content = $( this.contentSelector );
 		$content.addClass( 'wbmi-entityview-state-write' );
 		$content.removeClass( 'wbmi-entityview-state-read' );
-		this.editToggle.hide();
+		this.editToggle.$element.hide();
 		this.cancelPublish.show();
 		this.$depictsPropertyLink.hide();
 	};
@@ -76,7 +78,7 @@
 		$content.addClass( 'wbmi-entityview-state-read' );
 		$content.removeClass( 'wbmi-entityview-state-write' );
 		this.cancelPublish.hide();
-		this.editToggle.show();
+		this.editToggle.$element.show();
 		this.$depictsPropertyLink.show();
 	};
 

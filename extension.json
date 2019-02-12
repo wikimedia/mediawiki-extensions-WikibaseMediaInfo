@@ -97,7 +97,6 @@
 		"wikibase.mediainfo.filePageDisplay": {
 			"scripts": [
 				"resources/filepage/__namespace.js",
-				"resources/filepage/EditToggle.js",
 				"resources/filepage/LanguagesViewWidget.js",
 				"resources/filepage/UlsWidget.js",
 				"resources/filepage/CancelPublishWidget.js",

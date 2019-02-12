@@ -49,12 +49,12 @@
 		this.captionsData = {};
 		this.languageSelectors = [];
 		this.textInputs = [];
-		this.editToggle = new sd.EditToggle(
-			{
-				titleKey: 'wikibasemediainfo-filepage-edit-captions'
-			},
-			this
-		);
+		this.editToggle = new OO.ui.ButtonWidget( {
+			icon: 'edit',
+			framed: false,
+			title: mw.message( 'wikibasemediainfo-filepage-edit-captions' ).text(),
+			classes: [ 'wbmi-entityview-editButton' ]
+		} );
 		this.languagesViewWidget = new sd.LanguagesViewWidget( this.config );
 		this.editActionsWidget = new sd.CaptionsEditActionsWidget(
 			{ appendToSelector: '.' + config.contentClass },
@@ -64,6 +64,8 @@
 		this.contentSelector = '.' + this.config.contentClass;
 		this.entityTermSelector = '.' + this.config.entityTermClass;
 		this.captionLanguagesDataAttr = 'data-caption-languages';
+
+		this.editToggle.connect( this, { click: 'makeEditable' } );
 
 		this.userLanguages = mw.config.get( 'wbUserSpecifiedLanguages' ).slice();
 	};
@@ -764,7 +766,7 @@
 				captionsPanel.redrawCaptionsContent();
 				var $captionsContent = $( captionsPanel.contentSelector );
 				$captionsContent.addClass( 'wbmi-entityview-editable' );
-				captionsPanel.editToggle.hide();
+				captionsPanel.editToggle.$element.hide();
 				captionsPanel.languagesViewWidget.hide();
 				captionsPanel.editActionsWidget.show();
 				var captionLangCodes = [];
@@ -793,7 +795,7 @@
 		this.editActionsWidget.hide();
 		this.redrawCaptionsContent();
 		this.languagesViewWidget.expand();
-		this.editToggle.show();
+		this.editToggle.$element.show();
 	};
 
 	sd.CaptionsPanel.prototype.addNewEditableLanguageRow = function () {

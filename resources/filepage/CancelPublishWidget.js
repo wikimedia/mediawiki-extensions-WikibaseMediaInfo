@@ -22,6 +22,8 @@
 			} );
 
 		var publishButton = new OO.ui.ButtonInputWidget( {
+			// disabled by default
+			disabled: true,
 			type: 'submit',
 			useInputTag: true,
 			label: mw.message( 'wikibasemediainfo-filepage-publish' ).text(),

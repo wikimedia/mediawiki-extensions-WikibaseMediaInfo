@@ -45,7 +45,7 @@
 		};
 
 		this.enablePublish = function () {
-			cancelAndPublishButtons.enablePublish( false );
+			cancelAndPublishButtons.enablePublish();
 		};
 
 		this.setStateSending = function () {

@@ -98,6 +98,7 @@
 			"scripts": [
 				"resources/filepage/__namespace.js",
 				"resources/filepage/LanguagesViewWidget.js",
+				"resources/filepage/LicenseDialogWidget.js",
 				"resources/filepage/UlsWidget.js",
 				"resources/filepage/CancelPublishWidget.js",
 				"resources/filepage/CaptionsEditActionsWidget.js",
@@ -132,7 +133,12 @@
 				"wikibasemediainfo-filepage-publish",
 				"wikibasemediainfo-filepage-caption-empty",
 				"wikibasemediainfo-filepage-caption-too-long",
-				"wikibasemediainfo-filepage-caption-approaching-limit"
+				"wikibasemediainfo-filepage-caption-approaching-limit",
+				"wikibasemediainfo-filepage-license-title",
+				"wikibasemediainfo-filepage-license-content",
+				"wikibasemediainfo-filepage-license-content-acceptance",
+				"wikibasemediainfo-filepage-license-accept",
+				"wikibasemediainfo-filepage-license-cancel"
 			],
 			"targets": [
 				"desktop",

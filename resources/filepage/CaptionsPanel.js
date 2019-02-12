@@ -49,12 +49,18 @@
 		this.captionsData = {};
 		this.languageSelectors = [];
 		this.textInputs = [];
+
+		this.licenseDialogWidget = new sd.LicenseDialogWidget();
+		this.licenseAcceptance = $.Deferred().promise();
+
 		this.editToggle = new OO.ui.ButtonWidget( {
 			icon: 'edit',
 			framed: false,
 			title: mw.message( 'wikibasemediainfo-filepage-edit-captions' ).text(),
 			classes: [ 'wbmi-entityview-editButton' ]
 		} );
+		this.editToggle.connect( this, { click: 'makeEditable' } );
+
 		this.languagesViewWidget = new sd.LanguagesViewWidget( this.config );
 		this.editActionsWidget = new sd.CaptionsEditActionsWidget(
 			{ appendToSelector: '.' + config.contentClass },
@@ -64,8 +70,6 @@
 		this.contentSelector = '.' + this.config.contentClass;
 		this.entityTermSelector = '.' + this.config.entityTermClass;
 		this.captionLanguagesDataAttr = 'data-caption-languages';
-
-		this.editToggle.connect( this, { click: 'makeEditable' } );
 
 		this.userLanguages = mw.config.get( 'wbUserSpecifiedLanguages' ).slice();
 	};
@@ -318,17 +322,14 @@
 
 	// TODO: Re-write to be simpler and merge in doTextInputChecks (which is only called by this)?
 	sd.CaptionsPanel.prototype.refreshPublishState = function () {
-		var captionsPanel = this;
+		var captionsPanel = this,
+			checks = this.doTextInputChecks();
 
-		$.when.apply( null, this.doTextInputChecks() )
-			.then(
-				function () {
-					captionsPanel.editActionsWidget.enablePublish();
-				},
-				function () {
-					captionsPanel.editActionsWidget.disablePublish();
-				}
-			);
+		checks.push( this.licenseAcceptance );
+
+		// disable publishing first, and only re-enable if/once all checks have cleared
+		captionsPanel.editActionsWidget.disablePublish();
+		$.when.apply( null, checks ).then( captionsPanel.editActionsWidget.enablePublish.bind( captionsPanel.editActionsWidget ) );
 	};
 
 	sd.CaptionsPanel.prototype.createRowDeleter = function ( $row ) {
@@ -757,6 +758,10 @@
 	sd.CaptionsPanel.prototype.makeEditable = function () {
 		var captionsPanel = this;
 
+		// show dialog informing user of licensing & store the returned promise
+		// in licenseAcceptance - submit won't be possible until dialog is closed
+		this.licenseAcceptance = this.licenseDialogWidget.getConfirmation().always( captionsPanel.refreshPublishState.bind( captionsPanel ) );
+
 		// Set the target pending element to the layout box
 		this.$pending = $( '.' + this.config.headerClass ).parent();
 		this.pushPending();
@@ -769,6 +774,7 @@
 				captionsPanel.editToggle.$element.hide();
 				captionsPanel.languagesViewWidget.hide();
 				captionsPanel.editActionsWidget.show();
+				captionsPanel.refreshPublishState();
 				var captionLangCodes = [];
 				$captionsContent.find( captionsPanel.entityTermSelector ).each( function () {
 					var dataInRow = captionsPanel.readDataFromReadOnlyRow( $( this ) );

@@ -111,6 +111,7 @@
 				"oojs",
 				"oojs-ui-core",
 				"oojs-ui-widgets",
+				"oojs-ui-windows",
 				"oojs-ui.styles.icons-editing-core",
 				"oojs-ui.styles.icons-movement",
 				"wikibase.mediainfo.filepagestyles",

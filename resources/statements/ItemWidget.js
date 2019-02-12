@@ -219,16 +219,20 @@
 
 		// remove existing qualifiers, then add new ones based on data passed in
 		this.clearItems();
-		Object.keys( data.qualifiers )
+		if ( data.qualifiers !== undefined ) {
+			Object.keys( data.qualifiers )
 			// this is a workaround for Object.values not being supported in all browsers...
-			.map( function ( key ) {
-				return data.qualifiers[ key ];
-			} )
-			.forEach( function ( qualifiers ) {
-				qualifiers.forEach( function ( qualifier ) {
-					self.addQualifier( qualifier );
-				} );
-			} );
+				.map( function ( key ) {
+					return data.qualifiers[ key ];
+				} )
+				.forEach(
+					function ( qualifiers ) {
+						qualifiers.forEach( function ( qualifier ) {
+							self.addQualifier( qualifier );
+						} );
+					}
+				);
+		}
 	};
 
 }( mw.mediaInfo.statements, wikibase ) );

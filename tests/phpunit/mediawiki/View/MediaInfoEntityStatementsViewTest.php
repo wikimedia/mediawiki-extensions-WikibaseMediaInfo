@@ -7,6 +7,7 @@ use ValueFormatters\FormatterOptions;
 use Wikibase\DataModel\Entity\EntityIdValue;
 use Wikibase\DataModel\Entity\ItemId;
 use Wikibase\DataModel\Entity\PropertyId;
+use Wikibase\DataModel\Serializers\StatementSerializer;
 use Wikibase\DataModel\Snak\PropertyNoValueSnak;
 use Wikibase\DataModel\Snak\PropertySomeValueSnak;
 use Wikibase\DataModel\Snak\PropertyValueSnak;
@@ -52,6 +53,10 @@ class MediaInfoEntityStatementsViewTest extends \PHPUnit\Framework\TestCase {
 	 * @var OutputFormatValueFormatterFactory
 	 */
 	private $valueFormatterFactory;
+	/**
+	 * @var StatementSerializer
+	 */
+	private $statementSerializer;
 
 	private function createDependencies( array $langCodes = [ 'en' ] ) {
 		$wbRepo = WikibaseRepo::getDefaultInstance();
@@ -61,6 +66,7 @@ class MediaInfoEntityStatementsViewTest extends \PHPUnit\Framework\TestCase {
 		}
 		$this->textProvider = new MediaWikiLocalizedTextProvider( $languages[0]->getLanguage() );
 		$this->entityTitleLookup = $wbRepo->getEntityTitleLookup();
+		$this->statementSerializer = $wbRepo->getStatementSerializer();
 
 		$snakFormatter = $this->getMockBuilder( SnakFormatter::class )
 			->disableOriginalConstructor()
@@ -156,7 +162,8 @@ class MediaInfoEntityStatementsViewTest extends \PHPUnit\Framework\TestCase {
 			$this->entityTitleLookup,
 			[ new PropertyId( 'P1' ) ],
 			$this->snakFormatterFactory,
-			$this->valueFormatterFactory
+			$this->valueFormatterFactory,
+			$this->statementSerializer
 		);
 		$html = $sut->getHtml(
 			new MediaInfo( null, null, null, $statementList )

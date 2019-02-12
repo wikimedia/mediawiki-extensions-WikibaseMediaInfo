@@ -12,6 +12,7 @@ use ValueFormatters\FormatterOptions;
 use Wikibase\DataModel\Entity\EntityId;
 use Wikibase\DataModel\Entity\EntityIdValue;
 use Wikibase\DataModel\Entity\PropertyId;
+use Wikibase\DataModel\Serializers\StatementSerializer;
 use Wikibase\DataModel\Snak\PropertyValueSnak;
 use Wikibase\DataModel\Snak\Snak;
 use Wikibase\DataModel\Snak\SnakList;
@@ -37,6 +38,7 @@ class MediaInfoEntityStatementsView {
 	private $defaultPropertyIds;
 	private $snakFormatterFactory;
 	private $valueFormatterFactory;
+	private $statementSerializer;
 
 	const EMPTY_DEFAULT_PROPERTY_PLACEHOLDER = 'EMPTY_DEFAULT_PROPERTY_PLACEHOLDER';
 
@@ -49,6 +51,7 @@ class MediaInfoEntityStatementsView {
 	 * 	we don't have values for them
 	 * @param OutputFormatSnakFormatterFactory $snakFormatterFactory
 	 * @param OutputFormatValueFormatterFactory $valueFormatterFactory
+	 * @param StatementSerializer $statementSerializer
 	 */
 	public function __construct(
 		PropertyOrderProvider $propertyOrderProvider,
@@ -56,7 +59,8 @@ class MediaInfoEntityStatementsView {
 		EntityTitleLookup $entityTitleLookup,
 		array $defaultPropertyIds,
 		OutputFormatSnakFormatterFactory $snakFormatterFactory,
-		OutputFormatValueFormatterFactory $valueFormatterFactory
+		OutputFormatValueFormatterFactory $valueFormatterFactory,
+		StatementSerializer $statementSerializer
 	) {
 		OutputPage::setupOOUI();
 
@@ -66,6 +70,7 @@ class MediaInfoEntityStatementsView {
 		$this->defaultPropertyIds = $defaultPropertyIds;
 		$this->snakFormatterFactory = $snakFormatterFactory;
 		$this->valueFormatterFactory = $valueFormatterFactory;
+		$this->statementSerializer = $statementSerializer;
 	}
 
 	/**
@@ -93,16 +98,19 @@ class MediaInfoEntityStatementsView {
 	}
 
 	private function getLayoutForProperty( $propertyIdString, array $statements ) {
+		$serializedStatements = [];
 		$itemsGroupDiv = new Tag( 'div' );
 		$itemsGroupDiv->addClasses( [ 'wbmi-content-items-group' ] );
 		foreach ( $statements as $statement ) {
 			$itemsGroupDiv->appendContent( $this->createStatementDiv( $statement ) );
+			$serializedStatements[] = $this->statementSerializer->serialize( $statement );
 		}
 
 		$panel = new PanelLayout( [
 			'classes' => [
 				'wbmi-entityview-statementsGroup',
 				self::getHtmlContainerClass( $propertyIdString ),
+				'wbmi-entityview-state-read'
 			],
 			'scrollable' => false,
 			'padded' => false,
@@ -113,6 +121,11 @@ class MediaInfoEntityStatementsView {
 				$itemsGroupDiv
 			]
 		] );
+		$panel->setAttributes(
+			[
+				'data-statements' => json_encode( $serializedStatements )
+			]
+		);
 		return $panel;
 	}
 

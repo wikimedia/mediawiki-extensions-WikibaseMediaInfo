@@ -125,7 +125,8 @@ return [
 				$wbRepo->getEntityTitleLookup(),
 				$defaultPropertyIdsForView,
 				$wbRepo->getSnakFormatterFactory(),
-				$wbRepo->getValueFormatterFactory()
+				$wbRepo->getValueFormatterFactory(),
+				$wbRepo->getStatementSerializer()
 			);
 
 			return new MediaInfoView(

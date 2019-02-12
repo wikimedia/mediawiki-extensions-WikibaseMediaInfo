@@ -65,6 +65,7 @@
 	statements.EntityInputWidget.prototype.setData = function ( data ) {
 		this.data = data;
 		this.setFlags( { destructive: false } );
+		this.emit( 'dataChange', this.data );
 
 		return this;
 	};
@@ -75,18 +76,22 @@
 	 * @inheritdoc
 	 */
 	statements.EntityInputWidget.prototype.setValue = function ( value ) {
+		value = this.cleanUpValue( value );
+
 		if ( value && value in this.mapLabelId ) {
 			// input (label) is one we've already selected, we still know the id
 			this.setData( this.mapLabelId[ value ] );
-			statements.EntityInputWidget.parent.prototype.setValue.call( this, value );
 		} else {
 			// unknown input - mark as invalid input, until something gets selected
 			this.data = undefined;
-			statements.EntityInputWidget.parent.prototype.setValue.call( this, value );
 			// don't set destructive flag just yet, we may still be entering a search
 			// term and don't want it to turn destructive until we've had a chance to
 			// select the value - we'll update set the state on blur
 		}
+
+		statements.EntityInputWidget.parent.prototype.setValue.call( this, value );
+
+		return this;
 	};
 
 	/**

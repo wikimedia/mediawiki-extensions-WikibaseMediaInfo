@@ -29,7 +29,10 @@
 	 * @param {object} data
 	 */
 	statements.DepictsWidget.prototype.addItemFromInput = function ( item, data ) {
-		this.addItem( item.getData(), data.label, data.url );
+		var widget = this.addItem( item.getData(), data.label, data.url );
+		this.emit( 'manual-add', widget );
+		// we just added a new item - let's switch all of them into editing mode
+		this.setEditing( true );
 	};
 
 	/**
@@ -41,15 +44,17 @@
 	 */
 	statements.DepictsWidget.prototype.addItem = function ( value, label, url, rank ) {
 		var widget = new statements.ItemWidget( {
+			editing: this.editing,
 			entityId: this.entityId,
 			propertyId: mw.config.get( 'wbmiProperties' ).depicts.id,
 			value: value,
 			label: label,
 			url: url,
-			rank: rank || 'normal'
+			rank: rank
 		} );
 
-		this.insertItem( widget );
+		this.addItems( [ widget ] );
+
 		widget.connect( this, { delete: [ 'removeItems', [ widget ] ] } );
 
 		// clear the autocomplete input field to select entities to add
@@ -73,14 +78,47 @@
 	statements.DepictsWidget.prototype.setData = function ( data ) {
 		var self = this;
 
+		this.data = data;
+
 		// remove existing items, then add new ones based on data passed in
 		this.input.setData( {} );
 		this.clearItems();
 
-		data.forEach( function ( data ) {
+		this.data.forEach( function ( data ) {
 			var widget = self.addItem( data.mainsnak.datavalue );
 			widget.setData( data );
 		} );
+	};
+
+	/**
+	 * @param {boolean} editing
+	 */
+	statements.DepictsWidget.prototype.setEditing = function ( editing ) {
+		var self = this;
+
+		this.getItems().forEach( function ( item ) {
+			try {
+				item.setEditing( editing );
+			} catch ( e ) {
+				// when switching modes, make sure to remove invalid (incomplete) items
+				self.removeItems( [ item ] );
+			}
+		} );
+	};
+
+	/**
+	 * Undo any changes that have been made in any of the items.
+	 *
+	 * @return {jQuery.Promise}
+	 */
+	statements.DepictsWidget.prototype.reset = function () {
+		this.getItems().forEach( function ( item ) {
+			item.setEditing( false );
+		} );
+
+		this.setData( this.data );
+
+		return $.Deferred().resolve().promise();
 	};
 
 	/**
@@ -88,26 +126,29 @@
 	 * @return {jQuery.Promise}
 	 */
 	statements.DepictsWidget.prototype.submit = function ( baseRevId ) {
-		var api = new mw.Api(),
-			promise = $.Deferred().resolve( { pageinfo: { lastrevid: baseRevId } } ).promise(),
-			callable = function ( statement, baseRevId ) {
+		var self = this,
+			api = new mw.Api(),
+			promise = $.Deferred().resolve( { pageinfo: { lastrevid: baseRevId } } ).promise();
+
+		this.getItems().forEach( function ( item ) {
+			promise = promise.then( function ( item, prevResponse ) {
+				item.setEditing( false );
 				return api.postWithEditToken( {
 					action: 'wbsetclaim',
 					format: 'json',
-					claim: JSON.stringify( statement ),
-					baserevid: baseRevId,
+					claim: JSON.stringify( item.getData() ),
+					// fetch the previous response's rev id and feed it to the next
+					baserevid: prevResponse.pageinfo ? prevResponse.pageinfo.lastrevid : undefined,
 					bot: 1,
 					assertuser: !mw.user.isAnon() ? mw.user.getName() : undefined
 				} );
-			};
+			}.bind( null, item ) );
+		} );
 
-		this.getData().forEach( function ( statement ) {
-			promise = promise
-				// fetch the previous response's rev id and feed it to the next
-				.then( function ( response ) {
-					return response.pageinfo ? response.pageinfo.lastrevid : undefined;
-				} )
-				.then( callable.bind( null, statement ) );
+		// store data after we've successfully submitted all changes, so that we'll
+		// reset to the actual most recent correct state
+		promise.then( function () {
+			self.data = self.getData();
 		} );
 
 		return promise;

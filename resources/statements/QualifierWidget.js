@@ -2,25 +2,36 @@
 
 	'use strict';
 
+	/**
+	 * @constructor
+	 * @param {Object} config Configuration options
+	 * @param {Array} [config.properties] Properties data: array of { id: x, label: x, input: x } data
+	 */
 	statements.QualifierWidget = function MediaInfoStatementsQualifierWidget( config ) {
 		statements.QualifierWidget.parent.call( this, config );
+		statements.FormatValueElement.call( this, $.extend( {}, config ) );
 
 		this.propertiesData = config.properties || { '': { id: '', label: '', input: 'string' } };
+
+		this.valueWidget = new OO.ui.Widget( { classes: [ 'wbmi-qualifier-value' ] } );
 
 		this.removeIcon = new OO.ui.ButtonWidget( { classes: [ 'wbmi-qualifier-remove' ], framed: false, icon: 'close' } );
 		this.removeIcon.connect( this, { click: [ 'emit', 'delete' ] } );
 
 		this.propertyDropdown = new OO.ui.DropdownWidget();
 		this.propertyDropdown.menu.connect( this, { select: 'populateValueInput' } );
+		this.propertyDropdown.menu.connect( this, { select: 'updateValueWidget' } );
 		this.propertyDropdown.menu.connect( this, { select: [ 'emit', 'change' ] } );
 
 		this.valueInput = new statements.QualifierValueInputWidget();
+		this.valueInput.connect( this, { change: 'updateValueWidget' } );
 		this.valueInput.connect( this, { change: [ 'emit', 'change' ] } );
 		// disable - will be enabled once a property has been selected
 		this.valueInput.setDisabled( true );
 
 		this.layout = new OO.ui.HorizontalLayout( {
 			items: [
+				this.valueWidget,
 				this.propertyDropdown,
 				this.valueInput,
 				this.removeIcon
@@ -33,6 +44,7 @@
 		this.$element = this.layout.$element;
 	};
 	OO.inheritClass( statements.QualifierWidget, OO.ui.Widget );
+	OO.mixinClass( statements.QualifierWidget, statements.FormatValueElement );
 
 	/**
 	 * @return {Object}
@@ -54,6 +66,29 @@
 		this.populatePropertiesDropdown();
 		this.propertyDropdown.getMenu().selectItemByData( data.property );
 		this.valueInput.setData( data.datavalue );
+
+		this.updateValueWidget();
+	};
+
+	/**
+	 * @return {jQuery.Promise}
+	 */
+	statements.QualifierWidget.prototype.updateValueWidget = function () {
+		var self = this,
+			data = this.getData();
+
+		return this.formatValue( data.datavalue, 'text/plain' ).then( function ( response ) {
+			var propertyKey = Object.keys( self.propertiesData ).filter( function ( key ) {
+					return self.propertiesData[ key ].id === data.property;
+				} )[ 0 ],
+				propertyData = self.propertiesData[ propertyKey ];
+
+			self.valueWidget.$element.text(
+				mw.message( propertyData.label ).text() + // @todo there's a better way... (e.g. formatting actual value)
+				mw.message( 'colon-separator' ).text() +
+				response.result
+			);
+		} );
 	};
 
 	statements.QualifierWidget.prototype.populatePropertiesDropdown = function () {
@@ -77,7 +112,7 @@
 			self.propertyDropdown.menu.addItems( [
 				new OO.ui.MenuOptionWidget( {
 					data: data.id,
-					label: mw.message( data.label ).text()
+					label: mw.message( data.label ).text() // @todo there's a better way... (e.g. formatting actual value)
 				} )
 			] );
 		} );

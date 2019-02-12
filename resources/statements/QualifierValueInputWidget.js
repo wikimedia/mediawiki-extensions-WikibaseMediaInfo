@@ -33,25 +33,30 @@
 		}
 
 		this.type = type;
+		this.value = {};
 
 		switch ( type ) {
 			case 'wikibase-entityid':
 				this.input = new statements.EntityInputWidget( this.config );
+				this.input.connect( this, { dataChange: 'onValueChange' } );
+				this.input.connect( this, { dataChange: [ 'emit', 'change' ] } );
+				this.input.connect( this, { enter: [ 'emit', 'enter' ] } );
 				break;
 			case 'quantity':
 				this.input = new OO.ui.NumberInputWidget( this.config );
+				this.input.connect( this, { change: 'onValueChange' } );
+				this.input.connect( this, { change: [ 'emit', 'change' ] } );
+				this.input.connect( this, { enter: [ 'emit', 'enter' ] } );
 				break;
 			case 'string':
 				this.input = new OO.ui.TextInputWidget( this.config );
+				this.input.connect( this, { change: 'onValueChange' } );
+				this.input.connect( this, { change: [ 'emit', 'change' ] } );
+				this.input.connect( this, { enter: [ 'emit', 'enter' ] } );
 				break;
 			default:
 				throw new Error( 'Unsupported qualifier input value type: ' + type );
 		}
-
-		this.input.connect( this, {
-			change: [ 'emit', 'change' ],
-			enter: [ 'emit', 'enter' ]
-		} );
 
 		// add the new element
 		this.$element.append( this.input.$element );
@@ -62,17 +67,15 @@
 	/**
 	 * @return {Object}
 	 */
-	statements.QualifierValueInputWidget.prototype.getData = function () {
-		var data = { type: this.type };
-
+	statements.QualifierValueInputWidget.prototype.onValueChange = function () {
 		switch ( this.type ) {
 			case 'wikibase-entityid':
-				data.value = {
+				this.value = {
 					id: this.input.getData()
 				};
 				break;
 			case 'quantity':
-				data.value = {
+				this.value = {
 					// add leading '+' if no unit is present already
 					amount: this.input.getValue().replace( /^(?![+-])/, '+' ),
 					// @todo not currently required, but we might need to implement support
@@ -81,11 +84,19 @@
 				};
 				break;
 			case 'string':
-				data.value = this.input.getValue();
+				this.value = this.input.getValue();
 				break;
 		}
+	};
 
-		return data;
+	/**
+	 * @return {Object}
+	 */
+	statements.QualifierValueInputWidget.prototype.getData = function () {
+		return {
+			type: this.type,
+			value: this.value
+		};
 	};
 
 	/**
@@ -97,6 +108,8 @@
 
 		this.setInputType( data.type );
 		this.setDisabled( false );
+
+		this.value = data.value;
 
 		this.formatValue( data, 'text/plain' ).then( function ( response ) {
 			self.input.setValue( response.result );

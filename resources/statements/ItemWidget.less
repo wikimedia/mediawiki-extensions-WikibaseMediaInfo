@@ -11,17 +11,33 @@
 		color: #36c;
 	}
 
+	width: 100%;
+	display: inline-block;
+}
+
+.wbmi-item-edit .wbmi-item-container {
 	// preserve some space for the delete icon/button
 	// 2px = 2x 1px of border
 	// 35px = the width of the delete icon
 	// (escaped to prevent LESS from incorrectly calculating)
 	width: ~'calc( 100% - 2px - 35px )';
-	display: inline-block;
+}
+
+// read-mode adjustments
+.wbmi-item-read {
+	.wbmi-item-container {
+		border: 1px solid #fff;
+	}
+
+	.wbmi-item-content {
+		background-color: #f8f9fa;
+		padding-top: 0;
+	}
 }
 
 .wbmi-entity-title {
-	background-color: #f8f9fa;
 	padding: 15px;
+	background-color: #f8f9fa;
 }
 
 h4.wbmi-entity-label {
@@ -63,24 +79,37 @@ h4.wbmi-entity-label {
 	}
 }
 
-.wbmi-item-content {
-	padding: 15px;
-	padding-bottom: 10px;
+/*
+ * Show and hide the textual values (read mode), or the properties dropdown &
+ * value input field (edit) depending on the mode we're in.
+ */
+.wbmi-item-read .wbmi-qualifier > *:not( .wbmi-qualifier-value ),
+.wbmi-item-edit .wbmi-qualifier > .wbmi-qualifier-value {
+	/* stylelint-disable-next-line declaration-no-important */
+	display: none !important;
+}
 
-	.wbmi-qualifier-read {
+.wbmi-item {
+	.wbmi-qualifier > .wbmi-qualifier-value {
 		line-height: 30px;
+		margin-bottom: 0;
 	}
 
-	// some messing around to get those quirky little leading lines to show
-	// below block will draw a vertical line that starts inside the title box
-	// down to the end of this content node, at 10px from the left border
-	position: relative;
-	&:before {
-		content: ' ';
-		position: absolute;
-		border-left: 1px solid #979797;
-		top: -5px;
-		bottom: 25px; // 10px padding-bottom + 15px margin-bottom of that last element
+	.wbmi-item-content {
+		padding: 15px;
+		padding-bottom: 10px;
+
+		// some messing around to get those quirky little leading lines to show
+		// below block will draw a vertical line that starts inside the title box
+		// down to the end of this content node, at 10px from the left border
+		position: relative;
+		&:before {
+			content: ' ';
+			position: absolute;
+			border-left: 1px solid #979797;
+			top: -5px;
+			bottom: 25px; // 10px padding-bottom + 15px margin-bottom of that last element
+		}
 	}
 
 	// this block adds leading lines starting at the vertical line we just drew
@@ -99,7 +128,7 @@ h4.wbmi-entity-label {
 		margin-bottom: 0.3em;
 	}
 
-	.wbmi-qualifier-read:last-child:before,
+	&.wbmi-item-read .wbmi-qualifier:last-child:before,
 	.wbmi-item-qualifier-add:last-child:before {
 		// ...HOWEVER! the very last element (the 'add qualifier' button) should
 		// not have a middle-aligned line: we need a fixed, deterministic end

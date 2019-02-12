@@ -31,7 +31,7 @@
 	"wikibasemediainfo-filepage-statement-some-value": "Text to display when a statement has an explicit 'SOME VALUE' value.",
 	"wikibasemediainfo-filepage-statement-error": "Text to display when a statement has a wrong kind of value; should never occur.",
 	"wikibasemediainfo-filepage-license-title": "Title for dialog with licensing instructions",
-	"wikibasemediainfo-filepage-license-content": "Text for dialog with licensing instructions",
+	"wikibasemediainfo-filepage-license-content": "Text for dialog with licensing instructions, indicating consent when clicking {{msg-mw|wikibasemediainfo-filepage-publish}}",
 	"wikibasemediainfo-filepage-license-content-acceptance": "Text to indicate user accepts licensing & no longer wants to see these instructions in the future",
 	"wikibasemediainfo-filepage-license-accept": "Text for accept button",
 	"wikibasemediainfo-filepage-license-cancel": "Text for cancel button",

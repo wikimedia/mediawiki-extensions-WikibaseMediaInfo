@@ -7,6 +7,8 @@
 	"wikibase-entity-mediainfo": "Medieninformatiounen",
 	"wikibasemediainfo-desc": "Wikibase-Erweiderung fir déi strukturéiert Meta-Donnéeë vu Medie-Fichieren zegeréieren",
 	"wikibasemediainfo-filepage-cancel": "Ofbriechen",
+	"wikibasemediainfo-filepage-license-accept": "Akzeptéieren",
+	"wikibasemediainfo-filepage-license-cancel": "Ofbriechen",
 	"wikibasemediainfo-statements-item-input-label": "vu Wikidata",
 	"wikibasemediainfo-statements-item-is-primary": "Primär",
 	"wikibasemediainfo-statements-item-remove": "Ewechhuelen",

@@ -126,7 +126,8 @@ return [
 				$defaultPropertyIdsForView,
 				$wbRepo->getSnakFormatterFactory(),
 				$wbRepo->getValueFormatterFactory(),
-				$wbRepo->getStatementSerializer()
+				$wbRepo->getCompactBaseDataModelSerializerFactory(),
+				$languageCode
 			);
 
 			return new MediaInfoView(

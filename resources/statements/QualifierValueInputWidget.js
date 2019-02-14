@@ -111,8 +111,8 @@
 
 		this.value = data.value;
 
-		this.formatValue( data, 'text/plain' ).then( function ( response ) {
-			self.input.setValue( response.result );
+		this.formatValue( data, 'text/plain' ).then( function ( plain ) {
+			self.input.setValue( plain );
 
 			if ( data.type === 'wikibase-entityid' ) {
 				// entities widget will need to be aware of the id that is associated

@@ -9,10 +9,11 @@ use OOUI\PanelLayout;
 use OOUI\Tag;
 use OutputPage;
 use ValueFormatters\FormatterOptions;
+use ValueFormatters\ValueFormatter;
 use Wikibase\DataModel\Entity\EntityId;
 use Wikibase\DataModel\Entity\EntityIdValue;
 use Wikibase\DataModel\Entity\PropertyId;
-use Wikibase\DataModel\Serializers\StatementSerializer;
+use Wikibase\DataModel\SerializerFactory;
 use Wikibase\DataModel\Snak\PropertyValueSnak;
 use Wikibase\DataModel\Snak\Snak;
 use Wikibase\DataModel\Snak\SnakList;
@@ -35,10 +36,12 @@ class MediaInfoEntityStatementsView {
 
 	private $propertyOrderProvider;
 	private $textProvider;
+	private $entityTitleLookup;
 	private $defaultPropertyIds;
 	private $snakFormatterFactory;
 	private $valueFormatterFactory;
-	private $statementSerializer;
+	private $serializerFactory;
+	private $languageCode;
 
 	const EMPTY_DEFAULT_PROPERTY_PLACEHOLDER = 'EMPTY_DEFAULT_PROPERTY_PLACEHOLDER';
 
@@ -51,7 +54,8 @@ class MediaInfoEntityStatementsView {
 	 * 	we don't have values for them
 	 * @param OutputFormatSnakFormatterFactory $snakFormatterFactory
 	 * @param OutputFormatValueFormatterFactory $valueFormatterFactory
-	 * @param StatementSerializer $statementSerializer
+	 * @param SerializerFactory $serializerFactory
+	 * @param string $languageCode
 	 */
 	public function __construct(
 		PropertyOrderProvider $propertyOrderProvider,
@@ -60,7 +64,8 @@ class MediaInfoEntityStatementsView {
 		array $defaultPropertyIds,
 		OutputFormatSnakFormatterFactory $snakFormatterFactory,
 		OutputFormatValueFormatterFactory $valueFormatterFactory,
-		StatementSerializer $statementSerializer
+		SerializerFactory $serializerFactory,
+		$languageCode
 	) {
 		OutputPage::setupOOUI();
 
@@ -70,7 +75,8 @@ class MediaInfoEntityStatementsView {
 		$this->defaultPropertyIds = $defaultPropertyIds;
 		$this->snakFormatterFactory = $snakFormatterFactory;
 		$this->valueFormatterFactory = $valueFormatterFactory;
-		$this->statementSerializer = $statementSerializer;
+		$this->serializerFactory = $serializerFactory;
+		$this->languageCode = $languageCode;
 	}
 
 	/**
@@ -98,13 +104,72 @@ class MediaInfoEntityStatementsView {
 		return 'wbmi-entityview-statementsGroup-' . str_replace( ':', '_', $propertyIdString );
 	}
 
+	/**
+	 * @param Statement $statement
+	 * @return array
+	 */
+	private function getFormatValueCache( Statement $statement ) {
+		$result = [];
+		$formats = [];
+
+		// gather a list of snaks that we'll want to pre-format
+		$formats['text/html'][] = $statement->getMainSnak();
+		$formats['text/plain'][] = $statement->getMainSnak();
+		foreach ( $statement->getQualifiers() as $qualifier ) {
+			$formats['text/plain'][] = $qualifier;
+		}
+
+		$snakSerializer = $this->serializerFactory->newSnakSerializer();
+
+		foreach ( $formats as $format => $snaks ) {
+			foreach ( $snaks as $snak ) {
+				$serialized = $snakSerializer->serialize( $snak );
+				if ( isset( $serialized['datavalue'] ) ) {
+					$data = json_encode( $serialized[ 'datavalue' ] );
+					$result[$data][$format][$this->languageCode] = $this->formatSnak(
+						$snak,
+						$format,
+						$this->languageCode
+					);
+				}
+			}
+		}
+
+		return $result;
+	}
+
+	/**
+	 * @param Snak $snak
+	 * @param string $format
+	 * @param string $language
+	 * @return string
+	 */
+	private function formatSnak( Snak $snak, $format, $language ) {
+		$formatter = $this->snakFormatterFactory->getSnakFormatter(
+			$format,
+			new FormatterOptions( [ ValueFormatter::OPT_LANG => $language ] )
+		);
+
+		return $formatter->formatSnak( $snak );
+	}
+
+	/**
+	 * @param string $propertyIdString
+	 * @param Statement[] $statements
+	 * @return PanelLayout
+	 */
 	private function getLayoutForProperty( $propertyIdString, array $statements ) {
+		$statementSerializer = $this->serializerFactory->newStatementSerializer();
+
 		$serializedStatements = [];
+		$formatValueCache = [];
+
 		$itemsGroupDiv = new Tag( 'div' );
 		$itemsGroupDiv->addClasses( [ 'wbmi-content-items-group' ] );
 		foreach ( $statements as $statement ) {
 			$itemsGroupDiv->appendContent( $this->createStatementDiv( $statement ) );
-			$serializedStatements[] = $this->statementSerializer->serialize( $statement );
+			$serializedStatements[] = $statementSerializer->serialize( $statement );
+			$formatValueCache += $this->getFormatValueCache( $statement );
 		}
 
 		$panel = new PanelLayout( [
@@ -123,7 +188,8 @@ class MediaInfoEntityStatementsView {
 		] );
 		$panel->setAttributes(
 			[
-				'data-statements' => json_encode( $serializedStatements )
+				'data-statements' => json_encode( $serializedStatements ),
+				'data-formatvalue' => json_encode( $formatValueCache ),
 			]
 		);
 		return $panel;

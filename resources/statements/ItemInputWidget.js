@@ -38,9 +38,9 @@
 	statements.ItemInputWidget.prototype.setData = function ( data ) {
 		if ( data.value && data.value.id ) {
 			var self = this;
-			this.data = data;
-			this.formatValue( data, 'text/plain' ).then( function ( response ) {
-				self.setValue( response.result );
+			this.formatValue( data, 'text/plain' ).then( function ( plain ) {
+				self.data = data;
+				self.setValue( plain );
 			} );
 		} else {
 			this.data = undefined;

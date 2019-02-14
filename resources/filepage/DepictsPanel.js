@@ -14,7 +14,6 @@
 	 */
 	sd.DepictsPanel = function DepictsPanel( config ) {
 		this.config = config || {};
-		this.data = {};
 
 		// Parent constructor
 		sd.DepictsPanel.super.apply( this, arguments );
@@ -24,7 +23,6 @@
 
 		this.api = wb.api.getLocationAgnosticMwApi( mw.config.get( 'wbRepoApiUrl' ) );
 		this.contentSelector = '.' + this.config.contentClass;
-		this.currentRevision = mw.config.get( 'wbCurrentRevision' );
 
 		this.licenseDialogWidget = new sd.LicenseDialogWidget();
 
@@ -46,6 +44,8 @@
 
 		this.depictsInput = new st.DepictsWidget( this.config );
 		this.depictsInput.connect( this, { 'manual-add': 'makeEditable' } );
+
+		this.currentRevision = mw.config.get( 'wbCurrentRevision' );
 	};
 
 	/* Inheritance */
@@ -107,7 +107,9 @@
 		this.editToggle.$element.show();
 		this.$depictsPropertyLink.show();
 
-		this.depictsInput.submit();
+		this.depictsInput.submit( this.currentRevision ).then( function ( response ) {
+			self.currentRevision = response.pageinfo.lastrevid;
+		} );
 	};
 
 }( mw.mediaInfo.structuredData, wikibase, mw.mediaInfo.statements ) );

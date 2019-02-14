@@ -329,7 +329,11 @@
 
 		// disable publishing first, and only re-enable if/once all checks have cleared
 		captionsPanel.editActionsWidget.disablePublish();
-		$.when.apply( null, checks ).then( captionsPanel.editActionsWidget.enablePublish.bind( captionsPanel.editActionsWidget ) );
+		$.when.apply( null, checks ).then(
+			captionsPanel.editActionsWidget.enablePublish.bind(
+				captionsPanel.editActionsWidget
+			)
+		);
 	};
 
 	sd.CaptionsPanel.prototype.createRowDeleter = function ( $row ) {
@@ -760,7 +764,10 @@
 
 		// show dialog informing user of licensing & store the returned promise
 		// in licenseAcceptance - submit won't be possible until dialog is closed
-		this.licenseAcceptance = this.licenseDialogWidget.getConfirmation().always( captionsPanel.refreshPublishState.bind( captionsPanel ) );
+		this.licenseAcceptance =
+			this.licenseDialogWidget.getConfirmation().always(
+				captionsPanel.refreshPublishState.bind( captionsPanel )
+			);
 
 		// Set the target pending element to the layout box
 		this.$pending = $( '.' + this.config.headerClass ).parent();

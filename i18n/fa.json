@@ -2,7 +2,8 @@
 	"@metadata": {
 		"authors": [
 			"Reza1615",
-			"درفش کاویانی"
+			"درفش کاویانی",
+			"Amirsara"
 		]
 	},
 	"wikibase-entity-mediainfo": "اطلاعات رسانه",
@@ -12,5 +13,7 @@
 	"wikibasemediainfo-filepage-add-caption": "افزودن یک توضیح",
 	"wikibasemediainfo-filepage-edit-captions": "ویرایش توضیحات",
 	"wikibasemediainfo-filepage-cancel": "لغو",
-	"wikibasemediainfo-filepage-publish": "انتشار تغییرات"
+	"wikibasemediainfo-filepage-publish": "انتشار تغییرات",
+	"wikibasemediainfo-filepage-license-accept": "پذیرفتن",
+	"wikibasemediainfo-filepage-license-cancel": "لغو"
 }

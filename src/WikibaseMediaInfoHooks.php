@@ -319,6 +319,7 @@ class WikibaseMediaInfoHooks {
 				new EntityInfo( [] )
 			);
 			$structuredDataHtml = $view->getContent( $emptyMediaInfo )->getHtml();
+
 			// Strip out the surrounding <mw:mediainfoView> tag
 			$structuredDataHtml = preg_replace(
 				self::getMediaInfoViewRegex(),
@@ -327,8 +328,8 @@ class WikibaseMediaInfoHooks {
 			);
 		}
 
-		return preg_replace(
-			'/<div class="mw-parser-output">/',
+		return str_replace(
+			'<div class="mw-parser-output">',
 			'<div class="mw-parser-output">' . $structuredDataHtml,
 			$text
 		);

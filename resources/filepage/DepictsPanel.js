@@ -53,23 +53,28 @@
 	OO.mixinClass( sd.DepictsPanel, OO.ui.mixin.PendingElement );
 
 	sd.DepictsPanel.prototype.initialize = function () {
-		// Only allow editing if we're NOT on a diff page or viewing an older revision
-		// eslint-disable-next-line jquery/no-global-selector
-		if ( $( '.diff' ).length === 0 && $( '.mw-revision' ).length === 0 ) {
-
-			this.editToggle.$element.insertAfter( this.$depictsPropertyLink );
-			this.cancelPublish.$element.insertAfter( this.$depictsPropertyLink );
-			this.cancelPublish.hide();
-
-			// Detach the pre-rendered depicts data from the DOM
-			$( this.contentSelector ).children( ':not(.' + this.config.headerClass + ')' ).detach();
-			// ... and load data into js widget instead
-			this.depictsInput.setData(
-				JSON.parse( $( this.contentSelector ).attr( 'data-statements' ) )
-			);
-
-			$( this.depictsInput.$element ).insertAfter( this.headerSelector );
+		if (
+			// Exit if there's no statements block on the page (e.g. if it's feature-flagged off)
+			$( this.contentSelector ).length === 0 ||
+			// Only allow editing if we're NOT on a diff page or viewing an older revision
+			// eslint-disable-next-line jquery/no-global-selector
+			$( '.diff' ).length !== 0 || $( '.mw-revision' ).length !== 0
+		) {
+			return;
 		}
+
+		this.editToggle.$element.insertAfter( this.$depictsPropertyLink );
+		this.cancelPublish.$element.insertAfter( this.$depictsPropertyLink );
+		this.cancelPublish.hide();
+
+		// Detach the pre-rendered depicts data from the DOM
+		$( this.contentSelector ).children( ':not(.' + this.config.headerClass + ')' ).detach();
+		// ... and load data into js widget instead
+		this.depictsInput.setData(
+			JSON.parse( $( this.contentSelector ).attr( 'data-statements' ) )
+		);
+
+		$( this.depictsInput.$element ).insertAfter( this.headerSelector );
 	};
 
 	sd.DepictsPanel.prototype.makeEditable = function () {

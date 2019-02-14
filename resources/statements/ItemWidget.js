@@ -73,7 +73,7 @@
 
 	statements.ItemWidget.prototype.renderInternal = function () {
 		var self = this,
-			id = this.value.value.id,
+			id = this.value.value.id || '',
 			repo = id.indexOf( ':' ) >= 0 ? id.replace( /:.+$/, '' ) : '',
 			$label = $( '<h4>' )
 				.addClass( 'wbmi-entity-label' )

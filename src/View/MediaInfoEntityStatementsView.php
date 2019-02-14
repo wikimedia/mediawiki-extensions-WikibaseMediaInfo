@@ -90,6 +90,7 @@ class MediaInfoEntityStatementsView {
 		foreach ( $panels as $panel ) {
 			$html .= $panel->toString();
 		}
+
 		return $html;
 	}
 

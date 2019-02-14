@@ -85,8 +85,15 @@
 		this.clearItems();
 
 		this.data.forEach( function ( data ) {
-			var widget = self.addItem( data.mainsnak.datavalue );
-			widget.setData( data );
+			var widget;
+			// let's be sure that we actually have an item here...
+			if (
+				data.mainsnak.datavalue.value && data.mainsnak.datavalue.value !==
+				'EMPTY_DEFAULT_PROPERTY_PLACEHOLDER'
+			) {
+				widget = self.addItem( data.mainsnak.datavalue );
+				widget.setData( data );
+			}
 		} );
 	};
 
@@ -128,15 +135,19 @@
 	statements.DepictsWidget.prototype.submit = function ( baseRevId ) {
 		var self = this,
 			api = new mw.Api(),
-			promise = $.Deferred().resolve( { pageinfo: { lastrevid: baseRevId } } ).promise();
+			promise = $.Deferred().resolve( { pageinfo: { lastrevid: baseRevId } } ).promise(),
+			sentStatementIds = [],
+			removeIds = [];
 
 		this.getItems().forEach( function ( item ) {
+			var data = item.getData();
+			sentStatementIds.push( data.id );
 			promise = promise.then( function ( item, prevResponse ) {
 				item.setEditing( false );
 				return api.postWithEditToken( {
 					action: 'wbsetclaim',
 					format: 'json',
-					claim: JSON.stringify( item.getData() ),
+					claim: JSON.stringify( data ),
 					// fetch the previous response's rev id and feed it to the next
 					baserevid: prevResponse.pageinfo ? prevResponse.pageinfo.lastrevid : undefined,
 					bot: 1,
@@ -144,6 +155,28 @@
 				} );
 			}.bind( null, item ) );
 		} );
+
+		// Delete removed items
+		removeIds = this.data
+			.map( function ( item ) {
+				return item.id;
+			} )
+			.filter( function ( id ) {
+				return sentStatementIds.indexOf( id ) < 0;
+			} );
+		if ( removeIds.length > 0 ) {
+			promise = promise.then( function ( prevResponse ) {
+				return api.postWithEditToken( {
+					action: 'wbremoveclaims',
+					format: 'json',
+					claim: removeIds.join( '|' ),
+					// fetch the previous response's rev id and feed it to the next
+					baserevid: prevResponse.pageinfo ? prevResponse.pageinfo.lastrevid : undefined,
+					bot: 1,
+					assertuser: !mw.user.isAnon() ? mw.user.getName() : undefined
+				} );
+			} );
+		}
 
 		// store data after we've successfully submitted all changes, so that we'll
 		// reset to the actual most recent correct state

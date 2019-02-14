@@ -5,7 +5,7 @@
 	/**
 	 * @constructor
 	 * @param {Object} config Configuration options
-	 * @param {Array} [config.properties] Properties data: array of { id: x, label: x, input: x } data
+	 * @param {Array} [config.properties] Properties data: [ { id: x, label: x, input: x }, ... ]
 	 */
 	statements.QualifierWidget = function MediaInfoStatementsQualifierWidget( config ) {
 		statements.QualifierWidget.parent.call( this, config );
@@ -84,7 +84,8 @@
 				propertyData = self.propertiesData[ propertyKey ];
 
 			self.valueWidget.$element.text(
-				mw.message( propertyData.label ).text() + // @todo there's a better way... (e.g. formatting actual value)
+				// @todo there's a better way... (e.g. formatting actual value)
+				mw.message( propertyData.label ).text() +
 				mw.message( 'colon-separator' ).text() +
 				response.result
 			);
@@ -112,7 +113,8 @@
 			self.propertyDropdown.menu.addItems( [
 				new OO.ui.MenuOptionWidget( {
 					data: data.id,
-					label: mw.message( data.label ).text() // @todo there's a better way... (e.g. formatting actual value)
+					// @todo there's a better way... (e.g. formatting actual value)
+					label: mw.message( data.label ).text()
 				} )
 			] );
 		} );

@@ -62,7 +62,9 @@
 		Object.keys( data ).map( function ( dataValue ) {
 			Object.keys( data[ dataValue ] ).map( function ( format ) {
 				Object.keys( data[ dataValue ][ format ] ).map( function ( language ) {
-					var key = st.FormatValueElement.getKey( JSON.parse( dataValue ), format, language ),
+					var key = st.FormatValueElement.getKey(
+							JSON.parse( dataValue ), format, language
+						),
 						result = data[ dataValue ][ format ][ language ];
 					st.FormatValueElement.toCache( key, result );
 				} );

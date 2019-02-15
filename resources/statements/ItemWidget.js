@@ -38,13 +38,16 @@
 		} );
 		this.removeButton.connect( this, { click: [ 'emit', 'delete' ] } );
 
-		this.addQualifierButton = new OO.ui.ButtonWidget( {
-			classes: [ 'wbmi-item-qualifier-add' ],
-			label: mw.message( 'wikibasemediainfo-statements-item-add-qualifier' ).text(),
-			flags: 'progressive',
-			framed: false
-		} );
-		this.addQualifierButton.connect( this, { click: [ 'addQualifier' ] } );
+		this.showQualifiers = mw.config.get( 'wbmiShowQualifiers' );
+		if ( this.showQualifiers ) {
+			this.addQualifierButton = new OO.ui.ButtonWidget( {
+				classes: [ 'wbmi-item-qualifier-add' ],
+				label: mw.message( 'wikibasemediainfo-statements-item-add-qualifier' ).text(),
+				flags: 'progressive',
+				framed: false
+			} );
+			this.addQualifierButton.connect( this, { click: [ 'addQualifier' ] } );
+		}
 
 		this.render();
 	};
@@ -102,7 +105,8 @@
 					e.preventDefault();
 					self.rank = self.rank === 'preferred' ? 'normal' : 'preferred';
 					self.render();
-				} );
+				} ),
+			itemContainer = $( '<div>' ).addClass( 'wbmi-item-container' );
 
 		this.$element.toggleClass( 'wbmi-item-edit', this.editing );
 		this.$element.toggleClass( 'wbmi-item-read', !this.editing );
@@ -110,25 +114,32 @@
 		// before we wipe out & re-build this entire thing, detach a few nodes that
 		// we'll be re-using...
 		this.$group.detach();
-		this.addQualifierButton.$element.detach();
 		this.removeButton.$element.detach();
 		this.$element.empty();
 
-		this.$element.append(
-			$( '<div>' ).addClass( 'wbmi-item-container' ).append(
-				$( '<div>' ).addClass( 'wbmi-entity-title' ).append(
-					$label,
-					$( '<div>' )
-						.addClass( 'wbmi-entity-label-extra' )
-						.html( '&bull;' )
-						.prepend( $link )
-						.append( $makePrimary )
-				),
+		itemContainer.append(
+			$( '<div>' ).addClass( 'wbmi-entity-title' ).append(
+				$label,
+				$( '<div>' )
+					.addClass( 'wbmi-entity-label-extra' )
+					.html( '&bull;' )
+					.prepend( $link )
+					.append( $makePrimary )
+			)
+		);
+
+		if ( this.showQualifiers ) {
+			this.addQualifierButton.$element.detach();
+			itemContainer.append(
 				$( '<div>' ).addClass( 'wbmi-item-content' ).append(
 					this.$group,
 					this.editing ? this.addQualifierButton.$element : undefined
 				)
-			),
+			);
+		}
+
+		this.$element.append(
+			itemContainer,
 			this.editing ? this.removeButton.$element : undefined
 		);
 	};

@@ -46,6 +46,9 @@
 				}
 			},
 			"merge_strategy": "array_plus_2d"
+		},
+		"MediaInfoShowQualifiers": {
+			"value": true
 		}
 	},
 	"ServiceWiringFiles": [

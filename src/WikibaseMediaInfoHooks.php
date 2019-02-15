@@ -162,7 +162,8 @@ class WikibaseMediaInfoHooks {
 	 */
 	public static function onBeforePageDisplay( $out, $skin ) {
 		global $wgDepictsQualifierProperties,
-			$wgMediaInfoProperties;
+			$wgMediaInfoProperties,
+			$wgMediaInfoShowQualifiers;
 
 		// Hide any MediaInfo content and UI on a page, if either …
 		if (
@@ -198,7 +199,8 @@ class WikibaseMediaInfoHooks {
 			new BabelUserLanguageLookup(),
 			WikibaseRepo::getDefaultInstance()->getEntityViewFactory(),
 			$wgDepictsQualifierProperties,
-			$wgMediaInfoProperties
+			$wgMediaInfoProperties,
+			$wgMediaInfoShowQualifiers
 		);
 	}
 
@@ -217,6 +219,7 @@ class WikibaseMediaInfoHooks {
 	 * 		]
 	 * 	]
 	 * @param array $properties Property details (id, label and url)
+	 * @param bool $showQualifiers Feature flag for showing qualifiers for MediaInfo statements
 	 */
 	public function doBeforePageDisplay(
 		$out,
@@ -225,7 +228,8 @@ class WikibaseMediaInfoHooks {
 		UserLanguageLookup $userLanguageLookup,
 		DispatchingEntityViewFactory $entityViewFactory,
 		array $depictsQualifierProperties,
-		array $properties
+		array $properties,
+		$showQualifiers
 	) {
 		// Site-wide config
 		$modules = [];
@@ -233,6 +237,7 @@ class WikibaseMediaInfoHooks {
 		$jsConfigVars = [
 			'wbmiDepictsQualifierProperties' => $depictsQualifierProperties,
 			'wbmiProperties' => $properties,
+			'wbmiShowQualifiers' => $showQualifiers,
 		];
 
 		if ( $isMediaInfoPage ) {

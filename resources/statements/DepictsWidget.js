@@ -12,6 +12,7 @@
 		OO.ui.mixin.GroupElement.call( this );
 
 		this.entityId = config.entityId;
+		this.data = [];
 
 		this.input = new statements.ItemInputWidget( { classes: [ 'wbmi-depicts-input' ] } );
 		this.input.connect( this, { choose: 'addItemFromInput' } );

@@ -127,7 +127,10 @@ return [
 				$wbRepo->getSnakFormatterFactory(),
 				$wbRepo->getValueFormatterFactory(),
 				$wbRepo->getCompactBaseDataModelSerializerFactory(),
-				$languageCode
+				$languageCode,
+				MediaWikiServices::getInstance()
+					->getMainConfig()
+					->get( 'MediaInfoShowQualifiers' )
 			);
 
 			return new MediaInfoView(

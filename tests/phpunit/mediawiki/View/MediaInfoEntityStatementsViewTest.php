@@ -164,7 +164,8 @@ class MediaInfoEntityStatementsViewTest extends \PHPUnit\Framework\TestCase {
 			$this->snakFormatterFactory,
 			$this->valueFormatterFactory,
 			$this->serializerFactory,
-			'en'
+			'en',
+			true
 		);
 		$html = $sut->getHtml(
 			new MediaInfo( null, null, null, $statementList )
@@ -185,6 +186,62 @@ class MediaInfoEntityStatementsViewTest extends \PHPUnit\Framework\TestCase {
 			),
 			$html
 		);
+	}
+
+	/**
+	 * @dataProvider provideStatementList
+	 * @param StatementList $statementList
+	 */
+	public function testGetHtml_noQualifiers( StatementList $statementList ) {
+		$this->createDependencies();
+
+		$orderProvider = $this->getMockBuilder( PropertyOrderProvider::class )
+			->disableOriginalConstructor()
+			->getMock();
+		$orderProvider->method( 'getPropertyOrder' )
+			->willReturn( [
+				'P888' => 1,
+				'P999' => 2,
+				'P777' => 3,
+				'P555' => 4,
+				'P666' => 5,
+				'P444' => 6,
+				'P333' => 7
+			] );
+
+		$sut = new MediaInfoEntityStatementsView(
+			$orderProvider,
+			$this->textProvider,
+			$this->entityTitleLookup,
+			[ new PropertyId( 'P1' ) ],
+			$this->snakFormatterFactory,
+			$this->valueFormatterFactory,
+			$this->serializerFactory,
+			'en',
+			false
+		);
+		$html = $sut->getHtml(
+			new MediaInfo( null, null, null, $statementList )
+		);
+
+		$sortedStatementList = $this->sortStatementList( $statementList, $orderProvider );
+
+		$this->assertRegExp( $this->getPropertyIdRegex( $sortedStatementList ), $html );
+		$this->assertRegExp(
+			$this->getMainSnakValueRegex(
+				$sortedStatementList
+			),
+			$html
+		);
+		$qualifiersRegex = $this->getQualifiersRegex( $sortedStatementList );
+		if ( $qualifiersRegex != '//' ) {
+			$this->assertNotRegExp(
+				$this->getQualifiersRegex(
+					$sortedStatementList
+				),
+				$html
+			);
+		}
 	}
 
 	/**

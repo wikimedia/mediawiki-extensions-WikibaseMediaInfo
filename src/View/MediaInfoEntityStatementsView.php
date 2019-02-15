@@ -42,6 +42,7 @@ class MediaInfoEntityStatementsView {
 	private $valueFormatterFactory;
 	private $serializerFactory;
 	private $languageCode;
+	private $showQualifiers;
 
 	const EMPTY_DEFAULT_PROPERTY_PLACEHOLDER = 'EMPTY_DEFAULT_PROPERTY_PLACEHOLDER';
 
@@ -56,6 +57,7 @@ class MediaInfoEntityStatementsView {
 	 * @param OutputFormatValueFormatterFactory $valueFormatterFactory
 	 * @param SerializerFactory $serializerFactory
 	 * @param string $languageCode
+	 * @param bool $showQualifiers
 	 */
 	public function __construct(
 		PropertyOrderProvider $propertyOrderProvider,
@@ -65,7 +67,8 @@ class MediaInfoEntityStatementsView {
 		OutputFormatSnakFormatterFactory $snakFormatterFactory,
 		OutputFormatValueFormatterFactory $valueFormatterFactory,
 		SerializerFactory $serializerFactory,
-		$languageCode
+		$languageCode,
+		$showQualifiers
 	) {
 		OutputPage::setupOOUI();
 
@@ -77,6 +80,7 @@ class MediaInfoEntityStatementsView {
 		$this->valueFormatterFactory = $valueFormatterFactory;
 		$this->serializerFactory = $serializerFactory;
 		$this->languageCode = $languageCode;
+		$this->showQualifiers = $showQualifiers;
 	}
 
 	/**
@@ -296,9 +300,11 @@ class MediaInfoEntityStatementsView {
 		);
 
 		$statementDiv->appendContent( $mainSnakDiv );
-		$qualifiers = $statement->getQualifiers();
-		if ( count( $qualifiers ) > 0 ) {
-			$statementDiv->appendContent( $this->createQualifiersDiv( $qualifiers ) );
+		if ( $this->showQualifiers ) {
+			$qualifiers = $statement->getQualifiers();
+			if ( count( $qualifiers ) > 0 ) {
+				$statementDiv->appendContent( $this->createQualifiersDiv( $qualifiers ) );
+			}
 		}
 		return $statementDiv;
 	}

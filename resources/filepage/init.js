@@ -2,6 +2,8 @@
 
 	'use strict';
 
+	sd.currentRevision = mw.config.get( 'wbCurrentRevision' );
+
 	sd.captions = new sd.CaptionsPanel( {
 		headerClass: 'wbmi-entityview-captions-header',
 		contentClass: 'wbmi-entityview-captionsPanel',

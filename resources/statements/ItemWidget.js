@@ -125,7 +125,7 @@
 						.append( $makePrimary )
 				),
 				$( '<div>' ).addClass( 'wbmi-item-content' ).append(
-					this.$group,
+					this.$group.addClass( 'wbmi-item-content-group' ),
 					this.editing ? this.addQualifierButton.$element : undefined
 				)
 			),

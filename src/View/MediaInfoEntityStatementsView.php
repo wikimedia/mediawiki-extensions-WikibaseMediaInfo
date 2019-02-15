@@ -344,6 +344,7 @@ class MediaInfoEntityStatementsView {
 		}
 
 		$innerDiv = new Tag( 'div' );
+		$innerDiv->addClasses( [ 'wbmi-item-content-group' ] );
 		$innerDiv->appendContent( $qualifierDivs );
 		$container->appendContent(
 			$innerDiv

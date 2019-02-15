@@ -15,26 +15,6 @@
 	display: inline-block;
 }
 
-.wbmi-item-edit .wbmi-item-container {
-	// preserve some space for the delete icon/button
-	// 2px = 2x 1px of border
-	// 35px = the width of the delete icon
-	// (escaped to prevent LESS from incorrectly calculating)
-	width: ~'calc( 100% - 2px - 35px )';
-}
-
-// read-mode adjustments
-.wbmi-item-read {
-	.wbmi-item-container {
-		border: 1px solid #fff;
-	}
-
-	.wbmi-item-content {
-		background-color: #f8f9fa;
-		padding-top: 0;
-	}
-}
-
 .wbmi-entity-title {
 	padding: 15px;
 	background-color: #f8f9fa;
@@ -141,6 +121,31 @@ h4.wbmi-entity-label {
 
 .wbmi-item-qualifier-add {
 	font-weight: normal;
+}
+
+.wbmi-item-edit .wbmi-item-container {
+	// preserve some space for the delete icon/button
+	// 2px = 2x 1px of border
+	// 35px = the width of the delete icon
+	// (escaped to prevent LESS from incorrectly calculating)
+	width: ~'calc( 100% - 2px - 35px )';
+}
+
+// read-mode adjustments
+.wbmi-item-read {
+	.wbmi-item-container {
+		border: 1px solid #fff;
+	}
+
+	.wbmi-item-content {
+		background-color: #f8f9fa;
+		padding-top: 0;
+		padding-bottom: 0;
+
+		.wbmi-item-content-group:not( :empty ) {
+			padding-bottom: 10px;
+		}
+	}
 }
 
 // undo one of the borders if the box is adjacent to another one - we don't

@@ -45,7 +45,6 @@
 		// Mixin constructors
 		OO.ui.mixin.PendingElement.call( this, this.config );
 
-		this.currentRevision = mw.config.get( 'wbCurrentRevision' );
 		this.captionsData = {};
 		this.languageSelectors = [];
 		this.textInputs = [];
@@ -495,7 +494,7 @@
 			language: language
 		};
 		if ( !this.entityIsEmpty() ) {
-			apiParams.baserevid = this.currentRevision;
+			apiParams.baserevid = sd.currentRevision;
 		}
 		return apiParams;
 	};
@@ -513,7 +512,7 @@
 					captionLanguages = captionsPanel.getCaptionLanguagesList();
 				captionsPanel.markEntityAsNonEmpty();
 				captionsPanel.captionsData[ language ] = new sd.CaptionData( language, text );
-				captionsPanel.currentRevision = result.entity.lastrevid;
+				sd.currentRevision = result.entity.lastrevid;
 				captionsPanel.languageSelectors.splice( index, 1 );
 				captionsPanel.textInputs.splice( index, 1 );
 				$( captionsPanel.contentSelector )
@@ -594,7 +593,7 @@
 				var captionLanguages = self.getCaptionLanguagesList();
 
 				// Update revision id
-				self.currentRevision = result.entity.lastrevid;
+				sd.currentRevision = result.entity.lastrevid;
 
 				// Update the captions data, and the language list if necessary
 				if (
@@ -669,7 +668,7 @@
 			} )
 			.done( function ( result ) {
 				var refreshedLabelsData = {};
-				captionsPanel.currentRevision = result.entities[ entityId ].lastrevid;
+				sd.currentRevision = result.entities[ entityId ].lastrevid;
 				// Add any empty CaptionData objects to the list first, as they won't be returned
 				// from the api
 				// eslint-disable-next-line jquery/no-each-util

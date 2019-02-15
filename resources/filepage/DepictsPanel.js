@@ -44,8 +44,6 @@
 
 		this.depictsInput = new st.DepictsWidget( this.config );
 		this.depictsInput.connect( this, { 'manual-add': 'makeEditable' } );
-
-		this.currentRevision = mw.config.get( 'wbCurrentRevision' );
 	};
 
 	/* Inheritance */
@@ -107,8 +105,8 @@
 		this.editToggle.$element.show();
 		this.$depictsPropertyLink.show();
 
-		this.depictsInput.submit( this.currentRevision ).then( function ( response ) {
-			self.currentRevision = response.pageinfo.lastrevid;
+		this.depictsInput.submit( sd.currentRevision ).then( function ( response ) {
+			sd.currentRevision = response.pageinfo.lastrevid;
 		} );
 	};
 

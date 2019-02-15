@@ -75,9 +75,15 @@
 	 */
 	statements.QualifierWidget.prototype.updateValueWidget = function () {
 		var self = this,
-			data = this.getData();
+			data = this.getData(),
+			formatPromise = $.Deferred().resolve( '' ).promise();
 
-		return this.formatValue( data.datavalue, 'text/plain' ).then( function ( response ) {
+		if ( this.valueInput.getValue() !== '' ) {
+			// if the value input is not empty, format it
+			formatPromise = this.formatValue( data.datavalue, 'text/plain' );
+		}
+
+		return formatPromise.then( function ( plain ) {
 			var propertyKey = Object.keys( self.propertiesData ).filter( function ( key ) {
 					return self.propertiesData[ key ].id === data.property;
 				} )[ 0 ],
@@ -87,7 +93,7 @@
 				// @todo there's a better way... (e.g. formatting actual value)
 				mw.message( propertyData.label ).text() +
 				mw.message( 'colon-separator' ).text() +
-				response.result
+				plain
 			);
 		} );
 	};

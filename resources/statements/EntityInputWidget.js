@@ -36,8 +36,8 @@
 		var data = item.getData();
 
 		this.mapLabelId[ data.label ] = data.id;
-		this.setValue( data.label );
 		this.setData( data.id );
+		this.setValue( data.label );
 
 		this.emit( 'choose', item );
 	};
@@ -80,7 +80,9 @@
 
 		if ( value && value in this.mapLabelId ) {
 			// input (label) is one we've already selected, we still know the id
-			this.setData( this.mapLabelId[ value ] );
+			if ( this.getData() !== this.mapLabelId[ value ] ) {
+				this.setData( this.mapLabelId[ value ] );
+			}
 		} else {
 			// unknown input - mark as invalid input, until something gets selected
 			this.data = undefined;

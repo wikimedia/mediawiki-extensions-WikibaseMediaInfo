@@ -62,8 +62,8 @@
 				this.formatValue( this.value, 'text/html' )
 			).then(
 				function ( plain, html ) {
-					self.label = plain[ 0 ].result;
-					self.url = $( html[ 0 ].result ).attr( 'href' );
+					self.label = plain;
+					self.url = $( html ).attr( 'href' );
 				}
 			);
 		}

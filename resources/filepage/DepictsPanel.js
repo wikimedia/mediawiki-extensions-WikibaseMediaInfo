@@ -52,6 +52,24 @@
 	OO.inheritClass( sd.DepictsPanel, OO.ui.Element );
 	OO.mixinClass( sd.DepictsPanel, OO.ui.mixin.PendingElement );
 
+	/**
+	 * Pre-populate the formatValue cache, which will save some
+	 * API calls if we end up wanting to format some of these...
+	 *
+	 * @param {Object} data
+	 */
+	sd.DepictsPanel.prototype.populateFormatValueCache = function ( data ) {
+		Object.keys( data ).map( function ( dataValue ) {
+			Object.keys( data[ dataValue ] ).map( function ( format ) {
+				Object.keys( data[ dataValue ][ format ] ).map( function ( language ) {
+					var key = st.FormatValueElement.getKey( JSON.parse( dataValue ), format, language ),
+						result = data[ dataValue ][ format ][ language ];
+					st.FormatValueElement.toCache( key, result );
+				} );
+			} );
+		} );
+	};
+
 	sd.DepictsPanel.prototype.initialize = function () {
 		if (
 			// Exit if there's no statements block on the page (e.g. if it's feature-flagged off)
@@ -62,6 +80,8 @@
 		) {
 			return;
 		}
+
+		this.populateFormatValueCache( JSON.parse( $( this.contentSelector ).attr( 'data-formatvalue' ) || '{}' ) );
 
 		this.editToggle.$element.insertAfter( this.$depictsPropertyLink );
 		this.cancelPublish.$element.insertAfter( this.$depictsPropertyLink );

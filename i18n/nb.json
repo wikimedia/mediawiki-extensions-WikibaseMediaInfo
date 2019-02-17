@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"Jon Harald Søby"
+			"Jon Harald Søby",
+			"AnB"
 		]
 	},
 	"right-mediainfo-term": "Endre medieinfobegreper (bildetekster, sammendrag)",
@@ -22,5 +23,8 @@
 	"wikibasemediainfo-filepage-publish": "Publiser endringer",
 	"wikibasemediainfo-filepage-caption-empty": "Legg til en kort forklaring på hva filen representerer",
 	"wikibasemediainfo-filepage-caption-too-long": "$1 {{PLURAL:$1|tegn}} over grensen",
-	"wikibasemediainfo-filepage-caption-approaching-limit": "{{PLURAL:$1|$1|0=Ingen}} tegn igjen"
+	"wikibasemediainfo-filepage-caption-approaching-limit": "{{PLURAL:$1|$1|0=Ingen}} tegn igjen",
+	"wikibasemediainfo-filepage-license-content-acceptance": "Jeg godtar disse vilkårene for mine fremtidige redigeringer. Ikke vis denne meldingen igjen.",
+	"wikibasemediainfo-filepage-license-accept": "Godta",
+	"wikibasemediainfo-filepage-license-cancel": "Avbryt"
 }

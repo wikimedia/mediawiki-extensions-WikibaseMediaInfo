@@ -27,6 +27,8 @@
 	"wikibasemediainfo-filepage-statement-no-value": "Non g'esiste nisciune valore pe sta probbietà",
 	"wikibasemediainfo-filepage-statement-some-value": "Sta probbietà tène 'nu valore, ma jè scanusciute",
 	"wikibasemediainfo-filepage-statement-error": "Ave assute 'n'errore duranne 'u recupere d'u valore pe sta probbietà",
+	"wikibasemediainfo-filepage-license-accept": "Accette",
+	"wikibasemediainfo-filepage-license-cancel": "Annulle",
 	"wikibasemediainfo-statements-depicts-title": "Eleminde rappresendate jndr'à st'immaggine",
 	"wikibasemediainfo-statements-item-input-placeholder": "Cirche de aggiungere le eleminde rappresendate",
 	"wikibasemediainfo-statements-item-input-label": "da Uicchidate",

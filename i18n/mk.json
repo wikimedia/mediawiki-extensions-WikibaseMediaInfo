@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"Bjankuloski06"
+			"Bjankuloski06",
+			"Vlad5250"
 		]
 	},
 	"right-mediainfo-term": "Менување на инфорамциски поими за слики и снимки (описи, кратки прегледи во текст)",
@@ -29,6 +30,8 @@
 	"wikibasemediainfo-filepage-statement-no-data": "Нема податоци",
 	"wikibasemediainfo-filepage-statement-some-value": "Ова својство има вредност, но не е познато",
 	"wikibasemediainfo-filepage-statement-error": "Се појави грешка при добивањето на вредноста за ова својство",
+	"wikibasemediainfo-filepage-license-accept": "Прифати",
+	"wikibasemediainfo-filepage-license-cancel": "Откажи",
 	"wikibasemediainfo-statements-depicts-title": "Предмети прикажани на сликава",
 	"wikibasemediainfo-statements-item-input-placeholder": "Пребарајте за да додадете прикажани предмети",
 	"wikibasemediainfo-statements-item-input-label": "од Википодатоците",

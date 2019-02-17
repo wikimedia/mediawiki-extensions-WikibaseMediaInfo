@@ -32,6 +32,7 @@
 	"wikibasemediainfo-filepage-statement-some-value": "Esta propriedade tem um valor, mas é desconhecido",
 	"wikibasemediainfo-filepage-statement-error": "Ocorreu um erro ao buscar o valor dessa propriedade",
 	"wikibasemediainfo-filepage-license-title": "Legendas e outras contribuições de dados estruturados",
+	"wikibasemediainfo-filepage-license-content": "Ao clicar em \"Publicar alterações\", você concorda com o [[wmf:Terms_of_Use|termos de uso]], e você irrevogavelmente concorda em liberar sua contribuição sob a [https://creativecommons.org/publicdomain/zero/1.0/ Licença Creative Commons CC0].",
 	"wikibasemediainfo-filepage-license-content-acceptance": "Eu aceito estes termos para minhas futuras edições. Não mostre esta mensagem novamente.",
 	"wikibasemediainfo-filepage-license-accept": "Aceitar",
 	"wikibasemediainfo-filepage-license-cancel": "Cancelar",

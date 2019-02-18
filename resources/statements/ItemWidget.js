@@ -38,16 +38,13 @@
 		} );
 		this.removeButton.connect( this, { click: [ 'emit', 'delete' ] } );
 
-		this.showQualifiers = mw.config.get( 'wbmiShowQualifiers' );
-		if ( this.showQualifiers ) {
-			this.addQualifierButton = new OO.ui.ButtonWidget( {
-				classes: [ 'wbmi-item-qualifier-add' ],
-				label: mw.message( 'wikibasemediainfo-statements-item-add-qualifier' ).text(),
-				flags: 'progressive',
-				framed: false
-			} );
-			this.addQualifierButton.connect( this, { click: [ 'addQualifier' ] } );
-		}
+		this.addQualifierButton = new OO.ui.ButtonWidget( {
+			classes: [ 'wbmi-item-qualifier-add' ],
+			label: mw.message( 'wikibasemediainfo-statements-item-add-qualifier' ).text(),
+			flags: 'progressive',
+			framed: false
+		} );
+		this.addQualifierButton.connect( this, { click: [ 'addQualifier' ] } );
 
 		this.render();
 	};
@@ -115,6 +112,7 @@
 		// we'll be re-using...
 		this.$group.detach();
 		this.removeButton.$element.detach();
+		this.addQualifierButton.$element.detach();
 		this.$element.empty();
 
 		itemContainer.append(
@@ -128,8 +126,7 @@
 			)
 		);
 
-		if ( this.showQualifiers ) {
-			this.addQualifierButton.$element.detach();
+		if ( mw.config.get( 'wbmiShowQualifiers' ) ) {
 			itemContainer.append(
 				$( '<div>' ).addClass( 'wbmi-item-content' ).append(
 					this.$group.addClass( 'wbmi-item-content-group' ),

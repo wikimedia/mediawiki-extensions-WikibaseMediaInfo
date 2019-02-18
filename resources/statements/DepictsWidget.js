@@ -129,6 +129,8 @@
 			item.setEditing( false );
 		} );
 
+		this.$element.find( '.wbmi-statement-publish-error-msg' ).remove();
+
 		this.setData( this.data );
 
 		return $.Deferred().resolve().promise();
@@ -158,22 +160,48 @@
 			} ),
 			removedStatements = this.data.toArray().filter( function ( statement ) {
 				return !( statement.getClaim().getGuid() in currentStatements );
-			} );
+			} ),
+			hasFailures = false;
 
 		this.setEditing( false );
 
-		changedStatements.forEach( function ( data ) {
-			promise = promise.then( function ( data, prevResponse ) {
+		this.$element.find( '.wbmi-statement-publish-error-msg' ).remove();
+
+		changedStatements.forEach( function ( statement ) {
+			promise = promise.then( function ( statement, prevResponse ) {
 				return api.postWithEditToken( {
 					action: 'wbsetclaim',
 					format: 'json',
-					claim: JSON.stringify( serializer.serialize( data ) ),
+					claim: JSON.stringify( serializer.serialize( statement ) ),
 					// fetch the previous response's rev id and feed it to the next
 					baserevid: prevResponse.pageinfo ? prevResponse.pageinfo.lastrevid : undefined,
 					bot: 1,
 					assertuser: !mw.user.isAnon() ? mw.user.getName() : undefined
-				} );
-			}.bind( null, data ) );
+				} ).catch(
+					function ( errorCode, error ) {
+						var apiError = wb.api.RepoApiError.newFromApiResponse( error, 'save' ),
+							guid = statement.getClaim().getGuid(),
+							item = self.getItems().filter( function ( item ) {
+								return item.getData().getClaim().getGuid() === guid;
+							} )[ 0 ];
+
+						item.$element.after( $( '<div>' )
+							.addClass( 'wbmi-statement-publish-error-msg' )
+							.text( apiError.detailedMessage )
+						);
+
+						// replace statement with what we previously had, since we failed
+						// to submit the changes...
+						data.removeItem( statement );
+						data.addItem( previousStatements[ guid ] );
+
+						hasFailures = true;
+
+						// keep the update chain moving...
+						return $.Deferred().resolve( prevResponse ).promise();
+					}
+				);
+			}.bind( null, statement ) );
 		} );
 
 		// Delete removed items
@@ -189,15 +217,45 @@
 					baserevid: prevResponse.pageinfo ? prevResponse.pageinfo.lastrevid : undefined,
 					bot: 1,
 					assertuser: !mw.user.isAnon() ? mw.user.getName() : undefined
+				} ).catch( function ( errorCode, error ) {
+					var apiError = wb.api.RepoApiError.newFromApiResponse( error, 'save' );
+
+					self.$element.append( $( '<div>' )
+						.addClass( 'wbmi-statement-publish-error-msg' )
+						.text( apiError.detailedMessage )
+					);
+
+					// restore statements that failed to delete
+					removedStatements.forEach( function ( statement ) {
+						data.addItem( statement );
+					} );
+
+					hasFailures = true;
+
+					// keep the update chain moving...
+					return $.Deferred().resolve( prevResponse ).promise();
 				} );
 			} );
 		}
 
-		// store data after we've successfully submitted all changes, so that we'll
-		// reset to the actual most recent correct state
-		promise.then( function () {
-			// reset data to what we've just submitted to the API
-			self.setData( data );
+		// store data after we've submitted all changes, so that we'll reset to the
+		// actual most recent correct state
+		promise = promise.then( function ( response ) {
+			// reset data to what we've just submitted to the API (items that failed
+			// to submit have been reset to their previous state in `data`)
+			var serializer = new wb.serialization.StatementListSerializer(),
+				deserializer = new wb.serialization.StatementListDeserializer();
+
+			self.data = deserializer.deserialize( serializer.serialize( data ) );
+
+			// if we've had failures, put the widget back in edit mode, and reject
+			// this promise, so callers will know something went wrong
+			if ( hasFailures ) {
+				self.setEditing( true );
+				return $.Deferred().reject().promise();
+			}
+
+			return response;
 		} );
 
 		return promise;

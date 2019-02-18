@@ -239,6 +239,7 @@
 				"oojs-ui-core",
 				"oojs-ui-widgets",
 				"wikibase.mediainfo.statements.styles",
+				"wikibase.serialization.StatementListSerializer",
 				"wikibase.serialization.StatementListDeserializer",
 				"wikibase.serialization.StatementSerializer",
 				"wikibase.serialization.StatementDeserializer",

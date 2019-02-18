@@ -121,18 +121,29 @@
 		this.editToggle.$element.show();
 		this.$depictsPropertyLink.show();
 
+		$( this.contentSelector )
+			.find( '.wbmi-statement-publish-error-msg' )
+			.remove();
+
 		this.depictsInput.reset();
 	};
 
 	sd.DepictsPanel.prototype.sendData = function () {
-		this.cancelPublish.disablePublish();
-		this.cancelPublish.hide();
-		this.editToggle.$element.show();
-		this.$depictsPropertyLink.show();
+		var self = this;
+		this.cancelPublish.setStateSending();
 
-		this.depictsInput.submit( sd.currentRevision ).then( function ( response ) {
-			sd.currentRevision = response.pageinfo.lastrevid;
-		} );
+		this.depictsInput.submit( sd.currentRevision )
+			.then( function ( response ) {
+				sd.currentRevision = response.pageinfo.lastrevid;
+				self.cancelPublish.setStateReady();
+				self.cancelPublish.hide();
+				self.editToggle.$element.show();
+				self.$depictsPropertyLink.show();
+			} )
+			.catch( function () {
+				self.cancelPublish.setStateReady();
+				self.cancelPublish.enablePublish();
+			} );
 	};
 
 }( mw.mediaInfo.structuredData, wikibase, mw.mediaInfo.statements, dataValues ) );

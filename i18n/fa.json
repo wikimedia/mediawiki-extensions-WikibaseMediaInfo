@@ -3,17 +3,24 @@
 		"authors": [
 			"Reza1615",
 			"درفش کاویانی",
-			"Amirsara"
+			"Amirsara",
+			"Physicsch"
 		]
 	},
 	"wikibase-entity-mediainfo": "اطلاعات رسانه",
 	"wikibasemediainfo-desc": "افزونه ویکی‌بیس برای مدیریت ساختار متادیتای پرونده‌های رسانه",
+	"wikibasemediainfo-filepage-structured-data-heading": "داده‌های ساختاریافته",
 	"wikibasemediainfo-filepage-captions-title": "گزینه‌ها",
-	"wikibasemediainfo-filepage-fewer-languages": "دیدن زبان‌های کمتر",
+	"wikibasemediainfo-filepage-more-languages": "نمایش $1 {{PLURAL:$1|زبان|زبان}} بیشتر",
+	"wikibasemediainfo-filepage-fewer-languages": "نمایش زبان‌های کمتر",
 	"wikibasemediainfo-filepage-add-caption": "افزودن یک توضیح",
 	"wikibasemediainfo-filepage-edit-captions": "ویرایش توضیحات",
 	"wikibasemediainfo-filepage-cancel": "لغو",
 	"wikibasemediainfo-filepage-publish": "انتشار تغییرات",
+	"wikibasemediainfo-filepage-caption-empty": "شرحی یک‌خطی از محتوای این فایل اضافه کنید",
+	"wikibasemediainfo-filepage-caption-too-long": "$1 کاراکتر بیشتر از تعداد مجاز",
+	"wikibasemediainfo-filepage-caption-approaching-limit": "$1 کاراکتر باقی‌مانده",
+	"wikibasemediainfo-filepage-statement-error": "هنگام بارگیری مقدار این ویژگی خطایی رخ داد.",
 	"wikibasemediainfo-filepage-license-accept": "پذیرفتن",
 	"wikibasemediainfo-filepage-license-cancel": "لغو"
 }

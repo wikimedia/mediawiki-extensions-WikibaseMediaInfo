@@ -110,6 +110,7 @@
 							wb.datamodel.Statement.RANK.NORMAL
 					);
 					self.render();
+					self.emit( 'change', self );
 				} ),
 			itemContainer = $( '<div>' ).addClass( 'wbmi-item-container' );
 
@@ -188,6 +189,8 @@
 			} ) );
 
 		this.data.getClaim().setQualifiers( qualifiers );
+
+		this.emit( 'change', this );
 	};
 
 	/**

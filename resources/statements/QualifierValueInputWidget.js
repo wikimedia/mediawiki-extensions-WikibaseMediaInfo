@@ -9,6 +9,8 @@
 			statements.QualifierValueInputWidget.parent.call( this, this.config );
 			statements.FormatValueElement.call( this, $.extend( {}, config ) );
 
+			this.allowEmitChange = true;
+
 			this.setInputType( this.type || 'string' );
 		};
 	OO.inheritClass( statements.QualifierValueInputWidget, OO.ui.Widget );
@@ -37,17 +39,17 @@
 		switch ( type ) {
 			case 'wikibase-entityid':
 				this.input = new statements.EntityInputWidget( this.config );
-				this.input.connect( this, { dataChange: [ 'emit', 'change' ] } );
+				this.input.connect( this, { dataChange: 'onChange' } );
 				this.input.connect( this, { enter: [ 'emit', 'enter' ] } );
 				break;
 			case 'quantity':
 				this.input = new OO.ui.NumberInputWidget( this.config );
-				this.input.connect( this, { change: [ 'emit', 'change' ] } );
+				this.input.connect( this, { change: 'onChange' } );
 				this.input.connect( this, { enter: [ 'emit', 'enter' ] } );
 				break;
 			case 'string':
 				this.input = new OO.ui.TextInputWidget( this.config );
-				this.input.connect( this, { change: [ 'emit', 'change' ] } );
+				this.input.connect( this, { change: 'onChange' } );
 				this.input.connect( this, { enter: [ 'emit', 'enter' ] } );
 				break;
 			default:
@@ -87,6 +89,15 @@
 	/**
 	 * @return {dataValues.DataValue}
 	 */
+	statements.QualifierValueInputWidget.prototype.onChange = function () {
+		if ( this.allowEmitChange ) {
+			this.emit( 'change' );
+		}
+	};
+
+	/**
+	 * @return {Object}
+	 */
 	statements.QualifierValueInputWidget.prototype.getData = function () {
 		return dv.newDataValue( this.type, this.value || this.getInputValue() );
 	};
@@ -106,7 +117,15 @@
 		// even though the input field doesn't have it yet...
 		this.value = data.getValue().toJSON();
 
+		this.emit( 'change' );
+
 		this.formatValue( data, 'text/plain' ).then( function ( plain ) {
+			// setData is supposed to behave asynchronously: we don't want it
+			// to trigger change events when nothing has really changed - it
+			// just takes a little time before we know how to display the input
+			// and make it interactive, but that doesn't mean the data changed
+			self.allowEmitChange = false;
+
 			switch ( data.getType() ) {
 				case 'wikibase-entityid':
 					// entities widget will need to be aware of the id that is associated
@@ -126,6 +145,8 @@
 			// reset temporary value workaround - we can now interact with the
 			// value, so we should fetch the result straight from input field
 			self.value = undefined;
+
+			self.allowEmitChange = true;
 		} );
 
 		return this;

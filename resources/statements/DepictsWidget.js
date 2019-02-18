@@ -30,10 +30,22 @@
 	 * @param {object} data
 	 */
 	statements.DepictsWidget.prototype.addItemFromInput = function ( item, data ) {
-		var widget = this.addItem( item.getData(), data.label, data.url );
-		this.emit( 'manual-add', widget );
+		var widget = this.createItem( item.getData(), data.label, data.url );
+		widget.connect( this, { delete: [ 'removeItems', [ widget ] ] } );
+		widget.connect( this, { delete: [ 'emit', 'change' ] } );
+		widget.connect( this, { change: [ 'setEditing', true ] } );
+		widget.connect( this, { change: [ 'emit', 'change' ] } );
+
+		this.addItems( [ widget ] );
+
 		// we just added a new item - let's switch all of them into editing mode
 		this.setEditing( true );
+
+		// clear the autocomplete input field to select entities to add
+		this.input.setData( undefined );
+
+		this.emit( 'manual-add', widget );
+		this.emit( 'change', widget );
 	};
 
 	/**
@@ -42,7 +54,7 @@
 	 * @param {string} [url]
 	 * @return {mw.mediaInfo.statements.ItemWidget}
 	 */
-	statements.DepictsWidget.prototype.addItem = function ( dataValue, label, url ) {
+	statements.DepictsWidget.prototype.createItem = function ( dataValue, label, url ) {
 		var propertyId = mw.config.get( 'wbmiProperties' ).depicts.id,
 			guidGenerator = new wb.utilities.ClaimGuidGenerator( this.entityId ),
 			mainSnak = new wb.datamodel.PropertyValueSnak( propertyId, dataValue, null ),
@@ -50,22 +62,14 @@
 			claim = new wb.datamodel.Claim( mainSnak, qualifiers, guidGenerator.newGuid() ),
 			references = null,
 			rank = wb.datamodel.Statement.RANK.NORMAL,
-			statement = new wb.datamodel.Statement( claim, references, rank ),
-			widget = new statements.ItemWidget( {
-				data: statement,
-				editing: this.editing,
-				label: label,
-				url: url
-			} );
+			statement = new wb.datamodel.Statement( claim, references, rank );
 
-		this.addItems( [ widget ] );
-
-		widget.connect( this, { delete: [ 'removeItems', [ widget ] ] } );
-
-		// clear the autocomplete input field to select entities to add
-		this.input.setData( undefined );
-
-		return widget;
+		return new statements.ItemWidget( {
+			data: statement,
+			editing: this.editing,
+			label: label,
+			url: url
+		} );
 	};
 
 	/**
@@ -98,8 +102,14 @@
 				return;
 			}
 
-			widget = self.addItem( dataValue );
+			widget = self.createItem( dataValue );
 			widget.setData( statement );
+			widget.connect( self, { delete: [ 'removeItems', [ widget ] ] } );
+			widget.connect( self, { delete: [ 'emit', 'change' ] } );
+			widget.connect( self, { change: [ 'setEditing', true ] } );
+			widget.connect( self, { change: [ 'emit', 'change' ] } );
+
+			self.addItems( [ widget ] );
 		} );
 	};
 
@@ -125,13 +135,9 @@
 	 * @return {jQuery.Promise}
 	 */
 	statements.DepictsWidget.prototype.reset = function () {
-		this.getItems().forEach( function ( item ) {
-			item.setEditing( false );
-		} );
-
-		this.$element.find( '.wbmi-statement-publish-error-msg' ).remove();
-
 		this.setData( this.data );
+		this.setEditing( false );
+		this.$element.find( '.wbmi-statement-publish-error-msg' ).remove();
 
 		return $.Deferred().resolve().promise();
 	};

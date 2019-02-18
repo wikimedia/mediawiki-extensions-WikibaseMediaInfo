@@ -43,7 +43,6 @@
 		this.$depictsPropertyLink = $( this.headerSelector + ' a' );
 
 		this.depictsInput = new st.DepictsWidget( this.config );
-		this.depictsInput.connect( this, { 'manual-add': 'makeEditable' } );
 	};
 
 	/* Inheritance */
@@ -96,6 +95,7 @@
 		// ... and load data into js widget instead
 		statementsJson = JSON.parse( $( this.contentSelector ).attr( 'data-statements' ) || '[]' );
 		this.depictsInput.setData( deserializer.deserialize( statementsJson ) );
+		this.depictsInput.connect( this, { change: 'makeEditable' } );
 
 		$( this.depictsInput.$element ).insertAfter( this.headerSelector );
 	};
@@ -116,25 +116,31 @@
 	};
 
 	sd.DepictsPanel.prototype.makeReadOnly = function () {
+		var self = this;
+
 		this.cancelPublish.disablePublish();
 		this.cancelPublish.hide();
-		this.editToggle.$element.show();
-		this.$depictsPropertyLink.show();
 
-		$( this.contentSelector )
-			.find( '.wbmi-statement-publish-error-msg' )
-			.remove();
+		this.depictsInput.disconnect( this, { change: 'makeEditable' } );
+		this.depictsInput.reset().then( function () {
+			self.depictsInput.connect( self, { change: 'makeEditable' } );
 
-		this.depictsInput.reset();
+			self.editToggle.$element.show();
+			self.$depictsPropertyLink.show();
+		} );
 	};
 
 	sd.DepictsPanel.prototype.sendData = function () {
 		var self = this;
 		this.cancelPublish.setStateSending();
 
+		this.depictsInput.disconnect( this, { change: 'makeEditable' } );
 		this.depictsInput.submit( sd.currentRevision )
 			.then( function ( response ) {
+				self.depictsInput.connect( self, { change: 'makeEditable' } );
+
 				sd.currentRevision = response.pageinfo.lastrevid;
+
 				self.cancelPublish.setStateReady();
 				self.cancelPublish.hide();
 				self.editToggle.$element.show();

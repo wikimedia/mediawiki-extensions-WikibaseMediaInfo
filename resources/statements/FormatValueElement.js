@@ -8,14 +8,14 @@
 	statements.FormatValueElement.cache = {};
 
 	/**
-	 * @param {Object} data
+	 * @param {dataValues.DataValue} dataValue
 	 * @param {string} format
 	 * @param {string} language
 	 * @return {string}
 	 */
-	statements.FormatValueElement.getKey = function ( data, format, language ) {
+	statements.FormatValueElement.getKey = function ( dataValue, format, language ) {
 		return JSON.stringify( {
-			data: data,
+			data: { type: dataValue.getType(), value: dataValue.toJSON() },
 			format: format,
 			language: language
 		}, function ( key, value ) {
@@ -51,7 +51,7 @@
 			deferred.reject();
 		}
 
-		return deferred.promise();
+		return deferred.promise( { abort: function () {} } );
 	};
 
 	/**
@@ -63,19 +63,20 @@
 	};
 
 	/**
-	 * @param {Object} data
+	 * @param {dataValues.DataValue} dataValue
 	 * @param {string} [format] e.g. text/plain or text/html
 	 * @param {string} [language]
 	 * @return {jQuery.Promise}
 	 */
-	statements.FormatValueElement.prototype.formatValue = function ( data, format, language ) {
+	statements.FormatValueElement.prototype.formatValue = function ( dataValue, format, language ) {
 		var api = new mw.Api(),
+			data = { type: dataValue.getType(), value: dataValue.toJSON() },
 			stringified = JSON.stringify( data ),
 			key;
 
 		format = format || 'text/plain';
 		language = language || mw.config.get( 'wgUserLanguage' );
-		key = statements.FormatValueElement.getKey( data, format, language );
+		key = statements.FormatValueElement.getKey( dataValue, format, language );
 
 		return statements.FormatValueElement.fromCache( key ).catch( function () {
 			return api.get( {

@@ -1,4 +1,4 @@
-( function ( statements ) {
+( function ( statements, wb ) {
 
 	'use strict';
 
@@ -12,7 +12,7 @@
 		OO.ui.mixin.GroupElement.call( this );
 
 		this.entityId = config.entityId;
-		this.data = [];
+		this.data = new wb.datamodel.StatementList();
 
 		this.input = new statements.ItemInputWidget( { classes: [ 'wbmi-depicts-input' ] } );
 		this.input.connect( this, { choose: 'addItemFromInput' } );
@@ -37,44 +37,48 @@
 	};
 
 	/**
-	 * @param {Object} value
+	 * @param {dataValues.DataValue} dataValue
 	 * @param {string} [label]
 	 * @param {string} [url]
-	 * @param {string} [rank]
 	 * @return {mw.mediaInfo.statements.ItemWidget}
 	 */
-	statements.DepictsWidget.prototype.addItem = function ( value, label, url, rank ) {
-		var widget = new statements.ItemWidget( {
-			editing: this.editing,
-			entityId: this.entityId,
-			propertyId: mw.config.get( 'wbmiProperties' ).depicts.id,
-			value: value,
-			label: label,
-			url: url,
-			rank: rank
-		} );
+	statements.DepictsWidget.prototype.addItem = function ( dataValue, label, url ) {
+		var propertyId = mw.config.get( 'wbmiProperties' ).depicts.id,
+			guidGenerator = new wb.utilities.ClaimGuidGenerator( this.entityId ),
+			mainSnak = new wb.datamodel.PropertyValueSnak( propertyId, dataValue, null ),
+			qualifiers = null,
+			claim = new wb.datamodel.Claim( mainSnak, qualifiers, guidGenerator.newGuid() ),
+			references = null,
+			rank = wb.datamodel.Statement.RANK.NORMAL,
+			statement = new wb.datamodel.Statement( claim, references, rank ),
+			widget = new statements.ItemWidget( {
+				data: statement,
+				editing: this.editing,
+				label: label,
+				url: url
+			} );
 
 		this.addItems( [ widget ] );
 
 		widget.connect( this, { delete: [ 'removeItems', [ widget ] ] } );
 
 		// clear the autocomplete input field to select entities to add
-		this.input.setData( {} );
+		this.input.setData( undefined );
 
 		return widget;
 	};
 
 	/**
-	 * @return {Array}
+	 * @return {wikibase.datamodel.StatementList}
 	 */
 	statements.DepictsWidget.prototype.getData = function () {
-		return this.getItems().map( function ( item ) {
+		return new wb.datamodel.StatementList( this.getItems().map( function ( item ) {
 			return item.getData();
-		} );
+		} ) );
 	};
 
 	/**
-	 * @param {Array} data
+	 * @param {wikibase.datamodel.StatementList} data
 	 */
 	statements.DepictsWidget.prototype.setData = function ( data ) {
 		var self = this;
@@ -82,19 +86,20 @@
 		this.data = data;
 
 		// remove existing items, then add new ones based on data passed in
-		this.input.setData( {} );
+		this.input.setData( undefined );
 		this.clearItems();
 
-		this.data.forEach( function ( data ) {
-			var widget;
-			// let's be sure that we actually have an item here...
-			if (
-				data.mainsnak.datavalue.value && data.mainsnak.datavalue.value !==
-				'EMPTY_DEFAULT_PROPERTY_PLACEHOLDER'
-			) {
-				widget = self.addItem( data.mainsnak.datavalue );
-				widget.setData( data );
+		this.data.each( function ( i, statement ) {
+			var dataValue = statement.getClaim().getMainSnak().getValue(),
+				widget;
+
+			if ( dataValue.getType() === 'string' && dataValue.getValue() === 'EMPTY_DEFAULT_PROPERTY_PLACEHOLDER' ) {
+				// ignore invalid placeholder text
+				return;
 			}
+
+			widget = self.addItem( dataValue );
+			widget.setData( statement );
 		} );
 	};
 
@@ -136,41 +141,50 @@
 	statements.DepictsWidget.prototype.submit = function ( baseRevId ) {
 		var self = this,
 			api = new mw.Api(),
+			data = this.getData(),
+			serializer = new wb.serialization.StatementSerializer(),
 			promise = $.Deferred().resolve( { pageinfo: { lastrevid: baseRevId } } ).promise(),
-			sentStatementIds = [],
-			removeIds = [];
+			previousStatements = this.data.toArray().reduce( function ( result, statement ) {
+				result[ statement.getClaim().getGuid() ] = statement;
+				return result;
+			}, {} ),
+			currentStatements = data.toArray().reduce( function ( result, statement ) {
+				result[ statement.getClaim().getGuid() ] = statement;
+				return result;
+			}, {} ),
+			changedStatements = data.toArray().filter( function ( statement ) {
+				return !( statement.getClaim().getGuid() in previousStatements ) ||
+					!statement.equals( previousStatements[ statement.getClaim().getGuid() ] );
+			} ),
+			removedStatements = this.data.toArray().filter( function ( statement ) {
+				return !( statement.getClaim().getGuid() in currentStatements );
+			} );
 
-		this.getItems().forEach( function ( item ) {
-			var data = item.getData();
-			sentStatementIds.push( data.id );
-			promise = promise.then( function ( item, prevResponse ) {
-				item.setEditing( false );
+		this.setEditing( false );
+
+		changedStatements.forEach( function ( data ) {
+			promise = promise.then( function ( data, prevResponse ) {
 				return api.postWithEditToken( {
 					action: 'wbsetclaim',
 					format: 'json',
-					claim: JSON.stringify( data ),
+					claim: JSON.stringify( serializer.serialize( data ) ),
 					// fetch the previous response's rev id and feed it to the next
 					baserevid: prevResponse.pageinfo ? prevResponse.pageinfo.lastrevid : undefined,
 					bot: 1,
 					assertuser: !mw.user.isAnon() ? mw.user.getName() : undefined
 				} );
-			}.bind( null, item ) );
+			}.bind( null, data ) );
 		} );
 
 		// Delete removed items
-		removeIds = this.data
-			.map( function ( item ) {
-				return item.id;
-			} )
-			.filter( function ( id ) {
-				return sentStatementIds.indexOf( id ) < 0;
-			} );
-		if ( removeIds.length > 0 ) {
+		if ( removedStatements.length > 0 ) {
 			promise = promise.then( function ( prevResponse ) {
 				return api.postWithEditToken( {
 					action: 'wbremoveclaims',
 					format: 'json',
-					claim: removeIds.join( '|' ),
+					claim: removedStatements.map( function ( statement ) {
+						return statement.getClaim().getGuid();
+					} ).join( '|' ),
 					// fetch the previous response's rev id and feed it to the next
 					baserevid: prevResponse.pageinfo ? prevResponse.pageinfo.lastrevid : undefined,
 					bot: 1,
@@ -182,10 +196,11 @@
 		// store data after we've successfully submitted all changes, so that we'll
 		// reset to the actual most recent correct state
 		promise.then( function () {
-			self.data = self.getData();
+			// reset data to what we've just submitted to the API
+			self.setData( data );
 		} );
 
 		return promise;
 	};
 
-}( mw.mediaInfo.statements ) );
+}( mw.mediaInfo.statements, wikibase ) );

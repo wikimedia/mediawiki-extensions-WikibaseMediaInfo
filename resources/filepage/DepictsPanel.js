@@ -1,4 +1,4 @@
-( function ( sd, wb, st ) {
+( function ( sd, wb, st, dv ) {
 	'use strict';
 
 	/**
@@ -60,8 +60,9 @@
 		Object.keys( data ).map( function ( dataValue ) {
 			Object.keys( data[ dataValue ] ).map( function ( format ) {
 				Object.keys( data[ dataValue ][ format ] ).map( function ( language ) {
-					var key = st.FormatValueElement.getKey(
-							JSON.parse( dataValue ), format, language
+					var json = JSON.parse( dataValue ),
+						key = st.FormatValueElement.getKey(
+							dv.newDataValue( json.type, json.value ), format, language
 						),
 						result = data[ dataValue ][ format ][ language ];
 					st.FormatValueElement.toCache( key, result );
@@ -71,6 +72,9 @@
 	};
 
 	sd.DepictsPanel.prototype.initialize = function () {
+		var deserializer = new wb.serialization.StatementListDeserializer(),
+			statementsJson;
+
 		if (
 			// Exit if there's no statements block on the page (e.g. if it's feature-flagged off)
 			$( this.contentSelector ).length === 0 ||
@@ -90,9 +94,8 @@
 		// Detach the pre-rendered depicts data from the DOM
 		$( this.contentSelector ).children( ':not(.' + this.config.headerClass + ')' ).detach();
 		// ... and load data into js widget instead
-		this.depictsInput.setData(
-			JSON.parse( $( this.contentSelector ).attr( 'data-statements' ) )
-		);
+		statementsJson = JSON.parse( $( this.contentSelector ).attr( 'data-statements' ) || '[]' );
+		this.depictsInput.setData( deserializer.deserialize( statementsJson ) );
 
 		$( this.depictsInput.$element ).insertAfter( this.headerSelector );
 	};
@@ -132,4 +135,4 @@
 		} );
 	};
 
-}( mw.mediaInfo.structuredData, wikibase, mw.mediaInfo.statements ) );
+}( mw.mediaInfo.structuredData, wikibase, mw.mediaInfo.statements, dataValues ) );

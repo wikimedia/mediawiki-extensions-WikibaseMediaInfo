@@ -1,4 +1,4 @@
-( function ( statements ) {
+( function ( statements, wb ) {
 
 	'use strict';
 
@@ -47,25 +47,29 @@
 	OO.mixinClass( statements.QualifierWidget, statements.FormatValueElement );
 
 	/**
-	 * @return {Object}
+	 * @return {wikibase.datamodel.PropertyValueSnak}
 	 */
 	statements.QualifierWidget.prototype.getData = function () {
-		var property = this.propertyDropdown.getMenu().findSelectedItem();
+		var property = this.propertyDropdown.getMenu().findSelectedItem(),
+			snak = new wb.datamodel.PropertyValueSnak(
+				property.getData(),
+				this.valueInput.getData()
+			);
 
-		return {
-			snaktype: 'value',
-			property: property.getData(),
-			datavalue: this.valueInput.getData()
-		};
+		// if snak hasn't changed since `this.setData`,
+		// return the original data (which includes `hash`)
+		return this.data && this.data.equals( snak ) ? this.data : snak;
 	};
 
 	/**
-	 * @param {Object} data
+	 * @param {wikibase.datamodel.PropertyValueSnak} data
 	 */
 	statements.QualifierWidget.prototype.setData = function ( data ) {
+		this.data = data;
+
 		this.populatePropertiesDropdown();
-		this.propertyDropdown.getMenu().selectItemByData( data.property );
-		this.valueInput.setData( data.datavalue );
+		this.propertyDropdown.getMenu().selectItemByData( data.getPropertyId() );
+		this.valueInput.setData( data.getValue() );
 
 		this.updateValueWidget();
 	};
@@ -75,27 +79,37 @@
 	 */
 	statements.QualifierWidget.prototype.updateValueWidget = function () {
 		var self = this,
-			data = this.getData(),
-			formatPromise = $.Deferred().resolve( '' ).promise();
+			data, dataValue;
 
-		if ( this.valueInput.getValue() !== '' ) {
+		try {
+			data = this.getData();
+			dataValue = data.getValue();
+
+			// abort in-flight API requests - there's no point in continuing
+			// to fetch the text-to-render when we've already changed it...
+			if ( this.updatePromise ) {
+				this.updatePromise.abort();
+			}
+
 			// if the value input is not empty, format it
-			formatPromise = this.formatValue( data.datavalue, 'text/plain' );
+			this.updatePromise = this.formatValue( dataValue, 'text/plain' ).then( function ( plain ) {
+				var propertyKey = Object.keys( self.propertiesData ).filter( function ( key ) {
+						return self.propertiesData[ key ].id === data.getPropertyId();
+					} )[ 0 ],
+					propertyData = self.propertiesData[ propertyKey ];
+
+				self.valueWidget.$element.text(
+					// @todo there's a better way... (e.g. formatting actual value)
+					mw.message( propertyData.label ).text() +
+					mw.message( 'colon-separator' ).text() +
+					plain
+				);
+			} );
+
+			return this.updatePromise;
+		} catch ( e ) {
+			// nothing to render if data is invalid...
 		}
-
-		return formatPromise.then( function ( plain ) {
-			var propertyKey = Object.keys( self.propertiesData ).filter( function ( key ) {
-					return self.propertiesData[ key ].id === data.property;
-				} )[ 0 ],
-				propertyData = self.propertiesData[ propertyKey ];
-
-			self.valueWidget.$element.text(
-				// @todo there's a better way... (e.g. formatting actual value)
-				mw.message( propertyData.label ).text() +
-				mw.message( 'colon-separator' ).text() +
-				plain
-			);
-		} );
 	};
 
 	statements.QualifierWidget.prototype.populatePropertiesDropdown = function () {
@@ -143,4 +157,4 @@
 		this.valueInput.setDisabled( false );
 	};
 
-}( mw.mediaInfo.statements ) );
+}( mw.mediaInfo.statements, wikibase ) );

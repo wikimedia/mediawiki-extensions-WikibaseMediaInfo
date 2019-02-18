@@ -239,7 +239,13 @@
 				"oojs-ui-core",
 				"oojs-ui-widgets",
 				"wikibase.mediainfo.statements.styles",
-				"wikibase.utilities.ClaimGuidGenerator"
+				"wikibase.serialization.StatementListDeserializer",
+				"wikibase.serialization.StatementSerializer",
+				"wikibase.serialization.StatementDeserializer",
+				"wikibase.datamodel.Statement",
+				"wikibase.datamodel.EntityId",
+				"wikibase.utilities.ClaimGuidGenerator",
+				"dataValues.values"
 			],
 			"messages": [
 				"wikibasemediainfo-property-placeholder",

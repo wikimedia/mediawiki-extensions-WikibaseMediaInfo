@@ -1,16 +1,14 @@
-( function ( statements, wikibase ) {
+( function ( statements, wb ) {
 
 	'use strict';
 
 	/**
 	 * @constructor
 	 * @param {Object} config Configuration options
+	 * @param {wikibase.datamodel.Statement} config.data
 	 * @param {string} config.entityId Entity ID (e.g. M123 id of the file you just uploaded)
-	 * @param {string} config.propertyId Property ID (e.g. P737 depicts id)
-	 * @param {Object} config.value Value (e.g. {"value":{"id":"Q1"},"type":"wikibase-entityid"})
 	 * @param {string} [config.label] Label for this item (e.g. 'cat')
 	 * @param {string} [config.url] URL to this item (e.g. /wiki/Item:Q1)
-	 * @param {string} [config.rank] Rank (e.g. 'normal' (default) or 'preferred')
 	 * @param {string} [config.editing] True for edit mode, False for read mode
 	 */
 	statements.ItemWidget = function MediaInfoStatementsItemWidget( config ) {
@@ -18,16 +16,11 @@
 		OO.ui.mixin.GroupElement.call( this, $.extend( {}, config ) );
 		statements.FormatValueElement.call( this, $.extend( {}, config ) );
 
-		var guidGenerator = new wikibase.utilities.ClaimGuidGenerator( config.entityId );
-
 		this.editing = !!config.editing;
 
-		this.propertyId = config.propertyId;
-		this.value = config.value;
+		this.data = config.data;
 		this.label = config.label;
 		this.url = config.url;
-		this.rank = config.rank || 'normal';
-		this.guid = guidGenerator.newGuid();
 
 		this.removeButton = new OO.ui.ButtonWidget( {
 			classes: [ 'wbmi-item-remove' ],
@@ -54,18 +47,29 @@
 
 	statements.ItemWidget.prototype.render = function () {
 		var self = this,
-			promise = $.Deferred().resolve().promise();
+			dataValue = this.data.getClaim().getMainSnak().getValue(),
+			promise = $.when(
+				this.formatValue( dataValue, 'text/plain' ),
+				this.formatValue( dataValue, 'text/html' )
+			);
 
 		if ( this.label === undefined || this.url === undefined ) {
-			promise = $.when(
-				this.formatValue( this.value, 'text/plain' ),
-				this.formatValue( this.value, 'text/html' )
-			).then(
+			promise.then(
 				function ( plain, html ) {
 					self.label = plain;
 					self.url = $( html ).attr( 'href' );
 				}
 			);
+		} else {
+			// if this.label & this.url have been passed in, we don't
+			// really need to format these values, so we can just go
+			// ahead and render
+			// we are still doing the formatValue calls, however,
+			// because even if we don't use them yet, we will need to
+			// do them later on (after submitting to API and rerendering)
+			// and we might as well fetch & cache them now to speed
+			// things up later...
+			promise = $.Deferred().resolve().promise();
 		}
 
 		promise.then( this.renderInternal.bind( this ) );
@@ -73,7 +77,7 @@
 
 	statements.ItemWidget.prototype.renderInternal = function () {
 		var self = this,
-			id = this.value.value.id || '',
+			id = this.data.getClaim().getMainSnak().getPropertyId() || '',
 			repo = id.indexOf( ':' ) >= 0 ? id.replace( /:.+$/, '' ) : '',
 			$label = $( '<h4>' )
 				.addClass( 'wbmi-entity-label' )
@@ -89,18 +93,22 @@
 			$makePrimary = $( '<a>' )
 				.addClass(
 					'wbmi-entity-primary ' +
-					'wbmi-entity' + ( this.rank === 'preferred' ? '-is-primary' : '-make-primary' )
+					'wbmi-entity' + ( this.data.getRank() === wb.datamodel.Statement.RANK.NORMAL ? '-make-primary' : '-is-primary' )
 				)
 				.attr( 'href', '#' )
 				.text(
-					this.rank === 'preferred' ?
-						mw.message( 'wikibasemediainfo-statements-item-is-primary' ).text() :
-						mw.message( 'wikibasemediainfo-statements-item-make-primary' ).text()
+					this.data.getRank() === wb.datamodel.Statement.RANK.NORMAL ?
+						mw.message( 'wikibasemediainfo-statements-item-make-primary' ).text() :
+						mw.message( 'wikibasemediainfo-statements-item-is-primary' ).text()
 				)
-				.prepend( this.rank === 'preferred' ? icon.$element : '' )
+				.prepend( this.data.getRank() === wb.datamodel.Statement.RANK.NORMAL ? '' : icon.$element )
 				.on( 'click', function ( e ) {
 					e.preventDefault();
-					self.rank = self.rank === 'preferred' ? 'normal' : 'preferred';
+					self.data.setRank(
+						self.data.getRank() === wb.datamodel.Statement.RANK.NORMAL ?
+							wb.datamodel.Statement.RANK.PREFERRED :
+							wb.datamodel.Statement.RANK.NORMAL
+					);
 					self.render();
 				} ),
 			itemContainer = $( '<div>' ).addClass( 'wbmi-item-container' );
@@ -142,7 +150,7 @@
 	};
 
 	/**
-	 * @param {Object} data
+	 * @param {wikibase.datamodel.Snak|undefined} data
 	 */
 	statements.ItemWidget.prototype.addQualifier = function ( data ) {
 		var properties = mw.config.get( 'wbmiDepictsQualifierProperties' ),
@@ -156,7 +164,30 @@
 		}
 
 		this.addItems( [ widget ] );
+		this.onQualifierChange( widget );
 		widget.connect( this, { delete: [ 'removeItems', [ widget ] ] } );
+		widget.connect( this, { delete: [ 'onQualifierChange', widget ] } );
+		widget.connect( this, { change: [ 'onQualifierChange', widget ] } );
+	};
+
+	statements.ItemWidget.prototype.onQualifierChange = function () {
+		// it's easier just to generate a new set of qualifiers instead of fetching the
+		// existing one, keeping track of which is/was where, and making updates...
+		var qualifiers = new wb.datamodel.SnakList( this.getItems()
+			.map( function ( item ) {
+				// try to fetch data - if it fails (likely because of incomplete input),
+				// we'll just ignore that qualifier
+				try {
+					return item.getData();
+				} catch ( e ) {
+					return undefined;
+				}
+			} )
+			.filter( function ( data ) {
+				return data instanceof wb.datamodel.Snak;
+			} ) );
+
+		this.data.getClaim().setQualifiers( qualifiers );
 	};
 
 	/**
@@ -170,55 +201,27 @@
 	};
 
 	/**
-	 * @return {Object}
+	 * @return {wikibase.datamodel.Statement}
 	 */
 	statements.ItemWidget.prototype.getData = function () {
-		var qualifiers = this.getItems()
-			.map( function ( item ) {
-				// try to fetch data - if it fails (likely because of incomplete input),
-				// we'll just ignore that qualifier
-				try {
-					return item.getData();
-				} catch ( e ) {
-					return null;
-				}
-			} )
-			.reduce( function ( result, data ) {
-				if ( data !== null ) {
-					result[ data.property ] = result[ data.property ] || [];
-					result[ data.property ].push( data );
-				}
-				return result;
-			}, {} );
-
-		return {
-			type: 'statement',
-			mainsnak: {
-				snaktype: 'value',
-				property: this.propertyId,
-				datavalue: this.value
-			},
-			id: this.guid,
-			qualifiers: qualifiers,
-			'qualifiers-order': Object.keys( qualifiers ),
-			rank: this.rank
-		};
+		return this.data;
 	};
 
 	/**
-	 * @param {Object} data
+	 * @param {wikibase.datamodel.Statement} data
 	 */
 	statements.ItemWidget.prototype.setData = function ( data ) {
-		var self = this;
+		var self = this,
+			serializer = new wb.serialization.StatementSerializer(),
+			deserializer = new wb.serialization.StatementDeserializer();
 
-		this.propertyId = data.mainsnak.property;
-		this.guid = data.id;
-		this.rank = data.rank;
+		// store a clone of the data we've been handled: if qualifiers
+		// or rank change, we'll be updating this data in here, but the source
+		// object should remain unaltered
+		this.data = deserializer.deserialize( serializer.serialize( data ) );
 
 		// save & re-render title
-		if ( this.value !== data.mainsnak.datavalue ) {
-			this.value = data.mainsnak.datavalue;
-
+		if ( !this.data.equals( data ) ) {
 			// property has changed: invalidate the label & url
 			this.label = undefined;
 			this.url = undefined;
@@ -228,16 +231,9 @@
 
 		// remove existing qualifiers, then add new ones based on data passed in
 		this.clearItems();
-		Object.keys( data.qualifiers || {} )
-			// this is a workaround for Object.values not being supported in all browsers...
-			.map( function ( key ) {
-				return data.qualifiers[ key ];
-			} )
-			.forEach( function ( qualifiers ) {
-				qualifiers.forEach( function ( qualifier ) {
-					self.addQualifier( qualifier );
-				} );
-			} );
+		data.getClaim().getQualifiers().each( function ( i, qualifier ) {
+			self.addQualifier( qualifier );
+		} );
 	};
 
 }( mw.mediaInfo.statements, wikibase ) );

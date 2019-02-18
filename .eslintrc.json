@@ -8,6 +8,7 @@
 		"module": false,
 		"util": false,
 		"wikibase": false,
+		"dataValues": false,
 		"mw": false,
 		"OO": false
 	},

@@ -1,4 +1,4 @@
-( function ( statements ) {
+( function ( statements, wb ) {
 
 	'use strict';
 
@@ -28,40 +28,32 @@
 	statements.ItemInputWidget.prototype.onLookupMenuItemChoose = function ( item ) {
 		var data = item.getData();
 		this.setValue( data.label );
-		this.data = data.id;
+		this.id = data.id;
 		this.emit( 'choose', this, data );
 	};
 
 	/**
-	 * @param {Object} data
+	 * @param {wb.datamodel.EntityId|undefined} data
 	 */
 	statements.ItemInputWidget.prototype.setData = function ( data ) {
-		if ( data.value && data.value.id ) {
-			var self = this;
+		var self = this;
+
+		if ( data instanceof wb.datamodel.EntityId ) {
 			this.formatValue( data, 'text/plain' ).then( function ( plain ) {
-				self.data = data;
+				self.id = data.toJSON().id;
 				self.setValue( plain );
 			} );
 		} else {
-			this.data = undefined;
+			this.id = undefined;
 			this.setValue( '' );
 		}
 	};
 
 	/**
-	 * @return {Object}
+	 * @return {wb.datamodel.EntityId}
 	 */
 	statements.ItemInputWidget.prototype.getData = function () {
-		if ( this.data === undefined ) {
-			return {};
-		}
-
-		return {
-			type: 'wikibase-entityid',
-			value: {
-				id: this.data
-			}
-		};
+		return new wb.datamodel.EntityId( this.id );
 	};
 
-}( mw.mediaInfo.statements ) );
+}( mw.mediaInfo.statements, wikibase ) );

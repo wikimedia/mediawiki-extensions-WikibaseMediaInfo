@@ -87,16 +87,6 @@
 		]
 	},
 	"ResourceModules": {
-		"jquery.wikibase.mediainfoview": {
-			"scripts": "resources/jquery.wikibase.mediainfoview.js",
-			"dependencies": [
-				"jquery.wikibase.entityview"
-			],
-			"targets": [
-				"desktop",
-				"mobile"
-			]
-		},
 		"wikibase.mediainfo.filePageDisplay": {
 			"scripts": [
 				"resources/filepage/__namespace.js",
@@ -143,16 +133,6 @@
 				"wikibasemediainfo-filepage-license-content-acceptance",
 				"wikibasemediainfo-filepage-license-accept",
 				"wikibasemediainfo-filepage-license-cancel"
-			],
-			"targets": [
-				"desktop",
-				"mobile"
-			]
-		},
-		"wikibase.mediainfo.mediainfoview": {
-			"dependencies": [
-				"jquery.wikibase.mediainfoview",
-				"wikibase.mediainfo.getDeserializer"
 			],
 			"targets": [
 				"desktop",

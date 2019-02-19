@@ -107,7 +107,7 @@
 				"oojs-ui-windows",
 				"oojs-ui.styles.icons-editing-core",
 				"oojs-ui.styles.icons-movement",
-				"wikibase.mediainfo.filepagestyles",
+				"wikibase.mediainfo.filepage.styles",
 				"wikibase.mediainfo.statements",
 				"wikibase",
 				"wikibase.api.getLocationAgnosticMwApi",
@@ -185,6 +185,15 @@
 			]
 		},
 		"wikibase.mediainfo.filepagestyles": {
+			"styles": [
+				"resources/mediainfo-filepage.less"
+			],
+			"targets": [
+				"desktop",
+				"mobile"
+			]
+		},
+		"wikibase.mediainfo.filepage.styles": {
 			"styles": [
 				"resources/mediainfo-filepage.less"
 			],

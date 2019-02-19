@@ -249,7 +249,7 @@ class WikibaseMediaInfoHooks {
 			$entityId = $this->entityIdFromPageId( $pageId );
 
 			$modules[] = 'wikibase.mediainfo.filePageDisplay';
-			$moduleStyles[] = 'wikibase.mediainfo.filepagestyles';
+			$moduleStyles[] = 'wikibase.mediainfo.filepage.styles';
 			$moduleStyles[] = 'wikibase.mediainfo.statements.styles';
 
 			$jsConfigVars += [

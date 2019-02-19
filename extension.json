@@ -87,6 +87,39 @@
 		]
 	},
 	"ResourceModules": {
+		"wikibase.mediainfo.getDeserializer": {
+			"scripts": "resources/getDeserializer.js",
+			"dependencies": [
+				"wikibase.mediainfo.serialization.MediaInfoDeserializer"
+			],
+			"targets": [
+				"desktop",
+				"mobile"
+			]
+		},
+		"wikibase.mediainfo.serialization.MediaInfoDeserializer": {
+			"scripts": [
+				"resources/__namespace.js",
+				"resources/datamodel/__namespace.js",
+				"resources/datamodel/MediaInfo.js",
+				"resources/serialization/__namespace.js",
+				"resources/serialization/MediaInfoDeserializer.js"
+			],
+			"dependencies": [
+				"util.inherit",
+				"wikibase.datamodel.Entity",
+				"wikibase.datamodel.Fingerprint",
+				"wikibase.datamodel.StatementGroupSet",
+				"wikibase.datamodel.TermMap",
+				"wikibase.serialization.Deserializer",
+				"wikibase.serialization.StatementGroupSetDeserializer",
+				"wikibase.serialization.TermMapDeserializer"
+			],
+			"targets": [
+				"desktop",
+				"mobile"
+			]
+		},
 		"wikibase.mediainfo.filePageDisplay": {
 			"scripts": [
 				"resources/filepage/__namespace.js",
@@ -133,51 +166,6 @@
 				"wikibasemediainfo-filepage-license-content-acceptance",
 				"wikibasemediainfo-filepage-license-accept",
 				"wikibasemediainfo-filepage-license-cancel"
-			],
-			"targets": [
-				"desktop",
-				"mobile"
-			]
-		},
-		"wikibase.mediainfo.datamodel.MediaInfo": {
-			"scripts": [
-				"resources/__namespace.js",
-				"resources/datamodel/__namespace.js",
-				"resources/datamodel/MediaInfo.js"
-			],
-			"dependencies": [
-				"util.inherit",
-				"wikibase.datamodel.Entity",
-				"wikibase.datamodel.Fingerprint",
-				"wikibase.datamodel.StatementGroupSet",
-				"wikibase.datamodel.TermMap"
-			],
-			"targets": [
-				"desktop",
-				"mobile"
-			]
-		},
-		"wikibase.mediainfo.getDeserializer": {
-			"scripts": "resources/getDeserializer.js",
-			"dependencies": [
-				"wikibase.mediainfo.serialization.MediaInfoDeserializer"
-			],
-			"targets": [
-				"desktop",
-				"mobile"
-			]
-		},
-		"wikibase.mediainfo.serialization.MediaInfoDeserializer": {
-			"scripts": [
-				"resources/serialization/__namespace.js",
-				"resources/serialization/MediaInfoDeserializer.js"
-			],
-			"dependencies": [
-				"util.inherit",
-				"wikibase.mediainfo.datamodel.MediaInfo",
-				"wikibase.serialization.Deserializer",
-				"wikibase.serialization.StatementGroupSetDeserializer",
-				"wikibase.serialization.TermMapDeserializer"
 			],
 			"targets": [
 				"desktop",

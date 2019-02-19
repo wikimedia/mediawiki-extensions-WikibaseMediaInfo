@@ -149,14 +149,6 @@
 				"mobile"
 			]
 		},
-		"wikibase.mediainfo": {
-			"scripts": "resources/__namespace.js",
-			"dependencies": "wikibase",
-			"targets": [
-				"desktop",
-				"mobile"
-			]
-		},
 		"wikibase.mediainfo.mediainfoview": {
 			"dependencies": [
 				"jquery.wikibase.mediainfoview",
@@ -169,6 +161,7 @@
 		},
 		"wikibase.mediainfo.datamodel.MediaInfo": {
 			"scripts": [
+				"resources/__namespace.js",
 				"resources/datamodel/__namespace.js",
 				"resources/datamodel/MediaInfo.js"
 			],
@@ -177,8 +170,7 @@
 				"wikibase.datamodel.Entity",
 				"wikibase.datamodel.Fingerprint",
 				"wikibase.datamodel.StatementGroupSet",
-				"wikibase.datamodel.TermMap",
-				"wikibase.mediainfo"
+				"wikibase.datamodel.TermMap"
 			],
 			"targets": [
 				"desktop",
@@ -202,7 +194,6 @@
 			],
 			"dependencies": [
 				"util.inherit",
-				"wikibase.mediainfo",
 				"wikibase.mediainfo.datamodel.MediaInfo",
 				"wikibase.serialization.Deserializer",
 				"wikibase.serialization.StatementGroupSetDeserializer",

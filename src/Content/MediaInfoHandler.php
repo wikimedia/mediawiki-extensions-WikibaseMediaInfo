@@ -3,17 +3,13 @@
 namespace Wikibase\MediaInfo\Content;
 
 use IContextSource;
-use Page;
 use Title;
 use Wikibase\Client\Store\UsageUpdater;
 use Wikibase\Content\EntityHolder;
 use Wikibase\DataModel\Entity\EntityId;
 use Wikibase\DataModel\Entity\EntityIdParser;
-use Wikibase\EditEntityAction;
-use Wikibase\HistoryEntityAction;
 use Wikibase\Lib\Store\EntityContentDataCodec;
 use Wikibase\Lib\Store\LanguageFallbackLabelDescriptionLookupFactory;
-use Wikibase\MediaInfo\Actions\ViewMediaInfoAction;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\MediaInfo\DataModel\MediaInfoId;
 use Wikibase\MediaInfo\Services\FilePageLookup;
@@ -22,7 +18,6 @@ use Wikibase\Repo\Search\Elastic\Fields\FieldDefinitions;
 use Wikibase\Repo\Validators\EntityConstraintProvider;
 use Wikibase\Repo\Validators\ValidatorErrorLocalizer;
 use Wikibase\Store\EntityIdLookup;
-use Wikibase\SubmitEntityAction;
 use Wikibase\TermIndex;
 
 /**
@@ -102,27 +97,6 @@ class MediaInfoHandler extends EntityHandler {
 		$this->missingMediaInfoHandler = $missingMediaInfoHandler;
 		$this->filePageLookup = $filePageLookup;
 		$this->usageUpdater = $usageUpdater;
-	}
-
-	/**
-	 * @see ContentHandler::getActionOverrides
-	 *
-	 * @return array
-	 */
-	public function getActionOverrides() {
-		return [
-			'history' => function( Page $page, IContextSource $context ) {
-				return new HistoryEntityAction(
-					$page,
-					$context,
-					$this->entityIdLookup,
-					$this->labelLookupFactory->newLabelDescriptionLookup( $context->getLanguage() )
-				);
-			},
-			'view' => ViewMediaInfoAction::class,
-			'edit' => EditEntityAction::class,
-			'submit' => SubmitEntityAction::class,
-		];
 	}
 
 	/**

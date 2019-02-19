@@ -2,12 +2,8 @@
 
 namespace Wikibase\MediaInfo\Tests\MediaWiki\Content;
 
-use Action;
-use Article;
-use Closure;
 use FauxRequest;
 use IContextSource;
-use Language;
 use PHPUnit4And6Compat;
 use RequestContext;
 use Title;
@@ -129,30 +125,8 @@ class MediaInfoHandlerTest extends \PHPUnit\Framework\TestCase {
 		$mediaInfoHandler = $this->newMediaInfoHandler();
 		$overrides = $mediaInfoHandler->getActionOverrides();
 
-		$this->assertSame( [ 'history', 'view', 'edit', 'submit' ], array_keys( $overrides ) );
-
-		$this->assertActionOverride( $overrides['history'] );
-		$this->assertActionOverride( $overrides['view'] );
-		$this->assertActionOverride( $overrides['edit'] );
-		$this->assertActionOverride( $overrides['submit'] );
-	}
-
-	private function assertActionOverride( $override ) {
-		if ( $override instanceof Closure ) {
-			$context = $this->getMock( IContextSource::class );
-			$context->expects( $this->any() )
-				->method( 'getLanguage' )
-				->will( $this->returnValue( $this->getMockWithoutConstructor( Language::class ) ) );
-
-			$article = $this->getMockBuilder( Article::class )
-				->disableOriginalConstructor()
-				->getMock();
-
-			$action = $override( $article, $context );
-			$this->assertInstanceOf( Action::class, $action );
-		} else {
-			$this->assertTrue( is_subclass_of( $override, Action::class ) );
-		}
+		// We should not over-ride anything
+		$this->assertSame( [], array_keys( $overrides ) );
 	}
 
 	public function testMakeEmptyEntity() {

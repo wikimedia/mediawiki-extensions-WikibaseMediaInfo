@@ -75,7 +75,7 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 			],
 			'placeholder replaced' => [
 				'original' => 'STRING_1<mw:slotheader>STRING_2</mw:slotheader>STRING_3',
-				'expected' => 'STRING_1<mw:mediainfoslotheader />STRING_3',
+				'expected' => 'STRING_1<mediainfoslotheader />STRING_3',
 			],
 		];
 	}
@@ -181,9 +181,9 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 		$out = $this->getMockOutputPage( $imgTitle );
 
 		$parserOutputTag = '<div class="mw-parser-output">';
-		$mediaInfoViewOpeningTag = '<mw:mediainfoView>';
+		$mediaInfoViewOpeningTag = '<mediainfoView>';
 		$captions = 'SOME_CAPTIONS';
-		$mediaInfoViewClosingTag = '</mw:mediainfoView>';
+		$mediaInfoViewClosingTag = '</mediainfoView>';
 		$extraHtml = 'SOME_HTML';
 		$captionsHeader = '<h1 class="mw-slot-header">' .
 			WikibaseMediaInfoHooks::MEDIAINFO_SLOT_HEADER_PLACEHOLDER .
@@ -252,9 +252,9 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 		$out = $this->getMockOutputPage( $imgTitle );
 
 		$parserOutputTag = '<div class="mw-parser-output">';
-		$mediaInfoViewOpeningTag = '<mw:mediainfoView>';
+		$mediaInfoViewOpeningTag = '<mediainfoView>';
 		$captions = 'SOME_CAPTIONS';
-		$mediaInfoViewClosingTag = '</mw:mediainfoView>';
+		$mediaInfoViewClosingTag = '</mediainfoView>';
 		$extraHtml = 'SOME_HTML';
 		$out->clearHTML();
 		$out->addHTML(

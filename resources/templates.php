@@ -16,11 +16,11 @@ return call_user_func( function() {
 
 	$templates['filepage-entityview'] =
 		<<<HTML
-<mw:mediainfoView>
+<mediainfoView>
 <div id="wb-$1-$2" class="wbmi-entityview" dir="$3">
 	$4
 </div>
-</mw:mediainfoView>
+</mediainfoView>
 HTML;
 
 	return $templates;

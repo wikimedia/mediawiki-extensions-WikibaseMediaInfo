@@ -21,6 +21,7 @@
 	"wikibasemediainfo-filepage-edit-captions": "Edit captions",
 	"wikibasemediainfo-filepage-edit-depicts": "Edit depicts",
 	"wikibasemediainfo-filepage-cancel": "Cancel",
+	"wikibasemediainfo-filepage-edit": "Edit",
 	"wikibasemediainfo-filepage-publish": "Publish changes",
 	"wikibasemediainfo-filepage-caption-empty": "Add a one-line explanation of what this file represents",
 	"wikibasemediainfo-filepage-caption-too-long": "$1 {{PLURAL:$1|character|characters}} over the limit",

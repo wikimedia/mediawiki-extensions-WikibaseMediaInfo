@@ -23,21 +23,19 @@
 
 		this.api = wb.api.getLocationAgnosticMwApi( mw.config.get( 'wbRepoApiUrl' ) );
 		this.contentSelector = '.' + this.config.contentClass;
-
 		this.licenseDialogWidget = new sd.LicenseDialogWidget();
-
 		this.headerSelector = this.contentSelector + ' .' + config.headerClass;
+
 		this.editToggle = new OO.ui.ButtonWidget( {
-			icon: 'edit',
+			label: mw.message( 'wikibasemediainfo-filepage-edit' ).text(),
 			framed: false,
+			flags: 'progressive',
 			title: mw.message( 'wikibasemediainfo-filepage-edit-depicts' ).text(),
 			classes: [ 'wbmi-entityview-editButton' ]
 		} );
-		this.editToggle.connect( this, { click: 'makeEditable' } );
 
-		this.cancelPublish = new sd.CancelPublishWidget(
-			this
-		);
+		this.editToggle.connect( this, { click: 'makeEditable' } );
+		this.cancelPublish = new sd.CancelPublishWidget( this );
 
 		// jquery element for the link to the 'depicts' property on wikidata
 		this.$depictsPropertyLink = $( this.headerSelector + ' a' );
@@ -85,7 +83,9 @@
 			return;
 		}
 
-		this.populateFormatValueCache( JSON.parse( $( this.contentSelector ).attr( 'data-formatvalue' ) || '{}' ) );
+		this.populateFormatValueCache(
+			JSON.parse( $( this.contentSelector ).attr( 'data-formatvalue' ) || '{}' )
+		);
 
 		this.editToggle.$element.insertAfter( this.$depictsPropertyLink );
 		this.cancelPublish.$element.insertAfter( this.$depictsPropertyLink );

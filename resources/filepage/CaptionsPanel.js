@@ -53,8 +53,9 @@
 		this.licenseAcceptance = $.Deferred().promise();
 
 		this.editToggle = new OO.ui.ButtonWidget( {
-			icon: 'edit',
+			label: mw.message( 'wikibasemediainfo-filepage-edit' ).text(),
 			framed: false,
+			flags: 'progressive',
 			title: mw.message( 'wikibasemediainfo-filepage-edit-captions' ).text(),
 			classes: [ 'wbmi-entityview-editButton' ]
 		} );

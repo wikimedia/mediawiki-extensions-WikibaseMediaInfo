@@ -169,15 +169,6 @@
 				"mobile"
 			]
 		},
-		"wikibase.mediainfo.filepagestyles": {
-			"styles": [
-				"resources/mediainfo-filepage.less"
-			],
-			"targets": [
-				"desktop",
-				"mobile"
-			]
-		},
 		"wikibase.mediainfo.filepage.styles": {
 			"styles": [
 				"resources/mediainfo-filepage.less"

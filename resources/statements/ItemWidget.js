@@ -77,7 +77,7 @@
 
 	statements.ItemWidget.prototype.renderInternal = function () {
 		var self = this,
-			id = this.data.getClaim().getMainSnak().getPropertyId() || '',
+			id = this.data.getClaim().getMainSnak().getValue().toJSON().id || '',
 			repo = id.indexOf( ':' ) >= 0 ? id.replace( /:.+$/, '' ) : '',
 			$label = $( '<h4>' )
 				.addClass( 'wbmi-entity-label' )

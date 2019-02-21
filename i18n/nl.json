@@ -5,7 +5,8 @@
 			"Jdforrester",
 			"Spinster",
 			"Optilete",
-			"Xbaked potatox"
+			"Xbaked potatox",
+			"Elroy"
 		]
 	},
 	"right-mediainfo-term": "Pas de media-informatietermen aan (onderschriften, samenvattingen)",
@@ -29,10 +30,18 @@
 	"wikibasemediainfo-filepage-caption-too-long": "$1 {{PLURAL:$1|teken|tekens}} over de limiet",
 	"wikibasemediainfo-filepage-caption-approaching-limit": "$1 {{PLURAL:$1|teken|tekens|0=tekens}} over",
 	"wikibasemediainfo-filepage-statement-no-data": "Geen gegevens beschikbaar",
+	"wikibasemediainfo-filepage-license-accept": "Aanvaarden",
+	"wikibasemediainfo-filepage-license-cancel": "Annuleren",
+	"wikibasemediainfo-statements-depicts-title": "Naar deze afbeelding verwezen onderdelen",
 	"wikibasemediainfo-statements-item-input-label": "van Wikidata",
 	"wikibasemediainfo-statements-item-is-primary": "Primair",
 	"wikibasemediainfo-statements-item-remove": "Verwijderen",
+	"wikibasemediainfo-statements-item-add-qualifier": "Kwalificatie toevoegen",
+	"wikibasemediainfo-property-depicts": "Verwijzingen",
 	"wikibasemediainfo-property-placeholder": "Eigenschap",
+	"wikibasemediainfo-property-value-features": "Met onderdelen weergegeven",
 	"wikibasemediainfo-property-value-color": "Kleur",
-	"wikibasemediainfo-property-value-quantity": "Hoeveelheid"
+	"wikibasemediainfo-property-value-part": "Wordt op onderdeel toegepast",
+	"wikibasemediainfo-property-value-quantity": "Hoeveelheid",
+	"wikibasemediainfo-property-value-depicts": "Verwijzingen"
 }

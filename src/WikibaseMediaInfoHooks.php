@@ -14,7 +14,9 @@ use OutputPage;
 use ParserOutput;
 use Title;
 use Wikibase\DataModel\Entity\EntityId;
+use Wikibase\DataModel\Entity\PropertyId;
 use Wikibase\DataModel\Services\EntityId\EntityIdComposer;
+use Wikibase\DataModel\Services\Lookup\PropertyDataTypeLookupException;
 use Wikibase\LanguageFallbackChainFactory;
 use Wikibase\Lib\Store\EntityByLinkedTitleLookup;
 use Wikibase\Lib\Store\EntityInfo;
@@ -176,8 +178,10 @@ class WikibaseMediaInfoHooks {
 			return;
 		}
 
+		$mwConfig = MediaWikiServices::getInstance()->getMainConfig();
+		$wbRepo = WikibaseRepo::getDefaultInstance();
 		$allLanguages = \Language::fetchLanguageNames();
-		$termsLanguages = WikibaseRepo::getDefaultInstance()->getTermsLanguages()->getLanguages();
+		$termsLanguages = $wbRepo->getTermsLanguages()->getLanguages();
 		$imgTitle = $out->getTitle();
 
 		$isMediaInfoPage =
@@ -189,6 +193,20 @@ class WikibaseMediaInfoHooks {
 			// … the page view is a read
 			\Action::getActionName( $out->getContext() ) === 'view';
 
+		$dataTypes = $mwConfig->get( 'WBRepoDataTypes' );
+		$qualifiers = [];
+		$propertyDataTypeLookup = $wbRepo->getPropertyDataTypeLookup();
+		foreach ( $wgDepictsQualifierProperties as $property ) {
+			try {
+				$id = new PropertyId( $property );
+				$propertyDatatype = $propertyDataTypeLookup->getDataTypeIdForProperty( $id );
+				$valueDataType = $dataTypes['PT:'.$propertyDatatype]['value-type'];
+				$qualifiers[$property] = $valueDataType;
+			} catch ( PropertyDataTypeLookupException $e ) {
+				// ignore invalid properties...
+			}
+		}
+
 		self::newFromGlobalState()->doBeforePageDisplay(
 			$out,
 			$isMediaInfoPage,
@@ -197,10 +215,9 @@ class WikibaseMediaInfoHooks {
 				array_flip( $termsLanguages )
 			),
 			new BabelUserLanguageLookup(),
-			WikibaseRepo::getDefaultInstance()->getEntityViewFactory(),
-			$wgDepictsQualifierProperties,
-			$wgMediaInfoProperties,
-			$wgMediaInfoShowQualifiers
+			$wbRepo->getEntityViewFactory(),
+			$wgMediaInfoShowQualifiers ? $qualifiers : [],
+			$wgMediaInfoProperties
 		);
 	}
 
@@ -210,7 +227,7 @@ class WikibaseMediaInfoHooks {
 	 * @param string[] $termsLanguages Array with language codes as keys and autonyms as values
 	 * @param UserLanguageLookup $userLanguageLookup
 	 * @param DispatchingEntityViewFactory $entityViewFactory
-	 * @param array $depictsQualifierProperties Array of properties of allowed qualifiers
+	 * @param array $depictsQualifierProperties Map of [qualifier properties => datatype]
 	 * 	for depicts in the format [
 	 * 		[
 	 * 			'id' => '<id of the property>',
@@ -219,7 +236,6 @@ class WikibaseMediaInfoHooks {
 	 * 		]
 	 * 	]
 	 * @param array $properties Property details (id, label and url)
-	 * @param bool $showQualifiers Feature flag for showing qualifiers for MediaInfo statements
 	 */
 	public function doBeforePageDisplay(
 		$out,
@@ -228,8 +244,7 @@ class WikibaseMediaInfoHooks {
 		UserLanguageLookup $userLanguageLookup,
 		DispatchingEntityViewFactory $entityViewFactory,
 		array $depictsQualifierProperties,
-		array $properties,
-		$showQualifiers
+		array $properties
 	) {
 		// Site-wide config
 		$modules = [];
@@ -237,7 +252,6 @@ class WikibaseMediaInfoHooks {
 		$jsConfigVars = [
 			'wbmiDepictsQualifierProperties' => $depictsQualifierProperties,
 			'wbmiProperties' => $properties,
-			'wbmiShowQualifiers' => $showQualifiers,
 		];
 
 		if ( $isMediaInfoPage ) {

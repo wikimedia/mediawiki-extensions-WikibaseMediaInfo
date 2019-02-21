@@ -42,7 +42,7 @@ class MediaInfoEntityStatementsView {
 	private $valueFormatterFactory;
 	private $serializerFactory;
 	private $languageCode;
-	private $showQualifiers;
+	private $qualifierIds;
 
 	const EMPTY_DEFAULT_PROPERTY_PLACEHOLDER = 'EMPTY_DEFAULT_PROPERTY_PLACEHOLDER';
 
@@ -57,7 +57,7 @@ class MediaInfoEntityStatementsView {
 	 * @param OutputFormatValueFormatterFactory $valueFormatterFactory
 	 * @param SerializerFactory $serializerFactory
 	 * @param string $languageCode
-	 * @param bool $showQualifiers
+	 * @param string[] $qualifiers Array of qualifier property IDs
 	 */
 	public function __construct(
 		PropertyOrderProvider $propertyOrderProvider,
@@ -68,7 +68,7 @@ class MediaInfoEntityStatementsView {
 		OutputFormatValueFormatterFactory $valueFormatterFactory,
 		SerializerFactory $serializerFactory,
 		$languageCode,
-		$showQualifiers
+		$qualifierIds
 	) {
 		OutputPage::setupOOUI();
 
@@ -80,7 +80,7 @@ class MediaInfoEntityStatementsView {
 		$this->valueFormatterFactory = $valueFormatterFactory;
 		$this->serializerFactory = $serializerFactory;
 		$this->languageCode = $languageCode;
-		$this->showQualifiers = $showQualifiers;
+		$this->qualifierIds = $qualifierIds;
 	}
 
 	/**
@@ -112,30 +112,40 @@ class MediaInfoEntityStatementsView {
 	 * @param Statement $statement
 	 * @return array
 	 */
-	private function getFormatValueCache( Statement $statement ) {
-		$result = [];
-		$formats = [];
+	private function getFormatValueCacheForStatement( Statement $statement ) {
+		$results = [];
 
-		// gather a list of snaks that we'll want to pre-format
-		$formats['text/html'][] = $statement->getMainSnak();
-		$formats['text/plain'][] = $statement->getMainSnak();
+		$results += $this->getFormatValueCache(
+			$statement->getMainSnak(),
+			[ 'text/html', 'text/plain' ]
+		);
+
 		foreach ( $statement->getQualifiers() as $qualifier ) {
-			$formats['text/plain'][] = $qualifier;
+			$results += $this->getFormatValueCache( $qualifier, [ 'text/plain' ] );
 		}
 
-		$snakSerializer = $this->serializerFactory->newSnakSerializer();
+		return $results;
+	}
 
-		foreach ( $formats as $format => $snaks ) {
-			foreach ( $snaks as $snak ) {
-				$serialized = $snakSerializer->serialize( $snak );
-				if ( isset( $serialized['datavalue'] ) ) {
-					$data = json_encode( $serialized[ 'datavalue' ] );
-					$result[$data][$format][$this->languageCode] = $this->formatSnak(
-						$snak,
-						$format,
-						$this->languageCode
-					);
-				}
+	/**
+	 * @param Snak $snak
+	 * @param string[] $formats
+	 * @return array
+	 */
+	private function getFormatValueCache( Snak $snak, $formats = [ 'text/plain' ] ) {
+		$result = [];
+
+		$snakSerializer = $this->serializerFactory->newSnakSerializer();
+		$serialized = $snakSerializer->serialize( $snak );
+
+		if ( isset( $serialized['datavalue'] ) ) {
+			$data = json_encode( $serialized[ 'datavalue' ] );
+			foreach ( $formats as $format ) {
+				$result[$data][$format][$this->languageCode] = $this->formatSnak(
+					$snak,
+					$format,
+					$this->languageCode
+				);
 			}
 		}
 
@@ -173,7 +183,27 @@ class MediaInfoEntityStatementsView {
 		foreach ( $statements as $statement ) {
 			$itemsGroupDiv->appendContent( $this->createStatementDiv( $statement ) );
 			$serializedStatements[] = $statementSerializer->serialize( $statement );
-			$formatValueCache += $this->getFormatValueCache( $statement );
+			$formatValueCache += $this->getFormatValueCacheForStatement( $statement );
+		}
+
+		// below is the main property (e.g. depicts)
+		$mainPropertySnak = new PropertyValueSnak(
+			$statement->getPropertyId(),
+			new EntityIdValue( $statement->getPropertyId() )
+		);
+		$formatValueCache += $this->getFormatValueCache(
+			$mainPropertySnak,
+			[ 'text/plain', 'text/html' ]
+		);
+		// these are properties use in qualifier dropdown (e.g. color, wears, ...)
+		foreach ( $this->qualifierIds as $id ) {
+			$formatValueCache += $this->getFormatValueCache(
+				new PropertyValueSnak(
+					new PropertyId( $propertyIdString ),
+					new EntityIdValue( new PropertyId( $id ) )
+				),
+				[ 'text/plain' ]
+			);
 		}
 
 		$panel = new PanelLayout( [
@@ -201,16 +231,11 @@ class MediaInfoEntityStatementsView {
 
 	private function createPropertyHeader( $propertyIdString ) {
 		$propertyId = new PropertyId( $propertyIdString );
-		$header = new Tag( 'div' );
-		$header->appendContent(
-			new HtmlSnippet(
-				$this->decorateFormattedDataValue(
-					$this->formatEntityId( $propertyId ),
-					$propertyId
-				)
-			)
+		$header = $this->createFormattedDataValue(
+			$this->formatEntityId( $propertyId ),
+			$propertyId
 		);
-		$header->addClasses( [ 'wbmi-entityview-statementsGroup-header' ] );
+		$header->addClasses( [ 'wbmi-statements-header' ] );
 		return $header;
 	}
 
@@ -222,7 +247,7 @@ class MediaInfoEntityStatementsView {
 		return $valueFormatter->formatValue( new EntityIdValue( $entityId ) );
 	}
 
-	private function decorateFormattedDataValue( $formattedValue, EntityId $entityId = null ) {
+	private function createFormattedDataValue( $formattedValue, EntityId $entityId = null ) {
 		$links = '';
 		$label = Html::rawElement(
 			'h4',
@@ -258,11 +283,10 @@ class MediaInfoEntityStatementsView {
 			);
 		}
 
-		return Html::rawElement(
-			'div',
-			[ 'class' => 'wbmi-entity-title' ],
-			$label . $links
-		);
+		$tag = new Tag( 'div' );
+		$tag->addClasses( [ 'wbmi-entity-title' ] );
+		$tag->appendContent( new HtmlSnippet( $label . $links ) );
+		return $tag;
 	}
 
 	private function createStatementDiv( Statement $statement ) {
@@ -292,16 +316,14 @@ class MediaInfoEntityStatementsView {
 			$mainSnakValueEntityId = $mainSnak->getDataValue()->getEntityId();
 		}
 		$mainSnakDiv->appendContent(
-			new HtmlSnippet(
-				$this->decorateFormattedDataValue(
-					$this->formatSnakValue( $mainSnak ),
-					$mainSnakValueEntityId
-				)
+			$this->createFormattedDataValue(
+				$this->formatSnakValue( $mainSnak ),
+				$mainSnakValueEntityId
 			)
 		);
 
 		$statementDiv->appendContent( $mainSnakDiv );
-		if ( $this->showQualifiers ) {
+		if ( count( $this->qualifierIds ) > 0 ) {
 			$qualifiers = $statement->getQualifiers();
 			if ( count( $qualifiers ) > 0 ) {
 				$statementDiv->appendContent( $this->createQualifiersDiv( $qualifiers ) );

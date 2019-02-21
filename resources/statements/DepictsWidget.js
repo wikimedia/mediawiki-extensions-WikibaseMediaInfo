@@ -5,25 +5,63 @@
 	/**
 	 * @constructor
 	 * @param {Object} [config] Configuration options
-	 * @param {string} [config.entityId] Entity ID (e.g. M123 id of the file you just uploaded)
+	 * @param {string} config.entityId Entity ID (e.g. M123 id of the file you just uploaded)
+	 * @param {string} [config.propertyId] Property ID (e.g. P123 id of `depicts` property)
+	 * @param {Object} [config.qualifiers] Qualifiers map: { propertyId: datatype, ...}
 	 */
 	statements.DepictsWidget = function MediaInfoStatementsDepictsWidget( config ) {
+		var
+			propertyId = config.propertyId || mw.config.get( 'wbmiProperties' ).depicts,
+			qualifiers = config.qualifiers || mw.config.get( 'wbmiDepictsQualifierProperties' ) || {},
+			dataValue = new wb.datamodel.EntityId( propertyId ),
+			repo = propertyId.indexOf( ':' ) >= 0 ? propertyId.replace( /:.+$/, '' ) : '',
+			$label = $( '<h4>' )
+				.addClass( 'wbmi-entity-label' )
+				.text( '' ), // will be filled out later (after formatValue call)
+			$link = $( '<a>' )
+				.addClass(
+					'wbmi-entity-link ' +
+					'wbmi-entity-link' + ( repo !== '' ? '-foreign-repo-' + repo : '-local-repo' )
+				)
+				.attr( 'href', '#' ) // will be filled out later (after formatValue call)
+				.attr( 'target', '_blank' ) // will be filled out later (after formatValue call)
+				.text( propertyId.replace( /^.+:/, '' ) );
+
+		config.propertyId = propertyId;
+		config.qualifiers = qualifiers;
+
 		statements.DepictsWidget.parent.call( this, config );
 		OO.ui.mixin.GroupElement.call( this );
 
 		this.entityId = config.entityId;
+		this.propertyId = config.propertyId;
+		this.qualifiers = config.qualifiers;
 		this.data = new wb.datamodel.StatementList();
 
 		this.input = new statements.ItemInputWidget( { classes: [ 'wbmi-depicts-input' ] } );
 		this.input.connect( this, { choose: 'addItemFromInput' } );
 
 		this.$element.append(
+			$( '<div>' ).addClass( 'wbmi-statements-header wbmi-entity-title' ).append(
+				$label,
+				$( '<div>' ).addClass( 'wbmi-entity-label-extra' ).append( $link )
+			),
 			this.input.$element,
 			this.$group.addClass( 'wbmi-content-items-group' )
 		);
+
+		// fetch property value & url
+		$.when(
+			this.formatValue( dataValue, 'text/plain' ),
+			this.formatValue( dataValue, 'text/html' )
+		).then( function ( plain, html ) {
+			$label.text( plain );
+			$link.attr( 'href', $( html ).attr( 'href' ) );
+		} );
 	};
 	OO.inheritClass( statements.DepictsWidget, OO.ui.Widget );
 	OO.mixinClass( statements.DepictsWidget, OO.ui.mixin.GroupElement );
+	OO.mixinClass( statements.DepictsWidget, statements.FormatValueElement );
 
 	/**
 	 * @param {mw.mediaInfo.statements.ItemInputWidget} item
@@ -55,9 +93,8 @@
 	 * @return {mw.mediaInfo.statements.ItemWidget}
 	 */
 	statements.DepictsWidget.prototype.createItem = function ( dataValue, label, url ) {
-		var propertyId = mw.config.get( 'wbmiProperties' ).depicts.id,
-			guidGenerator = new wb.utilities.ClaimGuidGenerator( this.entityId ),
-			mainSnak = new wb.datamodel.PropertyValueSnak( propertyId, dataValue, null ),
+		var guidGenerator = new wb.utilities.ClaimGuidGenerator( this.entityId ),
+			mainSnak = new wb.datamodel.PropertyValueSnak( this.propertyId, dataValue, null ),
 			qualifiers = null,
 			claim = new wb.datamodel.Claim( mainSnak, qualifiers, guidGenerator.newGuid() ),
 			references = null,
@@ -65,6 +102,7 @@
 			statement = new wb.datamodel.Statement( claim, references, rank );
 
 		return new statements.ItemWidget( {
+			qualifiers: this.qualifiers,
 			data: statement,
 			editing: this.editing,
 			label: label,
@@ -96,6 +134,10 @@
 		this.data.each( function ( i, statement ) {
 			var dataValue = statement.getClaim().getMainSnak().getValue(),
 				widget;
+
+			if ( statement.getClaim().getMainSnak().getPropertyId() !== self.propertyId ) {
+				throw new Error( 'Invalid statement' );
+			}
 
 			if ( dataValue.getType() === 'string' && dataValue.getValue() === 'EMPTY_DEFAULT_PROPERTY_PLACEHOLDER' ) {
 				// ignore invalid placeholder text

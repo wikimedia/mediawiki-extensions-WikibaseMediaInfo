@@ -14,10 +14,9 @@
 	sd.captions.initialize();
 
 	sd.depicts = new sd.DepictsPanel( {
-		headerClass: 'wbmi-entityview-statementsGroup-header',
 		contentClass:
 			'wbmi-entityview-statementsGroup-' +
-			mw.config.get( 'wbmiProperties' ).depicts.id.replace( ':', '_' ),
+			mw.config.get( 'wbmiProperties' ).depicts.replace( ':', '_' ),
 		entityId: mw.config.get( 'wbEntityId' )
 	} );
 	sd.depicts.initialize();

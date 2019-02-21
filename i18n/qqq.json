@@ -46,13 +46,5 @@
 	"wikibasemediainfo-statements-item-add-qualifier": "Text for button to add a qualifier",
 	"wikibasemediainfo-property-depicts": "Label for property 'Depicts'",
 	"wikibasemediainfo-property-placeholder": "Placeholder for properties dropdown",
-	"wikibasemediainfo-property-value-features": "Label for property 'Shown with features'",
-	"wikibasemediainfo-property-value-color": "Label for property 'Color'",
-	"wikibasemediainfo-property-value-wears": "Label for property 'Wears'",
-	"wikibasemediainfo-property-value-part": "Label for property 'Applies to part'",
-	"wikibasemediainfo-property-value-inscription": "Label for property 'Inscription'",
-	"wikibasemediainfo-property-value-symbolizes": "Label for property 'Symbolizes'",
-	"wikibasemediainfo-property-value-position": "Label for property 'Relative position within image'",
-	"wikibasemediainfo-property-value-quantity": "Label for property 'Quantity'",
 	"wikibasemediainfo-property-value-depicts": "Label for property 'Depicts'"
 }

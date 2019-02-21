@@ -9,7 +9,6 @@
 	 *
 	 * @constructor
 	 * @param {Object} [config]
-	 * @cfg {string} headerClass CSS class of depicts header element
 	 * @cfg {string} contentClass CSS class of depicts content container
 	 */
 	sd.DepictsPanel = function DepictsPanel( config ) {
@@ -22,9 +21,10 @@
 		OO.ui.mixin.PendingElement.call( this, this.config );
 
 		this.api = wb.api.getLocationAgnosticMwApi( mw.config.get( 'wbRepoApiUrl' ) );
-		this.contentSelector = '.' + this.config.contentClass;
+
+		this.$content = $( '.' + this.config.contentClass );
+
 		this.licenseDialogWidget = new sd.LicenseDialogWidget();
-		this.headerSelector = this.contentSelector + ' .' + config.headerClass;
 
 		this.editToggle = new OO.ui.ButtonWidget( {
 			label: mw.message( 'wikibasemediainfo-filepage-edit' ).text(),
@@ -37,10 +37,7 @@
 		this.editToggle.connect( this, { click: 'makeEditable' } );
 		this.cancelPublish = new sd.CancelPublishWidget( this );
 
-		// jquery element for the link to the 'depicts' property on wikidata
-		this.$depictsPropertyLink = $( this.headerSelector + ' a' );
-		this.$depictsPropertyLink.attr( 'target', '_blank' );
-
+		this.populateFormatValueCache( JSON.parse( this.$content.attr( 'data-formatvalue' ) || '{}' ) );
 		this.depictsInput = new st.DepictsWidget( this.config );
 	};
 
@@ -75,7 +72,9 @@
 
 		if (
 			// Exit if there's no statements block on the page (e.g. if it's feature-flagged off)
-			$( this.contentSelector ).length === 0 ||
+			this.$content.length === 0 ||
+			// Or we're missing an ID for "depicts" in config
+			!( 'depicts' in mw.config.get( 'wbmiProperties' ) ) ||
 			// Only allow editing if we're NOT on a diff page or viewing an older revision
 			// eslint-disable-next-line jquery/no-global-selector
 			$( '.diff' ).length !== 0 || $( '.mw-revision' ).length !== 0
@@ -83,22 +82,21 @@
 			return;
 		}
 
-		this.populateFormatValueCache(
-			JSON.parse( $( this.contentSelector ).attr( 'data-formatvalue' ) || '{}' )
-		);
-
-		this.editToggle.$element.insertAfter( this.$depictsPropertyLink );
-		this.cancelPublish.$element.insertAfter( this.$depictsPropertyLink );
 		this.cancelPublish.hide();
 
-		// Detach the pre-rendered depicts data from the DOM
-		$( this.contentSelector ).children( ':not(.' + this.config.headerClass + ')' ).detach();
-		// ... and load data into js widget instead
-		statementsJson = JSON.parse( $( this.contentSelector ).attr( 'data-statements' ) || '[]' );
+		// load data into js widget instead
+		statementsJson = JSON.parse( this.$content.attr( 'data-statements' ) || '[]' );
 		this.depictsInput.setData( deserializer.deserialize( statementsJson ) );
 		this.depictsInput.connect( this, { change: 'makeEditable' } );
 
-		$( this.depictsInput.$element ).insertAfter( this.headerSelector );
+		// ...and attach the widget to DOM, replacing the server-side rendered equivalent
+		this.$content.empty().append( this.depictsInput.$element );
+
+		// ...and attach edit/cancel/publish controls
+		this.$content.find( '.wbmi-statements-header .wbmi-entity-label-extra' ).append(
+			this.editToggle.$element,
+			this.cancelPublish.$element
+		);
 	};
 
 	sd.DepictsPanel.prototype.makeEditable = function () {
@@ -110,7 +108,7 @@
 			self.cancelPublish.enablePublish();
 			self.cancelPublish.show();
 			self.editToggle.$element.hide();
-			self.$depictsPropertyLink.hide();
+			self.$content.find( '.wbmi-statements-header .wbmi-entity-link' ).hide();
 
 			self.depictsInput.setEditing( true );
 		} );
@@ -127,7 +125,7 @@
 			self.depictsInput.connect( self, { change: 'makeEditable' } );
 
 			self.editToggle.$element.show();
-			self.$depictsPropertyLink.show();
+			self.$content.find( '.wbmi-statements-header .wbmi-entity-link' ).show();
 		} );
 	};
 
@@ -145,7 +143,7 @@
 				self.cancelPublish.setStateReady();
 				self.cancelPublish.hide();
 				self.editToggle.$element.show();
-				self.$depictsPropertyLink.show();
+				self.$content.find( '.wbmi-statements-header .wbmi-entity-link' ).show();
 			} )
 			.catch( function () {
 				self.cancelPublish.setStateReady();

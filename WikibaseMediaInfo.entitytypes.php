@@ -90,6 +90,7 @@ return [
 				new TemplateRegistry( include __DIR__ . '/resources/templates.php' )
 			);
 
+			$mwConfig = MediaWikiServices::getInstance()->getMainConfig();
 			$languageCode = $language->getCode();
 
 			// Use a MediaInfo-specific EntityTermsView class instead of the default one
@@ -112,13 +113,13 @@ return [
 			);
 
 			$defaultPropertyIdsForView = [];
-			$properties = MediaWikiServices::getInstance()
-				->getMainConfig()
-				->get( 'MediaInfoProperties' );
-			$depictsPropertyId = $properties['depicts']['id'];
+			$properties = $mwConfig->get( 'MediaInfoProperties' );
+			$depictsPropertyId = $properties['depicts'];
 			if ( !empty( $depictsPropertyId ) ) {
 				$defaultPropertyIdsForView[] = new PropertyId( $depictsPropertyId );
 			}
+
+			$qualifierPropertyIds = $mwConfig->get( 'DepictsQualifierProperties' );
 			$statementsView = new MediaInfoEntityStatementsView(
 				$propertyOrderProvider,
 				$textProvider,
@@ -128,9 +129,7 @@ return [
 				$wbRepo->getValueFormatterFactory(),
 				$wbRepo->getCompactBaseDataModelSerializerFactory(),
 				$languageCode,
-				MediaWikiServices::getInstance()
-					->getMainConfig()
-					->get( 'MediaInfoShowQualifiers' )
+				$mwConfig->get( 'MediaInfoShowQualifiers' ) ? $qualifierPropertyIds : []
 			);
 
 			return new MediaInfoView(

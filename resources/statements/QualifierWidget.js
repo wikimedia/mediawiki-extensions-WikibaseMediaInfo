@@ -5,13 +5,13 @@
 	/**
 	 * @constructor
 	 * @param {Object} config Configuration options
-	 * @param {Array} [config.properties] Properties data: [ { id: x, label: x, input: x }, ... ]
+	 * @param {Object} config.qualifiers Qualifiers map: { propertyId: datatype, ...}
 	 */
 	statements.QualifierWidget = function MediaInfoStatementsQualifierWidget( config ) {
 		statements.QualifierWidget.parent.call( this, config );
 		statements.FormatValueElement.call( this, $.extend( {}, config ) );
 
-		this.propertiesData = config.properties || { '': { id: '', label: '', input: 'string' } };
+		this.qualifiers = config.qualifiers || {};
 
 		this.valueWidget = new OO.ui.Widget( { classes: [ 'wbmi-qualifier-value' ] } );
 
@@ -19,9 +19,10 @@
 		this.removeIcon.connect( this, { click: [ 'emit', 'delete' ] } );
 
 		this.propertyDropdown = new OO.ui.DropdownWidget();
-		this.propertyDropdown.menu.connect( this, { select: 'populateValueInput' } );
-		this.propertyDropdown.menu.connect( this, { select: 'updateValueWidget' } );
-		this.propertyDropdown.menu.connect( this, { select: [ 'emit', 'change' ] } );
+		this.propertyDropdown.getMenu().connect( this, { select: 'populateValueInput' } );
+		this.propertyDropdown.getMenu().connect( this, { select: 'updateValueWidget' } );
+		this.propertyDropdown.getMenu().connect( this, { select: [ 'emit', 'change' ] } );
+		this.populatePropertiesDropdown();
 
 		this.valueInput = new statements.QualifierValueInputWidget();
 		this.valueInput.connect( this, { change: 'updateValueWidget' } );
@@ -38,8 +39,6 @@
 			],
 			classes: [ 'wbmi-qualifier' ]
 		} );
-
-		this.populatePropertiesDropdown();
 
 		this.$element = this.layout.$element;
 	};
@@ -67,11 +66,8 @@
 	statements.QualifierWidget.prototype.setData = function ( data ) {
 		this.data = data;
 
-		this.populatePropertiesDropdown();
 		this.propertyDropdown.getMenu().selectItemByData( data.getPropertyId() );
 		this.valueInput.setData( data.getValue() );
-
-		this.updateValueWidget();
 	};
 
 	/**
@@ -92,15 +88,10 @@
 			}
 
 			// if the value input is not empty, format it
-			this.updatePromise = this.formatValue( dataValue, 'text/plain' ).then( function ( plain ) {
-				var propertyKey = Object.keys( self.propertiesData ).filter( function ( key ) {
-						return self.propertiesData[ key ].id === data.getPropertyId();
-					} )[ 0 ],
-					propertyData = self.propertiesData[ propertyKey ];
-
+			this.updatePromise = this.formatValue( dataValue, 'text/plain' );
+			this.updatePromise.then( function ( plain ) {
 				self.valueWidget.$element.text(
-					// @todo there's a better way... (e.g. formatting actual value)
-					mw.message( propertyData.label ).text() +
+					( self.propertyDropdown.getMenu().findSelectedItem().getLabel() || '' ) +
 					mw.message( 'colon-separator' ).text() +
 					plain
 				);
@@ -116,43 +107,46 @@
 		var self = this;
 
 		// reset dropdown
-		this.propertyDropdown.menu.clearItems();
-		this.propertyDropdown.setLabel( mw.message( self.propertiesData[ '' ].label ).text() );
-		this.propertyDropdown.setDisabled( true );
+		this.propertyDropdown.getMenu().clearItems();
+		this.propertyDropdown.setLabel( mw.message( 'wikibasemediainfo-property-placeholder' ).text() );
 
-		// add all menu items
-		Object.keys( this.propertiesData ).forEach( function ( property ) {
-			var data = self.propertiesData[ property ];
-
-			if ( property === '' ) {
-				// skip empty property, it only serves as data fallback for when
-				// nothing is selected, but shouldn't be displayed
-				return;
-			}
-
-			self.propertyDropdown.menu.addItems( [
-				new OO.ui.MenuOptionWidget( {
-					data: data.id,
-					// @todo there's a better way... (e.g. formatting actual value)
-					label: mw.message( data.label ).text()
-				} )
+		Object.keys( this.qualifiers ).forEach( function ( propertyId ) {
+			// add all menu items
+			self.propertyDropdown.getMenu().addItems( [
+				new OO.ui.MenuOptionWidget( { data: propertyId } )
 			] );
 		} );
 
-		// mark as disabled if there are no items
-		this.propertyDropdown.setDisabled( this.propertyDropdown.menu.getItems().length === 0 );
+		this.propertyDropdown.setDisabled( this.propertyDropdown.getMenu().getItems().length === 0 );
+
+		// now fetch the formatted values for all qualifier properties and update the
+		// dropdown menu item's labels once we have them...
+		$.when.apply( $, Object.keys( this.qualifiers ).map( function ( propertyId ) {
+			var dataValue = new wb.datamodel.EntityId( propertyId );
+			return self.formatValue( dataValue, 'text/plain' );
+		} ) ).then( function () {
+			var selected = self.propertyDropdown.getMenu().findSelectedItem(),
+				labels = arguments;
+
+			// set property labels
+			Object.keys( self.qualifiers ).forEach( function ( propertyId, i ) {
+				self.propertyDropdown.getMenu().findItemFromData( propertyId ).setLabel( labels[ i ] );
+			} );
+
+			// if one of the properties was already selected, reflect that in the dropdown's label
+			if ( selected !== null ) {
+				self.propertyDropdown.setLabel( selected.getLabel() );
+			}
+
+			self.updateValueWidget();
+		} );
 	};
 
 	statements.QualifierWidget.prototype.populateValueInput = function () {
-		var self = this,
-			property = this.propertyDropdown.getMenu().findSelectedItem().getData(),
-			key = Object.keys( this.propertiesData ).filter( function ( key ) {
-				return self.propertiesData[ key ].id === property;
-			} )[ 0 ],
-			data = this.propertiesData[ key ];
+		var property = this.propertyDropdown.getMenu().findSelectedItem().getData();
 
 		// update input to reflect the correct type for this property
-		this.valueInput.setInputType( data.input );
+		this.valueInput.setInputType( this.qualifiers[ property ] );
 
 		this.valueInput.setDisabled( false );
 	};

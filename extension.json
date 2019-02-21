@@ -27,24 +27,14 @@
 			"value": false
 		},
 		"MediaInfoProperties": {
-			"description": "Relevant data for the depicts property. Keys: `id` is the property ID, `label` is the i18n key & `url` links to the property",
+			"description": "Map of { indicative name: property id }. E.g. { depicts: P1 }",
 			"value": {
-				"depicts": {
-					"id": "P1",
-					"label": "wikibasemediainfo-property-value-depicts",
-					"url": "#"
-				}
+				"depicts": "P1"
 			}
 		},
 		"DepictsQualifierProperties": {
-			"description": "Lists all available properties for properties dropdown for depicts qualifiers. Keys: `id` is the property ID, `label` is the i18n key & `input` defines the input type (entity, text or numeric)",
-			"value": {
-				"": {
-					"id": "",
-					"label": "wikibasemediainfo-property-placeholder",
-					"input": "string"
-				}
-			},
+			"description": "Map of all available properties for depicts qualifiers dropdown. Map of { (unused) indicative name: property id }. E.g. { color: P2, wears: P3 }",
+			"value": {},
 			"merge_strategy": "array_plus_2d"
 		},
 		"MediaInfoShowQualifiers": {
@@ -219,14 +209,6 @@
 			],
 			"messages": [
 				"wikibasemediainfo-property-placeholder",
-				"wikibasemediainfo-property-value-features",
-				"wikibasemediainfo-property-value-color",
-				"wikibasemediainfo-property-value-wears",
-				"wikibasemediainfo-property-value-part",
-				"wikibasemediainfo-property-value-inscription",
-				"wikibasemediainfo-property-value-symbolizes",
-				"wikibasemediainfo-property-value-position",
-				"wikibasemediainfo-property-value-quantity",
 				"wikibasemediainfo-property-value-depicts",
 				"wikibasemediainfo-statements-depicts-title",
 				"wikibasemediainfo-statements-item-input-placeholder",

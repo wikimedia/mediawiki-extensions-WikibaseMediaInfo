@@ -6,6 +6,7 @@
 	 * @constructor
 	 * @param {Object} config Configuration options
 	 * @param {wikibase.datamodel.Statement} config.data
+	 * @param {Object} config.qualifiers Qualifiers map: { propertyId: datatype, ...}
 	 * @param {string} config.entityId Entity ID (e.g. M123 id of the file you just uploaded)
 	 * @param {string} [config.label] Label for this item (e.g. 'cat')
 	 * @param {string} [config.url] URL to this item (e.g. /wiki/Item:Q1)
@@ -18,6 +19,7 @@
 
 		this.editing = !!config.editing;
 
+		this.qualifiers = config.qualifiers;
 		this.data = config.data;
 		this.label = config.label;
 		this.url = config.url;
@@ -136,7 +138,7 @@
 			)
 		);
 
-		if ( mw.config.get( 'wbmiShowQualifiers' ) ) {
+		if ( Object.keys( this.qualifiers ).length > 0 ) {
 			itemContainer.append(
 				$( '<div>' ).addClass( 'wbmi-item-content' ).append(
 					this.$group.addClass( 'wbmi-item-content-group' ),
@@ -155,11 +157,10 @@
 	 * @param {wikibase.datamodel.Snak|undefined} data
 	 */
 	statements.ItemWidget.prototype.addQualifier = function ( data ) {
-		var properties = mw.config.get( 'wbmiDepictsQualifierProperties' ),
-			widget = new statements.QualifierWidget( {
-				editing: this.editing,
-				properties: properties
-			} );
+		var widget = new statements.QualifierWidget( {
+			editing: this.editing,
+			qualifiers: this.qualifiers
+		} );
 
 		if ( data ) {
 			widget.setData( data );

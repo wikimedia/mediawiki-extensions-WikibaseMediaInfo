@@ -72,25 +72,30 @@
 		var api = new mw.Api(),
 			data = { type: dataValue.getType(), value: dataValue.toJSON() },
 			stringified = JSON.stringify( data ),
+			promise,
 			key;
 
 		format = format || 'text/plain';
 		language = language || mw.config.get( 'wgUserLanguage' );
 		key = statements.FormatValueElement.getKey( dataValue, format, language );
 
-		return statements.FormatValueElement.fromCache( key ).catch( function () {
-			return api.get( {
+		promise = statements.FormatValueElement.fromCache( key );
+		return promise.catch( function () {
+			// re-assign promise from within, because `api.get` is the one that needs
+			// to expose its `abort` method
+			promise = api.get( {
 				action: 'wbformatvalue',
 				format: 'json',
 				datavalue: stringified,
 				options: JSON.stringify( { lang: language } ),
 				generate: format
-			} ).then( function ( response ) {
+			} );
+			return promise.then( function ( response ) {
 				var result = response.result;
 				statements.FormatValueElement.toCache( key, result );
 				return result;
 			} );
-		} );
+		} ).promise( { abort: promise.abort } );
 	};
 
 }( mw.mediaInfo.statements ) );

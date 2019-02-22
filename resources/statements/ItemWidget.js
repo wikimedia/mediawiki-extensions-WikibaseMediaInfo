@@ -134,9 +134,7 @@
 				$label,
 				$( '<div>' )
 					.addClass( 'wbmi-entity-label-extra' )
-					.html( '&bull;' )
-					.prepend( $link )
-					.append( $makePrimary )
+					.append( $link, $makePrimary )
 			)
 		);
 

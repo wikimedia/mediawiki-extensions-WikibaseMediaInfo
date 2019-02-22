@@ -37,6 +37,10 @@
 			"value": {},
 			"merge_strategy": "array_plus_2d"
 		},
+		"DepictsHelpUrl": {
+			"description": "Link to page to learn more about 'depicts'",
+			"value": "https://commons.wikimedia.org/wiki/Special:MyLanguage/Commons:Depicts"
+		},
 		"MediaInfoShowQualifiers": {
 			"value": true
 		},
@@ -223,6 +227,8 @@
 				"wikibasemediainfo-statements-item-remove",
 				"wikibasemediainfo-statements-item-add-qualifier",
 				"wikibasemediainfo-filepage-statement-no-results",
+				"wikibasemediainfo-statements-remove",
+				"wikibasemediainfo-statements-learn-more",
 				"colon-separator",
 				"parentheses"
 			],

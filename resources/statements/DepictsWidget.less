@@ -12,3 +12,29 @@
 		margin-right: 0;
 	}
 }
+
+.wbmi-statement-footer {
+	margin-top: 1em;
+	font-weight: bold;
+	font-size: 0.9em;
+
+	// adds a &bull; between all visible siblings
+	> *:not( .wbmi-hidden ) ~ *:before {
+		content: '\2022'; // &bull;
+		padding: 0 10px;
+		color: #000;
+		cursor: initial;
+		display: inline-block;
+		text-decoration: none;
+	}
+
+	// color palette: https://meta.wikimedia.org/wiki/Wiki_color_formatting_help#WikimediaUI_color_palette_
+	.wbmi-statement-remove {
+		color: #d33;
+		text-decoration: none;
+	}
+
+	.wbmi-statement-learn-more {
+		color: #36c;
+	}
+}

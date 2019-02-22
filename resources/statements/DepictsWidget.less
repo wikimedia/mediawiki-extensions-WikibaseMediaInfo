@@ -1,3 +1,10 @@
 .wbmi-depicts-input {
 	margin-bottom: 25px;
+
+	// increased specificity is required to override default OOUI
+	// inputWidget margin styles for the wbmi-depicts-input element.
+	/* stylelint-disable-next-line selector-class-pattern */
+	&.oo-ui-inputWidget {
+		margin-right: 0;
+	}
 }

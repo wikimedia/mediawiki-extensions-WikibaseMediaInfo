@@ -88,6 +88,7 @@
 					'wbmi-entity-link' + ( repo !== '' ? '-foreign-repo-' + repo : '-local-repo' )
 				)
 				.attr( 'href', this.url )
+				.attr( 'target', '_blank' )
 				.text( id.replace( /^.+:/, '' ) ),
 			icon = new OO.ui.IconWidget( { icon: 'check' } ),
 			$makePrimary = $( '<a>' )

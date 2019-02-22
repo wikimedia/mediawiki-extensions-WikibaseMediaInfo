@@ -41,6 +41,7 @@
 
 		// jquery element for the link to the 'depicts' property on wikidata
 		this.$depictsPropertyLink = $( this.headerSelector + ' a' );
+		this.$depictsPropertyLink.attr( 'target', '_blank' );
 
 		this.depictsInput = new st.DepictsWidget( this.config );
 	};

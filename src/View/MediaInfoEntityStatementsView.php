@@ -251,6 +251,7 @@ class MediaInfoEntityStatementsView {
 					[
 						'class' => implode( ' ', $linkClasses ),
 						'href' => $title->isLocal() ? $title->getLocalURL() : $title->getFullURL(),
+						'target' => '_blank',
 					],
 					$entityId->getLocalPart()
 				)

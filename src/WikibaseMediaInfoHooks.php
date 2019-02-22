@@ -10,6 +10,10 @@ use Elastica\Document;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\Revision\SlotRecord;
 use MediaWiki\Revision\SlotRoleRegistry;
+use OOUI\HtmlSnippet;
+use OOUI\IndexLayout;
+use OOUI\PanelLayout;
+use OOUI\TabPanelLayout;
 use OutputPage;
 use ParserOutput;
 use Title;
@@ -25,6 +29,9 @@ use Wikibase\MediaInfo\Content\MediaInfoContent;
 use Wikibase\MediaInfo\Content\MediaInfoHandler;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\MediaInfo\Services\MediaInfoByLinkedTitleLookup;
+use Wikibase\MediaInfo\View\MediaInfoEntityStatementsView;
+use Wikibase\MediaInfo\View\MediaInfoEntityTermsView;
+use Wikibase\MediaInfo\View\MediaInfoView;
 use Wikibase\Repo\BabelUserLanguageLookup;
 use Wikibase\Repo\MediaWikiLocalizedTextProvider;
 use Wikibase\Repo\ParserOutput\DispatchingEntityViewFactory;
@@ -167,7 +174,8 @@ class WikibaseMediaInfoHooks {
 			$wgDepictsHelpUrl,
 			$wgMediaInfoProperties,
 			$wgMediaInfoShowQualifiers,
-			$wgMediaInfoExternalEntitySearchBaseUri;
+			$wgMediaInfoExternalEntitySearchBaseUri,
+			$wgMediaInfoEnableFilePageDepicts;
 
 		// Hide any MediaInfo content and UI on a page, if either …
 		if (
@@ -218,7 +226,8 @@ class WikibaseMediaInfoHooks {
 			),
 			new BabelUserLanguageLookup(),
 			$wbRepo->getEntityViewFactory(),
-			$jsConfigVars = [
+			$wgMediaInfoEnableFilePageDepicts,
+			[
 				'wbmiProperties' => $wgMediaInfoProperties,
 				'wbmiDepictsQualifierProperties' => $wgMediaInfoShowQualifiers ? $qualifiers : [],
 				'wbmiDepictsHelpUrl' => $wgDepictsHelpUrl,
@@ -233,6 +242,7 @@ class WikibaseMediaInfoHooks {
 	 * @param string[] $termsLanguages Array with language codes as keys and autonyms as values
 	 * @param UserLanguageLookup $userLanguageLookup
 	 * @param DispatchingEntityViewFactory $entityViewFactory
+	 * @param bool $showDepicts Feature flag for showing depicts statements
 	 * @param array $jsConfigVars Variables to expose to JavaScript
 	 */
 	public function doBeforePageDisplay(
@@ -241,6 +251,7 @@ class WikibaseMediaInfoHooks {
 		array $termsLanguages,
 		UserLanguageLookup $userLanguageLookup,
 		DispatchingEntityViewFactory $entityViewFactory,
+		$showDepicts,
 		array $jsConfigVars = []
 	) {
 		// Site-wide config
@@ -248,7 +259,12 @@ class WikibaseMediaInfoHooks {
 		$moduleStyles = [];
 
 		if ( $isMediaInfoPage ) {
-			$out = $this->moveMediaInfoData( $out, $entityViewFactory );
+			OutputPage::setupOOUI();
+			if ( $showDepicts ) {
+				$out = $this->tabifyStructuredData( $out, $entityViewFactory );
+			} else {
+				$out = $this->moveMediaInfoCaptions( $out, $entityViewFactory );
+			}
 			$out->preventClickjacking();
 			$imgTitle = $out->getTitle();
 
@@ -272,6 +288,7 @@ class WikibaseMediaInfoHooks {
 				),
 				'wbCurrentRevision' => $entityRevisionId,
 				'wbEntityId' => $entityId->getSerialization(),
+				'wbmiCaptionsExist' => $this->mediaInfoCaptionsExist( $out ),
 				'wbTermsLanguages' => $termsLanguages,
 				'wbRepoApiUrl' => wfScript( 'api' ),
 				'maxCaptionLength' => self::getMaxCaptionLength(),
@@ -288,7 +305,146 @@ class WikibaseMediaInfoHooks {
 	 * @param DispatchingEntityViewFactory $entityViewFactory
 	 * @return OutputPage $out
 	 */
-	private function moveMediaInfoData(
+
+	private function tabifyStructuredData(
+		OutputPage $out,
+		DispatchingEntityViewFactory $entityViewFactory
+	) {
+		$html = $out->getHTML();
+		$out->clearHTML();
+		$textProvider = new MediaWikiLocalizedTextProvider( $out->getLanguage() );
+
+		// Remove the slot header, as it's made redundant by the tabs
+		$html = preg_replace( self::getStructuredDataHeaderRegex(), '', $html );
+
+		// Snip out out the structured data sections ($captions, $statements)
+		$extractedHtml = $this->extractStructuredDataHtml( $html, $out, $entityViewFactory );
+		if ( preg_match(
+			self::getMediaInfoCaptionsRegex(),
+			$extractedHtml['structured'],
+			$matches
+		) ) {
+			$captions = $matches[1];
+		}
+		if ( preg_match(
+			self::getMediaInfoStatementsRegex(),
+			$extractedHtml['structured'],
+			$matches
+		) ) {
+			$statements = $matches[1];
+			// Add a title for no-js
+			$statements = \Html::rawElement(
+				'h2',
+				[ 'class' => 'wbmi-captions-header' ],
+					$textProvider->get( 'wikibasemediainfo-filepage-structured-data-heading' )
+			) . $statements;
+		}
+
+		if ( empty( $captions ) || empty( $statements ) ) {
+			// Something has gone wrong - markup should have been created for empty/missing data.
+			// Return the html unmodified (this should not be reachable, it's here just in case)
+			$out->addHTML( $html );
+			return $out;
+		}
+
+		// Tab 1 will be everything inside <div id="mw-content-text"> from
+		// <div id="mw-imagepage-content"> onwards ... or in other words from
+		// <div id="mw-imagepage-content"> itself until the end of $html
+		$tab1ContentRegex = '/' .
+			'(<div\b[^>]*\bid=(\'|")mw-imagepage-content\\2[^>]*>.*)' .
+			'/is';
+		// Snip out the div, and replace with a placeholder
+		if (
+			preg_match(
+				$tab1ContentRegex,
+				$extractedHtml['unstructured'],
+				$matches
+			)
+		) {
+			$tab1Html = $matches[1];
+			$html = preg_replace(
+				$tab1ContentRegex,
+				'<WBMI_TABS_PLACEHOLDER>',
+				$extractedHtml['unstructured']
+			);
+			// Add a title for no-js
+			$tab1Html = \Html::rawElement(
+					'h2',
+					[ 'class' => 'wbmi-structured-data-header' ],
+					$textProvider->get( 'wikibasemediainfo-filepage-captions-title' )
+				) . $tab1Html;
+		} else {
+			// If the div isn't found, something has gone wrong - return unmodified html
+			// (this should not be reachable, it's here just in case)
+			$out->addHTML( $html );
+			return $out;
+		}
+
+		// inject captions into tab1
+		$tab1Html = strtr(
+			$tab1Html,
+			[
+				'<div class="mw-parser-output">' =>
+					'<div class="mw-parser-output">' . $captions
+			]
+		);
+
+		// Prepare tab panels
+		$tab1 = new TabPanelLayout(
+			'wikiTextPlusCaptions',
+			[
+				'classes' => [ 'wbmi-tab' ],
+				'label' => $textProvider->get( 'wikibasemediainfo-filepage-fileinfo-heading' ),
+				'content' => new HtmlSnippet( $tab1Html ),
+				'expanded' => false,
+			]
+		);
+		$tab2 = new TabPanelLayout(
+			'statements',
+			[
+				'classes' => [ 'wbmi-tab' ],
+				'label' => $textProvider->get( 'wikibasemediainfo-filepage-structured-data-heading' ),
+				'content' => new HtmlSnippet( $statements ),
+				'expanded' => false,
+			]
+		);
+		$tabs = new IndexLayout( [
+			'classes' => [ 'wbmi-tabs' ],
+			'expanded' => false,
+		] );
+		$tabs->addTabPanels( [ $tab1, $tab2 ] );
+		$tabs->setInfusable( true );
+
+		$tabWrapper = new PanelLayout( [
+			'classes' => [ 'wbmi-tabs-container' ],
+			'content' => $tabs,
+			'expanded' => false,
+			'framed' => false,
+		] );
+
+		// Replace the placeholder with the tabs
+		$html = str_replace( '<WBMI_TABS_PLACEHOLDER>', $tabWrapper, $html );
+
+		$out->addHTML( $html );
+		return $out;
+	}
+
+	private function mediaInfoCaptionsExist( OutputPage $out ) {
+		$html = $out->getHTML();
+		if (
+			strpos( $html, '<' . MediaInfoEntityTermsView::CAPTIONS_CUSTOM_TAG . '>' ) === false
+		) {
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * @param OutputPage $out
+	 * @param DispatchingEntityViewFactory $entityViewFactory
+	 * @return OutputPage $out
+	 */
+	private function moveMediaInfoCaptions(
 		OutputPage $out,
 		DispatchingEntityViewFactory $entityViewFactory
 	) {
@@ -305,28 +461,60 @@ class WikibaseMediaInfoHooks {
 	}
 
 	/**
-	 * Move the structured data multi-lingual captions to the place we want them
+	 * Move the structured data multi-lingual captions to just after <div class="mw-parser-output">
 	 *
 	 * If captions AND depicts are missing then an empty mediainfo view is injected
 	 *
-	 * @param $text
+	 * @param string $html
 	 * @param OutputPage $out
 	 * @param DispatchingEntityViewFactory $entityViewFactory
 	 * @return string
 	 */
 	private function moveStructuredData(
-		$text,
-		$out,
-		$entityViewFactory
+		$html,
+		OutputPage $out,
+		DispatchingEntityViewFactory $entityViewFactory
+	) {
+		$extractedHtml = $this->extractStructuredDataHtml( $html, $out, $entityViewFactory );
+
+		$modifiedHtml = strtr(
+			$extractedHtml['unstructured'],
+			[
+				'<div class="mw-parser-output">' =>
+					'<div class="mw-parser-output">' . $extractedHtml['structured']
+			]
+		);
+
+		return $modifiedHtml;
+	}
+
+	/**
+	 * Returns an array with 2 elements
+	 * [
+	 * 	'unstructured' => html output with structured data removed
+	 *  'structured' => structured data as html ... if there is no structured data an empty
+	 * 		mediainfoview is used to create the html
+	 * ]
+	 *
+	 * @param string $html
+	 * @param OutputPage $out
+	 * @param DispatchingEntityViewFactory $entityViewFactory
+	 * @return string[]
+	 */
+	private function extractStructuredDataHtml(
+		$html,
+		OutputPage $out,
+		DispatchingEntityViewFactory $entityViewFactory
 	) {
 		if ( preg_match(
 			self::getMediaInfoViewRegex(),
-			$text,
+			$html,
 			$matches
 		) ) {
-			$structuredDataHtml = $matches[1];
-			$text = str_replace( $matches[0], '', $text );
+			$structured = $matches[1];
+			$unstructured = preg_replace( self::getMediaInfoViewRegex(), '', $html );
 		} else {
+			$unstructured = $html;
 			$emptyMediaInfo = new MediaInfo();
 			$fallbackChainFactory = new LanguageFallbackChainFactory();
 			$view = $entityViewFactory->newEntityView(
@@ -335,23 +523,19 @@ class WikibaseMediaInfoHooks {
 				$emptyMediaInfo,
 				new EntityInfo( [] )
 			);
-			$structuredDataHtml = $view->getContent( $emptyMediaInfo )->getHtml();
+			$structured = $view->getContent( $emptyMediaInfo )->getHtml();
 
-			// Strip out the surrounding <mediainfoView> tag
-			$structuredDataHtml = preg_replace(
+			// Strip out the surrounding <mediaInfoView> tag
+			$structured = preg_replace(
 				self::getMediaInfoViewRegex(),
 				'$1',
-				$structuredDataHtml
+				$structured
 			);
 		}
-
-		// Finally, move to be the first item in the content
-		$text = strtr(
-			$text,
-			[ '<div class="mw-parser-output">' => '<div class="mw-parser-output">' . $structuredDataHtml ]
-		);
-
-		return $text;
+		return [
+			'unstructured' => $unstructured,
+			'structured' => $structured,
+		];
 	}
 
 	/**
@@ -370,7 +554,28 @@ class WikibaseMediaInfoHooks {
 	}
 
 	private static function getMediaInfoViewRegex() {
-		return '/<mediainfoView>(.*)<\/mediainfoView>/is';
+		$tag = MediaInfoView::MEDIAINFOVIEW_CUSTOM_TAG;
+		return '/<' . $tag . '>(.*)<\/' . $tag . '>/is';
+	}
+
+	private static function getMediaInfoCaptionsRegex() {
+		$tag = MediaInfoEntityTermsView::CAPTIONS_CUSTOM_TAG;
+
+		// below $old is a workaround to process old, cached parser output
+		// about a month or so after this patch got merged, below line
+		// can be deleted and the commented-out below line can be used
+		return '/(?|<' . $tag . '>(.*)<\/' . $tag . '>|(<div data-caption-languages.+?)<div data-statements)/is';
+		// return '/<' . $tag . '>(.*)<\/' . $tag . '>/is';
+	}
+
+	private static function getMediaInfoStatementsRegex() {
+		$tag = MediaInfoEntityStatementsView::STATEMENTS_CUSTOM_TAG;
+
+		// below $old is a workaround to process old, cached parser output
+		// about a month or so after this patch got merged, below line
+		// can be deleted and the commented-out below line can be used
+		return '/(?|<' . $tag . '>(.*)<\/' . $tag . '>|(<div data-statements.+)\s*<\/div>\s*$)/is';
+		// return '/<' . $tag . '>(.*)<\/' . $tag . '>/is';
 	}
 
 	/**

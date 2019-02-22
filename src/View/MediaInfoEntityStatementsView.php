@@ -45,6 +45,8 @@ class MediaInfoEntityStatementsView {
 	private $properties;
 	private $qualifiers;
 
+	const STATEMENTS_CUSTOM_TAG = 'mediaInfoViewStatements';
+
 	/**
 	 * MediaInfoEntityStatementsView constructor.
 	 * @param PropertyOrderProvider $propertyOrderProvider
@@ -98,7 +100,13 @@ class MediaInfoEntityStatementsView {
 			$html .= $panel->toString();
 		}
 
-		return $html;
+		// Wrap the whole thing in a custom tag so we can manipulate its position on the page
+		// later on
+		return Html::rawElement(
+			self::STATEMENTS_CUSTOM_TAG,
+			[],
+			$html
+		);
 	}
 
 	public static function getHtmlContainerClass( $propertyIdString ) {

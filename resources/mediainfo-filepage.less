@@ -1,7 +1,10 @@
 @import 'mediawiki.mixins';
 
 /* Clear content after the entity view because it transitively floats */
-.wbmi-entityview {
+// class .wbmi-entityview is unused, but selected here for BC with cached output
+// can be removed a month after this got merged
+.wbmi-entityview,
+.wbmi-entityview-captionsPanel {
 	overflow: auto;
 
 	& + * {
@@ -12,14 +15,11 @@
 .wbmi-entityview-content,
 .wbmi-entityview-captionsPanel,
 .wbmi-entityview-statementsGroup {
-	padding-top: 0.6em;
-	float: left;
 	clear: both;
 	width: 100%;
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
-	margin-bottom: 2em;
 
 	h3:not( .wbmi-statements-title ) {
 		border-bottom: 1px solid #a2a9b1;
@@ -135,6 +135,37 @@ h3.wbmi-statements-title {
 
 .wbmi-entityview-statementsGroup {
 	padding: 1em;
+}
+
+.wbmi-tabs-container {
+	padding-top: 1em;
+
+	// override OOUI - get rid of vertical & bottom padding to better blend in with
+	// existing content
+	/* stylelint-disable-next-line selector-class-pattern */
+	.oo-ui-indexLayout-stackLayout > .oo-ui-panelLayout.wbmi-tab {
+		padding-left: 0;
+		padding-right: 0;
+		padding-bottom: 0;
+	}
+}
+
+.wbmi-captions-header,
+.wbmi-structured-data-header {
+	display: none;
+}
+
+/* stylelint-disable-next-line selector-class-pattern */
+.client-nojs {
+	/* stylelint-disable-next-line selector-class-pattern */
+	.wbmi-tabs .oo-ui-menuLayout-menu {
+		display: none;
+	}
+
+	.wbmi-captions-header,
+	.wbmi-structured-data-header {
+		display: block;
+	}
 }
 
 .wbmi-statement-publish-error-msg {

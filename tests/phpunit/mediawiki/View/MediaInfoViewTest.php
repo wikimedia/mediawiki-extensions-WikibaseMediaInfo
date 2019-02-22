@@ -2,6 +2,7 @@
 
 namespace Wikibase\MediaInfo\Tests\MediaWiki\View;
 
+use Html;
 use MediaWiki\MediaWikiServices;
 use Wikibase\DataModel\Entity\EntityDocument;
 use Wikibase\DataModel\Entity\Property;
@@ -13,7 +14,6 @@ use Wikibase\MediaInfo\View\MediaInfoEntityTermsView;
 use Wikibase\MediaInfo\View\MediaInfoView;
 use Wikibase\View\EntityTermsView;
 use Wikibase\View\LanguageDirectionalityLookup;
-use Wikibase\View\Template\TemplateFactory;
 
 /**
  * @covers \Wikibase\MediaInfo\View\MediaInfoView
@@ -28,8 +28,6 @@ class MediaInfoViewTest extends \PHPUnit\Framework\TestCase {
 		'entityType' => 'TEST_TYPE',
 		'entityId' => 'P999'
 	];
-	/** @var  \Wikibase\View\Template\TemplateFactory */
-	private $templateFactory;
 	/** @var  EntityTermsView */
 	private $entityTermsView;
 	/** @var  MediaInfoEntityStatementsView */
@@ -44,9 +42,6 @@ class MediaInfoViewTest extends \PHPUnit\Framework\TestCase {
 	private $sut;
 
 	private function createMocks() {
-		$this->templateFactory = $this->getMockBuilder( TemplateFactory::class )
-			->disableOriginalConstructor()
-			->getMock();
 		$this->entityTermsView = $this->getMockBuilder( MediaInfoEntityTermsView::class )
 			->disableOriginalConstructor()
 			->getMock();
@@ -73,7 +68,6 @@ class MediaInfoViewTest extends \PHPUnit\Framework\TestCase {
 			->willReturn( new TermList( [] ) );
 
 		$this->sut = new MediaInfoView(
-			$this->templateFactory,
 			$this->entityTermsView,
 			$this->languageDirectionalityLookup,
 			$this->languageCode,
@@ -87,7 +81,6 @@ class MediaInfoViewTest extends \PHPUnit\Framework\TestCase {
 		$langDir = 'TEST_DIR';
 		$termsViewHtml = 'TEST_TERMS_HTML';
 		$statementsViewHtml = 'TEST_STATEMENTS_HTML';
-		$renderedContent = 'TEST_RENDERED';
 
 		$this->languageDirectionalityLookup
 			->method( 'getDirectionality' )
@@ -107,20 +100,15 @@ class MediaInfoViewTest extends \PHPUnit\Framework\TestCase {
 			$html .= $statementsViewHtml;
 		}
 
-		$this->templateFactory
-			->expects( $this->once() )
-			->method( 'render' )
-			->with(
-				'filepage-entityview',
-				$this->values['entityType'],
-				$this->values['entityId'],
-				$langDir,
-				$html
-			)->willReturn( $renderedContent );
+		$expectedContent = Html::rawElement(
+			MediaInfoView::MEDIAINFOVIEW_CUSTOM_TAG,
+			[],
+			$html
+		);
 
 		$viewContent = $this->sut->getContent( $this->entity );
 
-		$this->assertEquals( $renderedContent, $viewContent->getHtml() );
+		$this->assertEquals( $expectedContent, $viewContent->getHtml() );
 		$this->assertSame( [], $viewContent->getPlaceholders() );
 	}
 

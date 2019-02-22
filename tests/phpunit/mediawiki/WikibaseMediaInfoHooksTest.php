@@ -181,9 +181,9 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 		$out = $this->getMockOutputPage( $imgTitle );
 
 		$parserOutputTag = '<div class="mw-parser-output">';
-		$mediaInfoViewOpeningTag = '<mediainfoView>';
+		$mediaInfoViewOpeningTag = '<mediaInfoView>';
 		$captions = 'SOME_CAPTIONS';
-		$mediaInfoViewClosingTag = '</mediainfoView>';
+		$mediaInfoViewClosingTag = '</mediaInfoView>';
 		$extraHtml = 'SOME_HTML';
 		$captionsHeader = '<h1 class="mw-slot-header">' .
 			WikibaseMediaInfoHooks::MEDIAINFO_SLOT_HEADER_PLACEHOLDER .
@@ -204,7 +204,7 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 
 		WikibaseMediaInfoHooks::onBeforePageDisplay( $out, $skin );
 
-		$this->assertNotRegExp( '/mediainfoView/is', $out->getHtml() );
+		$this->assertNotRegExp( '/mediaInfoView/is', $out->getHtml() );
 		$this->assertNotRegExp(
 			'/mw-slot-header/is',
 			$out->getHtml()
@@ -246,15 +246,26 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 			);
 			return;
 		}
+		if (
+			MediaWikiServices::getInstance()
+				->getMainConfig()
+				->get( 'MediaInfoEnableFilePageDepicts' )
+		) {
+			$this->markTestSkipped(
+				'moveMediaInfoCaptions in onBeforePageDisplay not tested as it is not ' .
+				'called if depicts is enabled'
+			);
+			return;
+		}
 
 		$imgTitle = Title::makeTitle( NS_FILE, 'Foo.jpg' );
 		$imgTitle->resetArticleID( 23 );
 		$out = $this->getMockOutputPage( $imgTitle );
 
 		$parserOutputTag = '<div class="mw-parser-output">';
-		$mediaInfoViewOpeningTag = '<mediainfoView>';
+		$mediaInfoViewOpeningTag = '<mediaInfoView>';
 		$captions = 'SOME_CAPTIONS';
-		$mediaInfoViewClosingTag = '</mediainfoView>';
+		$mediaInfoViewClosingTag = '</mediaInfoView>';
 		$extraHtml = 'SOME_HTML';
 		$out->clearHTML();
 		$out->addHTML(
@@ -282,6 +293,17 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 	 * the appropriate spot
 	 */
 	public function testOnBeforePageDisplay_moveAbsentCaptionsAndHeader() {
+		if (
+			MediaWikiServices::getInstance()
+				->getMainConfig()
+				->get( 'MediaInfoEnableFilePageDepicts' )
+		) {
+			$this->markTestSkipped(
+				'moveMediaInfoCaptions in onBeforePageDisplay not tested as it is not ' .
+				'called if depicts is enabled'
+			);
+			return;
+		}
 		$imgTitle = Title::makeTitle( NS_FILE, 'Foo.jpg' );
 		$imgTitle->resetArticleID( 23 );
 		$out = $this->getMockOutputPage( $imgTitle );
@@ -338,6 +360,7 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 			$mockViewFactory,
 			[],
 			[],
+			false,
 			false
 		);
 
@@ -354,6 +377,17 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 			$this->markTestSkipped(
 				'Header move in onBeforePageDisplay not tested as it does not happen if ' .
 				'extension is disabled'
+			);
+			return;
+		}
+		if (
+			MediaWikiServices::getInstance()
+				->getMainConfig()
+				->get( 'MediaInfoEnableFilePageDepicts' )
+		) {
+			$this->markTestSkipped(
+				'moveMediaInfoCaptions in onBeforePageDisplay not tested as it is not ' .
+				'called if depicts is enabled'
 			);
 			return;
 		}

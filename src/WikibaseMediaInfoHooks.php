@@ -38,7 +38,7 @@ use WikiPage;
  */
 class WikibaseMediaInfoHooks {
 
-	const MEDIAINFO_SLOT_HEADER_PLACEHOLDER = '<mw:mediainfoslotheader />';
+	const MEDIAINFO_SLOT_HEADER_PLACEHOLDER = '<mediainfoslotheader />';
 
 	/**
 	 * @var EntityIdComposer
@@ -325,7 +325,7 @@ class WikibaseMediaInfoHooks {
 			);
 			$structuredDataHtml = $view->getContent( $emptyMediaInfo )->getHtml();
 
-			// Strip out the surrounding <mw:mediainfoView> tag
+			// Strip out the surrounding <mediainfoView> tag
 			$structuredDataHtml = preg_replace(
 				self::getMediaInfoViewRegex(),
 				'$1',
@@ -333,11 +333,13 @@ class WikibaseMediaInfoHooks {
 			);
 		}
 
-		return str_replace(
-			'<div class="mw-parser-output">',
-			'<div class="mw-parser-output">' . $structuredDataHtml,
-			$text
+		// Finally, move to be the first item in the content
+		$text = strtr(
+			$text,
+			[ '<div class="mw-parser-output">' => '<div class="mw-parser-output">' . $structuredDataHtml ]
 		);
+
+		return $text;
 	}
 
 	/**
@@ -356,7 +358,7 @@ class WikibaseMediaInfoHooks {
 	}
 
 	private static function getMediaInfoViewRegex() {
-		return '/<mw:mediainfoView>(.*)<\/mw:mediainfoView>/is';
+		return '/<mediainfoView>(.*)<\/mediainfoView>/is';
 	}
 
 	/**

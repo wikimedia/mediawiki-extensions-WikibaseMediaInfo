@@ -26,5 +26,10 @@
 	"wikibasemediainfo-filepage-caption-approaching-limit": "{{PLURAL:$1|Üks märk|$1 märki}} järel",
 	"wikibasemediainfo-filepage-statement-no-value": "Sellel omadusel puudub väärtus",
 	"wikibasemediainfo-filepage-statement-some-value": "Sellel omadusel on väärtus, aga see on teadmata",
-	"wikibasemediainfo-filepage-statement-error": "Selle omaduse väärtuse hankimisel esines tõrge"
+	"wikibasemediainfo-filepage-statement-error": "Selle omaduse väärtuse hankimisel esines tõrge",
+	"wikibasemediainfo-filepage-license-title": "Pealdiste ja muude struktuurandmetega seotud kaastöö",
+	"wikibasemediainfo-filepage-license-content": "Kui klõpsad \"Avalda muudatused\", nõustud [[wmf:Terms_of_Use|kasutustingimustega]] ja oma kaastöö pöördumatu avaldamisega Creative Commonsi litsentsi [https://creativecommons.org/publicdomain/zero/1.0/deed.et CC0] all.",
+	"wikibasemediainfo-filepage-license-content-acceptance": "Nõustun tegema edasisi muudatusi kooskõlas nende tingimustega. Ära seda sõnumit enam näita.",
+	"wikibasemediainfo-filepage-license-accept": "Nõustun",
+	"wikibasemediainfo-filepage-license-cancel": "Loobu"
 }

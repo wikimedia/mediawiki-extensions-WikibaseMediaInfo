@@ -2,7 +2,8 @@
 	"@metadata": {
 		"authors": [
 			"Dvorapa",
-			"Mormegil"
+			"Mormegil",
+			"Patriccck"
 		]
 	},
 	"right-mediainfo-term": "Změny prvků informací o souborech (popisky, shrnutí)",
@@ -24,5 +25,10 @@
 	"wikibasemediainfo-filepage-publish": "Zveřejnit změny",
 	"wikibasemediainfo-filepage-caption-empty": "Přidejte jednořádkové vysvětlení, co tento soubor představuje",
 	"wikibasemediainfo-filepage-caption-too-long": "$1 {{PLURAL:$1|znak|znaky|znaků}} přes limit",
-	"wikibasemediainfo-filepage-caption-approaching-limit": "Zbývá $1 {{PLURAL:$1|znak|znaky|znaků}}"
+	"wikibasemediainfo-filepage-caption-approaching-limit": "Zbývá $1 {{PLURAL:$1|znak|znaky|znaků}}",
+	"wikibasemediainfo-filepage-license-title": "Popisek a další strukturované příspěvky",
+	"wikibasemediainfo-filepage-license-content": "Kliknutím na „Zveřejnit změny“ souhlasíte s [[wmf:Terms_of_Use|Podmínkami užití]], a neodvolatelně svůj příspěvek uvolňujete pod licencí [https://creativecommons.org/publicdomain/zero/1.0/ Creative Commons CC0 License].",
+	"wikibasemediainfo-filepage-license-content-acceptance": "Přijímám tyto podmínky pro své budoucí editace. Tuto zprávu už příště nezobrazovat.",
+	"wikibasemediainfo-filepage-license-accept": "Přijmout",
+	"wikibasemediainfo-filepage-license-cancel": "Storno"
 }

@@ -4,7 +4,8 @@
 			"Liuxinyu970226",
 			"Phenolla",
 			"A Chinese Wikipedian",
-			"Angrydog001"
+			"Angrydog001",
+			"Zazzzz"
 		]
 	},
 	"wikibase-entity-mediainfo": "媒体信息",
@@ -26,6 +27,7 @@
 	"wikibasemediainfo-filepage-license-title": "标题和其他结构化数据贡献",
 	"wikibasemediainfo-filepage-license-content-acceptance": "我接受对我未来的编辑也采用这些条款。不再显示该信息。",
 	"wikibasemediainfo-filepage-license-accept": "接受",
+	"wikibasemediainfo-filepage-license-cancel": "取消",
 	"wikibasemediainfo-statements-item-input-label": "来自维基数据",
 	"wikibasemediainfo-statements-item-remove": "移除",
 	"wikibasemediainfo-property-placeholder": "属性",

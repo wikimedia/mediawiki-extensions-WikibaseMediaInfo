@@ -6,7 +6,11 @@
 	},
 	"wikibase-entity-mediainfo": "Medieninformatiounen",
 	"wikibasemediainfo-desc": "Wikibase-Erweiderung fir déi strukturéiert Meta-Donnéeë vu Medie-Fichieren zegeréieren",
+	"wikibasemediainfo-filepage-structured-data-heading": "Strukturéiert Daten",
 	"wikibasemediainfo-filepage-cancel": "Ofbriechen",
+	"wikibasemediainfo-filepage-publish": "Ännerunge publizéieren",
+	"wikibasemediainfo-filepage-caption-empty": "Setzt eng Erklärung an enger Zeil derbäi wat dëse Fichier duerstellt",
+	"wikibasemediainfo-filepage-statement-no-data": "Keng Donnéeën disponibel",
 	"wikibasemediainfo-filepage-license-accept": "Akzeptéieren",
 	"wikibasemediainfo-filepage-license-cancel": "Ofbriechen",
 	"wikibasemediainfo-statements-item-input-label": "vu Wikidata",
@@ -15,5 +19,6 @@
 	"wikibasemediainfo-property-placeholder": "Eegenschaft",
 	"wikibasemediainfo-property-value-color": "Faarf",
 	"wikibasemediainfo-property-value-inscription": "Aschreiwung",
+	"wikibasemediainfo-property-value-position": "Relativ Positioun um Bild",
 	"wikibasemediainfo-property-value-quantity": "Quantitéit"
 }

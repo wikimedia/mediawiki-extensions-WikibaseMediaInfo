@@ -79,7 +79,8 @@
 		this.depictsInput.connect( this, { change: 'onDepictsChange' } );
 
 		// ...and attach the widget to DOM, replacing the server-side rendered equivalent
-		this.$content.empty().append( this.depictsInput.$element );
+		this.$content.find( ':not( .wbmi-statements-title )' ).remove();
+		this.$content.append( this.depictsInput.$element );
 
 		// ...and attach edit/cancel/publish controls
 		this.$content.find( '.wbmi-statements-header .wbmi-entity-label-extra' ).append(

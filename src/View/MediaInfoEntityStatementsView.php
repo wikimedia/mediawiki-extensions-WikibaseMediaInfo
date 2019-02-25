@@ -42,7 +42,8 @@ class MediaInfoEntityStatementsView {
 	private $valueFormatterFactory;
 	private $serializerFactory;
 	private $languageCode;
-	private $qualifierIds;
+	private $properties;
+	private $qualifiers;
 
 	/**
 	 * MediaInfoEntityStatementsView constructor.
@@ -55,6 +56,7 @@ class MediaInfoEntityStatementsView {
 	 * @param OutputFormatValueFormatterFactory $valueFormatterFactory
 	 * @param SerializerFactory $serializerFactory
 	 * @param string $languageCode
+	 * @param string[] $properties Array of property IDs
 	 * @param string[] $qualifiers Array of qualifier property IDs
 	 */
 	public function __construct(
@@ -66,7 +68,8 @@ class MediaInfoEntityStatementsView {
 		OutputFormatValueFormatterFactory $valueFormatterFactory,
 		SerializerFactory $serializerFactory,
 		$languageCode,
-		$qualifierIds
+		$properties,
+		$qualifiers
 	) {
 		OutputPage::setupOOUI();
 
@@ -78,7 +81,8 @@ class MediaInfoEntityStatementsView {
 		$this->valueFormatterFactory = $valueFormatterFactory;
 		$this->serializerFactory = $serializerFactory;
 		$this->languageCode = $languageCode;
-		$this->qualifierIds = $qualifierIds;
+		$this->properties = $properties;
+		$this->qualifiers = $qualifiers;
 	}
 
 	/**
@@ -88,14 +92,9 @@ class MediaInfoEntityStatementsView {
 	public function getHtml( MediaInfo $entity ) {
 		$statements = $this->statementsByPropertyId( $entity->getStatements() );
 
-		/** @var PanelLayout[] $panels */
-		$panels = [];
-		foreach ( $statements as $propertyId => $statementArray ) {
-			$panels[] = $this->getLayoutForProperty( $propertyId, $statementArray );
-		}
-
 		$html = '';
-		foreach ( $panels as $panel ) {
+		foreach ( $statements as $propertyId => $statementArray ) {
+			$panel = $this->getLayoutForProperty( $propertyId, $statementArray );
 			$html .= $panel->toString();
 		}
 
@@ -194,7 +193,7 @@ class MediaInfoEntityStatementsView {
 			[ 'text/plain', 'text/html' ]
 		);
 		// these are properties use in qualifier dropdown (e.g. color, wears, ...)
-		foreach ( $this->qualifierIds as $id ) {
+		foreach ( $this->qualifiers as $id ) {
 			$formatValueCache += $this->getFormatValueCache(
 				new PropertyValueSnak(
 					new PropertyId( $propertyIdString ),
@@ -202,6 +201,33 @@ class MediaInfoEntityStatementsView {
 				),
 				[ 'text/plain' ]
 			);
+		}
+
+		/*
+		 * Here's quite an odd way to render a title...
+		 * We want to keep this place mostly generic, so that it doesn't
+		 * really matter what property we're dealing with. `Depicts` (or
+		 * any other) is not different from the next.
+		 * However, it looks like we (may) want to have specific titles
+		 * (https://phabricator.wikimedia.org/T216757 asks for one for
+		 * depicts on commons)
+		 * Instead of hardcoding this, let's just see if a message exist
+		 * that uses the descriptive name that was used for the property
+		 * ID in extension.json: for a property { depicts: P1 }, we'll
+		 * see if we can find an image with i18n key
+		 * wikibasemediainfo-statements-title-depicts, and if so, display
+		 * a title. If not, no title... This allows any wiki to set up
+		 * any property/statement group with any title, or none at all.
+		 */
+		$title = '';
+		$name = array_search( $propertyIdString, $this->properties );
+		// possible messages include:
+		// wikibasemediainfo-statements-title-depicts
+		$message = wfMessage( 'wikibasemediainfo-statements-title-' . ( $name ?: '' ) );
+		if ( $name !== false && $message->exists() ) {
+			$title = new Tag( 'h3' );
+			$title->addClasses( [ 'wbmi-statements-title' ] );
+			$title->appendContent( $message->text() );
 		}
 
 		$panel = new PanelLayout( [
@@ -214,8 +240,11 @@ class MediaInfoEntityStatementsView {
 			'expanded' => false,
 			'framed' => true,
 			'content' => [
-				$this->createPropertyHeader( $propertyIdString ),
-				$itemsGroupDiv
+				$title,
+				( new Tag( 'div' ) )->appendContent(
+					$this->createPropertyHeader( $propertyIdString ),
+					$itemsGroupDiv
+				),
 			]
 		] );
 		$panel->setAttributes(
@@ -321,7 +350,7 @@ class MediaInfoEntityStatementsView {
 		);
 
 		$statementDiv->appendContent( $mainSnakDiv );
-		if ( count( $this->qualifierIds ) > 0 ) {
+		if ( count( $this->qualifiers ) > 0 ) {
 			$qualifiers = $statement->getQualifiers();
 			if ( count( $qualifiers ) > 0 ) {
 				$statementDiv->appendContent( $this->createQualifiersDiv( $qualifiers ) );

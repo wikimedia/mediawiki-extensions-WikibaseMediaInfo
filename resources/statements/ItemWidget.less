@@ -28,6 +28,14 @@ h4.wbmi-entity-label {
 	line-height: inherit;
 }
 
+// the adjacent selector will make sure that this styling is *not* applied if
+// a more elaborate .wbmi-statements-title title is missing, in which case
+// all we have is this label, and it needs more emphasis
+h3.wbmi-statements-title + * .wbmi-statements-header h4.wbmi-entity-label {
+	font-weight: normal;
+	font-style: italic;
+}
+
 .wbmi-entity-label-extra {
 	font-weight: normal;
 	float: right;

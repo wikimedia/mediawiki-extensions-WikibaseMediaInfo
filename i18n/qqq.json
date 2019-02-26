@@ -30,6 +30,7 @@
 	"wikibasemediainfo-filepage-caption-approaching-limit": "Warning text when a caption is approaching the length limit. Parameters:\n* $1 - Number of characters left before reaching max character count, for PLURAL support",
 	"wikibasemediainfo-filepage-statement-no-value": "Text to display when a statement has an explicit 'NO VALUE' value.",
 	"wikibasemediainfo-filepage-statement-no-data": "Text to display when we want to display statements for a particular property (e.g. depicts) but there is no data for it",
+	"wikibasemediainfo-filepage-statement-no-results": "Text to display when no results for a query have been found, e.g. in autocomplete widgets",
 	"wikibasemediainfo-filepage-statement-some-value": "Text to display when a statement has an explicit 'SOME VALUE' value.",
 	"wikibasemediainfo-filepage-statement-error": "Text to display when a statement has a wrong kind of value; should never occur.",
 	"wikibasemediainfo-filepage-license-title": "Title for dialog with licensing instructions",

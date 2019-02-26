@@ -28,6 +28,7 @@
 	"wikibasemediainfo-filepage-caption-approaching-limit": "$1 {{PLURAL:$1|character|characters|0=characters}} left",
 	"wikibasemediainfo-filepage-statement-no-value": "No value exists for this property",
 	"wikibasemediainfo-filepage-statement-no-data": "No data available",
+	"wikibasemediainfo-filepage-statement-no-results": "No results found",
 	"wikibasemediainfo-filepage-statement-some-value": "This property has a value, but it is unknown",
 	"wikibasemediainfo-filepage-statement-error": "An error occurred when fetching the value for this property",
 	"wikibasemediainfo-filepage-license-title": "Captions and other structured data contributions",

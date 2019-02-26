@@ -156,7 +156,8 @@
 				"wikibasemediainfo-filepage-license-content",
 				"wikibasemediainfo-filepage-license-content-acceptance",
 				"wikibasemediainfo-filepage-license-accept",
-				"wikibasemediainfo-filepage-license-cancel"
+				"wikibasemediainfo-filepage-license-cancel",
+				"wikibasemediainfo-filepage-statement-no-results"
 			],
 			"targets": [
 				"desktop",

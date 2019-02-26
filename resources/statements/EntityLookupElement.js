@@ -67,12 +67,20 @@
 	 * @inheritdoc
 	 */
 	statements.EntityLookupElement.prototype.getLookupMenuOptionsFromData = function ( data ) {
-		var
-			items = [],
-			i, $label;
+		var i,
+			$label,
+			items = [];
 
 		if ( !data ) {
 			return [];
+		} else if ( data.length === 0 ) {
+			// Generate a disabled option with a helpful message in case no results are found.
+			return [
+				new OO.ui.MenuOptionWidget( {
+					disabled: true,
+					label: mw.message( 'wikibasemediainfo-filepage-statement-no-results' ).text()
+				} )
+			];
 		}
 
 		for ( i = 0; i < data.length; i++ ) {

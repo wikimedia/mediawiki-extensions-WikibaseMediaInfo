@@ -328,12 +328,31 @@
 		checks.push( this.licenseAcceptance );
 
 		// disable publishing first, and only re-enable if/once all checks have cleared
-		captionsPanel.editActionsWidget.disablePublish();
-		$.when.apply( null, checks ).then(
-			captionsPanel.editActionsWidget.enablePublish.bind(
-				captionsPanel.editActionsWidget
-			)
-		);
+		$.when.apply( null, checks )
+			.then( function () {
+				var $captions = $( captionsPanel.contentSelector ).find( captionsPanel.entityTermSelector ),
+					hasChanges = $captions.length < Object.keys( captionsPanel.captionsData ).length;
+
+				$captions.each( function () {
+					var index = $( this ).attr( 'data-index' ),
+						languageCode = captionsPanel.languageSelectors[ index ].getValue(),
+						text = captionsPanel.textInputs[ index ].getValue(),
+						existingDataForLanguage = captionsPanel.getDataForLangCode( languageCode );
+
+					// Ignore rows where no language code has been selected
+					if ( languageCode !== undefined && existingDataForLanguage.text !== text ) {
+						hasChanges = true;
+					}
+				} );
+
+				if ( !hasChanges ) {
+					return $.Deferred().reject().promise();
+				}
+			} )
+			.then(
+				captionsPanel.editActionsWidget.enablePublish.bind( captionsPanel.editActionsWidget ),
+				captionsPanel.editActionsWidget.disablePublish.bind( captionsPanel.editActionsWidget )
+			);
 	};
 
 	sd.CaptionsPanel.prototype.createRowDeleter = function ( $row ) {
@@ -389,6 +408,7 @@
 			$parentRow.find( '.wbmi-language-label' ).attr( 'dir', dir );
 			$parentRow.find( '.wbmi-caption-value' ).attr( 'dir', dir );
 			$parentRow.find( '.wbmi-caption-textInput' ).attr( 'dir', dir );
+			captionsPanel.refreshPublishState();
 		} );
 		this.languageSelectors[ index ] = languageSelector;
 
@@ -762,6 +782,8 @@
 	sd.CaptionsPanel.prototype.makeEditable = function () {
 		var captionsPanel = this;
 
+		this.refreshPublishState();
+
 		// show dialog informing user of licensing & store the returned promise
 		// in licenseAcceptance - submit won't be possible until dialog is closed
 		this.licenseAcceptance =
@@ -818,6 +840,7 @@
 		);
 		row.insertBefore( $captionsContent.find( '.wbmi-entityview-editActions' ) );
 		this.refreshLanguageSelectorsOptions();
+		this.refreshPublishState();
 	};
 
 	sd.CaptionsPanel.prototype.sendData = function () {

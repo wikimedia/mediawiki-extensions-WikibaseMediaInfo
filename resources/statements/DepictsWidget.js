@@ -172,6 +172,37 @@
 	};
 
 	/**
+	 * @return {wikibase.datamodel.Statement[]}
+	 */
+	statements.DepictsWidget.prototype.getChanges = function () {
+		var data = this.getData(),
+			previousStatements = this.data.toArray().reduce( function ( result, statement ) {
+				result[ statement.getClaim().getGuid() ] = statement;
+				return result;
+			}, {} );
+
+		return data.toArray().filter( function ( statement ) {
+			return !( statement.getClaim().getGuid() in previousStatements ) ||
+				!statement.equals( previousStatements[ statement.getClaim().getGuid() ] );
+		} );
+	};
+
+	/**
+	 * @return {wikibase.datamodel.Statement[]}
+	 */
+	statements.DepictsWidget.prototype.getRemovals = function () {
+		var data = this.getData(),
+			currentStatements = data.toArray().reduce( function ( result, statement ) {
+				result[ statement.getClaim().getGuid() ] = statement;
+				return result;
+			}, {} );
+
+		return this.data.toArray().filter( function ( statement ) {
+			return !( statement.getClaim().getGuid() in currentStatements );
+		} );
+	};
+
+	/**
 	 * Undo any changes that have been made in any of the items.
 	 *
 	 * @return {jQuery.Promise}
@@ -194,21 +225,8 @@
 			data = this.getData(),
 			serializer = new wb.serialization.StatementSerializer(),
 			promise = $.Deferred().resolve( { pageinfo: { lastrevid: baseRevId } } ).promise(),
-			previousStatements = this.data.toArray().reduce( function ( result, statement ) {
-				result[ statement.getClaim().getGuid() ] = statement;
-				return result;
-			}, {} ),
-			currentStatements = data.toArray().reduce( function ( result, statement ) {
-				result[ statement.getClaim().getGuid() ] = statement;
-				return result;
-			}, {} ),
-			changedStatements = data.toArray().filter( function ( statement ) {
-				return !( statement.getClaim().getGuid() in previousStatements ) ||
-					!statement.equals( previousStatements[ statement.getClaim().getGuid() ] );
-			} ),
-			removedStatements = this.data.toArray().filter( function ( statement ) {
-				return !( statement.getClaim().getGuid() in currentStatements );
-			} ),
+			changedStatements = this.getChanges(),
+			removedStatements = this.getRemovals(),
 			hasFailures = false;
 
 		this.setEditing( false );
@@ -241,7 +259,9 @@
 						// replace statement with what we previously had, since we failed
 						// to submit the changes...
 						data.removeItem( statement );
-						data.addItem( previousStatements[ guid ] );
+						data.addItem( self.data.toArray().filter( function ( statement ) {
+							return statement.getClaim().getGuid() === guid;
+						} )[ 0 ] );
 
 						hasFailures = true;
 

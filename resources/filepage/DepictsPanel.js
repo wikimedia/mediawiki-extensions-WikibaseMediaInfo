@@ -36,6 +36,7 @@
 
 		this.editToggle.connect( this, { click: 'makeEditable' } );
 		this.cancelPublish = new sd.CancelPublishWidget( this );
+		this.cancelPublish.disablePublish();
 
 		this.populateFormatValueCache( JSON.parse( this.$content.attr( 'data-formatvalue' ) || '{}' ) );
 		this.depictsInput = new st.DepictsWidget( this.config );
@@ -87,7 +88,7 @@
 		// load data into js widget instead
 		statementsJson = JSON.parse( this.$content.attr( 'data-statements' ) || '[]' );
 		this.depictsInput.setData( deserializer.deserialize( statementsJson ) );
-		this.depictsInput.connect( this, { change: 'makeEditable' } );
+		this.depictsInput.connect( this, { change: 'onDepictsChange' } );
 
 		// ...and attach the widget to DOM, replacing the server-side rendered equivalent
 		this.$content.empty().append( this.depictsInput.$element );
@@ -99,13 +100,25 @@
 		);
 	};
 
+	sd.DepictsPanel.prototype.onDepictsChange = function () {
+		var changes = this.depictsInput.getChanges(),
+			removals = this.depictsInput.getRemovals();
+
+		if ( changes.length > 0 || removals().length > 0 ) {
+			this.cancelPublish.enablePublish();
+		} else {
+			this.cancelPublish.disablePublish();
+		}
+
+		this.makeEditable();
+	};
+
 	sd.DepictsPanel.prototype.makeEditable = function () {
 		var self = this;
 
 		// show dialog informing user of licensing & store the returned promise
 		// in licenseAcceptance - submit won't be possible until dialog is closed
 		this.licenseDialogWidget.getConfirmation().then( function () {
-			self.cancelPublish.enablePublish();
 			self.cancelPublish.show();
 			self.editToggle.$element.hide();
 			self.$content.find( '.wbmi-statements-header .wbmi-entity-link' ).hide();
@@ -120,9 +133,9 @@
 		this.cancelPublish.disablePublish();
 		this.cancelPublish.hide();
 
-		this.depictsInput.disconnect( this, { change: 'makeEditable' } );
+		this.depictsInput.disconnect( this, { change: 'onDepictsChange' } );
 		this.depictsInput.reset().then( function () {
-			self.depictsInput.connect( self, { change: 'makeEditable' } );
+			self.depictsInput.connect( self, { change: 'onDepictsChange' } );
 
 			self.editToggle.$element.show();
 			self.$content.find( '.wbmi-statements-header .wbmi-entity-link' ).show();
@@ -133,14 +146,15 @@
 		var self = this;
 		this.cancelPublish.setStateSending();
 
-		this.depictsInput.disconnect( this, { change: 'makeEditable' } );
+		this.depictsInput.disconnect( this, { change: 'onDepictsChange' } );
 		this.depictsInput.submit( sd.currentRevision )
 			.then( function ( response ) {
-				self.depictsInput.connect( self, { change: 'makeEditable' } );
+				self.depictsInput.connect( self, { change: 'onDepictsChange' } );
 
 				sd.currentRevision = response.pageinfo.lastrevid;
 
 				self.cancelPublish.setStateReady();
+				self.cancelPublish.disablePublish();
 				self.cancelPublish.hide();
 				self.editToggle.$element.show();
 				self.$content.find( '.wbmi-statements-header .wbmi-entity-link' ).show();

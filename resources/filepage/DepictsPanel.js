@@ -70,18 +70,6 @@
 		var deserializer = new wb.serialization.StatementListDeserializer(),
 			statementsJson;
 
-		if (
-			// Exit if there's no statements block on the page (e.g. if it's feature-flagged off)
-			this.$content.length === 0 ||
-			// Or we're missing an ID for "depicts" in config
-			!( 'depicts' in mw.config.get( 'wbmiProperties' ) ) ||
-			// Only allow editing if we're NOT on a diff page or viewing an older revision
-			// eslint-disable-next-line jquery/no-global-selector
-			$( '.diff' ).length !== 0 || $( '.mw-revision' ).length !== 0
-		) {
-			return;
-		}
-
 		this.cancelPublish.hide();
 
 		// load data into js widget instead

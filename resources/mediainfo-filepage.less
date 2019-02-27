@@ -1,8 +1,11 @@
 @import 'mediawiki.mixins';
 
 /* Clear content after the entity view because it transitively floats */
-.wbmi-entityview + * {
-	clear: both;
+.wbmi-entityview {
+	overflow: auto;
+	& + * {
+		clear: both;
+	}
 }
 
 .wbmi-entityview-content,

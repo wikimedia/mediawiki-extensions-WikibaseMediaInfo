@@ -96,8 +96,8 @@
 			self.cancelPublish.enablePublish();
 			self.cancelPublish.show();
 			self.editToggle.$element.hide();
+			self.$content.addClass( 'wbmi-entityview-editable' );
 			self.$content.find( '.wbmi-statements-header .wbmi-entity-link' ).hide();
-
 			self.depictsInput.setEditing( true );
 		} );
 	};
@@ -105,6 +105,7 @@
 	sd.DepictsPanel.prototype.makeReadOnly = function () {
 		var self = this;
 
+		self.$content.removeClass( 'wbmi-entityview-editable' );
 		this.cancelPublish.disablePublish();
 		this.cancelPublish.hide();
 
@@ -128,6 +129,7 @@
 
 				sd.currentRevision = response.pageinfo.lastrevid;
 
+				self.$content.removeClass( 'wbmi-entityview-editable' );
 				self.cancelPublish.setStateReady();
 				self.cancelPublish.hide();
 				self.editToggle.$element.show();

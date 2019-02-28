@@ -10,5 +10,6 @@
 	"wikibasemediainfo-desc": "Расширение Wikibase для управления структурированными метаданными медиафайлов",
 	"wikibasemediainfo-diffview-label": "подпись",
 	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Подпись",
-	"wikibasemediainfo-filepage-caption-empty": "Опишите в одной строке, что представляет этот файл"
+	"wikibasemediainfo-filepage-caption-empty": "Опишите в одной строке, что представляет этот файл",
+	"wikibasemediainfo-filepage-statement-no-results": "Ничего не найдено"
 }

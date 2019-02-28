@@ -13,8 +13,5 @@
 	"wikibasemediainfo-statements-item-is-primary": "Birincil",
 	"wikibasemediainfo-statements-item-remove": "Kaldır",
 	"wikibasemediainfo-statements-item-add-qualifier": "Niteleyici еkle",
-	"wikibasemediainfo-property-placeholder": "Özellik",
-	"wikibasemediainfo-property-value-color": "Renk",
-	"wikibasemediainfo-property-value-inscription": "Açıklama",
-	"wikibasemediainfo-property-value-quantity": "Nicelik"
+	"wikibasemediainfo-property-placeholder": "Özellik"
 }

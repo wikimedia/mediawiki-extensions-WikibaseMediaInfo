@@ -23,9 +23,5 @@
 	"wikibasemediainfo-filepage-license-cancel": "Cancel·la",
 	"wikibasemediainfo-statements-item-remove": "Suprimeix",
 	"wikibasemediainfo-statements-item-add-qualifier": "Afegeix qualificador",
-	"wikibasemediainfo-property-placeholder": "Propietat",
-	"wikibasemediainfo-property-value-color": "Color",
-	"wikibasemediainfo-property-value-inscription": "Inscripció",
-	"wikibasemediainfo-property-value-symbolizes": "Simbolitza",
-	"wikibasemediainfo-property-value-position": "Posició relativa a la imatge"
+	"wikibasemediainfo-property-placeholder": "Propietat"
 }

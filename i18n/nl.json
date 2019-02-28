@@ -25,6 +25,7 @@
 	"wikibasemediainfo-filepage-add-caption": "Voeg een bijschrift toe",
 	"wikibasemediainfo-filepage-edit-captions": "Bewerk de bijschriften",
 	"wikibasemediainfo-filepage-cancel": "Annuleren",
+	"wikibasemediainfo-filepage-edit": "Bewerken",
 	"wikibasemediainfo-filepage-publish": "Wijzigingen publiceren",
 	"wikibasemediainfo-filepage-caption-empty": "Beschrijf in één regel wat dit bestand voorstelt",
 	"wikibasemediainfo-filepage-caption-too-long": "$1 {{PLURAL:$1|teken|tekens}} over de limiet",
@@ -39,9 +40,5 @@
 	"wikibasemediainfo-statements-item-add-qualifier": "Kwalificatie toevoegen",
 	"wikibasemediainfo-property-depicts": "Verwijzingen",
 	"wikibasemediainfo-property-placeholder": "Eigenschap",
-	"wikibasemediainfo-property-value-features": "Met onderdelen weergegeven",
-	"wikibasemediainfo-property-value-color": "Kleur",
-	"wikibasemediainfo-property-value-part": "Wordt op onderdeel toegepast",
-	"wikibasemediainfo-property-value-quantity": "Hoeveelheid",
 	"wikibasemediainfo-property-value-depicts": "Verwijzingen"
 }

@@ -21,6 +21,7 @@
 	"wikibasemediainfo-filepage-edit-captions": "编辑说明文字",
 	"wikibasemediainfo-filepage-edit-depicts": "编辑描述",
 	"wikibasemediainfo-filepage-cancel": "取消",
+	"wikibasemediainfo-filepage-edit": "编辑",
 	"wikibasemediainfo-filepage-publish": "发布更改",
 	"wikibasemediainfo-filepage-caption-empty": "未定义说明文字",
 	"wikibasemediainfo-filepage-statement-no-data": "没有可用数据",
@@ -30,8 +31,5 @@
 	"wikibasemediainfo-filepage-license-cancel": "取消",
 	"wikibasemediainfo-statements-item-input-label": "来自维基数据",
 	"wikibasemediainfo-statements-item-remove": "移除",
-	"wikibasemediainfo-property-placeholder": "属性",
-	"wikibasemediainfo-property-value-color": "颜色",
-	"wikibasemediainfo-property-value-symbolizes": "标志",
-	"wikibasemediainfo-property-value-quantity": "数量"
+	"wikibasemediainfo-property-placeholder": "属性"
 }

@@ -7,6 +7,7 @@
 	"wikibasemediainfo-filepage-structured-data-heading": "Strukturētie dati",
 	"wikibasemediainfo-filepage-fewer-languages": "Redzēt mazāk valodas",
 	"wikibasemediainfo-filepage-cancel": "Atcelt",
+	"wikibasemediainfo-filepage-edit": "Labot",
 	"wikibasemediainfo-filepage-publish": "Publicēt izmaiņas",
 	"wikibasemediainfo-filepage-license-cancel": "Atcelt",
 	"wikibasemediainfo-statements-item-input-label": "no Vikidatiem",
@@ -16,12 +17,5 @@
 	"wikibasemediainfo-statements-item-add-qualifier": "Pievienot ierobežojumu",
 	"wikibasemediainfo-property-depicts": "Attēlo",
 	"wikibasemediainfo-property-placeholder": "Īpašība",
-	"wikibasemediainfo-property-value-color": "Krāsa",
-	"wikibasemediainfo-property-value-wears": "Valkā",
-	"wikibasemediainfo-property-value-part": "Attiecas uz daļu",
-	"wikibasemediainfo-property-value-inscription": "Uzraksts",
-	"wikibasemediainfo-property-value-symbolizes": "Simbolizē",
-	"wikibasemediainfo-property-value-position": "Relatīvā pozīcija attēlā",
-	"wikibasemediainfo-property-value-quantity": "Daudzums",
 	"wikibasemediainfo-property-value-depicts": "Attēlo"
 }

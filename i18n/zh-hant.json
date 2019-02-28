@@ -21,6 +21,7 @@
 	"wikibasemediainfo-filepage-edit-captions": "編輯說明",
 	"wikibasemediainfo-filepage-edit-depicts": "編輯描述",
 	"wikibasemediainfo-filepage-cancel": "取消",
+	"wikibasemediainfo-filepage-edit": "編輯",
 	"wikibasemediainfo-filepage-publish": "發佈更改",
 	"wikibasemediainfo-filepage-caption-empty": "添加單行說明來描述出檔案所代表的內容",
 	"wikibasemediainfo-filepage-caption-too-long": "超過 $1 個{{PLURAL:$1|字元|字元}}限制",
@@ -43,13 +44,5 @@
 	"wikibasemediainfo-statements-item-add-qualifier": "新增限定詞",
 	"wikibasemediainfo-property-depicts": "描述",
 	"wikibasemediainfo-property-placeholder": "屬性",
-	"wikibasemediainfo-property-value-features": "顯示特徵",
-	"wikibasemediainfo-property-value-color": "色彩",
-	"wikibasemediainfo-property-value-wears": "佩帶",
-	"wikibasemediainfo-property-value-part": "套用至部份",
-	"wikibasemediainfo-property-value-inscription": "題字",
-	"wikibasemediainfo-property-value-symbolizes": "標誌",
-	"wikibasemediainfo-property-value-position": "圖片內的相對位置",
-	"wikibasemediainfo-property-value-quantity": "數量",
 	"wikibasemediainfo-property-value-depicts": "描述"
 }

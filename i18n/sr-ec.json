@@ -29,7 +29,5 @@
 	"wikibasemediainfo-filepage-statement-no-value": "Нема вредности за ово својство",
 	"wikibasemediainfo-filepage-statement-some-value": "Ово својство има вредност, али је непозната",
 	"wikibasemediainfo-filepage-statement-error": "Дошло је до грешке при добављању вредности за ово својство",
-	"wikibasemediainfo-property-placeholder": "Својство",
-	"wikibasemediainfo-property-value-color": "Боја",
-	"wikibasemediainfo-property-value-quantity": "Количина"
+	"wikibasemediainfo-property-placeholder": "Својство"
 }

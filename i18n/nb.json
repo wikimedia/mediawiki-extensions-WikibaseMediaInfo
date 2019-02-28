@@ -30,9 +30,5 @@
 	"wikibasemediainfo-filepage-license-cancel": "Avbryt",
 	"wikibasemediainfo-statements-item-input-label": "fra Wikidata",
 	"wikibasemediainfo-statements-item-remove": "Fjern",
-	"wikibasemediainfo-property-placeholder": "Egenskap",
-	"wikibasemediainfo-property-value-color": "Farge",
-	"wikibasemediainfo-property-value-wears": "Har på seg",
-	"wikibasemediainfo-property-value-symbolizes": "Symboliserer",
-	"wikibasemediainfo-property-value-quantity": "Mengde"
+	"wikibasemediainfo-property-placeholder": "Egenskap"
 }

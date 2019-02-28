@@ -16,9 +16,5 @@
 	"wikibasemediainfo-statements-item-input-label": "vu Wikidata",
 	"wikibasemediainfo-statements-item-is-primary": "Primär",
 	"wikibasemediainfo-statements-item-remove": "Ewechhuelen",
-	"wikibasemediainfo-property-placeholder": "Eegenschaft",
-	"wikibasemediainfo-property-value-color": "Faarf",
-	"wikibasemediainfo-property-value-inscription": "Aschreiwung",
-	"wikibasemediainfo-property-value-position": "Relativ Positioun um Bild",
-	"wikibasemediainfo-property-value-quantity": "Quantitéit"
+	"wikibasemediainfo-property-placeholder": "Eegenschaft"
 }

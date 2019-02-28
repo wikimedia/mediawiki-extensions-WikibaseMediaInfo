@@ -3,16 +3,19 @@
 		"authors": [
 			"Macofe",
 			"Dgstranz",
-			"Fitoschido"
+			"Fitoschido",
+			"La Mantis"
 		]
 	},
 	"wikibase-entity-mediainfo": "información multimedia",
 	"wikibasemediainfo-desc": "Extensión de Wikibase para gestionar metadatos estructurados de archivos multimedia",
+	"wikibasemediainfo-filepage-edit": "Editar",
+	"wikibasemediainfo-filepage-statement-no-data": "No hay ningún dato disponible.",
+	"wikibasemediainfo-filepage-statement-no-results": "No se encontró ningún resultado",
+	"wikibasemediainfo-filepage-license-title": "Contribuciones de leyendas y otros datos estructurados",
+	"wikibasemediainfo-filepage-license-accept": "Aceptar",
+	"wikibasemediainfo-filepage-license-cancel": "Cancelar",
 	"wikibasemediainfo-statements-item-input-label": "de Wikidata",
 	"wikibasemediainfo-statements-item-remove": "Quitar",
-	"wikibasemediainfo-property-placeholder": "Propiedad",
-	"wikibasemediainfo-property-value-color": "Color",
-	"wikibasemediainfo-property-value-part": "Se aplica a la parte",
-	"wikibasemediainfo-property-value-symbolizes": "Simboliza",
-	"wikibasemediainfo-property-value-quantity": "Cantidad"
+	"wikibasemediainfo-property-placeholder": "Propiedad"
 }

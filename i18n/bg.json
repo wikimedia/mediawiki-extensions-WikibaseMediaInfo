@@ -21,6 +21,7 @@
 	"wikibasemediainfo-filepage-edit-captions": "Редактиране на описанията",
 	"wikibasemediainfo-filepage-edit-depicts": "Редакцията показва",
 	"wikibasemediainfo-filepage-cancel": "Отказ",
+	"wikibasemediainfo-filepage-edit": "Редактиране",
 	"wikibasemediainfo-filepage-publish": "Публикуване на промените",
 	"wikibasemediainfo-filepage-caption-too-long": "$1 {{PLURAL:$1|знак|знака}} над границата",
 	"wikibasemediainfo-filepage-statement-no-value": "Не съществува стойност за това свойство",
@@ -40,13 +41,5 @@
 	"wikibasemediainfo-statements-item-remove": "Премахване",
 	"wikibasemediainfo-property-depicts": "Показва",
 	"wikibasemediainfo-property-placeholder": "Свойство",
-	"wikibasemediainfo-property-value-features": "Показано с особеностите",
-	"wikibasemediainfo-property-value-color": "Цвят",
-	"wikibasemediainfo-property-value-wears": "Носи",
-	"wikibasemediainfo-property-value-part": "Прилага се за дяла",
-	"wikibasemediainfo-property-value-inscription": "Надпис",
-	"wikibasemediainfo-property-value-symbolizes": "Символизира",
-	"wikibasemediainfo-property-value-position": "Относително положение в рамките на изображението",
-	"wikibasemediainfo-property-value-quantity": "Количество",
 	"wikibasemediainfo-property-value-depicts": "Показва"
 }

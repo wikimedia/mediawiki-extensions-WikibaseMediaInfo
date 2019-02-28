@@ -18,8 +18,5 @@
 	"wikibasemediainfo-statements-item-is-primary": "Primær",
 	"wikibasemediainfo-statements-item-make-primary": "Gør til primær",
 	"wikibasemediainfo-statements-item-remove": "Fjern",
-	"wikibasemediainfo-property-placeholder": "Egenskab",
-	"wikibasemediainfo-property-value-color": "Farve",
-	"wikibasemediainfo-property-value-symbolizes": "Symboliserer",
-	"wikibasemediainfo-property-value-quantity": "Kvantitet"
+	"wikibasemediainfo-property-placeholder": "Egenskab"
 }

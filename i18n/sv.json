@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"WikiPhoenix"
+			"WikiPhoenix",
+			"Sturban"
 		]
 	},
 	"right-mediainfo-term": "Ändra termer i mediainfo (undertexter, sammanfattningar)",
@@ -23,6 +24,7 @@
 	"wikibasemediainfo-filepage-caption-approaching-limit": "$1 {{PLURAL:$1|tecken|0=tecken}} kvar",
 	"wikibasemediainfo-filepage-statement-no-value": "Inget värde finns för denna egenskap",
 	"wikibasemediainfo-filepage-statement-no-data": "Ingen tillgänglig data",
+	"wikibasemediainfo-filepage-statement-no-results": "Hittade inga resultat",
 	"wikibasemediainfo-filepage-statement-some-value": "Denna egenskap har ett värde, men det är okänt",
 	"wikibasemediainfo-filepage-statement-error": "Ett fel uppstod när värdet för denna egenskap hämtades",
 	"wikibasemediainfo-filepage-license-title": "Bildtexter och andra strukturerade databidrag",

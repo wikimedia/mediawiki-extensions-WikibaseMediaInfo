@@ -3,7 +3,8 @@
 		"authors": [
 			"Piramidion",
 			"Base",
-			"Vlad5250"
+			"Vlad5250",
+			"Andrew J.Kurbiko"
 		]
 	},
 	"right-mediainfo-term": "зміна термінів медіа-інформації (підписів, описів)",
@@ -22,6 +23,7 @@
 	"wikibasemediainfo-filepage-add-caption": "Додати підпис",
 	"wikibasemediainfo-filepage-edit-captions": "Редагувати підписи",
 	"wikibasemediainfo-filepage-cancel": "Скасувати",
+	"wikibasemediainfo-filepage-edit": "Редагувати",
 	"wikibasemediainfo-filepage-publish": "Опублікувати зміни",
 	"wikibasemediainfo-filepage-caption-empty": "Додайте однорядкове пояснення, що саме репрезентує цей файл",
 	"wikibasemediainfo-filepage-caption-too-long": "Ліміт перевищено на $1 {{PLURAL:$1|символ|символи|символів}}",
@@ -30,13 +32,16 @@
 	"wikibasemediainfo-filepage-statement-no-data": "Немає доступних даних",
 	"wikibasemediainfo-filepage-statement-some-value": "Ця властивість має значення, але воно невідоме",
 	"wikibasemediainfo-filepage-statement-error": "Сталася помилка при спробі отримати значення для цієї властивості",
+	"wikibasemediainfo-filepage-license-title": "Зміни підписів та інших структурованих даних",
 	"wikibasemediainfo-filepage-license-content-acceptance": "Я погоджуюся редагувати далі на цих умовах. Більше не показувати це повідомлення.",
 	"wikibasemediainfo-filepage-license-accept": "Прийняти",
 	"wikibasemediainfo-filepage-license-cancel": "Скасувати",
+	"wikibasemediainfo-statements-depicts-title": "Об'єкти, показані на цьому зображенні",
+	"wikibasemediainfo-statements-item-input-placeholder": "Розпочніть пошук, щоб додати відображувані об'єкти",
+	"wikibasemediainfo-statements-item-input-label": "із Вікіданих",
 	"wikibasemediainfo-statements-item-is-primary": "Основний",
 	"wikibasemediainfo-statements-item-make-primary": "Зробити основним",
 	"wikibasemediainfo-statements-item-remove": "Вилучити",
 	"wikibasemediainfo-statements-item-add-qualifier": "Додати визначник",
-	"wikibasemediainfo-property-placeholder": "Властивість",
-	"wikibasemediainfo-property-value-color": "Колір"
+	"wikibasemediainfo-property-placeholder": "Властивість"
 }

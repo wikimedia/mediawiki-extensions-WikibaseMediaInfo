@@ -43,7 +43,5 @@
 	"wikibasemediainfo-statements-item-make-primary": "Make primary",
 	"wikibasemediainfo-statements-item-remove": "Remove",
 	"wikibasemediainfo-statements-item-add-qualifier": "Add qualifier",
-	"wikibasemediainfo-property-depicts": "Depicts",
-	"wikibasemediainfo-property-placeholder": "Property",
-	"wikibasemediainfo-property-value-depicts": "Depicts"
+	"wikibasemediainfo-property-placeholder": "Property"
 }

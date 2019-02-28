@@ -45,7 +45,5 @@
 	"wikibasemediainfo-statements-item-make-primary": "Text for link to make statement primary",
 	"wikibasemediainfo-statements-item-remove": "Title text for button to remove a property",
 	"wikibasemediainfo-statements-item-add-qualifier": "Text for button to add a qualifier",
-	"wikibasemediainfo-property-depicts": "Label for property 'Depicts'",
-	"wikibasemediainfo-property-placeholder": "Placeholder for properties dropdown",
-	"wikibasemediainfo-property-value-depicts": "Label for property 'Depicts'"
+	"wikibasemediainfo-property-placeholder": "Placeholder for properties dropdown"
 }

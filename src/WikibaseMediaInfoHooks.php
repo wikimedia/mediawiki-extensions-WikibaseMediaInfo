@@ -260,7 +260,12 @@ class WikibaseMediaInfoHooks {
 			$imgTitle = $out->getTitle();
 
 			$pageId = $imgTitle->getArticleID();
+			$revision = $out->getWikiPage()->getRevision();
 			$entityId = $this->entityIdFromPageId( $pageId );
+
+			$wbRepo = WikibaseRepo::getDefaultInstance();
+			$entityLookup = $wbRepo->getEntityLookup();
+			$entityRevisionId = $entityLookup->hasEntity( $entityId ) ? $revision->getId() : null;
 
 			$modules[] = 'wikibase.mediainfo.filePageDisplay';
 			$moduleStyles[] = 'wikibase.mediainfo.filepage.styles';
@@ -272,7 +277,7 @@ class WikibaseMediaInfoHooks {
 						$out->getUser()
 					)
 				),
-				'wbCurrentRevision' => $out->getWikiPage()->getRevision()->getId(),
+				'wbCurrentRevision' => $entityRevisionId,
 				'wbEntityId' => $entityId->getSerialization(),
 				'wbTermsLanguages' => $termsLanguages,
 				'wbRepoApiUrl' => wfScript( 'api' ),

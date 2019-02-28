@@ -156,8 +156,7 @@
 				"wikibasemediainfo-filepage-license-content",
 				"wikibasemediainfo-filepage-license-content-acceptance",
 				"wikibasemediainfo-filepage-license-accept",
-				"wikibasemediainfo-filepage-license-cancel",
-				"wikibasemediainfo-filepage-statement-no-results"
+				"wikibasemediainfo-filepage-license-cancel"
 			],
 			"targets": [
 				"desktop",
@@ -218,6 +217,7 @@
 				"wikibasemediainfo-statements-item-make-primary",
 				"wikibasemediainfo-statements-item-remove",
 				"wikibasemediainfo-statements-item-add-qualifier",
+				"wikibasemediainfo-filepage-statement-no-results",
 				"colon-separator",
 				"parentheses"
 			],

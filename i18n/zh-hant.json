@@ -28,6 +28,7 @@
 	"wikibasemediainfo-filepage-caption-approaching-limit": "還剩 $1 個{{PLURAL:$1|字元|字元|0=characters}}",
 	"wikibasemediainfo-filepage-statement-no-value": "此屬性沒有值",
 	"wikibasemediainfo-filepage-statement-no-data": "沒有資料可用",
+	"wikibasemediainfo-filepage-statement-no-results": "查無結果",
 	"wikibasemediainfo-filepage-statement-some-value": "此屬性有值；但內容不明",
 	"wikibasemediainfo-filepage-statement-error": "當取得此屬性的值時發生錯誤",
 	"wikibasemediainfo-filepage-license-title": "說明與其它結構化資料貢獻",

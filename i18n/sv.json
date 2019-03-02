@@ -18,6 +18,7 @@
 	"wikibasemediainfo-filepage-add-caption": "Lägg till en bildtext",
 	"wikibasemediainfo-filepage-edit-captions": "Redigera bildtexter",
 	"wikibasemediainfo-filepage-cancel": "Avbryt",
+	"wikibasemediainfo-filepage-edit": "Redigera",
 	"wikibasemediainfo-filepage-publish": "Publicera ändringar",
 	"wikibasemediainfo-filepage-caption-empty": "Ingen bildtext har definierats",
 	"wikibasemediainfo-filepage-caption-too-long": "$1 {{PLURAL:$1|tecken}} över gränsen",

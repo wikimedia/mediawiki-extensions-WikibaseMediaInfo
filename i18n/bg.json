@@ -26,6 +26,7 @@
 	"wikibasemediainfo-filepage-caption-too-long": "$1 {{PLURAL:$1|знак|знака}} над границата",
 	"wikibasemediainfo-filepage-statement-no-value": "Не съществува стойност за това свойство",
 	"wikibasemediainfo-filepage-statement-no-data": "Няма данни",
+	"wikibasemediainfo-filepage-statement-no-results": "Не бяха открити резултати",
 	"wikibasemediainfo-filepage-statement-some-value": "Това свойство има стойност, но не е познато",
 	"wikibasemediainfo-filepage-statement-error": "Възникна грешка при получаването на стойността за това свойство",
 	"wikibasemediainfo-filepage-license-title": "Описания и други приноси в структурираните данни",

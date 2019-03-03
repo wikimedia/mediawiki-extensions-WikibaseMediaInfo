@@ -6,7 +6,8 @@
 			"Spinster",
 			"Optilete",
 			"Xbaked potatox",
-			"Elroy"
+			"Elroy",
+			"Romaine"
 		]
 	},
 	"right-mediainfo-term": "Pas de media-informatietermen aan (onderschriften, samenvattingen)",
@@ -31,6 +32,7 @@
 	"wikibasemediainfo-filepage-caption-too-long": "$1 {{PLURAL:$1|teken|tekens}} over de limiet",
 	"wikibasemediainfo-filepage-caption-approaching-limit": "$1 {{PLURAL:$1|teken|tekens|0=tekens}} over",
 	"wikibasemediainfo-filepage-statement-no-data": "Geen gegevens beschikbaar",
+	"wikibasemediainfo-filepage-statement-no-results": "Geen resultaten gevonden",
 	"wikibasemediainfo-filepage-license-accept": "Aanvaarden",
 	"wikibasemediainfo-filepage-license-cancel": "Annuleren",
 	"wikibasemediainfo-statements-depicts-title": "Naar deze afbeelding verwezen onderdelen",

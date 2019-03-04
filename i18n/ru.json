@@ -3,13 +3,30 @@
 		"authors": [
 			"Okras",
 			"Putnik",
-			"Vlad5250"
+			"Vlad5250",
+			"Kaganer"
 		]
 	},
-	"wikibase-entity-mediainfo": "медиаинформация",
+	"right-mediainfo-term": "измененять термины структурированной информации о медиафайлах (названия, краткие описания)",
+	"slot-name-mediainfo": "Структурированная информация о медиафайлах",
+	"wikibase-entity-mediainfo": "информация o медиафайлах",
+	"wikibase-mediainfo-summary-wbsetlabel-add": "Добавлен заголовок [$2]",
+	"wikibase-mediainfo-summary-wbsetlabel-remove": "Удалён заголовок [$2]",
+	"wikibase-mediainfo-summary-wbsetlabel-set": "Изменён заголовок [$2]",
 	"wikibasemediainfo-desc": "Расширение Wikibase для управления структурированными метаданными медиафайлов",
-	"wikibasemediainfo-diffview-label": "подпись",
-	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Подпись",
-	"wikibasemediainfo-filepage-caption-empty": "Опишите в одной строке, что представляет этот файл",
-	"wikibasemediainfo-filepage-statement-no-results": "Ничего не найдено"
+	"wikibasemediainfo-diffview-label": "название",
+	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Названия",
+	"wikibasemediainfo-filepage-structured-data-heading": "Структурированные данные",
+	"wikibasemediainfo-filepage-captions-title": "Заголовки",
+	"wikibasemediainfo-filepage-more-languages": "См. ещё $1 {{PLURAL:$1|язык|языка|языков}}",
+	"wikibasemediainfo-filepage-fewer-languages": "Меньше языков",
+	"wikibasemediainfo-filepage-add-caption": "Добавить заголовок",
+	"wikibasemediainfo-filepage-edit-captions": "Редактировать заголовки",
+	"wikibasemediainfo-filepage-cancel": "Отмена",
+	"wikibasemediainfo-filepage-edit": "Править",
+	"wikibasemediainfo-filepage-publish": "Опубликовать изменения",
+	"wikibasemediainfo-filepage-caption-empty": "Опишите в одной строке, что представляет собой этот файл",
+	"wikibasemediainfo-filepage-statement-no-results": "Ничего не найдено",
+	"wikibasemediainfo-filepage-license-accept": "Принять",
+	"wikibasemediainfo-filepage-license-cancel": "Отменить"
 }

@@ -106,7 +106,7 @@
 
 		// show dialog informing user of licensing & store the returned promise
 		// in licenseAcceptance - submit won't be possible until dialog is closed
-		this.licenseDialogWidget.getConfirmation().then( function () {
+		this.licenseDialogWidget.getConfirmationIfNecessary().then( function () {
 			self.cancelPublish.show();
 			self.editToggle.$element.hide();
 			self.$content.addClass( 'wbmi-entityview-editable' );

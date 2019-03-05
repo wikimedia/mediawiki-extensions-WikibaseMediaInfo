@@ -787,7 +787,7 @@
 		// show dialog informing user of licensing & store the returned promise
 		// in licenseAcceptance - submit won't be possible until dialog is closed
 		this.licenseAcceptance =
-			this.licenseDialogWidget.getConfirmation().always(
+			this.licenseDialogWidget.getConfirmationIfNecessary().always(
 				captionsPanel.refreshPublishState.bind( captionsPanel )
 			);
 

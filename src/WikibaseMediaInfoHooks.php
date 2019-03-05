@@ -508,4 +508,16 @@ class WikibaseMediaInfoHooks {
 		}
 	}
 
+	/**
+	 * Handler for the GetPreferences hook
+	 *
+	 * @param User $user The user object
+	 * @param array &$preferences Their preferences object
+	 */
+	public static function onGetPreferences( \User $user, array &$preferences ) {
+		$preferences['wbmi-cc0-confirmed'] = [
+			'type' => 'api'
+		];
+	}
+
 }

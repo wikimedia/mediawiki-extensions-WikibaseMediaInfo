@@ -43,7 +43,5 @@
 	"wikibasemediainfo-statements-item-make-primary": "作為主要陳述",
 	"wikibasemediainfo-statements-item-remove": "移除",
 	"wikibasemediainfo-statements-item-add-qualifier": "新增限定詞",
-	"wikibasemediainfo-property-depicts": "描述",
-	"wikibasemediainfo-property-placeholder": "屬性",
-	"wikibasemediainfo-property-value-depicts": "描述"
+	"wikibasemediainfo-property-placeholder": "屬性"
 }

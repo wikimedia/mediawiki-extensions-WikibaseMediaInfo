@@ -43,7 +43,5 @@
 	"wikibasemediainfo-statements-item-make-primary": "Направи го главен",
 	"wikibasemediainfo-statements-item-remove": "Отстрани",
 	"wikibasemediainfo-statements-item-add-qualifier": "Додај определница",
-	"wikibasemediainfo-property-depicts": "Прикажува",
-	"wikibasemediainfo-property-placeholder": "Својство",
-	"wikibasemediainfo-property-value-depicts": "Прикажува"
+	"wikibasemediainfo-property-placeholder": "Својство"
 }

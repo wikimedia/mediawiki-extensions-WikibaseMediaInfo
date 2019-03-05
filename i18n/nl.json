@@ -40,7 +40,5 @@
 	"wikibasemediainfo-statements-item-is-primary": "Primair",
 	"wikibasemediainfo-statements-item-remove": "Verwijderen",
 	"wikibasemediainfo-statements-item-add-qualifier": "Kwalificatie toevoegen",
-	"wikibasemediainfo-property-depicts": "Verwijzingen",
-	"wikibasemediainfo-property-placeholder": "Eigenschap",
-	"wikibasemediainfo-property-value-depicts": "Verwijzingen"
+	"wikibasemediainfo-property-placeholder": "Eigenschap"
 }

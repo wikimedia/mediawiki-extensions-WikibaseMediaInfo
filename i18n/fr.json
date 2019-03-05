@@ -45,7 +45,5 @@
 	"wikibasemediainfo-statements-item-make-primary": "Rendre principal",
 	"wikibasemediainfo-statements-item-remove": "Supprimer",
 	"wikibasemediainfo-statements-item-add-qualifier": "Ajouter un qualifieur",
-	"wikibasemediainfo-property-depicts": "Dépeint",
-	"wikibasemediainfo-property-placeholder": "Propriété",
-	"wikibasemediainfo-property-value-depicts": "Dépeint"
+	"wikibasemediainfo-property-placeholder": "Propriété"
 }

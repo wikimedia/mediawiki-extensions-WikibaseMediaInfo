@@ -46,7 +46,5 @@
 	"wikibasemediainfo-statements-item-make-primary": "اتخذ الأولويه",
 	"wikibasemediainfo-statements-item-remove": "إزالة",
 	"wikibasemediainfo-statements-item-add-qualifier": "إضافة تصفية",
-	"wikibasemediainfo-property-depicts": "يصور",
-	"wikibasemediainfo-property-placeholder": "الخاصية",
-	"wikibasemediainfo-property-value-depicts": "يصور"
+	"wikibasemediainfo-property-placeholder": "الخاصية"
 }

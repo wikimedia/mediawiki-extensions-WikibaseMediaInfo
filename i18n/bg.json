@@ -40,7 +40,5 @@
 	"wikibasemediainfo-statements-item-is-primary": "Главен",
 	"wikibasemediainfo-statements-item-make-primary": "Направи го главен",
 	"wikibasemediainfo-statements-item-remove": "Премахване",
-	"wikibasemediainfo-property-depicts": "Показва",
-	"wikibasemediainfo-property-placeholder": "Свойство",
-	"wikibasemediainfo-property-value-depicts": "Показва"
+	"wikibasemediainfo-property-placeholder": "Свойство"
 }

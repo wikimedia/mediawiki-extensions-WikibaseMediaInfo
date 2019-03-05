@@ -41,7 +41,5 @@
 	"wikibasemediainfo-statements-item-input-label": "z Wikidanych",
 	"wikibasemediainfo-statements-item-remove": "Usuń",
 	"wikibasemediainfo-statements-item-add-qualifier": "Dodaj kwalifikator",
-	"wikibasemediainfo-property-depicts": "Przedstawia",
-	"wikibasemediainfo-property-placeholder": "Właściwość",
-	"wikibasemediainfo-property-value-depicts": "Przedstawia"
+	"wikibasemediainfo-property-placeholder": "Właściwość"
 }

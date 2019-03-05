@@ -44,7 +44,5 @@
 	"wikibasemediainfo-statements-item-make-primary": "Primär machen",
 	"wikibasemediainfo-statements-item-remove": "Entfernen",
 	"wikibasemediainfo-statements-item-add-qualifier": "Qualifikator hinzufügen",
-	"wikibasemediainfo-property-depicts": "Abbildungen",
-	"wikibasemediainfo-property-placeholder": "Eigenschaft",
-	"wikibasemediainfo-property-value-depicts": "Abbildungen"
+	"wikibasemediainfo-property-placeholder": "Eigenschaft"
 }

@@ -2,7 +2,6 @@
 
 namespace Wikibase\MediaInfo\View;
 
-use DataValues\StringValue;
 use Html;
 use OOUI\HtmlSnippet;
 use OOUI\PanelLayout;
@@ -14,6 +13,7 @@ use Wikibase\DataModel\Entity\EntityId;
 use Wikibase\DataModel\Entity\EntityIdValue;
 use Wikibase\DataModel\Entity\PropertyId;
 use Wikibase\DataModel\SerializerFactory;
+use Wikibase\DataModel\Snak\PropertyNoValueSnak;
 use Wikibase\DataModel\Snak\PropertyValueSnak;
 use Wikibase\DataModel\Snak\Snak;
 use Wikibase\DataModel\Snak\SnakList;
@@ -43,8 +43,6 @@ class MediaInfoEntityStatementsView {
 	private $serializerFactory;
 	private $languageCode;
 	private $qualifierIds;
-
-	const EMPTY_DEFAULT_PROPERTY_PLACEHOLDER = 'EMPTY_DEFAULT_PROPERTY_PLACEHOLDER';
 
 	/**
 	 * MediaInfoEntityStatementsView constructor.
@@ -388,27 +386,6 @@ class MediaInfoEntityStatementsView {
 	 * @throws \OOUI\Exception
 	 */
 	private function formatSnakValue( Snak $snak, $format = SnakFormatter::FORMAT_PLAIN ) {
-		// First handle the special case where a dummy snak has been added by default because
-		// there are no values at all for a property, but we want to display the property
-		// anyway (e.g. "depicts" is always displayed)
-		if ( $snak instanceof PropertyValueSnak ) {
-			$value = $snak->getDataValue();
-			if ( !( $value instanceof EntityIdValue ) ) {
-				$content = $value->getValue();
-				if ( $content === self::EMPTY_DEFAULT_PROPERTY_PLACEHOLDER ) {
-					return new HtmlSnippet(
-						Html::element(
-							'em',
-							[ 'class' => 'wbmi-statement-empty-default-property' ],
-							$this->textProvider->get(
-								'wikibasemediainfo-filepage-statement-no-data'
-							)
-						)
-					);
-				}
-			}
-		}
-
 		$formatter = $this->snakFormatterFactory->getSnakFormatter(
 			$format,
 			new FormatterOptions()
@@ -421,7 +398,7 @@ class MediaInfoEntityStatementsView {
 	 * as keys, and arrays of statements pertaining to those property ids (ordered by rank) as
 	 * values
 	 *
-	 * @param StatementList[] $statementList
+	 * @param StatementList $statementList
 	 * @return array
 	 */
 	private function statementsByPropertyId( StatementList $statementList ) {
@@ -497,10 +474,7 @@ class MediaInfoEntityStatementsView {
 				$statementsByProperty[ $propertyId->getSerialization() ] =
 					[
 						new Statement(
-							new PropertyValueSnak(
-								$propertyId,
-								new StringValue( self::EMPTY_DEFAULT_PROPERTY_PLACEHOLDER )
-							)
+							new PropertyNoValueSnak( $propertyId )
 						)
 					];
 			}

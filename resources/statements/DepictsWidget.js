@@ -125,26 +125,25 @@
 	statements.DepictsWidget.prototype.setData = function ( data ) {
 		var self = this;
 
-		this.data = data;
-
 		// remove existing items, then add new ones based on data passed in
 		this.input.setData( undefined );
 		this.clearItems();
 
-		this.data.each( function ( i, statement ) {
-			var dataValue = statement.getClaim().getMainSnak().getValue(),
+		data.each( function ( i, statement ) {
+			var mainSnak = statement.getClaim().getMainSnak(),
 				widget;
 
 			if ( statement.getClaim().getMainSnak().getPropertyId() !== self.propertyId ) {
 				throw new Error( 'Invalid statement' );
 			}
 
-			if ( dataValue.getType() === 'string' && dataValue.getValue() === 'EMPTY_DEFAULT_PROPERTY_PLACEHOLDER' ) {
-				// ignore invalid placeholder text
+			if ( !( mainSnak instanceof wb.datamodel.PropertyValueSnak ) ) {
+				// ignore value-less snak
+				data.removeItem( statement );
 				return;
 			}
 
-			widget = self.createItem( dataValue );
+			widget = self.createItem( mainSnak.getValue() );
 			widget.setData( statement );
 			widget.connect( self, { delete: [ 'removeItems', [ widget ] ] } );
 			widget.connect( self, { delete: [ 'emit', 'change' ] } );
@@ -153,6 +152,8 @@
 
 			self.addItems( [ widget ] );
 		} );
+
+		this.data = data;
 	};
 
 	/**

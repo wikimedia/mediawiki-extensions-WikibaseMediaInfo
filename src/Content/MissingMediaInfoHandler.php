@@ -4,6 +4,7 @@ namespace Wikibase\MediaInfo\Content;
 
 use IContextSource;
 use MediaWiki\Linker\LinkTarget;
+use Wikibase\Lib\Store\EntityRevision;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\MediaInfo\DataModel\MediaInfoId;
 use Wikibase\MediaInfo\Services\FilePageLookup;
@@ -99,7 +100,8 @@ class MissingMediaInfoHandler {
 			getEntityParserOutputGenerator( $userLanguage );
 
 		$mediaInfo = new MediaInfo( $mediaInfoId );
-		$parserOutput = $outputGenerator->getParserOutput( $mediaInfo, true );
+
+		$parserOutput = $outputGenerator->getParserOutput( new EntityRevision( $mediaInfo ), true );
 
 		$outputPage->addParserOutput( $parserOutput );
 	}

@@ -69,7 +69,7 @@ class MediaInfoView implements EntityDocumentView {
 		return '';
 	}
 
-	public function getContent( EntityDocument $entity ): ViewContent {
+	public function getContent( EntityDocument $entity, $revision = null ): ViewContent {
 		if ( !( $entity instanceof MediaInfo ) ) {
 			throw new InvalidArgumentException( '$entity must be a MediaInfo entity.' );
 		}

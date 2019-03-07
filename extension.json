@@ -69,6 +69,9 @@
 		],
 		"ParserOutputPostCacheTransform": [
 			"Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onParserOutputPostCacheTransform"
+		],
+		"GetPreferences": [
+			"Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onGetPreferences"
 		]
 	},
 	"MessagesDirs": {
@@ -244,6 +247,9 @@
 	"ResourceFileModulePaths": {
 		"localBasePath": "",
 		"remoteExtPath": "WikibaseMediaInfo"
+	},
+	"DefaultUserOptions": {
+		"wbmi-cc0-confirmed": 0
 	},
 	"SpecialPages": {},
 	"manifest_version": 2,

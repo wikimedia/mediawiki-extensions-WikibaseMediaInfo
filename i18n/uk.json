@@ -30,6 +30,7 @@
 	"wikibasemediainfo-filepage-caption-approaching-limit": "{{PLURAL:$1|Залишився $1 символ|Залишилося $1 символи|Залишилось $1 символів}}",
 	"wikibasemediainfo-filepage-statement-no-value": "Для цієї властивості значення відсутнє",
 	"wikibasemediainfo-filepage-statement-no-data": "Немає доступних даних",
+	"wikibasemediainfo-filepage-statement-no-results": "Нічого не знайдено",
 	"wikibasemediainfo-filepage-statement-some-value": "Ця властивість має значення, але воно невідоме",
 	"wikibasemediainfo-filepage-statement-error": "Сталася помилка при спробі отримати значення для цієї властивості",
 	"wikibasemediainfo-filepage-license-title": "Зміни підписів та інших структурованих даних",

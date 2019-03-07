@@ -29,6 +29,7 @@
 	"wikibasemediainfo-filepage-caption-approaching-limit": "{{PLURAL:$1|преостанува уште $1 знак|преостануваат уште $1 знаци|0=преостануваат уште $1 знаци}}",
 	"wikibasemediainfo-filepage-statement-no-value": "Не постои вредност за ова својство",
 	"wikibasemediainfo-filepage-statement-no-data": "Нема податоци",
+	"wikibasemediainfo-filepage-statement-no-results": "Не пронајдов ништо",
 	"wikibasemediainfo-filepage-statement-some-value": "Ова својство има вредност, но не е познато",
 	"wikibasemediainfo-filepage-statement-error": "Се појави грешка при добивањето на вредноста за ова својство",
 	"wikibasemediainfo-filepage-license-title": "Описи и други придонеси во структурираните податоци",

@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"Toniher"
+			"Toniher",
+			"Fitoschido"
 		]
 	},
 	"wikibase-entity-mediainfo": "informació multimèdia",
@@ -19,6 +20,7 @@
 	"wikibasemediainfo-filepage-publish": "Publica els canvis",
 	"wikibasemediainfo-filepage-caption-empty": "No s'ha definit cap llegenda",
 	"wikibasemediainfo-filepage-statement-no-data": "Cap dada disponible",
+	"wikibasemediainfo-filepage-statement-no-results": "No s’ha trobat cap resultat",
 	"wikibasemediainfo-filepage-license-accept": "Accepta",
 	"wikibasemediainfo-filepage-license-cancel": "Cancel·la",
 	"wikibasemediainfo-statements-item-remove": "Suprimeix",

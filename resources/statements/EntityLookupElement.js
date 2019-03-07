@@ -3,6 +3,7 @@
 	'use strict';
 
 	statements.EntityLookupElement = function MediaInfoStatementsEntityLookupElement( config ) {
+		this.config = config;
 		config = $.extend( {
 			minLookupCharacters: 1
 		}, config );
@@ -35,7 +36,13 @@
 		var
 			value = this.getValue(),
 			deferred = $.Deferred(),
+			api;
+
+		if ( this.config.externalEntitySearchApiUri ) {
+			api = new mw.ForeignApi( this.config.externalEntitySearchApiUri );
+		} else {
 			api = new mw.Api();
+		}
 
 		if ( value.length < this.minLookupCharacters ) {
 			return deferred.resolve( [] ).promise( { abort: function () {} } );

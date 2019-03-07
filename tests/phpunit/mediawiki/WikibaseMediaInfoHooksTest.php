@@ -6,7 +6,6 @@ use CirrusSearch\Search\CirrusIndexField;
 use Elastica\Document;
 use Hooks;
 use Language;
-use MediaWiki\MediaWikiServices;
 use MediaWiki\Revision\RevisionRecord;
 use MediaWiki\Revision\SlotRecord;
 use ParserOutput;
@@ -138,14 +137,6 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 	}
 
 	public function testOnBeforePageDisplay() {
-		if ( !MediaWikiServices::getInstance()->getMainConfig()->get( 'MediaInfoEnable' ) ) {
-			$this->markTestSkipped(
-				'OutputPage calls in onBeforePageDisplay not tested as do not happen if ' .
-				'extension is disabled'
-			);
-			return;
-		}
-
 		$imgTitle = Title::makeTitle( NS_FILE, 'Foo.jpg' );
 		$imgTitle->resetArticleID( 23 );
 
@@ -167,48 +158,6 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 			->method( 'addModules' );
 
 		WikibaseMediaInfoHooks::onBeforePageDisplay( $out, $skin );
-	}
-
-	public function testOnBeforePageDisplay_extensionDisabled() {
-		if ( MediaWikiServices::getInstance()->getMainConfig()->get( 'MediaInfoEnable' ) ) {
-			$this->markTestSkipped(
-				'onBeforePageDisplay() not tested with MediaInfoEnable set to false'
-			);
-			return;
-		}
-		$imgTitle = Title::makeTitle( NS_FILE, 'Foo.jpg' );
-		$imgTitle->resetArticleID( 23 );
-		$out = $this->getMockOutputPage( $imgTitle );
-
-		$parserOutputTag = '<div class="mw-parser-output">';
-		$mediaInfoViewOpeningTag = '<mediaInfoView>';
-		$captions = 'SOME_CAPTIONS';
-		$mediaInfoViewClosingTag = '</mediaInfoView>';
-		$extraHtml = 'SOME_HTML';
-		$captionsHeader = '<h1 class="mw-slot-header">' .
-			WikibaseMediaInfoHooks::MEDIAINFO_SLOT_HEADER_PLACEHOLDER .
-			'</h1>';
-		$out->clearHTML();
-		$out->addHTML(
-			$parserOutputTag .
-			$captionsHeader .
-			$extraHtml  .
-			$mediaInfoViewOpeningTag .
-			$captions .
-			$mediaInfoViewClosingTag
-		);
-
-		$skin = $this->getMockBuilder( \Skin::class )
-			->disableOriginalConstructor()
-			->getMock();
-
-		WikibaseMediaInfoHooks::onBeforePageDisplay( $out, $skin );
-
-		$this->assertNotRegExp( '/mediaInfoView/is', $out->getHtml() );
-		$this->assertNotRegExp(
-			'/mw-slot-header/is',
-			$out->getHtml()
-		);
 	}
 
 	public function testOnBeforePageDisplayWithMissingTitle() {
@@ -239,13 +188,6 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 	 * "mw-parser-output" div
 	 */
 	public function testOnBeforePageDisplay_moveExistingCaptions() {
-		if ( !MediaWikiServices::getInstance()->getMainConfig()->get( 'MediaInfoEnable' ) ) {
-			$this->markTestSkipped(
-				'Existing captions move in onBeforePageDisplay not tested as it does not happen ' .
-				'if extension is disabled'
-			);
-			return;
-		}
 		if (
 			MediaWikiServices::getInstance()
 				->getMainConfig()
@@ -373,13 +315,6 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 	}
 
 	public function testOnBeforePageDisplay_moveSDHeader() {
-		if ( !MediaWikiServices::getInstance()->getMainConfig()->get( 'MediaInfoEnable' ) ) {
-			$this->markTestSkipped(
-				'Header move in onBeforePageDisplay not tested as it does not happen if ' .
-				'extension is disabled'
-			);
-			return;
-		}
 		if (
 			MediaWikiServices::getInstance()
 				->getMainConfig()

@@ -57,10 +57,8 @@ Extension configuration variables are sets of key-value pairs. They are document
 Other Config:
    - **`$wgUploadWizardConfig['wikibase']['enabled']`**\
    Enables MediaInfo data on UploadWizard when set to true.
-   - **`$wgMediaInfoEnable`**\
-      Defaults to true.
    - **`$wgMediaInfoEnableSearch`** _(temporary feature flag)_\
-      Defaults to false.
+   Defaults to false.
 
 ## MediaInfo Glossary
 

@@ -165,7 +165,8 @@ class WikibaseMediaInfoHooks {
 	public static function onBeforePageDisplay( $out, $skin ) {
 		global $wgDepictsQualifierProperties,
 			$wgMediaInfoProperties,
-			$wgMediaInfoShowQualifiers;
+			$wgMediaInfoShowQualifiers,
+			$wgMediaInfoExternalEntitySearchBaseUri;
 
 		// Hide any MediaInfo content and UI on a page, if either …
 		if (
@@ -217,7 +218,8 @@ class WikibaseMediaInfoHooks {
 			new BabelUserLanguageLookup(),
 			$wbRepo->getEntityViewFactory(),
 			$wgMediaInfoShowQualifiers ? $qualifiers : [],
-			$wgMediaInfoProperties
+			$wgMediaInfoProperties,
+			$wgMediaInfoExternalEntitySearchBaseUri
 		);
 	}
 
@@ -227,15 +229,9 @@ class WikibaseMediaInfoHooks {
 	 * @param string[] $termsLanguages Array with language codes as keys and autonyms as values
 	 * @param UserLanguageLookup $userLanguageLookup
 	 * @param DispatchingEntityViewFactory $entityViewFactory
-	 * @param array $depictsQualifierProperties Map of [qualifier properties => datatype]
-	 * 	for depicts in the format [
-	 * 		[
-	 * 			'id' => '<id of the property>',
-	 * 			'label' => '<i8n key for the property name>',
-	 * 			'input' => '<type of data the property holds - entity, numeric, text>'
-	 * 		]
-	 * 	]
-	 * @param array $properties Property details (id, label and url)
+	 * @param array $qualifierProperties Property ids for properties to be used as qualifiers
+	 * @param array $properties Properties id for properties to be used for statements
+	 * @param string $externalEntitySearchBaseUri Base uri for external entity search api
 	 */
 	public function doBeforePageDisplay(
 		$out,
@@ -243,15 +239,17 @@ class WikibaseMediaInfoHooks {
 		array $termsLanguages,
 		UserLanguageLookup $userLanguageLookup,
 		DispatchingEntityViewFactory $entityViewFactory,
-		array $depictsQualifierProperties,
-		array $properties
+		array $qualifierProperties,
+		array $properties,
+		$externalEntitySearchBaseUri
 	) {
 		// Site-wide config
 		$modules = [];
 		$moduleStyles = [];
 		$jsConfigVars = [
-			'wbmiDepictsQualifierProperties' => $depictsQualifierProperties,
+			'wbmiDepictsQualifierProperties' => $qualifierProperties,
 			'wbmiProperties' => $properties,
+			'wbmiExternalEntitySearchBaseUri' => $externalEntitySearchBaseUri,
 		];
 
 		if ( $isMediaInfoPage ) {

@@ -39,6 +39,9 @@
 		},
 		"MediaInfoShowQualifiers": {
 			"value": true
+		},
+		"MediaInfoExternalEntitySearchBaseUri": {
+			"value": ""
 		}
 	},
 	"ServiceWiringFiles": [

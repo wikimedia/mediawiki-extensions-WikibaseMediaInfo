@@ -27,7 +27,8 @@
 	) {
 		sd.depicts = new sd.DepictsPanel( {
 			contentClass: depictsClass,
-			entityId: mw.config.get( 'wbEntityId' )
+			entityId: mw.config.get( 'wbEntityId' ),
+			externalEntitySearchApiUri: mw.config.get( 'wbmiExternalEntitySearchBaseUri' )
 		} );
 		sd.depicts.initialize();
 	}

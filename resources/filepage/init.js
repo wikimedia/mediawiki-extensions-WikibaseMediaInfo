@@ -1,12 +1,22 @@
-( function ( sd ) {
+( function () {
 
 	'use strict';
 
+	mw.mediaInfo = mw.mediaInfo || {};
+	mw.mediaInfo.structuredData = mw.mediaInfo.structuredData || {};
+	mw.mediaInfo.structuredData.currentRevision = mw.config.get( 'wbCurrentRevision' );
+	mw.mediaInfo.statements = mw.mediaInfo.statements || {};
+
 	var depictsId = mw.config.get( 'wbmiProperties' ).depicts || '',
 		depictsClass = 'wbmi-entityview-statementsGroup-' + depictsId.replace( ':', '_' ),
+		captions,
+		CaptionsPanel,
+		depicts,
+		DepictsPanel,
 		$tabs;
 
-	sd.currentRevision = mw.config.get( 'wbCurrentRevision' );
+	CaptionsPanel = require( './CaptionsPanel.js' );
+	DepictsPanel = require( './DepictsPanel.js' );
 
 	if (
 		// make sure there's a statements block on the page (e.g. if it's feature-flagged off)
@@ -16,6 +26,7 @@
 	) {
 		// eslint-disable-next-line no-jquery/no-global-selector
 		$tabs = $( '.wbmi-tabs' );
+
 		if ( $tabs.length > 0 ) {
 			OO.ui.infuse( $tabs );
 		}
@@ -23,15 +34,16 @@
 		// Only allow editing if we're NOT on a diff page or viewing an older revision
 		// eslint-disable-next-line no-jquery/no-global-selector
 		if ( $( '.diff' ).length === 0 && $( '.mw-revision' ).length === 0 ) {
-			sd.depicts = new sd.DepictsPanel( {
+			depicts = new DepictsPanel( {
 				contentClass: depictsClass,
 				entityId: mw.config.get( 'wbEntityId' )
 			} );
-			sd.depicts.initialize();
+
+			depicts.initialize();
 		}
 	}
 
-	sd.captions = new sd.CaptionsPanel( {
+	captions = new CaptionsPanel( {
 		headerClass: 'wbmi-entityview-captions-header',
 		contentClass: 'wbmi-entityview-captionsPanel',
 		entityTermClass: 'wbmi-entityview-caption',
@@ -41,6 +53,7 @@
 		// eslint-disable-next-line no-jquery/no-global-selector
 		captionsExist: mw.config.get( 'wbmiCaptionsExist', $( '.emptyEntity' ).length > 0 )
 	} );
-	sd.captions.initialize();
 
-}( mw.mediaInfo.structuredData ) );
+	captions.initialize();
+
+}() );

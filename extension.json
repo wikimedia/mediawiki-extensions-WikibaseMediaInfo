@@ -159,8 +159,8 @@
 			]
 		},
 		"wikibase.mediainfo.filePageDisplay": {
-			"scripts": [
-				"resources/filepage/__namespace.js",
+			"packageFiles": [
+				"resources/filepage/init.js",
 				"resources/filepage/LanguagesViewWidget.js",
 				"resources/filepage/LicenseDialogWidget.js",
 				"resources/filepage/UlsWidget.js",
@@ -168,8 +168,7 @@
 				"resources/filepage/CaptionsEditActionsWidget.js",
 				"resources/filepage/CaptionData.js",
 				"resources/filepage/CaptionsPanel.js",
-				"resources/filepage/DepictsPanel.js",
-				"resources/filepage/init.js"
+				"resources/filepage/DepictsPanel.js"
 			],
 			"dependencies": [
 				"mediawiki.action.edit.editWarning",

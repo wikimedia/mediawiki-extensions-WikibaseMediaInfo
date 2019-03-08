@@ -23,7 +23,7 @@
 	 */
 	sd.LicenseDialogWidget.prototype.getConfirmationIfNecessary = function () {
 		var deferred = $.Deferred(),
-			confirmed = this.getLicenceConfirmation(),
+			confirmed = this.getLicenseConfirmation(),
 			self = this;
 
 		// check if we've agreed to this before, either in present
@@ -79,7 +79,7 @@
 	 * been set.
 	 * @returns {Number} 0 or 1
 	 */
-	sd.LicenseDialogWidget.prototype.getLicenceConfirmation = function () {
+	sd.LicenseDialogWidget.prototype.getLicenseConfirmation = function () {
 		var storage = mw.storage,
 			key = this.prefKey,
 			user = mw.user;
@@ -109,5 +109,7 @@
 			user.options.set( key, 1 );
 		}
 	};
+
+	module.exports = sd.LicenseDialogWidget;
 
 }( mw.mediaInfo.structuredData ) );

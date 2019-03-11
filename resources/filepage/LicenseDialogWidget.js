@@ -59,13 +59,8 @@
 			),
 			actions: [
 				{
-					action: 'cancel',
-					label: mw.message( 'wikibasemediainfo-filepage-license-cancel' ).text(),
-					flags: [ 'safe', 'back' ]
-				},
-				{
 					action: 'accept',
-					label: mw.message( 'wikibasemediainfo-filepage-license-accept' ).text(),
+					label: mw.message( 'wikibasemediainfo-filepage-license-agree' ).text(),
 					flags: [ 'primary', 'progressive' ]
 				}
 			]

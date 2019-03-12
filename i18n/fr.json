@@ -39,11 +39,12 @@
 	"wikibasemediainfo-filepage-license-accept": "Accepter",
 	"wikibasemediainfo-filepage-license-cancel": "Annuler",
 	"wikibasemediainfo-statements-depicts-title": "Éléments dépeints de cette image",
-	"wikibasemediainfo-statements-item-input-placeholder": "Chercher pour ajouter les éléments dépeints",
+	"wikibasemediainfo-statements-item-input-placeholder": "Chercher pour ajouter des éléments (chat domestique, montagne, Mona Lisa, etc ...)",
 	"wikibasemediainfo-statements-item-input-label": "de Wikidata",
 	"wikibasemediainfo-statements-item-is-primary": "Principal",
 	"wikibasemediainfo-statements-item-make-primary": "Rendre principal",
 	"wikibasemediainfo-statements-item-remove": "Supprimer",
 	"wikibasemediainfo-statements-item-add-qualifier": "Ajouter un qualifieur",
-	"wikibasemediainfo-property-placeholder": "Propriété"
+	"wikibasemediainfo-property-placeholder": "Propriété",
+	"wikibasemediainfo-statements-title-depicts": "Elements décrits dans ce fichier"
 }

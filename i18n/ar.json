@@ -40,11 +40,12 @@
 	"wikibasemediainfo-filepage-license-accept": "قبول",
 	"wikibasemediainfo-filepage-license-cancel": "إلغاء",
 	"wikibasemediainfo-statements-depicts-title": "العناصر المبينة في هذه الصورة",
-	"wikibasemediainfo-statements-item-input-placeholder": "بحث لإضافة العناصر المصورة",
+	"wikibasemediainfo-statements-item-input-placeholder": "بحث لإضافة عناصر (قطة منزلية، جبل، الموناليزا، إلخ)",
 	"wikibasemediainfo-statements-item-input-label": "من ويكي بيانات",
 	"wikibasemediainfo-statements-item-is-primary": "ابتدائي",
 	"wikibasemediainfo-statements-item-make-primary": "اتخذ الأولويه",
 	"wikibasemediainfo-statements-item-remove": "إزالة",
 	"wikibasemediainfo-statements-item-add-qualifier": "إضافة تصفية",
-	"wikibasemediainfo-property-placeholder": "الخاصية"
+	"wikibasemediainfo-property-placeholder": "الخاصية",
+	"wikibasemediainfo-statements-title-depicts": "العناصر المصورة في هذا الملف"
 }

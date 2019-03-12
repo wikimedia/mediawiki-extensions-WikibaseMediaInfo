@@ -165,7 +165,8 @@ class MediaInfoEntityStatementsViewTest extends \PHPUnit\Framework\TestCase {
 			$this->valueFormatterFactory,
 			$this->serializerFactory,
 			'en',
-			[ 'depicts' => 'P1' ]
+			[ 'depicts' => 'P1' ],
+			[ 'color' => 'P2', 'wears' => 'P3' ]
 		);
 		$html = $sut->getHtml(
 			new MediaInfo( null, null, null, $statementList )
@@ -218,6 +219,7 @@ class MediaInfoEntityStatementsViewTest extends \PHPUnit\Framework\TestCase {
 			$this->valueFormatterFactory,
 			$this->serializerFactory,
 			'en',
+			[ 'depicts' => 'P1' ],
 			[]
 		);
 		$html = $sut->getHtml(

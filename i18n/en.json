@@ -37,11 +37,12 @@
 	"wikibasemediainfo-filepage-license-accept": "Accept",
 	"wikibasemediainfo-filepage-license-cancel": "Cancel",
 	"wikibasemediainfo-statements-depicts-title": "Items depicted in this image",
-	"wikibasemediainfo-statements-item-input-placeholder": "Search to add depicted items",
+	"wikibasemediainfo-statements-item-input-placeholder": "Search to add items (house cat, mountain, Mona Lisa, etc.)",
 	"wikibasemediainfo-statements-item-input-label": "from Wikidata",
 	"wikibasemediainfo-statements-item-is-primary": "Primary",
 	"wikibasemediainfo-statements-item-make-primary": "Make primary",
 	"wikibasemediainfo-statements-item-remove": "Remove",
 	"wikibasemediainfo-statements-item-add-qualifier": "Add qualifier",
-	"wikibasemediainfo-property-placeholder": "Property"
+	"wikibasemediainfo-property-placeholder": "Property",
+	"wikibasemediainfo-statements-title-depicts": "Items portrayed in this file"
 }

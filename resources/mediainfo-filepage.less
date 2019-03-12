@@ -20,7 +20,7 @@
 	box-sizing: border-box;
 	margin-bottom: 2em;
 
-	h3 {
+	h3:not( .wbmi-statements-title ) {
 		border-bottom: 1px solid #a2a9b1;
 		padding: 0.8em 0.8em 0.4em 1em;
 		font-size: 1em;
@@ -124,6 +124,12 @@
 		max-width: none;
 		width: auto;
 	}
+}
+
+h3.wbmi-statements-title {
+	margin: 0;
+	padding: 0;
+	font-size: 1em;
 }
 
 .wbmi-entityview-statementsGroup {

@@ -129,6 +129,7 @@ return [
 				$wbRepo->getValueFormatterFactory(),
 				$wbRepo->getCompactBaseDataModelSerializerFactory(),
 				$languageCode,
+				$properties,
 				$mwConfig->get( 'MediaInfoShowQualifiers' ) ? $qualifierPropertyIds : []
 			);
 

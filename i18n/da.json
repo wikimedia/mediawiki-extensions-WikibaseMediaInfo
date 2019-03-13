@@ -15,9 +15,9 @@
 	"wikibasemediainfo-filepage-statement-some-value": "Denne egenskab har en værdi, men den er ukendt",
 	"wikibasemediainfo-filepage-license-accept": "Acceptér",
 	"wikibasemediainfo-filepage-license-cancel": "Annullér",
+	"wikibasemediainfo-property-placeholder": "Egenskab",
 	"wikibasemediainfo-statements-item-input-label": "fra Wikidata",
 	"wikibasemediainfo-statements-item-is-primary": "Primær",
 	"wikibasemediainfo-statements-item-make-primary": "Gør til primær",
-	"wikibasemediainfo-statements-item-remove": "Fjern",
-	"wikibasemediainfo-property-placeholder": "Egenskab"
+	"wikibasemediainfo-statements-item-remove": "Fjern"
 }

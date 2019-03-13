@@ -10,10 +10,10 @@
 	"wikibasemediainfo-filepage-edit": "Labot",
 	"wikibasemediainfo-filepage-publish": "Publicēt izmaiņas",
 	"wikibasemediainfo-filepage-license-cancel": "Atcelt",
+	"wikibasemediainfo-property-placeholder": "Īpašība",
+	"wikibasemediainfo-statements-item-add-qualifier": "Pievienot ierobežojumu",
 	"wikibasemediainfo-statements-item-input-label": "no Vikidatiem",
 	"wikibasemediainfo-statements-item-is-primary": "Primārais",
 	"wikibasemediainfo-statements-item-make-primary": "Padarīt par primāro",
-	"wikibasemediainfo-statements-item-remove": "Noņemt",
-	"wikibasemediainfo-statements-item-add-qualifier": "Pievienot ierobežojumu",
-	"wikibasemediainfo-property-placeholder": "Īpašība"
+	"wikibasemediainfo-statements-item-remove": "Noņemt"
 }

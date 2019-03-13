@@ -10,8 +10,8 @@
 	"wikibasemediainfo-filepage-caption-empty": "Bu dosyanın temsil ettiği şeyin tek satırlık açıklamasını ekleyin.",
 	"wikibasemediainfo-filepage-statement-no-data": "Veri yok",
 	"wikibasemediainfo-filepage-statement-some-value": "Bu özelliğin bir değeri var ancak bilinmemektedir.",
-	"wikibasemediainfo-statements-item-is-primary": "Birincil",
-	"wikibasemediainfo-statements-item-remove": "Kaldır",
+	"wikibasemediainfo-property-placeholder": "Özellik",
 	"wikibasemediainfo-statements-item-add-qualifier": "Niteleyici еkle",
-	"wikibasemediainfo-property-placeholder": "Özellik"
+	"wikibasemediainfo-statements-item-is-primary": "Birincil",
+	"wikibasemediainfo-statements-item-remove": "Kaldır"
 }

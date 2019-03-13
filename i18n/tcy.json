@@ -7,12 +7,12 @@
 	"wikibasemediainfo-filepage-edit-depicts": "ಸಂಪಾದಿ ಚಿತ್ರಿಸಾವುಂಡು",
 	"wikibasemediainfo-filepage-caption-empty": "ಈ ಕಡತ ತೋಜಾವುನ ಮಾಹಿತಿದ ಒಂಜಿ ಗೆರೆತ ವಿವರಣೆ ಸೇರಾಲೆ.",
 	"wikibasemediainfo-filepage-statement-no-data": "ಒವ್ವೆ ದತ್ತಾಂಶ ತಿಕ್ಕುಜಿ",
+	"wikibasemediainfo-property-placeholder": "ಗುಣಲಕ್ಷಣ",
 	"wikibasemediainfo-statements-depicts-title": "ಈ ಆಕೃತಿಡ್ ಚಿತ್ರಿತ ವಿಷಯೊಲು",
-	"wikibasemediainfo-statements-item-input-placeholder": "ಚಿತ್ರಿತ ವಿಷಯಾಂಶೊಲೆನ್ ಸೇರಾರೆ ನಾಡುಲೆ",
+	"wikibasemediainfo-statements-item-add-qualifier": "ವಿಶೇಷಣ ಸೇರಾಲೆ",
 	"wikibasemediainfo-statements-item-input-label": "ವಿಕಿಡೇಟೊ-ರ್ದು",
+	"wikibasemediainfo-statements-item-input-placeholder": "ಚಿತ್ರಿತ ವಿಷಯಾಂಶೊಲೆನ್ ಸೇರಾರೆ ನಾಡುಲೆ",
 	"wikibasemediainfo-statements-item-is-primary": "ಪ್ರಾಥಮಿಕ",
 	"wikibasemediainfo-statements-item-make-primary": "ಪ್ರಾಥಮಿಕ ಮಲ್ಪುಲೆ",
-	"wikibasemediainfo-statements-item-remove": "ದೆಪ್ಪುಲೆ",
-	"wikibasemediainfo-statements-item-add-qualifier": "ವಿಶೇಷಣ ಸೇರಾಲೆ",
-	"wikibasemediainfo-property-placeholder": "ಗುಣಲಕ್ಷಣ"
+	"wikibasemediainfo-statements-item-remove": "ದೆಪ್ಪುಲೆ"
 }

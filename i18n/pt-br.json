@@ -38,12 +38,13 @@
 	"wikibasemediainfo-filepage-license-content-acceptance": "Eu aceito estes termos para minhas futuras edições. Não mostre esta mensagem novamente.",
 	"wikibasemediainfo-filepage-license-accept": "Aceitar",
 	"wikibasemediainfo-filepage-license-cancel": "Cancelar",
+	"wikibasemediainfo-property-placeholder": "Propriedade",
 	"wikibasemediainfo-statements-depicts-title": "Itens representados nesta imagem",
-	"wikibasemediainfo-statements-item-input-placeholder": "Pesquisar para adicionar itens representados",
+	"wikibasemediainfo-statements-item-add-qualifier": "Adicionar qualificador",
 	"wikibasemediainfo-statements-item-input-label": "de Wikidata",
+	"wikibasemediainfo-statements-item-input-placeholder": "Pesquisar para adicionar itens representados (gato da casa, montanha, Mona Lisa, etc.)",
 	"wikibasemediainfo-statements-item-is-primary": "Principal",
 	"wikibasemediainfo-statements-item-make-primary": "Tornar primário",
 	"wikibasemediainfo-statements-item-remove": "Remover",
-	"wikibasemediainfo-statements-item-add-qualifier": "Adicionar qualificador",
-	"wikibasemediainfo-property-placeholder": "Propriedade"
+	"wikibasemediainfo-statements-title-depicts": "Itens retratados neste arquivo"
 }

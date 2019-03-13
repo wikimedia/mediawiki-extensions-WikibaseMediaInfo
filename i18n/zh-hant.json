@@ -36,12 +36,13 @@
 	"wikibasemediainfo-filepage-license-content-acceptance": "我接受我未來的編輯使用這些條款。不要再顯示此訊息。",
 	"wikibasemediainfo-filepage-license-accept": "接受",
 	"wikibasemediainfo-filepage-license-cancel": "取消",
+	"wikibasemediainfo-property-placeholder": "屬性",
 	"wikibasemediainfo-statements-depicts-title": "項目在此圖片已描述",
-	"wikibasemediainfo-statements-item-input-placeholder": "搜尋來添加已描述項目",
+	"wikibasemediainfo-statements-item-add-qualifier": "新增限定詞",
 	"wikibasemediainfo-statements-item-input-label": "自維基數據",
+	"wikibasemediainfo-statements-item-input-placeholder": "搜尋來添加項目（家貓、山峰、蒙娜麗莎、或是其它等等。）",
 	"wikibasemediainfo-statements-item-is-primary": "主要",
 	"wikibasemediainfo-statements-item-make-primary": "作為主要陳述",
 	"wikibasemediainfo-statements-item-remove": "移除",
-	"wikibasemediainfo-statements-item-add-qualifier": "新增限定詞",
-	"wikibasemediainfo-property-placeholder": "屬性"
+	"wikibasemediainfo-statements-title-depicts": "在此檔案描寫的項目"
 }

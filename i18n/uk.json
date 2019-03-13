@@ -37,12 +37,12 @@
 	"wikibasemediainfo-filepage-license-content-acceptance": "Я погоджуюся редагувати далі на цих умовах. Більше не показувати це повідомлення.",
 	"wikibasemediainfo-filepage-license-accept": "Прийняти",
 	"wikibasemediainfo-filepage-license-cancel": "Скасувати",
+	"wikibasemediainfo-property-placeholder": "Властивість",
 	"wikibasemediainfo-statements-depicts-title": "Об'єкти, показані на цьому зображенні",
-	"wikibasemediainfo-statements-item-input-placeholder": "Розпочніть пошук, щоб додати відображувані об'єкти",
+	"wikibasemediainfo-statements-item-add-qualifier": "Додати визначник",
 	"wikibasemediainfo-statements-item-input-label": "із Вікіданих",
+	"wikibasemediainfo-statements-item-input-placeholder": "Розпочніть пошук, щоб додати відображувані об'єкти",
 	"wikibasemediainfo-statements-item-is-primary": "Основний",
 	"wikibasemediainfo-statements-item-make-primary": "Зробити основним",
-	"wikibasemediainfo-statements-item-remove": "Вилучити",
-	"wikibasemediainfo-statements-item-add-qualifier": "Додати визначник",
-	"wikibasemediainfo-property-placeholder": "Властивість"
+	"wikibasemediainfo-statements-item-remove": "Вилучити"
 }

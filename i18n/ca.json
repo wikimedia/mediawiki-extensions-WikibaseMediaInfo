@@ -23,7 +23,7 @@
 	"wikibasemediainfo-filepage-statement-no-results": "No s’ha trobat cap resultat",
 	"wikibasemediainfo-filepage-license-accept": "Accepta",
 	"wikibasemediainfo-filepage-license-cancel": "Cancel·la",
-	"wikibasemediainfo-statements-item-remove": "Suprimeix",
+	"wikibasemediainfo-property-placeholder": "Propietat",
 	"wikibasemediainfo-statements-item-add-qualifier": "Afegeix qualificador",
-	"wikibasemediainfo-property-placeholder": "Propietat"
+	"wikibasemediainfo-statements-item-remove": "Suprimeix"
 }

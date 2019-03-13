@@ -37,13 +37,15 @@
 	"wikibasemediainfo-filepage-license-content-acceptance": "Ich akzeptiere diese Bedingungen für meine zukünftigen Bearbeitungen. Diese Nachricht nicht erneut anzeigen.",
 	"wikibasemediainfo-filepage-license-accept": "Akzeptieren",
 	"wikibasemediainfo-filepage-license-cancel": "Abbrechen",
+	"wikibasemediainfo-property-placeholder": "Eigenschaft",
 	"wikibasemediainfo-statements-depicts-title": "In diesem Bild abgebildete Objekte",
-	"wikibasemediainfo-statements-item-input-placeholder": "Zum Hinzufügen von Objekten suchen (Hauskatze, Berg, Mona Lisa etc.)",
+	"wikibasemediainfo-statements-item-add-qualifier": "Qualifikator hinzufügen",
 	"wikibasemediainfo-statements-item-input-label": "von Wikidata",
+	"wikibasemediainfo-statements-item-input-placeholder": "Zum Hinzufügen von Objekten suchen (Hauskatze, Berg, Mona Lisa etc.)",
 	"wikibasemediainfo-statements-item-is-primary": "Primär",
 	"wikibasemediainfo-statements-item-make-primary": "Primär machen",
 	"wikibasemediainfo-statements-item-remove": "Entfernen",
-	"wikibasemediainfo-statements-item-add-qualifier": "Qualifikator hinzufügen",
-	"wikibasemediainfo-property-placeholder": "Eigenschaft",
+	"wikibasemediainfo-statements-learn-more": "Mehr erfahren",
+	"wikibasemediainfo-statements-remove": "Aussage entfernen",
 	"wikibasemediainfo-statements-title-depicts": "In dieser Datei abgebildete Objekte"
 }

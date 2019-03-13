@@ -36,12 +36,12 @@
 	"wikibasemediainfo-filepage-license-content-acceptance": "Pristajem na ove uvjete u mojim budućim uređivanjima. Ne prikazuj mi više ovu poruku.",
 	"wikibasemediainfo-filepage-license-accept": "Prihvati",
 	"wikibasemediainfo-filepage-license-cancel": "Odustani",
+	"wikibasemediainfo-property-placeholder": "Svojstvo",
 	"wikibasemediainfo-statements-depicts-title": "Prikazane stavke na ovoj slici",
-	"wikibasemediainfo-statements-item-input-placeholder": "Pretraga za dodavanje prikazanih stavki",
+	"wikibasemediainfo-statements-item-add-qualifier": "Dodaj odrednicu",
 	"wikibasemediainfo-statements-item-input-label": "s Wikipodataka",
+	"wikibasemediainfo-statements-item-input-placeholder": "Pretraga za dodavanje prikazanih stavki",
 	"wikibasemediainfo-statements-item-is-primary": "Primarno",
 	"wikibasemediainfo-statements-item-make-primary": "Učini primarnim",
-	"wikibasemediainfo-statements-item-remove": "Ukloni",
-	"wikibasemediainfo-statements-item-add-qualifier": "Dodaj odrednicu",
-	"wikibasemediainfo-property-placeholder": "Svojstvo"
+	"wikibasemediainfo-statements-item-remove": "Ukloni"
 }

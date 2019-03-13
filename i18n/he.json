@@ -39,12 +39,12 @@
 	"wikibasemediainfo-filepage-license-content-acceptance": "אני מקבל את התנאים האלה לעריכות הבאות שלי. אל תראו לי את ההודעה הזאת שוב.",
 	"wikibasemediainfo-filepage-license-accept": "אישור",
 	"wikibasemediainfo-filepage-license-cancel": "ביטול",
+	"wikibasemediainfo-property-placeholder": "מאפיין",
 	"wikibasemediainfo-statements-depicts-title": "פריטים שמוצגים בתמונה הזאת",
-	"wikibasemediainfo-statements-item-input-placeholder": "חיפוש להוספת הפריטים המוצגים",
+	"wikibasemediainfo-statements-item-add-qualifier": "הוספת מבחין",
 	"wikibasemediainfo-statements-item-input-label": "מוויקינתונים",
+	"wikibasemediainfo-statements-item-input-placeholder": "חיפוש להוספת הפריטים המוצגים",
 	"wikibasemediainfo-statements-item-is-primary": "ראשית",
 	"wikibasemediainfo-statements-item-make-primary": "להגדיר בתור ראשית",
-	"wikibasemediainfo-statements-item-remove": "הסרה",
-	"wikibasemediainfo-statements-item-add-qualifier": "הוספת מבחין",
-	"wikibasemediainfo-property-placeholder": "מאפיין"
+	"wikibasemediainfo-statements-item-remove": "הסרה"
 }

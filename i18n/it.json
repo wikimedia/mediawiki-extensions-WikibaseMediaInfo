@@ -33,9 +33,9 @@
 	"wikibasemediainfo-filepage-license-content-acceptance": "Accetto questi termini per le mie future modifiche. Non mostrare di nuovo questo messaggio.",
 	"wikibasemediainfo-filepage-license-accept": "Accetta",
 	"wikibasemediainfo-filepage-license-cancel": "Annulla",
+	"wikibasemediainfo-property-placeholder": "Proprietà",
+	"wikibasemediainfo-statements-item-add-qualifier": "Aggiungi qualificatore",
 	"wikibasemediainfo-statements-item-input-label": "da Wikidata",
 	"wikibasemediainfo-statements-item-is-primary": "Primaria",
-	"wikibasemediainfo-statements-item-remove": "Rimuovi",
-	"wikibasemediainfo-statements-item-add-qualifier": "Aggiungi qualificatore",
-	"wikibasemediainfo-property-placeholder": "Proprietà"
+	"wikibasemediainfo-statements-item-remove": "Rimuovi"
 }

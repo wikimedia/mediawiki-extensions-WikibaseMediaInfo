@@ -36,10 +36,10 @@
 	"wikibasemediainfo-filepage-license-content-acceptance": "Akceptuję te warunki dla moich przyszłych edycji. Nie pokazuj więcej tego komunikatu.",
 	"wikibasemediainfo-filepage-license-accept": "Zgadzam się",
 	"wikibasemediainfo-filepage-license-cancel": "Anuluj",
+	"wikibasemediainfo-property-placeholder": "Właściwość",
 	"wikibasemediainfo-statements-depicts-title": "Obiekty przedstawione na tym zdjęciu",
-	"wikibasemediainfo-statements-item-input-placeholder": "Rozpocznij wyszukiwanie aby dodać przedstawiane elementy",
-	"wikibasemediainfo-statements-item-input-label": "z Wikidanych",
-	"wikibasemediainfo-statements-item-remove": "Usuń",
 	"wikibasemediainfo-statements-item-add-qualifier": "Dodaj kwalifikator",
-	"wikibasemediainfo-property-placeholder": "Właściwość"
+	"wikibasemediainfo-statements-item-input-label": "z Wikidanych",
+	"wikibasemediainfo-statements-item-input-placeholder": "Rozpocznij wyszukiwanie aby dodać przedstawiane elementy",
+	"wikibasemediainfo-statements-item-remove": "Usuń"
 }

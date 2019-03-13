@@ -40,6 +40,7 @@
 		this.uls = this.dropdown.$handle.uls( {
 			onSelect: function ( language ) {
 				ulsWidget.setValue( language );
+				// eslint-disable-next-line no-jquery/no-event-shorthand
 				ulsWidget.dropdown.$handle.focus();
 			},
 			languages: languages,

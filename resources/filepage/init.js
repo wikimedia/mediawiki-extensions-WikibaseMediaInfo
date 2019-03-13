@@ -22,7 +22,7 @@
 		// and we have an ID for "depicts" in config
 		'depicts' in mw.config.get( 'wbmiProperties' ) &&
 		// Only allow editing if we're NOT on a diff page or viewing an older revision
-		// eslint-disable-next-line jquery/no-global-selector
+		// eslint-disable-next-line no-jquery/no-global-selector
 		$( '.diff' ).length === 0 && $( '.mw-revision' ).length === 0
 	) {
 		sd.depicts = new sd.DepictsPanel( {

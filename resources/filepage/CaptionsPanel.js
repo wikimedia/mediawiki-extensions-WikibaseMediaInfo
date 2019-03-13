@@ -202,7 +202,7 @@
 	 */
 	sd.CaptionsPanel.prototype.reorderLanguageList = function () {
 		var captionLanguages = this.getCaptionLanguagesList(),
-			// eslint-disable-next-line jquery/no-global-selector
+			// eslint-disable-next-line no-jquery/no-global-selector
 			$visibleLanguageNodes = $( '.wbmi-entityview-showLabel .wbmi-language-label' ),
 			rearrangedCaptionLanguages = [];
 
@@ -447,7 +447,7 @@
 		var captionsPanel = this,
 			langCodesWithoutData = [];
 
-		// eslint-disable-next-line jquery/no-each-util
+		// eslint-disable-next-line no-jquery/no-each-util
 		$.each( this.captionsData, function ( i, captionData ) {
 			var langCodeHasData = false;
 			captionsPanel.languageSelectors.forEach( function ( languageSelector ) {
@@ -484,7 +484,7 @@
 	};
 
 	sd.CaptionsPanel.prototype.entityIsEmpty = function () {
-		// eslint-disable-next-line jquery/no-global-selector
+		// eslint-disable-next-line no-jquery/no-global-selector
 		return $( '.emptyEntity' ).length > 0;
 	};
 
@@ -692,13 +692,13 @@
 				sd.currentRevision = result.entities[ entityId ].lastrevid;
 				// Add any empty CaptionData objects to the list first, as they won't be returned
 				// from the api
-				// eslint-disable-next-line jquery/no-each-util
+				// eslint-disable-next-line no-jquery/no-each-util
 				$.each( captionsPanel.captionsData, function ( index, captionData ) {
 					if ( captionData.text === '' ) {
 						refreshedLabelsData[ captionData.languageCode ] = captionData;
 					}
 				} );
-				// eslint-disable-next-line jquery/no-each-util
+				// eslint-disable-next-line no-jquery/no-each-util
 				$.each(
 					result.entities[ entityId ].labels,
 					function ( languageCode, labelObject ) {
@@ -882,7 +882,7 @@
 		var captionsPanel = this;
 
 		// Only allow editing if we're NOT on a diff page or viewing an older revision
-		// eslint-disable-next-line jquery/no-global-selector
+		// eslint-disable-next-line no-jquery/no-global-selector
 		if ( $( '.diff' ).length === 0 && $( '.mw-revision' ).length === 0 ) {
 			$( '.' + this.config.headerClass ).append( this.editToggle.$element );
 		}

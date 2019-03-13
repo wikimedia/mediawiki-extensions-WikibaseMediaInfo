@@ -11,7 +11,7 @@
 		this.windowManager.addWindows( [ this.dialog ] );
 		this.prefKey = 'wbmi-cc0-confirmed';
 
-		// eslint-disable-next-line jquery/no-global-selector
+		// eslint-disable-next-line no-jquery/no-global-selector
 		$( 'body' ).append( this.windowManager.$element );
 	};
 	OO.inheritClass( sd.LicenseDialogWidget, OO.ui.Widget );

@@ -10,7 +10,6 @@
 	a {
 		color: #36c;
 	}
-
 	width: 100%;
 	display: inline-block;
 }
@@ -65,6 +64,18 @@ h3.wbmi-statements-title + * .wbmi-statements-header h4.wbmi-entity-label {
 			}
 		}
 	}
+
+	a {
+		margin: 0 10px;
+
+		&:first-child {
+			margin-left: 0;
+		}
+
+		&:last-child {
+			margin-right: 0;
+		}
+	}
 }
 
 /*
@@ -92,6 +103,7 @@ h3.wbmi-statements-title + * .wbmi-statements-header h4.wbmi-entity-label {
 		// below block will draw a vertical line that starts inside the title box
 		// down to the end of this content node, at 10px from the left border
 		position: relative;
+
 		&:before {
 			content: ' ';
 			position: absolute;

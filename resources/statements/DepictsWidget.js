@@ -34,11 +34,12 @@
 		statements.DepictsWidget.parent.call( this, config );
 		OO.ui.mixin.GroupElement.call( this );
 
+		this.config = config;
 		this.entityId = config.entityId;
 		this.propertyId = config.propertyId;
 		this.qualifiers = config.qualifiers;
 		this.data = new wb.datamodel.StatementList();
-		this.config = config;
+		this.editing = false;
 
 		this.input = new statements.ItemInputWidget( {
 			classes: [ 'wbmi-depicts-input' ],
@@ -47,13 +48,30 @@
 		} );
 		this.input.connect( this, { choose: 'addItemFromInput' } );
 
+		this.$footer = $( '<div>' ).addClass( 'wbmi-statement-footer' );
+		this.$removeLink = $( '<a>' )
+			.addClass( 'wbmi-statement-remove' )
+			.text( mw.message( 'wikibasemediainfo-statements-remove' ).text() );
+		this.$learnMoreLink = $( '<a>' )
+			.addClass( 'wbmi-statement-learn-more' )
+			.html( mw.message( 'wikibasemediainfo-statements-learn-more' ).parse() )
+			.attr( 'href', mw.config.get( 'wbmiDepictsHelpUrl' ) )
+			.attr( 'target', '_blank' );
+
+		this.$removeLink.on( 'click', this.clearItems.bind( this ) );
+		this.connect( this, { change: 'renderFooter' } );
+
 		this.$element.append(
 			$( '<div>' ).addClass( 'wbmi-statements-header wbmi-entity-title' ).append(
 				$label,
 				$( '<div>' ).addClass( 'wbmi-entity-label-extra' ).append( $link )
 			),
 			this.input.$element,
-			this.$group.addClass( 'wbmi-content-items-group' )
+			this.$group.addClass( 'wbmi-content-items-group' ),
+			this.$footer.append(
+				this.$removeLink.hide().addClass( 'wmbi-hidden' ),
+				this.$learnMoreLink.attr( 'href' ) !== '' ? this.$learnMoreLink : ''
+			).hide()
 		);
 
 		// fetch property value & url
@@ -64,10 +82,18 @@
 			$label.text( plain );
 			$link.attr( 'href', $( html ).attr( 'href' ) );
 		} );
+
+		this.renderFooter();
 	};
 	OO.inheritClass( statements.DepictsWidget, OO.ui.Widget );
 	OO.mixinClass( statements.DepictsWidget, OO.ui.mixin.GroupElement );
 	OO.mixinClass( statements.DepictsWidget, statements.FormatValueElement );
+
+	statements.DepictsWidget.prototype.renderFooter = function () {
+		var showRemove = this.getItems().length > 0 && this.editing;
+		this.$removeLink.toggle( showRemove ).toggleClass( 'wbmi-hidden', !showRemove );
+		this.$footer.toggle( this.editing );
+	};
 
 	/**
 	 * @param {mw.mediaInfo.statements.ItemInputWidget} item
@@ -169,6 +195,8 @@
 	statements.DepictsWidget.prototype.setEditing = function ( editing ) {
 		var self = this;
 
+		this.editing = editing;
+
 		this.getItems().forEach( function ( item ) {
 			try {
 				item.setEditing( editing );
@@ -177,6 +205,8 @@
 				self.removeItems( [ item ] );
 			}
 		} );
+
+		this.renderFooter();
 	};
 
 	/**

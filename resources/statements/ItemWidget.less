@@ -40,6 +40,16 @@ h3.wbmi-statements-title + * .wbmi-statements-header h4.wbmi-entity-label {
 	font-weight: normal;
 	float: right;
 
+	// adds a &bull; between all visible siblings
+	> *:not( .wbmi-hidden ) ~ *:before {
+		content: '\2022'; // &bull;
+		padding: 0 10px;
+		color: #000;
+		cursor: initial;
+		display: inline-block;
+		text-decoration: none;
+	}
+
 	.wbmi-entity-primary {
 		font-weight: bold;
 
@@ -53,16 +63,6 @@ h3.wbmi-statements-title + * .wbmi-statements-header h4.wbmi-entity-label {
 				background-size: 70%;
 				filter: opacity( 0.55 );
 			}
-		}
-	}
-
-	a {
-		margin: 0 10px;
-		&:first-child {
-			margin-left: 0;
-		}
-		&:last-child {
-			margin-right: 0;
 		}
 	}
 }

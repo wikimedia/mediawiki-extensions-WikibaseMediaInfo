@@ -164,6 +164,7 @@ class WikibaseMediaInfoHooks {
 	 */
 	public static function onBeforePageDisplay( $out, $skin ) {
 		global $wgDepictsQualifierProperties,
+			$wgDepictsHelpUrl,
 			$wgMediaInfoProperties,
 			$wgMediaInfoShowQualifiers,
 			$wgMediaInfoExternalEntitySearchBaseUri;
@@ -217,9 +218,12 @@ class WikibaseMediaInfoHooks {
 			),
 			new BabelUserLanguageLookup(),
 			$wbRepo->getEntityViewFactory(),
-			$wgMediaInfoShowQualifiers ? $qualifiers : [],
-			$wgMediaInfoProperties,
-			$wgMediaInfoExternalEntitySearchBaseUri
+			$jsConfigVars = [
+				'wbmiProperties' => $wgMediaInfoProperties,
+				'wbmiDepictsQualifierProperties' => $wgMediaInfoShowQualifiers ? $qualifiers : [],
+				'wbmiDepictsHelpUrl' => $wgDepictsHelpUrl,
+				'wbmiExternalEntitySearchBaseUri' => $wgMediaInfoExternalEntitySearchBaseUri,
+			]
 		);
 	}
 
@@ -229,9 +233,7 @@ class WikibaseMediaInfoHooks {
 	 * @param string[] $termsLanguages Array with language codes as keys and autonyms as values
 	 * @param UserLanguageLookup $userLanguageLookup
 	 * @param DispatchingEntityViewFactory $entityViewFactory
-	 * @param array $qualifierProperties Property ids for properties to be used as qualifiers
-	 * @param array $properties Properties id for properties to be used for statements
-	 * @param string $externalEntitySearchBaseUri Base uri for external entity search api
+	 * @param array $jsConfigVars Variables to expose to JavaScript
 	 */
 	public function doBeforePageDisplay(
 		$out,
@@ -239,18 +241,11 @@ class WikibaseMediaInfoHooks {
 		array $termsLanguages,
 		UserLanguageLookup $userLanguageLookup,
 		DispatchingEntityViewFactory $entityViewFactory,
-		array $qualifierProperties,
-		array $properties,
-		$externalEntitySearchBaseUri
+		array $jsConfigVars = []
 	) {
 		// Site-wide config
 		$modules = [];
 		$moduleStyles = [];
-		$jsConfigVars = [
-			'wbmiDepictsQualifierProperties' => $qualifierProperties,
-			'wbmiProperties' => $properties,
-			'wbmiExternalEntitySearchBaseUri' => $externalEntitySearchBaseUri,
-		];
 
 		if ( $isMediaInfoPage ) {
 			$out = $this->moveMediaInfoData( $out, $entityViewFactory );

@@ -42,11 +42,11 @@
 		} );
 
 		this.hide = function () {
-			widget.$element.hide();
+			widget.$element.hide().addClass( 'wbmi-hidden' );
 		};
 
 		this.show = function () {
-			widget.$element.show();
+			widget.$element.show().removeClass( 'wbmi-hidden' );
 		};
 
 		this.disablePublish = function () {

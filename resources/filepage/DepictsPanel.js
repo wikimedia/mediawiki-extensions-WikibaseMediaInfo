@@ -109,9 +109,9 @@
 		// in licenseAcceptance - submit won't be possible until dialog is closed
 		this.licenseDialogWidget.getConfirmationIfNecessary().then( function () {
 			self.cancelPublish.show();
-			self.editToggle.$element.hide();
+			self.editToggle.$element.hide().addClass( 'wbmi-hidden' );
 			self.$content.addClass( 'wbmi-entityview-editable' );
-			self.$content.find( '.wbmi-statements-header .wbmi-entity-link' ).hide();
+			self.$content.find( '.wbmi-statements-header .wbmi-entity-link' ).hide().addClass( 'wbmi-hidden' );
 			self.depictsInput.setEditing( true );
 		} );
 	};
@@ -127,8 +127,8 @@
 		this.depictsInput.reset().then( function () {
 			self.depictsInput.connect( self, { change: 'onDepictsChange' } );
 
-			self.editToggle.$element.show();
-			self.$content.find( '.wbmi-statements-header .wbmi-entity-link' ).show();
+			self.editToggle.$element.show().removeClass( 'wbmi-hidden' );
+			self.$content.find( '.wbmi-statements-header .wbmi-entity-link' ).show().removeClass( 'wbmi-hidden' );
 		} );
 	};
 
@@ -147,8 +147,8 @@
 				self.cancelPublish.setStateReady();
 				self.cancelPublish.disablePublish();
 				self.cancelPublish.hide();
-				self.editToggle.$element.show();
-				self.$content.find( '.wbmi-statements-header .wbmi-entity-link' ).show();
+				self.editToggle.$element.show().removeClass( 'wbmi-hidden' );
+				self.$content.find( '.wbmi-statements-header .wbmi-entity-link' ).show().removeClass( 'wbmi-hidden' );
 			} )
 			.catch( function () {
 				self.cancelPublish.setStateReady();

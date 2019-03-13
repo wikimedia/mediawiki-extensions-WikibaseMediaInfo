@@ -38,13 +38,15 @@
 	"wikibasemediainfo-filepage-license-content-acceptance": "Text to indicate user accepts licensing & no longer wants to see these instructions in the future.\n\nSee also:\n* {{msg-mw|wikibase-copyrighttooltip-acknowledge}}",
 	"wikibasemediainfo-filepage-license-accept": "Text for accept button\n{{Identical|Accept}}",
 	"wikibasemediainfo-filepage-license-cancel": "Text for cancel button\n{{Identical|Cancel}}",
+	"wikibasemediainfo-property-placeholder": "Placeholder for properties dropdown",
 	"wikibasemediainfo-statements-depicts-title": "Title text for section for adding items depicted in the image",
-	"wikibasemediainfo-statements-item-input-placeholder": "Placeholder text for input field to search for properties",
+	"wikibasemediainfo-statements-item-add-qualifier": "Text for button to add a qualifier",
 	"wikibasemediainfo-statements-item-input-label": "Label text for input fields autocompleting Wikidata properties",
+	"wikibasemediainfo-statements-item-input-placeholder": "Placeholder text for input field to search for properties",
 	"wikibasemediainfo-statements-item-is-primary": "Text for link when statement is primary, to turn it normal again",
 	"wikibasemediainfo-statements-item-make-primary": "Text for link to make statement primary",
 	"wikibasemediainfo-statements-item-remove": "Title text for button to remove a property",
-	"wikibasemediainfo-statements-item-add-qualifier": "Text for button to add a qualifier",
-	"wikibasemediainfo-property-placeholder": "Placeholder for properties dropdown",
+	"wikibasemediainfo-statements-learn-more": "Text for link to page to learn more about statements",
+	"wikibasemediainfo-statements-remove": "Text for button to remove a statement",
 	"wikibasemediainfo-statements-title-depicts": "Title for the group of statements for 'Depicts'"
 }

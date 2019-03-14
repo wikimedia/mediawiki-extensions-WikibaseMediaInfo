@@ -114,7 +114,7 @@ return [
 
 			$defaultPropertyIdsForView = [];
 			$properties = $mwConfig->get( 'MediaInfoProperties' );
-			$depictsPropertyId = $properties['depicts'];
+			$depictsPropertyId = $properties['depicts'] ?? null;
 			if ( !empty( $depictsPropertyId ) ) {
 				$defaultPropertyIdsForView[] = new PropertyId( $depictsPropertyId );
 			}

@@ -4,7 +4,8 @@
 			"Macofe",
 			"Dgstranz",
 			"Fitoschido",
-			"La Mantis"
+			"La Mantis",
+			"Marcelo9987"
 		]
 	},
 	"wikibase-entity-mediainfo": "información multimedia",
@@ -17,5 +18,6 @@
 	"wikibasemediainfo-filepage-license-cancel": "Cancelar",
 	"wikibasemediainfo-property-placeholder": "Propiedad",
 	"wikibasemediainfo-statements-item-input-label": "de Wikidata",
+	"wikibasemediainfo-statements-item-input-placeholder": "Búsqueda para añadir elementos (gato de casa, montaña, Mona Lisa, etc.)",
 	"wikibasemediainfo-statements-item-remove": "Quitar"
 }

@@ -29,6 +29,7 @@
 	"wikibasemediainfo-filepage-caption-approaching-limit": "Pozostał{{PLURAL:$1|y|o}} $1 {{PLURAL:$1|znak|znaki|znaków}}",
 	"wikibasemediainfo-filepage-statement-no-value": "Brak wartości tej właściwości",
 	"wikibasemediainfo-filepage-statement-no-data": "Brak dostępnych danych",
+	"wikibasemediainfo-filepage-statement-no-results": "Nie znaleziono żadnych wyników",
 	"wikibasemediainfo-filepage-statement-some-value": "Ta właściwość jest podana, ale jako nieznana",
 	"wikibasemediainfo-filepage-statement-error": "Wystąpił błąd podczas pobierania wartości tej właściwości",
 	"wikibasemediainfo-filepage-license-title": "Zmienianie podpisów i innych danych strukturalnych",
@@ -40,6 +41,11 @@
 	"wikibasemediainfo-statements-depicts-title": "Obiekty przedstawione na tym zdjęciu",
 	"wikibasemediainfo-statements-item-add-qualifier": "Dodaj kwalifikator",
 	"wikibasemediainfo-statements-item-input-label": "z Wikidanych",
-	"wikibasemediainfo-statements-item-input-placeholder": "Rozpocznij wyszukiwanie aby dodać przedstawiane elementy",
-	"wikibasemediainfo-statements-item-remove": "Usuń"
+	"wikibasemediainfo-statements-item-input-placeholder": "Rozpocznij wyszukiwanie aby dodać elementy (kot domowy, góra, Mona Lisa itp.)",
+	"wikibasemediainfo-statements-item-is-primary": "Główny",
+	"wikibasemediainfo-statements-item-make-primary": "Jako główny",
+	"wikibasemediainfo-statements-item-remove": "Usuń",
+	"wikibasemediainfo-statements-learn-more": "Dowiedz się więcej",
+	"wikibasemediainfo-statements-remove": "Usuń stwierdzenie",
+	"wikibasemediainfo-statements-title-depicts": "Obiekty przedstawione na tym zdjęciu"
 }

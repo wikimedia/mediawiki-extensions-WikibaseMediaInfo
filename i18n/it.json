@@ -37,5 +37,7 @@
 	"wikibasemediainfo-statements-item-add-qualifier": "Aggiungi qualificatore",
 	"wikibasemediainfo-statements-item-input-label": "da Wikidata",
 	"wikibasemediainfo-statements-item-is-primary": "Primaria",
-	"wikibasemediainfo-statements-item-remove": "Rimuovi"
+	"wikibasemediainfo-statements-item-remove": "Rimuovi",
+	"wikibasemediainfo-statements-learn-more": "Ulteriori informazioni",
+	"wikibasemediainfo-statements-remove": "Rimuovi dichiarazione"
 }

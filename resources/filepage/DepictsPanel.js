@@ -93,7 +93,7 @@
 		var changes = this.depictsInput.getChanges(),
 			removals = this.depictsInput.getRemovals();
 
-		if ( changes.length > 0 || removals().length > 0 ) {
+		if ( changes.length > 0 || removals.length > 0 ) {
 			this.cancelPublish.enablePublish();
 		} else {
 			this.cancelPublish.disablePublish();

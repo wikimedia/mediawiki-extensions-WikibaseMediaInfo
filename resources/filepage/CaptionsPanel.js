@@ -31,8 +31,8 @@
 	 * @param {Object} [config]
 	 * @cfg {string} headerClass CSS class of captions header element
 	 * @cfg {string} contentClass CSS class of captions content container
-	 * @cfg {string} entityViewClass CSS class of entire entity view
 	 * @cfg {string} entityTermClass CSS class of individual caption
+	 * @cfg {bool} captionsExist True if there is existing caption data, false if not
 	 * @cfg {int} warnWithinMaxCaptionLength Show a warning when the caption length is within X
 	 *   characters of the max
 	 */
@@ -46,6 +46,7 @@
 		OO.ui.mixin.PendingElement.call( this, this.config );
 
 		this.captionsData = {};
+		this.captionsExist = config.captionsExist;
 		this.languageSelectors = [];
 		this.textInputs = [];
 
@@ -483,15 +484,6 @@
 		} );
 	};
 
-	sd.CaptionsPanel.prototype.entityIsEmpty = function () {
-		// eslint-disable-next-line no-jquery/no-global-selector
-		return $( '.emptyEntity' ).length > 0;
-	};
-
-	sd.CaptionsPanel.prototype.markEntityAsNonEmpty = function () {
-		$( '.' + this.config.entityViewClass ).removeClass( 'emptyEntity' );
-	};
-
 	/**
 	 * Get a value object for sending data to the api
 	 *
@@ -514,7 +506,7 @@
 			value: text,
 			language: language
 		};
-		if ( !this.entityIsEmpty() ) {
+		if ( this.captionsExist === true ) {
 			apiParams.baserevid = sd.currentRevision;
 		}
 		return apiParams;
@@ -531,7 +523,7 @@
 			.done( function ( result ) {
 				var showCaptionFlags = captionsPanel.getShowCaptionFlagsByLangCode(),
 					captionLanguages = captionsPanel.getCaptionLanguagesList();
-				captionsPanel.markEntityAsNonEmpty();
+				captionsPanel.captionsExist = true;
 				captionsPanel.captionsData[ language ] = new sd.CaptionData( language, text );
 				sd.currentRevision = result.entity.lastrevid;
 				captionsPanel.languageSelectors.splice( index, 1 );

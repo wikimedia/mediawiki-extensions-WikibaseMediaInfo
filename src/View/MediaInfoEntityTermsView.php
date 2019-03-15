@@ -2,6 +2,7 @@
 
 namespace Wikibase\MediaInfo\View;
 
+use Html;
 use OOUI\Element;
 use OOUI\HorizontalLayout;
 use OOUI\LabelWidget;
@@ -42,6 +43,7 @@ class MediaInfoEntityTermsView {
 	 */
 	private $fallbackChain;
 
+	const CAPTIONS_CUSTOM_TAG = 'mediaInfoViewCaptions';
 	const CAPTION_EMPTY_CLASS = 'wbmi-entityview-emptyCaption';
 	const SHOW_CAPTION_CLASS = 'wbmi-entityview-showLabel';
 	const CAPTIONS_CONTAINER = 'wbmi-entityview-captionsPanel';
@@ -94,7 +96,15 @@ class MediaInfoEntityTermsView {
 			'data-caption-languages' =>
 				implode( ',', $this->getLanguagesOrderedByFallbackChain( $entity ) )
 		] );
-		return $layout->toString();
+		$html = $layout->toString();
+
+		// Wrap the whole thing in a custom tag so we can manipulate its position on the page
+		// later on
+		return Html::rawElement(
+			self::CAPTIONS_CUSTOM_TAG,
+			[],
+			$html
+		);
 	}
 
 	private function getCaptionsHeader() {

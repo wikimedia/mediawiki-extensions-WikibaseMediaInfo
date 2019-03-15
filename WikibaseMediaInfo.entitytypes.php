@@ -56,8 +56,6 @@ use Wikibase\Repo\Search\Elastic\Fields\LabelsProviderFieldDefinitions;
 use Wikibase\Repo\Search\Elastic\Fields\StatementProviderFieldDefinitions;
 use Wikibase\Repo\WikibaseRepo;
 use Wikibase\SettingsArray;
-use Wikibase\View\Template\TemplateFactory;
-use Wikibase\View\Template\TemplateRegistry;
 
 return [
 	MediaInfo::ENTITY_TYPE => [
@@ -86,9 +84,6 @@ return [
 			EntityDocument $entity,
 			EntityInfo $entityInfo
 		) {
-			$templateFactory = new TemplateFactory(
-				new TemplateRegistry( include __DIR__ . '/resources/templates.php' )
-			);
 
 			$mwConfig = MediaWikiServices::getInstance()->getMainConfig();
 			$languageCode = $language->getCode();
@@ -134,7 +129,6 @@ return [
 			);
 
 			return new MediaInfoView(
-				$templateFactory,
 				$mediaInfoEntityTermsView,
 				new MediaWikiLanguageDirectionalityLookup(),
 				$languageCode,

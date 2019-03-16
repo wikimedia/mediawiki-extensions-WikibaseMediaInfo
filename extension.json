@@ -163,8 +163,7 @@
 				"wikibasemediainfo-filepage-license-title",
 				"wikibasemediainfo-filepage-license-content",
 				"wikibasemediainfo-filepage-license-content-acceptance",
-				"wikibasemediainfo-filepage-license-accept",
-				"wikibasemediainfo-filepage-license-cancel"
+				"wikibasemediainfo-filepage-license-agree"
 			],
 			"targets": [
 				"desktop",

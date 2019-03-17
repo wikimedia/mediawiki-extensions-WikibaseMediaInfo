@@ -26,7 +26,5 @@
 	"wikibasemediainfo-filepage-edit": "Править",
 	"wikibasemediainfo-filepage-publish": "Опубликовать изменения",
 	"wikibasemediainfo-filepage-caption-empty": "Опишите в одной строке, что представляет собой этот файл",
-	"wikibasemediainfo-filepage-statement-no-results": "Ничего не найдено",
-	"wikibasemediainfo-filepage-license-accept": "Принять",
-	"wikibasemediainfo-filepage-license-cancel": "Отменить"
+	"wikibasemediainfo-filepage-statement-no-results": "Ничего не найдено"
 }

@@ -30,7 +30,5 @@
 	"wikibasemediainfo-filepage-statement-error": "Ett fel uppstod när värdet för denna egenskap hämtades",
 	"wikibasemediainfo-filepage-license-title": "Bildtexter och andra strukturerade databidrag",
 	"wikibasemediainfo-filepage-license-content": "Genom att klicka på \"Publicera ändringar\" samtycker du till [[wmf:Terms_of_Use|användarvillkoren]] och du samtycker oåterkalleligen till att släppa ditt bidrag under licensen [https://creativecommons.org/publicdomain/zero/1.0/ Creative Commons CC0].",
-	"wikibasemediainfo-filepage-license-content-acceptance": "Jag accepterar dessa villkor för mina framtida redigeringar. Visa inte detta meddelande igen.",
-	"wikibasemediainfo-filepage-license-accept": "Acceptera",
-	"wikibasemediainfo-filepage-license-cancel": "Avbryt"
+	"wikibasemediainfo-filepage-license-content-acceptance": "Jag accepterar dessa villkor för mina framtida redigeringar. Visa inte detta meddelande igen."
 }

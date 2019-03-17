@@ -33,8 +33,6 @@
 	"wikibasemediainfo-filepage-caption-approaching-limit": "$1 {{PLURAL:$1|teken|tekens|0=tekens}} over",
 	"wikibasemediainfo-filepage-statement-no-data": "Geen gegevens beschikbaar",
 	"wikibasemediainfo-filepage-statement-no-results": "Geen resultaten gevonden",
-	"wikibasemediainfo-filepage-license-accept": "Aanvaarden",
-	"wikibasemediainfo-filepage-license-cancel": "Annuleren",
 	"wikibasemediainfo-property-placeholder": "Eigenschap",
 	"wikibasemediainfo-statements-depicts-title": "Naar deze afbeelding verwezen onderdelen",
 	"wikibasemediainfo-statements-item-add-qualifier": "Kwalificatie toevoegen",

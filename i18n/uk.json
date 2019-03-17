@@ -35,8 +35,6 @@
 	"wikibasemediainfo-filepage-statement-error": "Сталася помилка при спробі отримати значення для цієї властивості",
 	"wikibasemediainfo-filepage-license-title": "Зміни підписів та інших структурованих даних",
 	"wikibasemediainfo-filepage-license-content-acceptance": "Я погоджуюся редагувати далі на цих умовах. Більше не показувати це повідомлення.",
-	"wikibasemediainfo-filepage-license-accept": "Прийняти",
-	"wikibasemediainfo-filepage-license-cancel": "Скасувати",
 	"wikibasemediainfo-property-placeholder": "Властивість",
 	"wikibasemediainfo-statements-depicts-title": "Об'єкти, показані на цьому зображенні",
 	"wikibasemediainfo-statements-item-add-qualifier": "Додати визначник",

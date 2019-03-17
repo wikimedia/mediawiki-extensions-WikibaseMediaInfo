@@ -9,7 +9,5 @@
 	"wikibase-mediainfo-summary-wbsetlabel-set": "แก้ไขคำบรรยาย [$2]",
 	"wikibasemediainfo-diffview-label": "คำอธิบาย",
 	"wikibasemediainfo-filepage-license-title": "คำบรรยายภาพและการมีส่วนร่วมของข้อมูลที่มีโครงสร้างอื่น ๆ",
-	"wikibasemediainfo-filepage-license-content-acceptance": "ฉันยอมรับข้อกำหนดเหล่านี้สำหรับการแก้ไขในอนาคตของฉัน อย่าแสดงข้อความนี้อีก",
-	"wikibasemediainfo-filepage-license-accept": "ยอมรับ",
-	"wikibasemediainfo-filepage-license-cancel": "ยกเลิก"
+	"wikibasemediainfo-filepage-license-content-acceptance": "ฉันยอมรับข้อกำหนดเหล่านี้สำหรับการแก้ไขในอนาคตของฉัน อย่าแสดงข้อความนี้อีก"
 }

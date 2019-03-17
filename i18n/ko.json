@@ -11,6 +11,7 @@
 	"wikibase-entity-mediainfo": "미디어 정보",
 	"wikibasemediainfo-desc": "미디어 파일의 구조화된 메타데이터를 관리하는 위키베이스 확장 기능",
 	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "설명",
+	"wikibasemediainfo-filepage-fileinfo-heading": "파일 정보",
 	"wikibasemediainfo-filepage-structured-data-heading": "구조화된 데이터",
 	"wikibasemediainfo-filepage-captions-title": "캡션",
 	"wikibasemediainfo-filepage-more-languages": "$1개 {{PLURAL:$1|언어}} 더 보기",
@@ -29,9 +30,8 @@
 	"wikibasemediainfo-filepage-statement-some-value": "이 속성에 값이 있으나 알려진 값이 아닙니다",
 	"wikibasemediainfo-filepage-statement-error": "이 속성의 값을 가져올 때 오류가 발생했습니다",
 	"wikibasemediainfo-filepage-license-content-acceptance": "이후 편집에 이 약관에 동의합니다. 이 메시지를 다시 표시하지 않습니다.",
-	"wikibasemediainfo-filepage-license-accept": "수락",
-	"wikibasemediainfo-filepage-license-cancel": "취소",
 	"wikibasemediainfo-property-placeholder": "속성",
+	"wikibasemediainfo-filepage-license-agree": "동의합니다",
 	"wikibasemediainfo-statements-item-input-label": "위키데이터에서",
 	"wikibasemediainfo-statements-item-remove": "제거",
 	"wikibasemediainfo-statements-learn-more": "더 알아보기"

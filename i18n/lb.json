@@ -11,10 +11,10 @@
 	"wikibasemediainfo-filepage-publish": "Ännerunge publizéieren",
 	"wikibasemediainfo-filepage-caption-empty": "Setzt eng Erklärung an enger Zeil derbäi wat dëse Fichier duerstellt",
 	"wikibasemediainfo-filepage-statement-no-data": "Keng Donnéeën disponibel",
-	"wikibasemediainfo-filepage-license-accept": "Akzeptéieren",
-	"wikibasemediainfo-filepage-license-cancel": "Ofbriechen",
 	"wikibasemediainfo-property-placeholder": "Eegenschaft",
+	"wikibasemediainfo-filepage-license-agree": "Ech sinn d'accord",
 	"wikibasemediainfo-statements-item-input-label": "vu Wikidata",
 	"wikibasemediainfo-statements-item-is-primary": "Primär",
-	"wikibasemediainfo-statements-item-remove": "Ewechhuelen"
+	"wikibasemediainfo-statements-item-remove": "Ewechhuelen",
+	"wikibasemediainfo-statements-learn-more": "Fir méi ze wëssen"
 }

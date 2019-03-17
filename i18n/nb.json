@@ -26,8 +26,6 @@
 	"wikibasemediainfo-filepage-caption-too-long": "$1 {{PLURAL:$1|tegn}} over grensen",
 	"wikibasemediainfo-filepage-caption-approaching-limit": "{{PLURAL:$1|$1|0=Ingen}} tegn igjen",
 	"wikibasemediainfo-filepage-license-content-acceptance": "Jeg godtar disse vilkårene for mine fremtidige redigeringer. Ikke vis denne meldingen igjen.",
-	"wikibasemediainfo-filepage-license-accept": "Godta",
-	"wikibasemediainfo-filepage-license-cancel": "Avbryt",
 	"wikibasemediainfo-property-placeholder": "Egenskap",
 	"wikibasemediainfo-statements-item-input-label": "fra Wikidata",
 	"wikibasemediainfo-statements-item-remove": "Fjern"

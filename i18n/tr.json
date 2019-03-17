@@ -6,11 +6,13 @@
 			"Mirzali"
 		]
 	},
+	"wikibasemediainfo-filepage-fileinfo-heading": "Dosya bilgisi",
 	"wikibasemediainfo-filepage-edit-depicts": "Resimleri düzenle",
 	"wikibasemediainfo-filepage-caption-empty": "Bu dosyanın temsil ettiği şeyin tek satırlık açıklamasını ekleyin.",
 	"wikibasemediainfo-filepage-statement-no-data": "Veri yok",
 	"wikibasemediainfo-filepage-statement-some-value": "Bu özelliğin bir değeri var ancak bilinmemektedir.",
 	"wikibasemediainfo-property-placeholder": "Özellik",
+	"wikibasemediainfo-filepage-license-agree": "Kabul ediyorum",
 	"wikibasemediainfo-statements-item-add-qualifier": "Niteleyici еkle",
 	"wikibasemediainfo-statements-item-is-primary": "Birincil",
 	"wikibasemediainfo-statements-item-remove": "Kaldır"

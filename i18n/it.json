@@ -31,8 +31,6 @@
 	"wikibasemediainfo-filepage-statement-some-value": "Questa proprietà ha un valore, ma è sconosciuto",
 	"wikibasemediainfo-filepage-statement-error": "Si è verificato un errore durante il recupero del valore per questa proprietà",
 	"wikibasemediainfo-filepage-license-content-acceptance": "Accetto questi termini per le mie future modifiche. Non mostrare di nuovo questo messaggio.",
-	"wikibasemediainfo-filepage-license-accept": "Accetta",
-	"wikibasemediainfo-filepage-license-cancel": "Annulla",
 	"wikibasemediainfo-property-placeholder": "Proprietà",
 	"wikibasemediainfo-statements-item-add-qualifier": "Aggiungi qualificatore",
 	"wikibasemediainfo-statements-item-input-label": "da Wikidata",

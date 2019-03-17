@@ -34,8 +34,6 @@
 	"wikibasemediainfo-filepage-license-title": "Pealdiste ja muude struktuurandmetega seotud kaastöö",
 	"wikibasemediainfo-filepage-license-content": "Kui klõpsad \"Avalda muudatused\", nõustud [[wmf:Terms_of_Use|kasutustingimustega]] ja oma kaastöö pöördumatu avaldamisega Creative Commonsi litsentsi [https://creativecommons.org/publicdomain/zero/1.0/deed.et CC0] all.",
 	"wikibasemediainfo-filepage-license-content-acceptance": "Nõustud tegema edasisi muudatusi kooskõlas nende tingimustega. Seda sõnumit ei näidata enam.",
-	"wikibasemediainfo-filepage-license-accept": "Nõustun",
-	"wikibasemediainfo-filepage-license-cancel": "Loobu",
 	"wikibasemediainfo-statements-item-input-label": "Vikiandmetest",
 	"wikibasemediainfo-statements-item-input-placeholder": "Otsi kujutatud üksusi, mida lisada"
 }

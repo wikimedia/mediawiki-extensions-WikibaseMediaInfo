@@ -4,7 +4,8 @@
 			"Dvorapa",
 			"Mormegil",
 			"Patriccck",
-			"Matěj Suchánek"
+			"Matěj Suchánek",
+			"Michaelbrabec"
 		]
 	},
 	"right-mediainfo-term": "Změny prvků informací o souborech (popisky, shrnutí)",
@@ -16,6 +17,7 @@
 	"wikibasemediainfo-desc": "Rozšíření Wikibase pro správu strukturovaných metadat k mediálním souborům",
 	"wikibasemediainfo-diffview-label": "popisek",
 	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Popisky",
+	"wikibasemediainfo-filepage-fileinfo-heading": "Informace o souboru",
 	"wikibasemediainfo-filepage-structured-data-heading": "Strukturovaná data",
 	"wikibasemediainfo-filepage-captions-title": "Popisky",
 	"wikibasemediainfo-filepage-more-languages": "Zobrazit $1 {{PLURAL:$1|další jazyk|další jazyky|dalších jazyků}}",
@@ -31,6 +33,8 @@
 	"wikibasemediainfo-filepage-license-title": "Popisek a další strukturované příspěvky",
 	"wikibasemediainfo-filepage-license-content": "Kliknutím na „Zveřejnit změny“ souhlasíte s [[wmf:Terms_of_Use|podmínkami užití]] a neodvolatelně svůj příspěvek uvolňujete pod licencí [https://creativecommons.org/publicdomain/zero/1.0/ Creative Commons CC0].",
 	"wikibasemediainfo-filepage-license-content-acceptance": "Přijímám tyto podmínky pro své budoucí editace. Tuto zprávu už příště nezobrazovat.",
-	"wikibasemediainfo-filepage-license-accept": "Přijmout",
-	"wikibasemediainfo-filepage-license-cancel": "Storno"
+	"wikibasemediainfo-property-placeholder": "Vlastnost",
+	"wikibasemediainfo-filepage-license-agree": "Souhlasím",
+	"wikibasemediainfo-statements-item-add-qualifier": "Přidat vymezení",
+	"wikibasemediainfo-statements-learn-more": "Další informace"
 }

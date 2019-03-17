@@ -20,7 +20,5 @@
 	"wikibasemediainfo-filepage-caption-empty": "شرحی یک‌خطی از محتوای این فایل اضافه کنید",
 	"wikibasemediainfo-filepage-caption-too-long": "$1 کاراکتر بیشتر از تعداد مجاز",
 	"wikibasemediainfo-filepage-caption-approaching-limit": "$1 کاراکتر باقی‌مانده",
-	"wikibasemediainfo-filepage-statement-error": "هنگام بارگیری مقدار این ویژگی خطایی رخ داد.",
-	"wikibasemediainfo-filepage-license-accept": "پذیرفتن",
-	"wikibasemediainfo-filepage-license-cancel": "لغو"
+	"wikibasemediainfo-filepage-statement-error": "هنگام بارگیری مقدار این ویژگی خطایی رخ داد."
 }

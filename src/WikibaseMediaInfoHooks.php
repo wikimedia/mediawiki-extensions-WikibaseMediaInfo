@@ -335,7 +335,7 @@ class WikibaseMediaInfoHooks {
 			// Add a title for no-js
 			$statements = \Html::rawElement(
 				'h2',
-				[ 'class' => 'wbmi-captions-header' ],
+				[ 'class' => 'wbmi-structured-data-header' ],
 					$textProvider->get( 'wikibasemediainfo-filepage-structured-data-heading' )
 			) . $statements;
 		}
@@ -370,7 +370,7 @@ class WikibaseMediaInfoHooks {
 			// Add a title for no-js
 			$tab1Html = \Html::rawElement(
 					'h2',
-					[ 'class' => 'wbmi-structured-data-header' ],
+					[ 'class' => 'wbmi-captions-header' ],
 					$textProvider->get( 'wikibasemediainfo-filepage-captions-title' )
 				) . $tab1Html;
 		} else {

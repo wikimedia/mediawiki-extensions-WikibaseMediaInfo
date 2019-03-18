@@ -409,6 +409,7 @@ class WikibaseMediaInfoHooks {
 			]
 		);
 		$tabs = new IndexLayout( [
+			'autoFocus' => false,
 			'classes' => [ 'wbmi-tabs' ],
 			'expanded' => false,
 		] );

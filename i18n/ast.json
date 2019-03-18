@@ -1,11 +1,13 @@
 {
 	"@metadata": {
 		"authors": [
-			"Xuacu"
+			"Xuacu",
+			"Fitoschido"
 		]
 	},
 	"right-mediainfo-term": "Cambiar términos de la información del mediu (pies, sumarios)",
 	"wikibase-entity-mediainfo": "información multimedia",
 	"wikibasemediainfo-desc": "Estensión de Wikibase pa xestionar los metadatos estructuraos de los ficheros multimedia",
-	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Pie"
+	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Pie",
+	"wikibasemediainfo-filepage-cancel": "Encaboxar"
 }

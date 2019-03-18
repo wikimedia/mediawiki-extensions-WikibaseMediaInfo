@@ -14,6 +14,7 @@
 	"wikibasemediainfo-desc": "Додаток на Викибазата за управување со структурирани метаподатоци на слики и снимки",
 	"wikibasemediainfo-diffview-label": "опис",
 	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Описи",
+	"wikibasemediainfo-filepage-fileinfo-heading": "Информации за податотеката",
 	"wikibasemediainfo-filepage-structured-data-heading": "Структурирани податоци",
 	"wikibasemediainfo-filepage-captions-title": "Описи",
 	"wikibasemediainfo-filepage-more-languages": "Погл. $1 уште {{PLURAL:$1|јазик|јазици}}",
@@ -36,11 +37,15 @@
 	"wikibasemediainfo-filepage-license-content": "Стискајќи на „Објави промени“ се согласувате со [[wmf:Terms_of_Use|условите на употреба]] и дека неотповикливо ги објавувате вашите придонеси под лиценцата [https://creativecommons.org/publicdomain/zero/1.0/deed.mk Криејтив комонс CC0].",
 	"wikibasemediainfo-filepage-license-content-acceptance": "Ги прифаќам овие услови што ќе важат за идните уредувања. Повеќе не ја прикажувај поракава.",
 	"wikibasemediainfo-property-placeholder": "Својство",
+	"wikibasemediainfo-filepage-license-agree": "Се согласувам",
 	"wikibasemediainfo-statements-depicts-title": "Предмети прикажани на сликава",
 	"wikibasemediainfo-statements-item-add-qualifier": "Додај определница",
 	"wikibasemediainfo-statements-item-input-label": "од Википодатоците",
-	"wikibasemediainfo-statements-item-input-placeholder": "Пребарајте за да додадете прикажани предмети",
+	"wikibasemediainfo-statements-item-input-placeholder": "Пребарајте за да додадете прикажани предмети (домашна мачка, планина, Мона Лиза и тн.)",
 	"wikibasemediainfo-statements-item-is-primary": "Главен",
 	"wikibasemediainfo-statements-item-make-primary": "Направи го главен",
-	"wikibasemediainfo-statements-item-remove": "Отстрани"
+	"wikibasemediainfo-statements-item-remove": "Отстрани",
+	"wikibasemediainfo-statements-learn-more": "Дознајте повеќе",
+	"wikibasemediainfo-statements-remove": "Отстрани исказ",
+	"wikibasemediainfo-statements-title-depicts": "Предмети прикажани на податотекава"
 }

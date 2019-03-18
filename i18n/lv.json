@@ -4,16 +4,22 @@
 			"Papuass"
 		]
 	},
+	"wikibasemediainfo-filepage-fileinfo-heading": "Faila informācija",
 	"wikibasemediainfo-filepage-structured-data-heading": "Strukturētie dati",
+	"wikibasemediainfo-filepage-more-languages": "Skatīt vēl $1 {{PLURAL:$1|valodas|valodu|valodas}}",
 	"wikibasemediainfo-filepage-fewer-languages": "Redzēt mazāk valodas",
 	"wikibasemediainfo-filepage-cancel": "Atcelt",
 	"wikibasemediainfo-filepage-edit": "Labot",
 	"wikibasemediainfo-filepage-publish": "Publicēt izmaiņas",
+	"wikibasemediainfo-filepage-statement-no-data": "Nav datu",
+	"wikibasemediainfo-filepage-statement-no-results": "Nav atrasts neviens rezultāts",
 	"wikibasemediainfo-property-placeholder": "Īpašība",
+	"wikibasemediainfo-filepage-license-agree": "Es piekrītu",
 	"wikibasemediainfo-statements-item-add-qualifier": "Pievienot ierobežojumu",
 	"wikibasemediainfo-statements-item-input-label": "no Vikidatiem",
 	"wikibasemediainfo-statements-item-is-primary": "Primārais",
 	"wikibasemediainfo-statements-item-make-primary": "Padarīt par primāro",
 	"wikibasemediainfo-statements-item-remove": "Noņemt",
-	"wikibasemediainfo-statements-learn-more": "Uzzināt vairāk"
+	"wikibasemediainfo-statements-learn-more": "Uzzināt vairāk",
+	"wikibasemediainfo-statements-remove": "Noņemt apgalvojumu"
 }

@@ -16,6 +16,7 @@
 	"wikibasemediainfo-desc": "הרחבה לוויקיבייס לניהול מטא־נתונים מובְנים של קובצי מדיה",
 	"wikibasemediainfo-diffview-label": "כיתוב",
 	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "כיתובים",
+	"wikibasemediainfo-filepage-fileinfo-heading": "מידע על הקובץ",
 	"wikibasemediainfo-filepage-structured-data-heading": "נתונים מובְנים",
 	"wikibasemediainfo-filepage-captions-title": "כיתובים",
 	"wikibasemediainfo-filepage-more-languages": "לראות {{PLURAL:$1|עוד שפה אחת|עוד $1 שפות}}",
@@ -38,11 +39,15 @@
 	"wikibasemediainfo-filepage-license-content": "לחיצה על \"פרסום השינויים\" מהווה את הסכמתך ל[[wmf:Terms_of_Use|תנאי השימוש]], ואת הסכמתך הבלתי־חוזרת לשחרור התרומה שלך לפי תנאי [https://creativecommons.org/publicdomain/zero/1.0/ רישיון קריאייטיב קומונז CC0].",
 	"wikibasemediainfo-filepage-license-content-acceptance": "אני מקבל את התנאים האלה לעריכות הבאות שלי. אל תראו לי את ההודעה הזאת שוב.",
 	"wikibasemediainfo-property-placeholder": "מאפיין",
+	"wikibasemediainfo-filepage-license-agree": "אני מסכים",
 	"wikibasemediainfo-statements-depicts-title": "פריטים שמוצגים בתמונה הזאת",
 	"wikibasemediainfo-statements-item-add-qualifier": "הוספת מבחין",
 	"wikibasemediainfo-statements-item-input-label": "מוויקינתונים",
-	"wikibasemediainfo-statements-item-input-placeholder": "חיפוש להוספת הפריטים המוצגים",
+	"wikibasemediainfo-statements-item-input-placeholder": "חיפוש להוספת הפריטים המוצגים (חתול הבית, הר, מונה ליזה, וכו')",
 	"wikibasemediainfo-statements-item-is-primary": "ראשית",
 	"wikibasemediainfo-statements-item-make-primary": "להגדיר בתור ראשית",
-	"wikibasemediainfo-statements-item-remove": "הסרה"
+	"wikibasemediainfo-statements-item-remove": "הסרה",
+	"wikibasemediainfo-statements-learn-more": "מידע נוסף",
+	"wikibasemediainfo-statements-remove": "הסרת הטענה",
+	"wikibasemediainfo-statements-title-depicts": "פריטים שמוצגים בקובץ הזה"
 }

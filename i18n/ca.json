@@ -11,6 +11,7 @@
 	"wikibase-mediainfo-summary-wbsetlabel-set": "S'ha modificat la llegenda [$2]",
 	"wikibasemediainfo-diffview-label": "llegenda",
 	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Llegendes",
+	"wikibasemediainfo-filepage-fileinfo-heading": "Informació del fitxer",
 	"wikibasemediainfo-filepage-structured-data-heading": "Dades estructurades",
 	"wikibasemediainfo-filepage-captions-title": "Llegendes",
 	"wikibasemediainfo-filepage-fewer-languages": "Mostra menys llengües",
@@ -22,6 +23,7 @@
 	"wikibasemediainfo-filepage-statement-no-data": "Cap dada disponible",
 	"wikibasemediainfo-filepage-statement-no-results": "No s’ha trobat cap resultat",
 	"wikibasemediainfo-property-placeholder": "Propietat",
+	"wikibasemediainfo-filepage-license-agree": "Hi estic d’acord",
 	"wikibasemediainfo-statements-item-add-qualifier": "Afegeix qualificador",
 	"wikibasemediainfo-statements-item-remove": "Suprimeix"
 }

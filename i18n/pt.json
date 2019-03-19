@@ -3,7 +3,8 @@
 		"authors": [
 			"Vitorvicentevalente",
 			"Hamilton Abreu",
-			"Ruila"
+			"Ruila",
+			"CaiusSPQR"
 		]
 	},
 	"right-mediainfo-term": "Alterar os termos da informação de ficheiros multimédia (legendas, resumos)",
@@ -25,5 +26,7 @@
 	"wikibasemediainfo-filepage-publish": "Publicar alterações",
 	"wikibasemediainfo-filepage-caption-empty": "Adicione uma explicação de uma linha do que este ficheiro representa",
 	"wikibasemediainfo-filepage-caption-too-long": "$1 {{PLURAL:$1|carácter|caracteres}} para além do limite",
-	"wikibasemediainfo-filepage-caption-approaching-limit": "restam $1 {{PLURAL:$1|carácter|caracteres|0=caracteres}}"
+	"wikibasemediainfo-filepage-caption-approaching-limit": "restam $1 {{PLURAL:$1|carácter|caracteres|0=caracteres}}",
+	"wikibasemediainfo-filepage-license-agree": "Estou de acordo",
+	"wikibasemediainfo-statements-learn-more": "Saiba mais"
 }

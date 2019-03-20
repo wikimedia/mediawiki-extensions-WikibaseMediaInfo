@@ -12,6 +12,7 @@
 	"wikibase-mediainfo-summary-wbsetlabel-set": "Redigerade undertexter [$2]",
 	"wikibasemediainfo-desc": "Wikibase-tillägg för att hantera strukturerad metadata för mediafiler",
 	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Bildtexter",
+	"wikibasemediainfo-filepage-fileinfo-heading": "Filinformation",
 	"wikibasemediainfo-filepage-structured-data-heading": "Strukturerad data",
 	"wikibasemediainfo-filepage-more-languages": "Se $1 {{PLURAL:$1|till språk|fler språk}}",
 	"wikibasemediainfo-filepage-fewer-languages": "Se färre språk",
@@ -30,5 +31,7 @@
 	"wikibasemediainfo-filepage-statement-error": "Ett fel uppstod när värdet för denna egenskap hämtades",
 	"wikibasemediainfo-filepage-license-title": "Bildtexter och andra strukturerade databidrag",
 	"wikibasemediainfo-filepage-license-content": "Genom att klicka på \"Publicera ändringar\" samtycker du till [[wmf:Terms_of_Use|användarvillkoren]] och du samtycker oåterkalleligen till att släppa ditt bidrag under licensen [https://creativecommons.org/publicdomain/zero/1.0/ Creative Commons CC0].",
-	"wikibasemediainfo-filepage-license-content-acceptance": "Jag accepterar dessa villkor för mina framtida redigeringar. Visa inte detta meddelande igen."
+	"wikibasemediainfo-filepage-license-content-acceptance": "Jag accepterar dessa villkor för mina framtida redigeringar. Visa inte detta meddelande igen.",
+	"wikibasemediainfo-filepage-license-agree": "Jag godkänner",
+	"wikibasemediainfo-statements-learn-more": "Läs mer"
 }

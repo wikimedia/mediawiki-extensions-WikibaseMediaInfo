@@ -3,7 +3,8 @@
 		"authors": [
 			"Obsuser",
 			"BadDog",
-			"Zoranzoki21"
+			"Zoranzoki21",
+			"Милан Јелисавчић"
 		]
 	},
 	"right-mediainfo-term": "Промена услова за информације медија (натписи, резимеи)",
@@ -29,5 +30,6 @@
 	"wikibasemediainfo-filepage-statement-no-value": "Нема вредности за ово својство",
 	"wikibasemediainfo-filepage-statement-some-value": "Ово својство има вредност, али је непозната",
 	"wikibasemediainfo-filepage-statement-error": "Дошло је до грешке при добављању вредности за ово својство",
-	"wikibasemediainfo-property-placeholder": "Својство"
+	"wikibasemediainfo-property-placeholder": "Својство",
+	"wikibasemediainfo-filepage-license-agree": "Прихватам"
 }

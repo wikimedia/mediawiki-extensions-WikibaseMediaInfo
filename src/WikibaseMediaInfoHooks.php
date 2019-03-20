@@ -524,7 +524,8 @@ class WikibaseMediaInfoHooks {
 				$emptyMediaInfo,
 				new EntityInfo( [] )
 			);
-			$structured = $view->getContent( $emptyMediaInfo )->getHtml();
+
+			$structured = $view->getContent( $emptyMediaInfo, 0 /* EntityRevision::UNSAVED_REVISION */ )->getHtml();
 
 			// Strip out the surrounding <mediaInfoView> tag
 			$structured = preg_replace(

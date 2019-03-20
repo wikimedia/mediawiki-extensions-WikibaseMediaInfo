@@ -9,8 +9,7 @@
 
 		statements.EntityLookupElement.call( this, $.extend( {}, config, {
 			allowSuggestionsWhenEmpty: false,
-			highlightFirst: false,
-			externalEntitySearchApiUri: config.externalEntitySearchApiUri
+			highlightFirst: false
 		} ) );
 
 		OO.ui.mixin.FlaggedElement.call( this, $.extend( {}, config, {

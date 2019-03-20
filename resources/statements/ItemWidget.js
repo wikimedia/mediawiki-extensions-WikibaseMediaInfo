@@ -11,7 +11,6 @@
 	 * @param {string} [config.label] Label for this item (e.g. 'cat')
 	 * @param {string} [config.url] URL to this item (e.g. /wiki/Item:Q1)
 	 * @param {string} [config.editing] True for edit mode, False for read mode
-	 * @param {string} [config.externalEntitySearchApiUri]
 	 */
 	statements.ItemWidget = function MediaInfoStatementsItemWidget( config ) {
 		statements.ItemWidget.parent.call( this, $.extend( { classes: [ 'wbmi-item' ] }, config ) );
@@ -159,8 +158,7 @@
 	statements.ItemWidget.prototype.addQualifier = function ( data ) {
 		var widget = new statements.QualifierWidget( {
 			editing: this.editing,
-			qualifiers: this.qualifiers,
-			externalEntitySearchApiUri: this.config.externalEntitySearchApiUri
+			qualifiers: this.qualifiers
 		} );
 
 		if ( data ) {

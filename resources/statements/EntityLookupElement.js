@@ -3,18 +3,17 @@
 	'use strict';
 
 	statements.EntityLookupElement = function MediaInfoStatementsEntityLookupElement( config ) {
-		this.config = config;
-		config = $.extend( {
-			minLookupCharacters: 1
+		this.config = $.extend( {
+			minLookupCharacters: 1,
+			externalEntitySearchApiUri: mw.config.get( 'wbmiExternalEntitySearchBaseUri', '' )
 		}, config );
 
-		OO.ui.mixin.LookupElement.call( this, $.extend( {}, config, {
+		OO.ui.mixin.LookupElement.call( this, $.extend( {}, this.config, {
 			allowSuggestionsWhenEmpty: false,
 			highlightFirst: false
 		} ) );
 
-		this.minLookupCharacters = config.minLookupCharacters;
-		this.type = config.type || 'item';
+		this.type = this.config.type || 'item';
 	};
 	OO.mixinClass( statements.EntityLookupElement, OO.ui.mixin.LookupElement );
 
@@ -44,7 +43,7 @@
 			api = new mw.Api();
 		}
 
-		if ( value.length < this.minLookupCharacters ) {
+		if ( value.length < this.config.minLookupCharacters ) {
 			return deferred.resolve( [] ).promise( { abort: function () {} } );
 		}
 

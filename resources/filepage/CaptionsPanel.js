@@ -259,7 +259,7 @@
 	};
 
 	sd.CaptionsPanel.prototype.refreshLanguageSelectorsOptions = function () {
-		var captionsPanel = this,
+		var self = this,
 			currentlySelectedLanguages = [];
 
 		this.languageSelectors.forEach( function ( languageSelector ) {
@@ -267,7 +267,7 @@
 		} );
 		this.languageSelectors.forEach( function ( languageSelector ) {
 			languageSelector.updateLanguages(
-				captionsPanel.getAvailableLanguages(
+				self.getAvailableLanguages(
 					currentlySelectedLanguages,
 					languageSelector.getValue()
 				)
@@ -275,6 +275,11 @@
 		} );
 	};
 
+	/**
+	 * Update DOM with errors on text input  - connected to text input 'change' events
+	 *
+	 *  @param {string} textInput caption text
+	 */
 	sd.CaptionsPanel.prototype.warnIfTextApproachingLimit = function ( textInput ) {
 		var $caption = textInput.$element.parents( '.wbmi-caption-value' ),
 			lengthDiff = mw.config.get( 'maxCaptionLength' ) - textInput.getValue().length;
@@ -293,7 +298,12 @@
 		}
 	};
 
-	sd.CaptionsPanel.prototype.doTextInputChecks = function () {
+	/**
+	 * Runs validity checks on captions text and returns functions for updating DOM
+	 *
+	 * @returns {Array<Promise>} show/hide error messages when resolved
+	 */
+	sd.CaptionsPanel.prototype.validateCaptionsAndReturnUpdates = function () {
 		var textInputChecks = [];
 		this.textInputs.forEach( function ( textInput ) {
 			textInputChecks.push(
@@ -321,43 +331,50 @@
 		return textInputChecks;
 	};
 
-	// TODO: Re-write to be simpler and merge in doTextInputChecks (which is only called by this)?
+	/**
+	 * Update publish (submit) button state
+	 */
 	sd.CaptionsPanel.prototype.refreshPublishState = function () {
-		var captionsPanel = this,
-			checks = this.doTextInputChecks();
+		var self = this,
+			$captions = $( self.contentSelector ).find( self.entityTermSelector ),
+			hasChanges = $captions.length < Object.keys( self.captionsData ).length;
 
-		checks.push( this.licenseAcceptance );
+		$captions.each( function () {
+			var index = $( this ).attr( 'data-index' ),
+				languageCode = self.languageSelectors[ index ].getValue(),
+				text = self.textInputs[ index ].getValue(),
+				existingDataForLanguage = self.getDataForLangCode( languageCode );
 
-		// disable publishing first, and only re-enable if/once all checks have cleared
-		$.when.apply( null, checks )
+			if ( languageCode !== undefined && existingDataForLanguage.text !== text ) {
+				hasChanges = true;
+			}
+		} );
+
+		if ( hasChanges ) {
+			self.editActionsWidget.enablePublish();
+		} else {
+			self.editActionsWidget.disablePublish();
+		}
+	};
+
+	/**
+	 * Apply validations and refresh publish button - connected to text input 'change' events
+	*/
+	sd.CaptionsPanel.prototype.onCaptionsChange = function () {
+		var self = this,
+			validations = self.validateCaptionsAndReturnUpdates(); // This is an array of promises
+
+		$.when.apply( null, validations )
 			.then( function () {
-				var $captions = $( captionsPanel.contentSelector ).find( captionsPanel.entityTermSelector ),
-					hasChanges = $captions.length < Object.keys( captionsPanel.captionsData ).length;
-
-				$captions.each( function () {
-					var index = $( this ).attr( 'data-index' ),
-						languageCode = captionsPanel.languageSelectors[ index ].getValue(),
-						text = captionsPanel.textInputs[ index ].getValue(),
-						existingDataForLanguage = captionsPanel.getDataForLangCode( languageCode );
-
-					// Ignore rows where no language code has been selected
-					if ( languageCode !== undefined && existingDataForLanguage.text !== text ) {
-						hasChanges = true;
-					}
-				} );
-
-				if ( !hasChanges ) {
-					return $.Deferred().reject().promise();
-				}
+				self.refreshPublishState();
 			} )
-			.then(
-				captionsPanel.editActionsWidget.enablePublish.bind( captionsPanel.editActionsWidget ),
-				captionsPanel.editActionsWidget.disablePublish.bind( captionsPanel.editActionsWidget )
-			);
+			.catch( function () {
+				self.editActionsWidget.disablePublish();
+			} );
 	};
 
 	sd.CaptionsPanel.prototype.createRowDeleter = function ( $row ) {
-		var captionsPanel = this,
+		var self = this,
 			deleter = new OO.ui.ButtonWidget( {
 				icon: 'trash',
 				framed: false,
@@ -366,18 +383,18 @@
 			} );
 
 		deleter.$element.on( 'click', function () {
-			captionsPanel.languageSelectors.splice(
+			self.languageSelectors.splice(
 				$row.attr( 'data-index' ),
 				1
 			);
-			captionsPanel.textInputs.splice(
+			self.textInputs.splice(
 				$row.attr( 'data-index' ),
 				1
 			);
 			$row.remove();
-			captionsPanel.refreshRowIndices();
-			captionsPanel.refreshLanguageSelectorsOptions();
-			captionsPanel.refreshPublishState();
+			self.refreshRowIndices();
+			self.refreshLanguageSelectorsOptions();
+			self.refreshPublishState();
 		} );
 		return deleter;
 	};
@@ -385,7 +402,7 @@
 	sd.CaptionsPanel.prototype.createIndexedEditableRow = function (
 		index, captionLangCodes, captionData
 	) {
-		var captionsPanel = this,
+		var self = this,
 			languageSelector,
 			textInput,
 			$row;
@@ -403,13 +420,13 @@
 		languageSelector.on( 'select', function () {
 			var dir,
 				$parentRow;
-			captionsPanel.refreshLanguageSelectorsOptions();
+			self.refreshLanguageSelectorsOptions();
 			dir = $.uls.data.getDir( languageSelector.getValue() );
-			$parentRow = languageSelector.$element.parents( captionsPanel.entityTermSelector );
+			$parentRow = languageSelector.$element.parents( self.entityTermSelector );
 			$parentRow.find( '.wbmi-language-label' ).attr( 'dir', dir );
 			$parentRow.find( '.wbmi-caption-value' ).attr( 'dir', dir );
 			$parentRow.find( '.wbmi-caption-textInput' ).attr( 'dir', dir );
-			captionsPanel.refreshPublishState();
+			self.refreshPublishState();
 		} );
 		this.languageSelectors[ index ] = languageSelector;
 
@@ -422,13 +439,12 @@
 			placeholder: captionData.text === '' ? mw.message( 'wikibasemediainfo-filepage-caption-empty' ).text() : '',
 			classes: [ 'wbmi-caption-textInput' ]
 		} );
-		textInput.on( 'change', function () {
-			captionsPanel.warnIfTextApproachingLimit( textInput );
-			captionsPanel.refreshPublishState();
+
+		textInput.connect( this, {
+			change: [ 'onCaptionsChange', 'warnIfTextApproachingLimit' ],
+			enter: 'sendData'
 		} );
-		textInput.on( 'enter', function () {
-			captionsPanel.sendData();
-		} );
+
 		this.textInputs[ index ] = textInput;
 
 		$row = this.createCaptionRow(
@@ -445,13 +461,13 @@
 	};
 
 	sd.CaptionsPanel.prototype.findRemovedLanguages = function () {
-		var captionsPanel = this,
+		var self = this,
 			langCodesWithoutData = [];
 
 		// eslint-disable-next-line no-jquery/no-each-util
 		$.each( this.captionsData, function ( i, captionData ) {
 			var langCodeHasData = false;
-			captionsPanel.languageSelectors.forEach( function ( languageSelector ) {
+			self.languageSelectors.forEach( function ( languageSelector ) {
 				if ( languageSelector.getValue() === captionData.languageCode ) {
 					langCodeHasData = true;
 					return false;
@@ -465,22 +481,27 @@
 	};
 
 	sd.CaptionsPanel.prototype.disableAllFormInputs = function () {
+		var self = this;
 		this.languageSelectors.forEach( function ( languageSelector ) {
 			languageSelector.setDisabled( true );
 		} );
 		this.textInputs.forEach( function ( textInput ) {
+			textInput.disconnect( self, { change: 'onCaptionsChange' } );
 			textInput.setDisabled( true );
 			textInput.$element.parents( '.wbmi-caption-value' ).find( '.wbmi-caption-deleteButton' ).hide();
 		} );
 	};
 
 	sd.CaptionsPanel.prototype.enableAllFormInputs = function () {
+		var self = this;
+
 		this.languageSelectors.forEach( function ( languageSelector ) {
 			languageSelector.setDisabled( false );
 		} );
 		this.textInputs.forEach( function ( textInput ) {
 			textInput.setDisabled( false );
 			textInput.$element.parents( '.wbmi-caption-value' ).find( '.wbmi-caption-deleteButton' ).show();
+			textInput.connect( self, { change: 'onCaptionsChange' } );
 		} );
 	};
 
@@ -513,34 +534,37 @@
 	};
 
 	sd.CaptionsPanel.prototype.sendIndividualLabel = function ( index, language, text ) {
-		var captionsPanel = this,
+		var self = this,
+			textInput = self.textInputs[ index ],
 			deferred = $.Deferred();
 
-		this.api.postWithToken(
+		textInput.disconnect( self, { change: 'onCaptionsChange' } );
+		self.api.postWithToken(
 			'csrf',
-			this.getWbSetLabelParams( language, text )
+			self.getWbSetLabelParams( language, text )
 		)
 			.done( function ( result ) {
-				var showCaptionFlags = captionsPanel.getShowCaptionFlagsByLangCode(),
-					captionLanguages = captionsPanel.getCaptionLanguagesList();
-				captionsPanel.captionsExist = true;
-				captionsPanel.captionsData[ language ] = new sd.CaptionData( language, text );
+				var showCaptionFlags = self.getShowCaptionFlagsByLangCode(),
+					captionLanguages = self.getCaptionLanguagesList();
+				self.captionsExist = true;
+				self.captionsData[ language ] = new sd.CaptionData( language, text );
 				sd.currentRevision = result.entity.lastrevid;
-				captionsPanel.languageSelectors.splice( index, 1 );
-				captionsPanel.textInputs.splice( index, 1 );
-				$( captionsPanel.contentSelector )
-					.find( captionsPanel.entityTermSelector + '[data-index="' + index + '"]' )
+				self.languageSelectors.splice( index, 1 );
+				self.textInputs.splice( index, 1 );
+				$( self.contentSelector )
+					.find( self.entityTermSelector + '[data-index="' + index + '"]' )
 					.replaceWith(
-						captionsPanel.createIndexedReadOnlyRow(
+						self.createIndexedReadOnlyRow(
 							index,
-							captionsPanel.captionsData[ language ],
+							self.captionsData[ language ],
 							showCaptionFlags[ language ]
 						)
 					);
 				if ( captionLanguages.indexOf( language ) === -1 ) {
 					captionLanguages.push( language );
-					captionsPanel.setCaptionLanguagesList( captionLanguages );
+					self.setCaptionLanguagesList( captionLanguages );
 				}
+				textInput.connect( self, { change: 'onCaptionsChange' } );
 				deferred.resolve();
 			} )
 			.fail( function ( errorCode, error ) {
@@ -553,33 +577,33 @@
 	};
 
 	sd.CaptionsPanel.prototype.sendDataToAPI = function ( chain ) {
-		var captionsPanel = this,
+		var self = this,
 			rowsWithoutLanguage = [];
 
 		$( this.contentSelector ).find( this.entityTermSelector ).each( function () {
 			var index = $( this ).attr( 'data-index' ),
-				languageCode = captionsPanel.languageSelectors[ index ].getValue(),
-				text = captionsPanel.textInputs[ index ].getValue(),
-				existingDataForLanguage = captionsPanel.getDataForLangCode( languageCode );
+				languageCode = self.languageSelectors[ index ].getValue(),
+				text = self.textInputs[ index ].getValue(),
+				existingDataForLanguage = self.getDataForLangCode( languageCode );
 
 			// Ignore rows where no language code has been selected
 			if ( languageCode === undefined ) {
-				rowsWithoutLanguage.push( $( captionsPanel ) );
+				rowsWithoutLanguage.push( $( self ) );
 				return true;
 			}
 
 			if ( existingDataForLanguage.text !== text ) {
 				chain = chain.then( function () {
-					return captionsPanel.sendIndividualLabel(
+					return self.sendIndividualLabel(
 						index,
 						languageCode,
 						text
 					);
 				} );
 			} else {
-				var showCaptionFlags = captionsPanel.getShowCaptionFlagsByLangCode();
+				var showCaptionFlags = self.getShowCaptionFlagsByLangCode();
 				$( this ).replaceWith(
-					captionsPanel.createIndexedReadOnlyRow(
+					self.createIndexedReadOnlyRow(
 						index,
 						existingDataForLanguage,
 						showCaptionFlags[ languageCode ]
@@ -587,6 +611,7 @@
 				);
 			}
 		} );
+
 		rowsWithoutLanguage.forEach( function ( row ) {
 			row.remove();
 		} );
@@ -650,17 +675,18 @@
 				errorRow.insertBefore( $captionsContent.find( '.wbmi-entityview-editActions' ) );
 				rejection = wb.api.RepoApiError.newFromApiResponse( error, 'save' );
 				rejection.index = newIndex;
+				self.editActionsWidget.disablePublish();
 				deferred.reject( rejection );
 			} );
 		return deferred.promise();
 	};
 
 	sd.CaptionsPanel.prototype.deleteRemovedData = function ( chain, removedLanguages ) {
-		var captionsPanel = this;
+		var self = this;
 
 		removedLanguages.forEach( function ( languageCode ) {
 			chain = chain.then( function () {
-				return captionsPanel.deleteIndividualLabel(
+				return self.deleteIndividualLabel(
 					languageCode
 				);
 			} );
@@ -669,7 +695,7 @@
 	};
 
 	sd.CaptionsPanel.prototype.refreshDataFromApi = function () {
-		var captionsPanel = this,
+		var self = this,
 			deferred = $.Deferred(),
 			entityId = mw.config.get( 'wbEntityId' );
 
@@ -685,7 +711,7 @@
 				// Add any empty CaptionData objects to the list first, as they won't be returned
 				// from the api
 				// eslint-disable-next-line no-jquery/no-each-util
-				$.each( captionsPanel.captionsData, function ( index, captionData ) {
+				$.each( self.captionsData, function ( index, captionData ) {
 					if ( captionData.text === '' ) {
 						refreshedLabelsData[ captionData.languageCode ] = captionData;
 					}
@@ -700,7 +726,7 @@
 						);
 					}
 				);
-				captionsPanel.captionsData = refreshedLabelsData;
+				self.captionsData = refreshedLabelsData;
 				deferred.resolve();
 			} )
 			.fail( function () {
@@ -772,48 +798,42 @@
 	};
 
 	sd.CaptionsPanel.prototype.makeEditable = function () {
-		var captionsPanel = this;
+		var self = this;
 
-		this.refreshPublishState();
-
-		// show dialog informing user of licensing & store the returned promise
-		// in licenseAcceptance - submit won't be possible until dialog is closed
-		this.licenseAcceptance =
-			this.licenseDialogWidget.getConfirmationIfNecessary().always(
-				captionsPanel.refreshPublishState.bind( captionsPanel )
-			);
-
+		// show dialog informing user of licensing
+		self.licenseDialogWidget.getConfirmationIfNecessary().then( function () {
 		// Set the target pending element to the layout box
-		this.$pending = $( '.' + this.config.headerClass ).parent();
-		this.pushPending();
+			self.$pending = $( '.' + self.config.headerClass ).parent();
+			self.pushPending();
 
-		this.refreshDataFromApi()
-			.always( function () {
-				captionsPanel.redrawCaptionsContent();
-				var $captionsContent = $( captionsPanel.contentSelector );
-				$captionsContent.addClass( 'wbmi-entityview-editable' );
-				captionsPanel.editToggle.$element.hide();
-				captionsPanel.languagesViewWidget.hide();
-				captionsPanel.editActionsWidget.show();
-				captionsPanel.refreshPublishState();
-				var captionLangCodes = [];
-				$captionsContent.find( captionsPanel.entityTermSelector ).each( function () {
-					var dataInRow = captionsPanel.readDataFromReadOnlyRow( $( this ) );
-					captionLangCodes.push( dataInRow.languageCode );
-				} );
-				$captionsContent.find( captionsPanel.entityTermSelector ).each( function ( index ) {
-					var captionData = captionsPanel.readDataFromReadOnlyRow( $( this ) );
+			self.refreshDataFromApi()
+				.always( function () {
+					self.redrawCaptionsContent();
+					var $captionsContent = $( self.contentSelector );
+					$captionsContent.addClass( 'wbmi-entityview-editable' );
+					self.editToggle.$element.hide();
+					self.languagesViewWidget.hide();
+					self.editActionsWidget.show();
+					self.editActionsWidget.disablePublish();
+					var captionLangCodes = [];
+					$captionsContent.find( self.entityTermSelector ).each( function () {
+						var dataInRow = self.readDataFromReadOnlyRow( $( this ) );
+						captionLangCodes.push( dataInRow.languageCode );
+					} );
+					$captionsContent.find( self.entityTermSelector ).each( function ( index ) {
+						var captionData = self.readDataFromReadOnlyRow( $( this ) );
 
-					$( this ).replaceWith(
-						captionsPanel.createIndexedEditableRow(
-							index,
-							captionLangCodes,
-							captionData
-						)
-					);
+						$( this ).replaceWith(
+							self.createIndexedEditableRow(
+								index,
+								captionLangCodes,
+								captionData
+							)
+						);
+					} );
+					self.popPending();
 				} );
-				captionsPanel.popPending();
-			} );
+		} );
 	};
 
 	sd.CaptionsPanel.prototype.makeReadOnly = function () {
@@ -832,12 +852,10 @@
 		);
 		row.insertBefore( $captionsContent.find( '.wbmi-entityview-editActions' ) );
 		this.refreshLanguageSelectorsOptions();
-		this.refreshPublishState();
 	};
 
 	sd.CaptionsPanel.prototype.sendData = function () {
-		var captionsPanel = this,
-			chain = $.Deferred().resolve().promise(),
+		var chain = $.Deferred().resolve().promise(),
 			removedLanguages = this.findRemovedLanguages(),
 			self = this;
 
@@ -852,10 +870,10 @@
 			} )
 			.catch( function ( error ) {
 				var $caption;
-				captionsPanel.enableAllFormInputs();
+				self.enableAllFormInputs();
 				$caption =
-					$( captionsPanel.contentSelector ).find(
-						captionsPanel.entityTermSelector + '[data-index="' + error.index + '"] .wbmi-caption-value'
+					$( self.contentSelector ).find(
+						self.entityTermSelector + '[data-index="' + error.index + '"] .wbmi-caption-value'
 					);
 				$caption.find( 'div.wbmi-caption-publishError' ).remove();
 				$caption.find( 'div.wbmi-caption-publishWarning' ).remove();
@@ -866,12 +884,12 @@
 				);
 			} )
 			.always( function () {
-				captionsPanel.editActionsWidget.setStateReady();
+				self.editActionsWidget.setStateReady();
 			} );
 	};
 
 	sd.CaptionsPanel.prototype.initialize = function () {
-		var captionsPanel = this;
+		var self = this;
 
 		// Only allow editing if we're NOT on a diff page or viewing an older revision
 		// eslint-disable-next-line no-jquery/no-global-selector
@@ -882,8 +900,8 @@
 		$( this.contentSelector ).find( this.entityTermSelector ).each( function ( index ) {
 			var captionData;
 			$( this ).attr( 'data-index', index );
-			captionData = captionsPanel.readDataFromReadOnlyRow( $( this ) );
-			captionsPanel.captionsData[ captionData.languageCode ] = captionData;
+			captionData = self.readDataFromReadOnlyRow( $( this ) );
+			self.captionsData[ captionData.languageCode ] = captionData;
 		} );
 		this.addCaptionsDataForUserLanguages();
 		this.languagesViewWidget.refreshLabel();

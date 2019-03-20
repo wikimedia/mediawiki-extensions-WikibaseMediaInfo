@@ -147,6 +147,8 @@ h3.wbmi-statements-title {
 		padding-left: 0;
 		padding-right: 0;
 		padding-bottom: 0;
+		// make sure there's enough space for the depicts dropdown
+		min-height: 37em;
 	}
 }
 
@@ -165,6 +167,11 @@ h3.wbmi-statements-title {
 	.wbmi-captions-header,
 	.wbmi-structured-data-header {
 		display: block;
+	}
+
+	/* stylelint-disable-next-line selector-class-pattern */
+	.wbmi-tabs-container .oo-ui-indexLayout-stackLayout > .oo-ui-panelLayout.wbmi-tab {
+		min-height: auto;
 	}
 }
 

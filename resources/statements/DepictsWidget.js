@@ -8,7 +8,6 @@
 	 * @param {string} config.entityId Entity ID (e.g. M123 id of the file you just uploaded)
 	 * @param {string} [config.propertyId] Property ID (e.g. P123 id of `depicts` property)
 	 * @param {Object} [config.qualifiers] Qualifiers map: { propertyId: datatype, ...}
-	 * @param {string} [config.externalEntitySearchApiUri]
 	 */
 	statements.DepictsWidget = function MediaInfoStatementsDepictsWidget( config ) {
 		var
@@ -42,9 +41,7 @@
 		this.editing = false;
 
 		this.input = new statements.ItemInputWidget( {
-			classes: [ 'wbmi-depicts-input' ],
-			externalEntitySearchApiUri: config.externalEntitySearchApiUri
-
+			classes: [ 'wbmi-depicts-input' ]
 		} );
 		this.input.connect( this, { choose: 'addItemFromInput' } );
 
@@ -138,8 +135,7 @@
 			data: statement,
 			editing: this.editing,
 			label: label,
-			url: url,
-			externalEntitySearchApiUri: this.config.externalEntitySearchApiUri
+			url: url
 		} );
 	};
 

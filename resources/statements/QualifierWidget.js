@@ -6,7 +6,6 @@
 	 * @constructor
 	 * @param {Object} config Configuration options
 	 * @param {Object} config.qualifiers Qualifiers map: { propertyId: datatype, ...}
-	 * @param {Object} config.externalEntitySearchApiUri
 	 */
 	statements.QualifierWidget = function MediaInfoStatementsQualifierWidget( config ) {
 		statements.QualifierWidget.parent.call( this, config );
@@ -25,9 +24,7 @@
 		this.propertyDropdown.getMenu().connect( this, { select: [ 'emit', 'change' ] } );
 		this.populatePropertiesDropdown();
 
-		this.valueInput = new statements.QualifierValueInputWidget( {
-			externalEntitySearchApiUri: config.externalEntitySearchApiUri
-		} );
+		this.valueInput = new statements.QualifierValueInputWidget();
 		this.valueInput.connect( this, { change: 'updateValueWidget' } );
 		this.valueInput.connect( this, { change: [ 'emit', 'change' ] } );
 		// disable - will be enabled once a property has been selected

@@ -42,8 +42,6 @@ Other Config:
    Enables MediaInfo data on UploadWizard when set to true.
    - **`$wgMediaInfoEnable`**\
       Defaults to true.
-   - **`$wgMediaInfoShowQualifiers`** _(temporary feature flag)_\
-      Defaults to true.
 
 ## MediaInfo Glossary
 

@@ -39,9 +39,6 @@
 			"description": "Link to page to learn more about 'depicts'",
 			"value": "https://commons.wikimedia.org/wiki/Special:MyLanguage/Commons:Depicts"
 		},
-		"MediaInfoShowQualifiers": {
-			"value": true
-		},
 		"MediaInfoExternalEntitySearchBaseUri": {
 			"value": ""
 		}

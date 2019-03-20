@@ -125,7 +125,7 @@ return [
 				$wbRepo->getCompactBaseDataModelSerializerFactory(),
 				$languageCode,
 				$properties,
-				$mwConfig->get( 'MediaInfoShowQualifiers' ) ? $qualifierPropertyIds : []
+				$qualifierPropertyIds
 			);
 
 			return new MediaInfoView(

@@ -21,13 +21,13 @@ use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\MediaInfo\DataModel\MediaInfoId;
 use Wikibase\MediaInfo\Search\MediaInfoFieldDefinitions;
 use Wikibase\MediaInfo\Services\FilePageLookup;
-use Wikibase\Repo\Search\Elastic\Fields\DescriptionsProviderFieldDefinitions;
-use Wikibase\Repo\Search\Fields\FieldDefinitions;
-use Wikibase\Repo\Search\Elastic\Fields\LabelsProviderFieldDefinitions;
 use Wikibase\Repo\Search\Elastic\Fields\StatementProviderFieldDefinitions;
+use Wikibase\Repo\Search\Fields\FieldDefinitions;
 use Wikibase\Repo\Search\Fields\WikibaseIndexField;
 use Wikibase\Repo\Validators\EntityConstraintProvider;
 use Wikibase\Repo\Validators\ValidatorErrorLocalizer;
+use Wikibase\Search\Elastic\Fields\DescriptionsProviderFieldDefinitions;
+use Wikibase\Search\Elastic\Fields\LabelsProviderFieldDefinitions;
 use Wikibase\Store\EntityIdLookup;
 use Wikibase\TermIndex;
 
@@ -56,7 +56,7 @@ class MediaInfoHandlerTest extends \PHPUnit\Framework\TestCase {
 		);
 		$labelLookupFactory->expects( $this->any() )
 			->method( 'newLabelDescriptionLookup' )
-			->will( $this->returnValue( $this->getMock( LabelDescriptionLookup::class ) ) );
+			->willReturn( $this->getMock( LabelDescriptionLookup::class ) );
 
 		$propertyLookup = $this->getMock( PropertyDataTypeLookup::class );
 		$propertyLookup->expects( $this->any() )
@@ -68,25 +68,23 @@ class MediaInfoHandlerTest extends \PHPUnit\Framework\TestCase {
 		);
 		$missingMediaInfoHandler->expects( $this->any() )
 			->method( 'getMediaInfoId' )
-			->will( $this->returnValue( $m17 ) );
+			->willReturn( $m17 );
 		$missingMediaInfoHandler->expects( $this->any() )
 			->method( 'showVirtualMediaInfo' )
-			->will( $this->returnCallback(
-				function( MediaInfoId $id, IContextSource $context ) {
-					$context->getOutput()->addHTML( 'MISSING!' );
-				}
-			) );
+			->willReturnCallback( function ( MediaInfoId $id, IContextSource $context ) {
+				$context->getOutput()->addHTML( 'MISSING!' );
+			} );
 
 		$filePageLookup = $this->getMockWithoutConstructor( FilePageLookup::class );
 		$filePageLookup->expects( $this->any() )
 			->method( 'getFilePage' )
-			->will( $this->returnCallback( function( MediaInfoId $id ) {
+			->willReturnCallback( function ( MediaInfoId $id ) {
 				if ( $id->getSerialization() !== 'M1' ) {
 					return null;
 				}
 
 				return Title::makeTitle( NS_FILE, 'Test-' . $id->getSerialization() . '.png' );
-			} ) );
+			} );
 
 		$mockUsageUpdater = $this->getMockBuilder( UsageUpdater::class )
 			->disableOriginalConstructor()

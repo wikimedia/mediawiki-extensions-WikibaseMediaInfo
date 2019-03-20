@@ -173,7 +173,6 @@ class WikibaseMediaInfoHooks {
 		global $wgDepictsQualifierProperties,
 			$wgDepictsHelpUrl,
 			$wgMediaInfoProperties,
-			$wgMediaInfoShowQualifiers,
 			$wgMediaInfoExternalEntitySearchBaseUri,
 			$wgMediaInfoEnableFilePageDepicts;
 
@@ -229,7 +228,7 @@ class WikibaseMediaInfoHooks {
 			$wgMediaInfoEnableFilePageDepicts,
 			[
 				'wbmiProperties' => $wgMediaInfoProperties,
-				'wbmiDepictsQualifierProperties' => $wgMediaInfoShowQualifiers ? $qualifiers : [],
+				'wbmiDepictsQualifierProperties' => $qualifiers,
 				'wbmiDepictsHelpUrl' => $wgDepictsHelpUrl,
 				'wbmiExternalEntitySearchBaseUri' => $wgMediaInfoExternalEntitySearchBaseUri,
 			]

@@ -51,10 +51,10 @@ use Wikibase\Repo\Diff\ClaimDiffer;
 use Wikibase\Repo\Diff\ClaimDifferenceVisualizer;
 use Wikibase\Repo\MediaWikiLanguageDirectionalityLookup;
 use Wikibase\Repo\MediaWikiLocalizedTextProvider;
-use Wikibase\Repo\Search\Elastic\Fields\DescriptionsProviderFieldDefinitions;
-use Wikibase\Repo\Search\Elastic\Fields\LabelsProviderFieldDefinitions;
-use Wikibase\Repo\Search\Elastic\Fields\StatementProviderFieldDefinitions;
 use Wikibase\Repo\WikibaseRepo;
+use Wikibase\Search\Elastic\Fields\DescriptionsProviderFieldDefinitions;
+use Wikibase\Search\Elastic\Fields\LabelsProviderFieldDefinitions;
+use Wikibase\Search\Elastic\Fields\StatementProviderFieldDefinitions;
 use Wikibase\SettingsArray;
 
 return [

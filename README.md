@@ -37,11 +37,30 @@ Extension configuration variables are sets of key-value pairs. They are document
       ];
       ```
 
+- **`$wgMediaInfoSearchFiletypes`**\
+	List of filetypes to search in. E.g.:\
+      ```
+      [
+          {
+              "label": "wikibasemediainfo-filetype-bitmap",
+              "data": "bitmap",
+              "selected": true
+          },
+          {
+              "label": "wikibasemediainfo-filetype-video",
+              "data": "video",
+              "selected": true
+          },
+      ];
+      ```
+
 Other Config:
    - **`$wgUploadWizardConfig['wikibase']['enabled']`**\
    Enables MediaInfo data on UploadWizard when set to true.
    - **`$wgMediaInfoEnable`**\
       Defaults to true.
+   - **`$wgMediaInfoEnableSearch`** _(temporary feature flag)_\
+      Defaults to false.
 
 ## MediaInfo Glossary
 

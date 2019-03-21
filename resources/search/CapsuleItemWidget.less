@@ -1,0 +1,27 @@
+/*
+ * Indicate that the capsules can be clicked (to open a popup that
+ * allows adding more details/qualifiers
+ */
+/* stylelint-disable-next-line selector-class-pattern */
+.wbmi-search-capsule.oo-ui-tagItemWidget.oo-ui-labelElement:not( .oo-ui-tagItemWidget-fixed ) .oo-ui-labelElement-label {
+	cursor: pointer;
+}
+
+.wbmi-search-popover {
+	z-index: 2;
+
+	/* stylelint-disable-next-line selector-class-pattern */
+	.oo-ui-popupWidget-body {
+		padding: 2em;
+	}
+
+	/*
+	 * There will be OOUI dropdowns inside the popover that, when
+	 * expanded, will reach outside the popover.
+	 * Let's make sure they're displayed...
+	 */
+	/* stylelint-disable-next-line selector-class-pattern */
+	.oo-ui-popupWidget-popup {
+		overflow: visible;
+	}
+}

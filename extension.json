@@ -27,6 +27,9 @@
 		"MediaInfoEnableFilePageDepicts": {
 			"value": false
 		},
+		"MediaInfoEnableSearch": {
+			"value": false
+		},
 		"MediaInfoProperties": {
 			"description": "Map of { indicative name: property id }. E.g. { depicts: P1 }. The key doesn't really matter, except that it's easier to reference the value (.depicts is easier to grasp than [0]) and to construct a title (grep for wikibasemediainfo-statements-title-)",
 			"value": {}
@@ -39,6 +42,48 @@
 		"DepictsHelpUrl": {
 			"description": "Link to page to learn more about 'depicts'",
 			"value": "https://commons.wikimedia.org/wiki/Special:MyLanguage/Commons:Depicts"
+		},
+		"MediaInfoSearchFiletypes": {
+			"description": "Options to feed to namespace selection",
+			"value": [
+				{
+					"label": "wikibasemediainfo-filetype-multimedia",
+					"selected": true,
+					"options": [
+						{
+							"label": "wikibasemediainfo-filetype-bitmap",
+							"data": "bitmap",
+							"selected": true
+						},
+						{
+							"label": "wikibasemediainfo-filetype-video",
+							"data": "video",
+							"selected": true
+						},
+						{
+							"label": "wikibasemediainfo-filetype-audio",
+							"data": "audio",
+							"selected": true
+						},
+						{
+							"label": "wikibasemediainfo-filetype-drawing",
+							"data": "drawing",
+							"selected": true
+						},
+						{
+							"label": "wikibasemediainfo-filetype-3d",
+							"data": "3d",
+							"selected": true
+						},
+						{
+							"label": "wikibasemediainfo-filetype-office",
+							"data": "office",
+							"selected": true
+						}
+					]
+				}
+			],
+			"merge_strategy": "array_plus_2d"
 		},
 		"MediaInfoExternalEntitySearchBaseUri": {
 			"value": ""
@@ -236,6 +281,78 @@
 			"targets": [
 				"desktop",
 				"mobile"
+			]
+		},
+		"wikibase.mediainfo.search": {
+			"scripts": [
+				"resources/search/base.js",
+				"resources/search/NestedCheckboxMultioptionWidget.js",
+				"resources/search/NestedCheckboxMultiselectWidget.js",
+				"resources/search/SelectInputWidget.js",
+				"resources/search/CapsuleItemWidget.js",
+				"resources/search/KeywordsInputWidget.js",
+				"resources/search/DepictsInputWidget.js",
+				"resources/search/StatementsInputWidget.js",
+				"resources/search/QualifierWidget.js",
+				"resources/search/QualifiersPopoverWidget.js",
+				"resources/search/SearchInputWidget.js",
+				"resources/search/SearchWidget.js",
+				"resources/search/init.js"
+			],
+			"styles": [
+				"resources/search/NestedCheckboxMultioptionWidget.less",
+				"resources/search/NestedCheckboxMultiselectWidget.less",
+				"resources/search/SelectInputWidget.less",
+				"resources/search/CapsuleItemWidget.less",
+				"resources/search/KeywordsInputWidget.less",
+				"resources/search/DepictsInputWidget.less",
+				"resources/search/StatementsInputWidget.less",
+				"resources/search/QualifierWidget.less",
+				"resources/search/QualifiersPopoverWidget.less",
+				"resources/search/SearchInputWidget.less",
+				"resources/search/SearchWidget.less"
+			],
+			"dependencies": [
+				"oojs",
+				"oojs-ui-core",
+				"oojs-ui-widgets",
+				"oojs-ui-windows",
+				"wikibase.mediainfo.statements"
+			],
+			"messages": [
+				"wikibasemediainfo-filetype-multimedia",
+				"wikibasemediainfo-filetype-bitmap",
+				"wikibasemediainfo-filetype-video",
+				"wikibasemediainfo-filetype-audio",
+				"wikibasemediainfo-filetype-drawing",
+				"wikibasemediainfo-filetype-3d",
+				"wikibasemediainfo-filetype-office",
+				"wikibasemediainfo-property-placeholder",
+				"wikibasemediainfo-operator-placeholder",
+				"wikibasemediainfo-operator-value-is",
+				"wikibasemediainfo-operator-value-isnot",
+				"wikibasemediainfo-operator-value-isempty",
+				"wikibasemediainfo-operator-value-isgreaterthan",
+				"wikibasemediainfo-operator-value-islessthan",
+				"wikibasemediainfo-search-input-placeholder-keywords",
+				"wikibasemediainfo-search-input-placeholder-depicts",
+				"wikibasemediainfo-search-input-placeholder-statements",
+				"wikibasemediainfo-search-qualifiers-add",
+				"wikibasemediainfo-search-qualifiers-cancel",
+				"wikibasemediainfo-search-qualifiers-save",
+				"wikibasemediainfo-search-qualifiers-title",
+				"wikibasemediainfo-search-qualifiers-help",
+				"wikibasemediainfo-search-qualifiers-intro",
+				"wikibasemediainfo-search-statements-add",
+				"wikibasemediainfo-search-statements-cancel",
+				"wikibasemediainfo-search-statements-save",
+				"wikibasemediainfo-search-statements-title",
+				"wikibasemediainfo-search-statements-help",
+				"wikibasemediainfo-search-statements-intro",
+				"wikibasemediainfo-search-search",
+				"wikibasemediainfo-search-toggle-keywords",
+				"wikibasemediainfo-search-toggle-depicts",
+				"wikibasemediainfo-search-toggle-statements"
 			]
 		}
 	},

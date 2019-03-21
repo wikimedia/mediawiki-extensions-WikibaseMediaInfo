@@ -174,7 +174,9 @@ class WikibaseMediaInfoHooks {
 			$wgDepictsHelpUrl,
 			$wgMediaInfoProperties,
 			$wgMediaInfoExternalEntitySearchBaseUri,
-			$wgMediaInfoEnableFilePageDepicts;
+			$wgMediaInfoEnableFilePageDepicts,
+			$wgMediaInfoSearchFiletypes,
+			$wgMediaInfoEnableSearch;
 
 		// Hide any MediaInfo content and UI on a page, if either …
 		if (
@@ -231,6 +233,8 @@ class WikibaseMediaInfoHooks {
 				'wbmiDepictsQualifierProperties' => $qualifiers,
 				'wbmiDepictsHelpUrl' => $wgDepictsHelpUrl,
 				'wbmiExternalEntitySearchBaseUri' => $wgMediaInfoExternalEntitySearchBaseUri,
+				'wbmiSearchFiletypes' => $wgMediaInfoSearchFiletypes,
+				'wbmiMediaInfoEnableSearch' => $wgMediaInfoEnableSearch,
 			]
 		);
 	}
@@ -254,7 +258,7 @@ class WikibaseMediaInfoHooks {
 		array $jsConfigVars = []
 	) {
 		// Site-wide config
-		$modules = [];
+		$modules = [ 'wikibase.mediainfo.search' ];
 		$moduleStyles = [];
 
 		if ( $isMediaInfoPage ) {
@@ -335,7 +339,7 @@ class WikibaseMediaInfoHooks {
 			$statements = \Html::rawElement(
 				'h2',
 				[ 'class' => 'wbmi-structured-data-header' ],
-					$textProvider->get( 'wikibasemediainfo-filepage-structured-data-heading' )
+				$textProvider->get( 'wikibasemediainfo-filepage-structured-data-heading' )
 			) . $statements;
 		}
 
@@ -630,7 +634,7 @@ class WikibaseMediaInfoHooks {
 
 	private static function getStructuredDataHeaderRegex() {
 		return '#<h1\b[^>]*\bclass=(\'|")mw-slot-header\\1[^>]*>' .
-			   self::MEDIAINFO_SLOT_HEADER_PLACEHOLDER . '</h1>#iU';
+			self::MEDIAINFO_SLOT_HEADER_PLACEHOLDER . '</h1>#iU';
 	}
 
 	private static function getMaxCaptionLength() {

@@ -115,7 +115,10 @@
 			$label.append(
 				$( '<span>' )
 					.addClass( 'wbmi-entityselector-aliases' )
-					.text( mw.message( 'parentheses', mw.language.listToText( entityStub.aliases ) ).text() )
+					.text(
+						mw.message( 'word-separator' ).text() +
+						mw.message( 'parentheses', mw.language.listToText( entityStub.aliases ) ).text()
+					)
 			);
 		}
 

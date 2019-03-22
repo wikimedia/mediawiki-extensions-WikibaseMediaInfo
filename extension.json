@@ -261,6 +261,7 @@
 				"wikibasemediainfo-statements-remove",
 				"wikibasemediainfo-statements-learn-more",
 				"colon-separator",
+				"word-separator",
 				"parentheses"
 			],
 			"targets": [

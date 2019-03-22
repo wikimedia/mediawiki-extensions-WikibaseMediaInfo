@@ -329,18 +329,38 @@ class WikibaseMediaInfoHooks {
 		) ) {
 			$captions = $matches[1];
 		}
+		// Deal with pages in the parser cache that don't have placeholder tags for captions
+		// This can be removed once parser caches have expired (X days after this code goes live)
+		if ( empty( $captions ) ) {
+			if (
+				preg_match(
+					'/(<div[^>]*data-caption-languages.*<\/div>)\s*<\/div>\s*$/is',
+					$extractedHtml['structured'],
+					$matches
+				)
+			) {
+				$captions = $matches[1];
+			}
+		}
+
 		if ( preg_match(
 			self::getMediaInfoStatementsRegex(),
 			$extractedHtml['structured'],
 			$matches
 		) ) {
 			$statements = $matches[1];
-			// Add a title for no-js
-			$statements = \Html::rawElement(
-				'h2',
-				[ 'class' => 'wbmi-structured-data-header' ],
-				$textProvider->get( 'wikibasemediainfo-filepage-structured-data-heading' )
-			) . $statements;
+		}
+		// Deal with pages in the parser cache that don't have placeholder tags for statements
+		// This can be removed once parser caches have expired (X days after this code goes live)
+		if ( empty( $statements ) ) {
+			$emptyStructured = $this->createEmptyStructuredData( $out, $entityViewFactory );
+			if ( preg_match(
+				self::getMediaInfoStatementsRegex(),
+				$emptyStructured,
+				$matches
+			) ) {
+				$statements = $matches[1];
+			}
 		}
 
 		if ( empty( $captions ) || empty( $statements ) ) {
@@ -349,6 +369,13 @@ class WikibaseMediaInfoHooks {
 			$out->addHTML( $html );
 			return $out;
 		}
+
+		// Add a title to statements for no-js
+		$statements = \Html::rawElement(
+			'h2',
+			[ 'class' => 'wbmi-structured-data-header' ],
+			$textProvider->get( 'wikibasemediainfo-filepage-structured-data-heading' )
+		) . $statements;
 
 		// Tab 1 will be everything inside <div id="mw-content-text"> from
 		// <div id="mw-imagepage-content"> onwards ... or in other words from
@@ -519,28 +546,37 @@ class WikibaseMediaInfoHooks {
 			$unstructured = preg_replace( self::getMediaInfoViewRegex(), '', $html );
 		} else {
 			$unstructured = $html;
-			$emptyMediaInfo = new MediaInfo();
-			$fallbackChainFactory = new LanguageFallbackChainFactory();
-			$view = $entityViewFactory->newEntityView(
-				$out->getLanguage(),
-				$fallbackChainFactory->newFromLanguage( $out->getLanguage() ),
-				$emptyMediaInfo,
-				new EntityInfo( [] )
-			);
-
-			$structured = $view->getContent( $emptyMediaInfo, 0 /* EntityRevision::UNSAVED_REVISION */ )->getHtml();
-
-			// Strip out the surrounding <mediaInfoView> tag
-			$structured = preg_replace(
-				self::getMediaInfoViewRegex(),
-				'$1',
-				$structured
-			);
+			$structured = $this->createEmptyStructuredData( $out, $entityViewFactory );
 		}
 		return [
 			'unstructured' => $unstructured,
 			'structured' => $structured,
 		];
+	}
+
+	private function createEmptyStructuredData(
+		OutputPage $out,
+		DispatchingEntityViewFactory $entityViewFactory
+	) {
+		$emptyMediaInfo = new MediaInfo();
+		$fallbackChainFactory = new LanguageFallbackChainFactory();
+		$view = $entityViewFactory->newEntityView(
+			$out->getLanguage(),
+			$fallbackChainFactory->newFromLanguage( $out->getLanguage() ),
+			$emptyMediaInfo,
+			new EntityInfo( [] )
+		);
+
+		$structured = $view->getContent( $emptyMediaInfo, 0 /* EntityRevision::UNSAVED_REVISION */ )->getHtml();
+
+		// Strip out the surrounding <mediaInfoView> tag
+		$structured = preg_replace(
+			self::getMediaInfoViewRegex(),
+			'$1',
+			$structured
+		);
+
+		return $structured;
 	}
 
 	/**

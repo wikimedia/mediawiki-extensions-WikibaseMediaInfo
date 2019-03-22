@@ -377,11 +377,11 @@ class WikibaseMediaInfoHooks {
 			$textProvider->get( 'wikibasemediainfo-filepage-structured-data-heading' )
 		) . $statements;
 
-		// Tab 1 will be everything inside <div id="mw-content-text"> from
-		// <div id="mw-imagepage-content"> onwards ... or in other words from
-		// <div id="mw-imagepage-content"> itself until the end of $html
+		// Tab 1 will be everything inside <div class="mw-parser-output">
+		// ... which is everything from <div class="mw-parser-output"> to just before
+		// the last closing div tab
 		$tab1ContentRegex = '/' .
-			'(<div\b[^>]*\bid=(\'|")mw-imagepage-content\\2[^>]*>.*)' .
+			'(^.*)(<div\b[^>]*\bclass=(\'|")mw-parser-output\\3[^>]*>.*)(<\/div>\s*)$' .
 			'/is';
 		// Snip out the div, and replace with a placeholder
 		if (
@@ -391,10 +391,10 @@ class WikibaseMediaInfoHooks {
 				$matches
 			)
 		) {
-			$tab1Html = $matches[1];
+			$tab1Html = $matches[2];
 			$html = preg_replace(
 				$tab1ContentRegex,
-				'<WBMI_TABS_PLACEHOLDER>',
+				'$1<WBMI_TABS_PLACEHOLDER>$4',
 				$extractedHtml['unstructured']
 			);
 			// Add a title for no-js

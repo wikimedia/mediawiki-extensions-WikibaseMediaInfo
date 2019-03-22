@@ -12,10 +12,7 @@
 		// make sure there's a statements block on the page (e.g. if it's feature-flagged off)
 		$( '.' + depictsClass ).length !== 0 &&
 		// and we have an ID for "depicts" in config
-		'depicts' in mw.config.get( 'wbmiProperties' ) &&
-		// Only allow editing if we're NOT on a diff page or viewing an older revision
-		// eslint-disable-next-line no-jquery/no-global-selector
-		$( '.diff' ).length === 0 && $( '.mw-revision' ).length === 0
+		'depicts' in mw.config.get( 'wbmiProperties' )
 	) {
 		// eslint-disable-next-line no-jquery/no-global-selector
 		$tabs = $( '.wbmi-tabs' );
@@ -23,11 +20,15 @@
 			OO.ui.infuse( $tabs );
 		}
 
-		sd.depicts = new sd.DepictsPanel( {
-			contentClass: depictsClass,
-			entityId: mw.config.get( 'wbEntityId' )
-		} );
-		sd.depicts.initialize();
+		// Only allow editing if we're NOT on a diff page or viewing an older revision
+		// eslint-disable-next-line no-jquery/no-global-selector
+		if ( $( '.diff' ).length === 0 && $( '.mw-revision' ).length === 0 ) {
+			sd.depicts = new sd.DepictsPanel( {
+				contentClass: depictsClass,
+				entityId: mw.config.get( 'wbEntityId' )
+			} );
+			sd.depicts.initialize();
+		}
 	}
 
 	sd.captions = new sd.CaptionsPanel( {

@@ -34,5 +34,19 @@
 	"wikibasemediainfo-filepage-license-agree": "동의합니다",
 	"wikibasemediainfo-statements-item-input-label": "위키데이터에서",
 	"wikibasemediainfo-statements-item-remove": "제거",
-	"wikibasemediainfo-statements-learn-more": "더 알아보기"
+	"wikibasemediainfo-statements-learn-more": "더 알아보기",
+	"wikibasemediainfo-operator-value-isempty": "이(가) 비어 있습니다",
+	"wikibasemediainfo-filetype-multimedia": "멀티미디어",
+	"wikibasemediainfo-filetype-bitmap": "이미지",
+	"wikibasemediainfo-filetype-video": "동영상",
+	"wikibasemediainfo-filetype-audio": "소리",
+	"wikibasemediainfo-filetype-3d": "3D 모델",
+	"wikibasemediainfo-filetype-office": "오피스",
+	"wikibasemediainfo-search-qualifiers-cancel": "취소",
+	"wikibasemediainfo-search-qualifiers-save": "저장",
+	"wikibasemediainfo-search-statements-cancel": "취소",
+	"wikibasemediainfo-search-statements-save": "검색",
+	"wikibasemediainfo-search-search": "검색",
+	"wikibasemediainfo-search-toggle-keywords": "키워드",
+	"wikibasemediainfo-search-toggle-depicts": "태그"
 }

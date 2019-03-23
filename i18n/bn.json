@@ -27,5 +27,9 @@
 	"wikibasemediainfo-filepage-statement-no-data": "কোনো উপাত্ত উপলব্ধ নয়",
 	"wikibasemediainfo-statements-item-add-qualifier": "বাছাই যোগ করুন",
 	"wikibasemediainfo-statements-item-input-label": "উইকিউপাত্ত থেকে",
-	"wikibasemediainfo-statements-item-remove": "সরান"
+	"wikibasemediainfo-statements-item-remove": "সরান",
+	"wikibasemediainfo-filetype-multimedia": "মাল্টিমিডিয়া",
+	"wikibasemediainfo-filetype-video": "ভিডিও",
+	"wikibasemediainfo-search-statements-cancel": "বাতিল",
+	"wikibasemediainfo-search-statements-save": "অনুসন্ধান"
 }

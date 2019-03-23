@@ -13,6 +13,7 @@
 	"wikibasemediainfo-desc": "Estenzione Uicchibase pe gestì le metadate strutturate de file multimediale",
 	"wikibasemediainfo-diffview-label": "'ndestazione",
 	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "'Ndestaziune",
+	"wikibasemediainfo-filepage-fileinfo-heading": "'Mbormaziune d'u file",
 	"wikibasemediainfo-filepage-structured-data-heading": "Date strutturate",
 	"wikibasemediainfo-filepage-captions-title": "'Ndestaziune",
 	"wikibasemediainfo-filepage-more-languages": "'Ndruche $1 cchiù {{PLURAL:$1|lènghe}}",
@@ -20,6 +21,7 @@
 	"wikibasemediainfo-filepage-add-caption": "Aggiunge 'na 'ndestazione",
 	"wikibasemediainfo-filepage-edit-captions": "Cange le 'ndestaziune",
 	"wikibasemediainfo-filepage-cancel": "Annulle",
+	"wikibasemediainfo-filepage-edit": "Cange",
 	"wikibasemediainfo-filepage-publish": "Pubbleche le cangiaminde",
 	"wikibasemediainfo-filepage-caption-empty": "Aggiunge 'na spiegazione sus a 'na linèe de ce rappresende stu file",
 	"wikibasemediainfo-filepage-caption-too-long": "$1 {{PLURAL:$1|carattere}} sus a 'u limite",
@@ -31,7 +33,11 @@
 	"wikibasemediainfo-statements-depicts-title": "Eleminde rappresendate jndr'à st'immaggine",
 	"wikibasemediainfo-statements-item-add-qualifier": "Aggiunge 'nu qualificatore",
 	"wikibasemediainfo-statements-item-input-label": "da Uicchidate",
-	"wikibasemediainfo-statements-item-input-placeholder": "Cirche de aggiungere le eleminde rappresendate",
+	"wikibasemediainfo-statements-item-input-placeholder": "Cirche de aggiungere le eleminde (case d'u iatte, mundagne, Monna Lise, ecc.)",
 	"wikibasemediainfo-statements-item-is-primary": "Primarie",
-	"wikibasemediainfo-statements-item-remove": "Live"
+	"wikibasemediainfo-statements-item-remove": "Live",
+	"wikibasemediainfo-operator-value-is": "jè",
+	"wikibasemediainfo-operator-value-isnot": "no jè",
+	"wikibasemediainfo-operator-value-isempty": "jè vacande",
+	"wikibasemediainfo-filetype-3d": "Modelle 3D"
 }

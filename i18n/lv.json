@@ -21,5 +21,14 @@
 	"wikibasemediainfo-statements-item-make-primary": "Padarīt par primāro",
 	"wikibasemediainfo-statements-item-remove": "Noņemt",
 	"wikibasemediainfo-statements-learn-more": "Uzzināt vairāk",
-	"wikibasemediainfo-statements-remove": "Noņemt apgalvojumu"
+	"wikibasemediainfo-statements-remove": "Noņemt apgalvojumu",
+	"wikibasemediainfo-operator-placeholder": "Operators",
+	"wikibasemediainfo-operator-value-isempty": "ir tukšs",
+	"wikibasemediainfo-filetype-bitmap": "Attēli",
+	"wikibasemediainfo-filetype-video": "Video",
+	"wikibasemediainfo-filetype-audio": "Skaņa",
+	"wikibasemediainfo-filetype-drawing": "Zīmējumi",
+	"wikibasemediainfo-filetype-3d": "3D modeļi",
+	"wikibasemediainfo-search-qualifiers-cancel": "Atcelt",
+	"wikibasemediainfo-search-statements-cancel": "Atcelt"
 }

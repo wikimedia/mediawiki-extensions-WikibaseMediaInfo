@@ -25,5 +25,19 @@
 	"wikibasemediainfo-property-placeholder": "Propietat",
 	"wikibasemediainfo-filepage-license-agree": "Hi estic d’acord",
 	"wikibasemediainfo-statements-item-add-qualifier": "Afegeix qualificador",
-	"wikibasemediainfo-statements-item-remove": "Suprimeix"
+	"wikibasemediainfo-statements-item-remove": "Suprimeix",
+	"wikibasemediainfo-operator-placeholder": "Operador",
+	"wikibasemediainfo-operator-value-isempty": "és buit",
+	"wikibasemediainfo-filetype-multimedia": "Multimèdia",
+	"wikibasemediainfo-filetype-bitmap": "Imatges",
+	"wikibasemediainfo-filetype-video": "Vídeo",
+	"wikibasemediainfo-filetype-audio": "So",
+	"wikibasemediainfo-filetype-3d": "Models 3D",
+	"wikibasemediainfo-search-qualifiers-cancel": "Cancel·la",
+	"wikibasemediainfo-search-qualifiers-save": "Desa",
+	"wikibasemediainfo-search-statements-cancel": "Cancel·la",
+	"wikibasemediainfo-search-statements-save": "Cerca",
+	"wikibasemediainfo-search-search": "Cerca",
+	"wikibasemediainfo-search-toggle-keywords": "Paraula clau",
+	"wikibasemediainfo-search-toggle-depicts": "Etiquetes"
 }

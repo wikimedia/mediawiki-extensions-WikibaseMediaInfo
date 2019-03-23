@@ -4,7 +4,8 @@
 			"Okras",
 			"Putnik",
 			"Vlad5250",
-			"Kaganer"
+			"Kaganer",
+			"Bloomaround"
 		]
 	},
 	"right-mediainfo-term": "измененять термины структурированной информации о медиафайлах (названия, краткие описания)",
@@ -26,5 +27,9 @@
 	"wikibasemediainfo-filepage-edit": "Править",
 	"wikibasemediainfo-filepage-publish": "Опубликовать изменения",
 	"wikibasemediainfo-filepage-caption-empty": "Опишите в одной строке, что представляет собой этот файл",
-	"wikibasemediainfo-filepage-statement-no-results": "Ничего не найдено"
+	"wikibasemediainfo-filepage-statement-no-results": "Ничего не найдено",
+	"wikibasemediainfo-operator-value-isempty": "пуст",
+	"wikibasemediainfo-filetype-drawing": "Рисунки",
+	"wikibasemediainfo-filetype-3d": "3D модели",
+	"wikibasemediainfo-search-toggle-keywords": "Ключевое слово"
 }

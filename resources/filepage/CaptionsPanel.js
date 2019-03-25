@@ -800,6 +800,15 @@
 	sd.CaptionsPanel.prototype.makeEditable = function () {
 		var self = this;
 
+		if ( mw.user.isAnon() ) {
+			var msg = mw.message( 'anoneditwarning' );
+			mw.notify( msg, {
+				autoHide: false,
+				type: 'warn',
+				tag: 'wikibasemediainfo-anonymous-edit-warning'
+			} );
+		}
+
 		// show dialog informing user of licensing
 		self.licenseDialogWidget.getConfirmationIfNecessary().then( function () {
 		// Set the target pending element to the layout box

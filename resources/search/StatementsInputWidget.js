@@ -39,7 +39,6 @@
 			},
 			messages: {
 				title: mw.message( 'wikibasemediainfo-search-statements-title' ).text(),
-				help: mw.message( 'wikibasemediainfo-search-statements-help' ).text(),
 				intro: mw.message( 'wikibasemediainfo-search-statements-intro' ).text(),
 				add: mw.message( 'wikibasemediainfo-search-statements-add' ).text(),
 				cancel: mw.message( 'wikibasemediainfo-search-statements-cancel' ).text(),

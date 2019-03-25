@@ -37,7 +37,6 @@
 			},
 			messages: {
 				title: mw.message( 'wikibasemediainfo-search-qualifiers-title' ).text(),
-				help: mw.message( 'wikibasemediainfo-search-qualifiers-help' ).text(),
 				intro: mw.message( 'wikibasemediainfo-search-qualifiers-intro' ).text(),
 				add: mw.message( 'wikibasemediainfo-search-qualifiers-add' ).text(),
 				cancel: mw.message( 'wikibasemediainfo-search-qualifiers-cancel' ).text(),

@@ -37,8 +37,7 @@
 		this.qualifiersLayout = new OO.ui.FieldsetLayout();
 
 		this.fieldset = new OO.ui.FieldsetLayout( {
-			label: config.messages.title || '',
-			help: config.messages.help || ''
+			label: config.messages.title || ''
 		} );
 		this.fieldset.addItems( [
 			new OO.ui.FieldsetLayout( {

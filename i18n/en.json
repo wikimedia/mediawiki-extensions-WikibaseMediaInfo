@@ -22,6 +22,7 @@
 	"wikibasemediainfo-filepage-edit-captions": "Edit captions",
 	"wikibasemediainfo-filepage-edit-depicts": "Edit depicts",
 	"wikibasemediainfo-filepage-cancel": "Cancel",
+	"wikibasemediainfo-filepage-cancel-confirm": "Discard Changes? Changes you made will not be saved.",
 	"wikibasemediainfo-filepage-edit": "Edit",
 	"wikibasemediainfo-filepage-publish": "Publish changes",
 	"wikibasemediainfo-filepage-caption-empty": "Add a one-line explanation of what this file represents",

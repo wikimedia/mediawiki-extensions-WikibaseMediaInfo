@@ -332,9 +332,10 @@
 	};
 
 	/**
-	 * Update publish (submit) button state
-	 */
-	sd.CaptionsPanel.prototype.refreshPublishState = function () {
+	 * Check for changes to caption text by language or number of captions
+	 * @return bool
+	*/
+	sd.CaptionsPanel.prototype.hasChanges = function () {
 		var self = this,
 			$captions = $( self.contentSelector ).find( self.entityTermSelector ),
 			hasChanges = $captions.length < Object.keys( self.captionsData ).length;
@@ -350,6 +351,16 @@
 			}
 		} );
 
+		return hasChanges;
+	};
+
+	/**
+	 * Enable/Disable publish button based on presence of captions changes
+	 */
+	sd.CaptionsPanel.prototype.refreshPublishState = function () {
+		var self = this,
+			hasChanges = self.hasChanges();
+
 		if ( hasChanges ) {
 			self.editActionsWidget.enablePublish();
 		} else {
@@ -359,7 +370,7 @@
 
 	/**
 	 * Apply validations and refresh publish button - connected to text input 'change' events
-	*/
+	 */
 	sd.CaptionsPanel.prototype.onCaptionsChange = function () {
 		var self = this,
 			validations = self.validateCaptionsAndReturnUpdates(); // This is an array of promises
@@ -837,12 +848,24 @@
 	};
 
 	sd.CaptionsPanel.prototype.makeReadOnly = function () {
-		var $captionsContent = $( this.contentSelector );
-		$captionsContent.removeClass( 'wbmi-entityview-editable' );
-		this.editActionsWidget.hide();
-		this.redrawCaptionsContent();
-		this.languagesViewWidget.expand();
-		this.editToggle.$element.show();
+		var self = this,
+			hasChanges = self.hasChanges(),
+			allowCloseWindow = mw.confirmCloseWindow( {
+				message: mw.message( 'wikibasemediainfo-filepage-cancel-confirm' ).text(),
+				test: function () { return hasChanges; }
+			} );
+
+		var closeWindowConfirmed = allowCloseWindow.trigger();
+
+		if ( closeWindowConfirmed ) {
+			var $captionsContent = $( self.contentSelector );
+			$captionsContent.removeClass( 'wbmi-entityview-editable' );
+			self.editActionsWidget.hide();
+			self.redrawCaptionsContent();
+			self.languagesViewWidget.expand();
+			self.editToggle.$element.show();
+		}
+
 	};
 
 	sd.CaptionsPanel.prototype.addNewEditableLanguageRow = function () {

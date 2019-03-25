@@ -24,6 +24,7 @@
 	"wikibasemediainfo-filepage-edit-captions": "Label text for edit captions icon",
 	"wikibasemediainfo-filepage-edit-depicts": "Label text for edit depicts icon",
 	"wikibasemediainfo-filepage-cancel": "Label for 'cancel' button for editing structured data on file page\n{{Identical|Cancel}}",
+	"wikibasemediainfo-filepage-cancel-confirm": "Alert message to confirm user will cancel and discard changes",
 	"wikibasemediainfo-filepage-edit": "Label for 'edit' button for editing structured data on file page",
 	"wikibasemediainfo-filepage-publish": "Label for 'publish' button for editing structured data on file page",
 	"wikibasemediainfo-filepage-caption-empty": "Text to display when a caption is missing for a language, as a call-to-action for the user to add a caption",

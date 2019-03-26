@@ -308,6 +308,7 @@ class WikibaseMediaInfoHooks {
 	 * @param DispatchingEntityViewFactory $entityViewFactory
 	 * @return OutputPage $out
 	 */
+
 	private function tabifyStructuredData(
 		OutputPage $out,
 		DispatchingEntityViewFactory $entityViewFactory
@@ -363,10 +364,6 @@ class WikibaseMediaInfoHooks {
 		}
 
 		if ( empty( $captions ) || empty( $statements ) ) {
-			// @todo remove lines below
-			$html .= '<!-- empty captions '. var_export( empty( $captions ), true ) .
-				' or statements '. var_export( empty( $statements ), true ) .' -->';
-
 			// Something has gone wrong - markup should have been created for empty/missing data.
 			// Return the html unmodified (this should not be reachable, it's here just in case)
 			$out->addHTML( $html );
@@ -407,9 +404,6 @@ class WikibaseMediaInfoHooks {
 					$textProvider->get( 'wikibasemediainfo-filepage-captions-title' )
 				) . $tab1Html;
 		} else {
-			// @todo remove line below
-			$html .= '<!-- missing tab content -->';
-
 			// If the div isn't found, something has gone wrong - return unmodified html
 			// (this should not be reachable, it's here just in case)
 			$out->addHTML( $html );
@@ -461,10 +455,6 @@ class WikibaseMediaInfoHooks {
 
 		// Replace the placeholder with the tabs
 		$html = str_replace( '<WBMI_TABS_PLACEHOLDER>', $tabWrapper, $html );
-
-		// @todo remove line below (replacement of existing --> is to make sure comment doesn't end
-		// prematurely)
-		$html .= '<!-- '. strtr( var_export( $extractedHtml, true ), [ '-->' => '!!>' ] ) .' -->';
 
 		$out->addHTML( $html );
 		return $out;

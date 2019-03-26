@@ -102,8 +102,8 @@
 				.attr( 'href', '#' )
 				.text(
 					this.data.getRank() === wb.datamodel.Statement.RANK.NORMAL ?
-						mw.message( 'wikibasemediainfo-statements-item-make-primary' ).text() :
-						mw.message( 'wikibasemediainfo-statements-item-is-primary' ).text()
+						mw.message( 'wikibasemediainfo-statements-item-mark-as-prominent' ).text() :
+						mw.message( 'wikibasemediainfo-statements-item-is-prominent' ).text()
 				)
 				.prepend( this.data.getRank() === wb.datamodel.Statement.RANK.NORMAL ? '' : icon.$element )
 				.on( 'click', function ( e ) {

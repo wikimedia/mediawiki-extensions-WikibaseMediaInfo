@@ -9,6 +9,8 @@
 			"MarcoAurelio"
 		]
 	},
+	"right-mediainfo-term": "Cambiar términos de información de medio (leyendas, resúmenes…)",
+	"slot-name-mediainfo": "Infomación estructurada de multimedia",
 	"wikibase-entity-mediainfo": "información multimedia",
 	"wikibasemediainfo-desc": "Extensión de Wikibase para gestionar metadatos estructurados de archivos multimedia",
 	"wikibasemediainfo-filepage-structured-data-heading": "Datos estructurados",

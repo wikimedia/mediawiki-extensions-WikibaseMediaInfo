@@ -30,5 +30,8 @@
 	"wikibasemediainfo-filetype-drawing": "Zīmējumi",
 	"wikibasemediainfo-filetype-3d": "3D modeļi",
 	"wikibasemediainfo-search-qualifiers-cancel": "Atcelt",
-	"wikibasemediainfo-search-statements-cancel": "Atcelt"
+	"wikibasemediainfo-search-qualifiers-save": "Saglabāt",
+	"wikibasemediainfo-search-statements-cancel": "Atcelt",
+	"wikibasemediainfo-search-toggle-keywords": "Atslēgas vārds",
+	"wikibasemediainfo-search-toggle-depicts": "Iezīmes"
 }

@@ -3,7 +3,8 @@
 		"authors": [
 			"Liuxinyu970226",
 			"Robby",
-			"Pikne"
+			"Pikne",
+			"Amire80"
 		]
 	},
 	"right-mediainfo-term": "{{doc-right|mediainfo-term}}\nRight to alter the [[d:Special:MyLanguage/Wikidata:Glossary#Term|terms]] of [[d:Wikidata:Glossary#media info|media info]] entities.",
@@ -58,17 +59,17 @@
 	"wikibasemediainfo-filetype-multimedia": "Label for filetypes dropdown for 'Multimedia'",
 	"wikibasemediainfo-filetype-bitmap": "Label for filetypes dropdown for 'Images'",
 	"wikibasemediainfo-filetype-video": "Label for filetypes dropdown for 'Video'",
-	"wikibasemediainfo-filetype-audio": "Label for filetypes dropdown for 'Sound'",
+	"wikibasemediainfo-filetype-audio": "Label for filetypes dropdown for 'Sound'\n{{Identical|Sound}}",
 	"wikibasemediainfo-filetype-drawing": "Label for filetypes dropdown for 'Drawings'",
 	"wikibasemediainfo-filetype-3d": "Label for filetypes dropdown for '3D models'",
-	"wikibasemediainfo-filetype-office": "Label for filetypes dropdown for 'Office'\n{{Identical|Office}}",
+	"wikibasemediainfo-filetype-office": "Label for filetypes dropdown for 'Office'. It describes document files that are created by various office suites: Microsoft Word, LibreOffice, PDF, etc.\n{{Identical|Office}}",
 	"wikibasemediainfo-search-input-placeholder-keywords": "Placeholder text for the input to search by keyword",
 	"wikibasemediainfo-search-input-placeholder-depicts": "Placeholder text for the input to search by depicted items",
 	"wikibasemediainfo-search-input-placeholder-statements": "Placeholder text for the input to search by other statements",
 	"wikibasemediainfo-search-qualifiers-add": "Label for button to add a qualifier in the depicts search popover",
 	"wikibasemediainfo-search-qualifiers-cancel": "Label for button to cancel the depicts search popover\n{{Identical|Cancel}}",
 	"wikibasemediainfo-search-qualifiers-save": "Label for button to save the depicts search popover\n{{Identical|Save}}",
-	"wikibasemediainfo-search-qualifiers-title": "Title for the depicts search popover",
+	"wikibasemediainfo-search-qualifiers-title": "Title for the depicts search popover. It means \"statements with the 'depicts' property\" ([[:d:Property:P180|P180]] in Wikidata).",
 	"wikibasemediainfo-search-qualifiers-intro": "Intro text for the depicts search popover",
 	"wikibasemediainfo-search-statements-add": "Label for button to add a statement in the statements search popover",
 	"wikibasemediainfo-search-statements-cancel": "Label for button to cancel the statements search popover\n{{Identical|Cancel}}",

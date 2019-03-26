@@ -264,6 +264,7 @@
 			hasFailures = false;
 
 		this.setEditing( false );
+		this.input.setDisabled( true );
 
 		this.$element.find( '.wbmi-statement-publish-error-msg' ).remove();
 
@@ -349,6 +350,9 @@
 				deserializer = new wb.serialization.StatementListDeserializer();
 
 			self.data = deserializer.deserialize( serializer.serialize( data ) );
+
+			// re-enable statements input
+			self.input.setDisabled( false );
 
 			// if we've had failures, put the widget back in edit mode, and reject
 			// this promise, so callers will know something went wrong

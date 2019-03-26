@@ -404,10 +404,6 @@ class WikibaseMediaInfoHooks {
 					$textProvider->get( 'wikibasemediainfo-filepage-captions-title' )
 				) . $tab1Html;
 		} else {
-			// @todo remove lines below
-			$html .= '<!-- missing tab content -->';
-			$html .= '<!-- '. strtr( var_export( $extractedHtml, true ), [ '-->' => '!!>' ] ) .' -->';
-
 			// If the div isn't found, something has gone wrong - return unmodified html
 			// (this should not be reachable, it's here just in case)
 			$out->addHTML( $html );

@@ -812,7 +812,7 @@
 		var self = this;
 
 		if ( mw.user.isAnon() ) {
-			var msg = mw.message( 'anoneditwarning' );
+			var msg = mw.message( 'anoneditwarning' ).parse();
 			mw.notify( msg, {
 				autoHide: false,
 				type: 'warn',

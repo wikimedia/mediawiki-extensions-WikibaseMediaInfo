@@ -175,6 +175,7 @@
 				"resources/filepage/init.js"
 			],
 			"dependencies": [
+				"mediawiki.action.edit.editWarning",
 				"oojs",
 				"oojs-ui-core",
 				"oojs-ui-widgets",
@@ -198,6 +199,7 @@
 				"wikibasemediainfo-filepage-edit-captions",
 				"wikibasemediainfo-filepage-edit-depicts",
 				"wikibasemediainfo-filepage-cancel",
+				"wikibasemediainfo-filepage-cancel-confirm",
 				"wikibasemediainfo-filepage-edit",
 				"wikibasemediainfo-filepage-publish",
 				"wikibasemediainfo-filepage-caption-empty",

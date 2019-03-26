@@ -105,6 +105,15 @@
 	sd.DepictsPanel.prototype.makeEditable = function () {
 		var self = this;
 
+		if ( mw.user.isAnon() ) {
+			var msg = mw.message( 'anoneditwarning' );
+			mw.notify( msg, {
+				autoHide: false,
+				type: 'warn',
+				tag: 'wikibasemediainfo-anonymous-edit-warning'
+			} );
+		}
+
 		// show dialog informing user of licensing & store the returned promise
 		// in licenseAcceptance - submit won't be possible until dialog is closed
 		this.licenseDialogWidget.getConfirmationIfNecessary().then( function () {

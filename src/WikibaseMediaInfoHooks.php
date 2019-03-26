@@ -377,12 +377,10 @@ class WikibaseMediaInfoHooks {
 			$textProvider->get( 'wikibasemediainfo-filepage-structured-data-heading' )
 		) . $statements;
 
-		// Tab 1 will be everything inside <div class="mw-parser-output">
-		// ... which is everything from <div class="mw-parser-output"> to just before
-		// the last closing div tab
-		$tab1ContentRegex = '/' .
-			'(^.*)(<div\b[^>]*\bclass=(\'|")mw-parser-output\\3[^>]*>.*)(<\/div>\s*)$' .
-			'/is';
+		// Tab 1 will be everything after (and including) <div id="mw-imagepage-content">
+		// except for children of #mw-imagepage-content before .mw-parser-output (e.g. diffs)
+		$tab1ContentRegex = '/(<div\b[^>]*\bid=(\'|")mw-imagepage-content\\2[^>]*>)(.*)' .
+			'(<div\b[^>]*\bclass=(\'|")mw-parser-output\\5[^>]*>.*$)/is';
 		// Snip out the div, and replace with a placeholder
 		if (
 			preg_match(
@@ -391,18 +389,18 @@ class WikibaseMediaInfoHooks {
 				$matches
 			)
 		) {
-			$tab1Html = $matches[2];
+			$tab1Html = $matches[1] . $matches[4];
 			$html = preg_replace(
 				$tab1ContentRegex,
-				'$1<WBMI_TABS_PLACEHOLDER>$4',
+				'$3<WBMI_TABS_PLACEHOLDER>',
 				$extractedHtml['unstructured']
 			);
 			// Add a title for no-js
 			$tab1Html = \Html::rawElement(
-					'h2',
-					[ 'class' => 'wbmi-captions-header' ],
-					$textProvider->get( 'wikibasemediainfo-filepage-captions-title' )
-				) . $tab1Html;
+				'h2',
+				[ 'class' => 'wbmi-captions-header' ],
+				$textProvider->get( 'wikibasemediainfo-filepage-captions-title' )
+			) . $tab1Html;
 		} else {
 			// If the div isn't found, something has gone wrong - return unmodified html
 			// (this should not be reachable, it's here just in case)

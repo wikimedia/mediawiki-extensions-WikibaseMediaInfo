@@ -178,13 +178,8 @@ class WikibaseMediaInfoHooks {
 			$wgMediaInfoSearchFiletypes,
 			$wgMediaInfoEnableSearch;
 
-		// Hide any MediaInfo content and UI on a page, if either …
-		if (
-			// the extension is disabled, or
-			!MediaWikiServices::getInstance()->getMainConfig()->get( 'MediaInfoEnable' ) ||
-			// the target page is a redirect.
-			$out->getTitle()->isRedirect()
-		) {
+		// Hide any MediaInfo content and UI on a page, if the target page is a redirect.
+		if ( $out->getTitle()->isRedirect() ) {
 			$out = self::deleteMediaInfoData( $out );
 			return;
 		}
@@ -707,10 +702,6 @@ class WikibaseMediaInfoHooks {
 		ParserOutput $parserOutput,
 		Connection $connection
 	) {
-		// Exit if the extension is disabled.
-		if ( !MediaWikiServices::getInstance()->getMainConfig()->get( 'MediaInfoEnable' ) ) {
-			return;
-		}
 		self::newFromGlobalState()->doCirrusSearchBuildDocumentParse(
 			$document,
 			WikiPage::factory( $title ),

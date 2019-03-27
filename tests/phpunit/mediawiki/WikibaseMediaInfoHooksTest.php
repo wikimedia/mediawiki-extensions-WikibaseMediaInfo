@@ -6,6 +6,7 @@ use CirrusSearch\Search\CirrusIndexField;
 use Elastica\Document;
 use Hooks;
 use Language;
+use MediaWiki\MediaWikiServices;
 use MediaWiki\Revision\RevisionRecord;
 use MediaWiki\Revision\SlotRecord;
 use ParserOutput;

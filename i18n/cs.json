@@ -35,6 +35,16 @@
 	"wikibasemediainfo-filepage-license-content-acceptance": "Přijímám tyto podmínky pro své budoucí editace. Tuto zprávu už příště nezobrazovat.",
 	"wikibasemediainfo-property-placeholder": "Vlastnost",
 	"wikibasemediainfo-filepage-license-agree": "Souhlasím",
+	"wikibasemediainfo-statements-depicts-title": "Položky zobrazené tímto obrázkem",
 	"wikibasemediainfo-statements-item-add-qualifier": "Přidat vymezení",
-	"wikibasemediainfo-statements-learn-more": "Další informace"
+	"wikibasemediainfo-statements-item-input-label": "z Wikidat",
+	"wikibasemediainfo-statements-item-input-placeholder": "Hledáním přidejte položky (kočka domácí, hora, Mona Lisa atp.)",
+	"wikibasemediainfo-statements-item-is-primary": "Hlavní",
+	"wikibasemediainfo-statements-item-is-prominent": "Význačná",
+	"wikibasemediainfo-statements-item-make-primary": "Nastavit jako hlavní",
+	"wikibasemediainfo-statements-item-mark-as-prominent": "Nastavit jako význačnou",
+	"wikibasemediainfo-statements-item-remove": "Odebrat",
+	"wikibasemediainfo-statements-learn-more": "Další informace",
+	"wikibasemediainfo-statements-remove": "Odebrat výrok",
+	"wikibasemediainfo-statements-title-depicts": "Položky vyobrazené v tomto souboru"
 }

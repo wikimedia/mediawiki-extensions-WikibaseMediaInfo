@@ -23,15 +23,21 @@
 	"wikibasemediainfo-statements-learn-more": "Uzzināt vairāk",
 	"wikibasemediainfo-statements-remove": "Noņemt apgalvojumu",
 	"wikibasemediainfo-operator-placeholder": "Operators",
+	"wikibasemediainfo-operator-value-is": "ir",
+	"wikibasemediainfo-operator-value-isnot": "nav",
 	"wikibasemediainfo-operator-value-isempty": "ir tukšs",
+	"wikibasemediainfo-operator-value-isgreaterthan": "ir lielāks par",
+	"wikibasemediainfo-operator-value-islessthan": "ir mazāks par",
 	"wikibasemediainfo-filetype-bitmap": "Attēli",
 	"wikibasemediainfo-filetype-video": "Video",
 	"wikibasemediainfo-filetype-audio": "Skaņa",
 	"wikibasemediainfo-filetype-drawing": "Zīmējumi",
 	"wikibasemediainfo-filetype-3d": "3D modeļi",
+	"wikibasemediainfo-filetype-office": "Dokumenti",
 	"wikibasemediainfo-search-qualifiers-cancel": "Atcelt",
 	"wikibasemediainfo-search-qualifiers-save": "Saglabāt",
 	"wikibasemediainfo-search-statements-cancel": "Atcelt",
 	"wikibasemediainfo-search-toggle-keywords": "Atslēgas vārds",
-	"wikibasemediainfo-search-toggle-depicts": "Iezīmes"
+	"wikibasemediainfo-search-toggle-depicts": "Iezīmes",
+	"wikibasemediainfo-search-toggle-statements": "Citi apgalvojumi"
 }

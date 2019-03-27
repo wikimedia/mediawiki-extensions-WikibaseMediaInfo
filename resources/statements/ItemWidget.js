@@ -78,6 +78,25 @@
 		promise.then( this.renderInternal.bind( this ) );
 	};
 
+	statements.ItemWidget.prototype.toggleItemProminence = function ( e ) {
+		e.preventDefault();
+		var self = this,
+			isNowProminent = self.data.getRank() === wb.datamodel.Statement.RANK.NORMAL;
+
+		if ( self.disabled ) {
+			return;
+		}
+
+		self.data.setRank(
+			isNowProminent ?
+				wb.datamodel.Statement.RANK.PREFERRED :
+				wb.datamodel.Statement.RANK.NORMAL
+		);
+
+		self.render();
+		self.emit( 'change', self );
+	};
+
 	statements.ItemWidget.prototype.renderInternal = function () {
 		var self = this,
 			id = this.data.getClaim().getMainSnak().getValue().toJSON().id || '',
@@ -106,18 +125,7 @@
 						mw.message( 'wikibasemediainfo-statements-item-is-prominent' ).text()
 				)
 				.prepend( this.data.getRank() === wb.datamodel.Statement.RANK.NORMAL ? '' : icon.$element )
-				.on( 'click', function ( e ) {
-					e.preventDefault( e );
-					if ( !self.disabled ) {
-						self.data.setRank(
-							self.data.getRank() === wb.datamodel.Statement.RANK.NORMAL ?
-								wb.datamodel.Statement.RANK.PREFERRED :
-								wb.datamodel.Statement.RANK.NORMAL
-						);
-						self.render();
-						self.emit( 'change', self );
-					}
-				} ),
+				.on( 'click', self.toggleItemProminence.bind( self ) ),
 			itemContainer = $( '<div>' ).addClass( 'wbmi-item-container' );
 
 		this.$element.toggleClass( 'wbmi-item-edit', this.editing );

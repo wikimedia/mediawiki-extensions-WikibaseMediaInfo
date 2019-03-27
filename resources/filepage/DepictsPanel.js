@@ -163,20 +163,16 @@ DepictsPanel.prototype.sendData = function () {
 	this.depictsInput.disconnect( this, { change: 'onDepictsChange' } );
 	this.depictsInput.submit( mw.mediaInfo.structuredData.currentRevision )
 		.then( function ( response ) {
-			self.depictsInput.connect( self, { change: 'onDepictsChange' } );
-
 			mw.mediaInfo.structuredData.currentRevision = response.pageinfo.lastrevid;
+			self.makeReadOnly();
 
-			self.$content.removeClass( 'wbmi-entityview-editable' );
-			self.cancelPublish.setStateReady();
-			self.cancelPublish.disablePublish();
-			self.cancelPublish.hide();
-			self.editToggle.$element.show().removeClass( 'wbmi-hidden' );
-			self.$content.find( '.wbmi-statements-header .wbmi-entity-link' ).show().removeClass( 'wbmi-hidden' );
 		} )
 		.catch( function () {
-			self.cancelPublish.setStateReady();
 			self.cancelPublish.enablePublish();
+		} )
+		.always( function () {
+			self.depictsInput.connect( self, { change: 'onDepictsChange' } );
+			self.cancelPublish.setStateReady();
 		} );
 };
 

@@ -149,16 +149,24 @@
 	};
 
 	/**
+	 * Update DOM with latest data, sorted by prominence
 	 * @param {wikibase.datamodel.StatementList} data
 	 */
 	statements.DepictsWidget.prototype.setData = function ( data ) {
-		var self = this;
+		if ( !data ) {
+			return;
+		}
+
+		var self = this,
+			sortedData = data.toArray().sort( function ( statement1, statement2 ) {
+				return statement2.getRank() - statement1.getRank();
+			} );
 
 		// remove existing items, then add new ones based on data passed in
 		this.input.setData( undefined );
 		this.clearItems();
 
-		data.each( function ( i, statement ) {
+		sortedData.forEach( function ( statement ) {
 			var mainSnak = statement.getClaim().getMainSnak(),
 				widget;
 
@@ -209,13 +217,13 @@
 	 * @return {wikibase.datamodel.Statement[]}
 	 */
 	statements.DepictsWidget.prototype.getChanges = function () {
-		var data = this.getData(),
+		var currentStatements = this.getData().toArray(),
 			previousStatements = this.data.toArray().reduce( function ( result, statement ) {
 				result[ statement.getClaim().getGuid() ] = statement;
 				return result;
 			}, {} );
 
-		return data.toArray().filter( function ( statement ) {
+		return currentStatements.filter( function ( statement ) {
 			return !( statement.getClaim().getGuid() in previousStatements ) ||
 				!statement.equals( previousStatements[ statement.getClaim().getGuid() ] );
 		} );

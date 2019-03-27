@@ -18,7 +18,17 @@
 			label: mw.message( 'wikibasemediainfo-filepage-cancel' ).text()
 		} )
 			.on( 'click', function () {
-				sdcPanel.makeReadOnly();
+				var hasChanges = sdcPanel.hasChanges(),
+					allowCloseWindow = mw.confirmCloseWindow( {
+						message: mw.message( 'wikibasemediainfo-filepage-cancel-confirm' ).text(),
+						test: function () { return hasChanges; }
+					} );
+
+				var closeWindowConfirmed = allowCloseWindow.trigger();
+
+				if ( closeWindowConfirmed ) {
+					sdcPanel.makeReadOnly();
+				}
 			} );
 
 		var publishButton = new OO.ui.ButtonInputWidget( {

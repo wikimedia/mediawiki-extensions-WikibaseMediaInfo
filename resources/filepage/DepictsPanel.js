@@ -136,28 +136,19 @@
 	};
 
 	sd.DepictsPanel.prototype.makeReadOnly = function () {
-		var self = this,
-			hasChanges = self.hasChanges(),
-			allowCloseWindow = mw.confirmCloseWindow( {
-				message: mw.message( 'wikibasemediainfo-filepage-cancel-confirm' ).text(),
-				test: function () { return hasChanges; }
-			} );
+		var self = this;
 
-		var closeWindowConfirmed = allowCloseWindow.trigger();
+		this.$content.removeClass( 'wbmi-entityview-editable' );
+		this.cancelPublish.disablePublish();
+		this.cancelPublish.hide();
 
-		if ( closeWindowConfirmed ) {
-			self.$content.removeClass( 'wbmi-entityview-editable' );
-			self.cancelPublish.disablePublish();
-			self.cancelPublish.hide();
+		this.depictsInput.disconnect( this, { change: 'onDepictsChange' } );
+		this.depictsInput.reset().then( function () {
+			self.depictsInput.connect( self, { change: 'onDepictsChange' } );
 
-			self.depictsInput.disconnect( self, { change: 'onDepictsChange' } );
-			self.depictsInput.reset().then( function () {
-				self.depictsInput.connect( self, { change: 'onDepictsChange' } );
-
-				self.editToggle.$element.show().removeClass( 'wbmi-hidden' );
-				self.$content.find( '.wbmi-statements-header .wbmi-entity-link' ).show().removeClass( 'wbmi-hidden' );
-			} );
-		}
+			self.editToggle.$element.show().removeClass( 'wbmi-hidden' );
+			self.$content.find( '.wbmi-statements-header .wbmi-entity-link' ).show().removeClass( 'wbmi-hidden' );
+		} );
 
 	};
 

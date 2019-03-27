@@ -857,24 +857,12 @@
 	};
 
 	sd.CaptionsPanel.prototype.makeReadOnly = function () {
-		var self = this,
-			hasChanges = self.hasChanges(),
-			allowCloseWindow = mw.confirmCloseWindow( {
-				message: mw.message( 'wikibasemediainfo-filepage-cancel-confirm' ).text(),
-				test: function () { return hasChanges; }
-			} );
-
-		var closeWindowConfirmed = allowCloseWindow.trigger();
-
-		if ( closeWindowConfirmed ) {
-			var $captionsContent = $( self.contentSelector );
-			$captionsContent.removeClass( 'wbmi-entityview-editable' );
-			self.editActionsWidget.hide();
-			self.redrawCaptionsContent();
-			self.languagesViewWidget.expand();
-			self.editToggle.$element.show();
-		}
-
+		var $captionsContent = $( this.contentSelector );
+		$captionsContent.removeClass( 'wbmi-entityview-editable' );
+		this.editActionsWidget.hide();
+		this.redrawCaptionsContent();
+		this.languagesViewWidget.expand();
+		this.editToggle.$element.show();
 	};
 
 	sd.CaptionsPanel.prototype.addNewEditableLanguageRow = function () {

@@ -39,27 +39,10 @@
 
 	/**
 	 * @param {string} key
-	 * @return {Promise}
-	 */
-	statements.FormatValueElement.fromCache = function ( key ) {
-		var deferred = $.Deferred(),
-			result = statements.FormatValueElement.cache[ key ];
-
-		if ( result !== undefined ) {
-			deferred.resolve( result );
-		} else {
-			deferred.reject();
-		}
-
-		return deferred.promise( { abort: function () {} } );
-	};
-
-	/**
-	 * @param {string} key
 	 * @param {string} result
 	 */
 	statements.FormatValueElement.toCache = function ( key, result ) {
-		statements.FormatValueElement.cache[ key ] = result;
+		statements.FormatValueElement.cache[ key ] = $.Deferred().resolve( result ).promise( { abort: function () {} } );
 	};
 
 	/**
@@ -79,10 +62,7 @@
 		language = language || mw.config.get( 'wgUserLanguage' );
 		key = statements.FormatValueElement.getKey( dataValue, format, language );
 
-		promise = statements.FormatValueElement.fromCache( key );
-		return promise.catch( function () {
-			// re-assign promise from within, because `api.get` is the one that needs
-			// to expose its `abort` method
+		if ( !( key in statements.FormatValueElement.cache ) ) {
 			promise = api.get( {
 				action: 'wbformatvalue',
 				format: 'json',
@@ -90,12 +70,29 @@
 				options: JSON.stringify( { lang: language } ),
 				generate: format
 			} );
-			return promise.then( function ( response ) {
-				var result = response.result;
-				statements.FormatValueElement.toCache( key, result );
-				return result;
+
+			statements.FormatValueElement.cache[ key ] = promise.then( function ( response ) {
+				return response.result;
+			} ).promise( { abort: function () {
+				// immediately delete from cache
+				// this is also done in .catch below, but in case of abort, we can
+				// already do this right away instead of having to wait until the end
+				// of the call stack - thus ensuring new callers immediately fire off
+				// a new request instead of re-using an already aborted one (if it
+				// has not yet been cleaned up)
+				delete statements.FormatValueElement.cache[ key ];
+				// abort AJAX call
+				promise.abort();
+			} } );
+
+			statements.FormatValueElement.cache[ key ].catch( function () {
+				// this cached value seems to have failed, might as well get rid
+				// of it so it's re-attempted next time we need this...
+				delete statements.FormatValueElement.cache[ key ];
 			} );
-		} ).promise( { abort: promise.abort } );
+		}
+
+		return statements.FormatValueElement.cache[ key ];
 	};
 
 }( mw.mediaInfo.statements ) );

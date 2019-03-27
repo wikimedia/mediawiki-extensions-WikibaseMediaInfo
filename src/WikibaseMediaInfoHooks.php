@@ -290,6 +290,14 @@ class WikibaseMediaInfoHooks {
 				'wbTermsLanguages' => $termsLanguages,
 				'wbRepoApiUrl' => wfScript( 'api' ),
 				'maxCaptionLength' => self::getMaxCaptionLength(),
+				// FIXME: This is horrendous.
+				'parsedMessageAnonEditWarning' => $out->msg(
+					'anoneditwarning',
+					// Log-in link
+					'{{fullurl:Special:UserLogin|returnto={{FULLPAGENAMEE}}}}',
+					// Sign-up link
+					'{{fullurl:Special:UserLogin/signup|returnto={{FULLPAGENAMEE}}}}'
+				)->parseAsBlock(),
 			];
 		}
 

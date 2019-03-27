@@ -818,8 +818,10 @@ CaptionsPanel.prototype.makeEditable = function () {
 	var self = this;
 
 	// Show IP address logging notice to anon users
+	// TODO: This code should probably be shared with CaptionsPanel through a refactor.
 	if ( mw.user.isAnon() ) {
-		var msg = mw.message( 'anoneditwarning' ).parse();
+		// Hack to wrap our (rich) message in jQuery so mw.notify inserts it as HTML, not text
+		var msg = $( mw.config.get( 'parsedMessageAnonEditWarning' ) );
 		mw.notify( msg, {
 			autoHide: false,
 			type: 'warn',

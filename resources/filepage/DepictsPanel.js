@@ -26,7 +26,6 @@ DepictsPanel = function DepictsPanel( config ) {
 	// Mixin constructors
 	OO.ui.mixin.PendingElement.call( this, this.config );
 
-	this.api = wikibase.api.getLocationAgnosticMwApi( mw.config.get( 'wbRepoApiUrl' ) );
 	this.$content = $( '.' + this.config.contentClass );
 	this.licenseDialogWidget = new LicenseDialogWidget();
 	this.editToggle = new OO.ui.ButtonWidget( {

@@ -1,4 +1,4 @@
-( function ( statements ) {
+( function ( statements, wikibase ) {
 
 	'use strict';
 
@@ -52,7 +52,7 @@
 	 * @return {jQuery.Promise}
 	 */
 	statements.FormatValueElement.prototype.formatValue = function ( dataValue, format, language ) {
-		var api = new mw.Api(),
+		var api = wikibase.api.getLocationAgnosticMwApi( mw.config.get( 'wbRepoApiUrl' ) ),
 			data = { type: dataValue.getType(), value: dataValue.toJSON() },
 			stringified = JSON.stringify( data ),
 			promise,
@@ -95,4 +95,4 @@
 		return statements.FormatValueElement.cache[ key ];
 	};
 
-}( mw.mediaInfo.statements ) );
+}( mw.mediaInfo.statements, wikibase ) );

@@ -35,13 +35,9 @@
 		var
 			value = this.getValue(),
 			deferred = $.Deferred(),
-			api;
-
-		if ( this.config.externalEntitySearchApiUri ) {
-			api = new mw.ForeignApi( this.config.externalEntitySearchApiUri );
-		} else {
-			api = new mw.Api();
-		}
+			api = wikibase.api.getLocationAgnosticMwApi(
+				this.config.externalEntitySearchApiUri || mw.config.get( 'wbRepoApiUrl' )
+			);
 
 		if ( value.length < this.config.minLookupCharacters ) {
 			return deferred.resolve( [] ).promise( { abort: function () {} } );

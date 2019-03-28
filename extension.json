@@ -236,6 +236,8 @@
 				"oojs",
 				"oojs-ui-core",
 				"oojs-ui-widgets",
+				"wikibase.api.getLocationAgnosticMwApi",
+				"wikibase.api.RepoApiError",
 				"wikibase.mediainfo.statements.styles",
 				"wikibase.serialization.StatementListSerializer",
 				"wikibase.serialization.StatementListDeserializer",

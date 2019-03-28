@@ -80,7 +80,7 @@
 			term = ( this.terms[ inputType ] || {} )[ data.operator ] || '',
 			parseString = function ( string, variables ) {
 				return string.replace( /\$\{(.+?)\}/g, function ( match, variable ) {
-					return variables[ variable ] || match;
+					return variable in variables ? variables[ variable ] : match;
 				} );
 			};
 
@@ -89,7 +89,7 @@
 				params.value = data.value ? data.value.toJSON().id : '';
 				break;
 			case 'quantity':
-				params.value = data.value ? data.value.toJSON().amount.replace( /^\+/, '' ) : '';
+				params.value = data.value ? data.value.toJSON().amount.replace( /^\+/, '' ) : '0';
 				break;
 			case 'string':
 				params.value = data.value ? data.value.toJSON() : '';

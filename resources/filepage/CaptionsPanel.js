@@ -81,7 +81,7 @@ CaptionsPanel = function ( config ) {
 		this
 	);
 	// TODO: can we make the dependency on WB object more explicit?
-	this.api = wikibase.api.getLocationAgnosticMwApi( mw.config.get( 'wbRepoApiUrl' ) );
+	this.api = wikibase.api.getLocationAgnosticMwApi( mw.config.get( 'wbmiRepoApiUrl' ) );
 	this.contentSelector = '.' + this.config.contentClass;
 	this.entityTermSelector = '.' + this.config.entityTermClass;
 	this.captionLanguagesDataAttr = 'data-caption-languages';

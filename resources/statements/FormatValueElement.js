@@ -52,7 +52,7 @@
 	 * @return {jQuery.Promise}
 	 */
 	statements.FormatValueElement.prototype.formatValue = function ( dataValue, format, language ) {
-		var api = wikibase.api.getLocationAgnosticMwApi( mw.config.get( 'wbRepoApiUrl' ) ),
+		var api = wikibase.api.getLocationAgnosticMwApi( mw.config.get( 'wbmiRepoApiUrl' ) ),
 			data = { type: dataValue.getType(), value: dataValue.toJSON() },
 			stringified = JSON.stringify( data ),
 			promise,

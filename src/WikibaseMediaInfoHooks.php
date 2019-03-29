@@ -230,6 +230,7 @@ class WikibaseMediaInfoHooks {
 				'wbmiExternalEntitySearchBaseUri' => $wgMediaInfoExternalEntitySearchBaseUri,
 				'wbmiSearchFiletypes' => $wgMediaInfoSearchFiletypes,
 				'wbmiMediaInfoEnableSearch' => $wgMediaInfoEnableSearch,
+				'wbmiRepoApiUrl' => wfScript( 'api' ),
 			]
 		);
 	}
@@ -288,7 +289,6 @@ class WikibaseMediaInfoHooks {
 				'wbEntityId' => $entityId->getSerialization(),
 				'wbmiCaptionsExist' => $this->mediaInfoCaptionsExist( $out ),
 				'wbTermsLanguages' => $termsLanguages,
-				'wbRepoApiUrl' => wfScript( 'api' ),
 				'maxCaptionLength' => self::getMaxCaptionLength(),
 				// FIXME: This is horrendous.
 				'parsedMessageAnonEditWarning' => $out->msg(

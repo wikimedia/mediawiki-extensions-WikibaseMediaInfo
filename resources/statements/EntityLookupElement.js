@@ -36,7 +36,7 @@
 			value = this.getValue(),
 			deferred = $.Deferred(),
 			api = wikibase.api.getLocationAgnosticMwApi(
-				this.config.externalEntitySearchApiUri || mw.config.get( 'wbRepoApiUrl' )
+				this.config.externalEntitySearchApiUri || mw.config.get( 'wbmiRepoApiUrl' )
 			);
 
 		if ( value.length < this.config.minLookupCharacters ) {

@@ -97,7 +97,7 @@
 			$makePrimary = $( '<a>' )
 				.addClass(
 					'wbmi-entity-primary ' +
-					'wbmi-entity' + ( this.data.getRank() === wb.datamodel.Statement.RANK.NORMAL ? '-make-primary' : '-is-primary' )
+					'wbmi-entity' + ( this.data.getRank() === wb.datamodel.Statement.RANK.NORMAL ? '-mark-as-prominent' : '-is-prominent' )
 				)
 				.attr( 'href', '#' )
 				.text(

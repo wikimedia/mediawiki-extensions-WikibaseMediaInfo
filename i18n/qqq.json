@@ -79,7 +79,7 @@
 	"wikibasemediainfo-search-statements-save": "Label for button to save the statements search popover\n{{Identical|Search}}",
 	"wikibasemediainfo-search-statements-title": "Title for the statements search popover",
 	"wikibasemediainfo-search-statements-intro": "Intro text for the statements search popover",
-	"wikibasemediainfo-search-search": "Title text for search button",
+	"wikibasemediainfo-search-search": "Title text for search button\n{{Identical|Search}}",
 	"wikibasemediainfo-search-toggle-keywords": "Text for button to toggle to 'keyword' search mode",
 	"wikibasemediainfo-search-toggle-depicts": "Text for button to toggle to 'depicts' search mode",
 	"wikibasemediainfo-search-toggle-statements": "Text for button to toggle to 'other statements' search mode"

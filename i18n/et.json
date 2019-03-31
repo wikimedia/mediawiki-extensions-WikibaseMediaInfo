@@ -13,6 +13,7 @@
 	"wikibasemediainfo-desc": "Vikibaasi lisa meediumifailide struktureeritud metaandmete haldamiseks",
 	"wikibasemediainfo-diffview-label": "pealdis",
 	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Pealdised",
+	"wikibasemediainfo-filepage-fileinfo-heading": "Faili teave",
 	"wikibasemediainfo-filepage-structured-data-heading": "Struktuurandmed",
 	"wikibasemediainfo-filepage-captions-title": "Pealdised",
 	"wikibasemediainfo-filepage-more-languages": "Näita veel {{PLURAL:$1|üht|$1}} keelt",
@@ -21,6 +22,7 @@
 	"wikibasemediainfo-filepage-edit-captions": "Redigeeri pealdiseid",
 	"wikibasemediainfo-filepage-edit-depicts": "Redigeeri kujutatud üksusi",
 	"wikibasemediainfo-filepage-cancel": "Loobu",
+	"wikibasemediainfo-filepage-cancel-confirm": "Kas hülgad muudatused? Tehtud muudatusi ei salvestata.",
 	"wikibasemediainfo-filepage-edit": "Redigeeri",
 	"wikibasemediainfo-filepage-publish": "Avalda muudatused",
 	"wikibasemediainfo-filepage-caption-empty": "Lisa üherealine seletus sellest, mida fail esitab",
@@ -34,6 +36,14 @@
 	"wikibasemediainfo-filepage-license-title": "Pealdiste ja muude struktuurandmetega seotud kaastöö",
 	"wikibasemediainfo-filepage-license-content": "Kui klõpsad \"Avalda muudatused\", nõustud [[wmf:Terms_of_Use|kasutustingimustega]] ja oma kaastöö pöördumatu avaldamisega Creative Commonsi litsentsi [https://creativecommons.org/publicdomain/zero/1.0/deed.et CC0] all.",
 	"wikibasemediainfo-filepage-license-content-acceptance": "Nõustud tegema edasisi muudatusi kooskõlas nende tingimustega. Seda sõnumit ei näidata enam.",
+	"wikibasemediainfo-filepage-license-agree": "Nõustun",
+	"wikibasemediainfo-statements-depicts-title": "Sellel pildil kujutatud üksused",
 	"wikibasemediainfo-statements-item-input-label": "Vikiandmetest",
-	"wikibasemediainfo-statements-item-input-placeholder": "Otsi kujutatud üksusi, mida lisada"
+	"wikibasemediainfo-statements-item-input-placeholder": "Otsi üksusi, mida lisada (kodukass, mägi, Mona Lisa jne)",
+	"wikibasemediainfo-statements-item-is-primary": "Põhiteema",
+	"wikibasemediainfo-statements-item-make-primary": "Märgi põhiteemaks",
+	"wikibasemediainfo-statements-item-remove": "Eemalda",
+	"wikibasemediainfo-statements-learn-more": "Lisateave",
+	"wikibasemediainfo-statements-remove": "Eemalda avaldus",
+	"wikibasemediainfo-statements-title-depicts": "Selles failis kujutatud üksused"
 }

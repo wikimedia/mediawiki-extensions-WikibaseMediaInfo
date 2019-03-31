@@ -18,5 +18,14 @@
 	"wikibasemediainfo-statements-item-is-primary": "Primær",
 	"wikibasemediainfo-statements-item-make-primary": "Gør til primær",
 	"wikibasemediainfo-statements-item-remove": "Fjern",
-	"wikibasemediainfo-statements-learn-more": "Lær mere"
+	"wikibasemediainfo-statements-learn-more": "Lær mere",
+	"wikibasemediainfo-operator-value-is": "er",
+	"wikibasemediainfo-operator-value-isnot": "er ikke",
+	"wikibasemediainfo-operator-value-isempty": "er tom",
+	"wikibasemediainfo-operator-value-islessthan": "er mindre end",
+	"wikibasemediainfo-filetype-bitmap": "Billeder",
+	"wikibasemediainfo-filetype-drawing": "Tegninger",
+	"wikibasemediainfo-filetype-3d": "3D-modeller",
+	"wikibasemediainfo-filetype-office": "Dokumenter",
+	"wikibasemediainfo-search-toggle-keywords": "Nøgleord"
 }

@@ -107,14 +107,16 @@
 				)
 				.prepend( this.data.getRank() === wb.datamodel.Statement.RANK.NORMAL ? '' : icon.$element )
 				.on( 'click', function ( e ) {
-					e.preventDefault();
-					self.data.setRank(
-						self.data.getRank() === wb.datamodel.Statement.RANK.NORMAL ?
-							wb.datamodel.Statement.RANK.PREFERRED :
-							wb.datamodel.Statement.RANK.NORMAL
-					);
-					self.render();
-					self.emit( 'change', self );
+					e.preventDefault( e );
+					if ( !self.disabled ) {
+						self.data.setRank(
+							self.data.getRank() === wb.datamodel.Statement.RANK.NORMAL ?
+								wb.datamodel.Statement.RANK.PREFERRED :
+								wb.datamodel.Statement.RANK.NORMAL
+						);
+						self.render();
+						self.emit( 'change', self );
+					}
 				} ),
 			itemContainer = $( '<div>' ).addClass( 'wbmi-item-container' );
 
@@ -195,13 +197,29 @@
 	};
 
 	/**
+	 * @inheritdoc
+	 */
+	statements.ItemWidget.prototype.setDisabled = function ( disabled ) {
+		if ( this.disabled !== disabled ) {
+			statements.ItemWidget.parent.prototype.setDisabled.call( this, disabled );
+			this.render();
+		}
+
+		return this;
+	};
+
+	/**
 	 * @param {boolean} editing
+	 * @chainable
+	 * @return {OO.ui.Widget} The widget, for chaining
 	 */
 	statements.ItemWidget.prototype.setEditing = function ( editing ) {
 		if ( this.editing !== editing ) {
 			this.editing = editing;
 			this.render();
 		}
+
+		return this;
 	};
 
 	/**

@@ -29,6 +29,7 @@ CancelPublishWidget = function ( sdcPanel ) {
 			if ( closeWindowConfirmed ) {
 				sdcPanel.makeReadOnly();
 			}
+			allowCloseWindow.release();
 		} );
 
 	var publishButton = new OO.ui.ButtonInputWidget( {

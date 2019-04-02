@@ -27,6 +27,7 @@ DepictsPanel = function DepictsPanel( config ) {
 	OO.ui.mixin.PendingElement.call( this, this.config );
 
 	this.$content = $( '.' + this.config.contentClass );
+	this.isEditable = false;
 	this.licenseDialogWidget = new LicenseDialogWidget();
 	this.editToggle = new OO.ui.ButtonWidget( {
 		label: mw.message( 'wikibasemediainfo-filepage-edit' ).text(),
@@ -96,6 +97,9 @@ DepictsPanel.prototype.initialize = function () {
  * @return bool
  */
 DepictsPanel.prototype.hasChanges = function () {
+	if ( !this.isEditable ) {
+		return false;
+	}
 	var changes = this.depictsInput.getChanges(),
 		removals = this.depictsInput.getRemovals();
 
@@ -137,12 +141,13 @@ DepictsPanel.prototype.makeEditable = function () {
 		self.$content.addClass( 'wbmi-entityview-editable' );
 		self.$content.find( '.wbmi-statements-header .wbmi-entity-link' ).hide().addClass( 'wbmi-hidden' );
 		self.depictsInput.setEditing( true );
+		self.isEditable = true;
 	} );
 };
 
 DepictsPanel.prototype.makeReadOnly = function () {
 	var self = this;
-
+	this.isEditable = false;
 	this.$content.removeClass( 'wbmi-entityview-editable' );
 	this.cancelPublish.disablePublish();
 	this.cancelPublish.hide();

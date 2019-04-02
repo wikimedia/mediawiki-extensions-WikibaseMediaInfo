@@ -5,16 +5,15 @@
 	.flex-display();
 	position: relative;
 
-	&:before {
-		@horizontal-line();
-		left: -3.5ch;
+	.wbmi-qualifier-property {
+		.flex(1, 1, 10em, 1);
 	}
 
-	// TODO: add unique .wbmi- selector classes on the element children of
-	// .wbmi-qualifier (currently there are only the OOUI class names to target).
-	// Once that is done, the hard-coded value below can be removed in favor of
-	// specifying the flex-behavior of the dropdown element, input element, etc.
-	.wbmi-entity-input-widget {
-		min-width: 25rem;
+	.wbmi-qualifier-value-input {
+		.flex(2, 2, 20em, 2);
+	}
+
+	.wbmi-qualifier-remove {
+		.flex(0, 0, auto, 3);
 	}
 }

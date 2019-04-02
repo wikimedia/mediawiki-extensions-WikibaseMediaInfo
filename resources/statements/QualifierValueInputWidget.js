@@ -38,17 +38,17 @@
 
 		switch ( type ) {
 			case 'wikibase-entityid':
-				this.input = new statements.EntityInputWidget( this.config );
+				this.input = new statements.EntityInputWidget( $.extend( {}, this.config, { classes: [] } ) );
 				this.input.connect( this, { dataChange: 'onChange' } );
 				this.input.connect( this, { enter: [ 'emit', 'enter' ] } );
 				break;
 			case 'quantity':
-				this.input = new OO.ui.NumberInputWidget( this.config );
+				this.input = new OO.ui.NumberInputWidget( $.extend( {}, this.config, { classes: [] } ) );
 				this.input.connect( this, { change: 'onChange' } );
 				this.input.connect( this, { enter: [ 'emit', 'enter' ] } );
 				break;
 			case 'string':
-				this.input = new OO.ui.TextInputWidget( this.config );
+				this.input = new OO.ui.TextInputWidget( $.extend( {}, this.config, { classes: [] } ) );
 				this.input.connect( this, { change: 'onChange' } );
 				this.input.connect( this, { enter: [ 'emit', 'enter' ] } );
 				break;

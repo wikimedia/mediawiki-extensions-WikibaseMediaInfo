@@ -18,13 +18,13 @@
 		this.removeIcon = new OO.ui.ButtonWidget( { classes: [ 'wbmi-qualifier-remove' ], framed: false, icon: 'close' } );
 		this.removeIcon.connect( this, { click: [ 'emit', 'delete' ] } );
 
-		this.propertyDropdown = new OO.ui.DropdownWidget();
+		this.propertyDropdown = new OO.ui.DropdownWidget( { classes: [ 'wbmi-qualifier-property' ] } );
 		this.propertyDropdown.getMenu().connect( this, { select: 'populateValueInput' } );
 		this.propertyDropdown.getMenu().connect( this, { select: 'updateValueWidget' } );
 		this.propertyDropdown.getMenu().connect( this, { select: [ 'emit', 'change' ] } );
 		this.populatePropertiesDropdown();
 
-		this.valueInput = new statements.QualifierValueInputWidget();
+		this.valueInput = new statements.QualifierValueInputWidget( { classes: [ 'wbmi-qualifier-value-input' ] } );
 		this.valueInput.connect( this, { change: 'updateValueWidget' } );
 		this.valueInput.connect( this, { change: [ 'emit', 'change' ] } );
 		// disable - will be enabled once a property has been selected

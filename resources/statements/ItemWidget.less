@@ -13,19 +13,15 @@
  * The top-level block of repeatable items inside a panel. Certain sub-elements
  * appear and disappear when edit mode is toggled; flexbox is used to
  * preserve the layout while contents shift around.
- *
  */
 .wbmi-item {
 	.flex-display();
-	margin-bottom: @hairline-spacing;
 
-	&-container {
+	.wbmi-item-container {
 		.flex(1, 0, auto);
-		background-color: @base90;
-		border: 1px solid #eaecf0;
 
 		// Gray row element that fills the container
-		& .wbmi-entity-title {
+		.wbmi-entity-title {
 			.flex-display();
 			.flex();
 			padding: @sm-spacing;
@@ -35,13 +31,13 @@
 
 		// Left-aligned text label inside the gray row
 		// MW global styles for heading elements need to be overridden here
-		& .wbmi-entity-label {
+		.wbmi-entity-label {
 			margin: 0;
 			padding: 0;
 		}
 
 		// Right-aligned text label inside the gray row
-		& .wbmi-entity-label-extra {
+		.wbmi-entity-label-extra {
 			// adds a dot between all visible siblings
 			> *:not( .wbmi-hidden ) ~ *:before {
 				@bullet-separator();
@@ -67,7 +63,29 @@
 		}
 	}
 
-	&-content {
+	&.wbmi-item-read {
+		margin-top: @hairline-spacing;
+
+		.wbmi-item-container {
+			background-color: @color-background;
+		}
+	}
+
+	&.wbmi-item-edit {
+		// border is applied on -container, because .wbmi-item would also
+		// include delete icon
+		.wbmi-item-container {
+			border: 1px solid @base80;
+		}
+
+		+ .wbmi-item-edit {
+			.wbmi-item-container {
+				border-top: 0;
+			}
+		}
+	}
+
+	.wbmi-item-content {
 		margin-left: @base-spacing * 2;
 		position: relative;
 
@@ -75,7 +93,7 @@
 			@vertical-line();
 		}
 
-		&-group {
+		.wbmi-item-content-group {
 			padding: @sm-spacing;
 
 			// If an empty .wbmi-content-group element is the only child of its
@@ -89,14 +107,27 @@
 		}
 	}
 
+	.wbmi-qualifier > .wbmi-qualifier-value {
+		// .wbmi-qualifier-value would automatically get this margin-bottom from
+		// being a `.oo-ui-horizontalLayout > .oo-ui-widget` already, but we're
+		// declaring this once more to make sure it's also applied on the
+		// PHP-rendered version (where said OOUI widget classes are missing)
+		margin-bottom: 0.5em;
+	}
+
 	// Trash-can button; lives outside of .wbmi-container
-	&-remove {
+	.wbmi-item-remove {
 		.flex(0, 1, auto);
+	}
+
+	.wbmi-qualifier:before {
+		@horizontal-line();
+		left: -3.5ch;
 	}
 
 	// Add-qualifier button. It is nudged up by an amount equal to the padding
 	// along one side of its previous sibling, .wbmi-item-content-group`
-	&-qualifier-add {
+	.wbmi-item-qualifier-add {
 		position: relative;
 		top: -( @sm-spacing );
 
@@ -109,5 +140,13 @@
 		&.oo-ui-buttonElement > .oo-ui-buttonElement-button {
 			font-weight: normal;
 		}
+	}
+
+	// override position of horizontal line for last qualifier (read more) and
+	// add-qualifier button, to make sure it lines up perfectly with the height
+	// of the vertical line
+	&.wbmi-item-read .wbmi-qualifier:last-child:before,
+	&.wbmi-item-edit .wbmi-qualifier-add:before {
+		bottom: @base-spacing;
 	}
 }

@@ -58,7 +58,7 @@
 		this.$removeLink.on( 'click', this.clearItems.bind( this ) );
 		this.connect( this, { change: 'renderFooter' } );
 
-		this.$element.append(
+		this.$element.addClass( 'wbmi-statements-widget' ).append(
 			$( '<div>' ).addClass( 'wbmi-statements-header wbmi-entity-title' ).append(
 				$label,
 				$( '<div>' ).addClass( 'wbmi-entity-label-extra' ).append( $link )

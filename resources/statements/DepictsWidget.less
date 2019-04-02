@@ -1,37 +1,63 @@
+@import 'mediawiki.mixins';
 @import '../mediainfo-variables.less';
 
-.wbmi-depicts-input {
-	margin: @base-spacing 0;
-
-	// increased specificity is required to override default OOUI
-	// inputWidget margin styles for the wbmi-depicts-input element.
-	/* stylelint-disable-next-line selector-class-pattern */
-	&.oo-ui-inputWidget {
-		margin-right: 0;
-	}
-}
-
-.wbmi-statement-footer {
-	margin-top: 1em;
-	font-weight: bold;
-	font-size: 0.9em;
-
-	// adds a &bull; between all visible siblings
-	> *:not( .wbmi-hidden ) ~ *:before {
-		content: '\2022'; // &bull;
-		padding: 0 10px;
-		color: @base0;
-		cursor: initial;
-		display: inline-block;
-		text-decoration: none;
-	}
-
-	.wbmi-statement-remove {
-		color: @color-destructive;
-		text-decoration: none;
-	}
-
-	.wbmi-statement-learn-more {
+.wbmi-statements-widget {
+	// force all links (and links that act as button) to OOUI's primary color
+	a {
 		color: @color-primary;
+	}
+
+	h4.wbmi-entity-label {
+		margin: 0;
+		padding: 0;
+	}
+
+	.wbmi-statements-header {
+		.flex-display();
+		.flex();
+		margin-bottom: @base-spacing;
+	}
+
+	.wbmi-depicts-input {
+		// increased specificity is required to override default OOUI
+		// inputWidget margin styles for the wbmi-depicts-input element.
+		/* stylelint-disable-next-line selector-class-pattern */
+		&.oo-ui-inputWidget {
+			margin-right: 0;
+		}
+	}
+
+	.wbmi-statement-footer {
+		margin-top: 1em;
+		font-weight: bold;
+		font-size: 0.9em;
+
+		// adds a &bull; between all visible siblings
+		> *:not( .wbmi-hidden ) ~ *:before {
+			content: '\2022'; // &bull;
+			padding: 0 10px;
+			color: @base0;
+			cursor: initial;
+			display: inline-block;
+			text-decoration: none;
+		}
+
+		.wbmi-statement-remove {
+			color: @color-destructive;
+			text-decoration: none;
+		}
+
+		.wbmi-statement-learn-more {
+			color: @color-primary;
+		}
+	}
+
+	.wbmi-entity-link-foreign-repo-wikidata,
+	.wbmi-entity-link-foreign-repo-wd {
+		padding-left: 25px;
+		background-repeat: no-repeat;
+		background-size: 20px auto;
+		background-position: left center;
+		.background-image-svg( '../Wikidata-logo-small.svg', '../Wikidata-logo-small.png' );
 	}
 }

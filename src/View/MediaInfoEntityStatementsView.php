@@ -249,10 +249,12 @@ class MediaInfoEntityStatementsView {
 			'framed' => true,
 			'content' => [
 				$title,
-				( new Tag( 'div' ) )->appendContent(
-					$this->createPropertyHeader( $propertyIdString ),
-					$itemsGroupDiv
-				),
+				( new Tag( 'div' ) )
+					->addClasses( [ 'wbmi-statements-widget' ] )
+					->appendContent(
+						$this->createPropertyHeader( $propertyIdString ),
+						$itemsGroupDiv
+					),
 			]
 		] );
 		$panel->setAttributes(
@@ -301,6 +303,8 @@ class MediaInfoEntityStatementsView {
 			// Decorate the link with an icon for the relevant repository
 			if ( !empty( $entityId->getRepositoryName() ) ) {
 				$linkClasses[] = 'wbmi-entity-link-foreign-repo-' . $entityId->getRepositoryName();
+			} else {
+				$linkClasses[] = 'wbmi-entity-link-local-repo';
 			}
 
 			$links = Html::rawElement(

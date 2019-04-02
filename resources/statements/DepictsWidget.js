@@ -266,6 +266,11 @@
 		this.setEditing( false );
 		this.input.setDisabled( true );
 
+		// disable 'make prominent' links
+		this.getItems().forEach( function ( item ) {
+			item.setDisabled( true );
+		} );
+
 		this.$element.find( '.wbmi-statement-publish-error-msg' ).remove();
 
 		changedStatements.forEach( function ( statement ) {
@@ -344,6 +349,11 @@
 		// store data after we've submitted all changes, so that we'll reset to the
 		// actual most recent correct state
 		promise = promise.then( function ( response ) {
+			// re-enable 'make prominent' links
+			self.getItems().forEach( function ( item ) {
+				item.setDisabled( false );
+			} );
+
 			// reset data to what we've just submitted to the API (items that failed
 			// to submit have been reset to their previous state in `data`)
 			var serializer = new wb.serialization.StatementListSerializer(),

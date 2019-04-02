@@ -213,7 +213,9 @@
 		},
 		"wikibase.mediainfo.filepage.styles": {
 			"styles": [
-				"resources/mediainfo-filepage.less"
+				"resources/filepage/styles/mediainfo-filepage.less",
+				"resources/filepage/styles/mediainfo-filepage-captionspanel.less",
+				"resources/filepage/styles/mediainfo-filepage-depictspanel.less"
 			],
 			"targets": [
 				"desktop",

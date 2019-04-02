@@ -1,0 +1,34 @@
+@import 'mediawiki.mixins';
+@import '../../mediainfo-variables.less';
+@import './mediainfo-filepage-mixins.less';
+
+// Statements panel
+// ---------------------------------------------------------
+.wbmi-entityview-statementsGroup {
+	@panel();
+
+	// Statements header
+	.wbmi-statements-title {
+		@panel-header();
+		margin-bottom: 0;
+	}
+
+	h4.wbmi-entity-label {
+		margin: 0;
+		padding: 0;
+	}
+
+	// Header controls element
+	// TODO: move/add this rule to statements module
+	.wbmi-statements-header .wbmi-entity-label-extra {
+		@panel-controls();
+
+		> *:not( .wbmi-hidden ) ~ *:before {
+			@bullet-separator();
+		}
+
+		.wbmi-entityview-editButton {
+			margin-right: 0;
+		}
+	}
+}

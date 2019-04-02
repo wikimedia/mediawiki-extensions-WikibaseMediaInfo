@@ -1,0 +1,58 @@
+@import 'mediawiki.mixins';
+@import '../../mediainfo-variables.less';
+
+// Top-level layout for tabs and tabs-container
+// ---------------------------------------------------------
+
+// Disable default headers
+.wbmi-captions-header,
+.wbmi-structured-data-header {
+	display: none;
+}
+
+/* stylelint-disable selector-class-pattern */
+.client-nojs {
+	.wbmi-tabs .oo-ui-menuLayout-menu {
+		display: none;
+	}
+
+	.wbmi-captions-header,
+	.wbmi-structured-data-header {
+		display: block;
+	}
+
+	.wbmi-tabs-container .oo-ui-indexLayout-stackLayout > .oo-ui-panelLayout.wbmi-tab {
+		min-height: auto;
+	}
+}
+
+.wbmi-tabs-container {
+	margin-top: @base-spacing;
+
+	// Override default OOUI styles, even highly specific ones
+	.wbmi-tab,
+	.wbmi-tab.oo-ui-panelLayout {
+		margin: @base-spacing 0;
+		padding: 0;
+		// maintain enough space for the depicts input dropdown
+		min-height: 37em;
+	}
+
+	/* Some OOUI styles are loaded inline - add some here to prevent FOUC */
+	.oo-ui-panelLayout-framed {
+		border: @base-border;
+		border-radius: 2px;
+	}
+}
+/* stylelint-enable selector-class-pattern */
+
+// Error message styles used across all panels
+.wbmi-statement-publish-error-msg {
+	background-color: @red90;
+	border: solid 1px @base80;
+	color: @red50;
+	font-size: 0.9em;
+	font-weight: bold;
+	padding: @sm-spacing @base-spacing;
+	margin-right: 2rem; // offset by size of trash can icon
+}

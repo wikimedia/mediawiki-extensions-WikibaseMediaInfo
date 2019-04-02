@@ -1,9 +1,7 @@
-.wbmi-statements-header {
-	margin-bottom: 15px;
-}
+@import '../mediainfo-variables.less';
 
 .wbmi-depicts-input {
-	margin-bottom: 25px;
+	margin: @base-spacing 0;
 
 	// increased specificity is required to override default OOUI
 	// inputWidget margin styles for the wbmi-depicts-input element.
@@ -22,19 +20,18 @@
 	> *:not( .wbmi-hidden ) ~ *:before {
 		content: '\2022'; // &bull;
 		padding: 0 10px;
-		color: #000;
+		color: @base0;
 		cursor: initial;
 		display: inline-block;
 		text-decoration: none;
 	}
 
-	// color palette: https://meta.wikimedia.org/wiki/Wiki_color_formatting_help#WikimediaUI_color_palette_
 	.wbmi-statement-remove {
-		color: #d33;
+		color: @color-destructive;
 		text-decoration: none;
 	}
 
 	.wbmi-statement-learn-more {
-		color: #36c;
+		color: @color-primary;
 	}
 }

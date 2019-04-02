@@ -1,0 +1,113 @@
+// Global MediaInfo variables
+// ---------------------------------------------------------
+
+// Colors
+// ---------------------------------------------------------
+// https://design.wikimedia.org/style-guide/visual-style_colors.html
+
+// Base
+@base0: #000;
+@base10: #222;
+@base20: #54595d;
+@base30: #72777d;
+@base50: #a2a9b1;
+@base70: #c8ccd1;
+@base80: #eaecf0;
+@base90: #f8f9fa;
+@base100: #fff;
+
+// Accent
+@accent10: #2a4b8d;
+@accent50: #36c;
+@accent90: #eaf3ff;
+
+// Utility
+@red30: #b32424;
+@red50: #d33;
+@red90: #fee7e6;
+@green30: #14866d;
+@green50: #00af80;
+@green90: #d5fdf4;
+@yellow30: #ac6600;
+@yellow50: #fc3;
+@yellow90: #fef6e7;
+
+// Semantic colors
+@color-primary: @accent50;
+@color-background: @base90;
+@color-border: @base50;
+@color-destructive: @red50;
+
+// Spacing
+// ---------------------------------------------------------
+@base-spacing: 1rem;
+@sm-spacing: @base-spacing / 2;
+@xs-spacing: @base-spacing / 4;
+@hairline-spacing: 3px;
+
+// Spacing
+// ---------------------------------------------------------
+@base-border: solid 1px @color-border;
+
+// Typography
+// ---------------------------------------------------------
+@base-font-size: 1em;
+@sm-font-size: @base-spacing / 2;
+
+// State
+// ---------------------------------------------------------
+@edit-mode: wbmi-entityview-editable;
+
+// Global mixins
+// ---------------------------------------------------------
+
+/* stylelint-disable indentation */
+/* stylelint-disable no-extra-semicolons */
+
+@bullet-separator: {
+	color: @base0;
+	content: '\2022'; // &bull;
+	cursor: initial;
+	display: inline-block;
+	padding: 0 10px;
+	text-decoration: none;
+};
+
+// Line thingys
+@line-color: #979797;
+@line-offset: 2.5ch;
+
+@vertical-line: {
+	border-left: 1px solid @line-color;
+	content: '';
+	height: ~'calc(100% - 1.5rem)'; // ~ is required to disable LESS auto-calculation...
+	left: -( @line-offset );
+	position: absolute;
+	top: 0;
+};
+
+@horizontal-line: {
+	border-bottom: 1px solid @line-color;
+	bottom: 50%; // vertically centered in the parent element
+	content: '';
+	left: -( @line-offset );
+	position: absolute;
+	width: @base-spacing;
+};
+
+// Once Federation feature is implemented, this ruleset
+// will probably need to be adjusted
+@wikidata-link: {
+	// background-image-svg breaks LESS compilation when included in this file;
+	// must be a ResourceLoader thing.
+	// background-image-svg( '../Wikidata-logo-small.svg', '../Wikidata-logo-small.png' );
+	background-image: url( ../Wikidata-logo-small.svg );
+	background-position: left center;
+	background-repeat: no-repeat;
+	background-size: 20px auto;
+	color: @color-primary;
+	padding-left: 25px;
+};
+
+/* stylelint-enable indentation */
+/* stylelint-enable no-extra-semicolons */

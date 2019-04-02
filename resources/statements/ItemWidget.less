@@ -1,195 +1,113 @@
 @import 'mediawiki.mixins';
+@import '../mediainfo-variables.less';
 
-// color palatte: https://meta.wikimedia.org/wiki/Wiki_color_formatting_help#WikimediaUI_color_palette_(M82)
-
-.wbmi-item-container {
-	border: 1px solid #eaecf0;
-	font-size: 0.9em;
-	line-height: 1em;
-
-	a {
-		color: #36c;
-	}
-	width: 100%;
-	display: inline-block;
-}
-
-.wbmi-entity-title:not( .wbmi-statements-header ) {
-	padding: 15px;
-	background-color: #f8f9fa;
-}
-
-h4.wbmi-entity-label {
-	display: inline-block;
-	margin: 0;
-	padding: 0;
-	font-weight: bold;
-	line-height: inherit;
-}
-
-// the adjacent selector will make sure that this styling is *not* applied if
-// a more elaborate .wbmi-statements-title title is missing, in which case
-// all we have is this label, and it needs more emphasis
-h3.wbmi-statements-title + * .wbmi-statements-header h4.wbmi-entity-label {
-	font-weight: normal;
-	font-style: italic;
-}
-
-.wbmi-entity-label-extra {
-	font-weight: normal;
-	float: right;
-
-	// adds a &bull; between all visible siblings
-	> *:not( .wbmi-hidden ) ~ *:before {
-		content: '\2022'; // &bull;
-		padding: 0 10px;
-		color: #000;
-		cursor: initial;
-		display: inline-block;
-		text-decoration: none;
-	}
-
-	.wbmi-entity-primary,
-	.wbmi-entity-prominent {
-		font-weight: bold;
-
-		&.wbmi-entity-is-primary,
-		&.wbmi-entity-is-prominent {
-			color: #72777d;
-
-			/* stylelint-disable-next-line selector-class-pattern */
-			.oo-ui-iconElement {
-				min-height: 15px;
-				height: 15px;
-				background-size: 70%;
-				filter: opacity( 0.55 );
-			}
-		}
-	}
-
-	a {
-		&:first-child {
-			margin-left: 0;
-		}
-
-		&:last-child {
-			margin-right: 0;
-		}
-	}
-}
-
-/*
- * Show and hide the textual values (read mode), or the properties dropdown &
- * value input field (edit) depending on the mode we're in.
- */
+// TODO: Is there any other way to do this?
 .wbmi-item-read .wbmi-qualifier > *:not( .wbmi-qualifier-value ),
 .wbmi-item-edit .wbmi-qualifier > .wbmi-qualifier-value {
 	/* stylelint-disable-next-line declaration-no-important */
 	display: none !important;
 }
 
+/* .wbmi-item
+ *
+ * The top-level block of repeatable items inside a panel. Certain sub-elements
+ * appear and disappear when edit mode is toggled; flexbox is used to
+ * preserve the layout while contents shift around.
+ *
+ */
 .wbmi-item {
-	.wbmi-qualifier > .wbmi-qualifier-value {
-		line-height: 30px;
-		margin-bottom: 0;
-		display: inline-block;
+	.flex-display();
+	margin-bottom: @hairline-spacing;
+
+	&-container {
+		.flex(1, 0, auto);
+		background-color: @base90;
+		border: 1px solid #eaecf0;
+
+		// Gray row element that fills the container
+		& .wbmi-entity-title {
+			.flex-display();
+			.flex();
+			padding: @sm-spacing;
+			position: relative;
+			background-color: @color-background;
+		}
+
+		// Left-aligned text label inside the gray row
+		// MW global styles for heading elements need to be overridden here
+		& .wbmi-entity-label {
+			margin: 0;
+			padding: 0;
+		}
+
+		// Right-aligned text label inside the gray row
+		& .wbmi-entity-label-extra {
+			// adds a dot between all visible siblings
+			> *:not( .wbmi-hidden ) ~ *:before {
+				@bullet-separator();
+			}
+
+			.wbmi-entity-primary,
+			.wbmi-entity-prominent {
+				font-weight: bold;
+
+				&.wbmi-entity-is-primary,
+				&.wbmi-entity-is-prominent {
+					color: @base30;
+
+					/* stylelint-disable-next-line selector-class-pattern */
+					.oo-ui-iconElement {
+						min-height: 15px;
+						height: 15px;
+						background-size: 70%;
+						filter: opacity( 0.55 );
+					}
+				}
+			}
+		}
 	}
 
-	.wbmi-item-content {
-		padding: 15px;
-		padding-bottom: 10px;
-
-		// some messing around to get those quirky little leading lines to show
-		// below block will draw a vertical line that starts inside the title box
-		// down to the end of this content node, at 10px from the left border
+	&-content {
+		margin-left: @base-spacing * 2;
 		position: relative;
 
 		&:before {
-			content: ' ';
-			position: absolute;
-			border-left: 1px solid #979797;
-			top: -5px;
-			bottom: 25px; // 10px padding-bottom + 15px margin-bottom of that last element
+			@vertical-line();
+		}
+
+		&-group {
+			padding: @sm-spacing;
+
+			// If an empty .wbmi-content-group element is the only child of its
+			// parent (.wbmi-item-content) -- a state which corresponds to the
+			// panel being in reading state when no qualifiers exist -- collapse
+			// the padding so that the grandparent's border (.wbmi-item) does not
+			// wrap around empty space.
+			&:only-child:empty {
+				padding: 0;
+			}
 		}
 	}
 
-	// this block adds leading lines starting at the vertical line we just drew
-	// and going in the direction of the elements that'll follow it (on the right)
-	.wbmi-item-qualifier-add:before,
-	.wbmi-qualifier:before {
-		content: ' ';
-		width: 10px;
-		border-bottom: 1px solid #979797;
-		display: inline-block;
-		margin-right: 10px;
-		// middle-align the line, and then push it up slightly (because the elements
-		// that it aligns with have some (0.5em) margin-bottom, so the middle would
-		// appear to be slightly lower because of that whitespace
-		vertical-align: middle;
-		margin-bottom: 0.3em;
+	// Trash-can button; lives outside of .wbmi-container
+	&-remove {
+		.flex(0, 1, auto);
 	}
 
-	&.wbmi-item-read .wbmi-qualifier:last-child:before,
-	.wbmi-item-qualifier-add:last-child:before {
-		// ...HOWEVER! the very last element (the 'add qualifier' button) should
-		// not have a middle-aligned line: we need a fixed, deterministic end
-		// position, because we need it to match the end of the vertical line...
-		vertical-align: bottom;
-		margin-bottom: 15px;
-	}
-}
+	// Add-qualifier button. It is nudged up by an amount equal to the padding
+	// along one side of its previous sibling, .wbmi-item-content-group`
+	&-qualifier-add {
+		position: relative;
+		top: -( @sm-spacing );
 
-.wbmi-item-qualifier-add {
-	font-weight: normal;
-}
-
-.wbmi-item-edit .wbmi-item-container {
-	// preserve some space for the delete icon/button
-	// 2px = 2x 1px of border
-	// 35px = the width of the delete icon
-	// (escaped to prevent LESS from incorrectly calculating)
-	width: ~'calc( 100% - 2px - 35px )';
-}
-
-// read-mode adjustments
-.wbmi-item-read {
-	.wbmi-item-container {
-		border: 1px solid #fff;
-	}
-
-	.wbmi-item-content {
-		background-color: #f8f9fa;
-		padding-top: 0;
-		padding-bottom: 0;
-
-		.wbmi-item-content-group:not( :empty ) {
-			padding-bottom: 10px;
+		&:before {
+			@horizontal-line();
 		}
-	}
-}
 
-// undo one of the borders if the box is adjacent to another one - we don't
-// need 2 borders (the first one's bottom and the second's top border)
-.wbmi-item + .wbmi-item .wbmi-item-container {
-	border-top: 0;
-}
-
-span.wbmi-item-remove {
-	width: 35px;
-	vertical-align: top;
-	padding-top: 5px;
-}
-
-a.wbmi-entity-link {
-	font-weight: normal;
-	color: #36c;
-	padding-left: 25px;
-	background-repeat: no-repeat;
-	background-size: 20px auto;
-	background-position: left center;
-
-	&-foreign-repo-wikidata,
-	&-foreign-repo-wd {
-		.background-image-svg( '../Wikidata-logo-small.svg', '../Wikidata-logo-small.png' );
+		// OOUI override...
+		/* stylelint-disable-next-line selector-class-pattern */
+		&.oo-ui-buttonElement > .oo-ui-buttonElement-button {
+			font-weight: normal;
+		}
 	}
 }

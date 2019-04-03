@@ -1,10 +1,13 @@
 {
   "private": true,
   "scripts": {
+    "chromedriver": "npx chromedriver --url-base=/wd/hub --port=4444",
+    "selenium-test": "wdio tests/selenium/wdio.conf.js",
     "test": "grunt test && npm run test:unit",
     "test:unit": "qunit 'tests/node-qunit/**/*.test.js' | tap-mocha-reporter spec"
   },
   "devDependencies": {
+    "chromedriver": "2.46.0",
     "eslint-config-wikimedia": "0.11.0",
     "grunt": "1.0.3",
     "grunt-banana-checker": "0.7.0",
@@ -19,6 +22,11 @@
     "sinon": "7.2.7",
     "stylelint": "9.10.1",
     "stylelint-config-wikimedia": "0.5.0",
-    "tap-mocha-reporter": "3.0.7"
+    "tap-mocha-reporter": "3.0.7",
+    "tmp": "0.1.0",
+    "wdio-mediawiki": "0.3.0",
+    "wdio-mocha-framework": "0.6.3",
+    "wdio-spec-reporter": "0.1.5",
+    "webdriverio": "4.14.2"
   }
 }

@@ -12,52 +12,49 @@ var LanguagesViewWidget;
 LanguagesViewWidget = function ( config ) {
 	var self = this,
 		contentSelector = '.' + config.contentClass,
-		entityTermSelector = '.' + config.entityTermClass;
-
-	var viewMoreButton = new OO.ui.ButtonWidget( {
-		icon: 'expand',
-		flags: 'progressive',
-		label: mw.message(
-			'wikibasemediainfo-filepage-more-languages',
-			$( contentSelector ).find( entityTermSelector ).length - 1
-		).text(),
-		framed: false
-	} )
-		.on(
-			'click',
-			function () {
-				self.expand();
-			}
-		);
-
-	var viewMore = new OO.ui.Element( {
-		content: [ viewMoreButton ],
-		classes: [ 'wbmi-entityview-viewMoreButton' ]
-	} );
-
-	var viewLessButton = new OO.ui.ButtonWidget( {
-		icon: 'collapse',
-		flags: 'progressive',
-		label: mw.message(
-			'wikibasemediainfo-filepage-fewer-languages'
-		).text(),
-		framed: false
-	} )
-		.on(
-			'click',
-			function () {
-				self.collapse();
-			}
-		);
-
-	var viewLess = new OO.ui.Element( {
-		content: [ viewLessButton ],
-		classes: [ 'wbmi-entityview-viewLessButton' ]
-	} );
+		entityTermSelector = '.' + config.entityTermClass,
+		viewMoreButton = new OO.ui.ButtonWidget( {
+			icon: 'expand',
+			flags: 'progressive',
+			label: mw.message(
+				'wikibasemediainfo-filepage-more-languages',
+				$( contentSelector ).find( entityTermSelector ).length - 1
+			).text(),
+			framed: false
+		} )
+			.on(
+				'click',
+				function () {
+					self.expand();
+				}
+			),
+		viewMore = new OO.ui.Element( {
+			content: [ viewMoreButton ],
+			classes: [ 'wbmi-entityview-viewMoreButton' ]
+		} ),
+		viewLessButton = new OO.ui.ButtonWidget( {
+			icon: 'collapse',
+			flags: 'progressive',
+			label: mw.message(
+				'wikibasemediainfo-filepage-fewer-languages'
+			).text(),
+			framed: false
+		} )
+			.on(
+				'click',
+				function () {
+					self.collapse();
+				}
+			),
+		viewLess = new OO.ui.Element( {
+			content: [ viewLessButton ],
+			classes: [ 'wbmi-entityview-viewLessButton' ]
+		} );
 
 	this.refreshLabel = function () {
 		var hideableRowCount = $( contentSelector )
 			.find( entityTermSelector + ':not(.wbmi-entityview-showLabel)' ).length;
+
 		viewMoreButton.setLabel(
 			mw.message(
 				'wikibasemediainfo-filepage-more-languages',
@@ -68,6 +65,7 @@ LanguagesViewWidget = function ( config ) {
 
 	this.expand = function () {
 		var $captionsContent = $( contentSelector );
+
 		viewMore.$element.detach();
 		$captionsContent.find( entityTermSelector ).show();
 		if ( $captionsContent.find( entityTermSelector + ':not(.wbmi-entityview-showLabel)' ).length > 0 ) {
@@ -77,8 +75,9 @@ LanguagesViewWidget = function ( config ) {
 
 	this.collapse = function () {
 		var $captionsContent = $( contentSelector ),
-			$rows = $captionsContent.find( entityTermSelector + ':not(.wbmi-entityview-showLabel)' );
-		var rowCount = $rows.length;
+			$rows = $captionsContent.find( entityTermSelector + ':not(.wbmi-entityview-showLabel)' ),
+			rowCount = $rows.length;
+
 		if ( rowCount < 1 ) {
 			return;
 		}

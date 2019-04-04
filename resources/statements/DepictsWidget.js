@@ -153,14 +153,16 @@
 	 * @param {wikibase.datamodel.StatementList} data
 	 */
 	statements.DepictsWidget.prototype.setData = function ( data ) {
+		var self, sortedData;
+
 		if ( !data ) {
 			return;
 		}
 
-		var self = this,
-			sortedData = data.toArray().sort( function ( statement1, statement2 ) {
-				return statement2.getRank() - statement1.getRank();
-			} );
+		self = this;
+		sortedData = data.toArray().sort( function ( statement1, statement2 ) {
+			return statement2.getRank() - statement1.getRank();
+		} );
 
 		// remove existing items, then add new ones based on data passed in
 		this.input.setData( undefined );
@@ -357,6 +359,8 @@
 		// store data after we've submitted all changes, so that we'll reset to the
 		// actual most recent correct state
 		promise = promise.then( function ( response ) {
+			var serializer, deserializer;
+
 			// re-enable 'make prominent' links
 			self.getItems().forEach( function ( item ) {
 				item.setDisabled( false );
@@ -364,8 +368,8 @@
 
 			// reset data to what we've just submitted to the API (items that failed
 			// to submit have been reset to their previous state in `data`)
-			var serializer = new wb.serialization.StatementListSerializer(),
-				deserializer = new wb.serialization.StatementListDeserializer();
+			serializer = new wb.serialization.StatementListSerializer();
+			deserializer = new wb.serialization.StatementListDeserializer();
 
 			self.data = deserializer.deserialize( serializer.serialize( data ) );
 

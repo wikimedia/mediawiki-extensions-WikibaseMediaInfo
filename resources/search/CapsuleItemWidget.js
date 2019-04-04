@@ -3,6 +3,8 @@
 	'use strict';
 
 	search.CapsuleItemWidget = function MediaInfoSearchCapsuleItemWidget( config ) {
+		var addedCapsulesAmount;
+
 		search.CapsuleItemWidget.parent.call( this, $.extend( { classes: [ 'wbmi-search-capsule' ] }, config ) );
 		OO.ui.mixin.PopupElement.call( this, $.extend( { popup: { autoClose: false } }, config ) );
 
@@ -64,7 +66,7 @@
 		// to make it somewhat obvious that the capsule items can "expand" to further configure
 		// the statement details, we're going to automatically open the popup the first couple
 		// of times
-		var addedCapsulesAmount = parseInt( mw.cookie.get( 'mediainfo-capsule', undefined, '0' ) );
+		addedCapsulesAmount = parseInt( mw.cookie.get( 'mediainfo-capsule', undefined, '0' ) );
 		mw.cookie.set( 'mediainfo-capsule', addedCapsulesAmount + 1, { expires: 50 * 365 * 24 * 60 * 60 } );
 		if ( addedCapsulesAmount < 2 ) {
 			// wrapped inside a timer to make sure the relevant DOM elements exist before the popup

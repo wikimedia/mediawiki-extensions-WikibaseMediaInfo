@@ -17,23 +17,23 @@ CancelPublishWidget = require( './CancelPublishWidget.js' );
 	*/
 CaptionsEditActionsWidget = function ( config, captionsPanel ) {
 
-	var cancelAndPublishButtons = new CancelPublishWidget( captionsPanel );
+	var cancelAndPublishButtons = new CancelPublishWidget( captionsPanel ),
 
-	var addCaptionButton = new OO.ui.ButtonWidget( {
-		icon: 'add',
-		label: mw.message( 'wikibasemediainfo-filepage-add-caption' ).text(),
-		flags: 'progressive',
-		classes: [ 'wbmi-entityview-addCaptionButton' ],
-		framed: false
-	} )
-		.on( 'click', function () {
-			captionsPanel.addNewEditableLanguageRow();
+		addCaptionButton = new OO.ui.ButtonWidget( {
+			icon: 'add',
+			label: mw.message( 'wikibasemediainfo-filepage-add-caption' ).text(),
+			flags: 'progressive',
+			classes: [ 'wbmi-entityview-addCaptionButton' ],
+			framed: false
+		} )
+			.on( 'click', function () {
+				captionsPanel.addNewEditableLanguageRow();
+			} ),
+
+		editActions = new OO.ui.Element( {
+			content: [ addCaptionButton, cancelAndPublishButtons.$element ],
+			classes: [ 'wbmi-entityview-editActions' ]
 		} );
-
-	var editActions = new OO.ui.Element( {
-		content: [ addCaptionButton, cancelAndPublishButtons.$element ],
-		classes: [ 'wbmi-entityview-editActions' ]
-	} );
 
 	this.hide = function () {
 		editActions.$element.detach();

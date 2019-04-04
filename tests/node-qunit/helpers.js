@@ -27,11 +27,11 @@ module.exports.createMediaWikiEnv = function () {
  * @returns {Object} user
  */
 module.exports.createMediaWikiUser = function ( options ) {
-	options = options || {};
-
 	var user = {
 		options: {}
 	};
+
+	options = options || {};
 
 	if ( options.loggedIn ) {
 		user.isAnon = sinon.stub().returns( false );

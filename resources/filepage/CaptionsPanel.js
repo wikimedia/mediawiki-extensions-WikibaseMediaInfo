@@ -216,7 +216,7 @@ CaptionsPanel.prototype.addCaptionsDataForUserLanguages = function () {
  * (and possible the first fallback, if the interface language has no caption) having the
  * 'wbmi-entityview-showLabel' class
  *
- * @return bool True if the language list order has changed
+ * @return {bool} True if the language list order has changed
  */
 CaptionsPanel.prototype.reorderLanguageList = function () {
 	var captionLanguages = this.getCaptionLanguagesList(),
@@ -318,7 +318,7 @@ CaptionsPanel.prototype.warnIfTextApproachingLimit = function ( textInput ) {
 /**
  * Runs validity checks on captions text and returns functions for updating DOM
  *
- * @returns {Array<Promise>} show/hide error messages when resolved
+ * @return {Array<Promise>} show/hide error messages when resolved
  */
 CaptionsPanel.prototype.validateCaptionsAndReturnUpdates = function () {
 	var textInputChecks = [];
@@ -350,7 +350,7 @@ CaptionsPanel.prototype.validateCaptionsAndReturnUpdates = function () {
 
 /**
  * Check for changes to caption text by language or number of captions
- * @return bool
+ * @return {bool}
  */
 CaptionsPanel.prototype.hasChanges = function () {
 	var $captions, hasChanges,
@@ -539,9 +539,9 @@ CaptionsPanel.prototype.enableAllFormInputs = function () {
 /**
 	* Get a value object for sending data to the api
 	*
-	* @param language
-	* @param text
-	* @returns {{bot: number, action: string, id, value: *, language: *}}
+	* @param {string} language
+	* @param {string} text
+	* @return {{bot: number, action: string, id, value: *, language: *}}
 	*/
 CaptionsPanel.prototype.getWbSetLabelParams = function ( language, text ) {
 	var apiParams = {
@@ -795,6 +795,7 @@ CaptionsPanel.prototype.redrawCaptionsContent = function () {
  *
  * See class comments for rules on when to show/hide captions
  *
+ * @return {string[]}
  */
 CaptionsPanel.prototype.getShowCaptionFlagsByLangCode = function () {
 	var self = this,

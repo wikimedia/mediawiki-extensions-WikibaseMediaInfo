@@ -61,7 +61,7 @@
 	/**
 	 * @private
 	 * @param {search.NestedCheckboxMultioptionWidget[]} items
-	 * @param {function} callable
+	 * @param {Function} callable
 	 * @return {search.NestedCheckboxMultioptionWidget[]}
 	 */
 	search.NestedCheckboxMultiselectWidget.prototype.iterateRecursively = function (

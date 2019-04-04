@@ -22,6 +22,7 @@
 	 *
 	 * @param {string} type One of 'wikibase-entityid', 'quantity' or 'string'
 	 * @chainable
+	 * @return {QualifierValueInputWidget}
 	 */
 	statements.QualifierValueInputWidget.prototype.setInputType = function ( type ) {
 		if ( this.type === type ) {
@@ -100,6 +101,7 @@
 	/**
 	 * @param {dataValues.DataValue} data
 	 * @chainable
+	 * @return {QualifierValueInputWidget}
 	 */
 	statements.QualifierValueInputWidget.prototype.setData = function ( data ) {
 		var self = this;
@@ -150,6 +152,7 @@
 	/**
 	 * @param {Mixed} value
 	 * @chainable
+	 * @return {QualifierValueInputWidget}
 	 */
 	statements.QualifierValueInputWidget.prototype.setValue = function ( value ) {
 		return this.input.setValue( value );
@@ -172,6 +175,7 @@
 	/**
 	 * @param {boolean} disabled
 	 * @chainable
+	 * @return {QualifierValueInputWidget}
 	 */
 	statements.QualifierValueInputWidget.prototype.setDisabled = function ( disabled ) {
 		if ( this.input === undefined ) {

@@ -61,6 +61,7 @@
 	 *
 	 * @param {string} data
 	 * @chainable
+	 * @return {EntityInputWidget}
 	 */
 	statements.EntityInputWidget.prototype.setData = function ( data ) {
 		this.data = data;

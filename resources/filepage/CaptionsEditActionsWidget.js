@@ -13,7 +13,7 @@ CancelPublishWidget = require( './CancelPublishWidget.js' );
 	* @constructor
 	* @param {Object} [config]
 	* @cfg {Object} appendToSelector Selector for element the widger should be appended to
-	* @param {object} captionsPanel CaptionsPanel object
+	* @param {Object} captionsPanel CaptionsPanel object
 	*/
 CaptionsEditActionsWidget = function ( config, captionsPanel ) {
 

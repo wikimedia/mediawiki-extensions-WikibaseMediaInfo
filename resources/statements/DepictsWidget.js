@@ -94,7 +94,7 @@
 
 	/**
 	 * @param {mw.mediaInfo.statements.ItemInputWidget} item
-	 * @param {object} data
+	 * @param {Object} data
 	 */
 	statements.DepictsWidget.prototype.addItemFromInput = function ( item, data ) {
 		var widget = this.createItem( item.getData(), data.label, data.url );
@@ -260,7 +260,7 @@
 	};
 
 	/**
-	 * @return {number} [baseRevId]
+	 * @param {number} [baseRevId]
 	 * @return {jQuery.Promise}
 	 */
 	statements.DepictsWidget.prototype.submit = function ( baseRevId ) {

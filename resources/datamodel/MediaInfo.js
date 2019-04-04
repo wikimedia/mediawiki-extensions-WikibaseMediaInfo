@@ -1,6 +1,8 @@
 ( function ( wb, util ) {
 	'use strict';
 
+	/* eslint-disable no-underscore-dangle */
+
 	var PARENT = wb.datamodel.Entity;
 
 	/**

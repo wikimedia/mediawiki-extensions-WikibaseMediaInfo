@@ -16,7 +16,6 @@
 		"OO": false
 	},
 	"rules": {
-		"no-underscore-dangle": "off",
 		"one-var": "off",
 		"vars-on-top": "off",
 		"valid-jsdoc": "off"

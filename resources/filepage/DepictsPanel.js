@@ -94,7 +94,7 @@ DepictsPanel.prototype.initialize = function () {
 
 /**
  * Check for changes to statement claims or number of statements
- * @return bool
+ * @return {bool}
  */
 DepictsPanel.prototype.hasChanges = function () {
 	var changes, removals;

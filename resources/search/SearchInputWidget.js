@@ -90,6 +90,7 @@
 	 *
 	 * @param {string} type One of 'keywords', 'depicts' or 'statements'
 	 * @chainable
+	 * @return {SearchInputWidget}
 	 */
 	search.SearchInputWidget.prototype.setInputType = function ( type ) {
 		if ( this.type === type ) {
@@ -167,6 +168,7 @@
 	/**
 	 * @param {boolean} disabled
 	 * @chainable
+	 * @return {SearchInputWidget}
 	 */
 	search.SearchInputWidget.prototype.setDisabled = function ( disabled ) {
 		if ( this.input === undefined ) {

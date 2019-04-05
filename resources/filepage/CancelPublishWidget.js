@@ -6,7 +6,7 @@ var CancelPublishWidget;
  * Widget containing 'cancel' and 'publish' buttons
  *
  * @constructor
- * @param {object} sdcPanel Panel object with makeReadOnly() and sendData() methods
+ * @param {Object} sdcPanel Panel object with makeReadOnly() and sendData() methods
  */
 CancelPublishWidget = function ( sdcPanel ) {
 	var cancelButton = new OO.ui.ButtonWidget( {

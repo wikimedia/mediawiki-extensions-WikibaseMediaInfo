@@ -5,7 +5,7 @@ var sinon = require( 'sinon' );
  * properties/methods that need to be called in the test suite; expect more
  * additions over time as the suite grows.
  *
- * @returns {Object} mw
+ * @return {Object} mw
  */
 module.exports.createMediaWikiEnv = function () {
 	return {
@@ -24,7 +24,7 @@ module.exports.createMediaWikiEnv = function () {
  * @param {boolean} options.isLoggedIn Whether to simulate a logged-in user
  * @param {boolean} options.licenseAccepted Whether simulated user has accepted
  * CC0 license or not
- * @returns {Object} user
+ * @return {Object} user
  */
 module.exports.createMediaWikiUser = function ( options ) {
 	var user = {
@@ -54,7 +54,7 @@ module.exports.createMediaWikiUser = function ( options ) {
  * properties/methods that need to be called in the test suite; expect more
  * additions over time as the suite grows.
  *
- * @returns {Object} mw.storage mock
+ * @return {Object} mw.storage mock
  */
 module.exports.createMockStorage = function () {
 	return {

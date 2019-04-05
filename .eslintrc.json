@@ -14,8 +14,5 @@
 		"dataValues": false,
 		"mw": false,
 		"OO": false
-	},
-	"rules": {
-		"valid-jsdoc": "off"
 	}
 }

@@ -73,7 +73,7 @@ LicenseDialogWidget.prototype.openDialog = function () {
 	* terms. For anon users, check if the appropriate value has been set in
 	* localstorage; for logged-in users, check if the appropriate user pref has
 	* been set.
-	* @returns {Number} 0 or 1
+	* @return {number} 0 or 1
 	*/
 LicenseDialogWidget.prototype.getLicenseConfirmation = function () {
 	var storage = mw.storage,

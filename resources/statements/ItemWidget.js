@@ -7,9 +7,10 @@
 	 * @param {Object} config Configuration options
 	 * @param {wikibase.datamodel.Statement} config.data
 	 * @param {Object} config.qualifiers Qualifiers map: { propertyId: datatype, ...}
-	 * @param {string} config.entityId Entity ID (e.g. M123 id of the file you just uploaded)
+	 * @param {string} config.entityId Entity ID (e.g. 'M123' id of the file you just uploaded)
 	 * @param {string} [config.label] Label for this item (e.g. 'cat')
-	 * @param {string} [config.url] URL to this item (e.g. /wiki/Item:Q1)
+	 * @param {string} [config.url] URL to this item (e.g. '/wiki/Item:Q1')
+	 * @param {string} [config.repo] Repository name of this item (e.g. 'wikidata')
 	 * @param {string} [config.editing] True for edit mode, False for read mode
 	 */
 	statements.ItemWidget = function MediaInfoStatementsItemWidget( config ) {
@@ -23,6 +24,7 @@
 		this.data = config.data;
 		this.label = config.label;
 		this.url = config.url;
+		this.repo = config.repo;
 		this.config = config;
 
 		this.removeButton = new OO.ui.ButtonWidget( {
@@ -61,6 +63,13 @@
 				function ( plain, html ) {
 					self.label = plain;
 					self.url = $( html ).attr( 'href' );
+
+					// if the url is not relative (= has a prototype), it links to a foreign
+					// repository and we can extract the repo name from the title argument
+					self.repo = '';
+					if ( /^[a-z0-9]+:\/\//.test( self.url ) ) {
+						self.repo = $( html ).attr( 'title' ).replace( /:.+$/, '' );
+					}
 				}
 			);
 		} else {
@@ -100,14 +109,14 @@
 	statements.ItemWidget.prototype.renderInternal = function () {
 		var self = this,
 			id = this.data.getClaim().getMainSnak().getValue().toJSON().id || '',
-			repo = id.indexOf( ':' ) >= 0 ? id.replace( /:.+$/, '' ) : '',
 			$label = $( '<h4>' )
 				.addClass( 'wbmi-entity-label' )
 				.text( this.label ),
 			$link = $( '<a>' )
 				.addClass(
 					'wbmi-entity-link ' +
-					'wbmi-entity-link' + ( repo !== '' ? '-foreign-repo-' + repo : '-local-repo' )
+					// Classes used: wbmi-entity-link-foreign-repo-* and wbmi-entity-link-local-repo
+					'wbmi-entity-link' + ( this.repo !== '' ? '-foreign-repo-' + this.repo : '-local-repo' )
 				)
 				.attr( 'href', this.url )
 				.attr( 'target', '_blank' )

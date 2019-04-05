@@ -14,17 +14,13 @@
 			propertyId = config.propertyId || mw.config.get( 'wbmiProperties' ).depicts,
 			qualifiers = config.qualifiers || mw.config.get( 'wbmiDepictsQualifierProperties' ) || {},
 			dataValue = new wb.datamodel.EntityId( propertyId ),
-			repo = propertyId.indexOf( ':' ) >= 0 ? propertyId.replace( /:.+$/, '' ) : '',
 			$label = $( '<h4>' )
 				.addClass( 'wbmi-entity-label' )
 				.text( '' ), // will be filled out later (after formatValue call)
 			$link = $( '<a>' )
-				.addClass(
-					'wbmi-entity-link ' +
-					'wbmi-entity-link' + ( repo !== '' ? '-foreign-repo-' + repo : '-local-repo' )
-				)
+				.addClass( 'wbmi-entity-link ' ) // repo class will be added later (after formatValue call)
 				.attr( 'href', '#' ) // will be filled out later (after formatValue call)
-				.attr( 'target', '_blank' ) // will be filled out later (after formatValue call)
+				.attr( 'target', '_blank' )
 				.text( propertyId.replace( /^.+:/, '' ) );
 
 		config.propertyId = propertyId;
@@ -76,8 +72,16 @@
 			this.formatValue( dataValue, 'text/plain' ),
 			this.formatValue( dataValue, 'text/html' )
 		).then( function ( plain, html ) {
+			var repo = '';
+			// if the url is not relative (= has a prototype), it links to a foreign
+			// repository and we can extract the repo name from the title argument
+			if ( /^[a-z0-9]+:\/\//.test( $( html ).attr( 'href' ) ) ) {
+				repo = $( html ).attr( 'title' ).replace( /:.+$/, '' );
+			}
 			$label.text( plain );
 			$link.attr( 'href', $( html ).attr( 'href' ) );
+			// Classes used: wbmi-entity-link-foreign-repo-* and wbmi-entity-link-local-repo
+			$link.addClass( 'wbmi-entity-link' + ( repo !== '' ? '-foreign-repo-' + repo : '-local-repo' ) );
 		} );
 
 		this.renderFooter();
@@ -97,7 +101,7 @@
 	 * @param {object} data
 	 */
 	statements.DepictsWidget.prototype.addItemFromInput = function ( item, data ) {
-		var widget = this.createItem( item.getData(), data.label, data.url );
+		var widget = this.createItem( item.getData(), data.label, data.url, data.repository );
 		widget.connect( this, { delete: [ 'removeItems', [ widget ] ] } );
 		widget.connect( this, { delete: [ 'emit', 'change' ] } );
 		widget.connect( this, { change: [ 'setEditing', true ] } );
@@ -119,9 +123,10 @@
 	 * @param {dataValues.DataValue} dataValue
 	 * @param {string} [label]
 	 * @param {string} [url]
+	 * @param {string} [repo]
 	 * @return {mw.mediaInfo.statements.ItemWidget}
 	 */
-	statements.DepictsWidget.prototype.createItem = function ( dataValue, label, url ) {
+	statements.DepictsWidget.prototype.createItem = function ( dataValue, label, url, repo ) {
 		var guidGenerator = new wb.utilities.ClaimGuidGenerator( this.entityId ),
 			mainSnak = new wb.datamodel.PropertyValueSnak( this.propertyId, dataValue, null ),
 			qualifiers = null,
@@ -135,7 +140,8 @@
 			data: statement,
 			editing: this.editing,
 			label: label,
-			url: url
+			url: url,
+			repo: repo
 		} );
 	};
 

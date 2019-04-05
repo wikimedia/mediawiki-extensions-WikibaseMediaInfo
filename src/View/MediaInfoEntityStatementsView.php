@@ -122,11 +122,11 @@ class MediaInfoEntityStatementsView {
 
 		$results += $this->getFormatValueCache(
 			$statement->getMainSnak(),
-			[ 'text/html', 'text/plain' ]
+			[ SnakFormatter::FORMAT_HTML, SnakFormatter::FORMAT_PLAIN ]
 		);
 
 		foreach ( $statement->getQualifiers() as $qualifier ) {
-			$results += $this->getFormatValueCache( $qualifier, [ 'text/plain' ] );
+			$results += $this->getFormatValueCache( $qualifier, [ SnakFormatter::FORMAT_PLAIN ] );
 		}
 
 		return $results;
@@ -137,7 +137,7 @@ class MediaInfoEntityStatementsView {
 	 * @param string[] $formats
 	 * @return array
 	 */
-	private function getFormatValueCache( Snak $snak, $formats = [ 'text/plain' ] ) {
+	private function getFormatValueCache( Snak $snak, $formats = [ SnakFormatter::FORMAT_PLAIN ] ) {
 		$result = [];
 
 		$snakSerializer = $this->serializerFactory->newSnakSerializer();
@@ -155,6 +155,14 @@ class MediaInfoEntityStatementsView {
 		}
 
 		return $result;
+	}
+
+	private function extractRepo( $formatted ) {
+		if ( preg_match( '/href=[\'"][a-z0-9]+:\/\//i', $formatted ) ) {
+			return preg_replace( '/^.*title=[\'"](.+?):.*$/', '$1', $formatted );
+		}
+
+		return '';
 	}
 
 	/**
@@ -198,7 +206,7 @@ class MediaInfoEntityStatementsView {
 		);
 		$formatValueCache += $this->getFormatValueCache(
 			$mainPropertySnak,
-			[ 'text/plain', 'text/html' ]
+			[ SnakFormatter::FORMAT_PLAIN, SnakFormatter::FORMAT_HTML ]
 		);
 		// these are properties use in qualifier dropdown (e.g. color, wears, ...)
 		foreach ( $this->qualifiers as $id ) {
@@ -207,7 +215,7 @@ class MediaInfoEntityStatementsView {
 					new PropertyId( $propertyIdString ),
 					new EntityIdValue( new PropertyId( $id ) )
 				),
-				[ 'text/plain' ]
+				[ SnakFormatter::FORMAT_PLAIN ]
 			);
 		}
 
@@ -270,7 +278,8 @@ class MediaInfoEntityStatementsView {
 		$propertyId = new PropertyId( $propertyIdString );
 		$header = $this->createFormattedDataValue(
 			$this->formatEntityId( $propertyId ),
-			$propertyId
+			$propertyId,
+			$this->extractRepo( $this->formatEntityId( $propertyId, SnakFormatter::FORMAT_HTML ) )
 		);
 		$header->addClasses( [ 'wbmi-statements-header' ] );
 		return $header;
@@ -284,7 +293,7 @@ class MediaInfoEntityStatementsView {
 		return $valueFormatter->formatValue( new EntityIdValue( $entityId ) );
 	}
 
-	private function createFormattedDataValue( $formattedValue, EntityId $entityId = null ) {
+	private function createFormattedDataValue( $formattedValue, EntityId $entityId = null, $repo = '' ) {
 		$links = '';
 		$label = Html::rawElement(
 			'h4',
@@ -296,13 +305,14 @@ class MediaInfoEntityStatementsView {
 			$linkClasses = [ 'wbmi-entity-link' ];
 			$title = $this->entityTitleLookup->getTitleForId( $entityId );
 
-			if ( $title !== null && !$title->exists() ) {
+			if ( $title !== null && !$title->exists() && $repo === '' ) {
 				$linkClasses[] = 'new';
 			}
 
 			// Decorate the link with an icon for the relevant repository
-			if ( !empty( $entityId->getRepositoryName() ) ) {
-				$linkClasses[] = 'wbmi-entity-link-foreign-repo-' . $entityId->getRepositoryName();
+			// Classes used: wbmi-entity-link-foreign-repo-* and wbmi-entity-link-local-repo
+			if ( $repo ) {
+				$linkClasses[] = 'wbmi-entity-link-foreign-repo-' . $repo;
 			} else {
 				$linkClasses[] = 'wbmi-entity-link-local-repo';
 			}
@@ -356,8 +366,9 @@ class MediaInfoEntityStatementsView {
 		}
 		$mainSnakDiv->appendContent(
 			$this->createFormattedDataValue(
-				$this->formatSnakValue( $mainSnak ),
-				$mainSnakValueEntityId
+				new HtmlSnippet( $this->formatSnakValue( $mainSnak ) ),
+				$mainSnakValueEntityId,
+				$this->extractRepo( $this->formatSnakValue( $mainSnak, SnakFormatter::FORMAT_HTML ) )
 			)
 		);
 
@@ -389,7 +400,7 @@ class MediaInfoEntityStatementsView {
 		/** @var Snak $snak */
 		foreach ( $snakList as $snak ) {
 			$qualifierHtmlByPropertyId[$snak->getPropertyId()->getSerialization()][] =
-				$this->formatSnakValue( $snak, SnakFormatter::FORMAT_PLAIN );
+				new HtmlSnippet( $this->formatSnakValue( $snak, SnakFormatter::FORMAT_PLAIN ) );
 		}
 
 		$qualifierDivs = [];
@@ -423,7 +434,7 @@ class MediaInfoEntityStatementsView {
 	/**
 	 * @param Snak $snak
 	 * @param string $format
-	 * @return HtmlSnippet
+	 * @return string
 	 * @throws \OOUI\Exception
 	 */
 	private function formatSnakValue( Snak $snak, $format = SnakFormatter::FORMAT_PLAIN ) {
@@ -431,7 +442,7 @@ class MediaInfoEntityStatementsView {
 			$format,
 			new FormatterOptions()
 		);
-		return new HtmlSnippet( $formatter->formatSnak( $snak ) );
+		return $formatter->formatSnak( $snak );
 	}
 
 	/**

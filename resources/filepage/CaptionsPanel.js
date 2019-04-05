@@ -59,6 +59,7 @@ CaptionsPanel = function ( config ) {
 
 	this.captionsData = {};
 	this.captionsExist = config.captionsExist;
+	this.isEditable = false;
 	this.languageSelectors = [];
 	this.textInputs = [];
 
@@ -350,6 +351,9 @@ CaptionsPanel.prototype.validateCaptionsAndReturnUpdates = function () {
  * @return bool
  */
 CaptionsPanel.prototype.hasChanges = function () {
+	if ( !this.isEditable ) {
+		return false;
+	}
 	var self = this,
 		$captions = $( self.contentSelector ).find( self.entityTermSelector ),
 		hasChanges = $captions.length < Object.keys( self.captionsData ).length;
@@ -861,11 +865,13 @@ CaptionsPanel.prototype.makeEditable = function () {
 					);
 				} );
 				self.popPending();
+				self.isEditable = true;
 			} );
 	} );
 };
 
 CaptionsPanel.prototype.makeReadOnly = function () {
+	this.isEditable = false;
 	var $captionsContent = $( this.contentSelector );
 	$captionsContent.removeClass( 'wbmi-entityview-editable' );
 	this.editActionsWidget.hide();

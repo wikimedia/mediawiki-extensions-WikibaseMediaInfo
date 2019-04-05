@@ -16,8 +16,6 @@
 		"OO": false
 	},
 	"rules": {
-		"one-var": "off",
-		"vars-on-top": "off",
 		"valid-jsdoc": "off"
 	}
 }

@@ -22,12 +22,14 @@
 		 * @throws {Error} if serialization does not resolve to a serialized MediaInfo.
 		 */
 		deserialize: function ( serialization ) {
+			var statementGroupSetDeserializer, termMapDeserializer;
+
 			if ( serialization.type !== wb.datamodel.MediaInfo.TYPE ) {
 				throw new Error( 'Serialization does not resolve to an MediaInfo' );
 			}
 
-			var statementGroupSetDeserializer = new SERIALIZER.StatementGroupSetDeserializer(),
-				termMapDeserializer = new SERIALIZER.TermMapDeserializer();
+			statementGroupSetDeserializer = new SERIALIZER.StatementGroupSetDeserializer();
+			termMapDeserializer = new SERIALIZER.TermMapDeserializer();
 
 			return new wikibase.datamodel.MediaInfo(
 				serialization.id,

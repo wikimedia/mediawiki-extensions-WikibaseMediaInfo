@@ -88,9 +88,10 @@
 	};
 
 	statements.ItemWidget.prototype.toggleItemProminence = function ( e ) {
-		e.preventDefault();
 		var self = this,
 			isNowProminent = self.data.getRank() === wb.datamodel.Statement.RANK.NORMAL;
+
+		e.preventDefault();
 
 		if ( self.disabled ) {
 			return;

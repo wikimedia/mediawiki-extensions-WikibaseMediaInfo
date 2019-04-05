@@ -2,11 +2,6 @@
 
 	'use strict';
 
-	mw.mediaInfo = mw.mediaInfo || {};
-	mw.mediaInfo.structuredData = mw.mediaInfo.structuredData || {};
-	mw.mediaInfo.structuredData.currentRevision = mw.config.get( 'wbCurrentRevision' );
-	mw.mediaInfo.statements = mw.mediaInfo.statements || {};
-
 	var depictsId = mw.config.get( 'wbmiProperties' ).depicts || '',
 		depictsClass = 'wbmi-entityview-statementsGroup-' + depictsId.replace( ':', '_' ),
 		captions,
@@ -14,6 +9,11 @@
 		depicts,
 		DepictsPanel,
 		$tabs;
+
+	mw.mediaInfo = mw.mediaInfo || {};
+	mw.mediaInfo.structuredData = mw.mediaInfo.structuredData || {};
+	mw.mediaInfo.structuredData.currentRevision = mw.config.get( 'wbCurrentRevision' );
+	mw.mediaInfo.statements = mw.mediaInfo.statements || {};
 
 	CaptionsPanel = require( './CaptionsPanel.js' );
 	DepictsPanel = require( './DepictsPanel.js' );

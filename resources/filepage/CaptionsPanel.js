@@ -191,10 +191,12 @@ CaptionsPanel.prototype.addCaptionsDataForUserLanguages = function () {
 
 	// Create CaptionData objects for user languages that we don't already have on the screen
 	this.userLanguages.forEach( function ( langCode ) {
+		var caption;
+
 		if (
 			Object.prototype.hasOwnProperty.call( self.captionsData, langCode ) === false
 		) {
-			var caption = new CaptionData( langCode, '' );
+			caption = new CaptionData( langCode, '' );
 			self.captionsData[ langCode ] = caption;
 		}
 	} );
@@ -351,12 +353,16 @@ CaptionsPanel.prototype.validateCaptionsAndReturnUpdates = function () {
  * @return bool
  */
 CaptionsPanel.prototype.hasChanges = function () {
+	var $captions, hasChanges,
+		self = this;
+
 	if ( !this.isEditable ) {
 		return false;
 	}
-	var self = this,
-		$captions = $( self.contentSelector ).find( self.entityTermSelector ),
-		hasChanges = $captions.length < Object.keys( self.captionsData ).length;
+
+	$captions = $( self.contentSelector ).find( self.entityTermSelector );
+	hasChanges = $captions.length < Object.keys( self.captionsData ).length;
+
 	$captions.each( function () {
 		var index = $( this ).attr( 'data-index' ),
 			languageCode = self.languageSelectors[ index ].getValue(),
@@ -606,7 +612,8 @@ CaptionsPanel.prototype.sendDataToAPI = function ( chain ) {
 		rowsWithoutLanguage = [];
 
 	$( this.contentSelector ).find( this.entityTermSelector ).each( function () {
-		var index = $( this ).attr( 'data-index' ),
+		var showCaptionFlags,
+			index = $( this ).attr( 'data-index' ),
 			languageCode = self.languageSelectors[ index ].getValue(),
 			text = self.textInputs[ index ].getValue(),
 			existingDataForLanguage = self.getDataForLangCode( languageCode );
@@ -626,7 +633,7 @@ CaptionsPanel.prototype.sendDataToAPI = function ( chain ) {
 				);
 			} );
 		} else {
-			var showCaptionFlags = self.getShowCaptionFlagsByLangCode();
+			showCaptionFlags = self.getShowCaptionFlagsByLangCode();
 			$( this ).replaceWith(
 				self.createIndexedReadOnlyRow(
 					index,
@@ -652,7 +659,8 @@ CaptionsPanel.prototype.deleteIndividualLabel = function ( langCodeToDelete ) {
 		this.getWbSetLabelParams( langCodeToDelete, '' )
 	)
 		.done( function ( result ) {
-			var captionLanguages = self.getCaptionLanguagesList();
+			var updatedCaptionLanguages,
+				captionLanguages = self.getCaptionLanguagesList();
 			// Update revision id
 			mw.mediaInfo.structuredData.currentRevision = result.entity.lastrevid;
 			// Update the captions data, and the language list if necessary
@@ -667,7 +675,7 @@ CaptionsPanel.prototype.deleteIndividualLabel = function ( langCodeToDelete ) {
 				// Otherwise delete the data
 				delete self.captionsData[ langCodeToDelete ];
 				// ... and delete the language from the language list
-				var updatedCaptionLanguages = [];
+				updatedCaptionLanguages = [];
 				captionLanguages.forEach( function ( langCode ) {
 					if ( langCode !== langCodeToDelete ) {
 						updatedCaptionLanguages.push( langCode );
@@ -819,13 +827,14 @@ CaptionsPanel.prototype.getShowCaptionFlagsByLangCode = function () {
 };
 
 CaptionsPanel.prototype.makeEditable = function () {
-	var self = this;
+	var msg,
+		self = this;
 
 	// Show IP address logging notice to anon users
 	// TODO: This code should probably be shared with CaptionsPanel through a refactor.
 	if ( mw.user.isAnon() ) {
 		// Hack to wrap our (rich) message in jQuery so mw.notify inserts it as HTML, not text
-		var msg = $( mw.config.get( 'parsedMessageAnonEditWarning' ) );
+		msg = $( mw.config.get( 'parsedMessageAnonEditWarning' ) );
 		mw.notify( msg, {
 			autoHide: false,
 			type: 'warn',
@@ -841,14 +850,16 @@ CaptionsPanel.prototype.makeEditable = function () {
 
 		self.refreshDataFromApi()
 			.always( function () {
+				var $captionsContent, captionLangCodes;
+
 				self.redrawCaptionsContent();
-				var $captionsContent = $( self.contentSelector );
+				$captionsContent = $( self.contentSelector );
 				$captionsContent.addClass( 'wbmi-entityview-editable' );
 				self.editToggle.$element.hide();
 				self.languagesViewWidget.hide();
 				self.editActionsWidget.show();
 				self.editActionsWidget.disablePublish();
-				var captionLangCodes = [];
+				captionLangCodes = [];
 				$captionsContent.find( self.entityTermSelector ).each( function () {
 					var dataInRow = self.readDataFromReadOnlyRow( $( this ) );
 					captionLangCodes.push( dataInRow.languageCode );
@@ -871,8 +882,9 @@ CaptionsPanel.prototype.makeEditable = function () {
 };
 
 CaptionsPanel.prototype.makeReadOnly = function () {
-	this.isEditable = false;
 	var $captionsContent = $( this.contentSelector );
+
+	this.isEditable = false;
 	$captionsContent.removeClass( 'wbmi-entityview-editable' );
 	this.editActionsWidget.hide();
 	this.redrawCaptionsContent();
@@ -881,10 +893,10 @@ CaptionsPanel.prototype.makeReadOnly = function () {
 };
 
 CaptionsPanel.prototype.addNewEditableLanguageRow = function () {
-	var $captionsContent = $( this.contentSelector );
-	var row = this.createIndexedEditableRow(
-		$captionsContent.find( this.entityTermSelector ).length
-	);
+	var $captionsContent = $( this.contentSelector ),
+		row = this.createIndexedEditableRow(
+			$captionsContent.find( this.entityTermSelector ).length
+		);
 	row.insertBefore( $captionsContent.find( '.wbmi-entityview-editActions' ) );
 	this.refreshLanguageSelectorsOptions();
 };

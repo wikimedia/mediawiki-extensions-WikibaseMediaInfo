@@ -1,6 +1,7 @@
 ( function ( search ) {
 
 	'use strict';
+	var init;
 
 	if ( !mw.config.get( 'wbmiMediaInfoEnableSearch', false ) ) {
 		return;
@@ -14,7 +15,7 @@
 		$element.replaceWith( this.input.$element );
 	};
 
-	var init = new search.Init();
+	init = new search.Init();
 	// eslint-disable-next-line no-jquery/no-global-selector
 	init.bind( $( '#p-search' ) );
 

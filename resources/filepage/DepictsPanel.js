@@ -97,11 +97,14 @@ DepictsPanel.prototype.initialize = function () {
  * @return bool
  */
 DepictsPanel.prototype.hasChanges = function () {
+	var changes, removals;
+
 	if ( !this.isEditable ) {
 		return false;
 	}
-	var changes = this.depictsInput.getChanges(),
-		removals = this.depictsInput.getRemovals();
+
+	changes = this.depictsInput.getChanges();
+	removals = this.depictsInput.getRemovals();
 
 	return changes.length > 0 || removals.length > 0;
 };
@@ -119,13 +122,14 @@ DepictsPanel.prototype.onDepictsChange = function () {
 };
 
 DepictsPanel.prototype.makeEditable = function () {
-	var self = this;
+	var msg,
+		self = this;
 
 	// Show IP address logging notice to anon users
 	// TODO: This code should probably be shared with CaptionsPanel through a refactor.
 	if ( mw.user.isAnon() ) {
 		// Hack to wrap our (rich) message in jQuery so mw.notify inserts it as HTML, not text
-		var msg = $( mw.config.get( 'parsedMessageAnonEditWarning' ) );
+		msg = $( mw.config.get( 'parsedMessageAnonEditWarning' ) );
 		mw.notify( msg, {
 			autoHide: false,
 			type: 'warn',

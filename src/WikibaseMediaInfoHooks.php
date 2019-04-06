@@ -464,7 +464,7 @@ class WikibaseMediaInfoHooks {
 	private function mediaInfoCaptionsExist( OutputPage $out ) {
 		$html = $out->getHTML();
 		if (
-			strpos( $html, '<' . MediaInfoEntityTermsView::CAPTIONS_CUSTOM_TAG . '>' ) === false
+			stripos( $html, '<' . MediaInfoEntityTermsView::CAPTIONS_CUSTOM_TAG . '>' ) === false
 		) {
 			return false;
 		}

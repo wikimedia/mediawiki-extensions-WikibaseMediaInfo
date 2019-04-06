@@ -227,8 +227,19 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 
 		WikibaseMediaInfoHooks::onBeforePageDisplay( $out, $skin );
 
+		// Captions should have moved ahead of the extra content, but still inside the parser block
 		$this->assertRegExp(
 			'/' . self::$parserOutputTag . '.*' . $captions . self::$extraHtml . '/',
+			$out->getHTML()
+		);
+
+		// The <mediaInfoView> tags should not be present.
+		$this->assertNotRegExp(
+			'/' . self::$mediaInfoViewOpeningTag . '/',
+			$out->getHTML()
+		);
+		$this->assertNotRegExp(
+			'/' . preg_quote( self::$mediaInfoViewClosingTag, '/' ) . '/',
 			$out->getHTML()
 		);
 	}

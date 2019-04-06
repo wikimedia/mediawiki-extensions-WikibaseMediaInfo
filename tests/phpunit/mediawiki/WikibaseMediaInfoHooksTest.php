@@ -216,7 +216,7 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 		$out->addHTML(
 			self::$parserOutputTag .
 			self::$extraHtml  .
-			self::$mediaInfoViewOpeningTag .
+			strtolower( self::$mediaInfoViewOpeningTag ).
 			$captions .
 			self::$mediaInfoViewClosingTag
 		);
@@ -235,11 +235,11 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 
 		// The <mediaInfoView> tags should not be present.
 		$this->assertNotRegExp(
-			'/' . self::$mediaInfoViewOpeningTag . '/',
+			'/' . self::$mediaInfoViewOpeningTag . '/i',
 			$out->getHTML()
 		);
 		$this->assertNotRegExp(
-			'/' . preg_quote( self::$mediaInfoViewClosingTag, '/' ) . '/',
+			'/' . preg_quote( self::$mediaInfoViewClosingTag, '/' ) . '/i',
 			$out->getHTML()
 		);
 	}

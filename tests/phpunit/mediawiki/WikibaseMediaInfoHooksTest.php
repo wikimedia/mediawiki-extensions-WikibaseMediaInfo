@@ -42,7 +42,7 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 	private static $parserOutputTag = '<div class="mw-parser-output">';
 	private static $mediaInfoViewOpeningTag = '<mediaInfoView>';
 	private static $mediaInfoViewClosingTag = '</mediaInfoView>';
-	private static $extraHtml = 'SOME_HTML';
+	private static $extraHtml = 'SOME_HTML<div>Hello!#%$</div><h2 id="foo">Heading!</h2><p>More text!</p>MORE_HTML';
 
 	public function testOnWikibaseRepoEntityNamespaces() {
 		$entityNamespaces = [];
@@ -229,7 +229,7 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 
 		// Captions should have moved ahead of the extra content, but still inside the parser block
 		$this->assertRegExp(
-			'/' . self::$parserOutputTag . '.*' . $captions . self::$extraHtml . '/',
+			'/' . self::$parserOutputTag . '.*' . $captions . preg_quote( self::$extraHtml, '/' ) . '/',
 			$out->getHTML()
 		);
 
@@ -321,7 +321,7 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 		$this->assertRegExp(
 			'/' . self::$parserOutputTag .
 			'<h1 class="mw-slot-header">[^<]+<\/h1>' .
-			$entityHtml . self::$extraHtml . '/',
+			$entityHtml . preg_quote( self::$extraHtml, '/' ) . '/',
 			$out->getHTML()
 		);
 	}
@@ -360,7 +360,7 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 		WikibaseMediaInfoHooks::onBeforePageDisplay( $out, $skin );
 
 		$this->assertRegExp(
-			'#' . self::$parserOutputTag . '<h1 class="mw-slot-header">[^<]+</h1>.*'  . self::$extraHtml . '#is',
+			'#' . self::$parserOutputTag . '<h1 class="mw-slot-header">[^<]+</h1>.*'  . preg_quote( self::$extraHtml, '#' ) . '#is',
 			$out->getHTML()
 		);
 	}

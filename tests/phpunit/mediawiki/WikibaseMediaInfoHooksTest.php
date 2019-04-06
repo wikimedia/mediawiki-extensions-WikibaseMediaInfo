@@ -211,7 +211,7 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 		$imgTitle->resetArticleID( 23 );
 		$out = $this->getMockOutputPage( $imgTitle );
 
-		$captions = 'SOME_CAPTIONS';
+		$captions = '<div>SOME_CAPTIONS</div>';
 		$out->clearHTML();
 		$out->addHTML(
 			self::$parserOutputTag .
@@ -229,7 +229,7 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 
 		// Captions should have moved ahead of the extra content, but still inside the parser block
 		$this->assertRegExp(
-			'/' . self::$parserOutputTag . '.*' . $captions . preg_quote( self::$extraHtml, '/' ) . '/',
+			'/' . self::$parserOutputTag . '.*' . preg_quote( $captions . self::$extraHtml, '/' ) . '/',
 			$out->getHTML()
 		);
 

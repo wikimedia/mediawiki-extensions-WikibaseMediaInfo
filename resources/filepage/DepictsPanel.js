@@ -97,16 +97,14 @@ DepictsPanel.prototype.initialize = function () {
  * @return {bool}
  */
 DepictsPanel.prototype.hasChanges = function () {
-	var changes, removals;
-
-	if ( !this.isEditable ) {
-		return false;
-	}
-
-	changes = this.depictsInput.getChanges();
-	removals = this.depictsInput.getRemovals();
+	var changes = this.depictsInput.getChanges(),
+		removals = this.depictsInput.getRemovals();
 
 	return changes.length > 0 || removals.length > 0;
+};
+
+DepictsPanel.prototype.isEditable = function () {
+	return this.isEditable;
 };
 
 DepictsPanel.prototype.onDepictsChange = function () {

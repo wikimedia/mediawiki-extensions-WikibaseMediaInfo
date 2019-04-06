@@ -356,10 +356,6 @@ CaptionsPanel.prototype.hasChanges = function () {
 	var $captions, hasChanges,
 		self = this;
 
-	if ( !this.isEditable ) {
-		return false;
-	}
-
 	$captions = $( self.contentSelector ).find( self.entityTermSelector );
 	hasChanges = $captions.length < Object.keys( self.captionsData ).length;
 
@@ -373,6 +369,10 @@ CaptionsPanel.prototype.hasChanges = function () {
 		}
 	} );
 	return hasChanges;
+};
+
+CaptionsPanel.prototype.isEditable = function () {
+	return this.isEditable;
 };
 
 /**

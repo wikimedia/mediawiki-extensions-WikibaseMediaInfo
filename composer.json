@@ -30,7 +30,8 @@
 		"psr-4": {
 			"Wikibase\\MediaInfo\\": "src/",
 			"Wikibase\\MediaInfo\\Tests\\": "tests/phpunit/composer/",
-			"Wikibase\\MediaInfo\\Tests\\MediaWiki\\": "tests/phpunit/mediawiki/"
+			"Wikibase\\MediaInfo\\Tests\\MediaWiki\\": "tests/phpunit/mediawiki/",
+			"Wikibase\\MediaInfo\\Tests\\Integration\\": "tests/phpunit/integration/"
 		}
 	},
 	"scripts": {

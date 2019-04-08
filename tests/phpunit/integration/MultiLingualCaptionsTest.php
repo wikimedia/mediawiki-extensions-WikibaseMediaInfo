@@ -2,10 +2,6 @@
 
 namespace Wikibase\MediaInfo\Tests\Integration;
 
-use ApiUsageException;
-use MockSearchEngine;
-use TestUser;
-use User;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\Repo\WikibaseRepo;
 
@@ -25,117 +21,11 @@ use Wikibase\Repo\WikibaseRepo;
  * @group database
  * @coversNothing
  */
-class MultiLingualCaptionsTest extends \ApiUploadTestCase {
-
-	protected function setUp() {
-		parent::setUp();
-
-		$this->setupWbEditorUser();
-		$this->setupSearchEngine();
-	}
-
-	private function setupWbEditorUser() {
-		self::$users['wbeditor'] = new TestUser(
-			'Apitesteditor',
-			'Api Test Editor',
-			'api_test_editor@example.com',
-			[ 'wbeditor' ]
-		);
-	}
-
-	private function setupSearchEngine() {
-		MockSearchEngine::clearMockResults();
-		$this->setMwGlobals( [
-			'wgSearchType' => MockSearchEngine::class,
-		] );
-	}
-
-	/**
-	 * Appends an edit token to a request.
-	 *
-	 * @param array $params
-	 * @param array|null $session
-	 * @param User|null $user
-	 * @param string $tokenType
-	 *
-	 * @throws ApiUsageException
-	 * @return array( array|null $resultData, WebRequest $request, array $sessionArray )
-	 */
-	protected function doApiRequestWithToken(
-		array $params,
-		array $session = null,
-		User $user = null,
-		$tokenType = 'csrf'
-	) {
-		if ( !$user ) {
-			$user = $GLOBALS['wgUser'];
-		}
-
-		if ( !array_key_exists( 'token', $params ) ) {
-			$params['token'] = $user->getEditToken();
-		}
-
-		return $this->doApiRequest( $params, $session, false, $user, $tokenType );
-	}
-
-	private function login() {
-		$user = self::$users['uploader'];
-		$userName = $user->getUser()->getName();
-		$password = $user->getPassword();
-
-		$params = [
-			'action' => 'login',
-			'lgname' => $userName,
-			'lgpassword' => $password
-		];
-		list( , , $session ) = $this->doApiRequest( $params );
-		return $session;
-	}
-
-	private function upload() {
-		$session = $this->login();
-		$extension = 'png';
-		$mimeType = 'image/png';
-
-		try {
-			$randomImageGenerator = new \RandomImageGenerator();
-			$filePaths = $randomImageGenerator->writeImages(
-				1,
-				$extension,
-				$this->getNewTempDirectory()
-			);
-		} catch ( \Exception $e ) {
-			$this->markTestIncomplete( $e->getMessage() );
-		}
-
-		/** @var array $filePaths */
-		$filePath = $filePaths[0];
-		$fileName = basename( $filePath );
-
-		if ( !$this->fakeUploadFile( 'file', $fileName, $mimeType, $filePath ) ) {
-			$this->markTestIncomplete( "Couldn't upload file!\n" );
-		}
-
-		$params = [
-			'action' => 'upload',
-			'filename' => $fileName,
-			'file' => file_get_contents( $filePath ),
-			'comment' => 'dummy comment',
-			'text' => "This is the page text for $fileName",
-		];
-
-		list( $result, , ) = $this->doApiRequestWithToken(
-			$params,
-			$session,
-			self::$users['uploader']->getUser()
-		);
-
-		return $result['upload']['imageinfo']['canonicaltitle'];
-	}
+class MultiLingualCaptionsTest extends WBMIApiTestCase {
 
 	public function testEditCaptions() {
 		$testFilePage = \WikiPage::factory(
-			\Title::newFromText( $this->upload() )
+			\Title::newFromText( $this->uploadRandomImage() )
 		);
 
 		$pageId = $testFilePage->getId();

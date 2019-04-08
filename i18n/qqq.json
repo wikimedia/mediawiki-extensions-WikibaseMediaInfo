@@ -49,7 +49,7 @@
 	"wikibasemediainfo-statements-item-mark-as-prominent": "Text for link to make statement prominent. \"Prominent\" must be translated with the same word as in {{msg-mw|Wikibasemediainfo-statements-item-is-prominent}}.",
 	"wikibasemediainfo-statements-item-remove": "Title text for button to remove a property",
 	"wikibasemediainfo-statements-learn-more": "Text for link to page to learn more about statements",
-	"wikibasemediainfo-statements-remove": "Text for button to remove a statement",
+	"wikibasemediainfo-statements-remove": "Text for button to remove statements",
 	"wikibasemediainfo-statements-title-depicts": "Title for the group of statements for 'Depicts'",
 	"wikibasemediainfo-operator-placeholder": "Placeholder for operator dropdown",
 	"wikibasemediainfo-operator-value-is": "Label for operator 'is'",

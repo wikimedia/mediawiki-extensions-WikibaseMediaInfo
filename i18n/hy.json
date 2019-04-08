@@ -1,0 +1,23 @@
+{
+	"@metadata": {
+		"authors": [
+			"Kareyac"
+		]
+	},
+	"wikibasemediainfo-filepage-license-agree": "Ես համաձայն եմ",
+	"wikibasemediainfo-statements-learn-more": "Իմանալ ավելին",
+	"wikibasemediainfo-operator-placeholder": "Օպերատոր",
+	"wikibasemediainfo-operator-value-isempty": "դատարկ է",
+	"wikibasemediainfo-operator-value-isgreaterthan": "ավելի մեծ է, քան",
+	"wikibasemediainfo-filetype-bitmap": "Պատկերներ",
+	"wikibasemediainfo-filetype-video": "Վիդեո",
+	"wikibasemediainfo-filetype-audio": "Ձայն",
+	"wikibasemediainfo-filetype-drawing": "Նկարներ",
+	"wikibasemediainfo-filetype-3d": "3D մոդելներ",
+	"wikibasemediainfo-filetype-office": "Փաստաթղթեր",
+	"wikibasemediainfo-search-qualifiers-cancel": "Չեղարկել",
+	"wikibasemediainfo-search-qualifiers-save": "Հիշել",
+	"wikibasemediainfo-search-statements-cancel": "Չեղարկել",
+	"wikibasemediainfo-search-statements-save": "Որոնել",
+	"wikibasemediainfo-search-search": "Որոնել"
+}

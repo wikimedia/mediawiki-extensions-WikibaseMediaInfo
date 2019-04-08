@@ -17,5 +17,16 @@
 	"wikibasemediainfo-filepage-edit-captions": "Muokkaa kuvatekstejä",
 	"wikibasemediainfo-filepage-cancel": "Peru",
 	"wikibasemediainfo-filepage-publish": "Julkaise muutokset",
-	"wikibasemediainfo-filepage-caption-empty": "Lisää yhden rivin pituinen kuvaus tästä tiedostosta"
+	"wikibasemediainfo-filepage-caption-empty": "Lisää yhden rivin pituinen kuvaus tästä tiedostosta",
+	"wikibasemediainfo-filepage-license-agree": "Hyväksyn",
+	"wikibasemediainfo-operator-value-isgreaterthan": "on enemmän kuin",
+	"wikibasemediainfo-filetype-multimedia": "Multimedia",
+	"wikibasemediainfo-filetype-video": "Video",
+	"wikibasemediainfo-filetype-audio": "Ääni",
+	"wikibasemediainfo-filetype-3d": "3D-mallit",
+	"wikibasemediainfo-search-qualifiers-cancel": "Peruuta",
+	"wikibasemediainfo-search-qualifiers-save": "Tallenna",
+	"wikibasemediainfo-search-statements-cancel": "Peruuta",
+	"wikibasemediainfo-search-statements-save": "Haku",
+	"wikibasemediainfo-search-toggle-depicts": "Merkinnät"
 }

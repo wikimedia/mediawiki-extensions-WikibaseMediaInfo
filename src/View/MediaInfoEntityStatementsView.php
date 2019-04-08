@@ -249,6 +249,9 @@ class MediaInfoEntityStatementsView {
 		$panel = new PanelLayout( [
 			'classes' => [
 				'wbmi-entityview-statementsGroup',
+				// temporary indication (until we actively support other statements) that
+				// the statement is not defined in config
+				$name === false ? 'wbmi-entityview-statementsGroup-undefined' : '',
 				self::getHtmlContainerClass( $propertyIdString )
 			],
 			'scrollable' => false,
@@ -267,6 +270,7 @@ class MediaInfoEntityStatementsView {
 		] );
 		$panel->setAttributes(
 			[
+				'data-property' => $propertyIdString,
 				'data-statements' => json_encode( $serializedStatements ),
 				'data-formatvalue' => json_encode( $formatValueCache ),
 			]

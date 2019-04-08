@@ -6,12 +6,12 @@
 	 * @constructor
 	 * @param {Object} [config] Configuration options
 	 * @param {string} config.entityId Entity ID (e.g. M123 id of the file you just uploaded)
-	 * @param {string} [config.propertyId] Property ID (e.g. P123 id of `depicts` property)
+	 * @param {string} config.propertyId Property ID (e.g. P123 id of `depicts` property)
 	 * @param {Object} [config.qualifiers] Qualifiers map: { propertyId: datatype, ...}
 	 */
-	statements.DepictsWidget = function MediaInfoStatementsDepictsWidget( config ) {
+	statements.StatementWidget = function MediaInfoStatementsStatementWidget( config ) {
 		var
-			propertyId = config.propertyId || mw.config.get( 'wbmiProperties' ).depicts,
+			propertyId = config.propertyId,
 			qualifiers = config.qualifiers || mw.config.get( 'wbmiDepictsQualifierProperties' ) || {},
 			dataValue = new wb.datamodel.EntityId( propertyId ),
 			$label = $( '<h4>' )
@@ -26,7 +26,7 @@
 		config.propertyId = propertyId;
 		config.qualifiers = qualifiers;
 
-		statements.DepictsWidget.parent.call( this, config );
+		statements.StatementWidget.parent.call( this, config );
 		OO.ui.mixin.GroupElement.call( this );
 
 		this.config = config;
@@ -37,7 +37,7 @@
 		this.editing = false;
 
 		this.input = new statements.ItemInputWidget( {
-			classes: [ 'wbmi-depicts-input' ]
+			classes: [ 'wbmi-statement-input' ]
 		} );
 		this.input.connect( this, { choose: 'addItemFromInput' } );
 
@@ -86,11 +86,11 @@
 
 		this.renderFooter();
 	};
-	OO.inheritClass( statements.DepictsWidget, OO.ui.Widget );
-	OO.mixinClass( statements.DepictsWidget, OO.ui.mixin.GroupElement );
-	OO.mixinClass( statements.DepictsWidget, statements.FormatValueElement );
+	OO.inheritClass( statements.StatementWidget, OO.ui.Widget );
+	OO.mixinClass( statements.StatementWidget, OO.ui.mixin.GroupElement );
+	OO.mixinClass( statements.StatementWidget, statements.FormatValueElement );
 
-	statements.DepictsWidget.prototype.renderFooter = function () {
+	statements.StatementWidget.prototype.renderFooter = function () {
 		var showRemove = this.getItems().length > 0 && this.editing;
 		this.$removeLink.toggle( showRemove ).toggleClass( 'wbmi-hidden', !showRemove );
 		this.$footer.toggle( this.editing );
@@ -100,7 +100,7 @@
 	 * @param {mw.mediaInfo.statements.ItemInputWidget} item
 	 * @param {Object} data
 	 */
-	statements.DepictsWidget.prototype.addItemFromInput = function ( item, data ) {
+	statements.StatementWidget.prototype.addItemFromInput = function ( item, data ) {
 		var widget = this.createItem( item.getData(), data.label, data.url, data.repository );
 		widget.connect( this, { delete: [ 'removeItems', [ widget ] ] } );
 		widget.connect( this, { delete: [ 'emit', 'change' ] } );
@@ -126,7 +126,7 @@
 	 * @param {string} [repo]
 	 * @return {mw.mediaInfo.statements.ItemWidget}
 	 */
-	statements.DepictsWidget.prototype.createItem = function ( dataValue, label, url, repo ) {
+	statements.StatementWidget.prototype.createItem = function ( dataValue, label, url, repo ) {
 		var guidGenerator = new wb.utilities.ClaimGuidGenerator( this.entityId ),
 			mainSnak = new wb.datamodel.PropertyValueSnak( this.propertyId, dataValue, null ),
 			qualifiers = null,
@@ -148,7 +148,7 @@
 	/**
 	 * @return {wikibase.datamodel.StatementList}
 	 */
-	statements.DepictsWidget.prototype.getData = function () {
+	statements.StatementWidget.prototype.getData = function () {
 		return new wb.datamodel.StatementList( this.getItems().map( function ( item ) {
 			return item.getData();
 		} ) );
@@ -158,7 +158,7 @@
 	 * Update DOM with latest data, sorted by prominence
 	 * @param {wikibase.datamodel.StatementList} data
 	 */
-	statements.DepictsWidget.prototype.setData = function ( data ) {
+	statements.StatementWidget.prototype.setData = function ( data ) {
 		var self, sortedData;
 
 		if ( !data ) {
@@ -204,7 +204,7 @@
 	/**
 	 * @param {boolean} editing
 	 */
-	statements.DepictsWidget.prototype.setEditing = function ( editing ) {
+	statements.StatementWidget.prototype.setEditing = function ( editing ) {
 		var self = this;
 
 		this.editing = editing;
@@ -224,7 +224,7 @@
 	/**
 	 * @return {wikibase.datamodel.Statement[]}
 	 */
-	statements.DepictsWidget.prototype.getChanges = function () {
+	statements.StatementWidget.prototype.getChanges = function () {
 		var currentStatements = this.getData().toArray(),
 			previousStatements = this.data.toArray().reduce( function ( result, statement ) {
 				result[ statement.getClaim().getGuid() ] = statement;
@@ -240,7 +240,7 @@
 	/**
 	 * @return {wikibase.datamodel.Statement[]}
 	 */
-	statements.DepictsWidget.prototype.getRemovals = function () {
+	statements.StatementWidget.prototype.getRemovals = function () {
 		var data = this.getData(),
 			currentStatements = data.toArray().reduce( function ( result, statement ) {
 				result[ statement.getClaim().getGuid() ] = statement;
@@ -257,7 +257,7 @@
 	 *
 	 * @return {jQuery.Promise}
 	 */
-	statements.DepictsWidget.prototype.reset = function () {
+	statements.StatementWidget.prototype.reset = function () {
 		this.setData( this.data );
 		this.setEditing( false );
 		this.$element.find( '.wbmi-statement-publish-error-msg' ).remove();
@@ -269,7 +269,7 @@
 	 * @param {number} [baseRevId]
 	 * @return {jQuery.Promise}
 	 */
-	statements.DepictsWidget.prototype.submit = function ( baseRevId ) {
+	statements.StatementWidget.prototype.submit = function ( baseRevId ) {
 		var self = this,
 			api = wikibase.api.getLocationAgnosticMwApi( mw.config.get( 'wbmiRepoApiUrl', mw.config.get( 'wbRepoApiUrl' ) ) ),
 			data = this.getData(),
@@ -394,5 +394,8 @@
 
 		return promise;
 	};
+
+	// backward compatibility: this class used to be named differently
+	statements.DepictsWidget = statements.StatementWidget;
 
 }( mw.mediaInfo.statements, wikibase ) );

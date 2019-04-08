@@ -59,7 +59,7 @@ CaptionsPanel = function ( config ) {
 
 	this.captionsData = {};
 	this.captionsExist = config.captionsExist;
-	this.isEditable = false;
+	this.editing = false;
 	this.languageSelectors = [];
 	this.textInputs = [];
 
@@ -372,7 +372,7 @@ CaptionsPanel.prototype.hasChanges = function () {
 };
 
 CaptionsPanel.prototype.isEditable = function () {
-	return this.isEditable;
+	return this.editing;
 };
 
 /**
@@ -877,7 +877,7 @@ CaptionsPanel.prototype.makeEditable = function () {
 					);
 				} );
 				self.popPending();
-				self.isEditable = true;
+				self.editing = true;
 			} );
 	} );
 };
@@ -885,7 +885,7 @@ CaptionsPanel.prototype.makeEditable = function () {
 CaptionsPanel.prototype.makeReadOnly = function () {
 	var $captionsContent = $( this.contentSelector );
 
-	this.isEditable = false;
+	this.editing = false;
 	$captionsContent.removeClass( 'wbmi-entityview-editable' );
 	this.editActionsWidget.hide();
 	this.redrawCaptionsContent();

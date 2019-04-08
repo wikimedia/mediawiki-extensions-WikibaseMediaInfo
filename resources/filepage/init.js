@@ -62,7 +62,7 @@
 	// Ensure browser default 'Leave Site' popup triggers when leaving a page with edits
 	window.onbeforeunload = function () {
 		if (
-			( captions.isEditable() && captions.hasChanges() ) ||
+			( captions && captions.isEditable() && captions.hasChanges() ) ||
 			( depicts && depicts.isEditable() && depicts.hasChanges() )
 		) {
 			// this message is not usually displayed (browsers have default language)

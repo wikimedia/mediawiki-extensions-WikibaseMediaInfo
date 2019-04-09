@@ -27,19 +27,16 @@
 	.wbmi-entityview-caption {
 		.flex-display();
 		.flex-wrap();
-		border-bottom: 1px solid @base70;
-		margin-bottom: @sm-spacing;
+		padding: @sm-spacing 0;
 
-		&:last-of-type {
-			border-bottom: 0;
+		// set borders only between elements
+		// for some reason & + & syntax not working here...
+		& + .wbmi-entityview-caption {
+			border-top: 1px solid @base70;
 		}
 
 		.@{edit-mode}& {
-			border-bottom: 0;
-		}
-
-		&.wbmi-entityview-emptyCaption {
-			color: @base30;
+			border: 0;
 		}
 	}
 
@@ -57,6 +54,10 @@
 		.flex-display();
 		.flex-wrap(wrap);
 		.flex(1, 1, auto);
+
+		&.wbmi-entityview-emptyCaption {
+			color: @base30;
+		}
 	}
 
 	.wbmi-caption-textInput {

@@ -2,6 +2,7 @@
 
 namespace Wikibase\MediaInfo\Tests\MediaWiki\View;
 
+use DataValues\DataValue;
 use DataValues\StringValue;
 use ValueFormatters\FormatterOptions;
 use Wikibase\DataModel\Entity\EntityIdValue;
@@ -111,7 +112,7 @@ class MediaInfoEntityStatementsViewTest extends \PHPUnit\Framework\TestCase {
 			->getMock();
 		$valueFormatter->method( 'formatValue' )
 			->will(
-				$this->returnCallback( function( EntityIdValue $value ) {
+				$this->returnCallback( function( DataValue $value ) {
 					$map = [
 						'P333' => 'PROPERTY P333 LABEL',
 						'P444' => 'PROPERTY P444 LABEL',
@@ -121,7 +122,10 @@ class MediaInfoEntityStatementsViewTest extends \PHPUnit\Framework\TestCase {
 						'P888' => 'PROPERTY P888 LABEL',
 						'P999' => 'PROPERTY P999 LABEL',
 					];
-					if ( isset( $map[$value->getEntityId()->getSerialization()] ) ) {
+					if (
+						$value instanceof EntityIdValue &&
+						isset( $map[$value->getEntityId()->getSerialization()] )
+					) {
 						return $map[$value->getEntityId()->getSerialization()];
 					}
 					return null;

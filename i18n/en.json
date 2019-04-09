@@ -77,5 +77,6 @@
 	"wikibasemediainfo-search-search": "Search",
 	"wikibasemediainfo-search-toggle-keywords": "Keyword",
 	"wikibasemediainfo-search-toggle-depicts": "Tags",
-	"wikibasemediainfo-search-toggle-statements": "Other statements"
+	"wikibasemediainfo-search-toggle-statements": "Other statements",
+	"wikibasemediainfo-unsupported-datatype": "Unsupported data type: $1"
 }

@@ -246,6 +246,12 @@ the MediaWiki framework (located in `tests/phpunit/composer`) by running
 Tests relying on the MediaWiki framework (located in `tests/phpunit/mediawiki`)
 must by run using MediaWiki core's `phpunit.php` endpoint.
 
+### Selenium
+
+Selenium (browser) tests live in `tests/selenium`. Documentation about how to
+set up and run these tests can be found [in this
+file](./tests/selenium/README.md).
+
 ### Node-QUnit
 
 This extension supports headless testing of JS components using Node.js and

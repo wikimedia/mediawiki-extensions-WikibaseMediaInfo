@@ -7,6 +7,7 @@
 /node_modules
 .eslintcache
 .DS_Store
+.env
 tests/selenium/log/
 /.nyc_output/
 /coverage

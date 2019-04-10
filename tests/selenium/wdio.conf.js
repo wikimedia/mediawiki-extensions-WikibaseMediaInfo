@@ -5,35 +5,29 @@
 const fs = require( 'fs' ),
 	saveScreenshot = require( 'wdio-mediawiki' ).saveScreenshot;
 
+// Load values from .env file
+require( 'dotenv' ).config();
+
 exports.config = {
-	// ======
-	// Custom WDIO config specific to MediaWiki
-	// ======
-	// Use in a test as `browser.options.<key>`.
-	// Defaults are for convenience with MediaWiki-Vagrant
-	// Wiki admin
 
-	username: process.env.MEDIAWIKI_USER || 'Admin',
-	password: process.env.MEDIAWIKI_PASSWORD || 'vagrant',
+	// =========================
+	// MediaWiki-specific Config
+	// =========================
+	username: process.env.MEDIAWIKI_USER,
+	password: process.env.MEDIAWIKI_PASSWORD,
+	baseUrl: process.env.MW_SERVER + process.env.MW_SCRIPT_PATH,
 
-	// Base for browser.url() and Page#openTitle()
-	baseUrl: ( process.env.MW_SERVER || 'http://127.0.0.1:8080' ) + (
-		process.env.MW_SCRIPT_PATH || '/w'
-	),
-
-	// ==================
+	// ============
 	// Test Files
-	// ==================
+	// ============
 	specs: [
-
-		__dirname + '/specs/*.js'
-
+		__dirname + '/specs/**/*.js',
+		__dirname + '/specs_betacommons/**/*.js'
 	],
 
 	// ============
 	// Capabilities
 	// ============
-
 	capabilities: [ {
 		// https://sites.google.com/a/chromium.org/chromedriver/capabilities
 		browserName: 'chrome',
@@ -49,6 +43,7 @@ exports.config = {
 			]
 		}
 	} ],
+
 	// ===================
 	// Test Configurations
 	// ===================

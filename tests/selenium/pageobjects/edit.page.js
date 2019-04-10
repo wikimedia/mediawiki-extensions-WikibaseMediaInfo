@@ -42,6 +42,7 @@ class EditPage extends Page {
 
 	edit( name, content ) {
 		this.openForEditing( name );
+		browser.pause( 1000 );
 		this.content.setValue( content );
 		this.save.click();
 	}

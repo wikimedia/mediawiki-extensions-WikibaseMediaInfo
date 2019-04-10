@@ -19,6 +19,7 @@
 	"wikibasemediainfo-filepage-edit-captions": "Endra bilettekstar",
 	"wikibasemediainfo-filepage-edit-depicts": "Endra synlege element",
 	"wikibasemediainfo-filepage-cancel": "Avbryt",
+	"wikibasemediainfo-filepage-cancel-confirm": "Vil du kasta endringane dine?",
 	"wikibasemediainfo-filepage-edit": "Endre",
 	"wikibasemediainfo-filepage-publish": "Publiser endringar",
 	"wikibasemediainfo-filepage-caption-empty": "Skriv inn ei line med tekst som skildrar fila",
@@ -31,9 +32,12 @@
 	"wikibasemediainfo-property-placeholder": "Eigenskap",
 	"wikibasemediainfo-filepage-license-agree": "Eg samtykkjer",
 	"wikibasemediainfo-statements-depicts-title": "Element synlege på dette biletet",
+	"wikibasemediainfo-statements-item-add-qualifier": "Legg til kvalifikator",
 	"wikibasemediainfo-statements-item-input-label": "frå Wikidata",
-	"wikibasemediainfo-statements-item-input-placeholder": "Søk for å leggja til synlege element",
+	"wikibasemediainfo-statements-item-input-placeholder": "Søk for å leggja til element (katt, hav, Galdhøpiggen osb.)",
+	"wikibasemediainfo-statements-item-is-prominent": "Framståande",
+	"wikibasemediainfo-statements-item-mark-as-prominent": "Merk som framståande",
 	"wikibasemediainfo-statements-learn-more": "Lær meir",
-	"wikibasemediainfo-statements-remove": "Fjern utsegn",
+	"wikibasemediainfo-statements-remove": "Fjern alle",
 	"wikibasemediainfo-statements-title-depicts": "Element som er med i denne fila"
 }

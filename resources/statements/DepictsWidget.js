@@ -271,7 +271,7 @@
 	 */
 	statements.DepictsWidget.prototype.submit = function ( baseRevId ) {
 		var self = this,
-			api = wikibase.api.getLocationAgnosticMwApi( mw.config.get( 'wbmiRepoApiUrl' ) ),
+			api = wikibase.api.getLocationAgnosticMwApi( mw.config.get( 'wbmiRepoApiUrl', mw.config.get( 'wbRepoApiUrl' ) ) ),
 			data = this.getData(),
 			serializer = new wb.serialization.StatementSerializer(),
 			promise = $.Deferred().resolve( { pageinfo: { lastrevid: baseRevId } } ).promise(),

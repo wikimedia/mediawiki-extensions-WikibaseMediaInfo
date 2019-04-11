@@ -309,7 +309,7 @@
 
 						item.$element.after( $( '<div>' )
 							.addClass( 'wbmi-statement-publish-error-msg' )
-							.text( apiError.detailedMessage )
+							.html( apiError.detailedMessage )
 						);
 
 						// replace statement with what we previously had, since we failed
@@ -346,7 +346,7 @@
 
 					self.$element.append( $( '<div>' )
 						.addClass( 'wbmi-statement-publish-error-msg' )
-						.text( apiError.detailedMessage )
+						.html( apiError.detailedMessage )
 					);
 
 					// restore statements that failed to delete

@@ -38,4 +38,10 @@
 	+ .wbmi-entityview-statementsGroup {
 		margin-top: @base-spacing;
 	}
+
+	// temporary indication (until we actively support other statements) that
+	// the statement is not defined in config
+	&.wbmi-entityview-statementsGroup-undefined:not( .wbmi-entityview-editable ) {
+		opacity: 0.5;
+	}
 }

@@ -1,6 +1,6 @@
 'use strict';
 
-var DepictsPanel,
+var StatementPanel,
 	LicenseDialogWidget,
 	CancelPublishWidget;
 
@@ -8,25 +8,28 @@ CancelPublishWidget = require( './CancelPublishWidget.js' );
 LicenseDialogWidget = require( './LicenseDialogWidget.js' );
 
 /**
- * Panel for displaying/editing structured data depicts statements
+ * Panel for displaying/editing structured data statements
  *
  * @extends OO.ui.Element
  * @mixins OO.ui.mixin.PendingElement
  *
  * @constructor
  * @param {Object} [config]
- * @cfg {string} contentClass CSS class of depicts content container
+ * @cfg {jQuery} $element
+ * @cfg {string} propertyId
  */
-DepictsPanel = function DepictsPanel( config ) {
-	this.config = config || {};
-
+StatementPanel = function StatementPanel( config ) {
 	// Parent constructor
-	DepictsPanel.super.apply( this, arguments );
+	StatementPanel.super.apply( this, arguments );
+
+	this.$element = config.$element;
+	delete config.$element;
+
+	this.config = config || {};
 
 	// Mixin constructors
 	OO.ui.mixin.PendingElement.call( this, this.config );
 
-	this.$content = $( '.' + this.config.contentClass );
 	this.editing = false;
 	this.licenseDialogWidget = new LicenseDialogWidget();
 	this.editToggle = new OO.ui.ButtonWidget( {
@@ -41,13 +44,13 @@ DepictsPanel = function DepictsPanel( config ) {
 	this.cancelPublish = new CancelPublishWidget( this );
 	this.cancelPublish.disablePublish();
 
-	this.populateFormatValueCache( JSON.parse( this.$content.attr( 'data-formatvalue' ) || '{}' ) );
-	this.depictsInput = new mw.mediaInfo.statements.DepictsWidget( this.config );
+	this.populateFormatValueCache( JSON.parse( this.$element.attr( 'data-formatvalue' ) || '{}' ) );
+	this.statementWidget = new mw.mediaInfo.statements.StatementWidget( this.config );
 };
 
 /* Inheritance */
-OO.inheritClass( DepictsPanel, OO.ui.Element );
-OO.mixinClass( DepictsPanel, OO.ui.mixin.PendingElement );
+OO.inheritClass( StatementPanel, OO.ui.Element );
+OO.mixinClass( StatementPanel, OO.ui.mixin.PendingElement );
 
 /**
  * Pre-populate the formatValue cache, which will save some
@@ -55,7 +58,7 @@ OO.mixinClass( DepictsPanel, OO.ui.mixin.PendingElement );
  *
  * @param {Object} data
  */
-DepictsPanel.prototype.populateFormatValueCache = function ( data ) {
+StatementPanel.prototype.populateFormatValueCache = function ( data ) {
 	Object.keys( data ).map( function ( dataValue ) {
 		Object.keys( data[ dataValue ] ).map( function ( format ) {
 			Object.keys( data[ dataValue ][ format ] ).map( function ( language ) {
@@ -70,23 +73,23 @@ DepictsPanel.prototype.populateFormatValueCache = function ( data ) {
 	} );
 };
 
-DepictsPanel.prototype.initialize = function () {
+StatementPanel.prototype.initialize = function () {
 	var deserializer = new wikibase.serialization.StatementListDeserializer(),
 		statementsJson;
 
 	this.cancelPublish.hide();
 
 	// load data into js widget instead
-	statementsJson = JSON.parse( this.$content.attr( 'data-statements' ) || '[]' );
-	this.depictsInput.setData( deserializer.deserialize( statementsJson ) );
-	this.depictsInput.connect( this, { change: 'onDepictsChange' } );
+	statementsJson = JSON.parse( this.$element.attr( 'data-statements' ) || '[]' );
+	this.statementWidget.setData( deserializer.deserialize( statementsJson ) );
+	this.statementWidget.connect( this, { change: 'onDepictsChange' } );
 
 	// ...and attach the widget to DOM, replacing the server-side rendered equivalent
-	this.$content.find( ':not( .wbmi-statements-title )' ).remove();
-	this.$content.append( this.depictsInput.$element );
+	this.$element.find( ':not( .wbmi-statements-title )' ).remove();
+	this.$element.append( this.statementWidget.$element );
 
 	// ...and attach edit/cancel/publish controls
-	this.$content.find( '.wbmi-statements-header .wbmi-entity-label-extra' ).append(
+	this.$element.find( '.wbmi-statements-header .wbmi-entity-label-extra' ).append(
 		this.editToggle.$element,
 		this.cancelPublish.$element
 	);
@@ -96,18 +99,18 @@ DepictsPanel.prototype.initialize = function () {
  * Check for changes to statement claims or number of statements
  * @return {bool}
  */
-DepictsPanel.prototype.hasChanges = function () {
-	var changes = this.depictsInput.getChanges(),
-		removals = this.depictsInput.getRemovals();
+StatementPanel.prototype.hasChanges = function () {
+	var changes = this.statementWidget.getChanges(),
+		removals = this.statementWidget.getRemovals();
 
 	return changes.length > 0 || removals.length > 0;
 };
 
-DepictsPanel.prototype.isEditable = function () {
+StatementPanel.prototype.isEditable = function () {
 	return this.editing;
 };
 
-DepictsPanel.prototype.onDepictsChange = function () {
+StatementPanel.prototype.onDepictsChange = function () {
 	var hasChanges = this.hasChanges();
 
 	if ( hasChanges ) {
@@ -119,7 +122,7 @@ DepictsPanel.prototype.onDepictsChange = function () {
 	this.makeEditable();
 };
 
-DepictsPanel.prototype.makeEditable = function () {
+StatementPanel.prototype.makeEditable = function () {
 	var msg,
 		self = this;
 
@@ -140,35 +143,35 @@ DepictsPanel.prototype.makeEditable = function () {
 	this.licenseDialogWidget.getConfirmationIfNecessary().then( function () {
 		self.cancelPublish.show();
 		self.editToggle.$element.hide().addClass( 'wbmi-hidden' );
-		self.$content.addClass( 'wbmi-entityview-editable' );
-		self.$content.find( '.wbmi-statements-header .wbmi-entity-link' ).hide().addClass( 'wbmi-hidden' );
-		self.depictsInput.setEditing( true );
+		self.$element.addClass( 'wbmi-entityview-editable' );
+		self.$element.find( '.wbmi-statements-header .wbmi-entity-link' ).hide().addClass( 'wbmi-hidden' );
+		self.statementWidget.setEditing( true );
 		self.editing = true;
 	} );
 };
 
-DepictsPanel.prototype.makeReadOnly = function () {
+StatementPanel.prototype.makeReadOnly = function () {
 	var self = this;
 	this.editing = false;
-	this.$content.removeClass( 'wbmi-entityview-editable' );
+	this.$element.removeClass( 'wbmi-entityview-editable' );
 	this.cancelPublish.disablePublish();
 	this.cancelPublish.hide();
 
-	this.depictsInput.disconnect( this, { change: 'onDepictsChange' } );
-	this.depictsInput.reset().then( function () {
-		self.depictsInput.connect( self, { change: 'onDepictsChange' } );
+	this.statementWidget.disconnect( this, { change: 'onDepictsChange' } );
+	this.statementWidget.reset().then( function () {
+		self.statementWidget.connect( self, { change: 'onDepictsChange' } );
 
 		self.editToggle.$element.show().removeClass( 'wbmi-hidden' );
-		self.$content.find( '.wbmi-statements-header .wbmi-entity-link' ).show().removeClass( 'wbmi-hidden' );
+		self.$element.find( '.wbmi-statements-header .wbmi-entity-link' ).show().removeClass( 'wbmi-hidden' );
 	} );
 };
 
-DepictsPanel.prototype.sendData = function () {
+StatementPanel.prototype.sendData = function () {
 	var self = this;
 	this.cancelPublish.setStateSending();
 
-	this.depictsInput.disconnect( this, { change: 'onDepictsChange' } );
-	this.depictsInput.submit( mw.mediaInfo.structuredData.currentRevision )
+	this.statementWidget.disconnect( this, { change: 'onDepictsChange' } );
+	this.statementWidget.submit( mw.mediaInfo.structuredData.currentRevision )
 		.then( function ( response ) {
 			mw.mediaInfo.structuredData.currentRevision = response.pageinfo.lastrevid;
 			self.makeReadOnly();
@@ -178,9 +181,9 @@ DepictsPanel.prototype.sendData = function () {
 			self.cancelPublish.enablePublish();
 		} )
 		.always( function () {
-			self.depictsInput.connect( self, { change: 'onDepictsChange' } );
+			self.statementWidget.connect( self, { change: 'onDepictsChange' } );
 			self.cancelPublish.setStateReady();
 		} );
 };
 
-module.exports = DepictsPanel;
+module.exports = StatementPanel;

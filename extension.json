@@ -168,7 +168,7 @@
 				"resources/filepage/CaptionsEditActionsWidget.js",
 				"resources/filepage/CaptionData.js",
 				"resources/filepage/CaptionsPanel.js",
-				"resources/filepage/DepictsPanel.js"
+				"resources/filepage/StatementPanel.js"
 			],
 			"dependencies": [
 				"mediawiki.action.edit.editWarning",
@@ -215,7 +215,7 @@
 			"styles": [
 				"resources/filepage/styles/mediainfo-filepage.less",
 				"resources/filepage/styles/mediainfo-filepage-captionspanel.less",
-				"resources/filepage/styles/mediainfo-filepage-depictspanel.less"
+				"resources/filepage/styles/mediainfo-filepage-statementpanel.less"
 			],
 			"targets": [
 				"desktop",
@@ -229,7 +229,7 @@
 				"resources/statements/EntityLookupElement.js",
 				"resources/statements/EntityInputWidget.js",
 				"resources/statements/QualifierValueInputWidget.js",
-				"resources/statements/DepictsWidget.js",
+				"resources/statements/StatementWidget.js",
 				"resources/statements/ItemInputWidget.js",
 				"resources/statements/ItemWidget.js",
 				"resources/statements/QualifierWidget.js"
@@ -276,7 +276,7 @@
 				"resources/statements/EntityLookupElement.less",
 				"resources/statements/EntityInputWidget.less",
 				"resources/statements/QualifierValueInputWidget.less",
-				"resources/statements/DepictsWidget.less",
+				"resources/statements/StatementWidget.less",
 				"resources/statements/ItemInputWidget.less",
 				"resources/statements/ItemWidget.less",
 				"resources/statements/QualifierWidget.less"

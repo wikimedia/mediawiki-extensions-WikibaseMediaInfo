@@ -4,6 +4,7 @@
 			"Bene*"
 		]
 	},
+	"action-mediainfo-term": "change media info terms (captions, summaries)",
 	"right-mediainfo-term": "Change media info terms (captions, summaries)",
 	"slot-name-mediainfo": "Structured media info",
 	"wikibase-entity-mediainfo": "media info",

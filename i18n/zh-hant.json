@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"Kly"
+			"Kly",
+			"蘭斯特"
 		]
 	},
 	"right-mediainfo-term": "更改多媒體資訊項目（說明、摘要等）",
@@ -46,7 +47,7 @@
 	"wikibasemediainfo-statements-item-mark-as-prominent": "標記為突顯",
 	"wikibasemediainfo-statements-item-remove": "移除",
 	"wikibasemediainfo-statements-learn-more": "了解更多",
-	"wikibasemediainfo-statements-remove": "移除聲明",
+	"wikibasemediainfo-statements-remove": "全部移除",
 	"wikibasemediainfo-statements-title-depicts": "在此檔案描寫的項目",
 	"wikibasemediainfo-operator-placeholder": "操作者",
 	"wikibasemediainfo-operator-value-is": "是",

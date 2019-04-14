@@ -3,7 +3,8 @@
 		"authors": [
 			"Pyscowicz",
 			"Nike",
-			"Stryn"
+			"Stryn",
+			"Kyykaarme"
 		]
 	},
 	"wikibase-entity-mediainfo": "mediatieto",
@@ -19,6 +20,7 @@
 	"wikibasemediainfo-filepage-publish": "Julkaise muutokset",
 	"wikibasemediainfo-filepage-caption-empty": "Lisää yhden rivin pituinen kuvaus tästä tiedostosta",
 	"wikibasemediainfo-filepage-license-agree": "Hyväksyn",
+	"wikibasemediainfo-operator-value-isempty": "on tyhjä",
 	"wikibasemediainfo-operator-value-isgreaterthan": "on enemmän kuin",
 	"wikibasemediainfo-filetype-multimedia": "Multimedia",
 	"wikibasemediainfo-filetype-video": "Video",

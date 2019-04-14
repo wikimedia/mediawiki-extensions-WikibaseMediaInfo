@@ -5,6 +5,7 @@
 			"Speravir"
 		]
 	},
+	"action-mediainfo-term": "Bildtexte oder Zusammenfassungen zu ändern",
 	"right-mediainfo-term": "Medieninformationsbegriffe ändern (Bildtexte, Zusammenfassungen)",
 	"slot-name-mediainfo": "Strukturierte Medieninformationen",
 	"wikibase-entity-mediainfo": "Medieninformationen",

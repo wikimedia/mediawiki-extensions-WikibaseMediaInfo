@@ -6,6 +6,7 @@
 			"TheEduGobi"
 		]
 	},
+	"action-mediainfo-term": "alterar termos de informação de mídia (legendas, resumos)",
 	"right-mediainfo-term": "Alterar os termos da informação de arquivos multimídia (legendas, resumos)",
 	"slot-name-mediainfo": "Informação estruturada de multimídia",
 	"wikibase-entity-mediainfo": "informação multimídia",

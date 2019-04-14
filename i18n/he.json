@@ -7,6 +7,7 @@
 			"Jdforrester"
 		]
 	},
+	"action-mediainfo-term": "לשנות פרטים של מידע על מדיה (כיתובים, סיכומים)",
 	"right-mediainfo-term": "שינוי מושגים במידע על המדיה (כיתובים, סיכומים)",
 	"slot-name-mediainfo": "מידע מובנה על מדיה",
 	"wikibase-entity-mediainfo": "מידע על המדיה",

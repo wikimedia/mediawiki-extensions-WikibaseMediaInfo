@@ -79,5 +79,6 @@
 	"wikibasemediainfo-search-search": "Suchen",
 	"wikibasemediainfo-search-toggle-keywords": "Schlüsselwort",
 	"wikibasemediainfo-search-toggle-depicts": "Markierungen",
-	"wikibasemediainfo-search-toggle-statements": "Andere Aussagen"
+	"wikibasemediainfo-search-toggle-statements": "Andere Aussagen",
+	"wikibasemediainfo-unsupported-datatype": "Nicht unterstützter Datentyp: $1"
 }

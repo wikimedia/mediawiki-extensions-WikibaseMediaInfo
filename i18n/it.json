@@ -34,7 +34,7 @@
 	"wikibasemediainfo-filepage-statement-some-value": "Questa proprietà ha un valore, ma è sconosciuto",
 	"wikibasemediainfo-filepage-statement-error": "Si è verificato un errore durante il recupero del valore per questa proprietà",
 	"wikibasemediainfo-filepage-license-title": "Contributi a didascalie e altri dati strutturati",
-	"wikibasemediainfo-filepage-license-content": "Cliccando su \"Pubblica modifiche\", accetti le [[wmf:Terms_of_Use|condizioni d'uso]] e accetti irrevocabilmente di pubblicare il tuo contributo sotto la licenza [https://creativecommons.org/publicdomain/zero/1.0/ Creative Commons CC0].",
+	"wikibasemediainfo-filepage-license-content": "Cliccando su \"Pubblica modifiche\", accetti le [[wmf:Terms_of_Use|condizioni d'uso]] e accetti irrevocabilmente di pubblicare il tuo contributo in base alla licenza [https://creativecommons.org/publicdomain/zero/1.0/deed.it Creative Commons CC0].",
 	"wikibasemediainfo-filepage-license-content-acceptance": "Accetto questi termini per le mie future modifiche. Non mostrare di nuovo questo messaggio.",
 	"wikibasemediainfo-property-placeholder": "Proprietà",
 	"wikibasemediainfo-filepage-license-agree": "Accetto",

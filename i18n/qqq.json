@@ -83,5 +83,6 @@
 	"wikibasemediainfo-search-search": "Title text for search button\n{{Identical|Search}}",
 	"wikibasemediainfo-search-toggle-keywords": "Text for button to toggle to 'keyword' search mode",
 	"wikibasemediainfo-search-toggle-depicts": "Text for button to toggle to 'depicts' search mode",
-	"wikibasemediainfo-search-toggle-statements": "Text for button to toggle to 'other statements' search mode"
+	"wikibasemediainfo-search-toggle-statements": "Text for button to toggle to 'other statements' search mode",
+	"wikibasemediainfo-unsupported-datatype": "Message to display for unsupported data types. Parameters:\n* $1 - the data type"
 }

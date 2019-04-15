@@ -11,6 +11,7 @@
 		statements.QualifierWidget.parent.call( this, config );
 		statements.FormatValueElement.call( this, $.extend( {}, config ) );
 
+		this.config = config;
 		this.qualifiers = config.qualifiers || {};
 
 		this.valueWidget = new OO.ui.Widget( { classes: [ 'wbmi-qualifier-value' ] } );
@@ -66,13 +67,18 @@
 	statements.QualifierWidget.prototype.setData = function ( data ) {
 		this.data = data;
 
+		// make sure the property exists in the dropdown (it's supposed to be,
+		// but it's not unthinkable someone crafted an API call to add a property
+		// that's not configured, or that we've changed our minds and updated
+		// the list of properties...)
+		this.qualifiers = $.extend( {}, this.config.qualifiers );
+		this.qualifiers[ data.getPropertyId() ] = data.getValue().getType();
+		this.populatePropertiesDropdown();
+
 		this.propertyDropdown.getMenu().selectItemByData( data.getPropertyId() );
 		this.valueInput.setData( data.getValue() );
 	};
 
-	/**
-	 * @return {jQuery.Promise}
-	 */
 	statements.QualifierWidget.prototype.updateValueWidget = function () {
 		var self = this,
 			data, dataValue;
@@ -96,50 +102,52 @@
 					plain
 				);
 			} );
-
-			return this.updatePromise;
 		} catch ( e ) {
 			// nothing to render if data is invalid...
 		}
 	};
 
-	statements.QualifierWidget.prototype.populatePropertiesDropdown = function () {
-		var self = this;
+	/**
+	 * @param {string} propertyId
+	 * @return {jQuery.Promise}
+	 */
+	statements.QualifierWidget.prototype.addProperty = function ( propertyId ) {
+		var self = this,
+			dataValue = new wb.datamodel.EntityId( propertyId );
 
+		// skip if property already exists in dropdown
+		if ( this.propertyDropdown.getMenu().findItemFromData( propertyId ) !== null ) {
+			return $.Deferred().resolve().promise();
+		}
+
+		// add property to dropdown
+		this.propertyDropdown.getMenu().addItems( [
+			new OO.ui.MenuOptionWidget( { data: propertyId } )
+		] );
+
+		// enable dropdown now that it has items
+		this.propertyDropdown.setDisabled( false );
+
+		// now fetch the formatted value for the property and update the
+		// dropdown menu item's label
+		return self.formatValue( dataValue, 'text/plain' ).then( function ( formatted ) {
+			// set property label
+			var item = self.propertyDropdown.getMenu().findItemFromData( propertyId );
+			item.setLabel( formatted );
+			if ( item.isSelected() ) {
+				self.propertyDropdown.setLabel( formatted );
+				self.updateValueWidget();
+			}
+		} );
+	};
+
+	statements.QualifierWidget.prototype.populatePropertiesDropdown = function () {
 		// reset dropdown
 		this.propertyDropdown.getMenu().clearItems();
 		this.propertyDropdown.setLabel( mw.message( 'wikibasemediainfo-property-placeholder' ).text() );
+		this.propertyDropdown.setDisabled( true );
 
-		Object.keys( this.qualifiers ).forEach( function ( propertyId ) {
-			// add all menu items
-			self.propertyDropdown.getMenu().addItems( [
-				new OO.ui.MenuOptionWidget( { data: propertyId } )
-			] );
-		} );
-
-		this.propertyDropdown.setDisabled( this.propertyDropdown.getMenu().getItems().length === 0 );
-
-		// now fetch the formatted values for all qualifier properties and update the
-		// dropdown menu item's labels once we have them...
-		$.when.apply( $, Object.keys( this.qualifiers ).map( function ( propertyId ) {
-			var dataValue = new wb.datamodel.EntityId( propertyId );
-			return self.formatValue( dataValue, 'text/plain' );
-		} ) ).then( function () {
-			var selected = self.propertyDropdown.getMenu().findSelectedItem(),
-				labels = arguments;
-
-			// set property labels
-			Object.keys( self.qualifiers ).forEach( function ( propertyId, i ) {
-				self.propertyDropdown.getMenu().findItemFromData( propertyId ).setLabel( labels[ i ] );
-			} );
-
-			// if one of the properties was already selected, reflect that in the dropdown's label
-			if ( selected !== null ) {
-				self.propertyDropdown.setLabel( selected.getLabel() );
-			}
-
-			self.updateValueWidget();
-		} );
+		Object.keys( this.qualifiers ).forEach( this.addProperty.bind( this ) );
 	};
 
 	statements.QualifierWidget.prototype.populateValueInput = function () {

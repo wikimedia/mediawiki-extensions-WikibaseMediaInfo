@@ -39,8 +39,8 @@
 		if (
 			// make sure there's a statements block on the page (e.g. if it's feature-flagged off)
 			$statements.length !== 0 &&
-			// and we have an ID for "depicts" in config
-			'depicts' in mw.config.get( 'wbmiProperties' )
+			// and we have properties configured
+			Object.keys( mw.config.get( 'wbmiProperties' ) ).length > 0
 		) {
 			$tabs = $content.find( '.wbmi-tabs' );
 

@@ -94,7 +94,10 @@
 		}
 
 		return new search.CapsuleItemWidget( {
-			property: mw.config.get( 'wbmiProperties' ).depicts,
+			// @todo this assumes that wbmiProperties[0] === depicts, but that's not
+			// necessarily a safe assumption - this should be revisited once we resume
+			// work on searching depicts, and replaced with a better solution
+			property: Object.keys( mw.config.get( 'wbmiProperties' ) )[ 0 ], // assumed to be 'depicts'
 			qualifiers: mw.config.get( 'wbmiDepictsQualifierProperties' ),
 			data: data,
 			label: label,

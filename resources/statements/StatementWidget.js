@@ -7,11 +7,15 @@
 	 * @param {Object} [config] Configuration options
 	 * @param {string} config.entityId Entity ID (e.g. M123 id of the file you just uploaded)
 	 * @param {string} config.propertyId Property ID (e.g. P123 id of `depicts` property)
+	 * @param {string} config.properties Properties map: { propertyId: datatype, ...}
 	 * @param {Object} [config.qualifiers] Qualifiers map: { propertyId: datatype, ...}
 	 */
 	statements.StatementWidget = function MediaInfoStatementsStatementWidget( config ) {
 		var
-			propertyId = config.propertyId || mw.config.get( 'wbmiProperties' ).depicts,
+			properties = config.properties || mw.config.get( 'wbmiProperties' ) || {},
+			// wbmiProperties-based fallbacks are for backward compatibility, back
+			// when this was for depicts only, and propertyId wasn't required
+			propertyId = config.propertyId || Object.keys( properties )[ 0 ] || properties.depicts,
 			qualifiers = config.qualifiers || mw.config.get( 'wbmiDepictsQualifierProperties' ) || {},
 			dataValue = new wb.datamodel.EntityId( propertyId ),
 			$label = $( '<h4>' )
@@ -24,6 +28,7 @@
 				.text( propertyId.replace( /^.+:/, '' ) );
 
 		config.propertyId = propertyId;
+		config.properties = properties;
 		config.qualifiers = qualifiers;
 
 		statements.StatementWidget.parent.call( this, config );
@@ -32,12 +37,14 @@
 		this.config = config;
 		this.entityId = config.entityId;
 		this.propertyId = config.propertyId;
+		this.properties = config.properties;
 		this.qualifiers = config.qualifiers;
 		this.data = new wb.datamodel.StatementList();
 		this.editing = false;
 
 		this.input = new statements.ItemInputWidget( {
-			classes: [ 'wbmi-statement-input' ]
+			classes: [ 'wbmi-statement-input' ],
+			type: this.properties[ propertyId ] || 'string'
 		} );
 		this.input.connect( this, { choose: 'addItemFromInput' } );
 
@@ -181,6 +188,12 @@
 			if ( statement.getClaim().getMainSnak().getPropertyId() !== self.propertyId ) {
 				throw new Error( 'Invalid statement' );
 			}
+
+			// we've potentially received more info that we had when constructing this
+			// object: extract the id & data type of this statement & adjust the
+			// input type accordingly
+			self.properties[ mainSnak.getPropertyId() ] = mainSnak.getValue().getType();
+			self.input.setInputType( mainSnak.getValue().getType() );
 
 			if ( !( mainSnak instanceof wb.datamodel.PropertyValueSnak ) ) {
 				// ignore value-less snak

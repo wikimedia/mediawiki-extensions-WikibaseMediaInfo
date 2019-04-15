@@ -17,10 +17,30 @@
 		} ) );
 
 		statements.FormatValueElement.call( this, $.extend( {}, config ) );
+
+		this.setInputType( config.type || 'string' );
 	};
 	OO.inheritClass( statements.ItemInputWidget, OO.ui.TextInputWidget );
 	OO.mixinClass( statements.ItemInputWidget, statements.EntityLookupElement );
 	OO.mixinClass( statements.ItemInputWidget, statements.FormatValueElement );
+
+	/**
+	 * @param {string} type 'wikibase-entityid'
+	 * @chainable
+	 * @return {ItemInputWidget}
+	 */
+	statements.ItemInputWidget.prototype.setInputType = function ( type ) {
+		if ( type === 'wikibase-entityid' ) {
+			this.$element.show();
+		} else {
+			// don't show this input field if the data type is anything other than
+			// wikibase-entityid, the only datatype this thing is equiped to deal with;
+			// we'll figure out how to deal with other types later...
+			this.$element.hide();
+		}
+
+		return this;
+	};
 
 	/**
 	 * @inheritdoc

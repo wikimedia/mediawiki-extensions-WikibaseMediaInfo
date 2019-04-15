@@ -164,6 +164,21 @@ class WikibaseMediaInfoHooks {
 	}
 
 	/**
+	 * @param PropertyId $id
+	 * @return mixed
+	 * @throws PropertyDataTypeLookupException
+	 */
+	public static function getValueType( PropertyId $id ) {
+		$mwConfig = MediaWikiServices::getInstance()->getMainConfig();
+		$wbRepo = WikibaseRepo::getDefaultInstance();
+		$propertyDataTypeLookup = $wbRepo->getPropertyDataTypeLookup();
+		$dataTypes = $mwConfig->get( 'WBRepoDataTypes' );
+
+		$propertyDatatype = $propertyDataTypeLookup->getDataTypeIdForProperty( $id );
+		return $dataTypes['PT:'.$propertyDatatype]['value-type'];
+	}
+
+	/**
 	 * Replace mediainfo-specific placeholders (if any), move structured data, add data and modules
 	 *
 	 * @param \OutputPage $out
@@ -184,7 +199,6 @@ class WikibaseMediaInfoHooks {
 			return;
 		}
 
-		$mwConfig = MediaWikiServices::getInstance()->getMainConfig();
 		$wbRepo = WikibaseRepo::getDefaultInstance();
 		$allLanguages = \Language::fetchLanguageNames();
 		$termsLanguages = $wbRepo->getTermsLanguages()->getLanguages();
@@ -199,15 +213,18 @@ class WikibaseMediaInfoHooks {
 			// … the page view is a read
 			\Action::getActionName( $out->getContext() ) === 'view';
 
-		$dataTypes = $mwConfig->get( 'WBRepoDataTypes' );
+		$properties = [];
 		$qualifiers = [];
-		$propertyDataTypeLookup = $wbRepo->getPropertyDataTypeLookup();
 		foreach ( $wgDepictsQualifierProperties as $property ) {
 			try {
-				$id = new PropertyId( $property );
-				$propertyDatatype = $propertyDataTypeLookup->getDataTypeIdForProperty( $id );
-				$valueDataType = $dataTypes['PT:'.$propertyDatatype]['value-type'];
-				$qualifiers[$property] = $valueDataType;
+				$qualifiers[$property] = static::getValueType( new PropertyId( $property ) );
+			} catch ( PropertyDataTypeLookupException $e ) {
+				// ignore invalid properties...
+			}
+		}
+		foreach ( $wgMediaInfoProperties as $property ) {
+			try {
+				$properties[$property] = static::getValueType( new PropertyId( $property ) );
 			} catch ( PropertyDataTypeLookupException $e ) {
 				// ignore invalid properties...
 			}
@@ -224,7 +241,7 @@ class WikibaseMediaInfoHooks {
 			$wbRepo->getEntityViewFactory(),
 			$wgMediaInfoEnableFilePageDepicts,
 			[
-				'wbmiProperties' => $wgMediaInfoProperties,
+				'wbmiProperties' => $properties,
 				'wbmiDepictsQualifierProperties' => $qualifiers,
 				'wbmiDepictsHelpUrl' => $wgDepictsHelpUrl,
 				'wbmiExternalEntitySearchBaseUri' => $wgMediaInfoExternalEntitySearchBaseUri,

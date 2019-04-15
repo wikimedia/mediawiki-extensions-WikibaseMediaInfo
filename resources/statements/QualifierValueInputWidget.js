@@ -28,7 +28,7 @@
 	statements.QualifierValueInputWidget.prototype.setInputType = function ( type ) {
 		if ( this.type === type ) {
 			// nothing's changed, move along
-			return;
+			return this;
 		}
 
 		// remove existing element from DOM

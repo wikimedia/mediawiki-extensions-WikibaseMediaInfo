@@ -38,6 +38,12 @@ use Wikibase\View\ViewContent;
  */
 class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 
+	// Internal constants to avoid repetition.
+	private static $parserOutputTag = '<div class="mw-parser-output">';
+	private static $mediaInfoViewOpeningTag = '<mediaInfoView>';
+	private static $mediaInfoViewClosingTag = '</mediaInfoView>';
+	private static $extraHtml = 'SOME_HTML';
+
 	public function testOnWikibaseRepoEntityNamespaces() {
 		$entityNamespaces = [];
 		WikibaseMediaInfoHooks::onWikibaseRepoEntityNamespaces( $entityNamespaces );
@@ -205,18 +211,14 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 		$imgTitle->resetArticleID( 23 );
 		$out = $this->getMockOutputPage( $imgTitle );
 
-		$parserOutputTag = '<div class="mw-parser-output">';
-		$mediaInfoViewOpeningTag = '<mediaInfoView>';
 		$captions = 'SOME_CAPTIONS';
-		$mediaInfoViewClosingTag = '</mediaInfoView>';
-		$extraHtml = 'SOME_HTML';
 		$out->clearHTML();
 		$out->addHTML(
-			$parserOutputTag .
-			$extraHtml  .
-			$mediaInfoViewOpeningTag .
+			self::$parserOutputTag .
+			self::$extraHtml  .
+			self::$mediaInfoViewOpeningTag .
 			$captions .
-			$mediaInfoViewClosingTag
+			self::$mediaInfoViewClosingTag
 		);
 
 		$skin = $this->getMockBuilder( \Skin::class )
@@ -226,7 +228,7 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 		WikibaseMediaInfoHooks::onBeforePageDisplay( $out, $skin );
 
 		$this->assertRegExp(
-			'/' . $parserOutputTag . '.*' . $captions . $extraHtml . '/',
+			'/' . self::$parserOutputTag . '.*' . $captions . self::$extraHtml . '/',
 			$out->getHTML()
 		);
 	}
@@ -251,12 +253,10 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 		$imgTitle->resetArticleID( 23 );
 		$out = $this->getMockOutputPage( $imgTitle );
 
-		$parserOutputTag = '<div class="mw-parser-output">';
-		$extraHtml = 'SOME_HTML';
 		$out->clearHTML();
 		$out->addHTML(
-			$parserOutputTag .
-			$extraHtml
+			self::$parserOutputTag .
+			self::$extraHtml
 		);
 
 		$hookObject = new WikibaseMediaInfoHooks(
@@ -308,9 +308,9 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 		);
 
 		$this->assertRegExp(
-			'/' . $parserOutputTag .
+			'/' . self::$parserOutputTag .
 			'<h1 class="mw-slot-header">[^<]+<\/h1>' .
-			$entityHtml . $extraHtml . '/',
+			$entityHtml . self::$extraHtml . '/',
 			$out->getHTML()
 		);
 	}
@@ -332,15 +332,13 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 		$imgTitle->resetArticleID( 23 );
 		$out = $this->getMockOutputPage( $imgTitle );
 
-		$parserOutputTag = '<div class="mw-parser-output">';
-		$extraHtml = 'SOME_HTML';
 		$captionsHeader = '<h1 class="mw-slot-header">' .
 			WikibaseMediaInfoHooks::MEDIAINFO_SLOT_HEADER_PLACEHOLDER .
 			'</h1>';
 		$out->clearHTML();
 		$out->addHTML(
-			$parserOutputTag .
-			$extraHtml .
+			self::$parserOutputTag .
+			self::$extraHtml .
 			$captionsHeader
 		);
 
@@ -351,7 +349,7 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 		WikibaseMediaInfoHooks::onBeforePageDisplay( $out, $skin );
 
 		$this->assertRegExp(
-		'#' . $parserOutputTag . '<h1 class="mw-slot-header">[^<]+</h1>.*'  . $extraHtml . '#is',
+			'#' . self::$parserOutputTag . '<h1 class="mw-slot-header">[^<]+</h1>.*'  . self::$extraHtml . '#is',
 			$out->getHTML()
 		);
 	}

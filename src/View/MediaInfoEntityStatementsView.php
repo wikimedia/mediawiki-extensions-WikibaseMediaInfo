@@ -2,6 +2,8 @@
 
 namespace Wikibase\MediaInfo\View;
 
+use DataValues\DataValue;
+use DataValues\Serializers\DataValueSerializer;
 use Html;
 use OOUI\HtmlSnippet;
 use OOUI\PanelLayout;
@@ -17,6 +19,7 @@ use Wikibase\DataModel\Snak\PropertyNoValueSnak;
 use Wikibase\DataModel\Snak\PropertyValueSnak;
 use Wikibase\DataModel\Snak\Snak;
 use Wikibase\DataModel\Snak\SnakList;
+use Wikibase\DataModel\Snak\SnakObject;
 use Wikibase\DataModel\Statement\Statement;
 use Wikibase\DataModel\Statement\StatementList;
 use Wikibase\Lib\OutputFormatSnakFormatterFactory;
@@ -117,16 +120,16 @@ class MediaInfoEntityStatementsView {
 	 * @param Statement $statement
 	 * @return array
 	 */
-	private function getFormatValueCacheForStatement( Statement $statement ) {
+	private function getStatementFormatValueCache( Statement $statement ) {
 		$results = [];
 
-		$results += $this->getFormatValueCache(
+		$results += $this->getSnakFormatValueCache(
 			$statement->getMainSnak(),
 			[ SnakFormatter::FORMAT_HTML, SnakFormatter::FORMAT_PLAIN ]
 		);
 
 		foreach ( $statement->getQualifiers() as $qualifier ) {
-			$results += $this->getFormatValueCache( $qualifier, [ SnakFormatter::FORMAT_PLAIN ] );
+			$results += $this->getSnakFormatValueCache( $qualifier, [ SnakFormatter::FORMAT_PLAIN ] );
 		}
 
 		return $results;
@@ -137,21 +140,37 @@ class MediaInfoEntityStatementsView {
 	 * @param string[] $formats
 	 * @return array
 	 */
-	private function getFormatValueCache( Snak $snak, $formats = [ SnakFormatter::FORMAT_PLAIN ] ) {
+	private function getSnakFormatValueCache( Snak $snak, $formats = [ SnakFormatter::FORMAT_PLAIN ] ) {
 		$result = [];
 
-		$snakSerializer = $this->serializerFactory->newSnakSerializer();
-		$serialized = $snakSerializer->serialize( $snak );
+		// format property
+		if ( $snak instanceof SnakObject ) {
+			$dataValue = new EntityIdValue( $snak->getPropertyId() );
+			$result += $this->getValueFormatValueCache( $dataValue, $formats );
+		}
 
-		if ( isset( $serialized['datavalue'] ) ) {
-			$data = json_encode( $serialized[ 'datavalue' ] );
-			foreach ( $formats as $format ) {
-				$result[$data][$format][$this->languageCode] = $this->formatSnak(
-					$snak,
-					$format,
-					$this->languageCode
-				);
-			}
+		// format value
+		if ( $snak instanceof PropertyValueSnak ) {
+			$result += $this->getValueFormatValueCache( $snak->getDataValue(), $formats );
+		}
+
+		return $result;
+	}
+
+	/**
+	 * @param DataValue $value
+	 * @param string[] $formats
+	 * @return array
+	 */
+	private function getValueFormatValueCache( DataValue $value, $formats = [ SnakFormatter::FORMAT_PLAIN ] ) {
+		$result = [];
+
+		$serializer = new DataValueSerializer();
+		$serialized = $serializer->serialize( $value );
+
+		$data = json_encode( $serialized );
+		foreach ( $formats as $format ) {
+			$result[$data][$format][$this->languageCode] = $this->formatValue( $value, $format );
 		}
 
 		return $result;
@@ -163,21 +182,6 @@ class MediaInfoEntityStatementsView {
 		}
 
 		return '';
-	}
-
-	/**
-	 * @param Snak $snak
-	 * @param string $format
-	 * @param string $language
-	 * @return string
-	 */
-	private function formatSnak( Snak $snak, $format, $language ) {
-		$formatter = $this->snakFormatterFactory->getSnakFormatter(
-			$format,
-			new FormatterOptions( [ ValueFormatter::OPT_LANG => $language ] )
-		);
-
-		return $formatter->formatSnak( $snak );
 	}
 
 	/**
@@ -196,25 +200,18 @@ class MediaInfoEntityStatementsView {
 		foreach ( $statements as $statement ) {
 			$itemsGroupDiv->appendContent( $this->createStatementDiv( $statement ) );
 			$serializedStatements[] = $statementSerializer->serialize( $statement );
-			$formatValueCache += $this->getFormatValueCacheForStatement( $statement );
+			$formatValueCache += $this->getStatementFormatValueCache( $statement );
 		}
 
-		// below is the main property (e.g. depicts)
-		$mainPropertySnak = new PropertyValueSnak(
-			$statement->getPropertyId(),
-			new EntityIdValue( $statement->getPropertyId() )
-		);
-		$formatValueCache += $this->getFormatValueCache(
-			$mainPropertySnak,
+		// format main property (e.g. depicts)
+		$formatValueCache += $this->getValueFormatValueCache(
+			new EntityIdValue( $statement->getPropertyId() ),
 			[ SnakFormatter::FORMAT_PLAIN, SnakFormatter::FORMAT_HTML ]
 		);
-		// these are properties use in qualifier dropdown (e.g. color, wears, ...)
+		// format properties suggested in qualifier dropdown (e.g. color, wears, ...)
 		foreach ( $this->qualifiers as $id ) {
-			$formatValueCache += $this->getFormatValueCache(
-				new PropertyValueSnak(
-					new PropertyId( $propertyIdString ),
-					new EntityIdValue( new PropertyId( $id ) )
-				),
+			$formatValueCache += $this->getValueFormatValueCache(
+				new EntityIdValue( new PropertyId( $id ) ),
 				[ SnakFormatter::FORMAT_PLAIN ]
 			);
 		}
@@ -287,14 +284,6 @@ class MediaInfoEntityStatementsView {
 		);
 		$header->addClasses( [ 'wbmi-statements-header' ] );
 		return $header;
-	}
-
-	private function formatEntityId( EntityId $entityId, $format = SnakFormatter::FORMAT_PLAIN ) {
-		$valueFormatter = $this->valueFormatterFactory->getValueFormatter(
-			$format,
-			new FormatterOptions()
-		);
-		return $valueFormatter->formatValue( new EntityIdValue( $entityId ) );
 	}
 
 	private function createFormattedDataValue( $formattedValue, EntityId $entityId = null, $repo = '' ) {
@@ -370,9 +359,9 @@ class MediaInfoEntityStatementsView {
 		}
 		$mainSnakDiv->appendContent(
 			$this->createFormattedDataValue(
-				new HtmlSnippet( $this->formatSnakValue( $mainSnak ) ),
+				new HtmlSnippet( $this->formatSnak( $mainSnak ) ),
 				$mainSnakValueEntityId,
-				$this->extractRepo( $this->formatSnakValue( $mainSnak, SnakFormatter::FORMAT_HTML ) )
+				$this->extractRepo( $this->formatSnak( $mainSnak, SnakFormatter::FORMAT_HTML ) )
 			)
 		);
 
@@ -404,7 +393,7 @@ class MediaInfoEntityStatementsView {
 		/** @var Snak $snak */
 		foreach ( $snakList as $snak ) {
 			$qualifierHtmlByPropertyId[$snak->getPropertyId()->getSerialization()][] =
-				new HtmlSnippet( $this->formatSnakValue( $snak, SnakFormatter::FORMAT_PLAIN ) );
+				new HtmlSnippet( $this->formatSnak( $snak, SnakFormatter::FORMAT_PLAIN ) );
 		}
 
 		$qualifierDivs = [];
@@ -439,14 +428,37 @@ class MediaInfoEntityStatementsView {
 	 * @param Snak $snak
 	 * @param string $format
 	 * @return string
-	 * @throws \OOUI\Exception
 	 */
-	private function formatSnakValue( Snak $snak, $format = SnakFormatter::FORMAT_PLAIN ) {
+	private function formatSnak( Snak $snak, $format = SnakFormatter::FORMAT_PLAIN ) {
 		$formatter = $this->snakFormatterFactory->getSnakFormatter(
 			$format,
-			new FormatterOptions()
+			new FormatterOptions( [ ValueFormatter::OPT_LANG => $this->languageCode ] )
 		);
+
 		return $formatter->formatSnak( $snak );
+	}
+
+	/**
+	 * @param DataValue $value
+	 * @param string $format
+	 * @return string
+	 */
+	private function formatValue( DataValue $value, $format = SnakFormatter::FORMAT_PLAIN ) {
+		$formatter = $this->valueFormatterFactory->getValueFormatter(
+			$format,
+			new FormatterOptions( [ ValueFormatter::OPT_LANG => $this->languageCode ] )
+		);
+
+		return $formatter->formatValue( $value );
+	}
+
+	/**
+	 * @param EntityId $entityId
+	 * @param string $format
+	 * @return string
+	 */
+	private function formatEntityId( EntityId $entityId, $format = SnakFormatter::FORMAT_PLAIN ) {
+		return $this->formatValue( new EntityIdValue( $entityId ), $format );
 	}
 
 	/**

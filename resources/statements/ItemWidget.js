@@ -62,13 +62,21 @@
 			promise.then(
 				function ( plain, html ) {
 					self.label = plain;
-					self.url = $( html ).attr( 'href' );
 
-					// if the url is not relative (= has a prototype), it links to a foreign
-					// repository and we can extract the repo name from the title argument
-					self.repo = '';
-					if ( /^[a-z0-9]+:\/\//.test( self.url ) ) {
-						self.repo = $( html ).attr( 'title' ).replace( /:.+$/, '' );
+					self.url = undefined;
+					self.repo = undefined;
+					try {
+						self.url = $( html ).attr( 'href' );
+
+						// if the url is not relative (= has a prototype), it links to a foreign
+						// repository and we can extract the repo name from the title argument
+						self.repo = undefined;
+						if ( /^[a-z0-9]+:\/\//.test( self.url ) ) {
+							self.repo = $( html ).attr( 'title' ).replace( /:.+$/, '' );
+						}
+					} catch ( e ) {
+						// nothing to worry about, it's just not something with a link - we'll
+						// deal with it where we want to display the link
 					}
 				}
 			);
@@ -117,7 +125,7 @@
 				.addClass(
 					'wbmi-entity-link ' +
 					// Classes used: wbmi-entity-link-foreign-repo-* and wbmi-entity-link-local-repo
-					'wbmi-entity-link' + ( this.repo !== '' ? '-foreign-repo-' + this.repo : '-local-repo' )
+					'wbmi-entity-link' + ( this.repo ? '-foreign-repo-' + this.repo : '-local-repo' )
 				)
 				.attr( 'href', this.url )
 				.attr( 'target', '_blank' )
@@ -153,7 +161,7 @@
 				$label,
 				$( '<div>' )
 					.addClass( 'wbmi-entity-label-extra' )
-					.append( $link, $makePrimary )
+					.append( this.url ? $link : '', $makePrimary )
 			)
 		);
 
@@ -262,9 +270,10 @@
 
 		// save & re-render title
 		if ( !this.data.equals( data ) ) {
-			// property has changed: invalidate the label & url
+			// property has changed: invalidate the label, url & repo
 			this.label = undefined;
 			this.url = undefined;
+			this.repo = undefined;
 
 			this.render();
 		}

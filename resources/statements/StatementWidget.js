@@ -11,7 +11,7 @@
 	 */
 	statements.StatementWidget = function MediaInfoStatementsStatementWidget( config ) {
 		var
-			propertyId = config.propertyId,
+			propertyId = config.propertyId || mw.config.get( 'wbmiProperties' ).depicts,
 			qualifiers = config.qualifiers || mw.config.get( 'wbmiDepictsQualifierProperties' ) || {},
 			dataValue = new wb.datamodel.EntityId( propertyId ),
 			$label = $( '<h4>' )

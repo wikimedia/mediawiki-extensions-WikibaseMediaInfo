@@ -537,12 +537,12 @@ CaptionsPanel.prototype.enableAllFormInputs = function () {
 };
 
 /**
-	* Get a value object for sending data to the api
-	*
-	* @param {string} language
-	* @param {string} text
-	* @return {{bot: number, action: string, id, value: *, language: *}}
-	*/
+* Get a value object for sending data to the api
+*
+* @param {string} language
+* @param {string} text
+* @return {{bot: number, action: string, id, value: *, language: *}}
+*/
 CaptionsPanel.prototype.getWbSetLabelParams = function ( language, text ) {
 	var apiParams = {
 		/*
@@ -580,8 +580,6 @@ CaptionsPanel.prototype.sendIndividualLabel = function ( index, language, text )
 			self.captionsExist = true;
 			self.captionsData[ language ] = new CaptionData( language, text );
 			mw.mediaInfo.structuredData.currentRevision = result.entity.lastrevid;
-			self.languageSelectors.splice( index, 1 );
-			self.textInputs.splice( index, 1 );
 			$( self.contentSelector )
 				.find( self.entityTermSelector + '[data-index="' + index + '"]' )
 				.replaceWith(
@@ -595,7 +593,6 @@ CaptionsPanel.prototype.sendIndividualLabel = function ( index, language, text )
 				captionLanguages.push( language );
 				self.setCaptionLanguagesList( captionLanguages );
 			}
-			textInput.connect( self, { change: 'onCaptionsChange' } );
 			deferred.resolve();
 		} )
 		.fail( function ( errorCode, error ) {
@@ -603,6 +600,9 @@ CaptionsPanel.prototype.sendIndividualLabel = function ( index, language, text )
 
 			rejection.index = index;
 			deferred.reject( rejection );
+		} )
+		.always( function () {
+			textInput.connect( self, { change: 'onCaptionsChange' } );
 		} );
 	return deferred.promise();
 };

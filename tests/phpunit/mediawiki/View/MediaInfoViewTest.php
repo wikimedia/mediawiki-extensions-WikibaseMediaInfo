@@ -102,7 +102,7 @@ class MediaInfoViewTest extends \PHPUnit\Framework\TestCase {
 
 		$expectedContent = Html::rawElement(
 			MediaInfoView::MEDIAINFOVIEW_CUSTOM_TAG,
-			[],
+			[ 'style' => 'display: none' ],
 			$html
 		);
 

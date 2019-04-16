@@ -614,7 +614,7 @@ class WikibaseMediaInfoHooks {
 
 	private static function getMediaInfoViewRegex() {
 		$tag = MediaInfoView::MEDIAINFOVIEW_CUSTOM_TAG;
-		return '/<' . $tag . '>(.*)<\/' . $tag . '>/is';
+		return '/<' . $tag . '[^>]*>(.*)<\/' . $tag . '>/is';
 	}
 
 	private static function getMediaInfoCaptionsRegex() {

@@ -189,17 +189,17 @@
 				throw new Error( 'Invalid statement' );
 			}
 
-			// we've potentially received more info that we had when constructing this
-			// object: extract the id & data type of this statement & adjust the
-			// input type accordingly
-			self.properties[ mainSnak.getPropertyId() ] = mainSnak.getValue().getType();
-			self.input.setInputType( mainSnak.getValue().getType() );
-
 			if ( !( mainSnak instanceof wb.datamodel.PropertyValueSnak ) ) {
 				// ignore value-less snak
 				data.removeItem( statement );
 				return;
 			}
+
+			// we've potentially received more info that we had when constructing this
+			// object: extract the id & data type of this statement & adjust the
+			// input type accordingly
+			self.properties[ mainSnak.getPropertyId() ] = mainSnak.getValue().getType();
+			self.input.setInputType( mainSnak.getValue().getType() );
 
 			widget = self.createItem( mainSnak.getValue() );
 			widget.setData( statement );

@@ -79,7 +79,14 @@ class MediaInfoView implements EntityDocumentView {
 			// later on
 			Html::rawElement(
 				self::MEDIAINFOVIEW_CUSTOM_TAG,
-				[],
+				// Hide this custom tag by default: it's only really used to signal the boundaries
+				// of MediaInfo content, and we'll extract the relevant parts out of this if
+				// MediaInfo is installed.
+				// If MediaInfo is not installed, however (e.g. pulling in content from another
+				// wiki, or MediaInfo is uninstalled), this routine won't happen, styles and
+				// scripts to ensure this view works properly aren't loaded, etc, so we'd
+				// rather not have this content show up at all in that case...
+				[ 'style' => 'display: none' ],
 				$this->getCaptionsHtml( $entity ) . $this->getStatementsHtml( $entity )
 			)
 		);

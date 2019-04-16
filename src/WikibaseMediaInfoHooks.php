@@ -215,6 +215,7 @@ class WikibaseMediaInfoHooks {
 
 		$properties = [];
 		$qualifiers = [];
+		$titles = [];
 		foreach ( $wgDepictsQualifierProperties as $property ) {
 			try {
 				$qualifiers[$property] = static::getValueType( new PropertyId( $property ) );
@@ -222,8 +223,18 @@ class WikibaseMediaInfoHooks {
 				// ignore invalid properties...
 			}
 		}
-		foreach ( $wgMediaInfoProperties as $property ) {
+		foreach ( $wgMediaInfoProperties as $name => $property ) {
 			try {
+				// some properties/statements may have custom titles, in addition to their property
+				// label, to help clarify what data is expected there
+				// possible messages include:
+				// wikibasemediainfo-statements-title-depicts
+				$message = wfMessage( 'wikibasemediainfo-statements-title-' . ( $name ?: '' ) );
+				if ( $message->exists() ) {
+					$titles[$property] = $message->text();
+				}
+
+				// get data type for values associated with this property
 				$properties[$property] = static::getValueType( new PropertyId( $property ) );
 			} catch ( PropertyDataTypeLookupException $e ) {
 				// ignore invalid properties...
@@ -243,6 +254,7 @@ class WikibaseMediaInfoHooks {
 			[
 				'wbmiProperties' => $properties,
 				'wbmiDepictsQualifierProperties' => $qualifiers,
+				'wbmiPropertyTitles' => $titles,
 				'wbmiDepictsHelpUrl' => $wgDepictsHelpUrl,
 				'wbmiExternalEntitySearchBaseUri' => $wgMediaInfoExternalEntitySearchBaseUri,
 				'wbmiSearchFiletypes' => $wgMediaInfoSearchFiletypes,

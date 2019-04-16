@@ -85,8 +85,7 @@ StatementPanel.prototype.initialize = function () {
 	this.statementWidget.connect( this, { change: 'onDepictsChange' } );
 
 	// ...and attach the widget to DOM, replacing the server-side rendered equivalent
-	this.$element.find( ':not( .wbmi-statements-title )' ).remove();
-	this.$element.append( this.statementWidget.$element );
+	this.$element.empty().append( this.statementWidget.$element );
 
 	// ...and attach edit/cancel/publish controls
 	this.$element.find( '.wbmi-statements-header .wbmi-entity-label-extra' ).append(

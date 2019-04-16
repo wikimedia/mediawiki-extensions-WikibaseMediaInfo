@@ -9,6 +9,7 @@
 	 * @param {string} config.propertyId Property ID (e.g. P123 id of `depicts` property)
 	 * @param {string} config.properties Properties map: { propertyId: datatype, ...}
 	 * @param {Object} [config.qualifiers] Qualifiers map: { propertyId: datatype, ...}
+	 * @param {string} [config.title]
 	 */
 	statements.StatementWidget = function MediaInfoStatementsStatementWidget( config ) {
 		var
@@ -39,6 +40,7 @@
 		this.propertyId = config.propertyId;
 		this.properties = config.properties;
 		this.qualifiers = config.qualifiers;
+		this.title = config.title || mw.config.get( 'wbmiPropertyTitles' )[ this.propertyId ];
 		this.data = new wb.datamodel.StatementList();
 		this.editing = false;
 
@@ -62,6 +64,7 @@
 		this.connect( this, { change: 'renderFooter' } );
 
 		this.$element.addClass( 'wbmi-statements-widget' ).append(
+			this.title ? $( '<h3>' ).addClass( 'wbmi-statements-title' ).text( this.title ) : '',
 			$( '<div>' ).addClass( 'wbmi-statements-header wbmi-entity-title' ).append(
 				$label,
 				$( '<div>' ).addClass( 'wbmi-entity-label-extra' ).append( $link )

@@ -7,20 +7,6 @@
 .wbmi-entityview-statementsGroup {
 	@panel();
 
-	// Statements header
-	.wbmi-statements-title {
-		@panel-header();
-		margin-bottom: 0;
-	}
-
-	// the adjacent selector will make sure that this styling is *not* applied if
-	// a more elaborate .wbmi-statements-title title is missing, in which case
-	// all we have is this label, and it needs more emphasis
-	h3.wbmi-statements-title + * .wbmi-statements-header h4.wbmi-entity-label {
-		font-weight: normal;
-		font-style: italic;
-	}
-
 	// Header controls element
 	.wbmi-statements-header .wbmi-entity-label-extra {
 		@panel-controls();

@@ -1,5 +1,6 @@
 @import 'mediawiki.mixins';
 @import '../mediainfo-variables.less';
+@import '../filepage/styles/mediainfo-filepage-statementpanel';
 
 .wbmi-statements-widget {
 	margin-bottom: @sm-spacing;
@@ -13,6 +14,20 @@
 		margin: 0;
 		padding: 0;
 		overflow: visible;
+	}
+
+	// Statements header
+	h3.wbmi-statements-title {
+		@panel-header();
+		margin-bottom: 0;
+
+		// the adjacent selector will make sure that this styling is *not* applied if
+		// a more elaborate .wbmi-statements-title title is missing, in which case
+		// all we have is this label, and it needs more emphasis
+		+ .wbmi-statements-header h4.wbmi-entity-label {
+			font-weight: normal;
+			font-style: italic;
+		}
 	}
 
 	.wbmi-statements-header {

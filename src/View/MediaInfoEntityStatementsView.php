@@ -256,10 +256,10 @@ class MediaInfoEntityStatementsView {
 			'expanded' => false,
 			'framed' => true,
 			'content' => [
-				$title,
 				( new Tag( 'div' ) )
 					->addClasses( [ 'wbmi-statements-widget' ] )
 					->appendContent(
+						$title,
 						$this->createPropertyHeader( $propertyIdString ),
 						$itemsGroupDiv
 					),

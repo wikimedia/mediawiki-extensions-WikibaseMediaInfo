@@ -16,6 +16,7 @@
     "grunt-stylelint": "0.10.1",
     "jquery": "3.3.1",
     "jsdom": "14.0.0",
+    "mustache": "3.0.1",
     "oojs": "2.2.2",
     "oojs-ui": "0.31.1",
     "qunit": "2.9.2",

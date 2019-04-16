@@ -1,0 +1,46 @@
+<! doctype html>
+<html>
+<body>
+	{{#panels}}
+	<div class="wbmi-entityview-statementsGroup wbmi-entityview-statementsGroup-{{id}}">
+		<h3 class="wbmi-statements-title">
+			{{title}}
+		</h3>
+
+		<div class="wbmi-statements-widget">
+			<div class="wbmi-entity-title wbmi-statements-header">
+				<h4 class="wbmi-entity-label">
+					{{label}}
+				</h4>
+				<div class="wbmi-entity-label-extra">
+					<a class="wbmi-entity-link wbmi-entity-link-local-repo" href="{{url}}" target="_blank">
+						{{id}}
+					</a>
+				</div>
+			</div>
+
+			<div class="wbmi-content-items-group">
+				{{#statements}}
+				<div class="wbmi-item wbmi-item-read">
+					<div class="wbmi-item-container">
+						<div>
+							<div class="wbmi-entity-title">
+								<h4 class="wbmi-entity-label">
+									{{label}}
+								</h4>
+								<div class="wbmi-entity-label-extra">
+									<a class="wbmi-entity-link wbmi-entity-link-local-repo-d" href="{{url}}" target="_blank">
+										{{id}}
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				{{/statements}}
+			</div>
+		</div>
+	</div>
+	{{/panels}}
+</body>
+</html>

@@ -80,5 +80,6 @@
 	"wikibasemediainfo-search-search": "Pesquisar",
 	"wikibasemediainfo-search-toggle-keywords": "Palavras-chave",
 	"wikibasemediainfo-search-toggle-depicts": "Etiquetas",
-	"wikibasemediainfo-search-toggle-statements": "Outras declarações"
+	"wikibasemediainfo-search-toggle-statements": "Outras declarações",
+	"wikibasemediainfo-unsupported-datatype": "Tipo de dados não suportado: $1"
 }

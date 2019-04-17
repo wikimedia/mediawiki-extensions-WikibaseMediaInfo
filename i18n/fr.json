@@ -6,6 +6,7 @@
 			"Wladek92"
 		]
 	},
+	"action-mediainfo-term": "modifier les termes d’information du média (légendes, résumés)",
 	"right-mediainfo-term": "Modifier les termes d'information du média (légendes, résumés)",
 	"slot-name-mediainfo": "Information structurée de média",
 	"wikibase-entity-mediainfo": "Infos média",
@@ -79,5 +80,6 @@
 	"wikibasemediainfo-search-search": "Chercher",
 	"wikibasemediainfo-search-toggle-keywords": "Mot-clé",
 	"wikibasemediainfo-search-toggle-depicts": "Balises",
-	"wikibasemediainfo-search-toggle-statements": "Autres déclarations"
+	"wikibasemediainfo-search-toggle-statements": "Autres déclarations",
+	"wikibasemediainfo-unsupported-datatype": "Type de données non supporté : $1"
 }

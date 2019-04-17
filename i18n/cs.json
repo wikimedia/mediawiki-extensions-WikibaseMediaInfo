@@ -8,6 +8,7 @@
 			"Michaelbrabec"
 		]
 	},
+	"action-mediainfo-term": "měnit prvky informací o souborech (popisky, shrnutí)",
 	"right-mediainfo-term": "Změny prvků informací o souborech (popisky, shrnutí)",
 	"slot-name-mediainfo": "Strukturované informace o souboru",
 	"wikibase-entity-mediainfo": "informace o souboru",

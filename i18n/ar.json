@@ -81,5 +81,6 @@
 	"wikibasemediainfo-search-search": "بحث",
 	"wikibasemediainfo-search-toggle-keywords": "الكلمة المفتاحية",
 	"wikibasemediainfo-search-toggle-depicts": "الوسوم",
-	"wikibasemediainfo-search-toggle-statements": "بيانات أخرى"
+	"wikibasemediainfo-search-toggle-statements": "بيانات أخرى",
+	"wikibasemediainfo-unsupported-datatype": "نوع البيانات غير مدعوم: $1"
 }

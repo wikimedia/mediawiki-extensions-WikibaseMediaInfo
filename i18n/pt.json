@@ -4,7 +4,8 @@
 			"Vitorvicentevalente",
 			"Hamilton Abreu",
 			"Ruila",
-			"CaiusSPQR"
+			"CaiusSPQR",
+			"Fúlvio"
 		]
 	},
 	"right-mediainfo-term": "Alterar os termos da informação de ficheiros multimédia (legendas, resumos)",
@@ -49,7 +50,7 @@
 	"wikibasemediainfo-statements-item-mark-as-prominent": "Marcar como saliente",
 	"wikibasemediainfo-statements-item-remove": "Remover",
 	"wikibasemediainfo-statements-learn-more": "Saiba mais",
-	"wikibasemediainfo-statements-remove": "Remover declaração",
+	"wikibasemediainfo-statements-remove": "Remover tudo",
 	"wikibasemediainfo-statements-title-depicts": "Elementos retratados neste ficheiro",
 	"wikibasemediainfo-operator-placeholder": "Operador",
 	"wikibasemediainfo-operator-value-is": "é",

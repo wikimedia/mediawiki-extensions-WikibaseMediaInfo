@@ -49,7 +49,8 @@
 			}
 
 			// Only allow editing if we're NOT on a diff page or viewing an older revision
-			if ( $content.find( '.diff' ).length === 0 && $content.find( '.mw-revision' ).length === 0 ) {
+			// eslint-disable-next-line no-jquery/no-global-selector
+			if ( $( '.diff' ).length === 0 && $( '.mw-revision' ).length === 0 ) {
 				$statements.each( function () {
 					var propertyId = $( this ).data( 'property' );
 					if ( !propertyId ) {

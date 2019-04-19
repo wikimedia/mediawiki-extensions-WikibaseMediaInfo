@@ -79,5 +79,6 @@
 	"wikibasemediainfo-search-search": "搜尋",
 	"wikibasemediainfo-search-toggle-keywords": "關鍵字",
 	"wikibasemediainfo-search-toggle-depicts": "標籤",
-	"wikibasemediainfo-search-toggle-statements": "其它陳述"
+	"wikibasemediainfo-search-toggle-statements": "其它陳述",
+	"wikibasemediainfo-unsupported-datatype": "未支援的資料類型：$1"
 }

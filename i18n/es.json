@@ -56,5 +56,6 @@
 	"wikibasemediainfo-search-statements-save": "Buscar",
 	"wikibasemediainfo-search-search": "Buscar",
 	"wikibasemediainfo-search-toggle-keywords": "Palabra clave",
-	"wikibasemediainfo-search-toggle-depicts": "Etiquetas"
+	"wikibasemediainfo-search-toggle-depicts": "Etiquetas",
+	"wikibasemediainfo-unsupported-datatype": "No se admite el tipo de datos: $1"
 }

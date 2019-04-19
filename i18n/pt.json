@@ -8,6 +8,7 @@
 			"Fúlvio"
 		]
 	},
+	"action-mediainfo-term": "alterar os termos da informação de ficheiros multimédia (legendas, resumos)",
 	"right-mediainfo-term": "Alterar os termos da informação de ficheiros multimédia (legendas, resumos)",
 	"slot-name-mediainfo": "Informação estruturada de multimédia",
 	"wikibase-entity-mediainfo": "informação multimédia",
@@ -81,5 +82,6 @@
 	"wikibasemediainfo-search-search": "Pesquisar",
 	"wikibasemediainfo-search-toggle-keywords": "Palavra-chave",
 	"wikibasemediainfo-search-toggle-depicts": "Etiquetas",
-	"wikibasemediainfo-search-toggle-statements": "Outras declarações"
+	"wikibasemediainfo-search-toggle-statements": "Outras declarações",
+	"wikibasemediainfo-unsupported-datatype": "Tipo de dados não suportado: $1"
 }

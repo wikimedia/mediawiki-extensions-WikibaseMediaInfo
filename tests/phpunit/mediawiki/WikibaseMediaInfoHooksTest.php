@@ -24,8 +24,8 @@ use Wikibase\MediaInfo\View\MediaInfoView;
 use Wikibase\MediaInfo\WikibaseMediaInfoHooks;
 use Wikibase\Repo\BabelUserLanguageLookup;
 use Wikibase\Repo\ParserOutput\DispatchingEntityViewFactory;
-use Wikibase\Repo\Search\Elastic\Fields\TermIndexField;
 use Wikibase\Repo\Store\EntityTitleStoreLookup;
+use Wikibase\Search\Elastic\Fields\TermIndexField;
 use Wikibase\View\ViewContent;
 
 /**

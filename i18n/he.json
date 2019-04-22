@@ -81,5 +81,6 @@
 	"wikibasemediainfo-search-search": "חיפוש",
 	"wikibasemediainfo-search-toggle-keywords": "מילת מפתח",
 	"wikibasemediainfo-search-toggle-depicts": "תגים",
-	"wikibasemediainfo-search-toggle-statements": "קביעות אחרות"
+	"wikibasemediainfo-search-toggle-statements": "קביעות אחרות",
+	"wikibasemediainfo-unsupported-datatype": "סוג נתונים בלתי־נתמך: $1"
 }

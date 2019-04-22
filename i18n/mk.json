@@ -5,6 +5,7 @@
 			"Vlad5250"
 		]
 	},
+	"action-mediainfo-term": "промена на информации за податотеките (натписи, описи)",
 	"right-mediainfo-term": "Менување на инфорамциски поими за слики и снимки (описи, кратки прегледи во текст)",
 	"slot-name-mediainfo": "Структурирани информации за сликата/снимката",
 	"wikibase-entity-mediainfo": "инфо за снимка",
@@ -78,5 +79,6 @@
 	"wikibasemediainfo-search-search": "Пребарај",
 	"wikibasemediainfo-search-toggle-keywords": "Клучен збор",
 	"wikibasemediainfo-search-toggle-depicts": "Ознаки",
-	"wikibasemediainfo-search-toggle-statements": "Други искази"
+	"wikibasemediainfo-search-toggle-statements": "Други искази",
+	"wikibasemediainfo-unsupported-datatype": "Неподдржен податочен тип: $1"
 }

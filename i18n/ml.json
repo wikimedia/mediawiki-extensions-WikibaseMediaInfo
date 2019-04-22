@@ -23,5 +23,6 @@
 	"wikibasemediainfo-filepage-publish": "മാറ്റങ്ങൾ പ്രസിദ്ധീകരിക്കുക",
 	"wikibasemediainfo-filepage-caption-empty": "ഈ പ്രമാണം എന്തിനെ പ്രതിനിധീകരിക്കുന്നുവെന്ന ഒറ്റവരി വിശദീകരണം ചേർക്കുക",
 	"wikibasemediainfo-filepage-caption-too-long": "പരിധി കടന്ന {{PLURAL:$1|ഒരു അക്ഷരം|$1 അക്ഷരങ്ങൾ}} ഉണ്ട്",
-	"wikibasemediainfo-filepage-caption-approaching-limit": "$1 {{PLURAL:$1|അക്ഷരം|അക്ഷരങ്ങൾ|0=അക്ഷരങ്ങൾ}} ബാക്കിയുണ്ട്"
+	"wikibasemediainfo-filepage-caption-approaching-limit": "$1 {{PLURAL:$1|അക്ഷരം|അക്ഷരങ്ങൾ|0=അക്ഷരങ്ങൾ}} ബാക്കിയുണ്ട്",
+	"wikibasemediainfo-statements-remove": "എല്ലാം നീക്കം ചെയ്യുക"
 }

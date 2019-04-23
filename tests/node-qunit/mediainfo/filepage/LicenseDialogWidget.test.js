@@ -1,6 +1,6 @@
 var jsdom = require( 'jsdom' ),
 	sinon = require( 'sinon' ),
-	helpers = require( '../../helpers.js' ),
+	helpers = require( '../../support/helpers.js' ),
 	LicenseDialogWidget,
 	pathToWidget,
 	sandbox,
@@ -40,7 +40,6 @@ QUnit.module( 'LicenseDialogWidget', {
 	QUnit.module( 'User is not logged in and has not accepted license', {
 		beforeEach: function () {
 			global.mw.user = helpers.createMediaWikiUser();
-			global.mw.storage = helpers.createMockStorage();
 		}
 	}, function () {
 		QUnit.test( 'getLicenseConfirmation returns zero', function ( assert ) {
@@ -67,7 +66,6 @@ QUnit.module( 'LicenseDialogWidget', {
 				loggedIn: true,
 				licenseAccepted: false
 			} );
-			global.mw.storage = helpers.createMockStorage();
 			global.mw.Api = function () {};
 			global.mw.Api.prototype = {
 				saveOption: sinon.stub()

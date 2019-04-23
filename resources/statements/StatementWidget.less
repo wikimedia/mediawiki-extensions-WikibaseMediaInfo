@@ -43,6 +43,21 @@
 		&.oo-ui-inputWidget {
 			margin-right: 0;
 		}
+
+		& input {
+			text-overflow: ellipsis;
+		}
+
+		// Added specificity here is needed to override default OOUI label
+		// behavior
+		/* stylelint-disable-next-line selector-class-pattern */
+		.wbmi-entityview-statementsGroup & > .oo-ui-labelElement-label {
+			display: none;
+
+			@media screen and ( min-width: @breakpoint-tablet ) {
+				display: initial;
+			}
+		}
 	}
 
 	.wbmi-statement-footer {

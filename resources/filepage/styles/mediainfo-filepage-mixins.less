@@ -10,8 +10,11 @@
 @panel: {
 	border: @base-border;
 	padding: @base-spacing @base-spacing @sm-spacing;
-	max-width: 768px;
 	position: relative;
+
+	@media screen and ( min-width: @breakpoint-desktop ) {
+		max-width: 768px;
+	}
 
 	// Panel elements get a slight border-color change when active
 	.@{edit-mode}& {

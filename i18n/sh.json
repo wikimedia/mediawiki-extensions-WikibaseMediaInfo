@@ -4,6 +4,7 @@
 			"Vlad5250"
 		]
 	},
+	"action-mediainfo-term": "promjena informacija za datoteke (natpisi, opisi)",
 	"right-mediainfo-term": "Mijenjanje inforamcijskih pojama za slike i snimke (opisi, kratki prikazi u tekstu)",
 	"slot-name-mediainfo": "Strukturirane informacije o slici/snimci",
 	"wikibase-entity-mediainfo": "info o snimku",
@@ -46,7 +47,7 @@
 	"wikibasemediainfo-statements-item-mark-as-prominent": "Označi kao istaknut",
 	"wikibasemediainfo-statements-item-remove": "Ukloni",
 	"wikibasemediainfo-statements-learn-more": "Saznajte više",
-	"wikibasemediainfo-statements-remove": "Ukloni izjavu",
+	"wikibasemediainfo-statements-remove": "Ukloni sve",
 	"wikibasemediainfo-statements-title-depicts": "Predmeti pokazani na ovoj datoteci",
 	"wikibasemediainfo-operator-placeholder": "Operator",
 	"wikibasemediainfo-operator-value-is": "je",
@@ -77,5 +78,6 @@
 	"wikibasemediainfo-search-search": "Pretraži",
 	"wikibasemediainfo-search-toggle-keywords": "Ključna riječ",
 	"wikibasemediainfo-search-toggle-depicts": "Oznake",
-	"wikibasemediainfo-search-toggle-statements": "Druge izjave"
+	"wikibasemediainfo-search-toggle-statements": "Druge izjave",
+	"wikibasemediainfo-unsupported-datatype": "Nepodržan podatkovni tip: $1"
 }

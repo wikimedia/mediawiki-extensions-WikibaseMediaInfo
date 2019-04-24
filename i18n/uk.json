@@ -7,6 +7,7 @@
 			"Andrew J.Kurbiko"
 		]
 	},
+	"action-mediainfo-term": "зміну інформації медіафайлів (підписи, описи)",
 	"right-mediainfo-term": "зміна термінів медіа-інформації (підписів, описів)",
 	"slot-name-mediainfo": "Структурована медіа-інформація",
 	"wikibase-entity-mediainfo": "медіа-інформація",

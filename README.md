@@ -7,9 +7,32 @@ Entity](#MediaInfo Entity (M-item)). The user can view, create, edit, and delete
 this data.
 
 ## Requirements
-- [CirrusSearch](https://www.mediawiki.org/wiki/Extension:CirrusSearch#Installation)
+
+### System-level dependencies
+- **ElasticSearch*** (see [here](https://www.mediawiki.org/wiki/Extension:CirrusSearch#Dependencies) for more information on how to install)
+- **Node.js v6** for testing during development. Node dependency will be
+  upgraded to a more recent LTS version once our CI system can support it.
+
+### MW Extensions
+The following Mediawiki extensions must be installed and configured prior to
+installing WikibaseMediaInfo:
+
+- [UniversalLanguageSelector](https://www.mediawiki.org/wiki/Extension:UniversalLanguageSelector)
 - [Wikibase](https://www.mediawiki.org/wiki/Wikibase/Installation) (follow
   instructions for setting up repo and client)
+
+#### Search Features
+WikibaseMediaInfo adds some new search features. To use them, you need to
+install and configure the following search-related extensions:
+
+- [Elastica](https://www.mediawiki.org/wiki/Extension:Elastica)
+- [CirrusSearch](https://www.mediawiki.org/wiki/Extension:CirrusSearch#Installation)
+- [WikibaseCirrusSearch](https://www.mediawiki.org/wiki/Extension:WikibaseCirrusSearch)
+
+#### UploadWizard Features
+WikibaseMediaInfo also adds new functionality to the [UploadWizard
+Extension](https://www.mediawiki.org/wiki/Extension:UploadWizard), but it is not required.
+
 
 ## Installation
 After CirrusSearch and Wikibase are set up properly, enable the extension by
@@ -20,58 +43,76 @@ You might need to run `composer install` in the extension directory, or in the
 root directory of your MediaWiki installation if you are using a setup that
 merges all extension's dependencies into MediaWiki's vendor directory.
 
+## Post-install setup
+
+### Depicts Property
+A basic building-block of Wikibase is the
+[Statement](https://www.mediawiki.org/wiki/Wikibase/DataModel/Primer#Statements).
+The **claim** made by a given statement has two basic parts, *properties* and
+*values*. Currently WikibaseMediaInfo supports statements that feature a
+single property: the [Depicts](https://www.wikidata.org/wiki/Property:P180)
+property.
+
+If you are running this extension in a local development environment, you will
+need to add a Wikibase record for this property. The easiest way to do that is:
+
+1. Navigate to `Special:NewProperty`
+2. Add an item with label set to `depicts`. Make sure to set the data type to
+   `item`.
+3. Update your `LocalSettings.php` file so that the `depicts` property is set
+  to the ID of the property you just created:
+
+```
+$wgMediaInfoProperties = [
+	'depicts' => 'P123',
+];
+```
+
+#### Qualifier Properties
+[Qualifiers](https://www.mediawiki.org/wiki/Wikibase/DataModel/Primer#Qualifiers)
+are an optional component of Wikibase statements. To use them in WikibaseMediaInfo,
+create additional properties in Wikibase as described above, and add their label
+and ID to the `$wgDepictsQualifierProperties` config variable in
+`LocalSettings.php`. Only the `item` and `quantity` types are currently supported.
+
+```
+$wgDepictsQualifierProperties = [
+	'features' => 'P80',
+	'color' => 'P24',
+	'quantity' => 'P25',
+];
+```
+
+### Entities
+In order to add values to statements, you will also need to add Entity items to
+your local Wikibase instance. This can be done manually at: `Special:NewItem`,
+or through using the WikibaseImport script (see below).
+
+### WikibaseImport
+You can optionally use the unofficial
+[WikibaseImport](https://github.com/filbertkm/WikibaseImport) extension to
+automate the process of importing entities from another Wikibase instance (such
+as Wikidata). See that project's README for more information.
+
+### Federation
+TBD
+
 ## Configuration
 Extension configuration variables are sets of key-value pairs. They are
 documented in more detail in `WikibaseMediaInfo/extension.json`. Config
 variables should be added to`LocalSettings.php`. The following config options
 are available for this extension:
 
-#### Required Config (must be added to LocalSettings)
-- **`$wgMediaInfoProperties`**\
-   Establishes the main linked property used to build the MediaInfo entity in
-   Wikibase. Value is an array of key-value pairs connecting a label name to an
-   existing wikibase database id.\
-    `['depicts': 'P1]`
+| variable | example value | default | notes |
+|----------|---------------|---------|-------|
+| $wgMediaInfoEnableSearch | true/false | false | Feature-flag to enable search features |
+| $wgMediaInfoProperties | `[ 'depicts' => 'P123' ]` | {} | default WB properties to show (e.g. "depicts") |
+| $wgDepictsQualifierProperties | `[ 'features' => 'P80', 'color' => 'P24', 'quantity' => 'P25' ]` | {} | WB properties to allow for qualifiers |
+| $wgMediaInfoSearchFileTypes | see extension.json | see extension.json | List of file types to search in |
+| $wgUploadWizardConfig[ 'wikibase' ][ 'enabled' ] | true/false | false | UploadWizard feature-flag |
+| $wgUploadWizardConfig[ 'wikibase' ][ 'captions' ] | true/false | false | UploadWizard feature-flag |
+| $wgUploadWizardConfig[ 'wikibase' ][ 'statements' ] | true/false | false | UploadWizard feature-flag |
 
-- **`$wgDepictsQualifierProperties`**\
-    Establishes the descriptors or qualifiers of the MediaInfo entity defined
-    in `$wgMediaInfoProperties`. Value is an array of key-value pairs connecting
-    a label name to an existing wikibase database id.\
-      ```
-      [
-      'features' =>  'P2',
-      'color' =>  'P3',
-      'wears' =>  'P4',
-      'part' =>  'P5',
-      'inscription' =>  'P6',
-      'symbolizes' =>  'P7',
-      'position' =>  'P8',
-      'quantity' =>  'P9',
-      ];
-      ```
-
-- **`$wgMediaInfoSearchFiletypes`**\
-    List of filetypes to search in. E.g.:\
-      ```
-      [
-          {
-              "label": "wikibasemediainfo-filetype-bitmap",
-              "data": "bitmap",
-              "selected": true
-          },
-          {
-              "label": "wikibasemediainfo-filetype-video",
-              "data": "video",
-              "selected": true
-          },
-      ];
-      ```
-
-Other Config:
-   - **`$wgUploadWizardConfig['wikibase']['enabled']`**\
-   Enables MediaInfo data on UploadWizard when set to true.
-   - **`$wgMediaInfoEnableSearch`** _(temporary feature flag)_\
-   Defaults to false.
 
 ## MediaInfo Glossary
 

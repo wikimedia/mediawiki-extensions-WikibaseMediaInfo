@@ -108,10 +108,9 @@ return [
 			);
 
 			$defaultPropertyIdsForView = [];
-			$properties = $mwConfig->get( 'MediaInfoProperties' );
-			$depictsPropertyId = $properties['depicts'] ?? null;
-			if ( !empty( $depictsPropertyId ) ) {
-				$defaultPropertyIdsForView[] = new PropertyId( $depictsPropertyId );
+			$properties = $mwConfig->get( 'MediaInfoProperties' ) ?? [];
+			foreach ( $properties as $propertyId ) {
+				$defaultPropertyIdsForView[] = new PropertyId( $propertyId );
 			}
 
 			$qualifierPropertyIds = $mwConfig->get( 'DepictsQualifierProperties' );

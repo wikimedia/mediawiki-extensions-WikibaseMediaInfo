@@ -14,18 +14,20 @@
 	 * @param {string} [config.editing] True for edit mode, False for read mode
 	 */
 	statements.ItemWidget = function MediaInfoStatementsItemWidget( config ) {
-		statements.ItemWidget.parent.call( this, $.extend( { classes: [ 'wbmi-item' ] }, config ) );
-		OO.ui.mixin.GroupElement.call( this, $.extend( {}, config ) );
-		statements.FormatValueElement.call( this, $.extend( {}, config ) );
-
+		// set these first - the parent constructor could call other methods
+		// (e.g. setDisabled) which may cause a re-render, and will need
+		// some of these...
 		this.editing = !!config.editing;
-
 		this.qualifiers = config.qualifiers;
 		this.data = config.data;
 		this.label = config.label;
 		this.url = config.url;
 		this.repo = config.repo;
 		this.config = config;
+
+		statements.ItemWidget.parent.call( this, $.extend( { classes: [ 'wbmi-item' ] }, config ) );
+		OO.ui.mixin.GroupElement.call( this, $.extend( {}, config ) );
+		statements.FormatValueElement.call( this, $.extend( {}, config ) );
 
 		this.removeButton = new OO.ui.ButtonWidget( {
 			classes: [ 'wbmi-item-remove' ],
@@ -53,13 +55,13 @@
 	statements.ItemWidget.prototype.render = function () {
 		var self = this,
 			dataValue = this.data.getClaim().getMainSnak().getValue(),
+			promise = $.Deferred().resolve().promise();
+
+		if ( this.label === undefined || this.url === undefined ) {
 			promise = $.when(
 				this.formatValue( dataValue, 'text/plain' ),
 				this.formatValue( dataValue, 'text/html' )
-			);
-
-		if ( this.label === undefined || this.url === undefined ) {
-			promise.then(
+			).then(
 				function ( plain, html ) {
 					self.label = plain;
 
@@ -80,16 +82,6 @@
 					}
 				}
 			);
-		} else {
-			// if this.label & this.url have been passed in, we don't
-			// really need to format these values, so we can just go
-			// ahead and render
-			// we are still doing the formatValue calls, however,
-			// because even if we don't use them yet, we will need to
-			// do them later on (after submitting to API and rerendering)
-			// and we might as well fetch & cache them now to speed
-			// things up later...
-			promise = $.Deferred().resolve().promise();
 		}
 
 		promise.then( this.renderInternal.bind( this ) );

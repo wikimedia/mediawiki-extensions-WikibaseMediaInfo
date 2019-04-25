@@ -169,24 +169,32 @@
 	 * @param {wikibase.datamodel.StatementList} data
 	 */
 	statements.StatementWidget.prototype.setData = function ( data ) {
-		var self, sortedData;
+		var self = this,
+			existingItems = this.getItems(),
+			sortedData;
 
 		if ( !data ) {
+			// data should always be a StatementList, even if an empty one;
+			// if data is falsy, it's just invalid input...
 			return;
 		}
 
-		self = this;
 		sortedData = data.toArray().sort( function ( statement1, statement2 ) {
 			return statement2.getRank() - statement1.getRank();
 		} );
 
-		// remove existing items, then add new ones based on data passed in
+		// clear out input field
 		this.input.setData( undefined );
-		this.clearItems();
 
-		sortedData.forEach( function ( statement ) {
+		// get rid of existing widgets that are no longer present in the
+		// new set of data we've been fed
+		this.removeItems( existingItems.filter( function ( item ) {
+			return !data.hasItem( item.getData() );
+		} ) );
+
+		sortedData.forEach( function ( statement, i ) {
 			var mainSnak = statement.getClaim().getMainSnak(),
-				widget;
+				widget = self.findItemFromData( statement );
 
 			if ( statement.getClaim().getMainSnak().getPropertyId() !== self.propertyId ) {
 				throw new Error( 'Invalid statement' );
@@ -204,14 +212,18 @@
 			self.properties[ mainSnak.getPropertyId() ] = mainSnak.getValue().getType();
 			self.input.setInputType( mainSnak.getValue().getType() );
 
-			widget = self.createItem( mainSnak.getValue() );
-			widget.setData( statement );
-			widget.connect( self, { delete: [ 'removeItems', [ widget ] ] } );
-			widget.connect( self, { delete: [ 'emit', 'change' ] } );
-			widget.connect( self, { change: [ 'setEditing', true ] } );
-			widget.connect( self, { change: [ 'emit', 'change' ] } );
+			if ( widget ) {
+				self.moveItem( widget, i );
+			} else {
+				widget = self.createItem( mainSnak.getValue() );
+				widget.setData( statement );
+				widget.connect( self, { delete: [ 'removeItems', [ widget ] ] } );
+				widget.connect( self, { delete: [ 'emit', 'change' ] } );
+				widget.connect( self, { change: [ 'setEditing', true ] } );
+				widget.connect( self, { change: [ 'emit', 'change' ] } );
 
-			self.addItems( [ widget ] );
+				self.insertItem( widget, i );
+			}
 		} );
 
 		this.data = data;

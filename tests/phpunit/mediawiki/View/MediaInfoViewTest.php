@@ -3,7 +3,6 @@
 namespace Wikibase\MediaInfo\Tests\MediaWiki\View;
 
 use Html;
-use MediaWiki\MediaWikiServices;
 use Wikibase\DataModel\Entity\EntityDocument;
 use Wikibase\DataModel\Entity\Property;
 use Wikibase\DataModel\Entity\PropertyId;
@@ -92,13 +91,7 @@ class MediaInfoViewTest extends \PHPUnit\Framework\TestCase {
 			->method( 'getHtml' )
 			->willReturn( $statementsViewHtml );
 
-		$html = $termsViewHtml;
-		if (
-			MediaWikiServices::getInstance()
-				->getMainConfig()->get( 'MediaInfoEnableFilePageDepicts' )
-		) {
-			$html .= $statementsViewHtml;
-		}
+		$html = $termsViewHtml . $statementsViewHtml;
 
 		$expectedContent = Html::rawElement(
 			MediaInfoView::MEDIAINFOVIEW_CUSTOM_TAG,

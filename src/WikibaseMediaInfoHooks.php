@@ -189,7 +189,6 @@ class WikibaseMediaInfoHooks {
 			$wgDepictsHelpUrl,
 			$wgMediaInfoProperties,
 			$wgMediaInfoExternalEntitySearchBaseUri,
-			$wgMediaInfoEnableFilePageDepicts,
 			$wgMediaInfoSearchFiletypes,
 			$wgMediaInfoEnableSearch;
 
@@ -250,7 +249,6 @@ class WikibaseMediaInfoHooks {
 			),
 			new BabelUserLanguageLookup(),
 			$wbRepo->getEntityViewFactory(),
-			$wgMediaInfoEnableFilePageDepicts,
 			[
 				'wbmiProperties' => $properties,
 				'wbmiDepictsQualifierProperties' => $qualifiers,
@@ -270,7 +268,6 @@ class WikibaseMediaInfoHooks {
 	 * @param string[] $termsLanguages Array with language codes as keys and autonyms as values
 	 * @param UserLanguageLookup $userLanguageLookup
 	 * @param DispatchingEntityViewFactory $entityViewFactory
-	 * @param bool $showDepicts Feature flag for showing depicts statements
 	 * @param array $jsConfigVars Variables to expose to JavaScript
 	 */
 	public function doBeforePageDisplay(
@@ -279,7 +276,6 @@ class WikibaseMediaInfoHooks {
 		array $termsLanguages,
 		UserLanguageLookup $userLanguageLookup,
 		DispatchingEntityViewFactory $entityViewFactory,
-		$showDepicts,
 		array $jsConfigVars = []
 	) {
 		// Site-wide config
@@ -288,11 +284,7 @@ class WikibaseMediaInfoHooks {
 
 		if ( $isMediaInfoPage ) {
 			OutputPage::setupOOUI();
-			if ( $showDepicts ) {
-				$out = $this->tabifyStructuredData( $out, $entityViewFactory );
-			} else {
-				$out = $this->moveMediaInfoCaptions( $out, $entityViewFactory );
-			}
+			$out = $this->tabifyStructuredData( $out, $entityViewFactory );
 			$out->preventClickjacking();
 			$imgTitle = $out->getTitle();
 
@@ -340,7 +332,6 @@ class WikibaseMediaInfoHooks {
 	 * @param DispatchingEntityViewFactory $entityViewFactory
 	 * @return OutputPage $out
 	 */
-
 	private function tabifyStructuredData(
 		OutputPage $out,
 		DispatchingEntityViewFactory $entityViewFactory
@@ -501,55 +492,6 @@ class WikibaseMediaInfoHooks {
 	}
 
 	/**
-	 * @param OutputPage $out
-	 * @param DispatchingEntityViewFactory $entityViewFactory
-	 * @return OutputPage $out
-	 */
-	private function moveMediaInfoCaptions(
-		OutputPage $out,
-		DispatchingEntityViewFactory $entityViewFactory
-	) {
-		$html = $out->getHTML();
-		$out->clearHTML();
-		$html = $this->moveStructuredData(
-			$html,
-			$out,
-			$entityViewFactory
-		);
-		$html = $this->moveStructuredDataHeader( $html, $out );
-		$out->addHTML( $html );
-		return $out;
-	}
-
-	/**
-	 * Move the structured data multi-lingual captions to just after <div class="mw-parser-output">
-	 *
-	 * If captions AND depicts are missing then an empty mediainfo view is injected
-	 *
-	 * @param string $html
-	 * @param OutputPage $out
-	 * @param DispatchingEntityViewFactory $entityViewFactory
-	 * @return string
-	 */
-	private function moveStructuredData(
-		$html,
-		OutputPage $out,
-		DispatchingEntityViewFactory $entityViewFactory
-	) {
-		$extractedHtml = $this->extractStructuredDataHtml( $html, $out, $entityViewFactory );
-
-		$modifiedHtml = strtr(
-			$extractedHtml['unstructured'],
-			[
-				'<div class="mw-parser-output">' =>
-					'<div class="mw-parser-output">' . $extractedHtml['structured']
-			]
-		);
-
-		return $modifiedHtml;
-	}
-
-	/**
 	 * Returns an array with 2 elements
 	 * [
 	 * 	'unstructured' => html output with structured data removed
@@ -647,55 +589,6 @@ class WikibaseMediaInfoHooks {
 		// can be deleted and the commented-out below line can be used
 		return '/(?|<' . $tag . '>(.*)<\/' . $tag . '>|(<div data-statements.+)\s*<\/div>\s*$)/is';
 		// return '/<' . $tag . '>(.*)<\/' . $tag . '>/is';
-	}
-
-	/**
-	 * Move the structured data header to the place we want it
-	 *
-	 * Also replace the mediainfo-specific placeholder added in onParserOutputPostCacheTransform
-	 *
-	 * @see onParserOutputPostCacheTransform()
-	 *
-	 * The placeholder should no longer be necessary when T205444 is done
-	 * @see https://phabricator.wikimedia.org/T205444
-	 *
-	 * @param $text
-	 * @param OutputPage $out
-	 * @return string
-	 */
-	private function moveStructuredDataHeader( $text, $out ) {
-
-		// First do the move
-		$header = '<h1 class="mw-slot-header">' . self::MEDIAINFO_SLOT_HEADER_PLACEHOLDER . '</h1>';
-		if (
-			preg_match(
-				self::getStructuredDataHeaderRegex(),
-				$text,
-				$matches
-			)
-		) {
-			$header = $matches[0];
-			// Delete from the old place
-			$text = str_replace( $header, '', $text );
-		}
-		// Add at the new place
-		$text = preg_replace(
-			'/<div class="mw-parser-output">/',
-			'<div class="mw-parser-output">' . $header,
-			$text
-		);
-
-		// Now replace the placeholder
-		$textProvider = new MediaWikiLocalizedTextProvider( $out->getLanguage() );
-		$text = str_replace(
-			self::MEDIAINFO_SLOT_HEADER_PLACEHOLDER,
-			htmlspecialchars(
-				$textProvider->get( 'wikibasemediainfo-filepage-structured-data-heading' )
-			),
-			$text
-		);
-
-		return $text;
 	}
 
 	private static function getStructuredDataHeaderRegex() {

@@ -3,7 +3,8 @@
 		"authors": [
 			"Gomoko",
 			"Trial",
-			"Wladek92"
+			"Wladek92",
+			"Ayack"
 		]
 	},
 	"action-mediainfo-term": "modifier les termes d’information du média (légendes, résumés)",
@@ -44,13 +45,13 @@
 	"wikibasemediainfo-statements-depicts-title": "Éléments dépeints de cette image",
 	"wikibasemediainfo-statements-item-add-qualifier": "Ajouter un qualifieur",
 	"wikibasemediainfo-statements-item-input-label": "de Wikidata",
-	"wikibasemediainfo-statements-item-input-placeholder": "Chercher pour ajouter des éléments (chat domestique, montagne, Taj Mahal, etc.)",
+	"wikibasemediainfo-statements-item-input-placeholder": "Chercher pour ajouter des éléments (chat domestique, montagne, cathédrale Notre-Dame de Paris, etc.)",
 	"wikibasemediainfo-statements-item-is-prominent": "Remarquable",
 	"wikibasemediainfo-statements-item-mark-as-prominent": "Marquer comme remarquable",
 	"wikibasemediainfo-statements-item-remove": "Supprimer",
 	"wikibasemediainfo-statements-learn-more": "En savoir plus",
 	"wikibasemediainfo-statements-remove": "Supprimer tout",
-	"wikibasemediainfo-statements-title-depicts": "Elements décrits dans ce fichier",
+	"wikibasemediainfo-statements-title-depicts": "Éléments décrits dans ce fichier",
 	"wikibasemediainfo-operator-placeholder": "Opérateur",
 	"wikibasemediainfo-operator-value-is": "est",
 	"wikibasemediainfo-operator-value-isnot": "n'est pas",

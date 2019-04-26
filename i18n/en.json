@@ -49,6 +49,8 @@
 	"wikibasemediainfo-statements-learn-more": "Learn more",
 	"wikibasemediainfo-statements-remove": "Remove all",
 	"wikibasemediainfo-statements-title-depicts": "Items portrayed in this file",
+	"wikibasemediainfo-statements-unsupported-property-title": "Unsupported property",
+	"wikibasemediainfo-statements-unsupported-property-content": "Properties other than $1 are not yet fully supported, but will be in the future. For now, functionality for unsupported properties may not work as you might expect.",
 	"wikibasemediainfo-operator-placeholder": "Operator",
 	"wikibasemediainfo-operator-value-is": "is",
 	"wikibasemediainfo-operator-value-isnot": "is not",

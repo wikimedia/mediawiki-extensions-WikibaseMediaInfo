@@ -27,10 +27,7 @@
 			contentClass: 'wbmi-entityview-captionsPanel',
 			entityTermClass: 'wbmi-entityview-caption',
 			warnWithinMaxCaptionLength: 20,
-			// .emptyEntity was previously used, and will be fallback value, for cached output
-			// this can be removed a month after getting being merged...
-			// eslint-disable-next-line no-jquery/no-global-selector
-			captionsExist: mw.config.get( 'wbmiCaptionsExist', $( '.emptyEntity' ).length > 0 )
+			captionsExist: mw.config.get( 'wbmiCaptionsExist', false )
 		} );
 
 		captions.initialize();

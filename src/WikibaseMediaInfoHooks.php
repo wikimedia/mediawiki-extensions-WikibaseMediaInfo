@@ -340,19 +340,6 @@ class WikibaseMediaInfoHooks {
 		) ) {
 			$captions = $matches[1];
 		}
-		// Deal with pages in the parser cache that don't have placeholder tags for captions
-		// This can be removed once parser caches have expired (X days after this code goes live)
-		if ( empty( $captions ) ) {
-			if (
-				preg_match(
-					'/(<div[^>]*data-caption-languages.*<\/div>)\s*<\/div>\s*$/is',
-					$extractedHtml['structured'],
-					$matches
-				)
-			) {
-				$captions = $matches[1];
-			}
-		}
 
 		if ( preg_match(
 			self::getMediaInfoStatementsRegex(),
@@ -360,18 +347,6 @@ class WikibaseMediaInfoHooks {
 			$matches
 		) ) {
 			$statements = $matches[1];
-		}
-		// Deal with pages in the parser cache that don't have placeholder tags for statements
-		// This can be removed once parser caches have expired (X days after this code goes live)
-		if ( empty( $statements ) ) {
-			$emptyStructured = $this->createEmptyStructuredData( $out, $entityViewFactory );
-			if ( preg_match(
-				self::getMediaInfoStatementsRegex(),
-				$emptyStructured,
-				$matches
-			) ) {
-				$statements = $matches[1];
-			}
 		}
 
 		if ( empty( $captions ) || empty( $statements ) ) {
@@ -561,22 +536,12 @@ class WikibaseMediaInfoHooks {
 
 	private static function getMediaInfoCaptionsRegex() {
 		$tag = MediaInfoEntityTermsView::CAPTIONS_CUSTOM_TAG;
-
-		// below $old is a workaround to process old, cached parser output
-		// about a month or so after this patch got merged, below line
-		// can be deleted and the commented-out below line can be used
-		return '/(?|<' . $tag . '>(.*)<\/' . $tag . '>|(<div data-caption-languages.+?)<div data-statements)/is';
-		// return '/<' . $tag . '>(.*)<\/' . $tag . '>/is';
+		return '/<' . $tag . '>(.*)<\/' . $tag . '>/is';
 	}
 
 	private static function getMediaInfoStatementsRegex() {
 		$tag = MediaInfoEntityStatementsView::STATEMENTS_CUSTOM_TAG;
-
-		// below $old is a workaround to process old, cached parser output
-		// about a month or so after this patch got merged, below line
-		// can be deleted and the commented-out below line can be used
-		return '/(?|<' . $tag . '>(.*)<\/' . $tag . '>|(<div data-statements.+)\s*<\/div>\s*$)/is';
-		// return '/<' . $tag . '>(.*)<\/' . $tag . '>/is';
+		return '/<' . $tag . '>(.*)<\/' . $tag . '>/is';
 	}
 
 	private static function getStructuredDataHeaderRegex() {

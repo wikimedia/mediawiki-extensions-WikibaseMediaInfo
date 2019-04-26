@@ -23,11 +23,6 @@ class MediaInfoView implements EntityDocumentView {
 	private $captionsView;
 
 	/**
-	 * @var LanguageDirectionalityLookup
-	 */
-	private $languageDirectionalityLookup;
-
-	/**
 	 * @var string
 	 */
 	protected $languageCode;
@@ -48,14 +43,11 @@ class MediaInfoView implements EntityDocumentView {
 	 */
 	public function __construct(
 		MediaInfoEntityTermsView $captionsView,
-		LanguageDirectionalityLookup $languageDirectionalityLookup,
 		$languageCode,
 		MediaInfoEntityStatementsView $statementsView
 	) {
 		$this->captionsView = $captionsView;
-		$this->languageDirectionalityLookup = $languageDirectionalityLookup;
 		$this->languageCode = $languageCode;
-
 		$this->statementsView = $statementsView;
 	}
 

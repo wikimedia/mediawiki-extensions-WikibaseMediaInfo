@@ -4,12 +4,10 @@ namespace Wikibase\MediaInfo\Content;
 
 use IContextSource;
 use Title;
-use Wikibase\Client\Store\UsageUpdater;
 use Wikibase\Content\EntityHolder;
 use Wikibase\DataModel\Entity\EntityId;
 use Wikibase\DataModel\Entity\EntityIdParser;
 use Wikibase\Lib\Store\EntityContentDataCodec;
-use Wikibase\Lib\Store\LanguageFallbackLabelDescriptionLookupFactory;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\MediaInfo\DataModel\MediaInfoId;
 use Wikibase\MediaInfo\Services\FilePageLookup;
@@ -17,7 +15,6 @@ use Wikibase\Repo\Content\EntityHandler;
 use Wikibase\Repo\Search\Fields\FieldDefinitions;
 use Wikibase\Repo\Validators\EntityConstraintProvider;
 use Wikibase\Repo\Validators\ValidatorErrorLocalizer;
-use Wikibase\Store\EntityIdLookup;
 use Wikibase\TermIndex;
 
 /**
@@ -30,16 +27,6 @@ class MediaInfoHandler extends EntityHandler {
 	const FILE_PAGE_SEARCH_INDEX_KEY_MEDIAINFO_VERSION = 'mediaInfoVersion';
 
 	/**
-	 * @var EntityIdLookup
-	 */
-	private $entityIdLookup;
-
-	/**
-	 * @var LanguageFallbackLabelDescriptionLookupFactory
-	 */
-	private $labelLookupFactory;
-
-	/**
 	 * @var MissingMediaInfoHandler
 	 */
 	private $missingMediaInfoHandler;
@@ -50,22 +37,14 @@ class MediaInfoHandler extends EntityHandler {
 	private $filePageLookup;
 
 	/**
-	* @var UsageUpdater
-	*/
-	private $usageUpdater;
-
-	/**
 	 * @param TermIndex $termIndex
 	 * @param EntityContentDataCodec $contentCodec
 	 * @param EntityConstraintProvider $constraintProvider
 	 * @param ValidatorErrorLocalizer $errorLocalizer
 	 * @param EntityIdParser $entityIdParser
-	 * @param EntityIdLookup $entityIdLookup
-	 * @param LanguageFallbackLabelDescriptionLookupFactory $labelLookupFactory
 	 * @param MissingMediaInfoHandler $missingMediaInfoHandler
 	 * @param FilePageLookup $filePageLookup
 	 * @param FieldDefinitions $mediaInfoFieldDefinitions
-	 * @param UsageUpdater $usageUpdater
 	 * @param callable|null $legacyExportFormatDetector
 	 */
 	public function __construct(
@@ -74,12 +53,9 @@ class MediaInfoHandler extends EntityHandler {
 		EntityConstraintProvider $constraintProvider,
 		ValidatorErrorLocalizer $errorLocalizer,
 		EntityIdParser $entityIdParser,
-		EntityIdLookup $entityIdLookup,
-		LanguageFallbackLabelDescriptionLookupFactory $labelLookupFactory,
 		MissingMediaInfoHandler $missingMediaInfoHandler,
 		FilePageLookup $filePageLookup,
 		FieldDefinitions $mediaInfoFieldDefinitions,
-		UsageUpdater $usageUpdater,
 		$legacyExportFormatDetector = null
 	) {
 		parent::__construct(
@@ -92,11 +68,8 @@ class MediaInfoHandler extends EntityHandler {
 			$mediaInfoFieldDefinitions,
 			$legacyExportFormatDetector
 		);
-		$this->entityIdLookup = $entityIdLookup;
-		$this->labelLookupFactory = $labelLookupFactory;
 		$this->missingMediaInfoHandler = $missingMediaInfoHandler;
 		$this->filePageLookup = $filePageLookup;
-		$this->usageUpdater = $usageUpdater;
 	}
 
 	/**

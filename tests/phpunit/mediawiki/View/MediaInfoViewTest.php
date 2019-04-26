@@ -12,7 +12,6 @@ use Wikibase\MediaInfo\View\MediaInfoEntityStatementsView;
 use Wikibase\MediaInfo\View\MediaInfoEntityTermsView;
 use Wikibase\MediaInfo\View\MediaInfoView;
 use Wikibase\View\EntityTermsView;
-use Wikibase\View\LanguageDirectionalityLookup;
 
 /**
  * @covers \Wikibase\MediaInfo\View\MediaInfoView
@@ -31,8 +30,6 @@ class MediaInfoViewTest extends \PHPUnit\Framework\TestCase {
 	private $entityTermsView;
 	/** @var  MediaInfoEntityStatementsView */
 	private $statementsView;
-	/** @var  LanguageDirectionalityLookup */
-	private $languageDirectionalityLookup;
 	/** @var  EntityDocument */
 	private $entity;
 	/** @var string  */
@@ -43,10 +40,6 @@ class MediaInfoViewTest extends \PHPUnit\Framework\TestCase {
 	private function createMocks() {
 		$this->entityTermsView = $this->getMockBuilder( MediaInfoEntityTermsView::class )
 			->disableOriginalConstructor()
-			->getMock();
-		$this->languageDirectionalityLookup = $this->getMockBuilder(
-			LanguageDirectionalityLookup::class
-			)->disableOriginalConstructor()
 			->getMock();
 		$this->statementsView = $this->getMockBuilder(
 			MediaInfoEntityStatementsView::class
@@ -68,7 +61,6 @@ class MediaInfoViewTest extends \PHPUnit\Framework\TestCase {
 
 		$this->sut = new MediaInfoView(
 			$this->entityTermsView,
-			$this->languageDirectionalityLookup,
 			$this->languageCode,
 			$this->statementsView
 		);
@@ -77,13 +69,9 @@ class MediaInfoViewTest extends \PHPUnit\Framework\TestCase {
 	public function testGetContent() {
 		$this->createMocks();
 
-		$langDir = 'TEST_DIR';
 		$termsViewHtml = 'TEST_TERMS_HTML';
 		$statementsViewHtml = 'TEST_STATEMENTS_HTML';
 
-		$this->languageDirectionalityLookup
-			->method( 'getDirectionality' )
-			->willReturn( $langDir );
 		$this->entityTermsView
 			->method( 'getHtml' )
 			->willReturn( $termsViewHtml );

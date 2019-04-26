@@ -6,6 +6,7 @@ use Title;
 use Wikibase\Lib\Store\EntityByLinkedTitleLookup;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\Repo\WikibaseRepo;
+use Wikibase\DataModel\Entity\EntityId;
 
 /**
  * Lookup class for getting the MediaInfoId that corresponds to a file page.

@@ -7,13 +7,10 @@ use IContextSource;
 use PHPUnit4And6Compat;
 use RequestContext;
 use Title;
-use Wikibase\Client\Store\UsageUpdater;
 use Wikibase\DataModel\Entity\EntityId;
 use Wikibase\DataModel\Entity\ItemIdParser;
-use Wikibase\DataModel\Services\Lookup\LabelDescriptionLookup;
 use Wikibase\DataModel\Services\Lookup\PropertyDataTypeLookup;
 use Wikibase\Lib\Store\EntityContentDataCodec;
-use Wikibase\Lib\Store\LanguageFallbackLabelDescriptionLookupFactory;
 use Wikibase\MediaInfo\Content\MediaInfoContent;
 use Wikibase\MediaInfo\Content\MediaInfoHandler;
 use Wikibase\MediaInfo\Content\MissingMediaInfoHandler;
@@ -28,7 +25,6 @@ use Wikibase\Repo\Validators\ValidatorErrorLocalizer;
 use Wikibase\Search\Elastic\Fields\DescriptionsProviderFieldDefinitions;
 use Wikibase\Search\Elastic\Fields\LabelsProviderFieldDefinitions;
 use Wikibase\Search\Elastic\Fields\StatementProviderFieldDefinitions;
-use Wikibase\Store\EntityIdLookup;
 use Wikibase\TermIndex;
 
 /**
@@ -50,13 +46,6 @@ class MediaInfoHandlerTest extends \PHPUnit\Framework\TestCase {
 
 	private function newMediaInfoHandler( array $replacements = [] ) {
 		$m17 = new MediaInfoId( 'M17' );
-
-		$labelLookupFactory = $this->getMockWithoutConstructor(
-			LanguageFallbackLabelDescriptionLookupFactory::class
-		);
-		$labelLookupFactory->expects( $this->any() )
-			->method( 'newLabelDescriptionLookup' )
-			->willReturn( $this->getMock( LabelDescriptionLookup::class ) );
 
 		$propertyLookup = $this->getMock( PropertyDataTypeLookup::class );
 		$propertyLookup->expects( $this->any() )
@@ -86,18 +75,12 @@ class MediaInfoHandlerTest extends \PHPUnit\Framework\TestCase {
 				return Title::makeTitle( NS_FILE, 'Test-' . $id->getSerialization() . '.png' );
 			} );
 
-		$mockUsageUpdater = $this->getMockBuilder( UsageUpdater::class )
-			->disableOriginalConstructor()
-			->getMock();
-
 		return new MediaInfoHandler(
 			$this->getMock( TermIndex::class ),
 			$this->getMockWithoutConstructor( EntityContentDataCodec::class ),
 			$this->getMockWithoutConstructor( EntityConstraintProvider::class ),
 			$this->getMock( ValidatorErrorLocalizer::class ),
 			new ItemIdParser(),
-			$this->getMock( EntityIdLookup::class ),
-			$labelLookupFactory,
 			$missingMediaInfoHandler,
 			!empty( $replacements[ 'filePageLookup' ] )
 				? $replacements[ 'filePageLookup' ] : $filePageLookup,
@@ -113,8 +96,6 @@ class MediaInfoHandlerTest extends \PHPUnit\Framework\TestCase {
 					[]
 				)
 			),
-			!empty( $replacements[ 'usageUpdater' ] )
-				? $replacements[ 'usageUpdater' ] : $mockUsageUpdater,
 			null
 		);
 	}

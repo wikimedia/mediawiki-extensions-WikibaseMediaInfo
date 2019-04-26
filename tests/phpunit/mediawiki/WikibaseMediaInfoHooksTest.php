@@ -19,7 +19,6 @@ use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\MediaInfo\DataModel\MediaInfoId;
 use Wikibase\MediaInfo\Services\MediaInfoByLinkedTitleLookup;
 use Wikibase\MediaInfo\WikibaseMediaInfoHooks;
-use Wikibase\Repo\Store\EntityTitleStoreLookup;
 use Wikibase\Search\Elastic\Fields\TermIndexField;
 
 /**
@@ -31,12 +30,6 @@ use Wikibase\Search\Elastic\Fields\TermIndexField;
  * @author Bene* < benestar.wikimedia@gmail.com >
  */
 class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
-
-	// Internal constants to avoid repetition.
-	private static $parserOutputTag = '<div class="mw-parser-output">';
-	private static $mediaInfoViewOpeningTag = '<mediaInfoView>';
-	private static $mediaInfoViewClosingTag = '</mediaInfoView>';
-	private static $extraHtml = 'SOME_HTML<div>Hello!#%$</div><h2 id="foo">Heading!</h2><p>More text!</p>MORE_HTML';
 
 	public function testOnWikibaseRepoEntityNamespaces() {
 		$entityNamespaces = [];
@@ -187,9 +180,6 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 	private function createHookObjectWithMocks() {
 		return new WikibaseMediaInfoHooks(
 			$this->getMockBuilder( EntityIdComposer::class )
-				->disableOriginalConstructor()
-				->getMock(),
-			$this->getMockBuilder( EntityTitleStoreLookup::class )
 				->disableOriginalConstructor()
 				->getMock()
 		);

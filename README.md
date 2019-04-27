@@ -27,9 +27,6 @@ variables should be added to`LocalSettings.php`. The following config options
 are available for this extension:
 
 #### Required Config (must be added to LocalSettings)
-- **`$wgMediaInfoEnableFilePageDepicts`**  _(temporary feature flag)_\
-   Enables MediaInfo the depicts widget on the File Page when set to true.
-
 - **`$wgMediaInfoProperties`**\
    Establishes the main linked property used to build the MediaInfo entity in
    Wikibase. Value is an array of key-value pairs connecting a label name to an

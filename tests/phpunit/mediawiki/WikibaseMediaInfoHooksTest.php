@@ -6,13 +6,11 @@ use CirrusSearch\Search\CirrusIndexField;
 use Elastica\Document;
 use Hooks;
 use Language;
-use MediaWiki\MediaWikiServices;
 use MediaWiki\Revision\RevisionRecord;
 use MediaWiki\Revision\SlotRecord;
 use ParserOutput;
 use Title;
 use User;
-use Wikibase\DataModel\Entity\EntityId;
 use Wikibase\DataModel\Services\EntityId\EntityIdComposer;
 use Wikibase\Lib\Store\EntityByLinkedTitleLookup;
 use Wikibase\MediaInfo\Content\MediaInfoContent;
@@ -20,13 +18,9 @@ use Wikibase\MediaInfo\Content\MediaInfoHandler;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\MediaInfo\DataModel\MediaInfoId;
 use Wikibase\MediaInfo\Services\MediaInfoByLinkedTitleLookup;
-use Wikibase\MediaInfo\View\MediaInfoView;
 use Wikibase\MediaInfo\WikibaseMediaInfoHooks;
-use Wikibase\Repo\BabelUserLanguageLookup;
-use Wikibase\Repo\ParserOutput\DispatchingEntityViewFactory;
 use Wikibase\Repo\Store\EntityTitleStoreLookup;
 use Wikibase\Search\Elastic\Fields\TermIndexField;
-use Wikibase\View\ViewContent;
 
 /**
  * @covers \Wikibase\MediaInfo\WikibaseMediaInfoHooks
@@ -188,181 +182,6 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 			->getMock();
 
 		WikibaseMediaInfoHooks::onBeforePageDisplay( $out, $skin );
-	}
-
-	/**
-	 * If there is captions data in the output, it should be moved to just after the
-	 * "mw-parser-output" div
-	 */
-	public function testOnBeforePageDisplay_moveExistingCaptions() {
-		if (
-			MediaWikiServices::getInstance()
-				->getMainConfig()
-				->get( 'MediaInfoEnableFilePageDepicts' )
-		) {
-			$this->markTestSkipped(
-				'moveMediaInfoCaptions in onBeforePageDisplay not tested as it is not ' .
-				'called if depicts is enabled'
-			);
-			return;
-		}
-
-		$imgTitle = Title::makeTitle( NS_FILE, 'Foo.jpg' );
-		$imgTitle->resetArticleID( 23 );
-		$out = $this->getMockOutputPage( $imgTitle );
-
-		$captions = '<div>SOME_CAPTIONS</div>';
-		$out->clearHTML();
-		$out->addHTML(
-			self::$parserOutputTag .
-			self::$extraHtml  .
-			strtolower( self::$mediaInfoViewOpeningTag ).
-			$captions .
-			self::$mediaInfoViewClosingTag
-		);
-
-		$skin = $this->getMockBuilder( \Skin::class )
-			->disableOriginalConstructor()
-			->getMock();
-
-		WikibaseMediaInfoHooks::onBeforePageDisplay( $out, $skin );
-
-		// Captions should have moved ahead of the extra content, but still inside the parser block
-		$this->assertRegExp(
-			'/' . self::$parserOutputTag . '.*' . preg_quote( $captions . self::$extraHtml, '/' ) . '/',
-			$out->getHTML()
-		);
-
-		// The <mediaInfoView> tags should not be present.
-		$this->assertNotRegExp(
-			'/' . self::$mediaInfoViewOpeningTag . '/i',
-			$out->getHTML()
-		);
-		$this->assertNotRegExp(
-			'/' . preg_quote( self::$mediaInfoViewClosingTag, '/' ) . '/i',
-			$out->getHTML()
-		);
-	}
-
-	/**
-	 * If there is no captions data in the output, then an empty caption is created in
-	 * the appropriate spot
-	 */
-	public function testOnBeforePageDisplay_moveAbsentCaptionsAndHeader() {
-		if (
-			MediaWikiServices::getInstance()
-				->getMainConfig()
-				->get( 'MediaInfoEnableFilePageDepicts' )
-		) {
-			$this->markTestSkipped(
-				'moveMediaInfoCaptions in onBeforePageDisplay not tested as it is not ' .
-				'called if depicts is enabled'
-			);
-			return;
-		}
-		$imgTitle = Title::makeTitle( NS_FILE, 'Foo.jpg' );
-		$imgTitle->resetArticleID( 23 );
-		$out = $this->getMockOutputPage( $imgTitle );
-
-		$out->clearHTML();
-		$out->addHTML(
-			self::$parserOutputTag .
-			self::$extraHtml
-		);
-
-		$hookObject = new WikibaseMediaInfoHooks(
-			new EntityIdComposer( [
-				'mediainfo' => function( $repositoryName, $uniquePart ) {
-					return new MediaInfoId( EntityId::joinSerialization( [
-						$repositoryName,
-						'',
-						'M' . $uniquePart
-					] ) );
-				}
-			] ),
-			$this->getMockBuilder( EntityTitleStoreLookup::class )
-				->disableOriginalConstructor()
-				->getMock()
-		);
-
-		// Set up mocks for creation of html for empty entity captions
-		$entityHtml = 'HTML_FOR_ENTITY';
-		$mockViewContent = $this->getMockBuilder( ViewContent::class )
-			->disableOriginalConstructor()
-			->getMock();
-		$mockViewContent->expects( $this->atLeastOnce() )
-			->method( 'getHtml' )
-			->willReturn( $entityHtml );
-		$mockView = $this->getMockBuilder( MediaInfoView::class )
-			->disableOriginalConstructor()
-			->getMock();
-		$mockView->expects( $this->atLeastOnce() )
-			->method( 'getContent' )
-			->willReturn( $mockViewContent );
-		$mockViewFactory = $this->getMockBuilder( DispatchingEntityViewFactory::class )
-			->disableOriginalConstructor()
-			->getMock();
-		$mockViewFactory->expects( $this->atLeastOnce() )
-			->method( 'newEntityView' )
-			->willReturn( $mockView );
-
-		$hookObject->doBeforePageDisplay(
-			$out,
-			true,
-			[],
-			new BabelUserLanguageLookup(),
-			$mockViewFactory,
-			[],
-			[],
-			false,
-			false
-		);
-
-		$this->assertRegExp(
-			'/' . self::$parserOutputTag .
-			'<h1 class="mw-slot-header">[^<]+<\/h1>' .
-			$entityHtml . preg_quote( self::$extraHtml, '/' ) . '/',
-			$out->getHTML()
-		);
-	}
-
-	public function testOnBeforePageDisplay_moveSDHeader() {
-		if (
-			MediaWikiServices::getInstance()
-				->getMainConfig()
-				->get( 'MediaInfoEnableFilePageDepicts' )
-		) {
-			$this->markTestSkipped(
-				'moveMediaInfoCaptions in onBeforePageDisplay not tested as it is not ' .
-				'called if depicts is enabled'
-			);
-			return;
-		}
-
-		$imgTitle = Title::makeTitle( NS_FILE, 'Foo.jpg' );
-		$imgTitle->resetArticleID( 23 );
-		$out = $this->getMockOutputPage( $imgTitle );
-
-		$captionsHeader = '<h1 class="mw-slot-header">' .
-			WikibaseMediaInfoHooks::MEDIAINFO_SLOT_HEADER_PLACEHOLDER .
-			'</h1>';
-		$out->clearHTML();
-		$out->addHTML(
-			self::$parserOutputTag .
-			self::$extraHtml .
-			$captionsHeader
-		);
-
-		$skin = $this->getMockBuilder( \Skin::class )
-			->disableOriginalConstructor()
-			->getMock();
-
-		WikibaseMediaInfoHooks::onBeforePageDisplay( $out, $skin );
-
-		$this->assertRegExp(
-			'#' . self::$parserOutputTag . '<h1 class="mw-slot-header">[^<]+</h1>.*'  . preg_quote( self::$extraHtml, '#' ) . '#is',
-			$out->getHTML()
-		);
 	}
 
 	private function createHookObjectWithMocks() {

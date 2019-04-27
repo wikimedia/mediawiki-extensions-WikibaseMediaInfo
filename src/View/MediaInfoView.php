@@ -4,7 +4,6 @@ namespace Wikibase\MediaInfo\View;
 
 use Html;
 use InvalidArgumentException;
-use MediaWiki\MediaWikiServices;
 use Wikibase\DataModel\Entity\EntityDocument;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\View\EntityDocumentView;
@@ -99,9 +98,6 @@ class MediaInfoView implements EntityDocumentView {
 	}
 
 	public function getStatementsHtml( MediaInfo $entity ) {
-		if ( !MediaWikiServices::getInstance()->getMainConfig()->get( 'MediaInfoEnableFilePageDepicts' ) ) {
-			return '';
-		}
 		return $this->statementsView->getHtml(
 			$entity
 		);

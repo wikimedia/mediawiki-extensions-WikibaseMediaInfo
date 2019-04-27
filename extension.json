@@ -21,9 +21,6 @@
 		"Wikibase\\MediaInfo\\Tests\\MediaWiki\\": "tests/phpunit/mediawiki/"
 	},
 	"config": {
-		"MediaInfoEnableFilePageDepicts": {
-			"value": false
-		},
 		"MediaInfoEnableSearch": {
 			"value": false
 		},

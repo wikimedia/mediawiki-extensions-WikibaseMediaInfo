@@ -25,7 +25,7 @@
 			"value": false
 		},
 		"MediaInfoProperties": {
-			"description": "Map of { indicative name: property id }. E.g. { depicts: P1 }. The key doesn't really matter, except that it's easier to reference the value (.depicts is easier to grasp than [0]) and to construct a title (grep for wikibasemediainfo-statements-title-)",
+			"description": "Map of { indicative name: property id }. E.g. { depicts: P1 }. The key doesn't really matter, except to construct a title (grep for wikibasemediainfo-statements-title-)",
 			"value": {}
 		},
 		"DepictsQualifierProperties": {

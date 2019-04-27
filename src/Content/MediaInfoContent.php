@@ -101,6 +101,8 @@ class MediaInfoContent extends EntityContent {
 	 * @see EntityContent::getTextForSearchIndex
 	 *
 	 * @return string
+	 * @throws \FatalError
+	 * @throws \MWException
 	 */
 	public function getTextForSearchIndex() {
 		if ( $this->isRedirect() ) {

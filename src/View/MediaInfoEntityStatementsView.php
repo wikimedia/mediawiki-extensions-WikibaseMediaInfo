@@ -294,7 +294,7 @@ class MediaInfoEntityStatementsView {
 			$formattedValue
 		);
 
-		if ( !( is_null( $entityId ) ) ) {
+		if ( $entityId !== null ) {
 			$linkClasses = [ 'wbmi-entity-link' ];
 			$title = $this->entityTitleLookup->getTitleForId( $entityId );
 
@@ -345,7 +345,7 @@ class MediaInfoEntityStatementsView {
 		$statementDiv->addClasses( [ 'wbmi-item-container' ] );
 
 		$guid = $statement->getGuid();
-		if ( !is_null( $guid ) ) {
+		if ( $guid !== null ) {
 			$statementDiv->setAttributes( [ 'data-guid' => $guid ] );
 		}
 
@@ -381,7 +381,7 @@ class MediaInfoEntityStatementsView {
 
 		$qualifierHtmlByPropertyId = [];
 		$propertyOrder = $this->propertyOrderProvider->getPropertyOrder();
-		if ( is_null( $propertyOrder ) ) {
+		if ( $propertyOrder === null ) {
 			$snakList->orderByProperty();
 		} else {
 			$propertyIds = array_flip( $propertyOrder );

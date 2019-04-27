@@ -71,6 +71,7 @@ class BasicMediaInfoDiffVisualizer implements EntityDiffVisualizer {
 	 * @param EntityContentDiff $diff
 	 *
 	 * @return string
+	 * @throws MWException
 	 */
 	public function visualizeEntityContentDiff( EntityContentDiff $diff ) {
 		return $this->visualizeEntityDiff( $diff->getEntityDiff() );
@@ -82,6 +83,7 @@ class BasicMediaInfoDiffVisualizer implements EntityDiffVisualizer {
 	 * @param EntityDiff $diff
 	 *
 	 * @return string
+	 * @throws MWException
 	 */
 	protected function visualizeEntityDiff( EntityDiff $diff ) {
 		if ( $diff->isEmpty() ) {

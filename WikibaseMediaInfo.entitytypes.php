@@ -14,7 +14,6 @@
  */
 
 use MediaWiki\MediaWikiServices;
-use Wikibase\Client\WikibaseClient;
 use Wikibase\DataAccess\DataAccessSettings;
 use Wikibase\DataAccess\UnusableEntitySource;
 use Wikibase\DataModel\DeserializerFactory;
@@ -130,7 +129,6 @@ return [
 
 			return new MediaInfoView(
 				$mediaInfoEntityTermsView,
-				new MediaWikiLanguageDirectionalityLookup(),
 				$languageCode,
 				$statementsView
 			);
@@ -159,8 +157,6 @@ return [
 				$wikibaseRepo->getEntityConstraintProvider(),
 				$wikibaseRepo->getValidatorErrorLocalizer(),
 				$wikibaseRepo->getEntityIdParser(),
-				$wikibaseRepo->getEntityIdLookup(),
-				$wikibaseRepo->getLanguageFallbackLabelDescriptionLookupFactory(),
 				new MissingMediaInfoHandler(
 					MediaInfoServices::getMediaInfoIdLookup(),
 					MediaInfoServices::getFilePageLookup(),
@@ -168,7 +164,6 @@ return [
 				),
 				MediaInfoServices::getFilePageLookup(),
 				$wikibaseRepo->getFieldDefinitionsByType( MediaInfo::ENTITY_TYPE ),
-				WikibaseClient::getDefaultInstance()->getStore()->getUsageUpdater(),
 				null
 			);
 		},

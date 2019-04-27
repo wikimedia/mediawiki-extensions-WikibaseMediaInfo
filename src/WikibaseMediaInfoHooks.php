@@ -35,7 +35,6 @@ use Wikibase\MediaInfo\View\MediaInfoView;
 use Wikibase\Repo\BabelUserLanguageLookup;
 use Wikibase\Repo\MediaWikiLocalizedTextProvider;
 use Wikibase\Repo\ParserOutput\DispatchingEntityViewFactory;
-use Wikibase\Repo\Store\EntityTitleStoreLookup;
 use Wikibase\Repo\WikibaseRepo;
 use WikiPage;
 
@@ -54,32 +53,17 @@ class WikibaseMediaInfoHooks {
 	 */
 	private $entityIdComposer;
 
-	/**
-	 * @var EntityTitleStoreLookup
-	 */
-	private $entityTitleStoreLookup;
-
 	private static function newFromGlobalState() {
 		$wikibaseRepo = WikibaseRepo::getDefaultInstance();
-
-		return new self(
-			$wikibaseRepo->getEntityIdComposer(),
-			$wikibaseRepo->getEntityTitleLookup()
-		);
+		return new self( $wikibaseRepo->getEntityIdComposer() );
 	}
 
 	/**
-	 * WikibaseMediaInfoHooks constructor.
 	 * @param EntityIdComposer $entityIdComposer
-	 * @param EntityTitleStoreLookup $entityTitleStoreLookup
 	 * @codeCoverageIgnore
 	 */
-	public function __construct(
-		EntityIdComposer $entityIdComposer,
-		EntityTitleStoreLookup $entityTitleStoreLookup
-	) {
+	public function __construct( EntityIdComposer $entityIdComposer ) {
 		$this->entityIdComposer = $entityIdComposer;
-		$this->entityTitleStoreLookup = $entityTitleStoreLookup;
 	}
 
 	/**
@@ -137,7 +121,7 @@ class WikibaseMediaInfoHooks {
 	 * @see onBeforePageDisplay()
 	 *
 	 * @param ParserOutput $parserOutput
-	 * @param $text
+	 * @param string $text
 	 * @param array $options
 	 */
 	public static function onParserOutputPostCacheTransform(
@@ -165,8 +149,8 @@ class WikibaseMediaInfoHooks {
 
 	/**
 	 * @param PropertyId $id
-	 * @return mixed
-	 * @throws PropertyDataTypeLookupException
+	 * @return string
+	 * @throws \ConfigException
 	 */
 	public static function getValueType( PropertyId $id ) {
 		$mwConfig = MediaWikiServices::getInstance()->getMainConfig();
@@ -183,6 +167,8 @@ class WikibaseMediaInfoHooks {
 	 *
 	 * @param \OutputPage $out
 	 * @param \Skin $skin
+	 * @throws \ConfigException
+	 * @throws \OOUI\Exception
 	 */
 	public static function onBeforePageDisplay( $out, $skin ) {
 		global $wgDepictsQualifierProperties,
@@ -269,6 +255,7 @@ class WikibaseMediaInfoHooks {
 	 * @param UserLanguageLookup $userLanguageLookup
 	 * @param DispatchingEntityViewFactory $entityViewFactory
 	 * @param array $jsConfigVars Variables to expose to JavaScript
+	 * @throws \OOUI\Exception
 	 */
 	public function doBeforePageDisplay(
 		$out,
@@ -331,6 +318,7 @@ class WikibaseMediaInfoHooks {
 	 * @param OutputPage $out
 	 * @param DispatchingEntityViewFactory $entityViewFactory
 	 * @return OutputPage $out
+	 * @throws \OOUI\Exception
 	 */
 	private function tabifyStructuredData(
 		OutputPage $out,
@@ -646,7 +634,7 @@ class WikibaseMediaInfoHooks {
 	) {
 		$revisionRecord = $page->getRevisionRecord();
 		if (
-			!is_null( $revisionRecord ) && $revisionRecord->hasSlot( MediaInfo::ENTITY_TYPE )
+			$revisionRecord !== null && $revisionRecord->hasSlot( MediaInfo::ENTITY_TYPE )
 		) {
 			/** @var SlotRecord $mediaInfoSlot */
 			$mediaInfoSlot = $page->getRevisionRecord()->getSlot( MediaInfo::ENTITY_TYPE );
@@ -669,7 +657,7 @@ class WikibaseMediaInfoHooks {
 	/**
 	 * Handler for the GetPreferences hook
 	 *
-	 * @param User $user The user object
+	 * @param \User $user The user object
 	 * @param array &$preferences Their preferences object
 	 */
 	public static function onGetPreferences( \User $user, array &$preferences ) {

@@ -7,7 +7,8 @@
 			"Optilete",
 			"Xbaked potatox",
 			"Elroy",
-			"Romaine"
+			"Romaine",
+			"Sjoerddebruin"
 		]
 	},
 	"right-mediainfo-term": "Pas de media-informatietermen aan (onderschriften, samenvattingen)",
@@ -46,5 +47,7 @@
 	"wikibasemediainfo-statements-learn-more": "Meer informatie",
 	"wikibasemediainfo-statements-remove": "Verwijder alles",
 	"wikibasemediainfo-statements-title-depicts": "Items getoond in dit bestand",
-	"wikibasemediainfo-filetype-office": "Documenten"
+	"wikibasemediainfo-filetype-office": "Documenten",
+	"wikibasemediainfo-search-qualifiers-save": "Opslaan",
+	"wikibasemediainfo-search-toggle-statements": "Overige verklaringen"
 }

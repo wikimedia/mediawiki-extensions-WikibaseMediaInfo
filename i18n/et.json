@@ -4,6 +4,7 @@
 			"Pikne"
 		]
 	},
+	"action-mediainfo-term": "muuta meediumiteabe terme (pealdised, kokkuvõtted)",
 	"right-mediainfo-term": "Muuta meediumiteabe terme (pealdised, kokkuvõtted)",
 	"slot-name-mediainfo": "Struktureeritud meediumiteave",
 	"wikibase-entity-mediainfo": "meediumiteave",
@@ -36,12 +37,16 @@
 	"wikibasemediainfo-filepage-license-title": "Pealdiste ja muude struktuurandmetega seotud kaastöö",
 	"wikibasemediainfo-filepage-license-content": "Kui klõpsad \"Avalda muudatused\", nõustud [[wmf:Terms_of_Use|kasutustingimustega]] ja oma kaastöö pöördumatu avaldamisega Creative Commonsi litsentsi [https://creativecommons.org/publicdomain/zero/1.0/deed.et CC0] all.",
 	"wikibasemediainfo-filepage-license-content-acceptance": "Nõustud tegema edasisi muudatusi kooskõlas nende tingimustega. Seda sõnumit ei näidata enam.",
+	"wikibasemediainfo-property-placeholder": "Omadus",
 	"wikibasemediainfo-filepage-license-agree": "Nõustun",
 	"wikibasemediainfo-statements-depicts-title": "Sellel pildil kujutatud üksused",
+	"wikibasemediainfo-statements-item-add-qualifier": "Lisa täpsustus",
 	"wikibasemediainfo-statements-item-input-label": "Vikiandmetest",
-	"wikibasemediainfo-statements-item-input-placeholder": "Otsi üksusi, mida lisada (kodukass, mägi, Mona Lisa jne)",
+	"wikibasemediainfo-statements-item-input-placeholder": "Otsi üksusi, mida lisada (kodukass, mägi, Taj Mahal jne)",
+	"wikibasemediainfo-statements-item-is-prominent": "esiplaanil",
+	"wikibasemediainfo-statements-item-mark-as-prominent": "märgi esiplaanil olevaks",
 	"wikibasemediainfo-statements-item-remove": "Eemalda",
 	"wikibasemediainfo-statements-learn-more": "Lisateave",
-	"wikibasemediainfo-statements-remove": "Eemalda avaldus",
+	"wikibasemediainfo-statements-remove": "Eemalda kõik",
 	"wikibasemediainfo-statements-title-depicts": "Selles failis kujutatud üksused"
 }

@@ -2,7 +2,8 @@
 	"@metadata": {
 		"authors": [
 			"StanProg",
-			"Vlad5250"
+			"Vlad5250",
+			"Kaganer"
 		]
 	},
 	"right-mediainfo-term": "Променяне на информационни термини за изображения и записи (описания, кратки прегледи в текст)",
@@ -14,6 +15,7 @@
 	"wikibasemediainfo-desc": "Разширение на Уикибазата за управление на структурирани метаданни за картини и видеозаписи",
 	"wikibasemediainfo-diffview-label": "описание",
 	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Описания",
+	"wikibasemediainfo-filepage-fileinfo-heading": "Информация за файла",
 	"wikibasemediainfo-filepage-structured-data-heading": "Структурирани данни",
 	"wikibasemediainfo-filepage-captions-title": "Описания",
 	"wikibasemediainfo-filepage-more-languages": "Още $1 {{PLURAL:$1|език|езика}}",

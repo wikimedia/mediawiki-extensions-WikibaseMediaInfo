@@ -46,7 +46,8 @@
 
 		this.input = new statements.ItemInputWidget( {
 			classes: [ 'wbmi-statement-input' ],
-			type: this.properties[ propertyId ] || 'string'
+			type: this.properties[ propertyId ] || 'string',
+			disabled: this.disabled
 		} );
 		this.input.connect( this, { choose: 'addItemFromInput' } );
 
@@ -146,6 +147,7 @@
 			statement = new wb.datamodel.Statement( claim, references, rank );
 
 		return new statements.ItemWidget( {
+			disabled: this.disabled,
 			qualifiers: this.qualifiers,
 			data: statement,
 			editing: this.editing,
@@ -238,6 +240,27 @@
 	};
 
 	/**
+	 * @inheritDoc
+	 */
+	statements.StatementWidget.prototype.setDisabled = function ( disabled ) {
+		statements.StatementWidget.parent.prototype.setDisabled.call( this, disabled );
+
+		// update disabled state for the relevant child objects, if they
+		// exist (they might not yet, since this method also gets called
+		// while we're still constructing `this` object)
+		if ( this.input ) {
+			this.input.setDisabled( disabled );
+		}
+		if ( this.items && this.items.length > 0 ) {
+			this.getItems().forEach( function ( item ) {
+				item.setDisabled( disabled );
+			} );
+		}
+
+		return this;
+	};
+
+	/**
 	 * @return {wikibase.datamodel.Statement[]}
 	 */
 	statements.StatementWidget.prototype.getChanges = function () {
@@ -293,15 +316,11 @@
 			promise = $.Deferred().resolve( { pageinfo: { lastrevid: baseRevId } } ).promise(),
 			changedStatements = this.getChanges(),
 			removedStatements = this.getRemovals(),
-			hasFailures = false;
+			hasFailures = false,
+			disabled = this.disabled;
 
 		this.setEditing( false );
-		this.input.setDisabled( true );
-
-		// disable 'make prominent' links
-		this.getItems().forEach( function ( item ) {
-			item.setDisabled( true );
-		} );
+		this.setDisabled( true );
 
 		this.$element.find( '.wbmi-statement-publish-error-msg' ).remove();
 
@@ -383,10 +402,8 @@
 		promise = promise.then( function ( response ) {
 			var serializer, deserializer;
 
-			// re-enable 'make prominent' links
-			self.getItems().forEach( function ( item ) {
-				item.setDisabled( false );
-			} );
+			// reset to original, pre-submit, disabled state
+			self.setDisabled( disabled );
 
 			// reset data to what we've just submitted to the API (items that failed
 			// to submit have been reset to their previous state in `data`)
@@ -394,9 +411,6 @@
 			deserializer = new wb.serialization.StatementListDeserializer();
 
 			self.data = deserializer.deserialize( serializer.serialize( data ) );
-
-			// re-enable statements input
-			self.input.setDisabled( false );
 
 			// if we've had failures, put the widget back in edit mode, and reject
 			// this promise, so callers will know something went wrong

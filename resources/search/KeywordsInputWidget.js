@@ -1,11 +1,13 @@
-( function ( search, statements ) {
+( function ( search ) {
 
 	'use strict';
+
+	var EntityLookupElement = require( 'wikibase.mediainfo.statements' ).EntityLookupElement;
 
 	search.KeywordsInputWidget = function MediaInfoSearchKeywordsInputWidget( config ) {
 		search.KeywordsInputWidget.parent.call( this, config );
 
-		statements.EntityLookupElement.call( this, $.extend( {}, config, {
+		EntityLookupElement.call( this, $.extend( {}, config, {
 			allowSuggestionsWhenEmpty: false,
 			highlightFirst: false,
 			type: 'item'
@@ -15,7 +17,7 @@
 		this.$input.on( 'blur', this.emit.bind( this, 'blur' ) );
 	};
 	OO.inheritClass( search.KeywordsInputWidget, OO.ui.TextInputWidget );
-	OO.mixinClass( search.KeywordsInputWidget, statements.EntityLookupElement );
+	OO.mixinClass( search.KeywordsInputWidget, EntityLookupElement );
 
 	/**
 	 * @inheritdoc
@@ -24,4 +26,4 @@
 		return this.getValue();
 	};
 
-}( mw.mediaInfo.search, mw.mediaInfo.statements ) );
+}( mw.mediaInfo.search ) );

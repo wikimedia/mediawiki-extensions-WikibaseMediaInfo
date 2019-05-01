@@ -13,7 +13,6 @@
 	mw.mediaInfo = mw.mediaInfo || {};
 	mw.mediaInfo.structuredData = mw.mediaInfo.structuredData || {};
 	mw.mediaInfo.structuredData.currentRevision = mw.config.get( 'wbCurrentRevision' );
-	mw.mediaInfo.statements = mw.mediaInfo.statements || {};
 
 	CaptionsPanel = require( './CaptionsPanel.js' );
 	StatementPanel = require( './StatementPanel.js' );

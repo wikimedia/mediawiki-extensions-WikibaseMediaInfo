@@ -15,6 +15,7 @@
     "grunt-stylelint": "0.10.1",
     "jquery": "3.3.1",
     "jsdom": "14.0.0",
+    "mockery": "^2.1.0",
     "mustache": "3.0.1",
     "oojs": "2.2.2",
     "oojs-ui": "0.31.1",
@@ -27,6 +28,8 @@
     "wdio-mediawiki": "0.3.0",
     "wdio-mocha-framework": "0.6.3",
     "wdio-spec-reporter": "0.1.5",
-    "webdriverio": "4.14.2"
+    "webdriverio": "4.14.2",
+    "wikibase-data-model": "^5.0.0",
+    "wikibase-data-values": "^0.10.0"
   }
 }

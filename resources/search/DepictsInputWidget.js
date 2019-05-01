@@ -1,6 +1,8 @@
-( function ( search, statements ) {
+( function ( search ) {
 
 	'use strict';
+
+	var EntityLookupElement = require( 'wikibase.mediainfo.statements' ).EntityLookupElement;
 
 	search.DepictsInputWidget = function MediaInfoSearchDepictsInputWidget( config ) {
 		search.DepictsInputWidget.parent.call( this, $.extend( {}, config, {
@@ -14,7 +16,7 @@
 		// LookupElement expects this.$input
 		this.$input = this.input.$input;
 
-		statements.EntityLookupElement.call( this, $.extend( {}, config, {
+		EntityLookupElement.call( this, $.extend( {}, config, {
 			allowSuggestionsWhenEmpty: false,
 			highlightFirst: false,
 			type: 'item'
@@ -29,13 +31,13 @@
 	};
 	OO.inheritClass( search.DepictsInputWidget, OO.ui.TagMultiselectWidget );
 	OO.mixinClass( search.DepictsInputWidget, OO.ui.mixin.PendingElement );
-	OO.mixinClass( search.DepictsInputWidget, statements.EntityLookupElement );
+	OO.mixinClass( search.DepictsInputWidget, EntityLookupElement );
 
 	/**
 	 * @inheritdoc
 	 */
 	search.DepictsInputWidget.prototype.getLookupRequest = function () {
-		var promise = statements.EntityLookupElement.prototype.getLookupRequest.call( this );
+		var promise = EntityLookupElement.prototype.getLookupRequest.call( this );
 		this.pushPending();
 		promise.always( this.popPending.bind( this ) );
 		return promise;
@@ -173,4 +175,4 @@
 		this.setLookupsDisabled( false );
 	};
 
-}( mw.mediaInfo.search, mw.mediaInfo.statements ) );
+}( mw.mediaInfo.search ) );

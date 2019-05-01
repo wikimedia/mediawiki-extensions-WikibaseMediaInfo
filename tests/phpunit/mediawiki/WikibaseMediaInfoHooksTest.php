@@ -48,15 +48,8 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 	 * @dataProvider provideWikibaseEntityTypesHooks
 	 */
 	public function testOnWikibaseEntityTypes( $hook ) {
-		$entityTypeDefinitions = [
-			'item' => [ 'foo', 'bar' ]
-		];
-
+		$entityTypeDefinitions = [];
 		Hooks::run( $hook, [ &$entityTypeDefinitions ] );
-
-		$this->assertArrayHasKey( 'item', $entityTypeDefinitions );
-		$this->assertSame( [ 'foo', 'bar' ], $entityTypeDefinitions['item'] );
-
 		$this->assertArrayHasKey( 'mediainfo', $entityTypeDefinitions );
 	}
 

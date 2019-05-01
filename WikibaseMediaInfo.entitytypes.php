@@ -40,12 +40,16 @@ use Wikibase\MediaInfo\DataModel\Serialization\MediaInfoSerializer;
 use Wikibase\MediaInfo\DataModel\Services\Diff\MediaInfoDiffer;
 use Wikibase\MediaInfo\DataModel\Services\Diff\MediaInfoPatcher;
 use Wikibase\MediaInfo\Diff\BasicMediaInfoDiffVisualizer;
+use Wikibase\MediaInfo\Rdf\MediaInfoRdfBuilder;
 use Wikibase\MediaInfo\Search\MediaInfoFieldDefinitions;
 use Wikibase\MediaInfo\Services\MediaInfoServices;
 use Wikibase\MediaInfo\Services\MediaInfoEntityQuery;
 use Wikibase\MediaInfo\View\MediaInfoEntityTermsView;
 use Wikibase\MediaInfo\View\MediaInfoEntityStatementsView;
 use Wikibase\MediaInfo\View\MediaInfoView;
+use Wikibase\Rdf\DedupeBag;
+use Wikibase\Rdf\EntityMentionListener;
+use Wikibase\Rdf\RdfVocabulary;
 use Wikibase\Repo\Diff\ClaimDiffer;
 use Wikibase\Repo\Diff\ClaimDifferenceVisualizer;
 use Wikibase\Repo\MediaWikiLanguageDirectionalityLookup;
@@ -55,6 +59,7 @@ use Wikibase\Search\Elastic\Fields\DescriptionsProviderFieldDefinitions;
 use Wikibase\Search\Elastic\Fields\LabelsProviderFieldDefinitions;
 use Wikibase\Search\Elastic\Fields\StatementProviderFieldDefinitions;
 use Wikibase\SettingsArray;
+use Wikimedia\Purtle\RdfWriter;
 
 return [
 	MediaInfo::ENTITY_TYPE => [
@@ -237,6 +242,18 @@ return [
 				$dbName,
 				$repoName
 			);
-		}
+		},
+		'rdf-builder-factory-callback' => function (
+			$flavorFlags,
+			RdfVocabulary $vocabulary,
+			RdfWriter $writer,
+			EntityMentionListener $tracker,
+			DedupeBag $dedupe
+		) {
+			return new MediaInfoRdfBuilder(
+				$vocabulary,
+				$writer
+			);
+		},
 	]
 ];

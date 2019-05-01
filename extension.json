@@ -220,7 +220,7 @@
 			]
 		},
 		"wikibase.mediainfo.statements": {
-			"scripts": [
+			"packageFiles": [
 				"resources/statements/__namespace.js",
 				"resources/statements/FormatValueElement.js",
 				"resources/statements/EntityLookupElement.js",

@@ -1,7 +1,8 @@
-( function ( statements, wb ) {
+'use strict';
 
-	'use strict';
-
+var ItemInputWidget = require( './ItemInputWidget.js' ),
+	FormatValueElement = require( './FormatValueElement.js' ),
+	ItemWidget = require( './ItemWidget.js' ),
 	/**
 	 * @constructor
 	 * @param {Object} [config] Configuration options
@@ -11,14 +12,14 @@
 	 * @param {Object} [config.qualifiers] Qualifiers map: { propertyId: datatype, ...}
 	 * @param {string} [config.title]
 	 */
-	statements.StatementWidget = function MediaInfoStatementsStatementWidget( config ) {
+	StatementWidget = function MediaInfoStatementsStatementWidget( config ) {
 		var
 			properties = config.properties || mw.config.get( 'wbmiProperties' ) || {},
 			// wbmiProperties-based fallbacks are for backward compatibility, back
 			// when this was for depicts only, and propertyId wasn't required
 			propertyId = config.propertyId || Object.keys( properties )[ 0 ] || properties.depicts,
 			qualifiers = config.qualifiers || mw.config.get( 'wbmiDepictsQualifierProperties' ) || {},
-			dataValue = new wb.datamodel.EntityId( propertyId ),
+			dataValue = new wikibase.datamodel.EntityId( propertyId ),
 			$label = $( '<h4>' )
 				.addClass( 'wbmi-entity-label' )
 				.text( '' ), // will be filled out later (after formatValue call)
@@ -32,7 +33,7 @@
 		config.properties = properties;
 		config.qualifiers = qualifiers;
 
-		statements.StatementWidget.parent.call( this, config );
+		StatementWidget.parent.call( this, config );
 		OO.ui.mixin.GroupElement.call( this );
 
 		this.config = config;
@@ -41,10 +42,10 @@
 		this.properties = config.properties;
 		this.qualifiers = config.qualifiers;
 		this.title = config.title || mw.config.get( 'wbmiPropertyTitles' )[ this.propertyId ];
-		this.data = new wb.datamodel.StatementList();
+		this.data = new wikibase.datamodel.StatementList();
 		this.editing = false;
 
-		this.input = new statements.ItemInputWidget( {
+		this.input = new ItemInputWidget( {
 			classes: [ 'wbmi-statement-input' ],
 			type: this.properties[ propertyId ] || 'string',
 			disabled: this.disabled
@@ -97,347 +98,345 @@
 
 		this.renderFooter();
 	};
-	OO.inheritClass( statements.StatementWidget, OO.ui.Widget );
-	OO.mixinClass( statements.StatementWidget, OO.ui.mixin.GroupElement );
-	OO.mixinClass( statements.StatementWidget, statements.FormatValueElement );
+OO.inheritClass( StatementWidget, OO.ui.Widget );
+OO.mixinClass( StatementWidget, OO.ui.mixin.GroupElement );
+OO.mixinClass( StatementWidget, FormatValueElement );
 
-	statements.StatementWidget.prototype.renderFooter = function () {
-		var showRemove = this.getItems().length > 0 && this.editing;
-		this.$removeLink.toggle( showRemove ).toggleClass( 'wbmi-hidden', !showRemove );
-		this.$footer.toggle( this.editing );
-	};
+StatementWidget.prototype.renderFooter = function () {
+	var showRemove = this.getItems().length > 0 && this.editing;
+	this.$removeLink.toggle( showRemove ).toggleClass( 'wbmi-hidden', !showRemove );
+	this.$footer.toggle( this.editing );
+};
 
-	/**
-	 * @param {mw.mediaInfo.statements.ItemInputWidget} item
-	 * @param {Object} data
-	 */
-	statements.StatementWidget.prototype.addItemFromInput = function ( item, data ) {
-		var widget = this.createItem( item.getData(), data.label, data.url, data.repository );
-		widget.connect( this, { delete: [ 'removeItems', [ widget ] ] } );
-		widget.connect( this, { delete: [ 'emit', 'change' ] } );
-		widget.connect( this, { change: [ 'setEditing', true ] } );
-		widget.connect( this, { change: [ 'emit', 'change' ] } );
+/**
+ * @param {ItemInputWidget} item
+ * @param {Object} data
+ */
+StatementWidget.prototype.addItemFromInput = function ( item, data ) {
+	var widget = this.createItem( item.getData(), data.label, data.url, data.repository );
+	widget.connect( this, { delete: [ 'removeItems', [ widget ] ] } );
+	widget.connect( this, { delete: [ 'emit', 'change' ] } );
+	widget.connect( this, { change: [ 'setEditing', true ] } );
+	widget.connect( this, { change: [ 'emit', 'change' ] } );
 
-		this.addItems( [ widget ] );
+	this.addItems( [ widget ] );
 
-		// we just added a new item - let's switch all of them into editing mode
-		this.setEditing( true );
+	// we just added a new item - let's switch all of them into editing mode
+	this.setEditing( true );
 
-		// clear the autocomplete input field to select entities to add
-		this.input.setData( undefined );
+	// clear the autocomplete input field to select entities to add
+	this.input.setData( undefined );
 
-		this.emit( 'manual-add', widget );
-		this.emit( 'change', widget );
-	};
+	this.emit( 'manual-add', widget );
+	this.emit( 'change', widget );
+};
 
-	/**
-	 * @param {dataValues.DataValue} dataValue
-	 * @param {string} [label]
-	 * @param {string} [url]
-	 * @param {string} [repo]
-	 * @return {mw.mediaInfo.statements.ItemWidget}
-	 */
-	statements.StatementWidget.prototype.createItem = function ( dataValue, label, url, repo ) {
-		var guidGenerator = new wb.utilities.ClaimGuidGenerator( this.entityId ),
-			mainSnak = new wb.datamodel.PropertyValueSnak( this.propertyId, dataValue, null ),
-			qualifiers = null,
-			claim = new wb.datamodel.Claim( mainSnak, qualifiers, guidGenerator.newGuid() ),
-			references = null,
-			rank = wb.datamodel.Statement.RANK.NORMAL,
-			statement = new wb.datamodel.Statement( claim, references, rank );
+/**
+ * @param {dataValues.DataValue} dataValue
+ * @param {string} [label]
+ * @param {string} [url]
+ * @param {string} [repo]
+ * @return {ItemWidget}
+ */
+StatementWidget.prototype.createItem = function ( dataValue, label, url, repo ) {
+	var guidGenerator = new wikibase.utilities.ClaimGuidGenerator( this.entityId ),
+		mainSnak = new wikibase.datamodel.PropertyValueSnak( this.propertyId, dataValue, null ),
+		qualifiers = null,
+		claim = new wikibase.datamodel.Claim( mainSnak, qualifiers, guidGenerator.newGuid() ),
+		references = null,
+		rank = wikibase.datamodel.Statement.RANK.NORMAL,
+		statement = new wikibase.datamodel.Statement( claim, references, rank );
 
-		return new statements.ItemWidget( {
-			disabled: this.disabled,
-			qualifiers: this.qualifiers,
-			data: statement,
-			editing: this.editing,
-			label: label,
-			url: url,
-			repo: repo
-		} );
-	};
+	return new ItemWidget( {
+		disabled: this.disabled,
+		qualifiers: this.qualifiers,
+		data: statement,
+		editing: this.editing,
+		label: label,
+		url: url,
+		repo: repo
+	} );
+};
 
-	/**
-	 * @return {wikibase.datamodel.StatementList}
-	 */
-	statements.StatementWidget.prototype.getData = function () {
-		return new wb.datamodel.StatementList( this.getItems().map( function ( item ) {
-			return item.getData();
-		} ) );
-	};
+/**
+ * @return {wikibase.datamodel.StatementList}
+ */
+StatementWidget.prototype.getData = function () {
+	return new wikibase.datamodel.StatementList( this.getItems().map( function ( item ) {
+		return item.getData();
+	} ) );
+};
 
-	/**
-	 * Update DOM with latest data, sorted by prominence
-	 * @param {wikibase.datamodel.StatementList} data
-	 */
-	statements.StatementWidget.prototype.setData = function ( data ) {
-		var self = this,
-			existingItems = this.getItems(),
-			sortedData;
+/**
+ * Update DOM with latest data, sorted by prominence
+ * @param {wikibase.datamodel.StatementList} data
+ */
+StatementWidget.prototype.setData = function ( data ) {
+	var self = this,
+		existingItems = this.getItems(),
+		sortedData;
 
-		if ( !data ) {
-			// data should always be a StatementList, even if an empty one;
-			// if data is falsy, it's just invalid input...
+	if ( !data ) {
+		// data should always be a StatementList, even if an empty one;
+		// if data is falsy, it's just invalid input...
+		return;
+	}
+
+	self = this;
+	sortedData = data.toArray().sort( function ( statement1, statement2 ) {
+		return statement2.getRank() - statement1.getRank();
+	} );
+
+	// clear out input field
+	this.input.setData( undefined );
+
+	// get rid of existing widgets that are no longer present in the
+	// new set of data we've been fed
+	this.removeItems( existingItems.filter( function ( item ) {
+		return !data.hasItem( item.getData() );
+	} ) );
+
+	sortedData.forEach( function ( statement, i ) {
+		var mainSnak = statement.getClaim().getMainSnak(),
+			widget = self.findItemFromData( statement );
+
+		if ( statement.getClaim().getMainSnak().getPropertyId() !== self.propertyId ) {
+			throw new Error( 'Invalid statement' );
+		}
+
+		if ( !( mainSnak instanceof wikibase.datamodel.PropertyValueSnak ) ) {
+			// ignore value-less snak
+			data.removeItem( statement );
 			return;
 		}
 
-		sortedData = data.toArray().sort( function ( statement1, statement2 ) {
-			return statement2.getRank() - statement1.getRank();
-		} );
+		// we've potentially received more info that we had when constructing this
+		// object: extract the id & data type of this statement & adjust the
+		// input type accordingly
+		self.properties[ mainSnak.getPropertyId() ] = mainSnak.getValue().getType();
+		self.input.setInputType( mainSnak.getValue().getType() );
 
-		// clear out input field
-		this.input.setData( undefined );
+		if ( widget ) {
+			self.moveItem( widget, i );
+		} else {
+			widget = self.createItem( mainSnak.getValue() );
+			widget.setData( statement );
+			widget.connect( self, { delete: [ 'removeItems', [ widget ] ] } );
+			widget.connect( self, { delete: [ 'emit', 'change' ] } );
+			widget.connect( self, { change: [ 'setEditing', true ] } );
+			widget.connect( self, { change: [ 'emit', 'change' ] } );
 
-		// get rid of existing widgets that are no longer present in the
-		// new set of data we've been fed
-		this.removeItems( existingItems.filter( function ( item ) {
-			return !data.hasItem( item.getData() );
-		} ) );
+			self.insertItem( widget, i );
+		}
+	} );
 
-		sortedData.forEach( function ( statement, i ) {
-			var mainSnak = statement.getClaim().getMainSnak(),
-				widget = self.findItemFromData( statement );
+	this.data = data;
+};
 
-			if ( statement.getClaim().getMainSnak().getPropertyId() !== self.propertyId ) {
-				throw new Error( 'Invalid statement' );
-			}
+/**
+ * @param {boolean} editing
+ */
+StatementWidget.prototype.setEditing = function ( editing ) {
+	var self = this;
 
-			if ( !( mainSnak instanceof wb.datamodel.PropertyValueSnak ) ) {
-				// ignore value-less snak
-				data.removeItem( statement );
-				return;
-			}
+	this.editing = editing;
 
-			// we've potentially received more info that we had when constructing this
-			// object: extract the id & data type of this statement & adjust the
-			// input type accordingly
-			self.properties[ mainSnak.getPropertyId() ] = mainSnak.getValue().getType();
-			self.input.setInputType( mainSnak.getValue().getType() );
+	this.getItems().forEach( function ( item ) {
+		try {
+			item.setEditing( editing );
+		} catch ( e ) {
+			// when switching modes, make sure to remove invalid (incomplete) items
+			self.removeItems( [ item ] );
+		}
+	} );
 
-			if ( widget ) {
-				self.moveItem( widget, i );
-			} else {
-				widget = self.createItem( mainSnak.getValue() );
-				widget.setData( statement );
-				widget.connect( self, { delete: [ 'removeItems', [ widget ] ] } );
-				widget.connect( self, { delete: [ 'emit', 'change' ] } );
-				widget.connect( self, { change: [ 'setEditing', true ] } );
-				widget.connect( self, { change: [ 'emit', 'change' ] } );
+	this.renderFooter();
+};
 
-				self.insertItem( widget, i );
-			}
-		} );
+/**
+ * @inheritDoc
+ */
+StatementWidget.prototype.setDisabled = function ( disabled ) {
+	StatementWidget.parent.prototype.setDisabled.call( this, disabled );
 
-		this.data = data;
-	};
-
-	/**
-	 * @param {boolean} editing
-	 */
-	statements.StatementWidget.prototype.setEditing = function ( editing ) {
-		var self = this;
-
-		this.editing = editing;
-
+	// update disabled state for the relevant child objects, if they
+	// exist (they might not yet, since this method also gets called
+	// while we're still constructing `this` object)
+	if ( this.input ) {
+		this.input.setDisabled( disabled );
+	}
+	if ( this.items && this.items.length > 0 ) {
 		this.getItems().forEach( function ( item ) {
-			try {
-				item.setEditing( editing );
-			} catch ( e ) {
-				// when switching modes, make sure to remove invalid (incomplete) items
-				self.removeItems( [ item ] );
-			}
+			item.setDisabled( disabled );
 		} );
+	}
 
-		this.renderFooter();
-	};
+	return this;
+};
 
-	/**
-	 * @inheritDoc
-	 */
-	statements.StatementWidget.prototype.setDisabled = function ( disabled ) {
-		statements.StatementWidget.parent.prototype.setDisabled.call( this, disabled );
+/**
+ * @return {wikibase.datamodel.Statement[]}
+ */
+StatementWidget.prototype.getChanges = function () {
+	var currentStatements = this.getData().toArray(),
+		previousStatements = this.data.toArray().reduce( function ( result, statement ) {
+			result[ statement.getClaim().getGuid() ] = statement;
+			return result;
+		}, {} );
 
-		// update disabled state for the relevant child objects, if they
-		// exist (they might not yet, since this method also gets called
-		// while we're still constructing `this` object)
-		if ( this.input ) {
-			this.input.setDisabled( disabled );
-		}
-		if ( this.items && this.items.length > 0 ) {
-			this.getItems().forEach( function ( item ) {
-				item.setDisabled( disabled );
-			} );
-		}
+	return currentStatements.filter( function ( statement ) {
+		return !( statement.getClaim().getGuid() in previousStatements ) ||
+			!statement.equals( previousStatements[ statement.getClaim().getGuid() ] );
+	} );
+};
 
-		return this;
-	};
+/**
+ * @return {wikibase.datamodel.Statement[]}
+ */
+StatementWidget.prototype.getRemovals = function () {
+	var data = this.getData(),
+		currentStatements = data.toArray().reduce( function ( result, statement ) {
+			result[ statement.getClaim().getGuid() ] = statement;
+			return result;
+		}, {} );
 
-	/**
-	 * @return {wikibase.datamodel.Statement[]}
-	 */
-	statements.StatementWidget.prototype.getChanges = function () {
-		var currentStatements = this.getData().toArray(),
-			previousStatements = this.data.toArray().reduce( function ( result, statement ) {
-				result[ statement.getClaim().getGuid() ] = statement;
-				return result;
-			}, {} );
+	return this.data.toArray().filter( function ( statement ) {
+		return !( statement.getClaim().getGuid() in currentStatements );
+	} );
+};
 
-		return currentStatements.filter( function ( statement ) {
-			return !( statement.getClaim().getGuid() in previousStatements ) ||
-				!statement.equals( previousStatements[ statement.getClaim().getGuid() ] );
-		} );
-	};
+/**
+ * Undo any changes that have been made in any of the items.
+ *
+ * @return {jQuery.Promise}
+ */
+StatementWidget.prototype.reset = function () {
+	this.setData( this.data );
+	this.setEditing( false );
+	this.$element.find( '.wbmi-statement-publish-error-msg' ).remove();
 
-	/**
-	 * @return {wikibase.datamodel.Statement[]}
-	 */
-	statements.StatementWidget.prototype.getRemovals = function () {
-		var data = this.getData(),
-			currentStatements = data.toArray().reduce( function ( result, statement ) {
-				result[ statement.getClaim().getGuid() ] = statement;
-				return result;
-			}, {} );
+	return $.Deferred().resolve().promise();
+};
 
-		return this.data.toArray().filter( function ( statement ) {
-			return !( statement.getClaim().getGuid() in currentStatements );
-		} );
-	};
+/**
+ * @param {number} [baseRevId]
+ * @return {jQuery.Promise}
+ */
+StatementWidget.prototype.submit = function ( baseRevId ) {
+	var self = this,
+		api = wikibase.api.getLocationAgnosticMwApi( mw.config.get( 'wbmiRepoApiUrl', mw.config.get( 'wbRepoApiUrl' ) ) ),
+		data = this.getData(),
+		serializer = new wikibase.serialization.StatementSerializer(),
+		promise = $.Deferred().resolve( { pageinfo: { lastrevid: baseRevId } } ).promise(),
+		changedStatements = this.getChanges(),
+		removedStatements = this.getRemovals(),
+		hasFailures = false,
+		disabled = this.disabled;
 
-	/**
-	 * Undo any changes that have been made in any of the items.
-	 *
-	 * @return {jQuery.Promise}
-	 */
-	statements.StatementWidget.prototype.reset = function () {
-		this.setData( this.data );
-		this.setEditing( false );
-		this.$element.find( '.wbmi-statement-publish-error-msg' ).remove();
+	this.setEditing( false );
+	this.setDisabled( true );
 
-		return $.Deferred().resolve().promise();
-	};
+	this.$element.find( '.wbmi-statement-publish-error-msg' ).remove();
 
-	/**
-	 * @param {number} [baseRevId]
-	 * @return {jQuery.Promise}
-	 */
-	statements.StatementWidget.prototype.submit = function ( baseRevId ) {
-		var self = this,
-			api = wikibase.api.getLocationAgnosticMwApi( mw.config.get( 'wbmiRepoApiUrl', mw.config.get( 'wbRepoApiUrl' ) ) ),
-			data = this.getData(),
-			serializer = new wb.serialization.StatementSerializer(),
-			promise = $.Deferred().resolve( { pageinfo: { lastrevid: baseRevId } } ).promise(),
-			changedStatements = this.getChanges(),
-			removedStatements = this.getRemovals(),
-			hasFailures = false,
-			disabled = this.disabled;
+	changedStatements.forEach( function ( statement ) {
+		promise = promise.then( function ( statement, prevResponse ) {
+			return api.postWithEditToken( {
+				action: 'wbsetclaim',
+				format: 'json',
+				claim: JSON.stringify( serializer.serialize( statement ) ),
+				// fetch the previous response's rev id and feed it to the next
+				baserevid: prevResponse.pageinfo ? prevResponse.pageinfo.lastrevid : undefined,
+				bot: 1,
+				assertuser: !mw.user.isAnon() ? mw.user.getName() : undefined
+			} ).catch(
+				function ( errorCode, error ) {
+					var apiError = wikibase.api.RepoApiError.newFromApiResponse( error, 'save' ),
+						guid = statement.getClaim().getGuid(),
+						item = self.getItems().filter( function ( item ) {
+							return item.getData().getClaim().getGuid() === guid;
+						} )[ 0 ];
 
-		this.setEditing( false );
-		this.setDisabled( true );
-
-		this.$element.find( '.wbmi-statement-publish-error-msg' ).remove();
-
-		changedStatements.forEach( function ( statement ) {
-			promise = promise.then( function ( statement, prevResponse ) {
-				return api.postWithEditToken( {
-					action: 'wbsetclaim',
-					format: 'json',
-					claim: JSON.stringify( serializer.serialize( statement ) ),
-					// fetch the previous response's rev id and feed it to the next
-					baserevid: prevResponse.pageinfo ? prevResponse.pageinfo.lastrevid : undefined,
-					bot: 1,
-					assertuser: !mw.user.isAnon() ? mw.user.getName() : undefined
-				} ).catch(
-					function ( errorCode, error ) {
-						var apiError = wb.api.RepoApiError.newFromApiResponse( error, 'save' ),
-							guid = statement.getClaim().getGuid(),
-							item = self.getItems().filter( function ( item ) {
-								return item.getData().getClaim().getGuid() === guid;
-							} )[ 0 ];
-
-						item.$element.after( $( '<div>' )
-							.addClass( 'wbmi-statement-publish-error-msg' )
-							.html( apiError.detailedMessage )
-						);
-
-						// replace statement with what we previously had, since we failed
-						// to submit the changes...
-						data.removeItem( statement );
-						data.addItem( self.data.toArray().filter( function ( statement ) {
-							return statement.getClaim().getGuid() === guid;
-						} )[ 0 ] );
-
-						hasFailures = true;
-
-						// keep the update chain moving...
-						return $.Deferred().resolve( prevResponse ).promise();
-					}
-				);
-			}.bind( null, statement ) );
-		} );
-
-		// Delete removed items
-		if ( removedStatements.length > 0 ) {
-			promise = promise.then( function ( prevResponse ) {
-				return api.postWithEditToken( {
-					action: 'wbremoveclaims',
-					format: 'json',
-					claim: removedStatements.map( function ( statement ) {
-						return statement.getClaim().getGuid();
-					} ).join( '|' ),
-					// fetch the previous response's rev id and feed it to the next
-					baserevid: prevResponse.pageinfo ? prevResponse.pageinfo.lastrevid : undefined,
-					bot: 1,
-					assertuser: !mw.user.isAnon() ? mw.user.getName() : undefined
-				} ).catch( function ( errorCode, error ) {
-					var apiError = wb.api.RepoApiError.newFromApiResponse( error, 'save' );
-
-					self.$element.append( $( '<div>' )
+					item.$element.after( $( '<div>' )
 						.addClass( 'wbmi-statement-publish-error-msg' )
 						.html( apiError.detailedMessage )
 					);
 
-					// restore statements that failed to delete
-					removedStatements.forEach( function ( statement ) {
-						data.addItem( statement );
-					} );
+					// replace statement with what we previously had, since we failed
+					// to submit the changes...
+					data.removeItem( statement );
+					data.addItem( self.data.toArray().filter( function ( statement ) {
+						return statement.getClaim().getGuid() === guid;
+					} )[ 0 ] );
 
 					hasFailures = true;
 
 					// keep the update chain moving...
 					return $.Deferred().resolve( prevResponse ).promise();
+				}
+			);
+		}.bind( null, statement ) );
+	} );
+
+	// Delete removed items
+	if ( removedStatements.length > 0 ) {
+		promise = promise.then( function ( prevResponse ) {
+			return api.postWithEditToken( {
+				action: 'wbremoveclaims',
+				format: 'json',
+				claim: removedStatements.map( function ( statement ) {
+					return statement.getClaim().getGuid();
+				} ).join( '|' ),
+				// fetch the previous response's rev id and feed it to the next
+				baserevid: prevResponse.pageinfo ? prevResponse.pageinfo.lastrevid : undefined,
+				bot: 1,
+				assertuser: !mw.user.isAnon() ? mw.user.getName() : undefined
+			} ).catch( function ( errorCode, error ) {
+				var apiError = wikibase.api.RepoApiError.newFromApiResponse( error, 'save' );
+
+				self.$element.append( $( '<div>' )
+					.addClass( 'wbmi-statement-publish-error-msg' )
+					.html( apiError.detailedMessage )
+				);
+
+				// restore statements that failed to delete
+				removedStatements.forEach( function ( statement ) {
+					data.addItem( statement );
 				} );
+
+				hasFailures = true;
+
+				// keep the update chain moving...
+				return $.Deferred().resolve( prevResponse ).promise();
 			} );
+		} );
+	}
+
+	// store data after we've submitted all changes, so that we'll reset to the
+	// actual most recent correct state
+	promise = promise.then( function ( response ) {
+		var serializer, deserializer;
+
+		// reset to original, pre-submit, disabled state
+		self.setDisabled( disabled );
+
+		// reset data to what we've just submitted to the API (items that failed
+		// to submit have been reset to their previous state in `data`)
+		serializer = new wikibase.serialization.StatementListSerializer();
+		deserializer = new wikibase.serialization.StatementListDeserializer();
+
+		self.data = deserializer.deserialize( serializer.serialize( data ) );
+
+		// if we've had failures, put the widget back in edit mode, and reject
+		// this promise, so callers will know something went wrong
+		if ( hasFailures ) {
+			self.setEditing( true );
+			return $.Deferred().reject().promise();
 		}
 
-		// store data after we've submitted all changes, so that we'll reset to the
-		// actual most recent correct state
-		promise = promise.then( function ( response ) {
-			var serializer, deserializer;
+		return response;
+	} );
 
-			// reset to original, pre-submit, disabled state
-			self.setDisabled( disabled );
+	return promise;
+};
 
-			// reset data to what we've just submitted to the API (items that failed
-			// to submit have been reset to their previous state in `data`)
-			serializer = new wb.serialization.StatementListSerializer();
-			deserializer = new wb.serialization.StatementListDeserializer();
-
-			self.data = deserializer.deserialize( serializer.serialize( data ) );
-
-			// if we've had failures, put the widget back in edit mode, and reject
-			// this promise, so callers will know something went wrong
-			if ( hasFailures ) {
-				self.setEditing( true );
-				return $.Deferred().reject().promise();
-			}
-
-			return response;
-		} );
-
-		return promise;
-	};
-
-	// backward compatibility: this class used to be named differently
-	statements.DepictsWidget = statements.StatementWidget;
-
-}( mw.mediaInfo.statements, wikibase ) );
+module.exports = StatementWidget;

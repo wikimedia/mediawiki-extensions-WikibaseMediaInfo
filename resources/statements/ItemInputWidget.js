@@ -1,79 +1,79 @@
-( function ( statements, wb ) {
+'use strict';
 
-	'use strict';
-
-	statements.ItemInputWidget = function MediaInfoStatementsItemInputWidget( config ) {
-		statements.ItemInputWidget.parent.call( this, $.extend( {
+var EntityLookupElement = require( './EntityLookupElement.js' ),
+	FormatValueElement = require( './FormatValueElement.js' ),
+	ItemInputWidget = function MediaInfoStatementsItemInputWidget( config ) {
+		ItemInputWidget.parent.call( this, $.extend( {
 			placeholder: mw.message( 'wikibasemediainfo-statements-item-input-placeholder' ).text(),
 			icon: 'search',
 			label: mw.message( 'wikibasemediainfo-statements-item-input-label' ).text()
 		}, config ) );
 
-		statements.EntityLookupElement.call( this, $.extend( {}, config, {
+		EntityLookupElement.call( this, $.extend( {}, config, {
 			minLookupCharacters: 1,
 			allowSuggestionsWhenEmpty: false,
 			highlightFirst: false,
 			type: 'item'
 		} ) );
 
-		statements.FormatValueElement.call( this, $.extend( {}, config ) );
+		FormatValueElement.call( this, $.extend( {}, config ) );
 
 		this.setInputType( config.type || 'string' );
 	};
-	OO.inheritClass( statements.ItemInputWidget, OO.ui.TextInputWidget );
-	OO.mixinClass( statements.ItemInputWidget, statements.EntityLookupElement );
-	OO.mixinClass( statements.ItemInputWidget, statements.FormatValueElement );
+OO.inheritClass( ItemInputWidget, OO.ui.TextInputWidget );
+OO.mixinClass( ItemInputWidget, EntityLookupElement );
+OO.mixinClass( ItemInputWidget, FormatValueElement );
 
-	/**
-	 * @param {string} type 'wikibase-entityid'
-	 * @chainable
-	 * @return {ItemInputWidget}
-	 */
-	statements.ItemInputWidget.prototype.setInputType = function ( type ) {
-		if ( type === 'wikibase-entityid' ) {
-			this.$element.show();
-		} else {
-			// don't show this input field if the data type is anything other than
-			// wikibase-entityid, the only datatype this thing is equiped to deal with;
-			// we'll figure out how to deal with other types later...
-			this.$element.hide();
-		}
+/**
+ * @param {string} type 'wikibase-entityid'
+ * @chainable
+ * @return {ItemInputWidget}
+ */
+ItemInputWidget.prototype.setInputType = function ( type ) {
+	if ( type === 'wikibase-entityid' ) {
+		this.$element.show();
+	} else {
+		// don't show this input field if the data type is anything other than
+		// wikibase-entityid, the only datatype this thing is equiped to deal with;
+		// we'll figure out how to deal with other types later...
+		this.$element.hide();
+	}
 
-		return this;
-	};
+	return this;
+};
 
-	/**
-	 * @inheritdoc
-	 */
-	statements.ItemInputWidget.prototype.onLookupMenuItemChoose = function ( item ) {
-		var data = item.getData();
-		this.setValue( data.label );
-		this.id = data.id;
-		this.emit( 'choose', this, data );
-	};
+/**
+ * @inheritdoc
+ */
+ItemInputWidget.prototype.onLookupMenuItemChoose = function ( item ) {
+	var data = item.getData();
+	this.setValue( data.label );
+	this.id = data.id;
+	this.emit( 'choose', this, data );
+};
 
-	/**
-	 * @param {wb.datamodel.EntityId|undefined} data
-	 */
-	statements.ItemInputWidget.prototype.setData = function ( data ) {
-		var self = this;
+/**
+ * @param {wikibase.datamodel.EntityId|undefined} data
+ */
+ItemInputWidget.prototype.setData = function ( data ) {
+	var self = this;
 
-		if ( data instanceof wb.datamodel.EntityId ) {
-			this.formatValue( data, 'text/plain' ).then( function ( plain ) {
-				self.id = data.toJSON().id;
-				self.setValue( plain );
-			} );
-		} else {
-			this.id = undefined;
-			this.setValue( '' );
-		}
-	};
+	if ( data instanceof wikibase.datamodel.EntityId ) {
+		this.formatValue( data, 'text/plain' ).then( function ( plain ) {
+			self.id = data.toJSON().id;
+			self.setValue( plain );
+		} );
+	} else {
+		this.id = undefined;
+		this.setValue( '' );
+	}
+};
 
-	/**
-	 * @return {wb.datamodel.EntityId}
-	 */
-	statements.ItemInputWidget.prototype.getData = function () {
-		return new wb.datamodel.EntityId( this.id );
-	};
+/**
+ * @return {wikibase.datamodel.EntityId}
+ */
+ItemInputWidget.prototype.getData = function () {
+	return new wikibase.datamodel.EntityId( this.id );
+};
 
-}( mw.mediaInfo.statements, wikibase ) );
+module.exports = ItemInputWidget;

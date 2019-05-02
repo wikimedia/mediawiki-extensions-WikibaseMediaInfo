@@ -17,18 +17,35 @@ CancelPublishWidget = function ( sdcPanel ) {
 			label: mw.message( 'wikibasemediainfo-filepage-cancel' ).text()
 		} )
 			.on( 'click', function () {
-				var hasChanges = sdcPanel.hasChanges(),
-					allowCloseWindow = mw.confirmCloseWindow( {
-						message: mw.message( 'wikibasemediainfo-filepage-cancel-confirm' ).text(),
-						test: function () { return hasChanges; }
-					} ),
+				var hasChanges = sdcPanel.hasChanges();
 
-					closeWindowConfirmed = allowCloseWindow.trigger();
-
-				if ( closeWindowConfirmed ) {
+				if ( hasChanges ) {
+					OO.ui.confirm(
+						// TODO: Make "Discard changes?" the title
+						mw.msg( 'wikibasemediainfo-filepage-cancel-confirm' ),
+						{
+							actions: [
+								{
+									action: 'accept',
+									// TODO: Change this message to "Discard"
+									label: mw.msg( 'ooui-dialog-message-accept' ),
+									flags: [ 'primary', 'destructive' ]
+								},
+								{
+									action: 'reject',
+									label: mw.msg( 'ooui-dialog-message-reject' ),
+									flags: 'safe'
+								}
+							]
+						}
+					).then( function ( confirmed ) {
+						if ( confirmed ) {
+							sdcPanel.makeReadOnly();
+						}
+					} );
+				} else {
 					sdcPanel.makeReadOnly();
 				}
-				allowCloseWindow.release();
 			} ),
 
 		publishButton = new OO.ui.ButtonInputWidget( {

@@ -573,6 +573,12 @@ class WikibaseMediaInfoHooks {
 		$lookup = new MediaInfoByLinkedTitleLookup( $lookup );
 	}
 
+	public static function onGetEntityContentModelForTitle( Title $title, &$contentModel ) {
+		if ( $title->inNamespace( NS_FILE ) && $title->getArticleID() ) {
+			$contentModel = MediaInfoContent::CONTENT_MODEL_ID;
+		}
+	}
+
 	/**
 	 * Note that this is a workaround until all slots are passed automatically to CirrusSearch
 	 *

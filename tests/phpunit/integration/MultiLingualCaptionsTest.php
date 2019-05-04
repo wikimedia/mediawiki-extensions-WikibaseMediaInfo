@@ -102,7 +102,7 @@ class MultiLingualCaptionsTest extends \ApiUploadTestCase {
 			$filePaths = $randomImageGenerator->writeImages(
 				1,
 				$extension,
-				str_replace( '\\', DIRECTORY_SEPARATOR, $this->getNewTempDirectory() )
+				$this->getNewTempDirectory()
 			);
 		} catch ( \Exception $e ) {
 			$this->markTestIncomplete( $e->getMessage() );

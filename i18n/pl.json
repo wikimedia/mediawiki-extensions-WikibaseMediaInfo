@@ -5,6 +5,7 @@
 			"Woytecr"
 		]
 	},
+	"action-mediainfo-term": "zmiany strukturalnych opisów multimediów (podpisy, podsumowania)",
 	"right-mediainfo-term": "Zmiana stwierdzeń w informacjach o pliku (opisy, podsumowania)",
 	"slot-name-mediainfo": "Informacje strukturyzowane o pliku",
 	"wikibase-entity-mediainfo": "informacje o pliku",
@@ -78,5 +79,6 @@
 	"wikibasemediainfo-search-search": "Szukaj",
 	"wikibasemediainfo-search-toggle-keywords": "Słowo kluczowe",
 	"wikibasemediainfo-search-toggle-depicts": "Tagi",
-	"wikibasemediainfo-search-toggle-statements": "Inne stwierdzenia"
+	"wikibasemediainfo-search-toggle-statements": "Inne stwierdzenia",
+	"wikibasemediainfo-unsupported-datatype": "Nieobsługiwany typ danych: $1"
 }

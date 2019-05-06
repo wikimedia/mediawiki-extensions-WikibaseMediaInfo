@@ -6,7 +6,8 @@
 			"Vlad5250",
 			"Kaganer",
 			"Bloomaround",
-			"Kareyac"
+			"Kareyac",
+			"Movses"
 		]
 	},
 	"action-mediainfo-term": "изменение значений метаданных медиафайлов (заголовки, опсиания)",
@@ -32,7 +33,7 @@
 	"wikibasemediainfo-filepage-edit": "Редактировать",
 	"wikibasemediainfo-filepage-publish": "Опубликовать изменения",
 	"wikibasemediainfo-filepage-caption-empty": "Опишите в одной строке, что представляет собой этот файл",
-	"wikibasemediainfo-filepage-caption-too-long": "$1 {{PLURAL:$1|символ|символа|символов}} свех лимита",
+	"wikibasemediainfo-filepage-caption-too-long": "$1 {{PLURAL:$1|символ|символа|символов}} сверх лимита",
 	"wikibasemediainfo-filepage-caption-approaching-limit": "осталось $1 {{PLURAL:$1|символ|символа|символов|0=символов}}",
 	"wikibasemediainfo-filepage-statement-no-value": "Для этого свойства не существует значения",
 	"wikibasemediainfo-filepage-statement-no-data": "Нет доступных данных",

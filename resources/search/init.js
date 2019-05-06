@@ -1,22 +1,14 @@
-( function ( search ) {
-
+( function () {
 	'use strict';
-	var init;
+
+	var widget;
 
 	if ( !mw.config.get( 'wbmiMediaInfoEnableSearch', false ) ) {
 		return;
 	}
 
-	search.Init = function MediaInfoSearch() {
-		this.input = new search.SearchWidget( { minLookupCharacters: 2 } );
-	};
-
-	search.Init.prototype.bind = function ( $element ) {
-		$element.replaceWith( this.input.$element );
-	};
-
-	init = new search.Init();
+	widget = new mw.mediaInfo.search.SearchWidget( { minLookupCharacters: 2 } );
 	// eslint-disable-next-line no-jquery/no-global-selector
-	init.bind( $( '#p-search' ) );
+	$( '#p-search' ).replaceWith( widget.$element );
 
-}( mw.mediaInfo.search ) );
+}() );

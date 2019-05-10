@@ -201,7 +201,9 @@
 				"wikibasemediainfo-filepage-license-title",
 				"wikibasemediainfo-filepage-license-content",
 				"wikibasemediainfo-filepage-license-content-acceptance",
-				"wikibasemediainfo-filepage-license-agree"
+				"wikibasemediainfo-filepage-license-agree",
+				"wikibasemediainfo-statements-unsupported-property-title",
+				"wikibasemediainfo-statements-unsupported-property-content"
 			],
 			"targets": [
 				"desktop",

@@ -54,6 +54,8 @@
 	"wikibasemediainfo-statements-learn-more": "Text for link to page to learn more about statements",
 	"wikibasemediainfo-statements-remove": "Text for button to remove statements",
 	"wikibasemediainfo-statements-title-depicts": "Title for the group of statements for 'Depicts'",
+	"wikibasemediainfo-statements-unsupported-property-title": "Title for popover to inform this is an unsupported property",
+	"wikibasemediainfo-statements-unsupported-property-content": "Content for popover to inform this is an unsupported property. Parameters:\n* $1 - List of supported properties",
 	"wikibasemediainfo-operator-placeholder": "Placeholder for operator dropdown",
 	"wikibasemediainfo-operator-value-is": "Label for operator 'is'",
 	"wikibasemediainfo-operator-value-isnot": "Label for operator 'is not'",

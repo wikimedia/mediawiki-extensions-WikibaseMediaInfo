@@ -75,7 +75,8 @@ StatementPanel.prototype.populateFormatValueCache = function ( data ) {
 
 StatementPanel.prototype.initialize = function () {
 	var deserializer = new wikibase.serialization.StatementListDeserializer(),
-		statementsJson;
+		statementsJson,
+		popup;
 
 	this.cancelPublish.hide();
 
@@ -92,6 +93,47 @@ StatementPanel.prototype.initialize = function () {
 		this.editToggle.$element,
 		this.cancelPublish.$element
 	);
+
+	// @todo below is only temporary, until we officially support more statements...
+	if ( this.$element.hasClass( 'wbmi-entityview-statementsGroup-undefined' ) ) {
+		popup = new OO.ui.PopupWidget( {
+			$floatableContainer: this.editToggle.$element,
+			padded: true,
+			autoClose: true
+		} );
+
+		this.$element.append( popup.$element );
+		this.editToggle.on( 'click', function () {
+			// this is a bit of a hack: there's no great way to figure out
+			// what properties are "supported" (what even means "supported"
+			// in this project - Commons focusses on 'depicts' ATM, but other
+			// wikis could use this with any other property they like, as
+			// long as it's a supported data type...
+			// so... let's just grab the names from DOM instead of trying to
+			// figure out better methods of getting these to JS (either
+			// expose as a JS config var or via an API call to format) because
+			// this is only a temporary measure
+			// eslint-disable-next-line no-jquery/no-global-selector
+			var supportedProperties = $( '.wbmi-entityview-statementsGroup:not( .wbmi-entityview-statementsGroup-undefined )' )
+				.toArray()
+				.map( function ( element ) {
+					return $( '.wbmi-statements-header .wbmi-entity-label', element ).text();
+				} );
+
+			popup.$body.empty().append(
+				$( '<div>' ).append(
+					$( '<h4>' ).html( mw.message( 'wikibasemediainfo-statements-unsupported-property-title' ).parse() ),
+					$( '<p>' ).html(
+						mw.message(
+							'wikibasemediainfo-statements-unsupported-property-content',
+							mw.language.listToText( supportedProperties )
+						).parse()
+					)
+				)
+			);
+			popup.toggle( true );
+		} );
+	}
 };
 
 /**

@@ -3,7 +3,8 @@
 var EntityLookupElement = function MediaInfoStatementsEntityLookupElement( config ) {
 	this.config = $.extend( {
 		minLookupCharacters: 1,
-		externalEntitySearchApiUri: mw.config.get( 'wbmiExternalEntitySearchBaseUri', '' )
+		externalEntitySearchApiUri: mw.config.get( 'wbmiExternalEntitySearchBaseUri', '' ),
+		entityType: 'item'
 	}, config );
 
 	OO.ui.mixin.LookupElement.call( this, $.extend( {}, this.config, {
@@ -11,7 +12,7 @@ var EntityLookupElement = function MediaInfoStatementsEntityLookupElement( confi
 		highlightFirst: false
 	} ) );
 
-	this.type = this.config.type || 'item';
+	this.type = this.config.entityType;
 };
 OO.mixinClass( EntityLookupElement, OO.ui.mixin.LookupElement );
 
@@ -35,20 +36,25 @@ EntityLookupElement.prototype.getLookupRequest = function () {
 		deferred = $.Deferred(),
 		api = wikibase.api.getLocationAgnosticMwApi(
 			this.config.externalEntitySearchApiUri || mw.config.get( 'wbmiRepoApiUrl', mw.config.get( 'wbRepoApiUrl' ) )
-		);
+		),
+		requestParams = {
+			action: 'wbsearchentities',
+			search: value,
+			format: 'json',
+			language: mw.config.get( 'wgUserLanguage' ),
+			uselang: mw.config.get( 'wgUserLanguage' ),
+			type: this.type
+		};
 
 	if ( value.length < this.config.minLookupCharacters ) {
 		return deferred.resolve( [] ).promise( { abort: function () {} } );
 	}
 
-	return api.get( {
-		action: 'wbsearchentities',
-		search: value,
-		format: 'json',
-		language: mw.config.get( 'wgUserLanguage' ),
-		uselang: mw.config.get( 'wgUserLanguage' ),
-		type: this.type
-	} );
+	if ( this.config.filter !== undefined ) {
+		requestParams.limit = 'max';
+	}
+
+	return api.get( requestParams );
 };
 
 /**
@@ -70,6 +76,8 @@ EntityLookupElement.prototype.getLookupMenuOptionsFromData = function ( data ) {
 	var i,
 		$label,
 		items = [];
+
+	data = this.filterData( data );
 
 	if ( !data ) {
 		return [];
@@ -93,6 +101,22 @@ EntityLookupElement.prototype.getLookupMenuOptionsFromData = function ( data ) {
 	}
 
 	return items;
+};
+
+EntityLookupElement.prototype.filterData = function ( data ) {
+	var filteredData = [], i;
+
+	if ( this.config.filter === undefined ) {
+		return data;
+	}
+
+	for ( i = 0; i < data.length; i++ ) {
+		if ( data[ i ][ this.config.filter.field ] === this.config.filter.value ) {
+			filteredData.push( data[ i ] );
+		}
+	}
+
+	return filteredData;
 };
 
 /**

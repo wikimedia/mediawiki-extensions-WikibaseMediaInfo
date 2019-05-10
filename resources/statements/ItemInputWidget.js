@@ -9,16 +9,18 @@ var EntityLookupElement = require( './EntityLookupElement.js' ),
 			label: mw.message( 'wikibasemediainfo-statements-item-input-label' ).text()
 		}, config ) );
 
-		EntityLookupElement.call( this, $.extend( {}, config, {
+		EntityLookupElement.call( this, $.extend( {
 			minLookupCharacters: 1,
 			allowSuggestionsWhenEmpty: false,
 			highlightFirst: false,
-			type: 'item'
-		} ) );
+			entityType: 'item'
+		}, config ) );
 
 		FormatValueElement.call( this, $.extend( {}, config ) );
 
-		this.setInputType( config.type || 'string' );
+		if ( config.entityType !== 'property' ) {
+			this.setInputType( config.type || 'string' );
+		}
 	};
 OO.inheritClass( ItemInputWidget, OO.ui.TextInputWidget );
 OO.mixinClass( ItemInputWidget, EntityLookupElement );

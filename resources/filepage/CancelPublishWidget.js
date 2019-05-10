@@ -69,11 +69,11 @@ CancelPublishWidget = function ( sdcPanel ) {
 		} );
 
 	this.hide = function () {
-		widget.$element.hide().addClass( 'wbmi-hidden' );
+		widget.$element.hide();
 	};
 
 	this.show = function () {
-		widget.$element.show().removeClass( 'wbmi-hidden' );
+		widget.$element.show();
 	};
 
 	this.disablePublish = function () {

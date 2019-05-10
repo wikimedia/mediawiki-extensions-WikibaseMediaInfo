@@ -18,47 +18,49 @@
 	.flex-display();
 
 	.wbmi-item-container {
-		.flex(1, 0, auto);
+		.flex(1, 0);
 
-		// Gray row element that fills the container
-		.wbmi-entity-title {
+		.wbmi-entity-header {
 			.flex-display();
-			.flex();
 			padding: @sm-spacing;
-			position: relative;
 			background-color: @color-background;
 		}
 
-		// Left-aligned text label inside the gray row
-		// MW global styles for heading elements need to be overridden here
-		.wbmi-entity-label {
-			margin: 0;
-			padding: 0;
-		}
-
-		// Right-aligned text label inside the gray row
-		.wbmi-entity-label-extra {
-			// adds a dot between all visible siblings
-			> *:not( .wbmi-hidden ) ~ *:before {
+		@media screen and ( min-width: @breakpoint-tablet ) {
+			.wbmi-entity-primary:before {
 				@bullet-separator();
 			}
+		}
 
-			.wbmi-entity-primary,
-			.wbmi-entity-prominent {
-				font-weight: bold;
+		.wbmi-entity-primary,
+		.wbmi-entity-prominent {
+			font-weight: bold;
 
-				&.wbmi-entity-is-primary,
-				&.wbmi-entity-is-prominent {
-					color: @base30;
+			&.wbmi-entity-is-primary,
+			&.wbmi-entity-is-prominent {
+				color: @base30;
 
-					/* stylelint-disable-next-line selector-class-pattern */
-					.oo-ui-iconElement {
-						min-height: 15px;
-						height: 15px;
-						background-size: 70%;
-						filter: opacity( 0.55 );
-					}
+				/* stylelint-disable-next-line selector-class-pattern */
+				.oo-ui-iconElement {
+					min-height: 15px;
+					height: 15px;
+					background-size: 70%;
+					filter: opacity( 0.55 );
 				}
+			}
+		}
+
+		// backward compatibility: this selector (and everything inside it)
+		// targets only old-style nodes that may still live in parser cache
+		// this code can be removed 30+d this after merging the patch that
+		// introduces this...
+		> div:not( .wbmi-entity-header ) > .wbmi-entity-title { // PHP render
+			.flex-display();
+			.flex(1, 1, auto);
+
+			.wbmi-entity-label,
+			.wbmi-entity-label-extra {
+				padding: 0.5rem;
 			}
 		}
 	}
@@ -122,7 +124,7 @@
 
 	.wbmi-qualifier:before {
 		@horizontal-line();
-		left: -3.5ch;
+		left: -1.5rem;
 	}
 
 	// Add-qualifier button. It is nudged up by an amount equal to the padding
@@ -130,9 +132,11 @@
 	.wbmi-item-qualifier-add {
 		position: relative;
 		top: -( @sm-spacing );
+		padding-left: @sm-spacing;
 
 		&:before {
 			@horizontal-line();
+			bottom: 1rem;
 		}
 
 		// OOUI override...

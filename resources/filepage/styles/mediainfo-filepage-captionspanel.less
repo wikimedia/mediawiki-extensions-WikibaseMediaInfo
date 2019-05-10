@@ -7,6 +7,10 @@
 .wbmi-entityview-captionsPanel {
 	@panel();
 
+	@media screen and ( max-width: @breakpoint-tablet ) {
+		font-size: 0.9em;
+	}
+
 	// Captions header
 	.wbmi-entityview-captions-header {
 		@panel-header();
@@ -21,6 +25,7 @@
 		// keep buttons aligned right even when buttons on left are removed from
 		// display
 		margin-left: auto;
+		text-align: right;
 	}
 
 	// Caption Row

@@ -28,7 +28,8 @@ var ItemInputWidget = require( './ItemInputWidget.js' ),
 				.attr( 'href', '#' ) // will be filled out later (after formatValue call)
 				.attr( 'target', '_blank' )
 				.text( propertyId.replace( /^.+:/, '' ) ),
-			titles = mw.config.get( 'wbmiPropertyTitles' ) || [];
+			titles = mw.config.get( 'wbmiPropertyTitles' ) || [],
+			learnMoreLink = mw.config.get( 'wbmiDepictsHelpUrl' );
 
 		config.propertyId = propertyId;
 		config.properties = properties;
@@ -54,30 +55,41 @@ var ItemInputWidget = require( './ItemInputWidget.js' ),
 		this.input.connect( this, { choose: 'addItemFromInput' } );
 
 		this.$footer = $( '<div>' ).addClass( 'wbmi-statement-footer' );
-		this.$removeLink = $( '<a>' )
-			.addClass( 'wbmi-statement-remove' )
-			.text( mw.message( 'wikibasemediainfo-statements-remove' ).text() );
-		this.$learnMoreLink = $( '<a>' )
-			.addClass( 'wbmi-statement-learn-more' )
-			.html( mw.message( 'wikibasemediainfo-statements-learn-more' ).parse() )
-			.attr( 'href', mw.config.get( 'wbmiDepictsHelpUrl' ) )
-			.attr( 'target', '_blank' );
 
-		this.$removeLink.on( 'click', this.clearItems.bind( this ) );
+		this.removeButton = new OO.ui.ButtonWidget( {
+			label: mw.message( 'wikibasemediainfo-statements-remove' ).text(),
+			classes: [ 'wbmi-statement-remove' ],
+			flags: 'destructive',
+			framed: false
+		} );
+		this.removeButton.connect( this, { click: 'clearItems' } );
+		this.learnMoreButton = new OO.ui.ButtonWidget( {
+			label: mw.message( 'wikibasemediainfo-statements-learn-more' ).text(),
+			classes: [ 'wbmi-statement-learn-more' ],
+			flags: 'progressive',
+			framed: false
+		} );
+		this.learnMoreButton.connect( this, { click: window.open.bind( window, learnMoreLink, '_blank' ) } );
 		this.connect( this, { change: 'renderFooter' } );
 
 		this.$element.addClass( 'wbmi-statements-widget' ).append(
-			this.title ? $( '<h3>' ).addClass( 'wbmi-statements-title' ).text( this.title ) : '',
-			$( '<div>' ).addClass( 'wbmi-statements-header wbmi-entity-title' ).append(
-				$label,
-				$( '<div>' ).addClass( 'wbmi-entity-label-extra' ).append( $link )
+			$( '<div>' ).addClass( 'wbmi-statement-header' ).append(
+				$( '<div>' ).addClass( 'wbmi-entity-data' ).append(
+					$( '<div>' ).addClass( 'wbmi-entity-title' ).append(
+						this.title ? $( '<h3>' ).addClass( 'wbmi-statements-title' ).text( this.title ) : '',
+						$label
+					),
+					$link
+				)
 			),
 			this.input.$element,
 			this.$group.addClass( 'wbmi-content-items-group' ),
 			this.$footer.append(
-				this.$removeLink.hide().addClass( 'wmbi-hidden' ),
-				this.$learnMoreLink.attr( 'href' ) !== '' ? this.$learnMoreLink : ''
-			).hide()
+				$( '<div>' ).addClass( 'wbmi-statement-footer-buttons' ).append(
+					this.removeButton.$element.hide().addClass( 'wmbi-hidden' ),
+					learnMoreLink ? this.learnMoreButton.$element : ''
+				).hide()
+			)
 		);
 
 		// fetch property value & url
@@ -105,8 +117,8 @@ OO.mixinClass( StatementWidget, FormatValueElement );
 
 StatementWidget.prototype.renderFooter = function () {
 	var showRemove = this.getItems().length > 0 && this.editing;
-	this.$removeLink.toggle( showRemove ).toggleClass( 'wbmi-hidden', !showRemove );
-	this.$footer.toggle( this.editing );
+	this.removeButton.$element.toggle( showRemove );
+	this.$footer.find( '.wbmi-statement-footer-buttons' ).toggle( this.editing );
 };
 
 /**

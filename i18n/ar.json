@@ -53,6 +53,8 @@
 	"wikibasemediainfo-statements-learn-more": "معرفة المزيد",
 	"wikibasemediainfo-statements-remove": "إزالة الكل",
 	"wikibasemediainfo-statements-title-depicts": "العناصر المصورة في هذا الملف",
+	"wikibasemediainfo-statements-unsupported-property-title": "خاصية غير مدعومة",
+	"wikibasemediainfo-statements-unsupported-property-content": "الخواص بخلاف $1 ليست مدعومة بالكامل، لكنها ستكون كذلك في المستقبل، في الوقت الحالي، قد لا تعمل وظائف الخصائص غير المدعومة كما تتوقع.",
 	"wikibasemediainfo-operator-placeholder": "المشغل",
 	"wikibasemediainfo-operator-value-is": "هو",
 	"wikibasemediainfo-operator-value-isnot": "ليس",

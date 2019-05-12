@@ -50,6 +50,8 @@
 	"wikibasemediainfo-statements-learn-more": "Mehr erfahren",
 	"wikibasemediainfo-statements-remove": "Alle entfernen",
 	"wikibasemediainfo-statements-title-depicts": "In dieser Datei abgebildete Objekte",
+	"wikibasemediainfo-statements-unsupported-property-title": "Nicht unterstützte Eigenschaft",
+	"wikibasemediainfo-statements-unsupported-property-content": "Andere Eigenschaften als $1 werden noch nicht voll unterstützt, jedoch in Zukunft. Derzeit kann die Funktion für nicht unterstützte Eigenschaften unerwartet fehlerhaft arbeiten.",
 	"wikibasemediainfo-operator-placeholder": "Operator",
 	"wikibasemediainfo-operator-value-is": "ist",
 	"wikibasemediainfo-operator-value-isnot": "ist nicht",

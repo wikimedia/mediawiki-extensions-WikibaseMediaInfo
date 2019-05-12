@@ -2,7 +2,8 @@
 	"@metadata": {
 		"authors": [
 			"Nikosgranturismogt",
-			"Protnet"
+			"Protnet",
+			"Geraki"
 		]
 	},
 	"right-mediainfo-term": "Αλλαγή μέσων σε όρους (λεζάντες, περιλήψεις)",
@@ -15,5 +16,6 @@
 	"wikibasemediainfo-filepage-cancel": "Ακύρωση",
 	"wikibasemediainfo-filepage-publish": "Δημοσίευση αλλαγών",
 	"wikibasemediainfo-filepage-caption-empty": "Δεν ορίστηκε λεζάντα",
+	"wikibasemediainfo-statements-unsupported-property-title": "Μη υποστηριζόμενη ιδιότητα",
 	"wikibasemediainfo-unsupported-datatype": "Μη υποστηριζόμενος τύπος δεδομένων: $1"
 }

@@ -1,6 +1,9 @@
-( function ( search, statements, wb ) {
+( function ( search, wb ) {
 
 	'use strict';
+
+	var QualifierValueInputWidget = require( 'wikibase.mediainfo.statements' ).QualifierValueInputWidget,
+		FormatValueElement = require( 'wikibase.mediainfo.statements' ).FormatValueElement;
 
 	search.QualifierWidget = function MediaInfoSearchQualifierWidget( config ) {
 		search.QualifierWidget.parent.call( this, config );
@@ -48,7 +51,7 @@
 		this.operatorDropdown.getMenu().connect( this, { select: 'populateValueInput' } );
 		this.operatorDropdown.getMenu().connect( this, { select: [ 'emit', 'change' ] } );
 
-		this.valueInput = new statements.QualifierValueInputWidget();
+		this.valueInput = new QualifierValueInputWidget();
 		this.valueInput.connect( this, { change: [ 'emit', 'change' ] } );
 
 		this.layout = new OO.ui.HorizontalLayout( {
@@ -68,7 +71,7 @@
 		this.$element = this.layout.$element;
 	};
 	OO.inheritClass( search.QualifierWidget, OO.ui.Widget );
-	OO.mixinClass( search.QualifierWidget, statements.FormatValueElement );
+	OO.mixinClass( search.QualifierWidget, FormatValueElement );
 
 	/**
 	 * @return {string}
@@ -215,4 +218,4 @@
 		this.valueInput.setDisabled( !operator || operator.input === false );
 	};
 
-}( mw.mediaInfo.search, mw.mediaInfo.statements, wikibase ) );
+}( mw.mediaInfo.search, wikibase ) );

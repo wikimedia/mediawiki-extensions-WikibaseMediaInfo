@@ -27,7 +27,8 @@ var ItemInputWidget = require( './ItemInputWidget.js' ),
 				.addClass( 'wbmi-entity-link ' ) // repo class will be added later (after formatValue call)
 				.attr( 'href', '#' ) // will be filled out later (after formatValue call)
 				.attr( 'target', '_blank' )
-				.text( propertyId.replace( /^.+:/, '' ) );
+				.text( propertyId.replace( /^.+:/, '' ) ),
+			titles = mw.config.get( 'wbmiPropertyTitles' ) || [];
 
 		config.propertyId = propertyId;
 		config.properties = properties;
@@ -41,7 +42,7 @@ var ItemInputWidget = require( './ItemInputWidget.js' ),
 		this.propertyId = config.propertyId;
 		this.properties = config.properties;
 		this.qualifiers = config.qualifiers;
-		this.title = config.title || mw.config.get( 'wbmiPropertyTitles' )[ this.propertyId ];
+		this.title = config.title || titles[ this.propertyId ];
 		this.data = new wikibase.datamodel.StatementList();
 		this.editing = false;
 

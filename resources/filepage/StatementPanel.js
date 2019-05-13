@@ -2,10 +2,14 @@
 
 var StatementPanel,
 	LicenseDialogWidget,
-	CancelPublishWidget;
+	CancelPublishWidget,
+	StatementWidget,
+	FormatValueElement;
 
 CancelPublishWidget = require( './CancelPublishWidget.js' );
 LicenseDialogWidget = require( './LicenseDialogWidget.js' );
+StatementWidget = require( 'wikibase.mediainfo.statements' ).StatementWidget;
+FormatValueElement = require( 'wikibase.mediainfo.statements' ).FormatValueElement;
 
 /**
  * Panel for displaying/editing structured data statements
@@ -45,7 +49,7 @@ StatementPanel = function StatementPanel( config ) {
 	this.cancelPublish.disablePublish();
 
 	this.populateFormatValueCache( JSON.parse( this.$element.attr( 'data-formatvalue' ) || '{}' ) );
-	this.statementWidget = new mw.mediaInfo.statements.StatementWidget( this.config );
+	this.statementWidget = new StatementWidget( this.config );
 };
 
 /* Inheritance */
@@ -63,11 +67,11 @@ StatementPanel.prototype.populateFormatValueCache = function ( data ) {
 		Object.keys( data[ dataValue ] ).map( function ( format ) {
 			Object.keys( data[ dataValue ][ format ] ).map( function ( language ) {
 				var json = JSON.parse( dataValue ),
-					key = mw.mediaInfo.statements.FormatValueElement.getKey(
+					key = FormatValueElement.getKey(
 						dataValues.newDataValue( json.type, json.value ), format, language
 					),
 					result = data[ dataValue ][ format ][ language ];
-				mw.mediaInfo.statements.FormatValueElement.toCache( key, result );
+				FormatValueElement.toCache( key, result );
 			} );
 		} );
 	} );

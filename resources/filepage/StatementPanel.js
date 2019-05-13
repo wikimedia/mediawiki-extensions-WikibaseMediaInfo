@@ -93,7 +93,7 @@ StatementPanel.prototype.initialize = function () {
 	this.$element.empty().append( this.statementWidget.$element );
 
 	// ...and attach edit/cancel/publish controls
-	this.$element.append(
+	this.$element.find( '.wbmi-statements-header .wbmi-entity-label-extra' ).append(
 		this.editToggle.$element,
 		this.cancelPublish.$element
 	);
@@ -189,6 +189,7 @@ StatementPanel.prototype.makeEditable = function () {
 		self.cancelPublish.show();
 		self.editToggle.$element.hide().addClass( 'wbmi-hidden' );
 		self.$element.addClass( 'wbmi-entityview-editable' );
+		self.$element.find( '.wbmi-statements-header .wbmi-entity-link' ).hide().addClass( 'wbmi-hidden' );
 		self.statementWidget.setEditing( true );
 		self.editing = true;
 	} );
@@ -204,7 +205,9 @@ StatementPanel.prototype.makeReadOnly = function () {
 	this.statementWidget.disconnect( this, { change: 'onDepictsChange' } );
 	this.statementWidget.reset().then( function () {
 		self.statementWidget.connect( self, { change: 'onDepictsChange' } );
+
 		self.editToggle.$element.show().removeClass( 'wbmi-hidden' );
+		self.$element.find( '.wbmi-statements-header .wbmi-entity-link' ).show().removeClass( 'wbmi-hidden' );
 	} );
 };
 

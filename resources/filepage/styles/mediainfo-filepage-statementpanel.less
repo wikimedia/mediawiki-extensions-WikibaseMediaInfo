@@ -7,24 +7,17 @@
 .wbmi-entityview-statementsGroup {
 	@panel();
 
-	// Panel label & property link
+	// Header controls element
 	.wbmi-statements-header .wbmi-entity-label-extra {
-		&:before {
+		@panel-controls();
+
+		> *:not( .wbmi-hidden ) ~ *:before {
 			@bullet-separator();
 		}
-	}
 
-	// Panel edit button
-	.wbmi-entityview-editButton {
-		@panel-controls();
-		margin-right: 0;
-	}
-
-	// Panel cancel/publish buttons
-	.wbmi-entityview-cancelAndPublishButtons {
-		position: absolute;
-		right: @base-spacing;
-		bottom: @sm-spacing;
+		.wbmi-entityview-editButton {
+			margin-right: 0;
+		}
 	}
 
 	// separate multiple statement groups

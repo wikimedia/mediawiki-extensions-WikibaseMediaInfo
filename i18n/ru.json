@@ -7,13 +7,14 @@
 			"Kaganer",
 			"Bloomaround",
 			"Kareyac",
-			"Movses"
+			"Movses",
+			"Чаховіч Уладзіслаў"
 		]
 	},
 	"action-mediainfo-term": "изменение значений метаданных медиафайлов (заголовки, опсиания)",
 	"right-mediainfo-term": "изменять термины информации о медиафайлах (названия, краткие описания)",
 	"slot-name-mediainfo": "Структурированная информация о медиафайлах",
-	"wikibase-entity-mediainfo": "информация o медиафайлах",
+	"wikibase-entity-mediainfo": "информация о медиафайлах",
 	"wikibase-mediainfo-summary-wbsetlabel-add": "Добавлен заголовок [$2]",
 	"wikibase-mediainfo-summary-wbsetlabel-remove": "Удалён заголовок [$2]",
 	"wikibase-mediainfo-summary-wbsetlabel-set": "Изменён заголовок [$2]",
@@ -40,7 +41,7 @@
 	"wikibasemediainfo-filepage-statement-no-results": "Ничего не найдено",
 	"wikibasemediainfo-filepage-statement-some-value": "У этого свойства есть значение, но оно неизвестно",
 	"wikibasemediainfo-filepage-statement-error": "При получении значения для этого свойства произошла ошибка",
-	"wikibasemediainfo-filepage-license-title": "Добавление загловков и других структурированных данных",
+	"wikibasemediainfo-filepage-license-title": "Добавление заголовков и других структурированных данных",
 	"wikibasemediainfo-filepage-license-content": "Нажимая «Опубликовать изменения», вы соглашаетесь с [[wmf:Terms_of_Use|условиями использования]], а также соглашаетесь безотзывно публиковать свой вклад на условиях [https://creativecommons.org/publicdomain/zero/1.0/ лицензии Creative Commons CC0].",
 	"wikibasemediainfo-filepage-license-content-acceptance": "Я принимаю эти условия для моих будущих правок. Не показывать больше это сообщение.",
 	"wikibasemediainfo-property-placeholder": "Свойство",

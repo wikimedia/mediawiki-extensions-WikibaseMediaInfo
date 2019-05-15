@@ -50,6 +50,8 @@
 	"wikibasemediainfo-statements-learn-more": "Dowiedz się więcej",
 	"wikibasemediainfo-statements-remove": "Usuń wszystko",
 	"wikibasemediainfo-statements-title-depicts": "Obiekty przedstawione na tym zdjęciu",
+	"wikibasemediainfo-statements-unsupported-property-title": "Nieobsługiwana właściwość",
+	"wikibasemediainfo-statements-unsupported-property-content": "Właściwości inne niż $1 nie są w pełni obsługiwane, ale jest to możliwe w przyszłości. Na razie działanie nieobsługiwanych właściwości może nie być takie, jak oczekujesz.",
 	"wikibasemediainfo-operator-placeholder": "Operator",
 	"wikibasemediainfo-operator-value-is": "jest",
 	"wikibasemediainfo-operator-value-isnot": "nie jest",

@@ -31,5 +31,6 @@
 	"wikibasemediainfo-property-placeholder": "属性",
 	"wikibasemediainfo-statements-item-input-label": "来自维基数据",
 	"wikibasemediainfo-statements-item-remove": "移除",
+	"wikibasemediainfo-statements-unsupported-property-title": "不支持该属性",
 	"wikibasemediainfo-statements-unsupported-property-content": "可能不支持除$1以外的属性（将来可能会完善对其他属性的支持），与这些属性相关联的功能可能无法正常工作。"
 }

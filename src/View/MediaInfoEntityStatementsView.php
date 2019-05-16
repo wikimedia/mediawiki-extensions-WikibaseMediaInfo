@@ -51,7 +51,6 @@ class MediaInfoEntityStatementsView {
 	const STATEMENTS_CUSTOM_TAG = 'mediaInfoViewStatements';
 
 	/**
-	 * MediaInfoEntityStatementsView constructor.
 	 * @param PropertyOrderProvider $propertyOrderProvider
 	 * @param LocalizedTextProvider $textProvider
 	 * @param EntityTitleLookup $entityTitleLookup

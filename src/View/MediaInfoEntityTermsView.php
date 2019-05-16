@@ -49,7 +49,6 @@ class MediaInfoEntityTermsView {
 	const CAPTIONS_CONTAINER = 'wbmi-entityview-captionsPanel';
 
 	/**
-	 * MediaInfoEntityTermsView constructor.
 	 * @param LanguageNameLookup $languageNameLookup
 	 * @param LanguageDirectionalityLookup $languageDirectionalityLookup
 	 * @param LocalizedTextProvider $textProvider

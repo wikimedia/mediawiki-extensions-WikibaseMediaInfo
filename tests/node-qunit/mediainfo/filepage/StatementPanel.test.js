@@ -101,7 +101,7 @@ QUnit.module( 'StatementPanel', {
 			assert.strictEqual( sp.isEditable(), false );
 		} );
 
-		QUnit.test( 'Edit controls receive .wbmi-hidden class by default', function ( assert ) {
+		QUnit.test( 'Edit controls are hidden by default', function ( assert ) {
 			var StatementPanel = require( pathToWidget ),
 				config = {
 					$element: $( '.wbmi-entityview-statementsGroup' ),
@@ -111,7 +111,7 @@ QUnit.module( 'StatementPanel', {
 				$cancelPublish = sp.cancelPublish.$element;
 
 			sp.initialize();
-			assert.strictEqual( $cancelPublish[ 0 ].classList.contains( 'wbmi-hidden' ), true );
+			assert.strictEqual( $cancelPublish.is( ':hidden' ), true );
 		} );
 
 		// Scenario 1.1: Anon user

@@ -149,11 +149,14 @@ ItemWidget.prototype.renderInternal = function () {
 	this.$element.empty();
 
 	itemContainer.append(
-		$( '<div>' ).addClass( 'wbmi-entity-title' ).append(
-			$label,
-			$( '<div>' )
-				.addClass( 'wbmi-entity-label-extra' )
-				.append( this.url ? $link : '', $makePrimary )
+		$( '<div>' ).addClass( 'wbmi-entity-header' ).append(
+			$( '<div>' ).addClass( 'wbmi-entity-data' ).append(
+				$( '<div>' ).addClass( 'wbmi-entity-title' ).append(
+					$label
+				),
+				this.url ? $link : ''
+			),
+			$makePrimary
 		)
 	);
 

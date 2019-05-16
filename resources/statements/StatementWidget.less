@@ -5,6 +5,10 @@
 .wbmi-statements-widget {
 	margin-bottom: @sm-spacing;
 
+	@media screen and ( max-width: @breakpoint-tablet ) {
+		font-size: 0.9em;
+	}
+
 	// force all links (and links that act as button) to OOUI's primary color
 	a {
 		color: @color-primary;
@@ -24,13 +28,15 @@
 		// the adjacent selector will make sure that this styling is *not* applied if
 		// a more elaborate .wbmi-statements-title title is missing, in which case
 		// all we have is this label, and it needs more emphasis
+		// 2nd selector is for backward compatibility; remove 30+d after merging
+		+ h4.wbmi-entity-label,
 		+ .wbmi-statements-header h4.wbmi-entity-label {
 			font-weight: normal;
 			font-style: italic;
 		}
 	}
 
-	.wbmi-statements-header {
+	.wbmi-statement-header {
 		.flex-display();
 		align-items: baseline;
 		margin-bottom: @base-spacing;
@@ -61,27 +67,50 @@
 	}
 
 	.wbmi-statement-footer {
-		margin-top: 1em;
-		font-weight: bold;
-		font-size: 0.9em;
+		.flex-display();
 
-		// adds a &bull; between all visible siblings
-		> *:not( .wbmi-hidden ) ~ *:before {
-			content: '\2022'; // &bull;
-			padding: 0 10px;
-			color: @base0;
-			cursor: initial;
-			display: inline-block;
-			text-decoration: none;
+		> * {
+			.flex(1, 1, 0);
+			margin-top: 1em;
+		}
+
+		@media screen and ( max-width: @breakpoint-tablet ) {
+			display: block;
+
+			> * {
+				width: auto;
+			}
 		}
 
 		.wbmi-statement-remove {
-			color: @color-destructive;
-			text-decoration: none;
+			margin-right: 0;
+
+			&:after {
+				@bullet-separator();
+			}
+		}
+	}
+
+	.wbmi-entity-data {
+		.flex-display();
+		.flex(1, 1, 0, 0);
+
+		.wbmi-entity-title {
+			.flex(1, 1, 0, 0);
+
+			// MW global styles for heading elements need to be overridden here
+			.wbmi-entity-label {
+				margin: 0;
+				padding: 0;
+			}
 		}
 
-		.wbmi-statement-learn-more {
-			color: @color-primary;
+		@media screen and ( max-width: @breakpoint-tablet ) {
+			display: block;
+
+			.wbmi-entity-title {
+				width: auto;
+			}
 		}
 	}
 

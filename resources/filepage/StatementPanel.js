@@ -93,10 +93,8 @@ StatementPanel.prototype.initialize = function () {
 	this.$element.empty().append( this.statementWidget.$element );
 
 	// ...and attach edit/cancel/publish controls
-	this.$element.append(
-		this.editToggle.$element,
-		this.cancelPublish.$element
-	);
+	this.statementWidget.$element.find( '.wbmi-statement-header' ).append( this.editToggle.$element );
+	this.statementWidget.$element.find( '.wbmi-statement-footer' ).append( this.cancelPublish.$element );
 
 	// @todo below is only temporary, until we officially support more statements...
 	if ( this.$element.hasClass( 'wbmi-entityview-statementsGroup-undefined' ) ) {
@@ -110,7 +108,7 @@ StatementPanel.prototype.initialize = function () {
 		this.editToggle.on( 'click', function () {
 			// this is a bit of a hack: there's no great way to figure out
 			// what properties are "supported" (what even means "supported"
-			// in this project - Commons focusses on 'depicts' ATM, but other
+			// in this project - Commons focuses on 'depicts' ATM, but other
 			// wikis could use this with any other property they like, as
 			// long as it's a supported data type...
 			// so... let's just grab the names from DOM instead of trying to
@@ -121,7 +119,13 @@ StatementPanel.prototype.initialize = function () {
 			var supportedProperties = $( '.wbmi-entityview-statementsGroup:not( .wbmi-entityview-statementsGroup-undefined )' )
 				.toArray()
 				.map( function ( element ) {
-					return $( '.wbmi-statements-header .wbmi-entity-label', element ).text();
+					return $(
+						// 2nd selector (plural wbmi-statements-header) is for
+						// backward compatibility - can be renamed 30+d after
+						// merging this patch
+						'.wbmi-statement-header .wbmi-entity-label, .wbmi-statements-header .wbmi-entity-label',
+						element
+					).text();
 				} );
 
 			popup.$body.empty().append(
@@ -187,7 +191,7 @@ StatementPanel.prototype.makeEditable = function () {
 	// in licenseAcceptance - submit won't be possible until dialog is closed
 	this.licenseDialogWidget.getConfirmationIfNecessary().then( function () {
 		self.cancelPublish.show();
-		self.editToggle.$element.hide().addClass( 'wbmi-hidden' );
+		self.editToggle.$element.hide();
 		self.$element.addClass( 'wbmi-entityview-editable' );
 		self.statementWidget.setEditing( true );
 		self.editing = true;
@@ -204,7 +208,7 @@ StatementPanel.prototype.makeReadOnly = function () {
 	this.statementWidget.disconnect( this, { change: 'onDepictsChange' } );
 	this.statementWidget.reset().then( function () {
 		self.statementWidget.connect( self, { change: 'onDepictsChange' } );
-		self.editToggle.$element.show().removeClass( 'wbmi-hidden' );
+		self.editToggle.$element.show();
 	} );
 };
 

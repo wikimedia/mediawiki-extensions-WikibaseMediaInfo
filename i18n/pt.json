@@ -53,6 +53,8 @@
 	"wikibasemediainfo-statements-learn-more": "Saiba mais",
 	"wikibasemediainfo-statements-remove": "Remover tudo",
 	"wikibasemediainfo-statements-title-depicts": "Elementos retratados neste ficheiro",
+	"wikibasemediainfo-statements-unsupported-property-title": "Propriedade não suportada",
+	"wikibasemediainfo-statements-unsupported-property-content": "As propriedades para além de $1 ainda não são completamente suportadas, mas sê-lo-ão futuramente. Por enquanto, a funcionalidade de propriedades não suportadas poderá não ser a que espera.",
 	"wikibasemediainfo-operator-placeholder": "Operador",
 	"wikibasemediainfo-operator-value-is": "é",
 	"wikibasemediainfo-operator-value-isnot": "não é",

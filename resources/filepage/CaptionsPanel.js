@@ -486,8 +486,7 @@ CaptionsPanel.prototype.createIndexedEditableRow = function (
 		this.textInputs[ index ].$element,
 		false
 	);
-	$row.find( '.wbmi-caption-value' )
-		.append( this.createRowDeleter( $row ).$element );
+	$row.append( this.createRowDeleter( $row ).$element );
 	return $row;
 };
 

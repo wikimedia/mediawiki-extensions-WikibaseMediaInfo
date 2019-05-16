@@ -32,6 +32,7 @@
 	.wbmi-entityview-caption {
 		.flex-display();
 		.flex-wrap();
+		justify-content: space-between;
 		padding: @sm-spacing 0;
 
 		// set borders only between elements
@@ -63,6 +64,12 @@
 		&.wbmi-entityview-emptyCaption {
 			color: @base30;
 		}
+
+		.@{edit-mode}& {
+			@media screen and ( max-width: @breakpoint-tablet ) {
+				.flex(1, 1, 100%, 3);
+			}
+		}
 	}
 
 	.wbmi-caption-textInput {
@@ -75,8 +82,9 @@
 	}
 
 	.wbmi-entityview-editActions {
-		.flex-display();
 		.flex();
+		.flex-display();
+		.flex-wrap();
 	}
 
 	.wbmi-caption-publishError,

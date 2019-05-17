@@ -371,6 +371,11 @@
 			"mediainfo-term": true
 		}
 	},
+	"GrantPermissions": {
+		"editpage": {
+			"mediainfo-term": true
+		}
+	},
 	"AvailableRights": [
 		"mediainfo-term"
 	]

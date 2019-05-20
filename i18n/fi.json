@@ -4,13 +4,14 @@
 			"Pyscowicz",
 			"Nike",
 			"Stryn",
-			"Kyykaarme"
+			"Kyykaarme",
+			"Susannaanas"
 		]
 	},
 	"wikibase-entity-mediainfo": "mediatieto",
 	"wikibasemediainfo-diffview-label": "kuvateksti",
 	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Kuvatekstit",
-	"wikibasemediainfo-filepage-structured-data-heading": "Strukturoitu data",
+	"wikibasemediainfo-filepage-structured-data-heading": "Rakenteinen tieto",
 	"wikibasemediainfo-filepage-captions-title": "Kuvatekstit",
 	"wikibasemediainfo-filepage-more-languages": "Näytä $1 {{PLURAL:$1|kieli|kieltä}} lisää",
 	"wikibasemediainfo-filepage-fewer-languages": "Näytä vähemmän kieliä",

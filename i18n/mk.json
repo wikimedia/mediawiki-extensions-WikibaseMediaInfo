@@ -50,6 +50,8 @@
 	"wikibasemediainfo-statements-learn-more": "Дознајте повеќе",
 	"wikibasemediainfo-statements-remove": "Отстрани сè",
 	"wikibasemediainfo-statements-title-depicts": "Предмети прикажани на податотекава",
+	"wikibasemediainfo-statements-unsupported-property-title": "Неподдржано својство",
+	"wikibasemediainfo-statements-unsupported-property-content": "Сите својства освен $1 сѐ уште не се наполно поддржани, но ќе бидат во иднина. Засега нивните можности нема да работат според очекувањата.",
 	"wikibasemediainfo-operator-placeholder": "Оператор",
 	"wikibasemediainfo-operator-value-is": "е",
 	"wikibasemediainfo-operator-value-isnot": "не е",

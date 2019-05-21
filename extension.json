@@ -158,6 +158,7 @@
 		"wikibase.mediainfo.filePageDisplay": {
 			"packageFiles": [
 				"resources/filepage/init.js",
+				"resources/filepage/AnonWarning.js",
 				"resources/filepage/LanguagesViewWidget.js",
 				"resources/filepage/LicenseDialogWidget.js",
 				"resources/filepage/UlsWidget.js",

@@ -1,15 +1,11 @@
 'use strict';
 
-var StatementPanel,
-	LicenseDialogWidget,
-	CancelPublishWidget,
-	StatementWidget,
-	FormatValueElement;
-
-CancelPublishWidget = require( './CancelPublishWidget.js' );
-LicenseDialogWidget = require( './LicenseDialogWidget.js' );
-StatementWidget = require( 'wikibase.mediainfo.statements' ).StatementWidget;
-FormatValueElement = require( 'wikibase.mediainfo.statements' ).FormatValueElement;
+var AnonWarning = require( './AnonWarning.js' ),
+	CancelPublishWidget = require( './CancelPublishWidget.js' ),
+	FormatValueElement = require( 'wikibase.mediainfo.statements' ).FormatValueElement,
+	LicenseDialogWidget = require( './LicenseDialogWidget.js' ),
+	StatementWidget = require( 'wikibase.mediainfo.statements' ).StatementWidget,
+	StatementPanel;
 
 /**
  * Panel for displaying/editing structured data statements
@@ -172,19 +168,11 @@ StatementPanel.prototype.onDepictsChange = function () {
 };
 
 StatementPanel.prototype.makeEditable = function () {
-	var msg,
-		self = this;
+	var self = this;
 
 	// Show IP address logging notice to anon users
-	// TODO: This code should probably be shared with CaptionsPanel through a refactor.
 	if ( mw.user.isAnon() ) {
-		// Hack to wrap our (rich) message in jQuery so mw.notify inserts it as HTML, not text
-		msg = $( mw.config.get( 'parsedMessageAnonEditWarning' ) );
-		mw.notify( msg, {
-			autoHide: false,
-			type: 'warn',
-			tag: 'wikibasemediainfo-anonymous-edit-warning'
-		} );
+		AnonWarning.notifyOnce();
 	}
 
 	// show dialog informing user of licensing & store the returned promise

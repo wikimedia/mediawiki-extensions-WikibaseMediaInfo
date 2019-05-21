@@ -67,19 +67,13 @@
 	}
 
 	.wbmi-statement-footer {
+		.flex();
 		.flex-display();
+		.flex-wrap();
 
 		> * {
-			.flex(1, 1, 0);
+			.flex(1, 1, auto);
 			margin-top: 1em;
-		}
-
-		@media screen and ( max-width: @breakpoint-tablet ) {
-			display: block;
-
-			> * {
-				width: auto;
-			}
 		}
 
 		.wbmi-statement-remove {

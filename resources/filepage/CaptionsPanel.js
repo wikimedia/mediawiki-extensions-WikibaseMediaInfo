@@ -1,17 +1,12 @@
 'use strict';
 
-var CaptionData,
-	CaptionsPanel,
-	CaptionsEditActionsWidget,
-	LanguagesViewWidget,
-	LicenseDialogWidget,
-	UlsWidget;
-
-CaptionData = require( './CaptionData.js' );
-CaptionsEditActionsWidget = require( './CaptionsEditActionsWidget.js' );
-LanguagesViewWidget = require( './LanguagesViewWidget.js' );
-LicenseDialogWidget = require( './LicenseDialogWidget.js' );
-UlsWidget = require( './UlsWidget.js' );
+var AnonWarning = require( './AnonWarning.js' ),
+	CaptionData = require( './CaptionData.js' ),
+	CaptionsEditActionsWidget = require( './CaptionsEditActionsWidget.js' ),
+	LanguagesViewWidget = require( './LanguagesViewWidget.js' ),
+	LicenseDialogWidget = require( './LicenseDialogWidget.js' ),
+	UlsWidget = require( './UlsWidget.js' ),
+	CaptionsPanel;
 
 /**
  * Panel for displaying/editing structured data multi-lingual captions
@@ -827,19 +822,11 @@ CaptionsPanel.prototype.getShowCaptionFlagsByLangCode = function () {
 };
 
 CaptionsPanel.prototype.makeEditable = function () {
-	var msg,
-		self = this;
+	var self = this;
 
 	// Show IP address logging notice to anon users
-	// TODO: This code should probably be shared with CaptionsPanel through a refactor.
 	if ( mw.user.isAnon() ) {
-		// Hack to wrap our (rich) message in jQuery so mw.notify inserts it as HTML, not text
-		msg = $( mw.config.get( 'parsedMessageAnonEditWarning' ) );
-		mw.notify( msg, {
-			autoHide: false,
-			type: 'warn',
-			tag: 'wikibasemediainfo-anonymous-edit-warning'
-		} );
+		AnonWarning.notifyOnce();
 	}
 
 	// show dialog informing user of licensing

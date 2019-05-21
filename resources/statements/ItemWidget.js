@@ -193,6 +193,7 @@ ItemWidget.prototype.addQualifier = function ( data ) {
 	widget.connect( this, { delete: [ 'removeItems', [ widget ] ] } );
 	widget.connect( this, { delete: [ 'onQualifierChange', widget ] } );
 	widget.connect( this, { change: [ 'onQualifierChange', widget ] } );
+	widget.focus();
 };
 
 ItemWidget.prototype.onQualifierChange = function () {

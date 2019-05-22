@@ -26,11 +26,14 @@
 	"wikibasemediainfo-filepage-add-caption": "Přidat popisek",
 	"wikibasemediainfo-filepage-edit-captions": "Editovat popisky",
 	"wikibasemediainfo-filepage-cancel": "Storno",
+	"wikibasemediainfo-filepage-cancel-confirm": "Zahodit změny? Provedené změny nebudou uloženy.",
 	"wikibasemediainfo-filepage-edit": "Editovat",
 	"wikibasemediainfo-filepage-publish": "Zveřejnit změny",
 	"wikibasemediainfo-filepage-caption-empty": "Přidejte jednořádkové vysvětlení, co tento soubor představuje",
 	"wikibasemediainfo-filepage-caption-too-long": "$1 {{PLURAL:$1|znak|znaky|znaků}} přes limit",
 	"wikibasemediainfo-filepage-caption-approaching-limit": "Zbývá $1 {{PLURAL:$1|znak|znaky|znaků}}",
+	"wikibasemediainfo-filepage-statement-no-value": "Pro tuto vlastnost neexistuje žádná hodnota",
+	"wikibasemediainfo-filepage-statement-some-value": "Tato vlastnost má hodnotu, ale je neznámá",
 	"wikibasemediainfo-filepage-license-title": "Popisek a další strukturované příspěvky",
 	"wikibasemediainfo-filepage-license-content": "Kliknutím na „Zveřejnit změny“ souhlasíte s [[wmf:Terms_of_Use|podmínkami užití]] a neodvolatelně svůj příspěvek uvolňujete pod licencí [https://creativecommons.org/publicdomain/zero/1.0/ Creative Commons CC0].",
 	"wikibasemediainfo-filepage-license-content-acceptance": "Přijímám tyto podmínky pro své budoucí editace. Tuto zprávu už příště nezobrazovat.",
@@ -45,5 +48,10 @@
 	"wikibasemediainfo-statements-item-remove": "Odebrat",
 	"wikibasemediainfo-statements-learn-more": "Další informace",
 	"wikibasemediainfo-statements-remove": "Odebrat vše",
-	"wikibasemediainfo-statements-title-depicts": "Položky vyobrazené v tomto souboru"
+	"wikibasemediainfo-statements-title-depicts": "Položky vyobrazené v tomto souboru",
+	"wikibasemediainfo-statements-unsupported-property-title": "Nepodporovaná vlastnost",
+	"wikibasemediainfo-statements-unsupported-property-content": "Vlastnosti jiné než $1 dosud nejsou plně podporovány, ale v budoucnu budou. Momentálně nemusí nepodporované vlastnosti pracovat tak, jak byste čekali.",
+	"wikibasemediainfo-operator-placeholder": "Operátor",
+	"wikibasemediainfo-operator-value-is": "je",
+	"wikibasemediainfo-operator-value-isnot": "není"
 }

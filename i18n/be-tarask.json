@@ -4,8 +4,11 @@
 			"Red Winged Duck"
 		]
 	},
+	"action-mediainfo-term": "зьмену тэрмінаў мэдыязьвестак (подпісы, кароткія апісаньні)",
 	"right-mediainfo-term": "Зьмена тэрмінаў мэдыязьвестак (подпісы, кароткія апісаньні)",
 	"wikibase-entity-mediainfo": "мэдыязьвесткі",
 	"wikibasemediainfo-desc": "Пашырэньне Вікібазы для кіраваньня структураванымі мэтазьвесткамі мэдыяфайлаў",
-	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Подпісы"
+	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Подпісы",
+	"wikibasemediainfo-filepage-fileinfo-heading": "Інфармацыя пра файл",
+	"wikibasemediainfo-filepage-structured-data-heading": "Структураваныя зьвесткі"
 }

@@ -261,7 +261,7 @@ CaptionsPanel.prototype.getAvailableLanguages = function (
 	excludeLanguages, includeLanguage
 ) {
 	var languages = {};
-	$.extend( languages, mw.config.get( 'wgULSLanguages' ) );
+	$.extend( languages, mw.config.get( 'wbTermsLanguages' ) );
 	( excludeLanguages || [] ).forEach( function ( languageCode ) {
 		if ( languageCode !== includeLanguage ) {
 			delete languages[ languageCode ];

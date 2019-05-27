@@ -47,6 +47,15 @@ OO.inheritClass( QualifierWidget, OO.ui.Widget );
 OO.mixinClass( QualifierWidget, FormatValueElement );
 
 /**
+ * @chainable
+ * @return {OO.ui.Element} The element, for chaining
+ */
+QualifierWidget.prototype.focus = function () {
+	this.propertyDropdown.focus();
+	return this;
+};
+
+/**
  * @return {wikibase.datamodel.PropertyValueSnak}
  */
 QualifierWidget.prototype.getData = function () {

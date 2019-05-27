@@ -2,7 +2,22 @@ var sinon = require( 'sinon' ),
 	jsdom = require( 'jsdom' ),
 	fs = require( 'fs' ),
 	path = require( 'path' ),
-	Mustache = require( 'mustache' );
+	Mustache = require( 'mustache' ),
+	mockery = require( 'mockery' );
+
+/**
+ * Allows requiring a module more than once.
+ * Useful for e.g. wikibase files, which aren't really modules,
+ * but code that is executed immediately, which we'll want to
+ * run before every test.
+ *
+ * @param {string} module
+ * @return {*}
+ */
+function requireAgain( module ) {
+	delete require.cache[ require.resolve( module ) ];
+	return require( module );
+}
 
 /**
  * Builds a template for use in testing when given a Mustache template and JSON
@@ -49,8 +64,79 @@ module.exports.createMediaWikiEnv = function () {
 		cookie: {
 			get: sinon.stub(),
 			set: sinon.stub()
+		},
+
+		message: sinon.stub().returns( {
+			text: sinon.stub(),
+			parse: sinon.stub()
+		} )
+	};
+};
+
+/**
+ * Stubs out and/or loads a basic "dataValues" object for use in testing.
+ *
+ * @return {Object}
+ */
+module.exports.createDataValuesEnv = function () {
+	var dataValues;
+
+	global.dataValues = requireAgain( 'wikibase-data-values/src/dataValues.js' ).dataValues;
+	global.util = {};
+	requireAgain( 'wikibase-data-values/lib/util/util.inherit.js' );
+	requireAgain( 'wikibase-data-values/src/DataValue.js' );
+	requireAgain( 'wikibase-data-values/src/values/DecimalValue.js' );
+	requireAgain( 'wikibase-data-values/src/values/QuantityValue.js' );
+	requireAgain( 'wikibase-data-model/src/__namespace.js' );
+
+	// remove from global scope before returning
+	dataValues = global.dataValues;
+	delete global.dataValues;
+	delete global.util;
+
+	return dataValues;
+};
+
+/**
+ * Stubs out and/or loads a basic "wikibase" object for use in testing.
+ *
+ * @return {Object}
+ */
+module.exports.createWikibaseEnv = function () {
+	var wikibase;
+
+	global.wikibase = {
+		datamodel: {},
+		api: {
+			getLocationAgnosticMwApi: function () {
+				return {
+					get: function () { return $.Deferred().promise(); },
+					post: function () { return $.Deferred().promise(); }
+				};
+			}
+		},
+		serialization: {
+			StatementListDeserializer: require( './mocks/FakeStatementListDeserializer' )
 		}
 	};
+	global.util = {};
+
+	requireAgain( 'wikibase-data-values/lib/util/util.inherit.js' );
+	requireAgain( 'wikibase-data-model/src/EntityId.js' );
+	requireAgain( 'wikibase-data-model/src/GroupableCollection.js' );
+	requireAgain( 'wikibase-data-model/src/List.js' );
+	requireAgain( 'wikibase-data-model/src/Snak.js' );
+	requireAgain( 'wikibase-data-model/src/SnakList.js' );
+	requireAgain( 'wikibase-data-model/src/PropertyValueSnak.js' );
+	requireAgain( 'wikibase-data-model/src/Statement.js' );
+	requireAgain( 'wikibase-data-model/src/StatementList.js' );
+
+	// remove from global scope before returning
+	wikibase = global.wikibase;
+	delete global.wikibase;
+	delete global.util;
+
+	return wikibase;
 };
 
 /**
@@ -85,4 +171,19 @@ module.exports.createMediaWikiUser = function ( options ) {
 	}
 
 	return user;
+};
+
+module.exports.registerModules = function () {
+	// RL loader modules are not exposed, so let's make sure they're
+	// known when source code requires it...
+	mockery.registerMock( 'wikibase.mediainfo.statements', require( '../../../resources/statements/index.js' ) );
+	mockery.enable( {
+		warnOnReplace: false,
+		warnOnUnregistered: false
+	} );
+};
+
+module.exports.deregisterModules = function () {
+	mockery.deregisterAll();
+	mockery.disable();
 };

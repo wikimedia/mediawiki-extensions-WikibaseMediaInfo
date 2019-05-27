@@ -1,6 +1,6 @@
 'use strict';
 
-var exports = {
+module.exports = {
 	EntityInputWidget: require( './EntityInputWidget.js' ),
 	EntityLookupElement: require( './EntityLookupElement.js' ),
 	FormatValueElement: require( './FormatValueElement.js' ),
@@ -10,12 +10,3 @@ var exports = {
 	QualifierWidget: require( './QualifierWidget.js' ),
 	StatementWidget: require( './StatementWidget.js' )
 };
-
-// note: this (mw.mediaInfo.statements) will go away,
-// and you'll need to require the relevant classes you
-// intend to use instead of pulling them out of
-// mw.mediaInfo.statements
-mw.mediaInfo = mw.mediaInfo || {};
-mw.mediaInfo.statements = mw.mediaInfo.statements || exports;
-
-module.exports = exports;

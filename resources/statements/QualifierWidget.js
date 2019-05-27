@@ -8,6 +8,8 @@ var FormatValueElement = require( './FormatValueElement.js' ),
 	 * @param {Object} config.qualifiers Qualifiers map: { propertyId: datatype, ...}
 	 */
 	QualifierWidget = function MediaInfoStatementsQualifierWidget( config ) {
+		config = config || {};
+
 		QualifierWidget.parent.call( this, config );
 		FormatValueElement.call( this, $.extend( {}, config ) );
 

@@ -14,6 +14,8 @@
 var FormatValueElement = require( './FormatValueElement.js' ),
 	QualifierWidget = require( './QualifierWidget.js' ),
 	ItemWidget = function MediaInfoStatementsItemWidget( config ) {
+		config = config || {};
+
 		// set these first - the parent constructor could call other methods
 		// (e.g. setDisabled) which may cause a re-render, and will need
 		// some of these...
@@ -54,9 +56,14 @@ OO.mixinClass( ItemWidget, FormatValueElement );
 
 ItemWidget.prototype.render = function () {
 	var self = this,
-		dataValue = this.data.getClaim().getMainSnak().getValue(),
-		promise = $.Deferred().resolve().promise();
+		promise = $.Deferred().resolve().promise(),
+		dataValue;
 
+	if ( !this.data ) {
+		return;
+	}
+
+	dataValue = this.data.getClaim().getMainSnak().getValue();
 	if ( this.label === undefined || this.url === undefined ) {
 		promise = $.when(
 			this.formatValue( dataValue, 'text/plain' ),

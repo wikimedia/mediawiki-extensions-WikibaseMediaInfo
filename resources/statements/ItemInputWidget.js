@@ -3,6 +3,8 @@
 var EntityLookupElement = require( './EntityLookupElement.js' ),
 	FormatValueElement = require( './FormatValueElement.js' ),
 	ItemInputWidget = function MediaInfoStatementsItemInputWidget( config ) {
+		config = config || {};
+
 		ItemInputWidget.parent.call( this, $.extend( {
 			placeholder: mw.message( 'wikibasemediainfo-statements-item-input-placeholder' ).text(),
 			icon: 'search',
@@ -61,8 +63,8 @@ ItemInputWidget.prototype.setData = function ( data ) {
 	var self = this;
 
 	if ( data instanceof wikibase.datamodel.EntityId ) {
+		this.id = data.toJSON().id;
 		this.formatValue( data, 'text/plain' ).then( function ( plain ) {
-			self.id = data.toJSON().id;
 			self.setValue( plain );
 		} );
 	} else {

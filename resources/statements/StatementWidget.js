@@ -13,41 +13,34 @@ var ItemInputWidget = require( './ItemInputWidget.js' ),
 	 * @param {string} [config.title]
 	 */
 	StatementWidget = function MediaInfoStatementsStatementWidget( config ) {
-		var
-			properties = config.properties || mw.config.get( 'wbmiProperties' ) || {},
-			propertyId = config.propertyId,
-			qualifiers = config.qualifiers || mw.config.get( 'wbmiDepictsQualifierProperties' ) || {},
-			dataValue = new wikibase.datamodel.EntityId( propertyId ),
+		var learnMoreLink = mw.config.get( 'wbmiDepictsHelpUrl' ),
 			$label = $( '<h4>' )
 				.addClass( 'wbmi-entity-label' )
 				.text( '' ), // will be filled out later (after formatValue call)
 			$link = $( '<a>' )
 				.addClass( 'wbmi-entity-link ' ) // repo class will be added later (after formatValue call)
 				.attr( 'href', '#' ) // will be filled out later (after formatValue call)
-				.attr( 'target', '_blank' )
-				.text( propertyId.replace( /^.+:/, '' ) ),
-			titles = mw.config.get( 'wbmiPropertyTitles' ) || [],
-			learnMoreLink = mw.config.get( 'wbmiDepictsHelpUrl' );
+				.attr( 'target', '_blank' ),
+			dataValue;
 
-		config.propertyId = propertyId;
-		config.properties = properties;
-		config.qualifiers = qualifiers;
+		config = config || {};
+		config.qualifiers = config.qualifiers || mw.config.get( 'wbmiDepictsQualifierProperties' ) || {};
 
 		StatementWidget.parent.call( this, config );
 		OO.ui.mixin.GroupElement.call( this );
 
 		this.config = config;
 		this.entityId = config.entityId;
+		this.properties = config.properties || mw.config.get( 'wbmiProperties' ) || {};
 		this.propertyId = config.propertyId;
-		this.properties = config.properties;
 		this.qualifiers = config.qualifiers;
-		this.title = config.title || titles[ this.propertyId ];
+		this.title = config.title || ( mw.config.get( 'wbmiPropertyTitles' ) || [] )[ this.propertyId ];
 		this.data = new wikibase.datamodel.StatementList();
 		this.editing = false;
 
 		this.input = new ItemInputWidget( {
 			classes: [ 'wbmi-statement-input' ],
-			type: this.properties[ propertyId ] || 'string',
+			type: this.properties[ this.propertyId ] || 'string',
 			disabled: this.disabled
 		} );
 		this.input.connect( this, { choose: 'addItemFromInput' } );
@@ -77,7 +70,7 @@ var ItemInputWidget = require( './ItemInputWidget.js' ),
 						this.title ? $( '<h3>' ).addClass( 'wbmi-statements-title' ).text( this.title ) : '',
 						$label
 					),
-					$link
+					$link.text( this.propertyId.replace( /^.+:/, '' ) )
 				)
 			),
 			this.input.$element,
@@ -91,6 +84,7 @@ var ItemInputWidget = require( './ItemInputWidget.js' ),
 		);
 
 		// fetch property value & url
+		dataValue = new wikibase.datamodel.EntityId( this.propertyId );
 		$.when(
 			this.formatValue( dataValue, 'text/plain' ),
 			this.formatValue( dataValue, 'text/html' )

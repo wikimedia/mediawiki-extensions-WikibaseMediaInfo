@@ -394,14 +394,8 @@ class WikibaseMediaInfoHooks {
 			return $out;
 		}
 
-		// inject captions into tab1
-		$tab1Html = strtr(
-			$tab1Html,
-			[
-				'<div class="mw-parser-output">' =>
-					'<div class="mw-parser-output">' . $captions
-			]
-		);
+		// insert captions at the beginning of Tab1
+		$tab1Html = $captions . $tab1Html;
 
 		// Prepare tab panels
 		$tab1 = new TabPanelLayout(

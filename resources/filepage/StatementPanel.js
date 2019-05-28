@@ -17,6 +17,8 @@ var AnonWarning = require( './AnonWarning.js' ),
  * @param {Object} [config]
  * @cfg {jQuery} $element
  * @cfg {string} propertyId
+ * @cfg {string} entityId
+ * @cfg {Object} properties
  */
 StatementPanel = function StatementPanel( config ) {
 	// Parent constructor
@@ -76,7 +78,8 @@ StatementPanel.prototype.populateFormatValueCache = function ( data ) {
 StatementPanel.prototype.initialize = function () {
 	var deserializer = new wikibase.serialization.StatementListDeserializer(),
 		statementsJson,
-		popup;
+		popup,
+		self = this;
 
 	this.cancelPublish.hide();
 
@@ -92,8 +95,16 @@ StatementPanel.prototype.initialize = function () {
 	this.statementWidget.$element.find( '.wbmi-statement-header' ).append( this.editToggle.$element );
 	this.statementWidget.$element.find( '.wbmi-statement-footer' ).append( this.cancelPublish.$element );
 
-	// @todo below is only temporary, until we officially support more statements...
-	if ( this.$element.hasClass( 'wbmi-entityview-statementsGroup-undefined' ) ) {
+	if ( this.config.properties && this.config.properties[ this.config.propertyId ] !== 'wikibase-entityid' ) {
+		this.$element.addClass( 'wbmi-entityview-statementsGroup-unsupported' );
+	}
+
+	if (
+		this.$element.hasClass( 'wbmi-entityview-statementsGroup-unsupported' ) ||
+		// TODO: the following line (with '-undefined') is for BC, can be removed ~30days after
+		// T224461 gets released to production and parser cache has expired
+		this.$element.hasClass( 'wbmi-entityview-statementsGroup-undefined' )
+	) {
 		popup = new OO.ui.PopupWidget( {
 			$floatableContainer: this.editToggle.$element,
 			padded: true,
@@ -102,42 +113,59 @@ StatementPanel.prototype.initialize = function () {
 
 		this.$element.append( popup.$element );
 		this.editToggle.on( 'click', function () {
-			// this is a bit of a hack: there's no great way to figure out
-			// what properties are "supported" (what even means "supported"
-			// in this project - Commons focuses on 'depicts' ATM, but other
-			// wikis could use this with any other property they like, as
-			// long as it's a supported data type...
-			// so... let's just grab the names from DOM instead of trying to
-			// figure out better methods of getting these to JS (either
-			// expose as a JS config var or via an API call to format) because
-			// this is only a temporary measure
-			// eslint-disable-next-line no-jquery/no-global-selector
-			var supportedProperties = $( '.wbmi-entityview-statementsGroup:not( .wbmi-entityview-statementsGroup-undefined )' )
-				.toArray()
-				.map( function ( element ) {
-					return $(
-						// 2nd selector (plural wbmi-statements-header) is for
-						// backward compatibility - can be renamed 30+d after
-						// merging this patch
-						'.wbmi-statement-header .wbmi-entity-label, .wbmi-statements-header .wbmi-entity-label',
-						element
-					).text();
-				} );
+			var popupMsg;
+
+			if ( mw.config.get( 'wbmiEnableOtherStatements', false ) ) {
+				popupMsg = mw.message(
+					'wikibasemediainfo-statements-unsupported-property-type-content'
+				).parse();
+			} else {
+				// TODO: remove the 'else' (and getSupportedProperties) when feature flag
+				// MediaInfoEnableOtherStatements is removed
+				popupMsg = mw.message(
+					'wikibasemediainfo-statements-unsupported-property-content',
+					mw.language.listToText( self.getSupportedProperties() )
+				).parse();
+			}
 
 			popup.$body.empty().append(
 				$( '<div>' ).append(
 					$( '<h4>' ).html( mw.message( 'wikibasemediainfo-statements-unsupported-property-title' ).parse() ),
-					$( '<p>' ).html(
-						mw.message(
-							'wikibasemediainfo-statements-unsupported-property-content',
-							mw.language.listToText( supportedProperties )
-						).parse()
-					)
+					$( '<p>' ).html( popupMsg )
 				)
 			);
 			popup.toggle( true );
 		} );
 	}
+};
+
+/**
+ * this is a bit of a hack: there's no great way to figure out
+ * what properties are "supported" (what even means "supported"
+ * in this project - Commons focuses on 'depicts' ATM, but other
+ * wikis could use this with any other property they like, as
+ * long as it's a supported data type...
+ * so... let's just grab the names from DOM instead of trying to
+ * figure out better methods of getting these to JS (either
+ * expose as a JS config var or via an API call to format) because
+ * this is only a temporary measure
+ *
+ * TODO: remove when feature flag MediaInfoEnableOtherStatements is removed
+ *
+ * @return {[string]}
+ */
+StatementPanel.prototype.getSupportedProperties = function () {
+	// eslint-disable-next-line no-jquery/no-global-selector
+	return $( '.wbmi-entityview-statementsGroup:not( .wbmi-entityview-statementsGroup-undefined )' )
+		.toArray()
+		.map( function ( element ) {
+			return $(
+				// 2nd selector (plural wbmi-statements-header) is for
+				// backward compatibility - can be removed July 2019
+				'.wbmi-statement-header .wbmi-entity-label, .wbmi-statements-header .wbmi-entity-label',
+				element
+			).text();
+		} );
 };
 
 /**

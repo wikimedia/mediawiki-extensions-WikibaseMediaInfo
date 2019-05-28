@@ -5,19 +5,17 @@ var ItemInputWidget = require( './ItemInputWidget.js' ),
 	ItemWidget = require( './ItemWidget.js' ),
 	/**
 	 * @constructor
-	 * @param {Object} [config] Configuration options
+	 * @param {Object} config Configuration options
 	 * @param {string} config.entityId Entity ID (e.g. M123 id of the file you just uploaded)
 	 * @param {string} config.propertyId Property ID (e.g. P123 id of `depicts` property)
-	 * @param {string} config.properties Properties map: { propertyId: datatype, ...}
+	 * @param {string} [config.properties] Properties map: { propertyId: datatype, ...}
 	 * @param {Object} [config.qualifiers] Qualifiers map: { propertyId: datatype, ...}
 	 * @param {string} [config.title]
 	 */
 	StatementWidget = function MediaInfoStatementsStatementWidget( config ) {
 		var
 			properties = config.properties || mw.config.get( 'wbmiProperties' ) || {},
-			// wbmiProperties-based fallbacks are for backward compatibility, back
-			// when this was for depicts only, and propertyId wasn't required
-			propertyId = config.propertyId || Object.keys( properties )[ 0 ] || properties.depicts,
+			propertyId = config.propertyId,
 			qualifiers = config.qualifiers || mw.config.get( 'wbmiDepictsQualifierProperties' ) || {},
 			dataValue = new wikibase.datamodel.EntityId( propertyId ),
 			$label = $( '<h4>' )

@@ -8,7 +8,10 @@
 		CaptionsPanel,
 		statementPanel,
 		StatementPanel,
-		$tabs;
+		$tabs,
+		addPropertyWidget,
+		AddPropertyWidget,
+		propertiesInfo = mw.config.get( 'wbmiProperties' ) || {};
 
 	mw.mediaInfo = mw.mediaInfo || {};
 	mw.mediaInfo.structuredData = mw.mediaInfo.structuredData || {};
@@ -16,10 +19,13 @@
 
 	CaptionsPanel = require( './CaptionsPanel.js' );
 	StatementPanel = require( './StatementPanel.js' );
+	AddPropertyWidget = require( 'wikibase.mediainfo.statements' ).AddPropertyWidget;
 
 	// This has to go inside hooks to allow proper creation of js elements when content is
 	// replaced by the RevisionSlider extension
 	mw.hook( 'wikipage.content' ).add( function ( $content ) {
+
+		var propertyIds = [];
 
 		captions = new CaptionsPanel( {
 			headerClass: 'wbmi-entityview-captions-header',
@@ -50,20 +56,44 @@
 				$statements.each( function () {
 					var propertyId = $( this ).data( 'property' );
 					if ( !propertyId ) {
-						// backward compatibility for cached HTML - the 'property' attribute didn't use
-						// to exist, but this classname that includes the ID was already there...
+						// backward compatibility for cached HTML - the 'property' attribute didn't
+						// use to exist, but this classname that includes the ID was already there
 						propertyId = $( this ).attr( 'class' ).replace( /.*wbmi-entityview-statementsGroup-([a-z0-9]+).*/i, '$1' );
 					}
 
 					statementPanel = new StatementPanel( {
 						$element: $( this ),
 						propertyId: propertyId,
-						entityId: mw.config.get( 'wbEntityId' )
+						entityId: mw.config.get( 'wbEntityId' ),
+						properties: propertiesInfo
 					} );
 					statementPanel.initialize();
 
 					statementPanels.push( statementPanel );
+					propertyIds.push( propertyId );
 				} );
+
+				if ( mw.config.get( 'wbmiEnableOtherStatements', false ) ) {
+					addPropertyWidget = new AddPropertyWidget( { propertyIds: propertyIds } );
+					addPropertyWidget.on( 'choose', function ( data ) {
+						var statementPanel,
+							statementPanelContainer = $( '<div>' )
+								.addClass( 'wbmi-entityview-statementsGroup' )
+								.insertBefore( addPropertyWidget.$element );
+
+						propertiesInfo[ data.id ] = 'wikibase-entityid';
+						statementPanel = new StatementPanel( {
+							$element: statementPanelContainer,
+							propertyId: data.id,
+							entityId: mw.config.get( 'wbEntityId' ),
+							properties: propertiesInfo
+						} );
+						statementPanel.initialize();
+						statementPanels.push( statementPanel );
+					} );
+
+					statementPanel.$element.after( addPropertyWidget.$element );
+				}
 			}
 		}
 	} );

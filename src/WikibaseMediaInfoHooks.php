@@ -172,11 +172,12 @@ class WikibaseMediaInfoHooks {
 	 */
 	public static function onBeforePageDisplay( $out, $skin ) {
 		global $wgDepictsQualifierProperties,
-			$wgDepictsHelpUrl,
-			$wgMediaInfoProperties,
-			$wgMediaInfoExternalEntitySearchBaseUri,
-			$wgMediaInfoSearchFiletypes,
-			$wgMediaInfoEnableSearch;
+				$wgDepictsHelpUrl,
+				$wgMediaInfoProperties,
+				$wgMediaInfoExternalEntitySearchBaseUri,
+				$wgMediaInfoSearchFiletypes,
+				$wgMediaInfoEnableSearch,
+				$wgMediaInfoEnableOtherStatements;
 
 		// Hide any MediaInfo content and UI on a page, if the target page is a redirect.
 		if ( $out->getTitle()->isRedirect() ) {
@@ -244,6 +245,7 @@ class WikibaseMediaInfoHooks {
 				'wbmiSearchFiletypes' => $wgMediaInfoSearchFiletypes,
 				'wbmiMediaInfoEnableSearch' => $wgMediaInfoEnableSearch,
 				'wbmiRepoApiUrl' => wfScript( 'api' ),
+				'wbmiEnableOtherStatements' => $wgMediaInfoEnableOtherStatements,
 			]
 		);
 	}

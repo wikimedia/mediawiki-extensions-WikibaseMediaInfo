@@ -8,5 +8,6 @@ module.exports = {
 	ItemWidget: require( './ItemWidget.js' ),
 	QualifierValueInputWidget: require( './QualifierValueInputWidget.js' ),
 	QualifierWidget: require( './QualifierWidget.js' ),
-	StatementWidget: require( './StatementWidget.js' )
+	StatementWidget: require( './StatementWidget.js' ),
+	AddPropertyWidget: require( './AddPropertyWidget.js' )
 };

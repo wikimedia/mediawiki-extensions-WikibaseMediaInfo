@@ -1,5 +1,18 @@
 'use strict';
 
+/**
+ * @constructor
+ * @param {Object} [config]
+ * @cfg {int} minLookupCharacters Minimum number of characters that must exist before querying the api for matches
+ * @cfg {string} externalEntitySearchApiUri Uri for search api
+ * @cfg {string} entityType 'property' or 'item'
+ * @cfg {int} maxSuggestions The maximum number of suggestions to display in the auto-suggest
+ * @cfg {array} filter Array of objects each containing fields 'field' and 'value'.
+ *      Suggestions will only displayed if suggestion.{field} === {value} ... e.g. if config.filter
+ *      contains { 'field': 'type', 'value: 'property' } then only suggestions with 'type'
+ *      equal to 'property' will be returned.
+ *      Suffixing the value of 'field' with the character ! inverts the filter
+ */
 var EntityLookupElement = function MediaInfoStatementsEntityLookupElement( config ) {
 	this.config = $.extend( {
 		minLookupCharacters: 1,
@@ -13,6 +26,8 @@ var EntityLookupElement = function MediaInfoStatementsEntityLookupElement( confi
 	} ) );
 
 	this.type = this.config.entityType;
+	this.maxSuggestions = this.config.maxSuggestions;
+	this.setFilter( this.config.filter || [] );
 };
 OO.mixinClass( EntityLookupElement, OO.ui.mixin.LookupElement );
 
@@ -50,7 +65,7 @@ EntityLookupElement.prototype.getLookupRequest = function () {
 		return deferred.resolve( [] ).promise( { abort: function () {} } );
 	}
 
-	if ( this.config.filter !== undefined ) {
+	if ( this.filter.length > 0 ) {
 		requestParams.limit = 'max';
 	}
 
@@ -73,11 +88,13 @@ EntityLookupElement.prototype.getLookupCacheDataFromResponse =
  * @inheritdoc
  */
 EntityLookupElement.prototype.getLookupMenuOptionsFromData = function ( data ) {
-	var i,
-		$label,
+	var i, $label,
 		items = [];
 
 	data = this.filterData( data );
+	if ( this.maxSuggestions !== undefined ) {
+		data = data.slice( 0, this.maxSuggestions - 1 );
+	}
 
 	if ( !data ) {
 		return [];
@@ -103,20 +120,44 @@ EntityLookupElement.prototype.getLookupMenuOptionsFromData = function ( data ) {
 	return items;
 };
 
-EntityLookupElement.prototype.filterData = function ( data ) {
-	var filteredData = [], i;
+/**
+ * @param {Array} filter
+ */
+EntityLookupElement.prototype.setFilter = function ( filter ) {
+	this.filter = filter;
+};
 
-	if ( this.config.filter === undefined ) {
+EntityLookupElement.prototype.filterData = function ( data ) {
+	var filters = this.filter;
+
+	if ( filters === undefined ) {
 		return data;
 	}
 
-	for ( i = 0; i < data.length; i++ ) {
-		if ( data[ i ][ this.config.filter.field ] === this.config.filter.value ) {
-			filteredData.push( data[ i ] );
-		}
+	// If there's just a single filter make it into an array
+	if ( filters.field !== undefined ) {
+		filters = [ filters ];
 	}
 
-	return filteredData;
+	filters.forEach( function ( filter ) {
+		var values,
+			field = filter.field,
+			filterType = 'includeOnMatch';
+		if ( field.indexOf( '!' ) === 0 ) {
+			filterType = 'excludeOnMatch';
+			field = filter.field.substr( 1 );
+		}
+		values = filter.value.split( '|' );
+		data = data.filter( function ( datum ) {
+			if ( filterType === 'includeOnMatch' ) {
+				return values.indexOf( datum[ field ] ) !== -1;
+			} else {
+				return values.indexOf( datum[ field ] ) === -1;
+			}
+		} );
+	} );
+
+	return data;
 };
 
 /**

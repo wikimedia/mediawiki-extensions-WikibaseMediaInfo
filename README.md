@@ -106,6 +106,7 @@ are available for this extension:
 | variable | example value | default | notes |
 |----------|---------------|---------|-------|
 | $wgMediaInfoEnableSearch | true/false | false | Feature-flag to enable search features |
+| $wgMediaInfoEnableOtherStatements | true/false | false | Feature-flag to enable arbitrary statements |
 | $wgMediaInfoProperties | `[ 'depicts' => 'P123' ]` | {} | default WB properties to show (e.g. "depicts") |
 | $wgDepictsQualifierProperties | `[ 'features' => 'P80', 'color' => 'P24', 'quantity' => 'P25' ]` | {} | WB properties to allow for qualifiers |
 | $wgMediaInfoSearchFileTypes | see extension.json | see extension.json | List of file types to search in |

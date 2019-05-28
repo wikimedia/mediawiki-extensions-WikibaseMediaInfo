@@ -81,6 +81,9 @@
 		},
 		"MediaInfoExternalEntitySearchBaseUri": {
 			"value": ""
+		},
+		"MediaInfoEnableOtherStatements": {
+			"value": false
 		}
 	},
 	"ServiceWiringFiles": [
@@ -232,7 +235,8 @@
 				"resources/statements/StatementWidget.js",
 				"resources/statements/ItemInputWidget.js",
 				"resources/statements/ItemWidget.js",
-				"resources/statements/QualifierWidget.js"
+				"resources/statements/QualifierWidget.js",
+				"resources/statements/AddPropertyWidget.js"
 			],
 			"dependencies": [
 				"oojs",
@@ -251,6 +255,8 @@
 				"dataValues.values"
 			],
 			"messages": [
+				"wikibasemediainfo-add-property",
+				"wikibasemediainfo-add-statement",
 				"wikibasemediainfo-property-placeholder",
 				"wikibasemediainfo-statements-depicts-title",
 				"wikibasemediainfo-statements-item-input-placeholder",

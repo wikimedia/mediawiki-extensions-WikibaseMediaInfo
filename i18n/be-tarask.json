@@ -6,6 +6,7 @@
 	},
 	"action-mediainfo-term": "зьмену тэрмінаў мэдыязьвестак (подпісы, кароткія апісаньні)",
 	"right-mediainfo-term": "Зьмена тэрмінаў мэдыязьвестак (подпісы, кароткія апісаньні)",
+	"slot-name-mediainfo": "Структураваныя мэдыязьвесткі",
 	"wikibase-entity-mediainfo": "мэдыязьвесткі",
 	"wikibasemediainfo-desc": "Пашырэньне Вікібазы для кіраваньня структураванымі мэтазьвесткамі мэдыяфайлаў",
 	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Подпісы",

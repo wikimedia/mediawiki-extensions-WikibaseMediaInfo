@@ -107,6 +107,7 @@ module.exports.createWikibaseEnv = function () {
 
 	global.wikibase = {
 		datamodel: {},
+		serialization: {},
 		api: {
 			getLocationAgnosticMwApi: function () {
 				return {
@@ -115,8 +116,8 @@ module.exports.createWikibaseEnv = function () {
 				};
 			}
 		},
-		serialization: {
-			StatementListDeserializer: require( './mocks/FakeStatementListDeserializer' )
+		utilities: {
+			ClaimGuidGenerator: sinon.stub().returns( { newGuid: sinon.stub() } )
 		}
 	};
 	global.util = {};
@@ -127,9 +128,29 @@ module.exports.createWikibaseEnv = function () {
 	requireAgain( 'wikibase-data-model/src/List.js' );
 	requireAgain( 'wikibase-data-model/src/Snak.js' );
 	requireAgain( 'wikibase-data-model/src/SnakList.js' );
+	requireAgain( 'wikibase-data-model/src/PropertyNoValueSnak.js' );
 	requireAgain( 'wikibase-data-model/src/PropertyValueSnak.js' );
+	requireAgain( 'wikibase-data-model/src/Claim.js' );
+	requireAgain( 'wikibase-data-model/src/Reference.js' );
+	requireAgain( 'wikibase-data-model/src/ReferenceList.js' );
 	requireAgain( 'wikibase-data-model/src/Statement.js' );
 	requireAgain( 'wikibase-data-model/src/StatementList.js' );
+	requireAgain( 'wikibase-serialization/src/Serializers/Serializer.js' );
+	requireAgain( 'wikibase-serialization/src/Deserializers/Deserializer.js' );
+	requireAgain( 'wikibase-serialization/src/Serializers/SnakSerializer.js' );
+	requireAgain( 'wikibase-serialization/src/Serializers/SnakListSerializer.js' );
+	requireAgain( 'wikibase-serialization/src/Serializers/ClaimSerializer.js' );
+	requireAgain( 'wikibase-serialization/src/Serializers/ReferenceSerializer.js' );
+	requireAgain( 'wikibase-serialization/src/Serializers/ReferenceListSerializer.js' );
+	requireAgain( 'wikibase-serialization/src/Serializers/StatementSerializer.js' );
+	requireAgain( 'wikibase-serialization/src/Serializers/StatementListSerializer.js' );
+	requireAgain( 'wikibase-serialization/src/Deserializers/SnakDeserializer.js' );
+	requireAgain( 'wikibase-serialization/src/Deserializers/SnakListDeserializer.js' );
+	requireAgain( 'wikibase-serialization/src/Deserializers/ClaimDeserializer.js' );
+	requireAgain( 'wikibase-serialization/src/Deserializers/ReferenceDeserializer.js' );
+	requireAgain( 'wikibase-serialization/src/Deserializers/ReferenceListDeserializer.js' );
+	requireAgain( 'wikibase-serialization/src/Deserializers/StatementDeserializer.js' );
+	requireAgain( 'wikibase-serialization/src/Deserializers/StatementListDeserializer.js' );
 
 	// remove from global scope before returning
 	wikibase = global.wikibase;

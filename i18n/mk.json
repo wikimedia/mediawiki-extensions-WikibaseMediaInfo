@@ -12,6 +12,8 @@
 	"wikibase-mediainfo-summary-wbsetlabel-add": "Додаден [$2] титл",
 	"wikibase-mediainfo-summary-wbsetlabel-remove": "Отстранет [$2] титл",
 	"wikibase-mediainfo-summary-wbsetlabel-set": "Изменет [$2] титл",
+	"wikibasemediainfo-add-property": "Пребарајте за да додадете својства (дел од, медиумски тип и тн.)",
+	"wikibasemediainfo-add-statement": "Додај исказ",
 	"wikibasemediainfo-desc": "Додаток на Викибазата за управување со структурирани метаподатоци на слики и снимки",
 	"wikibasemediainfo-diffview-label": "опис",
 	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Описи",

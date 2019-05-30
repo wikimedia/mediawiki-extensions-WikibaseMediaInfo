@@ -13,6 +13,8 @@
 	"wikibase-mediainfo-summary-wbsetlabel-add": "Adicionada legenda em [$2]",
 	"wikibase-mediainfo-summary-wbsetlabel-remove": "Removida legenda em [$2]",
 	"wikibase-mediainfo-summary-wbsetlabel-set": "Editada legenda em [$2]",
+	"wikibasemediainfo-add-property": "Pesquisar para adicionar propriedades (parte do tipo de mídia, etc.)",
+	"wikibasemediainfo-add-statement": "Adicionar instrução",
 	"wikibasemediainfo-desc": "Extensão Wikibase para gerenciar metadados estruturados de arquivos de mídia",
 	"wikibasemediainfo-diffview-label": "legenda",
 	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Legendas",

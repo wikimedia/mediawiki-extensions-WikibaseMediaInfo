@@ -15,6 +15,8 @@
 	"wikibase-mediainfo-summary-wbsetlabel-add": "Přidán popisek pro [$2]",
 	"wikibase-mediainfo-summary-wbsetlabel-remove": "Odstraněn popisek pro [$2]",
 	"wikibase-mediainfo-summary-wbsetlabel-set": "Editován popisek pro [$2]",
+	"wikibasemediainfo-add-property": "Hledáním přidejte vlastnosti (část (čeho), typ média atp.)",
+	"wikibasemediainfo-add-statement": "Přidat tvrzení",
 	"wikibasemediainfo-desc": "Rozšíření Wikibase pro správu strukturovaných metadat k mediálním souborům",
 	"wikibasemediainfo-diffview-label": "popisek",
 	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Popisky",
@@ -53,5 +55,11 @@
 	"wikibasemediainfo-statements-unsupported-property-content": "Vlastnosti jiné než $1 dosud nejsou plně podporovány, ale v budoucnu budou. Momentálně nemusí nepodporované vlastnosti pracovat tak, jak byste čekali.",
 	"wikibasemediainfo-operator-placeholder": "Operátor",
 	"wikibasemediainfo-operator-value-is": "je",
-	"wikibasemediainfo-operator-value-isnot": "není"
+	"wikibasemediainfo-operator-value-isnot": "není",
+	"wikibasemediainfo-search-input-placeholder-keywords": "Hledat v názvech a popiscích",
+	"wikibasemediainfo-search-qualifiers-add": "Přidat vymezení",
+	"wikibasemediainfo-search-qualifiers-cancel": "Zrušit",
+	"wikibasemediainfo-search-qualifiers-save": "Uložit",
+	"wikibasemediainfo-search-statements-add": "Přidat tvrzení",
+	"wikibasemediainfo-search-toggle-statements": "Další tvrzení"
 }

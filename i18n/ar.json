@@ -15,6 +15,8 @@
 	"wikibase-mediainfo-summary-wbsetlabel-add": "تمت إضافة التسمية التوضيحية [$2]",
 	"wikibase-mediainfo-summary-wbsetlabel-remove": "تمت إزالة التسمية التوضيحية [$2]",
 	"wikibase-mediainfo-summary-wbsetlabel-set": "تم تعديل التسمية التوضيحية [$2]",
+	"wikibasemediainfo-add-property": "البحث لإضافة خصائص (جزء من، نوع الميديا، إلخ.)",
+	"wikibasemediainfo-add-statement": "إضافة بيان",
 	"wikibasemediainfo-desc": "امتداد Wikibase لإدارة البيانات الوصفية المهيكلة لملفات الوسائط",
 	"wikibasemediainfo-diffview-label": "الشرح",
 	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "الشروحات",

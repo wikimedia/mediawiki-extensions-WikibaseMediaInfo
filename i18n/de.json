@@ -2,7 +2,8 @@
 	"@metadata": {
 		"authors": [
 			"Metalhead64",
-			"Speravir"
+			"Speravir",
+			"Mirzali"
 		]
 	},
 	"action-mediainfo-term": "Bildtexte oder Zusammenfassungen zu ändern",
@@ -12,6 +13,8 @@
 	"wikibase-mediainfo-summary-wbsetlabel-add": "Bildtext [$2] hinzugefügt",
 	"wikibase-mediainfo-summary-wbsetlabel-remove": "Überschrift [$2] entfernt",
 	"wikibase-mediainfo-summary-wbsetlabel-set": "Bildtext [$2] bearbeitet",
+	"wikibasemediainfo-add-property": "Suchen, um Eigenschaften hinzuzufügen (Teil von, Medientyp usw.)",
+	"wikibasemediainfo-add-statement": "Anweisung hinzufügen",
 	"wikibasemediainfo-desc": "Wikibase-Erweiterung zur Verwaltung strukturierter Metadaten von Mediendateien",
 	"wikibasemediainfo-diffview-label": "Beschreibung",
 	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Kurzbeschreibungen",

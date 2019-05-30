@@ -11,6 +11,7 @@
 	"wikibase-mediainfo-summary-wbsetlabel-add": "ক্যাপশন যোগ হয়েছে [$2]",
 	"wikibase-mediainfo-summary-wbsetlabel-remove": "ক্যাপশন সরানো হয়েছে [$2]",
 	"wikibase-mediainfo-summary-wbsetlabel-set": "ক্যাপশন সম্পাদিত হয়েছে [$2]",
+	"wikibasemediainfo-add-statement": "বিবৃতি যোগ করুন",
 	"wikibasemediainfo-desc": "মিডিয়া ফাইলগুলির কাঠামোবদ্ধ অধিউপাত্ত পরিচালনা করতে উইকিবেস এক্সটেনশন",
 	"wikibasemediainfo-diffview-label": "ক্যাপশন",
 	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "ক্যাপশন",

@@ -119,37 +119,39 @@ ItemWidget.prototype.toggleItemProminence = function ( e ) {
 	self.emit( 'change', self );
 };
 
+/**
+ * Render the ItemContainer template with appropriate data and then
+ * manually append a few interactive OOUI elements
+ */
 ItemWidget.prototype.renderInternal = function () {
-	var self = this,
+	var data = {},
+		// self = this,
 		id = this.data.getClaim().getMainSnak().getValue().toJSON().id || '',
-		$label = $( '<h4>' )
-			.addClass( 'wbmi-entity-label' )
-			.text( this.label ),
-		$link = $( '<a>' )
-			.addClass(
-				'wbmi-entity-link ' +
-				// Classes used: wbmi-entity-link-foreign-repo-* and wbmi-entity-link-local-repo
-				'wbmi-entity-link' + ( this.repo ? '-foreign-repo-' + this.repo : '-local-repo' )
-			)
-			.attr( 'href', this.url )
-			.attr( 'target', '_blank' )
-			.text( id.replace( /^.+:/, '' ) ),
-		icon = new OO.ui.IconWidget( { icon: 'check' } ),
-		$makePrimary = $( '<a>' )
-			.addClass(
-				'wbmi-entity-primary ' +
-				'wbmi-entity' + ( this.data.getRank() === wikibase.datamodel.Statement.RANK.NORMAL ? '-mark-as-prominent' : '-is-prominent' )
-			)
-			.attr( 'href', '#' )
-			.text(
-				this.data.getRank() === wikibase.datamodel.Statement.RANK.NORMAL ?
-					mw.message( 'wikibasemediainfo-statements-item-mark-as-prominent' ).text() :
-					mw.message( 'wikibasemediainfo-statements-item-is-prominent' ).text()
-			)
-			.prepend( this.data.getRank() === wikibase.datamodel.Statement.RANK.NORMAL ? '' : icon.$element )
-			.on( 'click', self.toggleItemProminence.bind( self ) ),
-		itemContainer = $( '<div>' ).addClass( 'wbmi-item-container' );
+		prominent = this.data.getRank() === wikibase.datamodel.Statement.RANK.PREFERRED,
+		template,
+		$container;
 
+	template = mw.template.get(
+		'wikibase.mediainfo.statements',
+		'templates/statements/ItemContainer.mustache'
+	);
+
+	// Prepare data for template
+	data = {
+		label: this.label,
+		url: this.url,
+		id: id.replace( /^.+:/, '' ),
+		repo: this.repo,
+		prominent: prominent,
+		prominenceMessage: prominent ?
+			mw.message( 'wikibasemediainfo-statements-item-is-prominent' ).text() :
+			mw.message( 'wikibasemediainfo-statements-item-mark-as-prominent' ).text()
+	};
+
+	// Render ItemContainer Template
+	$container = template.render( data );
+
+	// Toggle parent element classes
 	this.$element.toggleClass( 'wbmi-item-edit', this.editing );
 	this.$element.toggleClass( 'wbmi-item-read', !this.editing );
 
@@ -160,20 +162,8 @@ ItemWidget.prototype.renderInternal = function () {
 	this.addQualifierButton.$element.detach();
 	this.$element.empty();
 
-	itemContainer.append(
-		$( '<div>' ).addClass( 'wbmi-entity-header' ).append(
-			$( '<div>' ).addClass( 'wbmi-entity-data' ).append(
-				$( '<div>' ).addClass( 'wbmi-entity-title' ).append(
-					$label
-				),
-				this.url ? $link : ''
-			),
-			$makePrimary
-		)
-	);
-
 	if ( Object.keys( this.qualifiers ).length > 0 ) {
-		itemContainer.append(
+		$container.append(
 			$( '<div>' ).addClass( 'wbmi-item-content' ).append(
 				this.$group.addClass( 'wbmi-item-content-group' ),
 				this.editing ? this.addQualifierButton.$element : undefined
@@ -182,7 +172,7 @@ ItemWidget.prototype.renderInternal = function () {
 	}
 
 	this.$element.append(
-		itemContainer,
+		$container,
 		this.editing ? this.removeButton.$element : undefined
 	);
 };

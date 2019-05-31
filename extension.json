@@ -282,6 +282,10 @@
 				"word-separator",
 				"parentheses"
 			],
+			"templates": [
+				"templates/statements/EntityLabel.mustache",
+				"templates/statements/ItemContainer.mustache"
+			],
 			"targets": [
 				"desktop",
 				"mobile"

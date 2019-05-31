@@ -166,33 +166,24 @@ EntityLookupElement.prototype.filterData = function ( data ) {
  * @return {jQuery}
  */
 EntityLookupElement.prototype.createLabelFromSuggestion = function ( entityStub ) {
-	var $suggestion = $( '<span>' ).addClass( 'wbmi-entityselector-itemcontent' ),
-		$label = $( '<span>' )
-			.addClass( 'wbmi-entityselector-label' )
-			.text( entityStub.label || entityStub.id );
+	var data = {},
+		template;
+
+	template = mw.template.get(
+		'wikibase.mediainfo.statements',
+		'templates/statements/EntityLabel.mustache'
+	);
+
+	data.label = entityStub.label || entityStub.id;
+	data.description = entityStub.description;
 
 	if ( entityStub.aliases ) {
-		$label.append(
-			$( '<span>' )
-				.addClass( 'wbmi-entityselector-aliases' )
-				.text(
-					mw.message( 'word-separator' ).text() +
-					mw.message( 'parentheses', mw.language.listToText( entityStub.aliases ) ).text()
-				)
-		);
+		data.aliases =
+			mw.message( 'word-separator' ).text() +
+			mw.message( 'parentheses', mw.language.listToText( entityStub.aliases ) ).text;
 	}
 
-	$suggestion.append( $label );
-
-	if ( entityStub.description ) {
-		$suggestion.append(
-			$( '<span>' )
-				.addClass( 'wbmi-entityselector-description' )
-				.text( entityStub.description )
-		);
-	}
-
-	return $suggestion;
+	return template.render( data );
 };
 
 module.exports = EntityLookupElement;

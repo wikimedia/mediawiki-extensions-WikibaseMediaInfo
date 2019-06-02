@@ -11,7 +11,10 @@
 	"wikibase-mediainfo-summary-wbsetlabel-add": "Дададзены подпіс [$2]",
 	"wikibase-mediainfo-summary-wbsetlabel-remove": "Выдалены подпіс [$2]",
 	"wikibase-mediainfo-summary-wbsetlabel-set": "Зьменены подпіс [$2]",
+	"wikibasemediainfo-add-property": "Пошук для дадаваньня ўласьцівасьцяў (частка, мэдыятып і г. д.)",
+	"wikibasemediainfo-add-statement": "Дадаць сьцьверджаньне",
 	"wikibasemediainfo-desc": "Пашырэньне Вікібазы для кіраваньня структураванымі мэтазьвесткамі мэдыяфайлаў",
+	"wikibasemediainfo-diffview-label": "подпіс",
 	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Подпісы",
 	"wikibasemediainfo-filepage-fileinfo-heading": "Інфармацыя пра файл",
 	"wikibasemediainfo-filepage-structured-data-heading": "Структураваныя зьвесткі"

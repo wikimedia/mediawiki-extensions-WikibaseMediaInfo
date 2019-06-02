@@ -12,6 +12,8 @@
 	"wikibase-mediainfo-summary-wbsetlabel-add": "Dodano [$2] podpis",
 	"wikibase-mediainfo-summary-wbsetlabel-remove": "Usunięto [$2] podpis",
 	"wikibase-mediainfo-summary-wbsetlabel-set": "Zmieniono [$2] podpis",
+	"wikibasemediainfo-add-property": "Wyszukaj właściwości do dodania (część, rodzaj pliku itp.)",
+	"wikibasemediainfo-add-statement": "Dodaj stwierdzenie",
 	"wikibasemediainfo-desc": "Rozszerzenie Wikibase do zarządzania strukturalizowanymi metadanymi plików multimedialnych",
 	"wikibasemediainfo-diffview-label": "podpis",
 	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Podpisy",

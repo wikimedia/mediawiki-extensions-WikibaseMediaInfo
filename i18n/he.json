@@ -14,6 +14,8 @@
 	"wikibase-mediainfo-summary-wbsetlabel-add": "נוסף כיתוב [$2]",
 	"wikibase-mediainfo-summary-wbsetlabel-remove": "הוסר כיתוב [$2]",
 	"wikibase-mediainfo-summary-wbsetlabel-set": "נערך כיתוב [$2]",
+	"wikibasemediainfo-add-property": "חיפוש להוספת מאפיינים (חלק מתוך, סוג המדיה, וכו')",
+	"wikibasemediainfo-add-statement": "הוספת קביעה",
 	"wikibasemediainfo-desc": "הרחבה לוויקיבייס לניהול מטא־נתונים מובְנים של קובצי מדיה",
 	"wikibasemediainfo-diffview-label": "כיתוב",
 	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "כיתובים",

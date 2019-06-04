@@ -38,6 +38,9 @@ class MediaInfoByLinkedTitleLookup implements EntityByLinkedTitleLookup {
 	public function getEntityIdForLinkedTitle( $globalSiteId, $pageTitle ) {
 		// Ignore site, assume title is local...
 		$title = Title::newFromText( $pageTitle );
+		if ( !$title ) {
+			return null;
+		}
 
 		if ( !$title->inNamespace( NS_FILE ) ) {
 			return $this->defaultLookup->getEntityIdForLinkedTitle( $globalSiteId, $pageTitle );

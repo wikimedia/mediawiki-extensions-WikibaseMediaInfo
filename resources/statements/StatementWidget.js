@@ -215,7 +215,7 @@ StatementWidget.prototype.setData = function ( data ) {
 			return;
 		}
 
-		// we've potentially received more info that we had when constructing this
+		// we've potentially received more info than we had when constructing this
 		// object: extract the id & data type of this statement & adjust the
 		// input type accordingly
 		self.properties[ mainSnak.getPropertyId() ] = mainSnak.getValue().getType();
@@ -225,7 +225,6 @@ StatementWidget.prototype.setData = function ( data ) {
 			self.moveItem( widget, i );
 		} else {
 			widget = self.createItem( mainSnak.getValue() );
-			widget.setData( statement );
 			widget.connect( self, { delete: [ 'removeItems', [ widget ] ] } );
 			widget.connect( self, { delete: [ 'emit', 'change' ] } );
 			widget.connect( self, { change: [ 'setEditing', true ] } );
@@ -233,6 +232,8 @@ StatementWidget.prototype.setData = function ( data ) {
 
 			self.insertItem( widget, i );
 		}
+
+		widget.setData( statement );
 	} );
 
 	this.data = data;

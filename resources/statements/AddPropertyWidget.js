@@ -43,9 +43,10 @@ AddPropertyWidget.prototype.onClick = function () {
 };
 
 /**
+ * @param {ItemInputWidget} item
  * @param {Object} data
  */
-AddPropertyWidget.prototype.onChoose = function ( data ) {
+AddPropertyWidget.prototype.onChoose = function ( item, data ) {
 	this.propertyInputWidget.setValue( '' );
 	this.propertyInputWidget.$element.hide();
 

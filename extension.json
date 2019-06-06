@@ -107,6 +107,9 @@
 		"GetEntityByLinkedTitleLookup": [
 			"Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onGetEntityByLinkedTitleLookup"
 		],
+		"GetEntityContentModelForTitle": [
+			"Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onGetEntityContentModelForTitle"
+		],
 		"BeforePageDisplay": [
 			"Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onBeforePageDisplay"
 		],

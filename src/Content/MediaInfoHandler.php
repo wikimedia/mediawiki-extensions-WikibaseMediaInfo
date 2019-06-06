@@ -181,4 +181,15 @@ class MediaInfoHandler extends EntityHandler {
 		return Title::newFromID( $id->getNumericId() );
 	}
 
+	/**
+	 * @param Title $target
+	 * @return EntityId
+	 */
+	public function getIdForTitle( Title $target ) {
+		if ( $target->inNamespace( NS_FILE ) && $target->getArticleID() ) {
+			return new MediaInfoId( 'M' . $target->getArticleID() );
+		}
+		return parent::getIdForTitle( $target );
+	}
+
 }

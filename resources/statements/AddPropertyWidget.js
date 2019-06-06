@@ -39,7 +39,7 @@ var ItemInputWidget = require( './ItemInputWidget.js' ),
 OO.inheritClass( AddPropertyWidget, OO.ui.Widget );
 
 AddPropertyWidget.prototype.onClick = function () {
-	this.propertyInputWidget.$element.show();
+	this.propertyInputWidget.$element.toggle();
 };
 
 /**

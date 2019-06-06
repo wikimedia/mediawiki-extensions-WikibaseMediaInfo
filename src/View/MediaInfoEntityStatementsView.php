@@ -189,6 +189,7 @@ class MediaInfoEntityStatementsView {
 	 * @return PanelLayout
 	 */
 	private function getLayoutForProperty( $propertyIdString, array $statements ) {
+		global $wgMediaInfoEnableOtherStatements;
 		$statementSerializer = $this->serializerFactory->newStatementSerializer();
 
 		$serializedStatements = [];
@@ -201,6 +202,7 @@ class MediaInfoEntityStatementsView {
 			$serializedStatements[] = $statementSerializer->serialize( $statement );
 			$formatValueCache += $this->getStatementFormatValueCache( $statement );
 		}
+		$propertyDataTypeIsSupportedForEditing = $this->isPropertyDataTypeSupported( $statement );
 
 		// format main property (e.g. depicts)
 		$formatValueCache += $this->getValueFormatValueCache(
@@ -242,14 +244,26 @@ class MediaInfoEntityStatementsView {
 			$title->appendContent( $message->text() );
 		}
 
+		// TODO refactor when feature flag MediaInfoEnableOtherStatements is removed
+		$panelExtraClasses = [];
+		if ( $wgMediaInfoEnableOtherStatements ) {
+			if ( $propertyDataTypeIsSupportedForEditing === false ) {
+				$panelExtraClasses[] = 'wbmi-entityview-statementsGroup-unsupported';
+			}
+		} else {
+			if ( $name === false ) {
+				$panelExtraClasses[] = 'wbmi-entityview-statementsGroup-undefined';
+			}
+		}
+
 		$panel = new PanelLayout( [
-			'classes' => [
-				'wbmi-entityview-statementsGroup',
-				// temporary indication (until we actively support other statements) that
-				// the statement is not defined in config
-				$name === false ? 'wbmi-entityview-statementsGroup-undefined' : '',
-				self::getHtmlContainerClass( $propertyIdString )
-			],
+			'classes' => array_merge(
+				[
+					'wbmi-entityview-statementsGroup',
+					self::getHtmlContainerClass( $propertyIdString )
+				],
+				$panelExtraClasses
+			),
 			'scrollable' => false,
 			'padded' => false,
 			'expanded' => false,
@@ -272,6 +286,17 @@ class MediaInfoEntityStatementsView {
 			]
 		);
 		return $panel;
+	}
+
+	private function isPropertyDataTypeSupported( Statement $statement ) {
+		$mainSnak = $statement->getMainSnak();
+		if (
+			$mainSnak instanceof PropertyValueSnak &&
+			$mainSnak->getDataValue() instanceof EntityIdValue
+		) {
+			return true;
+		}
+		return false;
 	}
 
 	private function createPropertyHeader( $propertyIdString ) {

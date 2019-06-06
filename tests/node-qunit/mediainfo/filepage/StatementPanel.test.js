@@ -45,7 +45,9 @@ QUnit.module( 'StatementPanel', {
 			var StatementPanel = require( pathToWidget ),
 				config = {
 					$element: $( '.wbmi-entityview-statementsGroup' ),
-					propertyId: 'P1'
+					propertyId: 'P1',
+					entityId: 'M1',
+					properties: { P1: 'wikibase-entityid' }
 				},
 				sp = new StatementPanel( config );
 
@@ -57,7 +59,9 @@ QUnit.module( 'StatementPanel', {
 			var StatementPanel = require( pathToWidget ),
 				config = {
 					$element: $( '.wbmi-entityview-statementsGroup' ),
-					propertyId: 'P1'
+					propertyId: 'P1',
+					entityId: 'M1',
+					properties: { P1: 'wikibase-entityid' }
 				},
 				sp = new StatementPanel( config );
 
@@ -69,7 +73,9 @@ QUnit.module( 'StatementPanel', {
 			var StatementPanel = require( pathToWidget ),
 				config = {
 					$element: $( '.wbmi-entityview-statementsGroup' ),
-					propertyId: 'P1'
+					propertyId: 'P1',
+					entityId: 'M1',
+					properties: { P1: 'wikibase-entityid' }
 				},
 				sp = new StatementPanel( config ),
 				$cancelPublish = sp.cancelPublish.$element;
@@ -89,7 +95,9 @@ QUnit.module( 'StatementPanel', {
 				var StatementPanel = require( pathToWidget ),
 					config = {
 						$element: $( '.wbmi-entityview-statementsGroup' ),
-						propertyId: 'P1'
+						propertyId: 'P1',
+						entityId: 'M1',
+						properties: { P1: 'wikibase-entityid' }
 					},
 					sp = new StatementPanel( config ),
 					spy,

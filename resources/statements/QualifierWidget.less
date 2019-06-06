@@ -3,17 +3,30 @@
 
 .wbmi-qualifier {
 	.flex-display();
+	.flex-wrap();
 	position: relative;
 
 	.wbmi-qualifier-property {
-		.flex(1, 1, 4em, 1);
+		.flex(1, 1, 5em, 1);
 	}
 
 	.wbmi-qualifier-value-input {
-		.flex(2, 2, 2em, 2);
+		.flex(2, 2, 10em, 2);
 	}
 
 	.wbmi-qualifier-remove {
 		.flex(0, 0, auto, 3);
+	}
+
+	// on small screens, make both of them large enough that they
+	// can't both fit on the same line and are forced to wrap
+	@media screen and ( max-width: @breakpoint-tablet ) {
+		.wbmi-qualifier-property {
+			.flex(1, 1, 51%, 1);
+		}
+
+		.wbmi-qualifier-value-input {
+			.flex(1, 1, 51%, 2);
+		}
 	}
 }

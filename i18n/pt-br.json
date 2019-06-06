@@ -55,6 +55,7 @@
 	"wikibasemediainfo-statements-title-depicts": "Itens retratados neste arquivo",
 	"wikibasemediainfo-statements-unsupported-property-title": "Propriedade não suportada",
 	"wikibasemediainfo-statements-unsupported-property-content": "As propriedades para além de $1 ainda não são completamente suportadas, mas sê-lo-ão futuramente. Por enquanto, a funcionalidade de propriedades não suportadas poderá não ser a que espera.",
+	"wikibasemediainfo-statements-unsupported-property-type-content": "Nem todos os tipos de propriedade são totalmente suportados, mas estarão no futuro. Por enquanto, a funcionalidade de propriedades não suportadas pode não funcionar como você poderia esperar.",
 	"wikibasemediainfo-operator-placeholder": "Operador",
 	"wikibasemediainfo-operator-value-is": "é",
 	"wikibasemediainfo-operator-value-isnot": "não é",

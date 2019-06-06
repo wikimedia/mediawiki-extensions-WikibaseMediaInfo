@@ -18,5 +18,8 @@
 	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Подпісы",
 	"wikibasemediainfo-filepage-fileinfo-heading": "Інфармацыя пра файл",
 	"wikibasemediainfo-filepage-structured-data-heading": "Структураваныя зьвесткі",
-	"wikibasemediainfo-filepage-captions-title": "Подпісы"
+	"wikibasemediainfo-filepage-captions-title": "Подпісы",
+	"wikibasemediainfo-filepage-more-languages": "Глядзіце яшчэ $1 {{PLURAL:$1|мову|мовы|моваў}}",
+	"wikibasemediainfo-filepage-fewer-languages": "Менш моваў",
+	"wikibasemediainfo-filepage-add-caption": "Дадаць подпіс"
 }

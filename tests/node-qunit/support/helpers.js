@@ -106,20 +106,19 @@ module.exports.createWikibaseEnv = function () {
 	var wikibase;
 
 	global.wikibase = {
+		api: {
+			getLocationAgnosticMwApi: sinon.stub().returns( {
+				get: sinon.stub().returns( $.Deferred().promise() ),
+				post: sinon.stub().returns( $.Deferred().promise() )
+			} )
+		},
 		datamodel: {},
 		serialization: {},
-		api: {
-			getLocationAgnosticMwApi: function () {
-				return {
-					get: function () { return $.Deferred().promise(); },
-					post: function () { return $.Deferred().promise(); }
-				};
-			}
-		},
 		utilities: {
 			ClaimGuidGenerator: sinon.stub().returns( { newGuid: sinon.stub() } )
 		}
 	};
+
 	global.util = {};
 
 	requireAgain( 'wikibase-data-values/lib/util/util.inherit.js' );

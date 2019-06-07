@@ -1,0 +1,16 @@
+{
+  "repository": "",
+  "id": "P109",
+  "concepturi": "http://default.web.mw.localhost:8080/entity/P109",
+  "title": "Property:P109",
+  "pageid": 215,
+  "url": "http://default.web.mw.localhost:8080/mediawiki/index.php?title=Property:P109",
+  "datatype": "wikibase-item",
+  "label": "part of",
+  "description": "object of which the subject is a part (it's not useful to link objects which are themselves parts of other objects already listed as parts of the subject). Inverse property of \"has part\" (P527, see also \"has parts of the class\" (P2670)).",
+  "match": {
+    "type": "label",
+    "language": "en",
+    "text": "part of"
+  }
+}

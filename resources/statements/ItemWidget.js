@@ -184,8 +184,9 @@ ItemWidget.prototype.renderInternal = function () {
 
 /**
  * @param {wikibase.datamodel.Snak|undefined} data
+ * @return {QualifierWidget}
  */
-ItemWidget.prototype.addQualifier = function ( data ) {
+ItemWidget.prototype.createQualifier = function ( data ) {
 	var widget = new QualifierWidget( {
 		editing: this.editing,
 		qualifiers: this.qualifiers
@@ -195,34 +196,47 @@ ItemWidget.prototype.addQualifier = function ( data ) {
 		widget.setData( data );
 	}
 
-	this.addItems( [ widget ] );
-	this.onQualifierChange( widget );
 	widget.connect( this, { delete: [ 'removeItems', [ widget ] ] } );
-	widget.connect( this, { delete: [ 'onQualifierChange', widget ] } );
-	widget.connect( this, { change: [ 'onQualifierChange', widget ] } );
-	widget.focus();
+	widget.connect( this, { delete: 'updateData' } );
+	widget.connect( this, { change: 'updateData' } );
+
+	return widget;
 };
 
-ItemWidget.prototype.onQualifierChange = function () {
+/**
+ * @param {wikibase.datamodel.Snak|undefined} data
+ */
+ItemWidget.prototype.addQualifier = function ( data ) {
+	var widget = this.createQualifier( data );
+	widget.focus();
+	this.addItems( [ widget ] );
+	this.updateData();
+};
+
+ItemWidget.prototype.updateData = function () {
 	// it's easier just to generate a new set of qualifiers instead of fetching the
 	// existing one, keeping track of which is/was where, and making updates...
 	var qualifiers = new wikibase.datamodel.SnakList( this.getItems()
-		.map( function ( item ) {
-			// try to fetch data - if it fails (likely because of incomplete input),
-			// we'll just ignore that qualifier
-			try {
-				return item.getData();
-			} catch ( e ) {
-				return undefined;
-			}
-		} )
-		.filter( function ( data ) {
-			return data instanceof wikibase.datamodel.Snak;
-		} ) );
+			.map( function ( item ) {
+				// try to fetch data - if it fails (likely because of incomplete input),
+				// we'll just ignore that qualifier
+				try {
+					return item.getData();
+				} catch ( e ) {
+					return undefined;
+				}
+			} )
+			.filter( function ( data ) {
+				return data instanceof wikibase.datamodel.Snak;
+			} )
+		),
+		hasChanged = !this.data.getClaim().getQualifiers().equals( qualifiers );
 
 	this.data.getClaim().setQualifiers( qualifiers );
 
-	this.emit( 'change', this );
+	if ( hasChanged ) {
+		this.emit( 'change' );
+	}
 };
 
 /**
@@ -281,11 +295,31 @@ ItemWidget.prototype.setData = function ( data ) {
 		this.render();
 	}
 
-	// remove existing qualifiers, then add new ones based on data passed in
-	this.clearItems();
+	// get rid of existing widgets that are no longer present in the
+	// new set of data we've been fed (or are in an invalid state)
+	this.removeItems( this.getItems().filter( function ( item ) {
+		var qualifier;
+		try {
+			qualifier = item.getData();
+		} catch ( e ) {
+			// failed to fetch data (likely because of incomplete input),
+			// so we should remove this qualifier...
+			return true;
+		}
+		return !data.getClaim().getQualifiers().hasItem( qualifier );
+	} ) );
+
+	// add new qualifiers that don't already exist
 	data.getClaim().getQualifiers().each( function ( i, qualifier ) {
-		self.addQualifier( qualifier );
+		var widget = self.findItemFromData( qualifier );
+		if ( widget ) {
+			self.moveItem( widget, i );
+		} else {
+			widget = self.createQualifier( qualifier );
+			self.insertItem( widget, i );
+		}
 	} );
+	this.updateData();
 };
 
 module.exports = ItemWidget;

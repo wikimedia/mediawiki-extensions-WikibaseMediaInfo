@@ -15,6 +15,7 @@
 	"wikibase-mediainfo-summary-wbsetlabel-add": "Додано підпис мовою [$2]",
 	"wikibase-mediainfo-summary-wbsetlabel-remove": "Вилучено підпис мовою [$2]",
 	"wikibase-mediainfo-summary-wbsetlabel-set": "Змінено підпис мовою [$2]",
+	"wikibasemediainfo-add-statement": "Додати твердження",
 	"wikibasemediainfo-desc": "Розширення Вікібази для управління структурованими метаданими медіафайлів",
 	"wikibasemediainfo-diffview-label": "підпис",
 	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Підписи",

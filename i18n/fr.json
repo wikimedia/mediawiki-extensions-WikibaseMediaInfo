@@ -57,6 +57,7 @@
 	"wikibasemediainfo-statements-title-depicts": "Éléments décrits dans ce fichier",
 	"wikibasemediainfo-statements-unsupported-property-title": "Propriété non prise en charge",
 	"wikibasemediainfo-statements-unsupported-property-content": "Les propriétés autres que $1 ne sont pas encore complètement prises en charge, mais le seront dans le futur. Pour l'instant, les fonctionnalités pour les propriétés non supportées risquent de ne pas fonctionner comme vous l'espérez.",
+	"wikibasemediainfo-statements-unsupported-property-type-content": "Tous les types de propriété ne sont pas supportés, mais le seront dans l’avenir. Pour le moment, la fonctionnalité pour les propriétés non supportées peut ne pas fonctionner comme attendu.",
 	"wikibasemediainfo-operator-placeholder": "Opérateur",
 	"wikibasemediainfo-operator-value-is": "est",
 	"wikibasemediainfo-operator-value-isnot": "n'est pas",

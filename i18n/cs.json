@@ -53,6 +53,7 @@
 	"wikibasemediainfo-statements-title-depicts": "Položky vyobrazené v tomto souboru",
 	"wikibasemediainfo-statements-unsupported-property-title": "Nepodporovaná vlastnost",
 	"wikibasemediainfo-statements-unsupported-property-content": "Vlastnosti jiné než $1 dosud nejsou plně podporovány, ale v budoucnu budou. Momentálně nemusí nepodporované vlastnosti pracovat tak, jak byste čekali.",
+	"wikibasemediainfo-statements-unsupported-property-type-content": "Ne všechny typy vlastností jsou plně podporovány, ale v budoucnu budou. Momentálně nemusí nepodporované vlastnosti pracovat tak, jak byste čekali.",
 	"wikibasemediainfo-operator-placeholder": "Operátor",
 	"wikibasemediainfo-operator-value-is": "je",
 	"wikibasemediainfo-operator-value-isnot": "není",
@@ -61,5 +62,6 @@
 	"wikibasemediainfo-search-qualifiers-cancel": "Zrušit",
 	"wikibasemediainfo-search-qualifiers-save": "Uložit",
 	"wikibasemediainfo-search-statements-add": "Přidat tvrzení",
-	"wikibasemediainfo-search-toggle-statements": "Další tvrzení"
+	"wikibasemediainfo-search-toggle-statements": "Další tvrzení",
+	"wikibasemediainfo-unsupported-datatype": "Nepodporovaný datový typ: $1"
 }

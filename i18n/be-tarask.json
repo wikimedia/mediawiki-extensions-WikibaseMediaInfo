@@ -21,5 +21,9 @@
 	"wikibasemediainfo-filepage-captions-title": "Подпісы",
 	"wikibasemediainfo-filepage-more-languages": "Глядзіце яшчэ $1 {{PLURAL:$1|мову|мовы|моваў}}",
 	"wikibasemediainfo-filepage-fewer-languages": "Менш моваў",
-	"wikibasemediainfo-filepage-add-caption": "Дадаць подпіс"
+	"wikibasemediainfo-filepage-add-caption": "Дадаць подпіс",
+	"wikibasemediainfo-filepage-edit-captions": "Рэдагаваць подпісы",
+	"wikibasemediainfo-filepage-edit-depicts": "Рэдагаваць апісаньне адлюстраванага",
+	"wikibasemediainfo-filepage-cancel": "Адмяніць",
+	"wikibasemediainfo-filepage-cancel-confirm": "Скасаваць зьмены? Зробленыя вамі зьмены ня будуць захаваныя."
 }

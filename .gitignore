@@ -8,3 +8,5 @@
 .eslintcache
 .DS_Store
 tests/selenium/log/
+/.nyc_output/
+/coverage

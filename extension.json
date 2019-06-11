@@ -247,6 +247,7 @@
 				"resources/statements/AddPropertyWidget.js"
 			],
 			"dependencies": [
+				"mw.config.values.wbDataTypes",
 				"oojs",
 				"oojs-ui-core",
 				"oojs-ui-widgets",

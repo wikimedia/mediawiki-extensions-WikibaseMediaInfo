@@ -208,8 +208,8 @@ ItemWidget.prototype.createQualifier = function ( data ) {
  */
 ItemWidget.prototype.addQualifier = function ( data ) {
 	var widget = this.createQualifier( data );
-	widget.focus();
 	this.addItems( [ widget ] );
+	widget.focus();
 	this.updateData();
 };
 

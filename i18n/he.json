@@ -56,6 +56,7 @@
 	"wikibasemediainfo-statements-title-depicts": "פריטים שמוצגים בקובץ הזה",
 	"wikibasemediainfo-statements-unsupported-property-title": "מאפיין בלתי־נתמך",
 	"wikibasemediainfo-statements-unsupported-property-content": "מאפיינים שאינם $1 עדיין אינם נתמכים באופן מלא, אבל ייתמכו בעתיד. לעת־עתה, ייתכן שמאפיינים שאינם נתמכים לא יעבדו כמצופה.",
+	"wikibasemediainfo-statements-unsupported-property-type-content": "לא כל סוגי המאפיינים נתמכים, אבל הם ייתמכו בעתיד. לעת־עתה, ייתכן שמאפיינים שאינם נתמכים לא יעבדו כמצופה.",
 	"wikibasemediainfo-operator-placeholder": "אופרטור",
 	"wikibasemediainfo-operator-value-is": "הוא",
 	"wikibasemediainfo-operator-value-isnot": "אינו",

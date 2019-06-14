@@ -7,7 +7,10 @@ var ItemInputWidget = require( './ItemInputWidget.js' ),
 	 * @cfg {array} propertyIds An array of property ids of statements that exist on the page
 	 */
 	AddPropertyWidget = function MediaInfoAddPropertyWidget( config ) {
-		AddPropertyWidget.parent.call( this, config );
+		AddPropertyWidget.parent.call(
+			this,
+			$.extend( config, { classes: [ 'wbmi-add-property' ] } )
+		);
 
 		this.propertyIds = config.propertyIds;
 
@@ -19,8 +22,10 @@ var ItemInputWidget = require( './ItemInputWidget.js' ),
 			label: mw.message( 'wikibasemediainfo-add-statement' ).text()
 		} );
 		this.addPropertyButton.connect( this, { click: 'onClick' } );
-		this.addPropertyButton.connect( this, { click: [ 'emit', 'click' ] } );
 
+		this.inputContainer = new OO.ui.Widget( {
+			classes: [ 'wbmi-entityview-add-statement-property-container' ]
+		} );
 		this.propertyInputWidget = new ItemInputWidget( {
 			classes: [ 'wbmi-entityview-add-statement-property' ],
 			entityType: 'property',
@@ -31,15 +36,28 @@ var ItemInputWidget = require( './ItemInputWidget.js' ),
 		this.propertyInputWidget.connect( this, { choose: 'onChoose' } );
 		this.propertyInputWidget.connect( this, { choose: [ 'emit', 'choose' ] } );
 
+		this.removeButton = new OO.ui.ButtonWidget( {
+			classes: [ 'wbmi-item-remove' ],
+			title: mw.message( 'wikibasemediainfo-statements-item-remove' ).text(),
+			flags: 'destructive',
+			icon: 'trash',
+			framed: false
+		} );
+		this.removeButton.connect( this, { click: 'onClick' } );
+		this.inputContainer.$element.append(
+			this.propertyInputWidget.$element,
+			this.removeButton.$element
+		);
+
 		this.$element.append(
 			this.addPropertyButton.$element,
-			this.propertyInputWidget.$element.hide()
+			this.inputContainer.$element.hide()
 		);
 	};
 OO.inheritClass( AddPropertyWidget, OO.ui.Widget );
 
 AddPropertyWidget.prototype.onClick = function () {
-	this.propertyInputWidget.$element.toggle();
+	this.inputContainer.$element.toggle();
 };
 
 /**
@@ -48,7 +66,7 @@ AddPropertyWidget.prototype.onClick = function () {
  */
 AddPropertyWidget.prototype.onChoose = function ( item, data ) {
 	this.propertyInputWidget.setValue( '' );
-	this.propertyInputWidget.$element.hide();
+	this.inputContainer.$element.hide();
 
 	this.propertyIds.push( data.id );
 	this.propertyInputWidget.setFilter( this.getFilters() );

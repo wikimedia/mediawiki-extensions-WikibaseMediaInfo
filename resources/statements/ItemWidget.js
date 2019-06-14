@@ -8,10 +8,10 @@
  * @param {string} config.entityId Entity ID (e.g. 'M123' id of the file you just uploaded)
  * @param {string} [config.label] Label for this item (e.g. 'cat')
  * @param {string} [config.url] URL to this item (e.g. '/wiki/Item:Q1')
- * @param {string} [config.repo] Repository name of this item (e.g. 'wikidata')
  * @param {string} [config.editing] True for edit mode, False for read mode
  */
 var FormatValueElement = require( './FormatValueElement.js' ),
+	GetRepoElement = require( './GetRepoElement.js' ),
 	QualifierWidget = require( './QualifierWidget.js' ),
 	ItemWidget = function MediaInfoStatementsItemWidget( config ) {
 		config = config || {};
@@ -24,8 +24,8 @@ var FormatValueElement = require( './FormatValueElement.js' ),
 		this.data = config.data;
 		this.label = config.label;
 		this.url = config.url;
-		this.repo = config.repo;
 		this.config = config;
+		this.repo = undefined;
 
 		ItemWidget.parent.call( this, $.extend( { classes: [ 'wbmi-item' ] }, config ) );
 		OO.ui.mixin.GroupElement.call( this, $.extend( {}, config ) );
@@ -53,6 +53,7 @@ var FormatValueElement = require( './FormatValueElement.js' ),
 OO.inheritClass( ItemWidget, OO.ui.Widget );
 OO.mixinClass( ItemWidget, OO.ui.mixin.GroupElement );
 OO.mixinClass( ItemWidget, FormatValueElement );
+OO.mixinClass( ItemWidget, GetRepoElement );
 
 ItemWidget.prototype.render = function () {
 	var self = this,
@@ -76,19 +77,22 @@ ItemWidget.prototype.render = function () {
 				self.repo = undefined;
 				try {
 					self.url = $( html ).attr( 'href' );
-
-					// if the url is not relative (= has a prototype), it links to a foreign
-					// repository and we can extract the repo name from the title argument
-					self.repo = undefined;
-					if ( /^[a-z0-9]+:\/\//.test( self.url ) ) {
-						self.repo = $( html ).attr( 'title' ).replace( /:.+$/, '' );
-					}
 				} catch ( e ) {
 					// nothing to worry about, it's just not something with a link - we'll
 					// deal with it where we want to display the link
 				}
 			}
 		);
+	}
+
+	if ( this.repo === undefined ) {
+		promise = promise.then( function () {
+			if ( self.url !== undefined ) {
+				return self.getRepoFromUrl( self.url ).then( function ( repo ) {
+					self.repo = repo;
+				} );
+			}
+		} );
 	}
 
 	promise.then( this.renderInternal.bind( this ) );

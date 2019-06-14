@@ -2,6 +2,7 @@
 
 var ItemInputWidget = require( './ItemInputWidget.js' ),
 	FormatValueElement = require( './FormatValueElement.js' ),
+	GetRepoElement = require( './GetRepoElement.js' ),
 	ItemWidget = require( './ItemWidget.js' ),
 	/**
 	 * @constructor
@@ -13,12 +14,13 @@ var ItemInputWidget = require( './ItemInputWidget.js' ),
 	 * @param {string} [config.title]
 	 */
 	StatementWidget = function MediaInfoStatementsStatementWidget( config ) {
-		var learnMoreLink = mw.config.get( 'wbmiDepictsHelpUrl' ),
+		var self = this,
+			learnMoreLink = mw.config.get( 'wbmiDepictsHelpUrl' ),
 			$label = $( '<h4>' )
 				.addClass( 'wbmi-entity-label' )
 				.text( '' ), // will be filled out later (after formatValue call)
 			$link = $( '<a>' )
-				.addClass( 'wbmi-entity-link ' ) // repo class will be added later (after formatValue call)
+				.addClass( 'wbmi-entity-link ' ) // repo class will be added later (after getRepoFromUrl call)
 				.attr( 'href', '#' ) // will be filled out later (after formatValue call)
 				.attr( 'target', '_blank' ),
 			dataValue;
@@ -89,16 +91,15 @@ var ItemInputWidget = require( './ItemInputWidget.js' ),
 			this.formatValue( dataValue, 'text/plain' ),
 			this.formatValue( dataValue, 'text/html' )
 		).then( function ( plain, html ) {
-			var repo = '';
-			// if the url is not relative (= has a prototype), it links to a foreign
-			// repository and we can extract the repo name from the title argument
-			if ( /^[a-z0-9]+:\/\//.test( $( html ).attr( 'href' ) ) ) {
-				repo = $( html ).attr( 'title' ).replace( /:.+$/, '' );
-			}
+			var url = $( html ).attr( 'href' );
+
 			$label.text( plain );
-			$link.attr( 'href', $( html ).attr( 'href' ) );
-			// Classes used: wbmi-entity-link-foreign-repo-* and wbmi-entity-link-local-repo
-			$link.addClass( 'wbmi-entity-link' + ( repo !== '' ? '-foreign-repo-' + repo : '-local-repo' ) );
+			$link.attr( 'href', url );
+
+			self.getRepoFromUrl( url ).then( function ( repo ) {
+				// Classes used: wbmi-entity-link-foreign-repo-* and wbmi-entity-link-local-repo
+				$link.addClass( 'wbmi-entity-link' + ( repo !== '' ? '-foreign-repo-' + repo : '-local-repo' ) );
+			} );
 		} );
 
 		this.renderFooter();
@@ -106,6 +107,7 @@ var ItemInputWidget = require( './ItemInputWidget.js' ),
 OO.inheritClass( StatementWidget, OO.ui.Widget );
 OO.mixinClass( StatementWidget, OO.ui.mixin.GroupElement );
 OO.mixinClass( StatementWidget, FormatValueElement );
+OO.mixinClass( StatementWidget, GetRepoElement );
 
 StatementWidget.prototype.renderFooter = function () {
 	var showRemove = this.getItems().length > 0 && this.editing;
@@ -118,7 +120,7 @@ StatementWidget.prototype.renderFooter = function () {
  * @param {Object} data
  */
 StatementWidget.prototype.addItemFromInput = function ( item, data ) {
-	var widget = this.createItem( item.getData(), data.label, data.url, data.repository );
+	var widget = this.createItem( item.getData(), data.label, data.url );
 	widget.connect( this, { delete: [ 'removeItems', [ widget ] ] } );
 	widget.connect( this, { delete: [ 'emit', 'change' ] } );
 	widget.connect( this, { change: [ 'setEditing', true ] } );
@@ -140,10 +142,9 @@ StatementWidget.prototype.addItemFromInput = function ( item, data ) {
  * @param {dataValues.DataValue} dataValue
  * @param {string} [label]
  * @param {string} [url]
- * @param {string} [repo]
  * @return {ItemWidget}
  */
-StatementWidget.prototype.createItem = function ( dataValue, label, url, repo ) {
+StatementWidget.prototype.createItem = function ( dataValue, label, url ) {
 	var guidGenerator = new wikibase.utilities.ClaimGuidGenerator( this.entityId ),
 		mainSnak = new wikibase.datamodel.PropertyValueSnak( this.propertyId, dataValue, null ),
 		qualifiers = null,
@@ -158,8 +159,7 @@ StatementWidget.prototype.createItem = function ( dataValue, label, url, repo ) 
 		data: statement,
 		editing: this.editing,
 		label: label,
-		url: url,
-		repo: repo
+		url: url
 	} );
 };
 

@@ -1,9 +1,11 @@
 {
 	"@metadata": {
 		"authors": [
-			"Omotecho"
+			"Omotecho",
+			"Afaz"
 		]
 	},
+	"action-mediainfo-term": "メディアの情報項目を変更（キャプション、概要等）",
 	"right-mediainfo-term": "メディアの情報項目を変更（キャプション、概要等）",
 	"slot-name-mediainfo": "構造化したメディア情報",
 	"wikibase-entity-mediainfo": "メディア情報",
@@ -13,6 +15,7 @@
 	"wikibasemediainfo-desc": "ウィキベース拡張機能でメディアファイルの構造化メタデータを管理",
 	"wikibasemediainfo-diffview-label": "キャプション",
 	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "キャプション",
+	"wikibasemediainfo-filepage-fileinfo-heading": "ファイル情報",
 	"wikibasemediainfo-filepage-structured-data-heading": "構造化データ",
 	"wikibasemediainfo-filepage-captions-title": "キャプション",
 	"wikibasemediainfo-filepage-more-languages": "$1件の{{PLURAL:$1|言語版|言語版}}表示を増やす",
@@ -20,8 +23,24 @@
 	"wikibasemediainfo-filepage-add-caption": "キャプションを追加する",
 	"wikibasemediainfo-filepage-edit-captions": "キャプションを編集する",
 	"wikibasemediainfo-filepage-cancel": "キャンセル",
+	"wikibasemediainfo-filepage-edit": "編集",
 	"wikibasemediainfo-filepage-publish": "変更を公開",
 	"wikibasemediainfo-filepage-caption-empty": "このファイルの内容を1行で説明する",
 	"wikibasemediainfo-filepage-caption-too-long": "制限より$1 {{PLURAL:$1|文字}}超過",
-	"wikibasemediainfo-filepage-caption-approaching-limit": "残り $1 {{PLURAL:$1|文字}}"
+	"wikibasemediainfo-filepage-caption-approaching-limit": "残り $1 {{PLURAL:$1|文字}}",
+	"wikibasemediainfo-filepage-statement-no-results": "該当するものはありません",
+	"wikibasemediainfo-filepage-license-content": "「変更を公開」をクリックすることで、あなたは[[wmf:Terms_of_Use|利用規約]]に同意し、自分の投稿内容を[https://creativecommons.org/publicdomain/zero/1.0/ CC0ライセンス]のもとで公開することに撤回不可能な形で同意することになります。",
+	"wikibasemediainfo-property-placeholder": "プロパティ",
+	"wikibasemediainfo-statements-item-add-qualifier": "修飾子を追加",
+	"wikibasemediainfo-statements-item-remove": "除去",
+	"wikibasemediainfo-statements-learn-more": "詳細",
+	"wikibasemediainfo-statements-remove": "すべて除去",
+	"wikibasemediainfo-search-qualifiers-add": "修飾子を追加",
+	"wikibasemediainfo-search-qualifiers-cancel": "キャンセル",
+	"wikibasemediainfo-search-qualifiers-save": "保存",
+	"wikibasemediainfo-search-statements-cancel": "キャンセル",
+	"wikibasemediainfo-search-statements-save": "検索",
+	"wikibasemediainfo-search-search": "検索",
+	"wikibasemediainfo-search-toggle-keywords": "キーワード",
+	"wikibasemediainfo-search-toggle-depicts": "タグ"
 }

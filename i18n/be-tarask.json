@@ -31,5 +31,6 @@
 	"wikibasemediainfo-filepage-caption-empty": "Дадайце аднарадковае тлумачэньне, што зь сябе ўяўляе гэты файл",
 	"wikibasemediainfo-filepage-caption-too-long": "Ліміт перавышаны на $1 {{PLURAL:$1|сымбаль|сымбалі|сымбаляў}}",
 	"wikibasemediainfo-filepage-caption-approaching-limit": "{{PLURAL:$1|Застаўся|Засталося|0=Засталося}} $1 {{PLURAL:$1|сымбаль|сымбалі|сымбаляў|0=сымбаляў}}",
-	"wikibasemediainfo-filepage-statement-no-value": "Не існуе значэньня для гэтай уласьцівасьці"
+	"wikibasemediainfo-filepage-statement-no-value": "Не існуе значэньня для гэтай уласьцівасьці",
+	"wikibasemediainfo-filepage-statement-no-data": "Няма даступных зьвестак"
 }

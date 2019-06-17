@@ -222,11 +222,19 @@ return [
 				MediaWikiServices::getInstance()->getSlotRoleStore()
 			);
 			$settings = WikibaseRepo::getDefaultInstance()->getSettings();
+
+			// Temporary setting, for T225603
+			$tmpPropertyTermsMigrationStage = MIGRATION_OLD;
+			if ( $settings->hasSetting( 'tmpPropertyTermsMigrationStage' ) ) {
+				$tmpPropertyTermsMigrationStage = $settings->getSetting( 'tmpPropertyTermsMigrationStage' );
+			}
+
 			$dataAccessSettings = new DataAccessSettings(
 				$settings->getSetting( 'maxSerializedEntitySize' ),
 				$settings->getSetting( 'useTermsTableSearchFields' ),
 				$settings->getSetting( 'forceWriteTermsTableSearchFields' ),
-					DataAccessSettings::USE_REPOSITORY_PREFIX_BASED_FEDERATION
+				DataAccessSettings::USE_REPOSITORY_PREFIX_BASED_FEDERATION,
+				$tmpPropertyTermsMigrationStage >= MIGRATION_WRITE_NEW
 			);
 
 			return new WikiPageEntityMetaDataLookup(

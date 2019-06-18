@@ -285,6 +285,7 @@
 		},
 		"wikibase.mediainfo.statements.styles": {
 			"styles": [
+				"resources/statements/AddPropertyWidget.less",
 				"resources/statements/EntityLookupElement.less",
 				"resources/statements/EntityInputWidget.less",
 				"resources/statements/QualifierValueInputWidget.less",

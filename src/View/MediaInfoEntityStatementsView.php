@@ -5,6 +5,7 @@ namespace Wikibase\MediaInfo\View;
 use DataValues\DataValue;
 use DataValues\Serializers\DataValueSerializer;
 use Html;
+use MediaWiki\MediaWikiServices;
 use OOUI\HtmlSnippet;
 use OOUI\PanelLayout;
 use OOUI\Tag;
@@ -175,12 +176,45 @@ class MediaInfoEntityStatementsView {
 		return $result;
 	}
 
+	/**
+	 * Given a formatted string, we'll extract the url and derive the repo from it.
+	 *
+	 * @param string $formatted
+	 * @return string
+	 */
 	private function extractRepo( $formatted ) {
-		if ( preg_match( '/href=[\'"][a-z0-9]+:\/\//i', $formatted ) ) {
-			return preg_replace( '/^.*title=[\'"](.+?):.*$/', '$1', $formatted );
+		$url = '';
+		if ( preg_match( '/href=([\'"])(.*?)\\1/i', $formatted, $match ) ) {
+			$url = $match[2];
 		}
 
-		return '';
+		return $this->getRepoFromUrl( $url );
+	}
+
+	/**
+	 * Given a url, look it up in the local interwiki map to find a matching project.
+	 *
+	 * @param string $url
+	 * @return string
+	 */
+	private function getRepoFromUrl( $url ) {
+		if ( !$url || !preg_match( '/[a-z0-9]+:\/\//i', $url ) ) {
+			return '';
+		}
+
+		$localPrefixes = MediaWikiServices::getInstance()->getInterwikiLookup()->getAllPrefixes( 1 );
+		$localPrefixes = array_combine(
+			array_column( $localPrefixes, 'iw_prefix' ),
+			array_column( $localPrefixes, 'iw_url' )
+		);
+
+		$matchingPrefixes = array_filter( $localPrefixes, function ( $interwiki ) use ( $url ) {
+			// replace variable part by match-all regex
+			$regex = '/' . str_replace( '\\$1', '.*?', preg_quote( $interwiki, '/' ) ) . '/';
+			return preg_match( $regex, $url );
+		} );
+
+		return key( $matchingPrefixes ) ?: '';
 	}
 
 	/**

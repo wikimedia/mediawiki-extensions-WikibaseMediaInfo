@@ -31,6 +31,10 @@ GetRepoElement.prototype.getRepoFromUrl = function ( url ) {
 
 	return GetRepoElement.interwikiMapPromise.then( function ( interwikiMap ) {
 		var matches = interwikiMap.filter( function ( interwiki ) {
+			// the first replace is basically a preg_quote equivalent (to escape
+			// regex-like characters in the url)
+			// the 2nd replace changes the `$1` placeholder in the url to `.*?`,
+			// so that we can use the variable part as regex to compare url
 			var regex = interwiki.url.replace( /[-/\\^$*+?.()|[\]{}]/g, '\\$&' ).replace( '\\$1', '.*?' );
 			return new RegExp( regex ).test( url );
 		} );

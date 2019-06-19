@@ -20,7 +20,7 @@ QualifierAutocomplete = function ( config ) {
 		config, {
 			entityType: 'property',
 			filter: this.getFilters(),
-			placeholder: mw.message( 'wikibasemediainfo-add-property' ).text()
+			placeholder: mw.message( 'wikibasemediainfo-property-placeholder' ).text()
 		}
 	);
 

@@ -145,11 +145,16 @@ QualifierWidget.prototype.onPropertyChoose = function () {
 	var property = this.propertyInput.getData(),
 		snak = this.constructNewSnak();
 
+	if ( this.data && this.data.equals( snak ) ) {
+		return;
+	}
+
+	this.data = snak;
+	this.updateValueInput( property.dataValueType );
+	this.emit( 'change' );
+
 	if ( snak ) {
-		this.data = snak;
-		this.updateValueInput( property.dataValueType );
 		this.asyncUpdate( property, snak.getValue() );
-		this.emit( 'change' );
 	}
 };
 
@@ -164,10 +169,11 @@ QualifierWidget.prototype.onValueChange = function () {
 		return;
 	}
 
+	this.data = snak;
+	this.emit( 'change' );
+
 	if ( snak ) {
-		this.data = snak;
 		this.asyncUpdate( property, snak.getValue() );
-		this.emit( 'change' );
 	}
 };
 

@@ -29,6 +29,7 @@ QualifierAutocomplete = function ( config ) {
 	QualifierAutocomplete.parent.call( this, this.config );
 	OO.ui.mixin.LookupElement.call( this, this.config );
 
+	this.dataTypeMap = mw.config.get( 'wbDataTypes', {} );
 	this.type = this.config.entityType;
 	this.maxSuggestions = this.config.maxSuggestions;
 	this.setFilter( this.config.filter || [] );
@@ -46,7 +47,7 @@ QualifierAutocomplete.prototype.onChoose = function ( chosen ) {
 	this.setData( {
 		id: chosen.data.id,
 		label: chosen.data.label,
-		datatype: chosen.data.datatype
+		dataValueType: this.dataTypeMap[ chosen.data.datatype ].dataValueType
 	} );
 };
 

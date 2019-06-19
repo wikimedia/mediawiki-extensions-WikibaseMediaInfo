@@ -83,7 +83,7 @@ QualifierWidget.prototype.setData = function ( data ) {
 	var self = this,
 		propId,
 		dataValue,
-		datatype;
+		dataValueType;
 
 	// Bail early and discard existing data if data argument is not a snak
 	if ( !( data instanceof wikibase.datamodel.Snak ) ) {
@@ -92,17 +92,17 @@ QualifierWidget.prototype.setData = function ( data ) {
 
 	propId = data.getPropertyId();
 	dataValue = data.getValue();
-	datatype = dataValue.getType();
+	dataValueType = dataValue.getType();
 
 	this.data = data;
 
-	this.updatePropertyInput( { id: propId, datatype: datatype } );
+	this.updatePropertyInput( { id: propId, dataValueType: dataValueType } );
 	this.valueInput.setData( dataValue );
-	this.asyncUpdate( { id: propId, datatype: datatype }, dataValue ).then( function ( formattedProperty ) {
+	this.asyncUpdate( { id: propId, dataValueType: dataValueType }, dataValue ).then( function ( formattedProperty ) {
 		self.updatePropertyInput( {
 			id: propId,
 			label: formattedProperty,
-			datatype: datatype
+			dataValueType: dataValueType
 		} );
 	} );
 };
@@ -147,7 +147,7 @@ QualifierWidget.prototype.onPropertyChoose = function () {
 
 	if ( snak ) {
 		this.data = snak;
-		this.updateValueInput( property.datatype );
+		this.updateValueInput( property.dataValueType );
 		this.asyncUpdate( property, snak.getValue() );
 		this.emit( 'change' );
 	}
@@ -185,15 +185,15 @@ QualifierWidget.prototype.formatProperty = function ( propId ) {
  * @param {Object} property
  * @param {string} property.id property ID
  * @param {string} property.label human-readable property label
- * @param {string} property.datatype property datatype
+ * @param {string} property.dataValueType datavalue type
  */
 QualifierWidget.prototype.updatePropertyInput = function ( property ) {
 	this.propertyInput.setData( property );
-	this.updateValueInput( property.datatype );
+	this.updateValueInput( property.dataValueType );
 };
 
 /**
- * @param {string} datatype
+ * @param {string} datatype datavalue type
  * @param {dataValues.DataValue} [value]
  */
 QualifierWidget.prototype.updateValueInput = function ( datatype, value ) {
@@ -221,7 +221,7 @@ QualifierWidget.prototype.updateValueWidget = function ( propertyLabel, valueLab
  * Asynchronously update the label elements with data from the API.
  * @param {Object} property
  * @param {string} property.id
- * @param {string} property.datatype
+ * @param {string} property.dataValueType
  * @param {dataValues.DataValue} dataValue
  * @return {jQuery.Promise}
  */

@@ -20,14 +20,15 @@ QualifierAutocomplete = function ( config ) {
 		config, {
 			entityType: 'property',
 			filter: this.getFilters(),
-			maxSuggestions: 7,
-			minLookupCharacters: 1,
 			placeholder: mw.message( 'wikibasemediainfo-add-property' ).text()
 		}
 	);
 
 	QualifierAutocomplete.parent.call( this, this.config );
-	OO.ui.mixin.LookupElement.call( this, this.config );
+	EntityLookupElement.call( this, $.extend( {}, config, {
+		allowSuggestionsWhenEmpty: false,
+		highlightFirst: false
+	} ) );
 
 	this.type = this.config.entityType;
 	this.maxSuggestions = this.config.maxSuggestions;

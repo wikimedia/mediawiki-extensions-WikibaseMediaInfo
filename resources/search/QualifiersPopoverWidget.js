@@ -94,9 +94,15 @@
 	 * @param {Object} [data]
 	 */
 	search.QualifiersPopoverWidget.prototype.addQualifier = function ( data ) {
-		var widget = new search.QualifierWidget( { terms: this.terms, properties: this.properties } );
+		var widget = new search.QualifierWidget( {
+			terms: this.terms,
+			properties: this.properties
+		} );
+
 		widget.setData( data || {} );
-		widget.connect( this.qualifiersLayout, { remove: [ 'removeItems', [ widget ] ] } );
+		widget.connect( this.qualifiersLayout, {
+			remove: [ 'removeItems', [ widget ] ]
+		} );
 
 		this.qualifiersLayout.addItems( [ widget ] );
 	};

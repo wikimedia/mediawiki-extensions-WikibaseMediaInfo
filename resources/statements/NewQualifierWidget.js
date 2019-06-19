@@ -98,13 +98,14 @@ QualifierWidget.prototype.setData = function ( data ) {
 
 	this.updatePropertyInput( { id: propId, dataValueType: dataValueType } );
 	this.valueInput.setData( dataValue );
-	this.asyncUpdate( { id: propId, dataValueType: dataValueType }, dataValue ).then( function ( formattedProperty ) {
-		self.updatePropertyInput( {
-			id: propId,
-			label: formattedProperty,
-			dataValueType: dataValueType
+	this.asyncUpdate( { id: propId, dataValueType: dataValueType }, dataValue )
+		.then( function ( formattedProperty ) {
+			self.updatePropertyInput( {
+				id: propId,
+				label: formattedProperty,
+				dataValueType: dataValueType
+			} );
 		} );
-	} );
 };
 
 /**

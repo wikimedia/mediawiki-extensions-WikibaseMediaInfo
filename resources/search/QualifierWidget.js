@@ -155,7 +155,12 @@
 			] );
 		} );
 
-		this.propertyDropdown.setDisabled( this.propertyDropdown.getMenu().getItems().length === 0 );
+		this.propertyDropdown.setDisabled(
+			this.propertyDropdown
+				.getMenu()
+				.getItems()
+				.length === 0
+		);
 
 		// now fetch the formatted values for all qualifier properties and update the
 		// dropdown menu item's labels once we have them...
@@ -168,7 +173,10 @@
 
 			// set property labels
 			Object.keys( self.properties ).forEach( function ( propertyId, i ) {
-				self.propertyDropdown.getMenu().findItemFromData( propertyId ).setLabel( labels[ i ] );
+				self.propertyDropdown
+					.getMenu()
+					.findItemFromData( propertyId )
+					.setLabel( labels[ i ] );
 			} );
 
 			// if one of the properties was already selected, reflect that in the dropdown's label
@@ -203,7 +211,12 @@
 		this.operatorDropdown.menu.selectItemByData( data.operator );
 
 		// mark as disabled if there are no items
-		this.operatorDropdown.setDisabled( this.operatorDropdown.getMenu().getItems().length === 0 );
+		this.operatorDropdown.setDisabled(
+			this.operatorDropdown
+				.getMenu()
+				.getItems()
+				.length === 0
+		);
 	};
 
 	search.QualifierWidget.prototype.populateValueInput = function () {

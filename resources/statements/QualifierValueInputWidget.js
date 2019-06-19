@@ -2,17 +2,20 @@
 
 var FormatValueElement = require( './FormatValueElement.js' ),
 	EntityInputWidget = require( './EntityInputWidget.js' ),
-	QualifierValueInputWidget = function MediaInfoStatementsQualifierValueInputWidget( config ) {
-		this.config = $.extend( {}, config );
+	QualifierValueInputWidget;
 
-		QualifierValueInputWidget.parent.call( this, this.config );
-		FormatValueElement.call( this, $.extend( {}, config ) );
+QualifierValueInputWidget = function ( config ) {
+	this.config = $.extend( {}, config );
 
-		this.allowEmitChange = true;
-		this.disabled = false;
+	QualifierValueInputWidget.parent.call( this, this.config );
+	FormatValueElement.call( this, $.extend( {}, config ) );
 
-		this.setInputType( 'string' );
-	};
+	this.allowEmitChange = true;
+	this.disabled = false;
+
+	this.setInputType( 'string' );
+};
+
 OO.inheritClass( QualifierValueInputWidget, OO.ui.Widget );
 OO.mixinClass( QualifierValueInputWidget, FormatValueElement );
 
@@ -25,6 +28,12 @@ OO.mixinClass( QualifierValueInputWidget, FormatValueElement );
  * @return {QualifierValueInputWidget}
  */
 QualifierValueInputWidget.prototype.setInputType = function ( type ) {
+	// TODO: this is a hack and needs to be removed once we have a better
+	// mapping of WB property-types to value-types...
+	if ( type === 'wikibase-item' ) {
+		type = 'wikibase-entityid';
+	}
+
 	if ( this.type === type ) {
 		// nothing's changed, move along
 		return this;
@@ -39,33 +48,69 @@ QualifierValueInputWidget.prototype.setInputType = function ( type ) {
 
 	switch ( type ) {
 		case 'wikibase-entityid':
-			this.input = new EntityInputWidget( $.extend( {}, this.config, { classes: [] } ) );
-			this.input.setDisabled( this.disabled );
-			this.input.connect( this, { dataChange: 'onChange' } );
-			this.input.connect( this, { enter: [ 'emit', 'enter' ] } );
+			this.input = this.createEntityInput();
 			break;
 		case 'quantity':
-			this.input = new OO.ui.NumberInputWidget( $.extend( {}, this.config, { classes: [] } ) );
-			this.input.setDisabled( this.disabled );
-			this.input.connect( this, { change: 'onChange' } );
-			this.input.connect( this, { enter: [ 'emit', 'enter' ] } );
+			this.input = this.createQuanityInput();
 			break;
 		case 'string':
-			this.input = new OO.ui.TextInputWidget( $.extend( {}, this.config, { classes: [] } ) );
-			this.input.setDisabled( this.disabled );
-			this.input.connect( this, { change: 'onChange' } );
-			this.input.connect( this, { enter: [ 'emit', 'enter' ] } );
+			this.input = this.createTextInput();
 			break;
 		default:
-			this.input = new OO.ui.TextInputWidget( $.extend( {}, this.config, { classes: [] } ) );
-			this.input.setDisabled( true );
-			this.input.setValue( mw.message( 'wikibasemediainfo-unsupported-datatype', type ).text() );
+			this.input = this.createDisabledInput();
 	}
 
 	// add the new element
 	this.$element.append( this.input.$element );
 
 	return this;
+};
+
+/**
+ * Prepare a WB Entity input widget
+ * @return {EntityInputWidget} WB Entity input
+ */
+QualifierValueInputWidget.prototype.createEntityInput = function () {
+	var input = new EntityInputWidget( $.extend( {}, this.config, { classes: [] } ) );
+	input.setDisabled( this.disabled );
+	input.connect( this, { dataChange: 'onChange' } );
+	input.connect( this, { enter: [ 'emit', 'enter' ] } );
+	return input;
+};
+
+/**
+ * Prepare a numerical input widget
+ * @return {OO.ui.NumberInputWidget} Numerical input
+ */
+QualifierValueInputWidget.prototype.createQuanityInput = function () {
+	var input = new OO.ui.NumberInputWidget( $.extend( {}, this.config, { classes: [] } ) );
+	input.setDisabled( this.disabled );
+	input.connect( this, { change: 'onChange' } );
+	input.connect( this, { enter: [ 'emit', 'enter' ] } );
+	return input;
+};
+/**
+ * Prepare a text input widget
+ * @return {OO.ui.TextInputWidget} Text input
+ */
+QualifierValueInputWidget.prototype.createTextInput = function () {
+	var input = new OO.ui.TextInputWidget( $.extend( {}, this.config, { classes: [] } ) );
+	input.setDisabled( this.disabled );
+	input.connect( this, { change: 'onChange' } );
+	input.connect( this, { enter: [ 'emit', 'enter' ] } );
+	return input;
+};
+
+/**
+ * Prepare a disabled text input widget w/appropriate message
+ * @param {Object} type
+ * @return {OO.ui.TextInputWidget} Disabled text input
+ */
+QualifierValueInputWidget.prototype.createDisabledInput = function ( type ) {
+	var input = new OO.ui.TextInputWidget( $.extend( {}, this.config, { classes: [] } ) );
+	input.setDisabled( true );
+	input.setValue( mw.message( 'wikibasemediainfo-unsupported-datatype', type ).text() );
+	return input;
 };
 
 /**
@@ -113,12 +158,14 @@ QualifierValueInputWidget.prototype.setData = function ( data ) {
 
 	this.setInputType( data.getType() );
 
+	if ( !data.equals( this.data ) ) {
+		this.emit( 'change' );
+	}
+
 	// temporarily save the value so that getValue() calls before below
 	// promise has resolved will already respond with the correct value,
 	// even though the input field doesn't have it yet...
 	this.value = data.toJSON();
-
-	this.emit( 'change' );
 
 	this.formatValue( data, 'text/plain' ).then( function ( plain ) {
 		// setData is supposed to behave asynchronously: we don't want it
@@ -173,7 +220,8 @@ QualifierValueInputWidget.prototype.isDisabled = function () {
 QualifierValueInputWidget.prototype.setDisabled = function ( disabled ) {
 	this.disabled = disabled;
 
-	if ( this.input === undefined || [ 'wikibase-entityid', 'quantity', 'string' ].indexOf( this.type ) < 0 ) {
+	if ( this.input === undefined ||
+		[ 'wikibase-entityid', 'quantity', 'string' ].indexOf( this.type ) < 0 ) {
 		// don't allow enabling the input field for input types that are
 		// not yet supported - those are just a disabled "not supported"
 		// input field and should remain that way

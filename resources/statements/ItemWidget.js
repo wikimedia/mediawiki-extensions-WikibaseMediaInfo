@@ -13,6 +13,7 @@
 var FormatValueElement = require( './FormatValueElement.js' ),
 	GetRepoElement = require( './GetRepoElement.js' ),
 	QualifierWidget = require( './QualifierWidget.js' ),
+	NewQualifierWidget = require( './NewQualifierWidget.js' ),
 	ItemWidget = function MediaInfoStatementsItemWidget( config ) {
 		config = config || {};
 
@@ -191,10 +192,16 @@ ItemWidget.prototype.renderInternal = function () {
  * @return {QualifierWidget}
  */
 ItemWidget.prototype.createQualifier = function ( data ) {
-	var widget = new QualifierWidget( {
-		editing: this.editing,
-		qualifiers: this.qualifiers
-	} );
+	var widget;
+
+	// use alternative QualifierWidget if feature flag is set
+	if ( mw.config.get( 'wbmiEnableOtherStatements', false ) ) {
+		widget = new NewQualifierWidget();
+	} else {
+		widget = new QualifierWidget( {
+			qualifiers: this.qualifiers
+		} );
+	}
 
 	if ( data ) {
 		widget.setData( data );

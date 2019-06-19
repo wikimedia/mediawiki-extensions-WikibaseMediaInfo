@@ -14,7 +14,7 @@
  *      Suffixing the value of 'field' with the character ! inverts the filter
  */
 var EntityLookupElement = function MediaInfoStatementsEntityLookupElement( config ) {
-	this.config = $.extend( {
+	this.config = $.extend( this.config, {
 		minLookupCharacters: 1,
 		externalEntitySearchApiUri: mw.config.get( 'wbmiExternalEntitySearchBaseUri', '' ),
 		entityType: 'item'

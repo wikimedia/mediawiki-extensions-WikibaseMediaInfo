@@ -330,6 +330,9 @@ class MediaInfoEntityStatementsView {
 		) {
 			return true;
 		}
+		if ( $mainSnak instanceof PropertyNoValueSnak ) {
+			return true;
+		}
 		return false;
 	}
 

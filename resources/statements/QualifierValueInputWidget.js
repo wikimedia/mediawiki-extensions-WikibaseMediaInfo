@@ -28,12 +28,6 @@ OO.mixinClass( QualifierValueInputWidget, FormatValueElement );
  * @return {QualifierValueInputWidget}
  */
 QualifierValueInputWidget.prototype.setInputType = function ( type ) {
-	// TODO: this is a hack and needs to be removed once we have a better
-	// mapping of WB property-types to value-types...
-	if ( type === 'wikibase-item' ) {
-		type = 'wikibase-entityid';
-	}
-
 	if ( this.type === type ) {
 		// nothing's changed, move along
 		return this;

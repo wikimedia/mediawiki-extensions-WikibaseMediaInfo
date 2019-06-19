@@ -57,7 +57,7 @@ QualifierValueInputWidget.prototype.setInputType = function ( type ) {
 			this.input = this.createTextInput();
 			break;
 		default:
-			this.input = this.createDisabledInput();
+			this.input = this.createDisabledInput( type );
 	}
 
 	// add the new element

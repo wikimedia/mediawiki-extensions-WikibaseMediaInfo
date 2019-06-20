@@ -40,7 +40,8 @@ FormatValueElement.getKey = function ( dataValue, format, language ) {
  * @param {string} result
  */
 FormatValueElement.toCache = function ( key, result ) {
-	FormatValueElement.cache[ key ] = $.Deferred().resolve( result ).promise( { abort: function () {} } );
+	FormatValueElement.cache[ key ] =
+		$.Deferred().resolve( result ).promise( { abort: function () {} } );
 };
 
 /**
@@ -50,11 +51,18 @@ FormatValueElement.toCache = function ( key, result ) {
  * @return {jQuery.Promise}
  */
 FormatValueElement.prototype.formatValue = function ( dataValue, format, language ) {
-	var api = wikibase.api.getLocationAgnosticMwApi( mw.config.get( 'wbmiRepoApiUrl', mw.config.get( 'wbRepoApiUrl' ) ) ),
+	var api,
 		data = { type: dataValue.getType(), value: dataValue.toJSON() },
 		stringified = JSON.stringify( data ),
 		promise,
 		key;
+
+	api = wikibase.api.getLocationAgnosticMwApi(
+		mw.config.get(
+			'wbmiRepoApiUrl',
+			mw.config.get( 'wbRepoApiUrl' )
+		)
+	);
 
 	format = format || 'text/plain';
 	language = language || mw.config.get( 'wgUserLanguage' );

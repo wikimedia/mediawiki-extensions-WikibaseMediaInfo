@@ -3,7 +3,8 @@
 /**
  * @constructor
  * @param {Object} [config]
- * @cfg {int} minLookupCharacters Minimum number of characters that must exist before querying the api for matches
+ * @cfg {int} minLookupCharacters Minimum number of characters that must exist
+ *      before querying the api for matches
  * @cfg {string} externalEntitySearchApiUri Uri for search api
  * @cfg {string} entityType 'property' or 'item'
  * @cfg {int} maxSuggestions The maximum number of suggestions to display in the auto-suggest

@@ -55,15 +55,12 @@ QualifierAutocomplete.prototype.onChoose = function ( chosen ) {
 /**
  * @param {Object} data
  * @param {string} data.id property ID
- * @param {string} data.label human-readable property label
- * @param {string} data.datatype property datatype
+ * @param {string} data.dataValueType property datatype
+ * @param {string} [data.label] human-readable property label
  */
 QualifierAutocomplete.prototype.setData = function ( data ) {
 	this.data = data || {};
-
-	if ( this.data.label ) {
-		this.setValue( this.data.label );
-	}
+	this.setValue( this.data.label || '' );
 };
 
 /**

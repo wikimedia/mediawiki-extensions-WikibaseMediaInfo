@@ -80,8 +80,7 @@ QualifierWidget.prototype.focus = function () {
  * @param {wikibase.datamodel.Snak} data
  */
 QualifierWidget.prototype.setData = function ( data ) {
-	var self = this,
-		propId,
+	var propId,
 		dataValue,
 		dataValueType;
 
@@ -98,14 +97,7 @@ QualifierWidget.prototype.setData = function ( data ) {
 
 	this.updatePropertyInput( { id: propId, dataValueType: dataValueType } );
 	this.valueInput.setData( dataValue );
-	this.asyncUpdate( { id: propId, dataValueType: dataValueType }, dataValue )
-		.then( function ( formattedProperty ) {
-			self.updatePropertyInput( {
-				id: propId,
-				label: formattedProperty,
-				dataValueType: dataValueType
-			} );
-		} );
+	this.asyncUpdateValueWidget();
 };
 
 /**
@@ -155,7 +147,7 @@ QualifierWidget.prototype.onPropertyChoose = function () {
 	this.emit( 'change' );
 
 	if ( snak ) {
-		this.asyncUpdate( property, snak.getValue() );
+		this.asyncUpdateValueWidget();
 	}
 };
 
@@ -163,8 +155,7 @@ QualifierWidget.prototype.onPropertyChoose = function () {
  * Handles change of valueInput text from the user
  */
 QualifierWidget.prototype.onValueChange = function () {
-	var property = this.propertyInput.getData(),
-		snak = this.constructNewSnak();
+	var snak = this.constructNewSnak();
 
 	if ( this.data && this.data.equals( snak ) ) {
 		return;
@@ -174,7 +165,7 @@ QualifierWidget.prototype.onValueChange = function () {
 	this.emit( 'change' );
 
 	if ( snak ) {
-		this.asyncUpdate( property, snak.getValue() );
+		this.asyncUpdateValueWidget();
 	}
 };
 
@@ -191,12 +182,30 @@ QualifierWidget.prototype.formatProperty = function ( propId ) {
 /**
  * @param {Object} property
  * @param {string} property.id property ID
- * @param {string} property.label human-readable property label
  * @param {string} property.dataValueType datavalue type
+ * @param {string} [property.label] human-readable property label
  */
 QualifierWidget.prototype.updatePropertyInput = function ( property ) {
+	var self = this;
+
 	this.propertyInput.setData( property );
 	this.updateValueInput( property.dataValueType );
+
+	if ( this.formatPropertyPromise ) {
+		this.formatPropertyPromise.abort();
+	}
+
+	if ( 'label' in property ) {
+		// we've set a new label - propagate that label to the (read mode) value widget
+		this.asyncUpdateValueWidget();
+	} else {
+		this.formatPropertyPromise = this.formatProperty( property.id );
+		this.formatPropertyPromise.then( function ( formatted ) {
+			self.updatePropertyInput( $.extend( {}, property, {
+				label: formatted
+			} ) );
+		} );
+	}
 };
 
 /**
@@ -215,45 +224,38 @@ QualifierWidget.prototype.updateValueInput = function ( datatype, value ) {
 
 /**
  * Update the text of the ValueWidget element.
- * @param {string} propertyLabel
  * @param {string} valueLabel
  */
-QualifierWidget.prototype.updateValueWidget = function ( propertyLabel, valueLabel ) {
+QualifierWidget.prototype.updateValueWidget = function ( valueLabel ) {
 	this.valueWidget.$element.text(
-		propertyLabel + mw.message( 'colon-separator' ) + valueLabel
+		this.propertyInput.getValue() + mw.message( 'colon-separator' ) + valueLabel
 	);
 };
 
 /**
  * Asynchronously update the label elements with data from the API.
- * @param {Object} property
- * @param {string} property.id
- * @param {string} property.dataValueType
- * @param {dataValues.DataValue} dataValue
- * @return {jQuery.Promise}
  */
-QualifierWidget.prototype.asyncUpdate = function ( property, dataValue ) {
+QualifierWidget.prototype.asyncUpdateValueWidget = function () {
 	var self = this,
-		promises = [
-			this.formatProperty( property.id ),
-			this.formatValue( dataValue )
-		];
+		dataValue;
 
-	if ( this.updatePromise ) {
-		this.updatePromise.abort();
-	}
+	try {
+		dataValue = this.valueInput.getData();
 
-	this.updatePromise = $.when.apply( $, promises ).promise( { abort: function () {
-		promises.forEach( function ( promise ) {
-			promise.abort();
+		// abort in-flight API requests - there's no point in continuing
+		// to fetch the text-to-render when we've already changed it...
+		if ( this.formatValuePromise ) {
+			this.formatValuePromise.abort();
+		}
+
+		this.formatValuePromise = this.formatValue( dataValue );
+		this.formatValuePromise.then( function ( formattedValue ) {
+			self.updateValueWidget( formattedValue );
 		} );
-	} } );
-
-	this.updatePromise.then( function ( formattedProperty, formattedValue ) {
-		self.updateValueWidget( formattedProperty, formattedValue );
-	} );
-
-	return this.updatePromise;
+	} catch ( e ) {
+		// nothing to render if data is invalid...
+		self.updateValueWidget( '' );
+	}
 };
 
 module.exports = QualifierWidget;

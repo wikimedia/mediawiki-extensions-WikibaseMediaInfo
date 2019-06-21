@@ -102,71 +102,36 @@ QualifierWidget.prototype.setData = function ( data ) {
 
 /**
  * Extracts data from child widgets for use elsewhere.
- * @return {wikibase.datamodel.Snak|undefined} data
+ * @return {wikibase.datamodel.Snak} data
  */
 QualifierWidget.prototype.getData = function () {
-	var snak = this.constructNewSnak();
-
-	if ( snak ) {
-		return this.data && this.data.equals( snak ) ? this.data : snak;
-	} else {
-		return undefined;
-	}
-};
-
-/**
- * Construct a snak from current data if possible
- * @return {wikibase.datamodel.Snak|undefined} Snak
- */
-QualifierWidget.prototype.constructNewSnak = function () {
 	var property = this.propertyInput.getData(),
-		value;
+		snak = new wikibase.datamodel.PropertyValueSnak(
+			property.id,
+			this.valueInput.getData()
+		);
 
-	try {
-		value = this.valueInput.getData();
-	} catch ( e ) {
-		return undefined;
-	}
-
-	return new wikibase.datamodel.PropertyValueSnak( property.id, value );
+	// if snak hasn't changed since `this.setData`,
+	// return the original data (which includes `hash`)
+	return this.data && this.data.equals( snak ) ? this.data : snak;
 };
 
 /**
  * Handles property selection by the user
  */
 QualifierWidget.prototype.onPropertyChoose = function () {
-	var property = this.propertyInput.getData(),
-		snak = this.constructNewSnak();
-
-	if ( this.data && this.data.equals( snak ) ) {
-		return;
-	}
-
-	this.data = snak;
+	var property = this.propertyInput.getData();
 	this.updateValueInput( property.dataValueType );
 	this.emit( 'change' );
-
-	if ( snak ) {
-		this.asyncUpdateValueWidget();
-	}
+	this.asyncUpdateValueWidget();
 };
 
 /**
  * Handles change of valueInput text from the user
  */
 QualifierWidget.prototype.onValueChange = function () {
-	var snak = this.constructNewSnak();
-
-	if ( this.data && this.data.equals( snak ) ) {
-		return;
-	}
-
-	this.data = snak;
 	this.emit( 'change' );
-
-	if ( snak ) {
-		this.asyncUpdateValueWidget();
-	}
+	this.asyncUpdateValueWidget();
 };
 
 /**

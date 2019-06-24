@@ -32,5 +32,11 @@
 	"wikibasemediainfo-filepage-caption-too-long": "Ліміт перавышаны на $1 {{PLURAL:$1|сымбаль|сымбалі|сымбаляў}}",
 	"wikibasemediainfo-filepage-caption-approaching-limit": "{{PLURAL:$1|Застаўся|Засталося|0=Засталося}} $1 {{PLURAL:$1|сымбаль|сымбалі|сымбаляў|0=сымбаляў}}",
 	"wikibasemediainfo-filepage-statement-no-value": "Не існуе значэньня для гэтай уласьцівасьці",
-	"wikibasemediainfo-filepage-statement-no-data": "Няма даступных зьвестак"
+	"wikibasemediainfo-filepage-statement-no-data": "Няма даступных зьвестак",
+	"wikibasemediainfo-filepage-statement-no-results": "Нічога ня знойдзена",
+	"wikibasemediainfo-filepage-statement-some-value": "Уласьцівасьць мае значэньне, але яно невядомае",
+	"wikibasemediainfo-filepage-statement-error": "Пры атрыманьні значэньня для гэтай уласьцівасьці адбылася памылка",
+	"wikibasemediainfo-filepage-license-title": "Подпісы і іншы ўнёсак у структураваныя зьвесткі",
+	"wikibasemediainfo-filepage-license-content": "Калі вы націскаеце «Апублікаваць зьмены», вы згаджаецеся з [[wmf:Terms_of_Use|умовамі выкарыстаньня]], і незваротна згаджаецеся апублікаваць ваш унёсак паводле [https://creativecommons.org/publicdomain/zero/1.0/ ліцэнзіі Creative Commons CC0].",
+	"wikibasemediainfo-filepage-license-content-acceptance": "Я прымаю гэтыя ўмовы для маіх будучых правак. Не паказваць гэтае паведамленьне ізноў."
 }

@@ -115,6 +115,11 @@ abstract class WBMIApiTestCase extends \ApiUploadTestCase {
 			self::$users['uploader']->getUser()
 		);
 
+		$this->assertArrayHasKey( 'upload', $result, "Bad response: " . json_encode( $result ) );
+		$this->assertArrayHasKey( 'imageinfo', $result['upload'],
+			"Bad response: " . json_encode( $result ) );
+		$this->assertArrayHasKey( 'canonicaltitle', $result['upload']['imageinfo'],
+			"Bad response: " . json_encode( $result ) );
 		return $result['upload']['imageinfo']['canonicaltitle'];
 	}
 

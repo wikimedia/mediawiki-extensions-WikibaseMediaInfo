@@ -90,7 +90,6 @@ CancelPublishWidget = function ( sdcPanel ) {
 	};
 
 	this.setStateReady = function () {
-		publishButton.setDisabled( false );
 		cancelButton.$element.show();
 	};
 

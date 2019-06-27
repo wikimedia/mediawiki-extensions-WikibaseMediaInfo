@@ -15,9 +15,14 @@ var sinon = require( 'sinon' ),
  * @return {*}
  */
 function requireAgain( module ) {
-	delete require.cache[ require.resolve( module ) ];
+	try {
+		delete require.cache[ require.resolve( module ) ];
+	} catch ( e ) {
+		// couldn't resolve module, so there'll be no cache for sure
+	}
 	return require( module );
 }
+module.exports.requireAgain = requireAgain;
 
 /**
  * Builds a template for use in testing when given a Mustache template and JSON
@@ -69,7 +74,10 @@ module.exports.createMediaWikiEnv = function () {
 		message: sinon.stub().returns( {
 			text: sinon.stub(),
 			parse: sinon.stub()
-		} )
+		} ),
+
+		// eslint-disable-next-line no-undef
+		templates: new Map()
 	};
 };
 
@@ -79,7 +87,14 @@ module.exports.createMediaWikiEnv = function () {
  * @return {Object}
  */
 module.exports.createDataValuesEnv = function () {
-	var dataValues;
+	var dataValues,
+		jQuery,
+		$;
+
+	// wikibase-data-values needs jquery...
+	jQuery = global.jQuery;
+	$ = global.$;
+	global.jQuery = global.$ = requireAgain( 'jquery' );
 
 	global.dataValues = requireAgain( 'wikibase-data-values/src/dataValues.js' ).dataValues;
 	global.util = {};
@@ -93,6 +108,10 @@ module.exports.createDataValuesEnv = function () {
 	dataValues = global.dataValues;
 	delete global.dataValues;
 	delete global.util;
+
+	// restore original jQuery/$ code/versions
+	global.jQuery = jQuery;
+	global.$ = $;
 
 	return dataValues;
 };

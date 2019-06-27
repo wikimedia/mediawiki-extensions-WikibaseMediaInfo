@@ -4,7 +4,8 @@
     "chromedriver": "npx chromedriver --url-base=/wd/hub --port=4444",
     "selenium-test": "wdio tests/selenium/wdio.conf.js",
     "test": "grunt test && npm run test:unit",
-    "test:unit": "nyc --include='resources/**/*.js' --reporter=lcov --reporter=lcovonly --reporter=text --reporter=text-summary qunit 'tests/node-qunit/**/*.test.js'"
+    "test:unit": "nyc --include='resources/**/*.js' --reporter=lcov --reporter=lcovonly --reporter=text --reporter=text-summary qunit 'tests/node-qunit/**/*.test.js'",
+    "install": "rm -rf node_modules/mediawiki && git clone -q https://gerrit.wikimedia.org/r/mediawiki/core node_modules/mediawiki"
   },
   "devDependencies": {
     "chromedriver": "2.46.0",

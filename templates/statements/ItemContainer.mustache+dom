@@ -1,0 +1,47 @@
+<div class="wbmi-item {{#editing}}wbmi-item-edit{{/editing}}{{^editing}}wbmi-item-read{{/editing}}">
+	<div class="wbmi-item-container">
+		<div class="wbmi-entity-header">
+			<div class="wbmi-entity-data">
+				<div class="wbmi-entity-title">
+					<h4 class="wbmi-entity-label">
+						{{label}}
+					</h4>
+				</div>
+
+				{{#url}}
+				<a class="wbmi-entity-link
+						  {{#repo}}wbmi-entity-link-foreign-repo-{{repo}} {{/repo}}
+						  {{^repo}}wbmi-entity-link-local-repo{{/repo}}"
+				   target="_blank"
+				   href="{{url}}">
+					{{id}}
+				</a>
+				{{/url}}
+			</div>
+
+			<a class="wbmi-entity-primary
+					  {{#prominent}}wbmi-entity-is-prominent{{/prominent}}
+					  {{^prominent}}wbmi-entity-mark-as-prominent{{/prominent}}"
+			   href="#{{! TODO }}">
+				{{#prominent}}
+				<span class="oo-ui-widget
+							 oo-ui-widget-enabled
+							 oo-ui-iconElement
+							 oo-ui-iconElement-icon
+							 oo-ui-icon-check
+							 oo-ui-labelElement-invisible
+							 oo-ui-iconWidget"
+					  aria-disabled="false">
+				</span>
+				{{/prominent}}
+				{{prominenceMessage}}
+			</a>
+		</div>
+
+		<div class="wbmi-item-content">
+			{{! qualifiers are iterated here (or in separate template/partial, and assigned similar to `removeButton` below) }}
+		</div>
+	</div>
+
+	{{#editing}}{{{removeButton}}}{{/editing}}
+</div>

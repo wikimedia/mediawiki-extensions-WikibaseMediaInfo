@@ -171,7 +171,7 @@ EntityLookupElement.prototype.createLabelFromSuggestion = function ( entityStub 
 
 	template = mw.template.get(
 		'wikibase.mediainfo.statements',
-		'templates/statements/EntityLabel.mustache'
+		'templates/statements/EntityLabel.mustache+dom'
 	);
 
 	data.label = entityStub.label || entityStub.id;

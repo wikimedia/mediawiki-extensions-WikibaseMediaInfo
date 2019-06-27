@@ -129,6 +129,18 @@
 		]
 	},
 	"ResourceModules": {
+		"mediawiki.template.mustache+dom": {
+			"scripts": [
+				"resources/mediawiki.template.mustache+dom.js"
+			],
+			"dependencies": [
+				"mediawiki.template.mustache"
+			],
+			"targets": [
+				"desktop",
+				"mobile"
+			]
+		},
 		"wikibase.mediainfo.getDeserializer": {
 			"scripts": "resources/getDeserializer.js",
 			"dependencies": [
@@ -247,6 +259,7 @@
 				"resources/statements/AddPropertyWidget.js"
 			],
 			"dependencies": [
+				"mediawiki.template.mustache+dom",
 				"mw.config.values.wbDataTypes",
 				"oojs",
 				"oojs-ui-core",
@@ -283,8 +296,8 @@
 				"parentheses"
 			],
 			"templates": [
-				"templates/statements/EntityLabel.mustache",
-				"templates/statements/ItemContainer.mustache"
+				"templates/statements/EntityLabel.mustache+dom",
+				"templates/statements/ItemContainer.mustache+dom"
 			],
 			"targets": [
 				"desktop",

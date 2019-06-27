@@ -28,7 +28,7 @@ var FormatValueElement = require( './FormatValueElement.js' ),
 		this.config = config;
 		this.repo = undefined;
 
-		ItemWidget.parent.call( this, $.extend( { classes: [ 'wbmi-item' ] }, config ) );
+		ItemWidget.parent.call( this, $.extend( {}, config ) );
 		OO.ui.mixin.GroupElement.call( this, $.extend( {}, config ) );
 		FormatValueElement.call( this, $.extend( {}, config ) );
 
@@ -124,16 +124,15 @@ ItemWidget.prototype.toggleItemProminence = function ( e ) {
  * manually append a few interactive OOUI elements
  */
 ItemWidget.prototype.renderInternal = function () {
-	var data = {},
-		// self = this,
-		id = this.data.getClaim().getMainSnak().getValue().toJSON().id || '',
+	var id = this.data.getClaim().getMainSnak().getValue().toJSON().id || '',
 		prominent = this.data.getRank() === wikibase.datamodel.Statement.RANK.PREFERRED,
+		data,
 		template,
 		$container;
 
 	template = mw.template.get(
 		'wikibase.mediainfo.statements',
-		'templates/statements/ItemContainer.mustache'
+		'templates/statements/ItemContainer.mustache+dom'
 	);
 
 	// Prepare data for template
@@ -145,36 +144,28 @@ ItemWidget.prototype.renderInternal = function () {
 		prominent: prominent,
 		prominenceMessage: prominent ?
 			mw.message( 'wikibasemediainfo-statements-item-is-prominent' ).text() :
-			mw.message( 'wikibasemediainfo-statements-item-mark-as-prominent' ).text()
+			mw.message( 'wikibasemediainfo-statements-item-mark-as-prominent' ).text(),
+		editing: this.editing,
+		removeButton: this.removeButton
 	};
 
 	// Render ItemContainer Template
 	$container = template.render( data );
 
-	// Toggle parent element classes
-	this.$element.toggleClass( 'wbmi-item-edit', this.editing );
-	this.$element.toggleClass( 'wbmi-item-read', !this.editing );
-
 	// before we wipe out & re-build this entire thing, detach a few nodes that
 	// we'll be re-using...
 	this.$group.detach();
-	this.removeButton.$element.detach();
 	this.addQualifierButton.$element.detach();
 	this.$element.empty();
 
 	if ( Object.keys( this.qualifiers ).length > 0 ) {
-		$container.append(
-			$( '<div>' ).addClass( 'wbmi-item-content' ).append(
-				this.$group.addClass( 'wbmi-item-content-group' ),
-				this.editing ? this.addQualifierButton.$element : undefined
-			)
+		$container.find( '.wbmi-item-content' ).append(
+			this.$group.addClass( 'wbmi-item-content-group' ),
+			this.editing ? this.addQualifierButton.$element : undefined
 		);
 	}
 
-	this.$element.append(
-		$container,
-		this.editing ? this.removeButton.$element : undefined
-	);
+	this.$element.append( $container );
 };
 
 /**

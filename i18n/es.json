@@ -12,6 +12,7 @@
 	"right-mediainfo-term": "Cambiar términos de información de medio (leyendas, resúmenes…)",
 	"slot-name-mediainfo": "Infomación estructurada de multimedia",
 	"wikibase-entity-mediainfo": "información multimedia",
+	"wikibasemediainfo-add-statement": "Añadir declaración",
 	"wikibasemediainfo-desc": "Extensión de Wikibase para gestionar metadatos estructurados de archivos multimedia",
 	"wikibasemediainfo-diffview-label": "leyenda",
 	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Leyendas",

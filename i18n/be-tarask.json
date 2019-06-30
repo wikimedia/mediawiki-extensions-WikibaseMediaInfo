@@ -38,5 +38,11 @@
 	"wikibasemediainfo-filepage-statement-error": "Пры атрыманьні значэньня для гэтай уласьцівасьці адбылася памылка",
 	"wikibasemediainfo-filepage-license-title": "Подпісы і іншы ўнёсак у структураваныя зьвесткі",
 	"wikibasemediainfo-filepage-license-content": "Калі вы націскаеце «Апублікаваць зьмены», вы згаджаецеся з [[wmf:Terms_of_Use|умовамі выкарыстаньня]], і незваротна згаджаецеся апублікаваць ваш унёсак паводле [https://creativecommons.org/publicdomain/zero/1.0/ ліцэнзіі Creative Commons CC0].",
-	"wikibasemediainfo-filepage-license-content-acceptance": "Я прымаю гэтыя ўмовы для маіх будучых правак. Не паказваць гэтае паведамленьне ізноў."
+	"wikibasemediainfo-filepage-license-content-acceptance": "Я прымаю гэтыя ўмовы для маіх будучых правак. Не паказваць гэтае паведамленьне ізноў.",
+	"wikibasemediainfo-property-placeholder": "Уласьцівасьць",
+	"wikibasemediainfo-filepage-license-agree": "Я згодны",
+	"wikibasemediainfo-statements-depicts-title": "Аб’екты, паказаныя на выяве",
+	"wikibasemediainfo-statements-item-add-qualifier": "Дадаць кваліфікатар",
+	"wikibasemediainfo-statements-item-input-label": "зь Вікізьвестак",
+	"wikibasemediainfo-statements-item-input-placeholder": "Пошук для дадаваньня элемэнтаў (хатні кот, гара, Тадж Магал і г. д.)"
 }

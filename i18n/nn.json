@@ -8,6 +8,8 @@
 	"wikibase-mediainfo-summary-wbsetlabel-add": "La til bilettekst for [$2]",
 	"wikibase-mediainfo-summary-wbsetlabel-remove": "Fjerna bilettekst for [$2]",
 	"wikibase-mediainfo-summary-wbsetlabel-set": "Endra bilettekst for [$2]",
+	"wikibasemediainfo-add-property": "Søk for å leggja til eigenskapar (del av, medietype osb.)",
+	"wikibasemediainfo-add-statement": "Legg til utsegn",
 	"wikibasemediainfo-diffview-label": "bilettekst",
 	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Bilettekstar",
 	"wikibasemediainfo-filepage-fileinfo-heading": "Filinformasjon",

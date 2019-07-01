@@ -23,10 +23,7 @@ class MediaInfoRdfBuilder implements EntityRdfBuilder {
 	 */
 	private $writer;
 
-	public function __construct(
-		RdfVocabulary $vocabulary,
-		RdfWriter $writer
-	) {
+	public function __construct( RdfVocabulary $vocabulary, RdfWriter $writer ) {
 		$this->vocabulary = $vocabulary;
 		$this->writer = $writer;
 	}
@@ -43,31 +40,15 @@ class MediaInfoRdfBuilder implements EntityRdfBuilder {
 		$mediaLName = $this->vocabulary->getEntityLName( $entity->getId() );
 
 		$this->addTypes( $mediaLName );
-		$this->addCaptions( $mediaLName, $entity );
 	}
 
 	/**
 	 * Produce MediaInfo types
+	 * @param string $mediaLName Local name
 	 */
 	private function addTypes( $mediaLName ) {
 		$this->writer->about( RdfVocabulary::NS_ENTITY, $mediaLName )
 			->a( RdfVocabulary::NS_SCHEMA_ORG, 'MediaObject' );
-	}
-
-	/**
-	 * Add schema:caption
-	 * @param string $mediaLName
-	 * @param MediaInfo $entity
-	 */
-	private function addCaptions( $mediaLName, MediaInfo $entity ) {
-		$labels = $entity->getLabels()->toTextArray();
-		if ( $labels ) {
-			$this->writer->about( RdfVocabulary::NS_ENTITY, $mediaLName )
-				->say( RdfVocabulary::NS_SCHEMA_ORG, 'caption' );
-			foreach ( $entity->getLabels()->toTextArray() as $languageCode => $labelText ) {
-				$this->writer->text( $labelText, $languageCode );
-			}
-		}
 	}
 
 	/**

@@ -263,5 +263,9 @@ return [
 				$writer
 			);
 		},
+		'rdf-builder-label-predicates' => [
+			[ RdfVocabulary::NS_SCHEMA_ORG, 'caption' ],
+			[ 'rdfs', 'label' ],
+		],
 	]
 ];

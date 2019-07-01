@@ -1,0 +1,25 @@
+<http://acme.test/M1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://wikiba.se/ontology#Mediainfo> .
+<http://acme.test/M1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/MediaObject> .
+<http://acme.test/M1> <http://schema.org/caption> "Stadtansicht von Trier, von Georg Braun & Frans Hogenberg, 1572."@de .
+<http://acme.test/M1> <http://schema.org/caption> "Historical view of Trier, Germany, by Georg Braun & Frans Hogenberg, 1572."@en .
+<http://acme.test/M1> <http://www.w3.org/2000/01/rdf-schema#label> "Stadtansicht von Trier, von Georg Braun & Frans Hogenberg, 1572."@de .
+<http://acme.test/M1> <http://www.w3.org/2004/02/skos/core#prefLabel> "Stadtansicht von Trier, von Georg Braun & Frans Hogenberg, 1572."@de .
+<http://acme.test/M1> <http://schema.org/name> "Stadtansicht von Trier, von Georg Braun & Frans Hogenberg, 1572."@de .
+<http://acme.test/M1> <http://www.w3.org/2000/01/rdf-schema#label> "Historical view of Trier, Germany, by Georg Braun & Frans Hogenberg, 1572."@en .
+<http://acme.test/M1> <http://www.w3.org/2004/02/skos/core#prefLabel> "Historical view of Trier, Germany, by Georg Braun & Frans Hogenberg, 1572."@en .
+<http://acme.test/M1> <http://schema.org/name> "Historical view of Trier, Germany, by Georg Braun & Frans Hogenberg, 1572."@en .
+<http://acme.test/M1> <http://schema.org/description> "Hohllay (\"pedra oca\") em Berdorf, Luxemburgo"@pt .
+<http://acme.test/M1> <http://schema.org/description> "Hohllay (\"roca hueca\") en Berdorf, Luxemburgo"@es .
+<http://acme.test/M1> <http://schema.org/description> "\u0425\u043E\u0445\u043B\u043B\u0430\u0439 (\"\u043F\u043E\u043B\u044B\u0435 \u0441\u043A\u0430\u043B\u044B\") \u0432 \u0433\u043E\u0440\u043E\u0434\u0435 \u0411\u0435\u0440\u0434\u043E\u0440\u0444, \u041B\u044E\u043A\u0441\u0435\u043C\u0431\u0443\u0440\u0433"@ru .
+<http://acme.test/M1> <http://schema.org/description> "Hohllay (\u201Ehohler Felsen\u201C) bei Berdorf, Luxemburg"@de .
+<http://acme.test/M1> <http://schema.org/description> "Hohllay (\u201Chollow rock\u201D) in Berdorf, Luxembourg"@en .
+<http://acme.test/M1> <http://acme.test/prop/direct/P180> <http://acme.test/Q468756> .
+<http://acme.test/M1> <http://acme.test/prop/P180> <http://acme.test/statement/M1-ef654d2b-46d5-139b-6033-ba0d4a1c78d1> .
+<http://acme.test/statement/M1-ef654d2b-46d5-139b-6033-ba0d4a1c78d1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://wikiba.se/ontology#Statement> .
+<http://acme.test/statement/M1-ef654d2b-46d5-139b-6033-ba0d4a1c78d1> <http://wikiba.se/ontology#rank> <http://wikiba.se/ontology#NormalRank> .
+<http://acme.test/statement/M1-ef654d2b-46d5-139b-6033-ba0d4a1c78d1> <http://acme.test/prop/statement/P180> <http://acme.test/Q83043> .
+<http://acme.test/M1> <http://acme.test/prop/P180> <http://acme.test/statement/M1-c243df94-4cdd-58de-708c-243191831595> .
+<http://acme.test/statement/M1-c243df94-4cdd-58de-708c-243191831595> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://wikiba.se/ontology#Statement> .
+<http://acme.test/statement/M1-c243df94-4cdd-58de-708c-243191831595> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://wikiba.se/ontology#BestRank> .
+<http://acme.test/statement/M1-c243df94-4cdd-58de-708c-243191831595> <http://wikiba.se/ontology#rank> <http://wikiba.se/ontology#PreferredRank> .
+<http://acme.test/statement/M1-c243df94-4cdd-58de-708c-243191831595> <http://acme.test/prop/statement/P180> <http://acme.test/Q468756> .

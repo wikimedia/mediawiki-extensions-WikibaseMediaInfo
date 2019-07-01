@@ -294,7 +294,7 @@ class MediaInfoEntityStatementsView {
 			'classes' => array_merge(
 				[
 					'wbmi-entityview-statementsGroup',
-					self::getHtmlContainerClass( $propertyIdString )
+					self::getHtmlContainerClass( $propertyIdString ),
 				],
 				$panelExtraClasses
 			),

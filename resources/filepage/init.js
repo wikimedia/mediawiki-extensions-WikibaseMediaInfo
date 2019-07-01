@@ -2,14 +2,13 @@
 
 	'use strict';
 
-	var statementPanels = [],
+	var statementPanels = {},
 		$statements,
 		captions,
 		CaptionsPanel,
 		statementPanel,
 		StatementPanel,
 		$tabs,
-		addPropertyWidget,
 		AddPropertyWidget,
 		propertiesInfo = mw.config.get( 'wbmiProperties' ) || {};
 
@@ -24,8 +23,17 @@
 	// This has to go inside hooks to allow proper creation of js elements when content is
 	// replaced by the RevisionSlider extension
 	mw.hook( 'wikipage.content' ).add( function ( $content ) {
-
-		var propertyIds = [];
+		var addPropertyWidget = new AddPropertyWidget(),
+			onStatementPanelRemoved = function ( propertyId ) {
+				var removed = statementPanels[ propertyId ];
+				// remove statement from the list we keep (e.g. to detect
+				// changes on window unload)...
+				delete statementPanels[ propertyId ];
+				// remove it from DOM...
+				removed.$element.remove();
+				// and make sure this property can be added again later
+				addPropertyWidget.onStatementPanelRemoved( propertyId );
+			};
 
 		captions = new CaptionsPanel( {
 			headerClass: 'wbmi-entityview-captions-header',
@@ -34,7 +42,6 @@
 			warnWithinMaxCaptionLength: 20,
 			captionsExist: mw.config.get( 'wbmiCaptionsExist', false )
 		} );
-
 		captions.initialize();
 
 		$statements = $content.find( '.wbmi-entityview-statementsGroup' );
@@ -42,7 +49,7 @@
 			// make sure there's a statements block on the page (e.g. if it's feature-flagged off)
 			$statements.length !== 0 &&
 			// and we have properties configured
-			Object.keys( mw.config.get( 'wbmiProperties' ) ).length > 0
+			Object.keys( propertiesInfo ).length > 0
 		) {
 			$tabs = $content.find( '.wbmi-tabs' );
 
@@ -57,6 +64,28 @@
 				// eslint-disable-next-line no-jquery/no-global-selector
 				$( '.mw-revision' ).length === 0
 			) {
+				if ( mw.config.get( 'wbmiEnableOtherStatements', false ) ) {
+					addPropertyWidget = new AddPropertyWidget();
+					addPropertyWidget.on( 'choose', function ( data ) {
+						var statementPanel,
+							statementPanelContainer = $( '<div>' )
+								.addClass( 'wbmi-entityview-statementsGroup' )
+								.insertBefore( addPropertyWidget.$element );
+
+						propertiesInfo[ data.id ] = 'wikibase-entityid';
+						statementPanel = new StatementPanel( {
+							$element: statementPanelContainer,
+							propertyId: data.id,
+							entityId: mw.config.get( 'wbEntityId' ),
+							properties: propertiesInfo,
+							isDefaultProperty: false
+						} );
+						statementPanel.initialize();
+						statementPanels[ data.id ] = statementPanel;
+						statementPanel.on( 'widgetRemoved', onStatementPanelRemoved );
+					} );
+				}
+
 				$statements.each( function () {
 					var propertyId = $( this ).data( 'property' );
 					if ( !propertyId ) {
@@ -69,33 +98,19 @@
 						$element: $( this ),
 						propertyId: propertyId,
 						entityId: mw.config.get( 'wbEntityId' ),
-						properties: propertiesInfo
+						properties: propertiesInfo,
+						isDefaultProperty: propertyId in propertiesInfo
 					} );
 					statementPanel.initialize();
+					statementPanels[ propertyId ] = statementPanel;
+					statementPanel.on( 'widgetRemoved', onStatementPanelRemoved );
 
-					statementPanels.push( statementPanel );
-					propertyIds.push( propertyId );
+					if ( mw.config.get( 'wbmiEnableOtherStatements', false ) ) {
+						addPropertyWidget.addPropertyId( propertyId );
+					}
 				} );
 
 				if ( mw.config.get( 'wbmiEnableOtherStatements', false ) ) {
-					addPropertyWidget = new AddPropertyWidget( { propertyIds: propertyIds } );
-					addPropertyWidget.on( 'choose', function ( data ) {
-						var statementPanel,
-							statementPanelContainer = $( '<div>' )
-								.addClass( 'wbmi-entityview-statementsGroup' )
-								.insertBefore( addPropertyWidget.$element );
-
-						propertiesInfo[ data.id ] = 'wikibase-entityid';
-						statementPanel = new StatementPanel( {
-							$element: statementPanelContainer,
-							propertyId: data.id,
-							entityId: mw.config.get( 'wbEntityId' ),
-							properties: propertiesInfo
-						} );
-						statementPanel.initialize();
-						statementPanels.push( statementPanel );
-					} );
-
 					statementPanel.$element.after( addPropertyWidget.$element );
 				}
 			}
@@ -104,7 +119,14 @@
 
 	// Ensure browser default 'Leave Site' popup triggers when leaving a page with edits
 	window.onbeforeunload = function () {
-		var hasChanges = statementPanels.concat( captions ).some( function ( panel ) {
+		var allPanels, hasChanges;
+
+		// combine statement panels with captions
+		allPanels = Object.keys( statementPanels ).map( function ( propertyId ) {
+			return statementPanels[ propertyId ];
+		} ).concat( captions );
+
+		hasChanges = allPanels.some( function ( panel ) {
 			return panel && panel.isEditable() && panel.hasChanges();
 		} );
 

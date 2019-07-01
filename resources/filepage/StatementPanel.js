@@ -19,6 +19,8 @@ var AnonWarning = require( './AnonWarning.js' ),
  * @cfg {string} propertyId
  * @cfg {string} entityId
  * @cfg {Object} properties
+ * @cfg {Object} [panelRemovalListener] Object on which onStatementPanelRemoved() will be called if
+ *  this panel is removed from the DOM
  */
 StatementPanel = function StatementPanel( config ) {
 	// Parent constructor
@@ -48,10 +50,12 @@ StatementPanel = function StatementPanel( config ) {
 
 	this.populateFormatValueCache( JSON.parse( this.$element.attr( 'data-formatvalue' ) || '{}' ) );
 	this.statementWidget = new StatementWidget( this.config );
+
+	this.panelRemovalListener = config.panelRemovalListener || undefined;
 };
 
 /* Inheritance */
-OO.inheritClass( StatementPanel, OO.ui.Element );
+OO.inheritClass( StatementPanel, OO.ui.Widget );
 OO.mixinClass( StatementPanel, OO.ui.mixin.PendingElement );
 
 /**
@@ -238,6 +242,13 @@ StatementPanel.prototype.sendData = function () {
 			mw.mediaInfo.structuredData.currentRevision = response.pageinfo.lastrevid;
 			self.makeReadOnly();
 
+			// if the statement widget is removed then also remove the panel
+			if (
+				self.statementWidget.getData().length === 0 &&
+				!self.config.isDefaultProperty
+			) {
+				self.emit( 'widgetRemoved', self.config.propertyId );
+			}
 		} )
 		.catch( function () {
 			self.cancelPublish.enablePublish();

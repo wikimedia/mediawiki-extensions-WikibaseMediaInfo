@@ -12,6 +12,8 @@ var ItemInputWidget = require( './ItemInputWidget.js' ),
 	 * @param {string} [config.properties] Properties map: { propertyId: datatype, ...}
 	 * @param {Object} [config.qualifiers] Qualifiers map: { propertyId: datatype, ...}
 	 * @param {string} [config.title]
+	 * @param {bool} config.isDefaultProperty True if the widget is shown even if there are
+	 *  no values for the property
 	 */
 	StatementWidget = function MediaInfoStatementsStatementWidget( config ) {
 		var self = this,
@@ -56,6 +58,7 @@ var ItemInputWidget = require( './ItemInputWidget.js' ),
 			framed: false
 		} );
 		this.removeButton.connect( this, { click: 'clearItems' } );
+
 		this.learnMoreButton = new OO.ui.ButtonWidget( {
 			label: mw.message( 'wikibasemediainfo-statements-learn-more' ).text(),
 			classes: [ 'wbmi-statement-learn-more' ],
@@ -79,7 +82,8 @@ var ItemInputWidget = require( './ItemInputWidget.js' ),
 			this.$group.addClass( 'wbmi-content-items-group' ),
 			this.$footer.append(
 				$( '<div>' ).addClass( 'wbmi-statement-footer-buttons' ).append(
-					this.removeButton.$element.hide().addClass( 'wmbi-hidden' ),
+					// If the property is a default property don't show 'remove all'
+					!config.isDefaultProperty ? this.removeButton.$element.hide().addClass( 'wmbi-hidden' ) : '',
 					learnMoreLink ? this.learnMoreButton.$element : ''
 				).hide()
 			)

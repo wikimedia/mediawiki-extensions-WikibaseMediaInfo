@@ -3,16 +3,17 @@
 var ItemInputWidget = require( './ItemInputWidget.js' ),
 	/**
 	 * @constructor
-	 * @param {Object} config
-	 * @cfg {array} propertyIds An array of property ids of statements that exist on the page
+	 * @param {Object} [config]
+	 * @cfg {array} [propertyIds] An array of property ids of statements that exist on the page
 	 */
 	AddPropertyWidget = function MediaInfoAddPropertyWidget( config ) {
+		config = config || {};
 		AddPropertyWidget.parent.call(
 			this,
 			$.extend( config, { classes: [ 'wbmi-add-property' ] } )
 		);
 
-		this.propertyIds = config.propertyIds;
+		this.propertyIds = config.propertyIds || [];
 
 		this.addPropertyButton = new OO.ui.ButtonWidget( {
 			classes: [ 'wbmi-entityview-add-statement-property-button' ],
@@ -56,6 +57,13 @@ var ItemInputWidget = require( './ItemInputWidget.js' ),
 	};
 OO.inheritClass( AddPropertyWidget, OO.ui.Widget );
 
+AddPropertyWidget.prototype.addPropertyId = function ( propertyId ) {
+	if ( this.propertyIds.indexOf( propertyId ) === -1 ) {
+		this.propertyIds.push( propertyId );
+	}
+	this.propertyInputWidget.setFilter( this.getFilters() );
+};
+
 AddPropertyWidget.prototype.onClick = function () {
 	this.inputContainer.$element.toggle();
 };
@@ -80,6 +88,20 @@ AddPropertyWidget.prototype.getFilters = function () {
 		{ field: 'datatype', value: 'wikibase-item' },
 		{ field: '!id', value: this.propertyIds.join( '|' ) }
 	];
+};
+
+/**
+ * If a statement panel has been removed then the filters in the property input widget need to
+ * be updated (properties with existing panels are filtered out of the input widget, and the
+ * property id of the removed panel shouldn't be filtered out anymore)
+ *
+ * @param {int} panelPropertyId
+ */
+AddPropertyWidget.prototype.onStatementPanelRemoved = function ( panelPropertyId ) {
+	this.propertyIds = this.propertyIds.filter( function ( propertyId ) {
+		return propertyId !== panelPropertyId;
+	} );
+	this.propertyInputWidget.setFilter( this.getFilters() );
 };
 
 module.exports = AddPropertyWidget;

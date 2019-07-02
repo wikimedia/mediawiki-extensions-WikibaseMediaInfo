@@ -22,7 +22,7 @@
 			<a class="wbmi-entity-primary
 					  {{#prominent}}wbmi-entity-is-prominent{{/prominent}}
 					  {{^prominent}}wbmi-entity-mark-as-prominent{{/prominent}}"
-			   href="#{{! TODO }}">
+			   href="#">
 				{{#prominent}}
 				<span class="oo-ui-widget
 							 oo-ui-widget-enabled
@@ -39,7 +39,15 @@
 		</div>
 
 		<div class="wbmi-item-content">
-			{{! qualifiers are iterated here (or in separate template/partial, and assigned similar to `removeButton` below) }}
+			{{#qualifiers.length}}
+				<div class="wbmi-item-content-group">
+					{{#qualifiers}}
+						{{{.}}}
+					{{/qualifiers}}
+				</div>
+			{{/qualifiers.length}}
+
+			{{#editing}}{{{addQualifierButton}}}{{/editing}}
 		</div>
 	</div>
 

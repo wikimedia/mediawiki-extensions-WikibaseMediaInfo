@@ -297,7 +297,7 @@
 			],
 			"templates": [
 				"templates/statements/EntityLabel.mustache+dom",
-				"templates/statements/ItemContainer.mustache+dom"
+				"templates/statements/ItemWidget.mustache+dom"
 			],
 			"targets": [
 				"desktop",

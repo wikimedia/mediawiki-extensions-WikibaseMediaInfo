@@ -32,23 +32,6 @@ var FormatValueElement = require( './FormatValueElement.js' ),
 		OO.ui.mixin.GroupElement.call( this, $.extend( {}, config ) );
 		FormatValueElement.call( this, $.extend( {}, config ) );
 
-		this.removeButton = new OO.ui.ButtonWidget( {
-			classes: [ 'wbmi-item-remove' ],
-			title: mw.message( 'wikibasemediainfo-statements-item-remove' ).text(),
-			flags: 'destructive',
-			icon: 'trash',
-			framed: false
-		} );
-		this.removeButton.connect( this, { click: [ 'emit', 'delete' ] } );
-
-		this.addQualifierButton = new OO.ui.ButtonWidget( {
-			classes: [ 'wbmi-item-qualifier-add' ],
-			label: mw.message( 'wikibasemediainfo-statements-item-add-qualifier' ).text(),
-			flags: 'progressive',
-			framed: false
-		} );
-		this.addQualifierButton.connect( this, { click: [ 'addQualifier' ] } );
-
 		this.render();
 	};
 OO.inheritClass( ItemWidget, OO.ui.Widget );
@@ -56,13 +39,16 @@ OO.mixinClass( ItemWidget, OO.ui.mixin.GroupElement );
 OO.mixinClass( ItemWidget, FormatValueElement );
 OO.mixinClass( ItemWidget, GetRepoElement );
 
+/**
+ * @return {jQuery.Promise}
+ */
 ItemWidget.prototype.render = function () {
 	var self = this,
 		promise = $.Deferred().resolve().promise(),
 		dataValue;
 
 	if ( !this.data ) {
-		return;
+		return $.Deferred().reject().promise();
 	}
 
 	dataValue = this.data.getClaim().getMainSnak().getValue();
@@ -96,7 +82,7 @@ ItemWidget.prototype.render = function () {
 		} );
 	}
 
-	promise.then( this.renderInternal.bind( this ) );
+	return promise.then( this.renderInternal.bind( this ) );
 };
 
 ItemWidget.prototype.toggleItemProminence = function ( e ) {
@@ -120,19 +106,38 @@ ItemWidget.prototype.toggleItemProminence = function ( e ) {
 };
 
 /**
- * Render the ItemContainer template with appropriate data and then
+ * Render the ItemWidget template with appropriate data and then
  * manually append a few interactive OOUI elements
  */
 ItemWidget.prototype.renderInternal = function () {
 	var id = this.data.getClaim().getMainSnak().getValue().toJSON().id || '',
 		prominent = this.data.getRank() === wikibase.datamodel.Statement.RANK.PREFERRED,
+		removeButton,
+		addQualifierButton,
 		data,
 		template,
 		$container;
 
+	removeButton = new OO.ui.ButtonWidget( {
+		classes: [ 'wbmi-item-remove' ],
+		title: mw.message( 'wikibasemediainfo-statements-item-remove' ).text(),
+		flags: 'destructive',
+		icon: 'trash',
+		framed: false
+	} );
+	removeButton.connect( this, { click: [ 'emit', 'delete' ] } );
+
+	addQualifierButton = new OO.ui.ButtonWidget( {
+		classes: [ 'wbmi-item-qualifier-add' ],
+		label: mw.message( 'wikibasemediainfo-statements-item-add-qualifier' ).text(),
+		flags: 'progressive',
+		framed: false
+	} );
+	addQualifierButton.connect( this, { click: [ 'addQualifier' ] } );
+
 	template = mw.template.get(
 		'wikibase.mediainfo.statements',
-		'templates/statements/ItemContainer.mustache+dom'
+		'templates/statements/ItemWidget.mustache+dom'
 	);
 
 	// Prepare data for template
@@ -146,26 +151,18 @@ ItemWidget.prototype.renderInternal = function () {
 			mw.message( 'wikibasemediainfo-statements-item-is-prominent' ).text() :
 			mw.message( 'wikibasemediainfo-statements-item-mark-as-prominent' ).text(),
 		editing: this.editing,
-		removeButton: this.removeButton
+		removeButton: removeButton,
+		qualifiers: this.getItems(),
+		addQualifierButton: addQualifierButton
 	};
 
-	// Render ItemContainer Template
+	// Render ItemWidget template
 	$container = template.render( data );
 
-	// before we wipe out & re-build this entire thing, detach a few nodes that
-	// we'll be re-using...
-	this.$group.detach();
-	this.addQualifierButton.$element.detach();
-	this.$element.empty();
+	// Attach event listeners to nodes in template
+	$container.find( '.wbmi-entity-primary' ).on( 'click', this.toggleItemProminence.bind( this ) );
 
-	if ( Object.keys( this.qualifiers ).length > 0 ) {
-		$container.find( '.wbmi-item-content' ).append(
-			this.$group.addClass( 'wbmi-item-content-group' ),
-			this.editing ? this.addQualifierButton.$element : undefined
-		);
-	}
-
-	this.$element.append( $container );
+	this.$element.empty().append( $container );
 };
 
 /**
@@ -201,7 +198,7 @@ ItemWidget.prototype.createQualifier = function ( data ) {
 ItemWidget.prototype.addQualifier = function ( data ) {
 	var widget = this.createQualifier( data );
 	this.addItems( [ widget ] );
-	widget.focus();
+	this.render().then( widget.focus.bind( widget ) );
 	this.updateData();
 };
 

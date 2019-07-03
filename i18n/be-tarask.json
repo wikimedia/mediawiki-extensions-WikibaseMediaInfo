@@ -44,5 +44,7 @@
 	"wikibasemediainfo-statements-depicts-title": "Аб’екты, паказаныя на выяве",
 	"wikibasemediainfo-statements-item-add-qualifier": "Дадаць кваліфікатар",
 	"wikibasemediainfo-statements-item-input-label": "зь Вікізьвестак",
-	"wikibasemediainfo-statements-item-input-placeholder": "Пошук для дадаваньня элемэнтаў (хатні кот, гара, Тадж Магал і г. д.)"
+	"wikibasemediainfo-statements-item-input-placeholder": "Пошук для дадаваньня элемэнтаў (хатні кот, гара, Тадж Магал і г. д.)",
+	"wikibasemediainfo-statements-item-is-prominent": "Вылучаецца",
+	"wikibasemediainfo-statements-item-mark-as-prominent": "Пазначыць як тое, што вылучаецца"
 }

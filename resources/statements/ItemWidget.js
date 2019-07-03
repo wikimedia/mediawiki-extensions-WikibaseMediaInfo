@@ -175,7 +175,7 @@ ItemWidget.prototype.createQualifier = function ( data ) {
 
 	// use alternative QualifierWidget if feature flag is set
 	if ( mw.config.get( 'wbmiEnableOtherStatements', false ) ) {
-		widget = new NewQualifierWidget();
+		widget = new NewQualifierWidget( { editing: this.editing } );
 	} else {
 		widget = new QualifierWidget( {
 			qualifiers: this.qualifiers
@@ -249,10 +249,30 @@ ItemWidget.prototype.setDisabled = function ( disabled ) {
 ItemWidget.prototype.setEditing = function ( editing ) {
 	if ( this.editing !== editing ) {
 		this.editing = editing;
+
+		// TODO: remove conditional wrapper when OtherStatements is enabled;
+		// setEditing and templates are only implemented for the new version of
+		// the QualifierWidget
+		if ( mw.config.get( 'wbmiEnableOtherStatements', false ) ) {
+			this.setEditingForQualifiers( editing );
+		}
+
 		this.render();
 	}
 
 	return this;
+};
+
+/**
+ * Calls the `setEditing` for any child QualifierWidgets.
+ * @param {boolean} editing
+ */
+ItemWidget.prototype.setEditingForQualifiers = function ( editing ) {
+	var qualifierWidgets = this.items;
+
+	qualifierWidgets.forEach( function ( widget ) {
+		widget.setEditing( editing );
+	} );
 };
 
 /**

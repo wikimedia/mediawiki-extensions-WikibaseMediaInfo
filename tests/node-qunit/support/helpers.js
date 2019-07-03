@@ -85,6 +85,12 @@ module.exports.createMediaWikiEnv = function () {
 			parse: sinon.stub()
 		} ),
 
+		template: {
+			get: sinon.stub().returns( {
+				render: sinon.stub()
+			} )
+		},
+
 		// eslint-disable-next-line no-undef
 		templates: new Map(),
 
@@ -243,6 +249,24 @@ module.exports.registerModules = function () {
 	// known when source code requires it...
 	mockery.registerMock( 'wikibase.mediainfo.base', require( '../../../resources/base/index.js' ) );
 	mockery.registerMock( 'wikibase.mediainfo.statements', require( '../../../resources/statements/index.js' ) );
+};
+
+module.exports.registerTemplates = function () {
+	var templates = {
+		'wikibase.mediainfo.statements': [
+			'templates/statements/EntityLabel.mustache+dom',
+			'templates/statements/ItemWidget.mustache+dom',
+			'templates/statements/QualifierWidget.mustache+dom'
+		]
+	};
+
+	Object.keys( templates ).forEach( function ( moduleName ) {
+		templates[ moduleName ].forEach( function ( templateName ) {
+			// eslint-disable-next-line no-undef
+			var template = fs.readFileSync( path.join( __dirname, '..', '..', '..', templateName ), 'utf8' );
+			global.mw.template.add( moduleName, templateName, template );
+		} );
+	} );
 };
 
 module.exports.deregisterModules = function () {

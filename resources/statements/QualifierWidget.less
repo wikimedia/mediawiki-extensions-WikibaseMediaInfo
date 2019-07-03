@@ -6,27 +6,42 @@
 	.flex-wrap();
 	position: relative;
 
+	// this is a bit of a hack to deal with whitespace between the elements:
+	// there will be whitespace between the property, separator and value,
+	// but that whitespace should not be displayed (it's only to keep our
+	// html/template clean)
+	.wbmi-qualifier-value {
+		display: flex;
+
+		// whitespace inside property, separator or value should be preserved
+		> * {
+			white-space: pre-wrap;
+		}
+	}
+
 	.wbmi-qualifier-property {
 		.flex(1, 1, 5em, 1);
+
+		@media screen and ( max-width: @breakpoint-tablet ) {
+			.flex(1, 1, 51%, 1);
+		}
 	}
 
 	.wbmi-qualifier-value-input {
 		.flex(2, 2, 10em, 2);
+
+		@media screen and ( max-width: @breakpoint-tablet ) {
+			.flex(1, 1, 51%, 2);
+		}
 	}
 
 	.wbmi-qualifier-remove {
 		.flex(0, 0, auto, 3);
 	}
 
-	// on small screens, make both of them large enough that they
-	// can't both fit on the same line and are forced to wrap
-	@media screen and ( max-width: @breakpoint-tablet ) {
-		.wbmi-qualifier-property {
-			.flex(1, 1, 51%, 1);
-		}
-
-		.wbmi-qualifier-value-input {
-			.flex(1, 1, 51%, 2);
-		}
+	/* stylelint-disable-next-line selector-class-pattern */
+	& > .oo-ui-widget {
+		margin-right: 0.5em;
+		margin-bottom: 0.5em;
 	}
 }

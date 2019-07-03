@@ -103,8 +103,9 @@ module.exports.mediainfo = Object.assign( {}, module.exports.ooui, module.export
 		helpers.requireULS();
 
 		// make sure that mediainfo modules (usually exposed via RL)
-		// can be required
+		// can be required, and templates are known
 		helpers.registerModules();
+		helpers.registerTemplates();
 	},
 	afterEach: function () {
 		helpers.deregisterModules();

@@ -1,0 +1,15 @@
+<div class="wbmi-qualifier">
+	{{#editing}}
+		{{{propertyInput}}}
+		{{{valueInput}}}
+		{{{removeIcon}}}
+	{{/editing}}
+
+	{{^editing}}
+		<div class="wbmi-qualifier-value">
+			{{#property.text}}{{property.text}}{{/property.text}}
+			{{#property.text}}{{#value.text}}<span class="wbmi-qualifier-value-separator">{{separator}}</span>{{/value.text}}{{/property.text}}
+			{{#value.text}}{{value.text}}{{/value.text}}
+		</div>
+	{{/editing}}
+</div>

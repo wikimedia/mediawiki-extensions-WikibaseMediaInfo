@@ -314,7 +314,8 @@
 			],
 			"templates": [
 				"templates/statements/EntityLabel.mustache+dom",
-				"templates/statements/ItemWidget.mustache+dom"
+				"templates/statements/ItemWidget.mustache+dom",
+				"templates/statements/QualifierWidget.mustache+dom"
 			],
 			"targets": [
 				"desktop",

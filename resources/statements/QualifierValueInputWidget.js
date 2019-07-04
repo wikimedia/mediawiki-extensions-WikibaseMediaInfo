@@ -45,7 +45,7 @@ QualifierValueInputWidget.prototype.setInputType = function ( type ) {
 			this.input = this.createEntityInput();
 			break;
 		case 'quantity':
-			this.input = this.createQuanityInput();
+			this.input = this.createQuantityInput();
 			break;
 		case 'string':
 			this.input = this.createTextInput();
@@ -76,7 +76,7 @@ QualifierValueInputWidget.prototype.createEntityInput = function () {
  * Prepare a numerical input widget
  * @return {OO.ui.NumberInputWidget} Numerical input
  */
-QualifierValueInputWidget.prototype.createQuanityInput = function () {
+QualifierValueInputWidget.prototype.createQuantityInput = function () {
 	var input = new OO.ui.NumberInputWidget( $.extend( {}, this.config, { classes: [] } ) );
 	input.setDisabled( this.disabled );
 	input.connect( this, { change: 'onChange' } );
@@ -180,7 +180,7 @@ QualifierValueInputWidget.prototype.setData = function ( data ) {
 				break;
 			case 'quantity':
 				// replace thousands delimiter - that's only useful for display purposes
-				self.input.setValue( plain.replace( ',', '' ) );
+				self.input.setValue( plain.replace( /,/g, '' ) );
 				// reset temporary value workaround - we can now interact with the
 				// value, so we should fetch the result straight from input field
 				self.value = undefined;

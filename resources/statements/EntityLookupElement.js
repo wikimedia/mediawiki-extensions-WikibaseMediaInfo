@@ -180,7 +180,7 @@ EntityLookupElement.prototype.createLabelFromSuggestion = function ( entityStub 
 	if ( entityStub.aliases ) {
 		data.aliases =
 			mw.message( 'word-separator' ).text() +
-			mw.message( 'parentheses', mw.language.listToText( entityStub.aliases ) ).text;
+			mw.message( 'parentheses', mw.language.listToText( entityStub.aliases ) ).text();
 	}
 
 	return template.render( data );

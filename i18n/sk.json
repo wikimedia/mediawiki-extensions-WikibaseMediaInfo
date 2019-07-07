@@ -1,0 +1,15 @@
+{
+	"@metadata": {
+		"authors": [
+			"Robert Važan"
+		]
+	},
+	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Štítky",
+	"wikibasemediainfo-filepage-fileinfo-heading": "Informácie o súbore",
+	"wikibasemediainfo-filepage-structured-data-heading": "Štruktúrované dáta",
+	"wikibasemediainfo-filepage-edit": "Upraviť",
+	"wikibasemediainfo-filepage-caption-empty": "Pridajte jednoriadkové vysvetlenie, čo tento súbor predstavuje",
+	"wikibasemediainfo-statements-item-input-label": "z Wikiúdajov",
+	"wikibasemediainfo-statements-item-input-placeholder": "Hľadaním pridajte položky (mačka domáca, hora, Taj Mahal, ...)",
+	"wikibasemediainfo-statements-title-depicts": "Položky prezentované týmto súborom"
+}

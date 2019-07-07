@@ -46,5 +46,9 @@
 	"wikibasemediainfo-statements-item-input-label": "зь Вікізьвестак",
 	"wikibasemediainfo-statements-item-input-placeholder": "Пошук для дадаваньня элемэнтаў (хатні кот, гара, Тадж Магал і г. д.)",
 	"wikibasemediainfo-statements-item-is-prominent": "Вылучаецца",
-	"wikibasemediainfo-statements-item-mark-as-prominent": "Пазначыць як тое, што вылучаецца"
+	"wikibasemediainfo-statements-item-mark-as-prominent": "Пазначыць як тое, што вылучаецца",
+	"wikibasemediainfo-statements-item-remove": "Выдаліць",
+	"wikibasemediainfo-statements-learn-more": "Даведацца болей",
+	"wikibasemediainfo-statements-remove": "Выдаліць усё",
+	"wikibasemediainfo-statements-title-depicts": "Элемэнты, выяўленыя на гэтым файле"
 }

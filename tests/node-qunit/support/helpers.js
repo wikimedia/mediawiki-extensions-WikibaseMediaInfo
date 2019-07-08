@@ -42,6 +42,15 @@ module.exports.generateTemplate = function ( pathToTemplate, pathToData ) {
 };
 
 /**
+ * Returns the contents of a json file as a js object
+ * @param {string} pathToFile
+ * @return {Object}
+ */
+module.exports.readJSON = function ( pathToFile ) {
+	return JSON.parse( fs.readFileSync( pathToFile, 'utf8' ) );
+};
+
+/**
  * Stubs out a basic "mw" object for use in testing. Only stubs out
  * properties/methods that need to be called in the test suite; expect more
  * additions over time as the suite grows.
@@ -77,7 +86,11 @@ module.exports.createMediaWikiEnv = function () {
 		} ),
 
 		// eslint-disable-next-line no-undef
-		templates: new Map()
+		templates: new Map(),
+
+		html: {
+			escape: sinon.stub()
+		}
 	};
 };
 
@@ -210,6 +223,14 @@ module.exports.createMediaWikiUser = function ( options ) {
 	}
 
 	return user;
+};
+
+module.exports.requireULS = function () {
+	requireAgain( 'jquery.uls/src/jquery.uls.data.js' );
+	requireAgain( 'jquery.uls/src/jquery.uls.data.utils.js' );
+	requireAgain( 'jquery.uls/src/jquery.uls.core.js' );
+	requireAgain( 'jquery.uls/src/jquery.uls.lcd.js' );
+	requireAgain( 'jquery.uls/src/jquery.uls.languagefilter.js' );
 };
 
 module.exports.registerModules = function () {

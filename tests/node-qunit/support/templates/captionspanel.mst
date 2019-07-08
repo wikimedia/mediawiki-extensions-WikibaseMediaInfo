@@ -1,0 +1,17 @@
+<! doctype html>
+<html>
+<body>
+	<div class="wbmi-entityview-captionsPanel" data-caption-languages="{{allLangCodes}}">
+		<h3 class="wbmi-entityview-captions-header">
+			Captions
+			<!-- edit button goes here -->
+		</h3>
+		{{#captions}}
+		<div class="wbmi-entityview-caption">
+			<div class="wbmi-language-label" dir="{{dir}}" lang="{{langCode}}">{{language}}</div>
+			<div class="wbmi-caption-value">{{value}}</div>
+		</div>
+		{{/captions}}
+	</div>
+</body>
+</html>

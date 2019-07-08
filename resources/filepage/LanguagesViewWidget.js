@@ -3,16 +3,16 @@
 var LanguagesViewWidget;
 
 /**
-	* Widget that shows/hides languages on click
-	*
-	* @constructor
-	* @param {Object} [config]
-	* @cfg {Object} contentClass CSS class of captions container
-	*/
+ * Widget that shows/hides languages on click
+ *
+ * @constructor
+ * @param {Object} [config]
+ * @cfg {Object} classes CSS classes of DOM elements (content and entityTerm)
+ */
 LanguagesViewWidget = function ( config ) {
 	var self = this,
-		contentSelector = '.' + config.contentClass,
-		entityTermSelector = '.' + config.entityTermClass,
+		contentSelector = '.' + config.classes.content,
+		entityTermSelector = '.' + config.classes.entityTerm,
 		viewMoreButton = new OO.ui.ButtonWidget( {
 			icon: 'expand',
 			flags: 'progressive',

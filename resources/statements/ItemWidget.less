@@ -97,15 +97,6 @@
 
 		.wbmi-item-content-group {
 			padding: @sm-spacing;
-
-			// If an empty .wbmi-content-group element is the only child of its
-			// parent (.wbmi-item-content) -- a state which corresponds to the
-			// panel being in reading state when no qualifiers exist -- collapse
-			// the padding so that the grandparent's border (.wbmi-item) does not
-			// wrap around empty space.
-			&:only-child:empty {
-				padding: 0;
-			}
 		}
 	}
 
@@ -143,6 +134,17 @@
 		/* stylelint-disable-next-line selector-class-pattern */
 		&.oo-ui-buttonElement > .oo-ui-buttonElement-button {
 			font-weight: normal;
+		}
+
+		// when there are no other existing statements, the 'add' button
+		// should be moved down a little
+		&:only-child {
+			margin-top: @base-spacing;
+			// OOUI override...
+			/* stylelint-disable-next-line selector-class-pattern */
+			&.oo-ui-buttonElement-frameless.oo-ui-labelElement:first-child {
+				margin-left: 0;
+			}
 		}
 	}
 

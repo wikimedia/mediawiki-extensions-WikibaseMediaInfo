@@ -2,7 +2,6 @@
 
 var ItemInputWidget = require( './ItemInputWidget.js' ),
 	FormatValueElement = require( './FormatValueElement.js' ),
-	GetRepoElement = require( './GetRepoElement.js' ),
 	ItemWidget = require( './ItemWidget.js' ),
 	/**
 	 * @constructor
@@ -19,16 +18,15 @@ var ItemInputWidget = require( './ItemInputWidget.js' ),
 	 *  e.g. { P1: "https://commons.wikimedia.org/wiki/Special:MyLanguage/Commons:Depicts" }
 	 */
 	StatementWidget = function MediaInfoStatementsStatementWidget( config ) {
-		var self = this,
-			learnMoreLink,
+		var learnMoreLink,
 			learnMoreButton,
 			$label = $( '<h4>' )
-				.addClass( 'wbmi-entity-label' )
-				.text( '' ), // will be filled out later (after formatValue call)
+				.addClass( 'wbmi-entity-label' ),
 			$link = $( '<a>' )
-				.addClass( 'wbmi-entity-link ' ) // repo class will be added later (after getRepoFromUrl call)
+				.addClass( 'wbmi-entity-link ' )
 				.attr( 'href', '#' ) // will be filled out later (after formatValue call)
-				.attr( 'target', '_blank' ),
+				.attr( 'target', '_blank' )
+				.text( '' ), // will be filled out later (after formatValue call)
 			dataValue;
 
 		config = config || {};
@@ -103,9 +101,8 @@ var ItemInputWidget = require( './ItemInputWidget.js' ),
 				$( '<div>' ).addClass( 'wbmi-entity-data' ).append(
 					$( '<div>' ).addClass( 'wbmi-entity-title' ).append(
 						this.title ? $( '<h3>' ).addClass( 'wbmi-statements-title' ).text( this.title ) : '',
-						$label
-					),
-					$link.text( this.propertyId.replace( /^.+:/, '' ) )
+						$label.append( $link )
+					)
 				)
 			),
 			this.input.$element,
@@ -126,14 +123,8 @@ var ItemInputWidget = require( './ItemInputWidget.js' ),
 			this.formatValue( dataValue, 'text/html' )
 		).then( function ( plain, html ) {
 			var url = $( html ).attr( 'href' );
-
-			$label.text( plain );
+			$link.text( plain );
 			$link.attr( 'href', url );
-
-			self.getRepoFromUrl( url ).then( function ( repo ) {
-				// Classes used: wbmi-entity-link-foreign-repo-* and wbmi-entity-link-local-repo
-				$link.addClass( 'wbmi-entity-link' + ( repo !== '' ? '-foreign-repo-' + repo : '-local-repo' ) );
-			} );
 		} );
 
 		this.renderFooter();
@@ -141,7 +132,6 @@ var ItemInputWidget = require( './ItemInputWidget.js' ),
 OO.inheritClass( StatementWidget, OO.ui.Widget );
 OO.mixinClass( StatementWidget, OO.ui.mixin.GroupElement );
 OO.mixinClass( StatementWidget, FormatValueElement );
-OO.mixinClass( StatementWidget, GetRepoElement );
 
 StatementWidget.prototype.renderFooter = function () {
 	var showRemove = this.getItems().length > 0 && this.editing;

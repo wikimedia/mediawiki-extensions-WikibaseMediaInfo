@@ -34,7 +34,7 @@ QualifierWidget = function ( config ) {
 		classes: [ 'wbmi-qualifier-value-input' ]
 	} );
 
-	this.valueWidget = new OO.ui.Widget( {
+	this.displayWidget = new OO.ui.Widget( {
 		classes: [ 'wbmi-qualifier-value' ]
 	} );
 
@@ -46,7 +46,7 @@ QualifierWidget = function ( config ) {
 
 	this.layout = new OO.ui.HorizontalLayout( {
 		items: [
-			this.valueWidget,
+			this.displayWidget,
 			this.propertyInput,
 			this.valueInput,
 			this.removeIcon
@@ -97,7 +97,7 @@ QualifierWidget.prototype.setData = function ( data ) {
 
 	this.updatePropertyInput( { id: propId, dataValueType: dataValueType } );
 	this.valueInput.setData( dataValue );
-	this.asyncUpdateValueWidget();
+	this.asyncUpdateDisplayWidget();
 };
 
 /**
@@ -123,7 +123,7 @@ QualifierWidget.prototype.onPropertyChoose = function () {
 	var property = this.propertyInput.getData();
 	this.updateValueInput( property.dataValueType );
 	this.emit( 'change' );
-	this.asyncUpdateValueWidget();
+	this.asyncUpdateDisplayWidget();
 };
 
 /**
@@ -131,17 +131,19 @@ QualifierWidget.prototype.onPropertyChoose = function () {
  */
 QualifierWidget.prototype.onValueChange = function () {
 	this.emit( 'change' );
-	this.asyncUpdateValueWidget();
+	this.asyncUpdateDisplayWidget();
 };
 
 /**
  * Ergonomic wrapper around formatValue() to make it easier to deal with
  * properties.
  * @param {string} propId
+ * @param {string} [format] text/plain or text/html
  * @return {$.Promise} promise
  */
-QualifierWidget.prototype.formatProperty = function ( propId ) {
-	return this.formatValue( new wikibase.datamodel.EntityId( propId ) );
+QualifierWidget.prototype.formatProperty = function ( propId, format ) {
+	format = format || 'text/plain';
+	return this.formatValue( new wikibase.datamodel.EntityId( propId ), format );
 };
 
 /**
@@ -162,7 +164,7 @@ QualifierWidget.prototype.updatePropertyInput = function ( property ) {
 
 	if ( 'label' in property ) {
 		// we've set a new label - propagate that label to the (read mode) value widget
-		this.asyncUpdateValueWidget();
+		this.asyncUpdateDisplayWidget();
 	} else {
 		this.formatPropertyPromise = this.formatProperty( property.id );
 		this.formatPropertyPromise.then( function ( formatted ) {
@@ -188,20 +190,27 @@ QualifierWidget.prototype.updateValueInput = function ( datatype, value ) {
 };
 
 /**
- * Update the text of the ValueWidget element.
- * @param {string} valueLabel
+ * Update the text of the DisplayWidget element.
+ * @param {string} propertyHtml HTML string
+ * @param {string} valueHtml HTML string
  */
-QualifierWidget.prototype.updateValueWidget = function ( valueLabel ) {
-	this.valueWidget.$element.text(
-		this.propertyInput.getValue() + mw.message( 'colon-separator' ) + valueLabel
+QualifierWidget.prototype.updateDisplayWidget = function ( propertyHtml, valueHtml ) {
+	var $separator = $( '<span>', { text: mw.message( 'colon-separator' ) } );
+
+	this.displayWidget.$element.empty();
+	this.displayWidget.$element.append(
+		propertyHtml.indexOf( '<' ) >= 0 ? $( propertyHtml ).attr( 'target', '_blank' ) : propertyHtml,
+		$separator,
+		valueHtml.indexOf( '<' ) >= 0 ? $( valueHtml ).attr( 'target', '_blank' ) : valueHtml
 	);
 };
 
 /**
  * Asynchronously update the label elements with data from the API.
  */
-QualifierWidget.prototype.asyncUpdateValueWidget = function () {
+QualifierWidget.prototype.asyncUpdateDisplayWidget = function () {
 	var self = this,
+		promises,
 		dataValue;
 
 	try {
@@ -209,17 +218,29 @@ QualifierWidget.prototype.asyncUpdateValueWidget = function () {
 
 		// abort in-flight API requests - there's no point in continuing
 		// to fetch the text-to-render when we've already changed it...
-		if ( this.formatValuePromise ) {
-			this.formatValuePromise.abort();
+		if ( this.formatDisplayPromise ) {
+			this.formatDisplayPromise.abort();
 		}
 
-		this.formatValuePromise = this.formatValue( dataValue );
-		this.formatValuePromise.then( function ( formattedValue ) {
-			self.updateValueWidget( formattedValue );
+		promises = [
+			this.formatProperty( this.propertyInput.getData().id, 'text/html' ),
+			this.formatValue( dataValue, 'text/html' )
+		];
+
+		this.formatDisplayPromise = $.when.apply( $, promises ).promise( {
+			abort: function () {
+				promises.forEach( function ( promise ) {
+					promise.abort();
+				} );
+			}
 		} );
+
+		this.formatDisplayPromise.then( function ( propertyLink, valueLink ) {
+			self.updateDisplayWidget( propertyLink, valueLink );
+		} );
+
 	} catch ( e ) {
 		// nothing to render if data is invalid...
-		self.updateValueWidget( '' );
 	}
 };
 

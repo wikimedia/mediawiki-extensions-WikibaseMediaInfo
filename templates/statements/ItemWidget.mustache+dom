@@ -4,19 +4,11 @@
 			<div class="wbmi-entity-data">
 				<div class="wbmi-entity-title">
 					<h4 class="wbmi-entity-label">
-						{{label}}
+						<a target="_blank" href="{{url}}">
+							{{label}}
+						</a>
 					</h4>
 				</div>
-
-				{{#url}}
-				<a class="wbmi-entity-link
-						  {{#repo}}wbmi-entity-link-foreign-repo-{{repo}} {{/repo}}
-						  {{^repo}}wbmi-entity-link-local-repo{{/repo}}"
-				   target="_blank"
-				   href="{{url}}">
-					{{id}}
-				</a>
-				{{/url}}
 			</div>
 
 			<a class="wbmi-entity-primary

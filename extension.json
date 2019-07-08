@@ -260,7 +260,6 @@
 			"packageFiles": [
 				"resources/statements/index.js",
 				"resources/statements/FormatValueElement.js",
-				"resources/statements/GetRepoElement.js",
 				"resources/statements/EntityLookupElement.js",
 				"resources/statements/EntityInputWidget.js",
 				"resources/statements/QualifierValueInputWidget.js",

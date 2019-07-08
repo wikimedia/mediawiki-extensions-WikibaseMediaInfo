@@ -141,6 +141,20 @@
 				"mobile"
 			]
 		},
+		"wikibase.mediainfo.base": {
+			"packageFiles": [
+				"resources/base/index.js",
+				"resources/base/DOMLessGroupWidget.js"
+			],
+			"dependencies": [
+				"oojs",
+				"oojs-ui-core"
+			],
+			"targets": [
+				"desktop",
+				"mobile"
+			]
+		},
 		"wikibase.mediainfo.getDeserializer": {
 			"scripts": "resources/getDeserializer.js",
 			"dependencies": [
@@ -259,6 +273,7 @@
 				"resources/statements/AddPropertyWidget.js"
 			],
 			"dependencies": [
+				"wikibase.mediainfo.base",
 				"mediawiki.template.mustache+dom",
 				"mw.config.values.wbDataTypes",
 				"oojs",

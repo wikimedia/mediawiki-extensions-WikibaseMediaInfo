@@ -14,6 +14,7 @@ var FormatValueElement = require( './FormatValueElement.js' ),
 	GetRepoElement = require( './GetRepoElement.js' ),
 	QualifierWidget = require( './QualifierWidget.js' ),
 	NewQualifierWidget = require( './NewQualifierWidget.js' ),
+	DOMLessGroupWidget = require( 'wikibase.mediainfo.base' ).DOMLessGroupWidget,
 	ItemWidget = function MediaInfoStatementsItemWidget( config ) {
 		config = config || {};
 
@@ -29,13 +30,13 @@ var FormatValueElement = require( './FormatValueElement.js' ),
 		this.repo = undefined;
 
 		ItemWidget.parent.call( this, $.extend( {}, config ) );
-		OO.ui.mixin.GroupElement.call( this, $.extend( {}, config ) );
+		DOMLessGroupWidget.call( this, $.extend( {}, config ) );
 		FormatValueElement.call( this, $.extend( {}, config ) );
 
 		this.render();
 	};
 OO.inheritClass( ItemWidget, OO.ui.Widget );
-OO.mixinClass( ItemWidget, OO.ui.mixin.GroupElement );
+OO.mixinClass( ItemWidget, DOMLessGroupWidget );
 OO.mixinClass( ItemWidget, FormatValueElement );
 OO.mixinClass( ItemWidget, GetRepoElement );
 

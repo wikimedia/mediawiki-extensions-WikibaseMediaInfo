@@ -213,13 +213,15 @@ module.exports.createMediaWikiUser = function ( options ) {
 };
 
 module.exports.registerModules = function () {
-	// RL loader modules are not exposed, so let's make sure they're
-	// known when source code requires it...
-	mockery.registerMock( 'wikibase.mediainfo.statements', require( '../../../resources/statements/index.js' ) );
 	mockery.enable( {
 		warnOnReplace: false,
 		warnOnUnregistered: false
 	} );
+
+	// RL loader modules are not exposed, so let's make sure they're
+	// known when source code requires it...
+	mockery.registerMock( 'wikibase.mediainfo.base', require( '../../../resources/base/index.js' ) );
+	mockery.registerMock( 'wikibase.mediainfo.statements', require( '../../../resources/statements/index.js' ) );
 };
 
 module.exports.deregisterModules = function () {

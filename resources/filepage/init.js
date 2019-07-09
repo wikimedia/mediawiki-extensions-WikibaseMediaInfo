@@ -36,11 +36,14 @@
 			};
 
 		captions = new CaptionsPanel( {
-			headerClass: 'wbmi-entityview-captions-header',
-			contentClass: 'wbmi-entityview-captionsPanel',
-			entityTermClass: 'wbmi-entityview-caption',
+			classes: {
+				header: 'wbmi-entityview-captions-header',
+				content: 'wbmi-entityview-captionsPanel',
+				entityTerm: 'wbmi-entityview-caption'
+			},
 			warnWithinMaxCaptionLength: 20,
-			captionsExist: mw.config.get( 'wbmiCaptionsExist', false )
+			captionsExist: mw.config.get( 'wbmiCaptionsExist', false ),
+			userLanguages: mw.config.get( 'wbUserSpecifiedLanguages', [] ).slice()
 		} );
 		captions.initialize();
 

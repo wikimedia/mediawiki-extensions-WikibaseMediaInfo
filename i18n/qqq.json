@@ -72,6 +72,7 @@
 	"wikibasemediainfo-filetype-drawing": "Label for filetypes dropdown for 'Drawings'",
 	"wikibasemediainfo-filetype-3d": "Label for filetypes dropdown for '3D models'",
 	"wikibasemediainfo-filetype-office": "Label for filetypes dropdown for 'Office'. It describes document files that are created by various office suites: Microsoft Word, LibreOffice, PDF, etc.\n{{Identical|Office}}",
+	"wikibasemediainfo-remove-all-statements-confirm": "Confirmation msg for removing all statements for a property",
 	"wikibasemediainfo-search-input-placeholder-keywords": "Placeholder text for the input to search by keyword",
 	"wikibasemediainfo-search-input-placeholder-depicts": "Placeholder text for the input to search by depicted items",
 	"wikibasemediainfo-search-input-placeholder-statements": "Placeholder text for the input to search by other statements",

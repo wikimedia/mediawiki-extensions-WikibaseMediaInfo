@@ -61,8 +61,30 @@ var ItemInputWidget = require( './ItemInputWidget.js' ),
 			classes: [ 'wbmi-statement-remove' ],
 			flags: 'destructive',
 			framed: false
-		} );
-		this.removeButton.connect( this, { click: 'clearItems' } );
+		} )
+			.on( 'click', function () {
+				OO.ui.confirm(
+					mw.msg( 'wikibasemediainfo-remove-all-statements-confirm' ),
+					{
+						actions: [
+							{
+								action: 'accept',
+								label: mw.msg( 'ooui-dialog-message-accept' ),
+								flags: [ 'primary', 'destructive' ]
+							},
+							{
+								action: 'reject',
+								label: mw.msg( 'ooui-dialog-message-reject' ),
+								flags: 'safe'
+							}
+						]
+					}
+				).then( function ( confirmed ) {
+					if ( confirmed ) {
+						self.clearItems();
+					}
+				} );
+			} );
 
 		learnMoreLink = config.helpUrls[ this.propertyId ];
 		if ( learnMoreLink ) {

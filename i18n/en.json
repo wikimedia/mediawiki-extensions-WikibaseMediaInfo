@@ -67,6 +67,7 @@
 	"wikibasemediainfo-filetype-drawing": "Drawings",
 	"wikibasemediainfo-filetype-3d": "3D models",
 	"wikibasemediainfo-filetype-office": "Documents",
+	"wikibasemediainfo-remove-all-statements-confirm": "This action will delete all existing values for this property. Properties with no values will be removed when changes are published. Are you sure?",
 	"wikibasemediainfo-search-input-placeholder-keywords": "Search in titles and descriptions",
 	"wikibasemediainfo-search-input-placeholder-depicts": "Search concepts or topics",
 	"wikibasemediainfo-search-input-placeholder-statements": "Search by other statements",

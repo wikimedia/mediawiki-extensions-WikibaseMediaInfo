@@ -21,6 +21,8 @@ var AnonWarning = require( './AnonWarning.js' ),
  * @cfg {Object} properties
  * @cfg {Object} [panelRemovalListener] Object on which onStatementPanelRemoved() will be called if
  *  this panel is removed from the DOM
+ * @cfg {Object} helpUrls An object with property id as members and help urls for the property
+ *  as values e.g. { P1: "https://commons.wikimedia.org/wiki/Special:MyLanguage/Commons:Depicts" }
  */
 StatementPanel = function StatementPanel( config ) {
 	// Parent constructor

@@ -14,10 +14,14 @@ var ItemInputWidget = require( './ItemInputWidget.js' ),
 	 * @param {string} [config.title]
 	 * @param {bool} config.isDefaultProperty True if the widget is shown even if there are
 	 *  no values for the property
+	 * @param {Object} [config.helpUrls]  An object with property id as members and help urls for
+	 *  the property as values
+	 *  e.g. { P1: "https://commons.wikimedia.org/wiki/Special:MyLanguage/Commons:Depicts" }
 	 */
 	StatementWidget = function MediaInfoStatementsStatementWidget( config ) {
 		var self = this,
-			learnMoreLink = mw.config.get( 'wbmiDepictsHelpUrl' ),
+			learnMoreLink,
+			learnMoreButton,
 			$label = $( '<h4>' )
 				.addClass( 'wbmi-entity-label' )
 				.text( '' ), // will be filled out later (after formatValue call)
@@ -28,6 +32,7 @@ var ItemInputWidget = require( './ItemInputWidget.js' ),
 			dataValue;
 
 		config = config || {};
+		config.helpUrls = config.helpUrls || {};
 		config.qualifiers = config.qualifiers || mw.config.get( 'wbmiDepictsQualifierProperties' ) || {};
 
 		StatementWidget.parent.call( this, config );
@@ -59,13 +64,16 @@ var ItemInputWidget = require( './ItemInputWidget.js' ),
 		} );
 		this.removeButton.connect( this, { click: 'clearItems' } );
 
-		this.learnMoreButton = new OO.ui.ButtonWidget( {
-			label: mw.message( 'wikibasemediainfo-statements-learn-more' ).text(),
-			classes: [ 'wbmi-statement-learn-more' ],
-			flags: 'progressive',
-			framed: false
-		} );
-		this.learnMoreButton.connect( this, { click: window.open.bind( window, learnMoreLink, '_blank' ) } );
+		learnMoreLink = config.helpUrls[ this.propertyId ];
+		if ( learnMoreLink ) {
+			learnMoreButton = new OO.ui.ButtonWidget( {
+				label: mw.message( 'wikibasemediainfo-statements-learn-more' ).text(),
+				classes: [ 'wbmi-statement-learn-more' ],
+				flags: 'progressive',
+				framed: false
+			} );
+			learnMoreButton.connect( this, { click: window.open.bind( window, learnMoreLink, '_blank' ) } );
+		}
 		this.connect( this, { change: 'renderFooter' } );
 
 		this.$element.addClass( 'wbmi-statements-widget' ).append(
@@ -84,7 +92,7 @@ var ItemInputWidget = require( './ItemInputWidget.js' ),
 				$( '<div>' ).addClass( 'wbmi-statement-footer-buttons' ).append(
 					// If the property is a default property don't show 'remove all'
 					!config.isDefaultProperty ? this.removeButton.$element.hide().addClass( 'wmbi-hidden' ) : '',
-					learnMoreLink ? this.learnMoreButton.$element : ''
+					learnMoreButton ? learnMoreButton.$element : ''
 				).hide()
 			)
 		);

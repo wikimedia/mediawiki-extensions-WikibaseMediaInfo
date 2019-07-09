@@ -10,7 +10,8 @@
 		StatementPanel,
 		$tabs,
 		AddPropertyWidget,
-		propertiesInfo = mw.config.get( 'wbmiProperties' ) || {};
+		propertiesInfo = mw.config.get( 'wbmiProperties' ) || {},
+		helpUrls = mw.config.get( 'wbmiHelpUrls' ) || {};
 
 	mw.mediaInfo = mw.mediaInfo || {};
 	mw.mediaInfo.structuredData = mw.mediaInfo.structuredData || {};
@@ -81,7 +82,8 @@
 							propertyId: data.id,
 							entityId: mw.config.get( 'wbEntityId' ),
 							properties: propertiesInfo,
-							isDefaultProperty: false
+							isDefaultProperty: false,
+							helpUrls: helpUrls
 						} );
 						statementPanel.initialize();
 						statementPanels[ data.id ] = statementPanel;
@@ -102,7 +104,8 @@
 						propertyId: propertyId,
 						entityId: mw.config.get( 'wbEntityId' ),
 						properties: propertiesInfo,
-						isDefaultProperty: propertyId in propertiesInfo
+						isDefaultProperty: propertyId in propertiesInfo,
+						helpUrls: helpUrls
 					} );
 					statementPanel.initialize();
 					statementPanels[ propertyId ] = statementPanel;

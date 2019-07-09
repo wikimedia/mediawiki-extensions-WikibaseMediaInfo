@@ -172,7 +172,7 @@ class WikibaseMediaInfoHooks {
 	 */
 	public static function onBeforePageDisplay( $out, $skin ) {
 		global $wgDepictsQualifierProperties,
-				$wgDepictsHelpUrl,
+				$wgMediaInfoHelpUrls,
 				$wgMediaInfoProperties,
 				$wgMediaInfoExternalEntitySearchBaseUri,
 				$wgMediaInfoSearchFiletypes,
@@ -240,7 +240,7 @@ class WikibaseMediaInfoHooks {
 				'wbmiProperties' => $properties,
 				'wbmiDepictsQualifierProperties' => $qualifiers,
 				'wbmiPropertyTitles' => $titles,
-				'wbmiDepictsHelpUrl' => $wgDepictsHelpUrl,
+				'wbmiHelpUrls' => $wgMediaInfoHelpUrls,
 				'wbmiExternalEntitySearchBaseUri' => $wgMediaInfoExternalEntitySearchBaseUri,
 				'wbmiSearchFiletypes' => $wgMediaInfoSearchFiletypes,
 				'wbmiMediaInfoEnableSearch' => $wgMediaInfoEnableSearch,

@@ -90,7 +90,7 @@ StatementPanel.prototype.initialize = function () {
 	// load data into js widget instead
 	statementsJson = JSON.parse( this.$element.attr( 'data-statements' ) || '[]' );
 	this.statementWidget.setData( deserializer.deserialize( statementsJson ) );
-	this.statementWidget.connect( this, { change: 'onDepictsChange' } );
+	this.statementWidget.connect( this, { change: 'onStatementChange' } );
 
 	// ...and attach the widget to DOM, replacing the server-side rendered equivalent
 	this.$element.empty().append( this.statementWidget.$element );
@@ -187,7 +187,7 @@ StatementPanel.prototype.isEditable = function () {
 	return this.editing;
 };
 
-StatementPanel.prototype.onDepictsChange = function () {
+StatementPanel.prototype.onStatementChange = function () {
 	var hasChanges = this.hasChanges();
 
 	if ( hasChanges ) {
@@ -225,9 +225,9 @@ StatementPanel.prototype.makeReadOnly = function () {
 	this.cancelPublish.disablePublish();
 	this.cancelPublish.hide();
 
-	this.statementWidget.disconnect( this, { change: 'onDepictsChange' } );
+	this.statementWidget.disconnect( this, { change: 'onStatementChange' } );
 	this.statementWidget.reset().then( function () {
-		self.statementWidget.connect( self, { change: 'onDepictsChange' } );
+		self.statementWidget.connect( self, { change: 'onStatementChange' } );
 		self.editToggle.$element.show();
 	} );
 };
@@ -236,7 +236,7 @@ StatementPanel.prototype.sendData = function () {
 	var self = this;
 	this.cancelPublish.setStateSending();
 
-	this.statementWidget.disconnect( this, { change: 'onDepictsChange' } );
+	this.statementWidget.disconnect( this, { change: 'onStatementChange' } );
 	this.statementWidget.submit( mw.mediaInfo.structuredData.currentRevision )
 		.then( function ( response ) {
 			mw.mediaInfo.structuredData.currentRevision = response.pageinfo.lastrevid;
@@ -254,7 +254,7 @@ StatementPanel.prototype.sendData = function () {
 			self.cancelPublish.enablePublish();
 		} )
 		.always( function () {
-			self.statementWidget.connect( self, { change: 'onDepictsChange' } );
+			self.statementWidget.connect( self, { change: 'onStatementChange' } );
 			self.cancelPublish.setStateReady();
 		} );
 };

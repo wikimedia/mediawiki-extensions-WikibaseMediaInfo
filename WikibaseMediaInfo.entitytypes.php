@@ -260,7 +260,9 @@ return [
 		) {
 			return new MediaInfoRdfBuilder(
 				$vocabulary,
-				$writer
+				$writer,
+				MediaInfoServices::getFilePageLookup(),
+				MediaWikiServices::getInstance()->getRepoGroup()
 			);
 		},
 		'rdf-builder-label-predicates' => [

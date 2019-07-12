@@ -15,6 +15,9 @@ use Wikibase\Repo\Content\EntityHandler;
 use Wikibase\Repo\Search\Fields\FieldDefinitions;
 use Wikibase\Repo\Validators\EntityConstraintProvider;
 use Wikibase\Repo\Validators\ValidatorErrorLocalizer;
+use Wikibase\Search\Elastic\Fields\DescriptionsField;
+use Wikibase\Search\Elastic\Fields\LabelCountField;
+use Wikibase\Search\Elastic\Fields\LabelsField;
 use Wikibase\TermIndex;
 
 /**
@@ -165,6 +168,15 @@ class MediaInfoHandler extends EntityHandler {
 
 			$fieldsData[self::FILE_PAGE_SEARCH_INDEX_KEY_MEDIAINFO_TEXT] =
 				$content->getTextForSearchIndex();
+
+			// Labels data is normally indexed for prefix matching.
+			// We don't need that for MediaInfo files, so swap labels data into descriptions
+			// instead so as not to overburden the search index
+			if ( isset( $fieldsData[ LabelsField::NAME ] ) ) {
+				$fieldsData[DescriptionsField::NAME] = $fieldsData[LabelsField::NAME];
+				$fieldsData[LabelsField::NAME] = [];
+			}
+			$fieldsData[LabelCountField::NAME] = 0;
 		}
 
 		return $fieldsData;

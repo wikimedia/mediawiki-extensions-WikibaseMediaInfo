@@ -54,6 +54,8 @@
 	"wikibasemediainfo-statements-unsupported-property-title": "Unsupported property",
 	"wikibasemediainfo-statements-unsupported-property-content": "Properties other than $1 are not yet fully supported, but will be in the future. For now, functionality for unsupported properties may not work as you might expect.",
 	"wikibasemediainfo-statements-unsupported-property-type-content": "Not all property types are fully supported, but will be in the future. For now, functionality for unsupported properties may not work as you might expect.",
+	"wikibasemediainfo-statements-link-notice": "Structured data labels link to their respective Wikidata pages and will open in a new tab or window.",
+	"wikibasemediainfo-statements-link-notice-dismiss": "Dismiss",
 	"wikibasemediainfo-operator-placeholder": "Operator",
 	"wikibasemediainfo-operator-value-is": "is",
 	"wikibasemediainfo-operator-value-isnot": "is not",

@@ -285,9 +285,10 @@ CaptionsPanel.prototype.reorderLanguageList = function () {
  * @private
  */
 CaptionsPanel.prototype.getCaptionLanguagesList = function () {
-	var knownLanguages = Object.keys( $.uls.data.languages );
+	var knownLanguages = Object.keys( $.uls.data.languages ),
+		captionLanguagesData = $( this.selectors.content ).attr( this.captionLanguagesDataAttr ) || '';
 
-	return $( this.selectors.content ).attr( this.captionLanguagesDataAttr ).split( ',' )
+	return captionLanguagesData.split( ',' )
 		// Drop languages that ULS doesn't know about
 		.filter( function ( languageCode ) {
 			return ( knownLanguages.indexOf( languageCode ) !== -1 );
@@ -498,8 +499,8 @@ CaptionsPanel.prototype.createRowDeleter = function ( $row ) {
  * textbox for caption)
  *
  * @param {int} index The index of the DOM element (starting at 0, in ascending order on the page)
- * @param {string[]} captionLangCodes Lang codes for existing captions
- * @param {CaptionData} captionData Data for the caption if it already exists
+ * @param {string[]} [captionLangCodes] Lang codes for existing captions
+ * @param {CaptionData} [captionData] Data for the caption if it already exists
  * @return {jQuery} jquery element
  * @private
  */
@@ -514,6 +515,9 @@ CaptionsPanel.prototype.createIndexedEditableRow = function (
 	if ( captionData === undefined ) {
 		captionData = new CaptionData();
 	}
+
+	captionLangCodes = captionLangCodes || [];
+	captionData = captionData || {};
 
 	languageSelector = new UlsWidget( {
 		languages: this.getAvailableLanguages(

@@ -1,24 +1,16 @@
-var jsdom = require( 'jsdom' ),
-	sinon = require( 'sinon' ),
+var sinon = require( 'sinon' ),
+	hooks = require( '../../support/hooks.js' ),
 	DOMLessGroupWidget,
 	GroupWidget,
 	ItemWidget,
-	sandbox,
-	dom;
+	sandbox;
 
-QUnit.module( 'DOMLessGroupWidget', {
+// eslint-disable-next-line no-restricted-properties
+QUnit.module( 'DOMLessGroupWidget', Object.assign( {}, hooks.mediainfo, {
 	beforeEach: function () {
-		sandbox = sinon.createSandbox();
-		dom = new jsdom.JSDOM( '<!doctype html><html><body></body></html>' );
-		global.window = dom.window;
-		global.document = global.window.document;
-		global.jQuery = global.$ = window.jQuery = window.$ = require( 'jquery' );
-		global.OO = require( 'oojs' );
+		hooks.mediainfo.beforeEach();
 
-		// Both OOUI and the WMF theme need to be loaded into scope via require();
-		// properties are automatically added to OO namespace.
-		require( 'oojs-ui' );
-		require( 'oojs-ui/dist/oojs-ui-wikimediaui.js' );
+		sandbox = sinon.createSandbox();
 
 		// construct an element that mixes in DOMLessGroupWidget, and
 		// an ItemWidget to insert to the group
@@ -37,12 +29,11 @@ QUnit.module( 'DOMLessGroupWidget', {
 		OO.inheritClass( ItemWidget, OO.ui.Widget );
 		OO.mixinClass( ItemWidget, OO.ui.mixin.ItemWidget );
 	},
-
 	afterEach: function () {
-		delete require.cache[ require.resolve( 'jquery' ) ];
-		sandbox.reset();
+		sandbox.restore();
+		hooks.mediainfo.afterEach();
 	}
-}, function () {
+} ), function () {
 
 	QUnit.test( 'Test item is added to group', function ( assert ) {
 		var widget = new GroupWidget(),

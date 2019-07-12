@@ -1,35 +1,10 @@
-var jsdom = require( 'jsdom' ),
-	sinon = require( 'sinon' ),
+var sinon = require( 'sinon' ),
 	helpers = require( '../../support/helpers.js' ),
-	LicenseDialogWidget,
-	pathToWidget,
-	sandbox,
-	dom;
+	hooks = require( '../../support/hooks.js' ),
+	pathToWidget = '../../../../resources/filepage/LicenseDialogWidget.js',
+	LicenseDialogWidget;
 
-pathToWidget = '../../../../resources/filepage/LicenseDialogWidget.js';
-
-QUnit.module( 'LicenseDialogWidget', {
-	beforeEach: function () {
-		sandbox = sinon.createSandbox();
-		dom = new jsdom.JSDOM( '<!doctype html><html><body></body></html>' );
-		global.window = dom.window;
-		global.document = global.window.document;
-		global.jQuery = global.$ = window.jQuery = window.$ = require( 'jquery' );
-		global.OO = require( 'oojs' );
-
-		// Both OOUI and the WMF theme need to be loaded into scope via require();
-		// properties are automatically added to OO namespace.
-		require( 'oojs-ui' );
-		require( 'oojs-ui/dist/oojs-ui-wikimediaui.js' );
-
-		global.mw = helpers.createMediaWikiEnv();
-	},
-
-	afterEach: function () {
-		delete require.cache[ require.resolve( 'jquery' ) ];
-		sandbox.reset();
-	}
-}, function () {
+QUnit.module( 'LicenseDialogWidget', hooks.mediainfo, function () {
 	QUnit.test( 'constructor', function ( assert ) {
 		LicenseDialogWidget = require( pathToWidget );
 		/* eslint-disable-next-line no-new */

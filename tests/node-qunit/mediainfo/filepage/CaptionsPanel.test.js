@@ -3,49 +3,28 @@
 var sinon = require( 'sinon' ),
 	pathToWidget = '../../../../resources/filepage/CaptionsPanel.js',
 	helpers = require( '../../support/helpers.js' ),
+	hooks = require( '../../support/hooks.js' ),
 	sandbox,
 	dom;
 
-QUnit.module( 'CaptionPanel', {
-	beforeEach: function () {
-		sandbox = sinon.createSandbox();
-
-		dom = helpers.generateTemplate( 'captionspanel.mst', 'captiondata.json' );
-
-		global.window = dom.window;
-		global.document = global.window.document;
-		global.jQuery = global.$ = window.jQuery = window.$ = require( 'jquery' );
-		global.$.fn.msg = sinon.stub(); // stub for the jQuery msg plugin
-
-		// Setup OOJS and OOUI
-		global.OO = require( 'oojs' );
-		require( 'oojs-ui' );
-		require( 'oojs-ui/dist/oojs-ui-wikimediaui.js' );
-
-		// Set up global MW and wikibase objects
-		global.mw = helpers.createMediaWikiEnv();
-		global.dataValues = helpers.createDataValuesEnv();
-		global.wikibase = helpers.createWikibaseEnv();
-
-		// make sure that mediainfo modules (usually exposed via RL)
-		// can be required
-		helpers.registerModules();
-
-		// the captions panel needs the ULS
-		helpers.requireULS();
-	},
-
-	afterEach: function () {
-		delete require.cache[ require.resolve( 'jquery' ) ];
-		sandbox.reset();
-		helpers.deregisterModules();
-	}
-}, function () {
+QUnit.module( 'CaptionsPanel', {}, function () {
 	// CaptionsPanel on page where statements are already present
-	QUnit.module( 'When pre-existing statements are present on page', {
+	// eslint-disable-next-line no-restricted-properties
+	QUnit.module( 'When pre-existing statements are present on page', Object.assign( {}, hooks.mediainfo, {
 		beforeEach: function () {
+			sandbox = sinon.createSandbox();
+
+			// pre-construct DOM for jQuery to initialize with
+			dom = helpers.generateTemplate( 'captionspanel.mst', 'captiondata.json' );
+			global.window = dom.window;
+
+			hooks.mediainfo.beforeEach();
+		},
+		afterEach: function () {
+			hooks.mediainfo.afterEach();
+			sandbox.restore();
 		}
-	}, function () {
+	} ), function () {
 		QUnit.test( 'initialization works without errors', function ( assert ) {
 			var CaptionsPanel = require( pathToWidget ),
 				config = {

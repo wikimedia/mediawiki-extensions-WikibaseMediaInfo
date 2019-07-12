@@ -1,36 +1,22 @@
 var sinon = require( 'sinon' ),
-	helpers = require( '../support/helpers.js' ),
+	hooks = require( '../support/hooks.js' ),
 	sandbox;
 
-QUnit.module( 'mediainfo.template.mustache+dom', {
+// eslint-disable-next-line no-restricted-properties
+QUnit.module( 'mediainfo.template.mustache+dom', Object.assign( {}, hooks.mediawiki, {
 	beforeEach: function () {
+		hooks.mediawiki.beforeEach();
+
 		sandbox = sinon.createSandbox();
-
-		// Setup jQuery
-		global.jQuery = global.$ = window.jQuery = window.$ = require( 'jquery' );
-
-		// Set up global MW and wikibase objects
-		global.mw = helpers.createMediaWikiEnv();
-
-		// Setup OOJS and OOUI
-		global.OO = require( 'oojs' );
-		require( 'oojs-ui' );
-		require( 'oojs-ui/dist/oojs-ui-wikimediaui.js' );
-
-		// Setup Mustache & templating
-		global.Mustache = require( 'mustache' );
-		helpers.requireAgain( 'mediawiki/resources/src/mediawiki.template.js' );
-		helpers.requireAgain( 'mediawiki/resources/src/mediawiki.template.mustache.js' );
-		helpers.requireAgain( '../../../resources/mediawiki.template.mustache+dom.js' );
 		sandbox.stub( mw.templates, 'get' ).returns( {
 			'test.mustache+dom': '<div>{{{foo}}}</div>'
 		} );
 	},
-
 	afterEach: function () {
-		sandbox.reset();
+		sandbox.restore();
+		hooks.mediainfo.afterEach();
 	}
-}, function () {
+} ), function () {
 	QUnit.test( 'Render mustache templates', function ( assert ) {
 		var html, data,
 			template = mw.template.get( 'stub', 'test.mustache+dom' );

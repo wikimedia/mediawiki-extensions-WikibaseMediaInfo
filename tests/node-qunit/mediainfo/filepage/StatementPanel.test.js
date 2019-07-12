@@ -3,44 +3,28 @@
 var sinon = require( 'sinon' ),
 	pathToWidget = '../../../../resources/filepage/StatementPanel.js',
 	helpers = require( '../../support/helpers.js' ),
-	sandbox;
+	hooks = require( '../../support/hooks.js' ),
+	sandbox,
+	dom;
 
-QUnit.module( 'StatementPanel', {
-	beforeEach: function () {
-		sandbox = sinon.createSandbox();
-
-		// Setup OOJS and OOUI
-		global.OO = require( 'oojs' );
-		require( 'oojs-ui' );
-		require( 'oojs-ui/dist/oojs-ui-wikimediaui.js' );
-
-		// Set up global MW and wikibase objects
-		global.mw = helpers.createMediaWikiEnv();
-		global.dataValues = helpers.createDataValuesEnv();
-		global.wikibase = helpers.createWikibaseEnv();
-
-		// make sure that mediainfo modules (usually exposed via RL)
-		// can be required
-		helpers.registerModules();
-	},
-
-	afterEach: function () {
-		delete require.cache[ require.resolve( 'jquery' ) ];
-		sandbox.reset();
-		helpers.deregisterModules();
-	}
-}, function () {
+QUnit.module( 'StatementPanel', {}, function () {
 	// Scenario 1. StatementsPanel on page where no statements are present
-	QUnit.module( 'When no pre-existing statements are present on page', {
+	// eslint-disable-next-line no-restricted-properties
+	QUnit.module( 'When no pre-existing statements are present on page', Object.assign( {}, hooks.mediainfo, {
 		beforeEach: function () {
-			var dom = helpers.generateTemplate( 'statementpanel.mst', 'paneldata-empty.json' );
+			sandbox = sinon.createSandbox();
 
+			// pre-construct DOM for jQuery to initialize with
+			dom = helpers.generateTemplate( 'statementpanel.mst', 'paneldata-empty.json' );
 			global.window = dom.window;
-			global.document = global.window.document;
-			global.jQuery = global.$ = window.jQuery = window.$ = require( 'jquery' );
-			global.$.fn.msg = sinon.stub(); // stub for the jQuery msg plugin
+
+			hooks.mediainfo.beforeEach();
+		},
+		afterEach: function () {
+			hooks.mediainfo.afterEach();
+			sandbox.restore();
 		}
-	}, function () {
+	} ), function () {
 		QUnit.test( 'constructor', function ( assert ) {
 			var StatementPanel = require( pathToWidget ),
 				config = {

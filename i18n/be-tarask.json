@@ -54,5 +54,8 @@
 	"wikibasemediainfo-statements-unsupported-property-title": "Уласьцівасьць не падтрымліваецца",
 	"wikibasemediainfo-statements-unsupported-property-content": "Уласьцівасьці, акрамя $1, яшчэ ня цалкам падтрымліваюцца, але будуць падтрымлівацца ў будучыні. Цяпер функцыянал уласьцівасьцяў, якія не падтрымліваюцца, можа не працаваць так, як вы чакаеце.",
 	"wikibasemediainfo-statements-unsupported-property-type-content": "Ня ўсе ўласьцівасьці цалкам падтрымліваюцца, але будуць падтрымлівацца ў будучыні. Цяпер функцыянал уласьцівасьцяў, якія не падтрымліваюцца, можа не працаваць так, як вы чакаеце.",
-	"wikibasemediainfo-operator-placeholder": "Апэратар"
+	"wikibasemediainfo-operator-placeholder": "Апэратар",
+	"wikibasemediainfo-operator-value-is": "зьяўляецца",
+	"wikibasemediainfo-operator-value-isnot": "не зьяўляецца",
+	"wikibasemediainfo-operator-value-isempty": "пусты"
 }

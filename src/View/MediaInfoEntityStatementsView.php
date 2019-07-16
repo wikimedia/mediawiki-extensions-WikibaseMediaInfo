@@ -5,6 +5,7 @@ namespace Wikibase\MediaInfo\View;
 use DataValues\DataValue;
 use DataValues\Serializers\DataValueSerializer;
 use Html;
+use MediaWiki\MediaWikiServices;
 use OOUI\HtmlSnippet;
 use OOUI\PanelLayout;
 use OOUI\Tag;
@@ -124,17 +125,11 @@ class MediaInfoEntityStatementsView {
 
 		$results += $this->getSnakFormatValueCache(
 			$statement->getMainSnak(),
-			[
-				SnakFormatter::FORMAT_HTML,
-				SnakFormatter::FORMAT_PLAIN,
-			]
+			[ SnakFormatter::FORMAT_HTML, SnakFormatter::FORMAT_PLAIN ]
 		);
 
 		foreach ( $statement->getQualifiers() as $qualifier ) {
-			$results += $this->getSnakFormatValueCache( $qualifier, [
-				SnakFormatter::FORMAT_HTML,
-				SnakFormatter::FORMAT_PLAIN,
-			] );
+			$results += $this->getSnakFormatValueCache( $qualifier, [ SnakFormatter::FORMAT_PLAIN ] );
 		}
 
 		return $results;
@@ -179,6 +174,47 @@ class MediaInfoEntityStatementsView {
 		}
 
 		return $result;
+	}
+
+	/**
+	 * Given a formatted string, we'll extract the url and derive the repo from it.
+	 *
+	 * @param string $formatted
+	 * @return string
+	 */
+	private function extractRepo( $formatted ) {
+		$url = '';
+		if ( preg_match( '/href=([\'"])(.*?)\\1/i', $formatted, $match ) ) {
+			$url = $match[2];
+		}
+
+		return $this->getRepoFromUrl( $url );
+	}
+
+	/**
+	 * Given a url, look it up in the local interwiki map to find a matching project.
+	 *
+	 * @param string $url
+	 * @return string
+	 */
+	private function getRepoFromUrl( $url ) {
+		if ( !$url || !preg_match( '/[a-z0-9]+:\/\//i', $url ) ) {
+			return '';
+		}
+
+		$localPrefixes = MediaWikiServices::getInstance()->getInterwikiLookup()->getAllPrefixes( 1 );
+		$localPrefixes = array_combine(
+			array_column( $localPrefixes, 'iw_prefix' ),
+			array_column( $localPrefixes, 'iw_url' )
+		);
+
+		$matchingPrefixes = array_filter( $localPrefixes, function ( $interwiki ) use ( $url ) {
+			// replace variable part by match-all regex
+			$regex = '/' . str_replace( '\\$1', '.*?', preg_quote( $interwiki, '/' ) ) . '/';
+			return preg_match( $regex, $url );
+		} );
+
+		return key( $matchingPrefixes ) ?: '';
 	}
 
 	/**
@@ -304,42 +340,55 @@ class MediaInfoEntityStatementsView {
 		$propertyId = new PropertyId( $propertyIdString );
 		$header = $this->createFormattedDataValue(
 			$this->formatEntityId( $propertyId ),
-			$propertyId
+			$propertyId,
+			$this->extractRepo( $this->formatEntityId( $propertyId, SnakFormatter::FORMAT_HTML ) )
 		);
 		$header->addClasses( [ 'wbmi-statements-header' ] );
 		return $header;
 	}
 
-	/**
-	 * @param string $formattedValue
-	 * @param EntityId|null $entityId
-	 * @return Tag
-	 */
-	private function createFormattedDataValue( $formattedValue, EntityId $entityId = null ) {
-		$content = $formattedValue;
+	private function createFormattedDataValue( $formattedValue, EntityId $entityId = null, $repo = '' ) {
+		$links = '';
+		$label = Html::rawElement(
+			'h4',
+			[ 'class' => 'wbmi-entity-label' ],
+			$formattedValue
+		);
+
 		if ( $entityId !== null ) {
-			// If entityId is present, make the label into a link
+			$linkClasses = [ 'wbmi-entity-link' ];
 			$title = $this->entityTitleLookup->getTitleForId( $entityId );
-			if ( $title ) {
-				$content = new HtmlSnippet( Html::element(
+
+			if ( $title !== null && !$title->exists() && $repo === '' ) {
+				$linkClasses[] = 'new';
+			}
+
+			// Decorate the link with an icon for the relevant repository
+			// Classes used: wbmi-entity-link-foreign-repo-* and wbmi-entity-link-local-repo
+			if ( $repo ) {
+				$linkClasses[] = 'wbmi-entity-link-foreign-repo-' . $repo;
+			} else {
+				$linkClasses[] = 'wbmi-entity-link-local-repo';
+			}
+
+			$links = Html::rawElement(
+				'div',
+				[ 'class' => 'wbmi-entity-label-extra' ],
+				Html::element(
 					'a',
 					[
-						'class' => 'wbmi-entity-link',
+						'class' => implode( ' ', $linkClasses ),
 						'href' => $title->isLocal() ? $title->getLocalURL() : $title->getFullURL(),
 						'target' => '_blank',
 					],
-					$formattedValue
-				) );
-			}
+					$entityId->getLocalPart()
+				)
+			);
 		}
-
-		$label = new Tag( 'h4' );
-		$label->addClasses( [ 'wbmi-entity-label' ] );
-		$label->appendContent( $content );
 
 		$tag = new Tag( 'div' );
 		$tag->addClasses( [ 'wbmi-entity-title' ] );
-		$tag->appendContent( $label );
+		$tag->appendContent( new HtmlSnippet( $label . $links ) );
 		return $tag;
 	}
 
@@ -371,8 +420,9 @@ class MediaInfoEntityStatementsView {
 		}
 		$mainSnakDiv->appendContent(
 			$this->createFormattedDataValue(
-				$this->formatSnak( $mainSnak ),
-				$mainSnakValueEntityId
+				new HtmlSnippet( $this->formatSnak( $mainSnak ) ),
+				$mainSnakValueEntityId,
+				$this->extractRepo( $this->formatSnak( $mainSnak, SnakFormatter::FORMAT_HTML ) )
 			)
 		);
 
@@ -390,6 +440,7 @@ class MediaInfoEntityStatementsView {
 		$container = new Tag( 'div' );
 		$container->addClasses( [ 'wbmi-item-content' ] );
 
+		$qualifierHtmlByPropertyId = [];
 		$propertyOrder = $this->propertyOrderProvider->getPropertyOrder();
 		if ( $propertyOrder === null ) {
 			$snakList->orderByProperty();
@@ -400,55 +451,23 @@ class MediaInfoEntityStatementsView {
 				array_values( $propertyIds )
 			);
 		}
-
-		$qualifierDivs = [];
-
 		/** @var Snak $snak */
 		foreach ( $snakList as $snak ) {
-			$formattedProperty = '';
-			if ( $snak instanceof SnakObject ) {
-				$formattedProperty = $this->formatEntityId( $snak->getPropertyId(), SnakFormatter::FORMAT_PLAIN );
-				$title = $this->entityTitleLookup->getTitleForId( $snak->getPropertyId() );
-				if ( $title ) {
-					$formattedProperty = new HtmlSnippet( Html::element(
-						'a',
-						[
-							'href' => $title->isLocal() ? $title->getLocalURL() : $title->getFullURL(),
-							'target' => '_blank',
-						],
-						$formattedProperty
-					) );
-				}
-			}
+			$qualifierHtmlByPropertyId[$snak->getPropertyId()->getSerialization()][] =
+				new HtmlSnippet( $this->formatSnak( $snak, SnakFormatter::FORMAT_PLAIN ) );
+		}
 
-			$formattedValue = $this->formatSnak( $snak, SnakFormatter::FORMAT_PLAIN );
-			if ( $snak instanceof PropertyValueSnak ) {
-				$dataValue = $snak->getDataValue();
-				if ( $dataValue instanceof EntityIdValue ) {
-					$title = $this->entityTitleLookup->getTitleForId( $dataValue->getEntityId() );
-					if ( $title ) {
-						$formattedValue = new HtmlSnippet( Html::element(
-							'a',
-							[
-								'href' => $title->isLocal() ? $title->getLocalURL() : $title->getFullURL(),
-								'target' => '_blank',
-							],
-							$formattedValue
-						) );
-					}
-				}
-			}
-
-			$separator = new HtmlSnippet( Html::element( 'span', [], $this->textProvider->get( 'colon-separator' ) ) );
-
+		$qualifierDivs = [];
+		foreach ( $qualifierHtmlByPropertyId as $propertyIdString => $qualifierHtmlArray ) {
+			$content = $this->formatEntityId( new PropertyId( $propertyIdString ) );
+			$content .= $this->textProvider->get( 'colon-separator' );
+			$content .= implode(
+				$this->textProvider->get( 'comma-separator' ),
+				$qualifierHtmlArray
+			);
 			$qualifierValueDiv = new Tag( 'div' );
 			$qualifierValueDiv->addClasses( [ 'wbmi-qualifier-value' ] );
-			$qualifierValueDiv->appendContent(
-				$formattedProperty,
-				// if we have both a property & a value, add a separator
-				$formattedProperty && $formattedValue ? $separator : '',
-				$formattedValue
-			);
+			$qualifierValueDiv->appendContent( $content );
 
 			$qualifierDiv = new Tag( 'div' );
 			$qualifierDiv->addClasses( [ 'wbmi-qualifier' ] );

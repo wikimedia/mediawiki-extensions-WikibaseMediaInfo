@@ -11,6 +11,12 @@
 	.wbmi-entityview-editButton {
 		@panel-controls();
 		margin-right: 0;
+
+		@media screen and ( min-width: @breakpoint-tablet ) {
+			&:before {
+				@bullet-separator();
+			}
+		}
 	}
 
 	// Panel cancel/publish buttons

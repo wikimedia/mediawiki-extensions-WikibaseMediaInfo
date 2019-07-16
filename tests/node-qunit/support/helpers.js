@@ -192,24 +192,34 @@ module.exports.createWikibaseEnv = function () {
 };
 
 /**
- * Stubs out a basic stand-in for the mw.user object.
+ * Stubs out a basic stand-in for the mw.user object. Only stubs out
+ * properties/methods that need to be called in the test suite; expect more
+ * additions over time as the suite grows.
  *
- * @param {boolean} loggedIn Whether to simulate a logged-in user
+ * @param {Object} options
+ * @param {boolean} options.isLoggedIn Whether to simulate a logged-in user
+ * @param {boolean} options.licenseAccepted Whether simulated user has accepted
+ * CC0 license or not
  * @return {Object} user
  */
-module.exports.createMediaWikiUser = function ( loggedIn ) {
+module.exports.createMediaWikiUser = function ( options ) {
 	var user = {
-		isAnon: sinon.stub(),
-		options: {
-			get: sinon.stub(),
-			set: sinon.stub()
-		}
+		options: {}
 	};
 
-	if ( loggedIn ) {
-		user.isAnon.returns( false );
+	options = options || {};
+
+	if ( options.loggedIn ) {
+		user.isAnon = sinon.stub().returns( false );
+		user.options.set = sinon.stub();
 	} else {
-		user.isAnon.returns( true );
+		user.isAnon = sinon.stub().returns( true );
+	}
+
+	if ( options.licenseAccepted ) {
+		user.options.get = sinon.stub().returns( 1 );
+	} else {
+		user.options.get = sinon.stub().returns( 0 );
 	}
 
 	return user;

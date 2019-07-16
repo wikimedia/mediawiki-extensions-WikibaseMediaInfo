@@ -10,7 +10,6 @@
 		StatementPanel,
 		$tabs,
 		AddPropertyWidget,
-		LinkNoticeWidget,
 		propertiesInfo = mw.config.get( 'wbmiProperties' ) || {},
 		helpUrls = mw.config.get( 'wbmiHelpUrls' ) || {};
 
@@ -21,13 +20,11 @@
 	CaptionsPanel = require( './CaptionsPanel.js' );
 	StatementPanel = require( './StatementPanel.js' );
 	AddPropertyWidget = require( 'wikibase.mediainfo.statements' ).AddPropertyWidget;
-	LinkNoticeWidget = require( 'wikibase.mediainfo.statements' ).LinkNoticeWidget;
 
 	// This has to go inside hooks to allow proper creation of js elements when content is
 	// replaced by the RevisionSlider extension
 	mw.hook( 'wikipage.content' ).add( function ( $content ) {
 		var addPropertyWidget = new AddPropertyWidget(),
-			linkNoticeWidget = new LinkNoticeWidget(),
 			onStatementPanelRemoved = function ( propertyId ) {
 				var removed = statementPanels[ propertyId ];
 				// remove statement from the list we keep (e.g. to detect
@@ -99,9 +96,7 @@
 					if ( !propertyId ) {
 						// backward compatibility for cached HTML - the 'property' attribute didn't
 						// use to exist, but this classname that includes the ID was already there
-						propertyId = $( this )
-							.attr( 'class' )
-							.replace( /.*wbmi-entityview-statementsGroup-([a-z0-9]+).*/i, '$1' );
+						propertyId = $( this ).attr( 'class' ).replace( /.*wbmi-entityview-statementsGroup-([a-z0-9]+).*/i, '$1' );
 					}
 
 					statementPanel = new StatementPanel( {
@@ -120,10 +115,6 @@
 						addPropertyWidget.addPropertyId( propertyId );
 					}
 				} );
-
-				if ( !linkNoticeWidget.isDismissed() ) {
-					statementPanel.$element.before( linkNoticeWidget.$element );
-				}
 
 				if ( mw.config.get( 'wbmiEnableOtherStatements', false ) ) {
 					statementPanel.$element.after( addPropertyWidget.$element );

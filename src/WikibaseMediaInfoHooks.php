@@ -631,10 +631,6 @@ class WikibaseMediaInfoHooks {
 		$preferences['wbmi-cc0-confirmed'] = [
 			'type' => 'api'
 		];
-
-		$preferences['wbmi-wikidata-link-notice-dismissed'] = [
-			'type' => 'api'
-		];
 	}
 
 }

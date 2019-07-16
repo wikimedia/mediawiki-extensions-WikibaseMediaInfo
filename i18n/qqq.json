@@ -59,6 +59,8 @@
 	"wikibasemediainfo-statements-unsupported-property-title": "Title for popover to inform this is an unsupported property",
 	"wikibasemediainfo-statements-unsupported-property-content": "Content for popover to inform this is an unsupported property. Parameters:\n* $1 - List of supported properties",
 	"wikibasemediainfo-statements-unsupported-property-type-content": "Content for popover to inform this is an unsupported property.",
+	"wikibasemediainfo-statements-link-notice": "Message to inform the user that the links in the statements below go to external Wikidata pages for their respective entries.",
+	"wikibasemediainfo-statements-link-notice-dismiss": "Label for the control to dismiss the link notice widget",
 	"wikibasemediainfo-operator-placeholder": "Placeholder for operator dropdown",
 	"wikibasemediainfo-operator-value-is": "Label for operator 'is'",
 	"wikibasemediainfo-operator-value-isnot": "Label for operator 'is not'",

@@ -35,12 +35,9 @@ QUnit.module( 'LicenseDialogWidget', hooks.mediainfo, function () {
 		} );
 	} );
 
-	QUnit.module( 'User is not logged in and has accepted license', {
+	QUnit.module( 'User is logged in and has not accepted license', {
 		beforeEach: function () {
-			global.mw.user = helpers.createMediaWikiUser( {
-				loggedIn: true,
-				licenseAccepted: false
-			} );
+			global.mw.user = helpers.createMediaWikiUser( true );
 			global.mw.Api = function () {};
 			global.mw.Api.prototype = {
 				saveOption: sinon.stub()
@@ -49,6 +46,9 @@ QUnit.module( 'LicenseDialogWidget', hooks.mediainfo, function () {
 	}, function () {
 		QUnit.test( 'getLicenseConfirmation returns zero', function ( assert ) {
 			var dialog;
+
+			// fake out user pref value: license not yet accepted
+			global.mw.user.options.get.returns( 0 );
 
 			LicenseDialogWidget = require( pathToWidget );
 			dialog = new LicenseDialogWidget();

@@ -1,7 +1,6 @@
 'use strict';
 
 var AnonWarning = require( './AnonWarning.js' ),
-	CancelPublishWidget = require( './CancelPublishWidget.js' ),
 	FormatValueElement = require( 'wikibase.mediainfo.statements' ).FormatValueElement,
 	LicenseDialogWidget = require( './LicenseDialogWidget.js' ),
 	StatementWidget = require( 'wikibase.mediainfo.statements' ).StatementWidget,
@@ -25,35 +24,36 @@ var AnonWarning = require( './AnonWarning.js' ),
  *  as values e.g. { P1: "https://commons.wikimedia.org/wiki/Special:MyLanguage/Commons:Depicts" }
  */
 StatementPanel = function StatementPanel( config ) {
+	var deserializer = new wikibase.serialization.StatementListDeserializer(),
+		statementsJson;
+
 	// Parent constructor
 	StatementPanel.super.apply( this, arguments );
 
 	this.$element = config.$element;
 	delete config.$element;
-
 	this.config = config || {};
 
 	// Mixin constructors
 	OO.ui.mixin.PendingElement.call( this, this.config );
 
-	this.editing = false;
-	this.licenseDialogWidget = new LicenseDialogWidget();
-	this.editToggle = new OO.ui.ButtonWidget( {
-		label: mw.message( 'wikibasemediainfo-filepage-edit' ).text(),
-		framed: false,
-		flags: 'progressive',
-		title: mw.message( 'wikibasemediainfo-filepage-edit-depicts' ).text(),
-		classes: [ 'wbmi-entityview-editButton' ]
-	} );
-
-	this.editToggle.connect( this, { click: 'makeEditable' } );
-	this.cancelPublish = new CancelPublishWidget( this );
-	this.cancelPublish.disablePublish();
-
 	this.populateFormatValueCache( JSON.parse( this.$element.attr( 'data-formatvalue' ) || '{}' ) );
-	this.statementWidget = new StatementWidget( this.config );
+
+	this.licenseDialogWidget = new LicenseDialogWidget();
+
+	statementsJson = JSON.parse( this.$element.attr( 'data-statements' ) || '[]' );
+	this.statementWidget = new StatementWidget( $.extend( { showControls: true }, this.config ) );
+	this.statementWidget.setData( deserializer.deserialize( statementsJson ) );
+	this.statementWidget.connect( this, { cancel: [ 'makeReadOnly' ] } );
+	this.statementWidget.connect( this, { publish: [ 'sendData' ] } );
 
 	this.panelRemovalListener = config.panelRemovalListener || undefined;
+
+	this.statementWidget.connect( this, { edit: 'makeEditable' } ); // clicked 'edit'
+	this.statementWidget.connect( this, { change: 'makeEditable' } ); // changed otherwise (e.g. 'make prominent')
+
+	// attach the widget to DOM, replacing the server-side rendered equivalent
+	this.$element.empty().append( this.statementWidget.$element );
 };
 
 /* Inheritance */
@@ -81,68 +81,104 @@ StatementPanel.prototype.populateFormatValueCache = function ( data ) {
 	} );
 };
 
-StatementPanel.prototype.initialize = function () {
-	var deserializer = new wikibase.serialization.StatementListDeserializer(),
-		statementsJson,
-		popup,
-		self = this;
+/**
+ * Check for changes to statement claims or number of statements
+ * @return {bool}
+ */
+StatementPanel.prototype.hasChanges = function () {
+	return this.statementWidget.hasChanges();
+};
 
-	this.cancelPublish.hide();
+StatementPanel.prototype.isEditable = function () {
+	return this.statementWidget.isEditing();
+};
 
-	// load data into js widget instead
-	statementsJson = JSON.parse( this.$element.attr( 'data-statements' ) || '[]' );
-	this.statementWidget.setData( deserializer.deserialize( statementsJson ) );
-	this.statementWidget.connect( this, { change: 'onStatementChange' } );
+StatementPanel.prototype.makeEditable = function () {
+	var self = this;
 
-	// ...and attach the widget to DOM, replacing the server-side rendered equivalent
-	this.$element.empty().append( this.statementWidget.$element );
-
-	// ...and attach edit/cancel/publish controls
-	this.statementWidget.$element.find( '.wbmi-statement-header' ).append( this.editToggle.$element );
-	this.statementWidget.$element.find( '.wbmi-statement-footer' ).append( this.cancelPublish.$element );
-
-	if ( this.config.properties && this.config.properties[ this.config.propertyId ] !== 'wikibase-entityid' ) {
-		this.$element.addClass( 'wbmi-entityview-statementsGroup-unsupported' );
+	// Show IP address logging notice to anon users
+	if ( mw.user.isAnon() ) {
+		AnonWarning.notifyOnce();
 	}
 
-	if (
-		this.$element.hasClass( 'wbmi-entityview-statementsGroup-unsupported' ) ||
-		// TODO: the following line (with '-undefined') is for BC, can be removed ~30days after
-		// T224461 gets released to production and parser cache has expired
-		this.$element.hasClass( 'wbmi-entityview-statementsGroup-undefined' )
-	) {
-		popup = new OO.ui.PopupWidget( {
-			$floatableContainer: this.editToggle.$element,
-			padded: true,
-			autoClose: true
-		} );
+	// show dialog informing user of licensing & store the returned promise
+	// in licenseAcceptance - submit won't be possible until dialog is closed
+	this.licenseDialogWidget.getConfirmationIfNecessary().then(
+		function () {
+			self.statementWidget.setEditing.bind( self.statementWidget, true );
 
-		this.$element.append( popup.$element );
-		this.editToggle.on( 'click', function () {
-			var popupMsg;
-
-			if ( mw.config.get( 'wbmiEnableOtherStatements', false ) ) {
-				popupMsg = mw.message(
-					'wikibasemediainfo-statements-unsupported-property-type-content'
-				).parse();
-			} else {
-				// TODO: remove the 'else' (and getSupportedProperties) when feature flag
-				// MediaInfoEnableOtherStatements is removed
-				popupMsg = mw.message(
-					'wikibasemediainfo-statements-unsupported-property-content',
-					mw.language.listToText( self.getSupportedProperties() )
-				).parse();
+			if (
+				self.$element.hasClass( 'wbmi-entityview-statementsGroup-unsupported' ) ||
+				// TODO: the following line (with '-undefined') is for BC, can be removed ~30days after
+				// T224461 gets released to production and parser cache has expired
+				self.$element.hasClass( 'wbmi-entityview-statementsGroup-undefined' )
+			) {
+				self.showUnsupportedPopup();
 			}
+		},
+		this.statementWidget.setEditing.bind( this.statementWidget, false )
+	);
+};
 
-			popup.$body.empty().append(
-				$( '<div>' ).append(
-					$( '<h4>' ).html( mw.message( 'wikibasemediainfo-statements-unsupported-property-title' ).parse() ),
-					$( '<p>' ).html( popupMsg )
-				)
-			);
-			popup.toggle( true );
+StatementPanel.prototype.makeReadOnly = function () {
+	var self = this;
+	this.statementWidget.disconnect( this, { change: 'makeEditable' } );
+	this.statementWidget.reset().then( function () {
+		self.statementWidget.connect( self, { change: 'makeEditable' } );
+	} );
+};
+
+StatementPanel.prototype.sendData = function () {
+	var self = this;
+
+	this.statementWidget.disconnect( this, { change: 'makeEditable' } );
+	this.statementWidget.submit( mw.mediaInfo.structuredData.currentRevision )
+		.then( function ( response ) {
+			mw.mediaInfo.structuredData.currentRevision = response.pageinfo.lastrevid;
+			self.makeReadOnly();
+
+			// if the statement widget is removed then also remove the panel
+			if (
+				self.statementWidget.getData().length === 0 &&
+				!self.config.isDefaultProperty
+			) {
+				self.emit( 'widgetRemoved', self.config.propertyId );
+			}
+		} )
+		.always( function () {
+			self.statementWidget.connect( self, { change: 'makeEditable' } );
 		} );
+};
+
+StatementPanel.prototype.showUnsupportedPopup = function () {
+	var popup, popupMsg, $content;
+
+	if ( mw.config.get( 'wbmiEnableOtherStatements', false ) ) {
+		popupMsg = mw.message( 'wikibasemediainfo-statements-unsupported-property-type-content' ).parse();
+	} else {
+		// TODO: remove the 'else' (and getSupportedProperties) when feature flag
+		// MediaInfoEnableOtherStatements is removed
+		popupMsg = mw.message(
+			'wikibasemediainfo-statements-unsupported-property-content',
+			mw.language.listToText( this.getSupportedProperties() )
+		).parse();
 	}
+
+	$content = $( '<div>' ).append(
+		$( '<h4>' ).html( mw.message( 'wikibasemediainfo-statements-unsupported-property-title' ).parse() ),
+		$( '<p>' ).html( popupMsg )
+	);
+
+	popup = new OO.ui.PopupWidget( {
+		$floatableContainer: this.statementWidget.$element,
+		position: 'after',
+		padded: true,
+		autoClose: true,
+		$content: $content
+	} );
+
+	this.$element.append( popup.$element );
+	popup.toggle( true );
 };
 
 /**
@@ -165,99 +201,7 @@ StatementPanel.prototype.getSupportedProperties = function () {
 	return $( '.wbmi-entityview-statementsGroup:not( .wbmi-entityview-statementsGroup-undefined )' )
 		.toArray()
 		.map( function ( element ) {
-			return $(
-				// 2nd selector (plural wbmi-statements-header) is for
-				// backward compatibility - can be removed July 2019
-				'.wbmi-statement-header .wbmi-entity-label, .wbmi-statements-header .wbmi-entity-label',
-				element
-			).text();
-		} );
-};
-
-/**
- * Check for changes to statement claims or number of statements
- * @return {bool}
- */
-StatementPanel.prototype.hasChanges = function () {
-	var changes = this.statementWidget.getChanges(),
-		removals = this.statementWidget.getRemovals();
-
-	return changes.length > 0 || removals.length > 0;
-};
-
-StatementPanel.prototype.isEditable = function () {
-	return this.editing;
-};
-
-StatementPanel.prototype.onStatementChange = function () {
-	var hasChanges = this.hasChanges();
-
-	if ( hasChanges ) {
-		this.cancelPublish.enablePublish();
-	} else {
-		this.cancelPublish.disablePublish();
-	}
-
-	this.makeEditable();
-};
-
-StatementPanel.prototype.makeEditable = function () {
-	var self = this;
-
-	// Show IP address logging notice to anon users
-	if ( mw.user.isAnon() ) {
-		AnonWarning.notifyOnce();
-	}
-
-	// show dialog informing user of licensing & store the returned promise
-	// in licenseAcceptance - submit won't be possible until dialog is closed
-	this.licenseDialogWidget.getConfirmationIfNecessary().then( function () {
-		self.cancelPublish.show();
-		self.editToggle.$element.hide();
-		self.$element.addClass( 'wbmi-entityview-editable' );
-		self.statementWidget.setEditing( true );
-		self.editing = true;
-	} );
-};
-
-StatementPanel.prototype.makeReadOnly = function () {
-	var self = this;
-	this.editing = false;
-	this.$element.removeClass( 'wbmi-entityview-editable' );
-	this.cancelPublish.disablePublish();
-	this.cancelPublish.hide();
-
-	this.statementWidget.disconnect( this, { change: 'onStatementChange' } );
-	this.statementWidget.reset().then( function () {
-		self.statementWidget.connect( self, { change: 'onStatementChange' } );
-		self.editToggle.$element.show();
-	} );
-};
-
-StatementPanel.prototype.sendData = function () {
-	var self = this;
-	this.cancelPublish.setStateSending();
-
-	this.statementWidget.disconnect( this, { change: 'onStatementChange' } );
-	this.statementWidget.submit( mw.mediaInfo.structuredData.currentRevision )
-		.then( function ( response ) {
-			mw.mediaInfo.structuredData.currentRevision = response.pageinfo.lastrevid;
-			self.makeReadOnly();
-
-			// if the statement widget is removed then also remove the panel
-			if (
-				self.statementWidget.getData().length === 0 &&
-				!self.config.isDefaultProperty
-			) {
-				self.emit( 'widgetRemoved', self.config.propertyId );
-			}
-		} )
-		.catch( function () {
-			self.cancelPublish.enablePublish();
-		} )
-		.always( function () {
-			self.statementWidget.connect( self, { change: 'onStatementChange' } );
-			self.cancelPublish.setStateReady();
+			return $( '.wbmi-statement-header .wbmi-entity-label', element ).text();
 		} );
 };
 

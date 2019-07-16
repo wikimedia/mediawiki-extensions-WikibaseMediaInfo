@@ -85,7 +85,6 @@
 							isDefaultProperty: false,
 							helpUrls: helpUrls
 						} );
-						statementPanel.initialize();
 						statementPanels[ data.id ] = statementPanel;
 						statementPanel.on( 'widgetRemoved', onStatementPanelRemoved );
 					} );
@@ -107,7 +106,6 @@
 						isDefaultProperty: propertyId in propertiesInfo,
 						helpUrls: helpUrls
 					} );
-					statementPanel.initialize();
 					statementPanels[ propertyId ] = statementPanel;
 					statementPanel.on( 'widgetRemoved', onStatementPanelRemoved );
 

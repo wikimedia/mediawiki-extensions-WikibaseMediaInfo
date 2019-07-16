@@ -32,10 +32,11 @@ QUnit.module( 'StatementPanel', {}, function () {
 					propertyId: 'P1',
 					entityId: 'M1',
 					properties: { P1: 'wikibase-entityid' }
-				},
-				sp = new StatementPanel( config );
+				};
 
-			sp.initialize();
+			// eslint-disable-next-line no-new
+			new StatementPanel( config );
+
 			assert.ok( true );
 		} );
 
@@ -49,23 +50,7 @@ QUnit.module( 'StatementPanel', {}, function () {
 				},
 				sp = new StatementPanel( config );
 
-			sp.initialize();
 			assert.strictEqual( sp.isEditable(), false );
-		} );
-
-		QUnit.test( 'Edit controls are hidden by default', function ( assert ) {
-			var StatementPanel = require( pathToWidget ),
-				config = {
-					$element: $( '.wbmi-entityview-statementsGroup' ),
-					propertyId: 'P1',
-					entityId: 'M1',
-					properties: { P1: 'wikibase-entityid' }
-				},
-				sp = new StatementPanel( config ),
-				$cancelPublish = sp.cancelPublish.$element;
-
-			sp.initialize();
-			assert.strictEqual( $cancelPublish.is( ':hidden' ), true );
 		} );
 
 		// Scenario 1.1: Anon user
@@ -87,7 +72,6 @@ QUnit.module( 'StatementPanel', {}, function () {
 					spy,
 					done = assert.async();
 
-				sp.initialize();
 				spy = sinon.spy( sp.licenseDialogWidget, 'openDialog' );
 				sp.makeEditable();
 

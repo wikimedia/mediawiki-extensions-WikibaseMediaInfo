@@ -69,22 +69,24 @@ QualifierWidget.prototype.render = function () {
 		'templates/statements/QualifierWidget.mustache+dom'
 	);
 
-	this.asyncFormatForDisplay().then( function ( propertyText, valueText ) {
+	this.asyncFormatForDisplay().then( function ( propertyHtml, valueHtml ) {
 		var data = {
 			editing: self.editing,
 			propertyInput: self.propertyInput,
 			valueInput: self.valueInput,
 			removeIcon: self.removeIcon,
 			property: {
-				text: propertyText
-				// @todo: we'll soon introduce 'link' as well...
+				text: propertyHtml.indexOf( '<' ) >= 0 ? $( propertyHtml ).text() : propertyHtml,
+				link: propertyHtml.indexOf( '<' ) >= 0 ? $( propertyHtml ).attr( 'href' ) : ''
 			},
 			value: {
-				text: valueText
-				// @todo: we'll soon introduce 'link' as well...
+				text: valueHtml.indexOf( '<' ) >= 0 ? $( valueHtml ).text() : valueHtml,
+				link: valueHtml.indexOf( '<' ) >= 0 ? $( valueHtml ).attr( 'href' ) : ''
 			},
 			separator: mw.message( 'colon-separator' ).text()
 		};
+
+		self.$element.children().detach();
 		$element = template.render( data );
 		self.$element.empty().append( $element );
 	} );
@@ -239,8 +241,8 @@ QualifierWidget.prototype.asyncFormatForDisplay = function () {
 		}
 
 		promises = [
-			this.formatProperty( this.propertyInput.getData().id, 'text/plain' ),
-			this.formatValue( dataValue, 'text/plain' )
+			this.formatProperty( this.propertyInput.getData().id, 'text/html' ),
+			this.formatValue( dataValue, 'text/html' )
 		];
 
 		this.formatDisplayPromise = $.when.apply( $, promises ).promise( {

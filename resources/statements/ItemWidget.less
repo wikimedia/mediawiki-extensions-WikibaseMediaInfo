@@ -17,6 +17,15 @@
 .wbmi-item {
 	.flex-display();
 
+	// This block of rules can be removed when other statements is enabled everywhere
+	&.wbmi-item--other-statements-disabled {
+		.wbmi-entity-primary:before {
+			@media screen and ( min-width: @breakpoint-tablet ) {
+				@bullet-separator();
+			}
+		}
+	}
+
 	.wbmi-item-container {
 		.flex(1, 0, 0);
 
@@ -24,12 +33,6 @@
 			.flex-display();
 			padding: @sm-spacing;
 			background-color: @color-background;
-		}
-
-		@media screen and ( min-width: @breakpoint-tablet ) {
-			.wbmi-entity-primary:before {
-				@bullet-separator();
-			}
 		}
 
 		.wbmi-entity-primary,

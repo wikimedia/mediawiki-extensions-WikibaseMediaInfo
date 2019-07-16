@@ -225,10 +225,10 @@
 				"wikibasemediainfo-filepage-add-caption",
 				"wikibasemediainfo-filepage-edit-captions",
 				"wikibasemediainfo-filepage-edit-depicts",
+				"wikibasemediainfo-filepage-publish",
 				"wikibasemediainfo-filepage-cancel",
 				"wikibasemediainfo-filepage-cancel-confirm",
 				"wikibasemediainfo-filepage-edit",
-				"wikibasemediainfo-filepage-publish",
 				"wikibasemediainfo-filepage-caption-empty",
 				"wikibasemediainfo-filepage-caption-too-long",
 				"wikibasemediainfo-filepage-caption-approaching-limit",
@@ -297,6 +297,8 @@
 				"wikibasemediainfo-add-statement",
 				"wikibasemediainfo-property-placeholder",
 				"wikibasemediainfo-remove-all-statements-confirm",
+				"wikibasemediainfo-filepage-cancel",
+				"wikibasemediainfo-filepage-publish",
 				"wikibasemediainfo-statements-depicts-title",
 				"wikibasemediainfo-statements-item-input-placeholder",
 				"wikibasemediainfo-statements-item-input-label",
@@ -315,9 +317,12 @@
 			"templates": [
 				"templates/statements/AddPropertyWidget.mustache+dom",
 				"templates/statements/EntityLabel.mustache+dom",
+				"templates/statements/EntityLabel.mustache+dom",
+				"templates/statements/ItemWidget.mustache+dom",
 				"templates/statements/ItemWidget.mustache+dom",
 				"templates/statements/QualifierValueInputWidget.mustache+dom",
-				"templates/statements/QualifierWidget.mustache+dom"
+				"templates/statements/QualifierWidget.mustache+dom",
+				"templates/statements/StatementWidget.mustache+dom"
 			],
 			"targets": [
 				"desktop",

@@ -3,150 +3,179 @@
 var ItemInputWidget = require( './ItemInputWidget.js' ),
 	FormatValueElement = require( './FormatValueElement.js' ),
 	GetRepoElement = require( './GetRepoElement.js' ),
+	DOMLessGroupWidget = require( 'wikibase.mediainfo.base' ).DOMLessGroupWidget,
 	ItemWidget = require( './ItemWidget.js' ),
-	/**
-	 * @constructor
-	 * @param {Object} config Configuration options
-	 * @param {string} config.entityId Entity ID (e.g. M123 id of the file you just uploaded)
-	 * @param {string} config.propertyId Property ID (e.g. P123 id of `depicts` property)
-	 * @param {string} [config.properties] Properties map: { propertyId: datatype, ...}
-	 * @param {Object} [config.qualifiers] Qualifiers map: { propertyId: datatype, ...}
-	 * @param {string} [config.title]
-	 * @param {bool} config.isDefaultProperty True if the widget is shown even if there are
-	 *  no values for the property
-	 * @param {Object} [config.helpUrls]  An object with property id as members and help urls for
-	 *  the property as values
-	 *  e.g. { P1: "https://commons.wikimedia.org/wiki/Special:MyLanguage/Commons:Depicts" }
-	 */
-	StatementWidget = function MediaInfoStatementsStatementWidget( config ) {
-		var self = this,
-			learnMoreLink,
-			learnMoreButton,
-			$label = $( '<h4>' )
-				.addClass( 'wbmi-entity-label' )
-				.text( '' ), // will be filled out later (after formatValue call)
-			$link = $( '<a>' )
-				.addClass( 'wbmi-entity-link ' ) // repo class will be added later (after getRepoFromUrl call)
-				.attr( 'href', '#' ) // will be filled out later (after formatValue call)
-				.attr( 'target', '_blank' ),
-			dataValue;
+	StatementWidget;
 
-		config = config || {};
-		config.helpUrls = config.helpUrls || {};
-		config.qualifiers = config.qualifiers || mw.config.get( 'wbmiDepictsQualifierProperties' ) || {};
+/**
+* @constructor
+* @param {Object} config Configuration options
+* @param {string} config.entityId Entity ID (e.g. M123 id of the file you just uploaded)
+* @param {string} config.propertyId Property ID (e.g. P123 id of `depicts` property)
+* @param {string} [config.properties] Properties map: { propertyId: datatype, ...}
+* @param {Object} [config.qualifiers] Qualifiers map: { propertyId: datatype, ...}
+* @param {string} [config.title]
+* @param {bool} config.isDefaultProperty True if the widget is shown even if there are
+*  no values for the property
+* @param {Object} [config.helpUrls]  An object with property id as members and help urls for
+*  the property as values
+* @param {bool} [config.showControls] Whether or not to display editing controls
+*  e.g. { P1: "https://commons.wikimedia.org/wiki/Special:MyLanguage/Commons:Depicts" }
+*/
+StatementWidget = function ( config ) {
+	config = config || {};
+	config.helpUrls = config.helpUrls || {};
+	config.qualifiers = config.qualifiers || mw.config.get( 'wbmiDepictsQualifierProperties' ) || {};
 
-		StatementWidget.parent.call( this, config );
-		OO.ui.mixin.GroupElement.call( this );
+	StatementWidget.parent.call( this, config );
+	DOMLessGroupWidget.call( this );
 
-		this.config = config;
-		this.entityId = config.entityId;
-		this.properties = config.properties || mw.config.get( 'wbmiProperties' ) || {};
-		this.propertyId = config.propertyId;
-		this.qualifiers = config.qualifiers;
-		this.title = config.title || ( mw.config.get( 'wbmiPropertyTitles' ) || [] )[ this.propertyId ];
-		this.data = new wikibase.datamodel.StatementList();
-		this.editing = false;
+	// TODO: remove unnecessary props after enabling wbmiEnableOtherStatements everywhere;
+	// this includes `this.properties` and `this.qualifiers`
+	this.config = config;
+	this.entityId = config.entityId;
+	this.properties = config.properties || mw.config.get( 'wbmiProperties' ) || {};
+	this.propertyId = config.propertyId;
+	this.qualifiers = config.qualifiers;
+	this.title = config.title || ( mw.config.get( 'wbmiPropertyTitles' ) || [] )[ this.propertyId ];
+	this.data = new wikibase.datamodel.StatementList();
+	this.editing = false;
 
-		this.input = new ItemInputWidget( {
-			classes: [ 'wbmi-statement-input' ],
-			type: this.properties[ this.propertyId ] || 'string',
-			disabled: this.disabled
-		} );
-		this.input.connect( this, { choose: 'addItemFromInput' } );
+	this.input = new ItemInputWidget( {
+		classes: [ 'wbmi-statement-input' ],
+		type: this.properties[ this.propertyId ] || 'string',
+		disabled: this.disabled
+	} );
 
-		this.$footer = $( '<div>' ).addClass( 'wbmi-statement-footer' );
+	this.editButton = new OO.ui.ButtonWidget( {
+		label: mw.message( 'wikibasemediainfo-filepage-edit' ).text(),
+		framed: false,
+		flags: 'progressive',
+		title: mw.message( 'wikibasemediainfo-filepage-edit-depicts' ).text(),
+		classes: [ 'wbmi-entityview-editButton' ]
+	} );
 
-		this.removeButton = new OO.ui.ButtonWidget( {
-			label: mw.message( 'wikibasemediainfo-statements-remove' ).text(),
-			classes: [ 'wbmi-statement-remove' ],
-			flags: 'destructive',
-			framed: false
-		} )
-			.on( 'click', function () {
-				OO.ui.confirm(
-					mw.msg( 'wikibasemediainfo-remove-all-statements-confirm' ),
-					{
-						actions: [
-							{
-								action: 'accept',
-								label: mw.msg( 'ooui-dialog-message-accept' ),
-								flags: [ 'primary', 'destructive' ]
-							},
-							{
-								action: 'reject',
-								label: mw.msg( 'ooui-dialog-message-reject' ),
-								flags: 'safe'
-							}
-						]
-					}
-				).then( function ( confirmed ) {
-					if ( confirmed ) {
-						self.clearItems();
-					}
-				} );
-			} );
+	this.cancelButton = new OO.ui.ButtonWidget( {
+		framed: false,
+		flags: [ 'destructive' ],
+		label: mw.message( 'wikibasemediainfo-filepage-cancel' ).text()
+	} );
 
-		learnMoreLink = config.helpUrls[ this.propertyId ];
-		if ( learnMoreLink ) {
-			learnMoreButton = new OO.ui.ButtonWidget( {
-				label: mw.message( 'wikibasemediainfo-statements-learn-more' ).text(),
-				classes: [ 'wbmi-statement-learn-more' ],
-				flags: 'progressive',
-				framed: false
-			} );
-			learnMoreButton.connect( this, { click: window.open.bind( window, learnMoreLink, '_blank' ) } );
-		}
-		this.connect( this, { change: 'renderFooter' } );
+	this.publishButton = new OO.ui.ButtonInputWidget( {
+		type: 'submit',
+		useInputTag: true,
+		label: mw.message( 'wikibasemediainfo-filepage-publish' ).text(),
+		flags: [ 'primary', 'progressive' ]
+	} );
 
-		this.$element.addClass( 'wbmi-statements-widget' ).append(
-			$( '<div>' ).addClass( 'wbmi-statement-header' ).append(
-				$( '<div>' ).addClass( 'wbmi-entity-data' ).append(
-					$( '<div>' ).addClass( 'wbmi-entity-title' ).append(
-						this.title ? $( '<h3>' ).addClass( 'wbmi-statements-title' ).text( this.title ) : '',
-						$label
-					),
-					$link.text( this.propertyId.replace( /^.+:/, '' ) )
-				)
-			),
-			this.input.$element,
-			this.$group.addClass( 'wbmi-content-items-group' ),
-			this.$footer.append(
-				$( '<div>' ).addClass( 'wbmi-statement-footer-buttons' ).append(
-					// If the property is a default property don't show 'remove all'
-					!config.isDefaultProperty ? this.removeButton.$element.hide().addClass( 'wmbi-hidden' ) : '',
-					learnMoreButton ? learnMoreButton.$element : ''
-				).hide()
-			)
-		);
+	this.removeButton = new OO.ui.ButtonWidget( {
+		label: mw.message( 'wikibasemediainfo-statements-remove' ).text(),
+		classes: [ 'wbmi-statement-remove' ],
+		flags: 'destructive',
+		framed: false
+	} );
 
-		// fetch property value & url
-		dataValue = new wikibase.datamodel.EntityId( this.propertyId );
-		$.when(
-			this.formatValue( dataValue, 'text/plain' ),
-			this.formatValue( dataValue, 'text/html' )
-		).then( function ( plain, html ) {
-			var url = $( html ).attr( 'href' );
+	this.learnMoreLink = this.config.helpUrls[ this.propertyId ];
+	this.learnMoreButton = new OO.ui.ButtonWidget( {
+		label: mw.message( 'wikibasemediainfo-statements-learn-more' ).text(),
+		classes: [ 'wbmi-statement-learn-more' ],
+		flags: 'progressive',
+		framed: false
+	} );
 
-			$label.text( plain );
-			$link.attr( 'href', url );
+	// event listeners
+	this.input.connect( this, { choose: 'addItemFromInput' } );
+	this.editButton.connect( this, { click: [ 'emit', 'edit' ] } );
+	this.editButton.connect( this, { click: [ 'setEditing', true ] } );
+	this.cancelButton.connect( this, { click: [ 'emit', 'cancel' ] } );
+	this.publishButton.connect( this, { click: [ 'emit', 'publish' ] } );
+	this.removeButton.connect( this, { click: 'showRemoveConfirmationDialogue' } );
+	this.learnMoreButton.connect( this, { click: window.open.bind( window, this.learnMoreLink, '_blank' ) } );
+	this.connect( this, { change: 'updateControls' } );
 
-			self.getRepoFromUrl( url ).then( function ( repo ) {
-				// Classes used: wbmi-entity-link-foreign-repo-* and wbmi-entity-link-local-repo
-				$link.addClass( 'wbmi-entity-link' + ( repo !== '' ? '-foreign-repo-' + repo : '-local-repo' ) );
-			} );
-		} );
+	this.updateControls();
+	this.render();
+};
 
-		this.renderFooter();
-	};
 OO.inheritClass( StatementWidget, OO.ui.Widget );
-OO.mixinClass( StatementWidget, OO.ui.mixin.GroupElement );
+OO.mixinClass( StatementWidget, DOMLessGroupWidget );
 OO.mixinClass( StatementWidget, FormatValueElement );
 OO.mixinClass( StatementWidget, GetRepoElement );
 
-StatementWidget.prototype.renderFooter = function () {
-	var showRemove = this.getItems().length > 0 && this.editing;
-	this.removeButton.$element.toggle( showRemove );
-	this.$footer.find( '.wbmi-statement-footer-buttons' ).toggle( this.editing );
+StatementWidget.prototype.render = function () {
+	var self = this,
+		dataValue = new wikibase.datamodel.EntityId( this.propertyId );
+
+	// fetch property value & url
+	return $.when(
+		this.formatValue( dataValue, 'text/plain' ),
+		this.formatValue( dataValue, 'text/html' )
+	).then( function ( plain, html ) {
+		self.url = $( html ).attr( 'href' );
+		self.label = plain;
+		self.getRepoFromUrl( self.url ).then( function ( repo ) {
+			// @todo remove repo after enabling wbmiEnableOtherStatements everywhere
+			self.repo = repo;
+			self.renderInternal();
+		} );
+	} );
+};
+
+StatementWidget.prototype.renderInternal = function () {
+	var template,
+		data,
+		$container;
+
+	// Get the template
+	template = mw.template.get(
+		'wikibase.mediainfo.statements',
+		'templates/statements/StatementWidget.mustache+dom'
+	);
+
+	// prepare the data
+	data = {
+		label: this.label,
+		title: this.title,
+		id: this.propertyId,
+		url: this.url,
+		repo: this.repo, // @todo remove repo after enabling wbmiEnableOtherStatements everywhere
+		showControls: this.config.showControls,
+		editing: this.isEditing(),
+		items: this.getItems(),
+		isDefaultProperty: this.config.isDefaultProperty,
+		input: this.input,
+		cancelButton: this.cancelButton,
+		editButton: this.editButton,
+		publishButton: this.publishButton,
+		removeAll: this.removeButton,
+		learnMoreLink: this.learnMoreLink,
+		learnMoreButton: this.learnMoreButton,
+		otherStatementsEnabled: mw.config.get( 'wbmiEnableOtherStatements', false )
+	};
+
+	// render the template with the data
+	this.$element.children().detach();
+	$container = template.render( data );
+	this.$element.html( $container );
+};
+
+StatementWidget.prototype.updateControls = function () {
+	if ( this.publishButton ) {
+		this.publishButton.setDisabled( this.isDisabled() || !this.hasChanges() );
+	}
+	if ( this.editButton ) {
+		this.editButton.setDisabled( this.isDisabled() || this.isEditing() );
+	}
+};
+
+/**
+ * @return {boolean}
+ */
+StatementWidget.prototype.hasChanges = function () {
+	var changes = this.getChanges(),
+		removals = this.getRemovals();
+
+	return changes.length > 0 || removals.length > 0;
 };
 
 /**
@@ -155,10 +184,6 @@ StatementWidget.prototype.renderFooter = function () {
  */
 StatementWidget.prototype.addItemFromInput = function ( item, data ) {
 	var widget = this.createItem( item.getData(), data.label, data.url );
-	widget.connect( this, { delete: [ 'removeItems', [ widget ] ] } );
-	widget.connect( this, { delete: [ 'emit', 'change' ] } );
-	widget.connect( this, { change: [ 'setEditing', true ] } );
-	widget.connect( this, { change: [ 'emit', 'change' ] } );
 
 	this.addItems( [ widget ] );
 
@@ -170,6 +195,7 @@ StatementWidget.prototype.addItemFromInput = function ( item, data ) {
 
 	this.emit( 'manual-add', widget );
 	this.emit( 'change', widget );
+	this.render();
 };
 
 /**
@@ -185,16 +211,23 @@ StatementWidget.prototype.createItem = function ( dataValue, label, url ) {
 		claim = new wikibase.datamodel.Claim( mainSnak, qualifiers, guidGenerator.newGuid() ),
 		references = null,
 		rank = wikibase.datamodel.Statement.RANK.NORMAL,
-		statement = new wikibase.datamodel.Statement( claim, references, rank );
+		statement = new wikibase.datamodel.Statement( claim, references, rank ),
+		widget = new ItemWidget( {
+			disabled: this.disabled,
+			qualifiers: this.qualifiers,
+			data: statement,
+			editing: this.editing,
+			label: label,
+			url: url
+		} );
 
-	return new ItemWidget( {
-		disabled: this.disabled,
-		qualifiers: this.qualifiers,
-		data: statement,
-		editing: this.editing,
-		label: label,
-		url: url
-	} );
+	widget.connect( this, { delete: [ 'removeItems', [ widget ] ] } );
+	widget.connect( this, { delete: [ 'emit', 'change' ] } );
+	widget.connect( this, { delete: 'render' } );
+	widget.connect( this, { change: [ 'setEditing', true ] } );
+	widget.connect( this, { change: [ 'emit', 'change' ] } );
+
+	return widget;
 };
 
 /**
@@ -221,7 +254,6 @@ StatementWidget.prototype.setData = function ( data ) {
 		return;
 	}
 
-	self = this;
 	sortedData = data.toArray().sort( function ( statement1, statement2 ) {
 		return statement2.getRank() - statement1.getRank();
 	} );
@@ -259,11 +291,6 @@ StatementWidget.prototype.setData = function ( data ) {
 			self.moveItem( widget, i );
 		} else {
 			widget = self.createItem( mainSnak.getValue() );
-			widget.connect( self, { delete: [ 'removeItems', [ widget ] ] } );
-			widget.connect( self, { delete: [ 'emit', 'change' ] } );
-			widget.connect( self, { change: [ 'setEditing', true ] } );
-			widget.connect( self, { change: [ 'emit', 'change' ] } );
-
 			self.insertItem( widget, i );
 		}
 
@@ -271,6 +298,7 @@ StatementWidget.prototype.setData = function ( data ) {
 	} );
 
 	this.data = data;
+	this.render();
 };
 
 /**
@@ -278,6 +306,10 @@ StatementWidget.prototype.setData = function ( data ) {
  */
 StatementWidget.prototype.setEditing = function ( editing ) {
 	var self = this;
+
+	if ( this.editing === editing ) {
+		return;
+	}
 
 	this.editing = editing;
 
@@ -290,7 +322,15 @@ StatementWidget.prototype.setEditing = function ( editing ) {
 		}
 	} );
 
-	this.renderFooter();
+	this.updateControls();
+	this.render();
+};
+
+/**
+ * @return {boolean}
+ */
+StatementWidget.prototype.isEditing = function () {
+	return this.editing;
 };
 
 /**
@@ -310,6 +350,8 @@ StatementWidget.prototype.setDisabled = function ( disabled ) {
 			item.setDisabled( disabled );
 		} );
 	}
+
+	this.updateControls();
 
 	return this;
 };
@@ -364,7 +406,9 @@ StatementWidget.prototype.reset = function () {
  */
 StatementWidget.prototype.submit = function ( baseRevId ) {
 	var self = this,
-		api = wikibase.api.getLocationAgnosticMwApi( mw.config.get( 'wbmiRepoApiUrl', mw.config.get( 'wbRepoApiUrl' ) ) ),
+		api = wikibase.api.getLocationAgnosticMwApi(
+			mw.config.get( 'wbmiRepoApiUrl', mw.config.get( 'wbRepoApiUrl' ) )
+		),
 		data = this.getData(),
 		serializer = new wikibase.serialization.StatementSerializer(),
 		promise = $.Deferred().resolve( { pageinfo: { lastrevid: baseRevId } } ).promise(),
@@ -477,6 +521,33 @@ StatementWidget.prototype.submit = function ( baseRevId ) {
 	} );
 
 	return promise;
+};
+
+/**
+ * Display the confirmation dialogue to the user when they click the "Remove
+ * All" button for a given block of statements.
+ */
+StatementWidget.prototype.showRemoveConfirmationDialogue = function () {
+	var self = this;
+
+	OO.ui.confirm(
+		mw.message( 'wikibasemediainfo-remove-all-statements-confirm' ).text(), {
+			actions: [ {
+				action: 'accept',
+				label: mw.message( 'ooui-dialog-message-accept' ).text(),
+				flags: [ 'primary', 'destructive' ]
+			}, {
+				action: 'reject',
+				label: mw.message( 'ooui-dialog-message-reject' ).text(),
+				flags: 'safe'
+			} ]
+		}
+	).done( function ( confirmed ) {
+		if ( confirmed ) {
+			self.clearItems();
+			self.render();
+		}
+	} );
 };
 
 module.exports = StatementWidget;

@@ -1,4 +1,66 @@
-<div class="wbmi-item {{#editing}}wbmi-item-edit{{/editing}}{{^editing}}wbmi-item-read{{/editing}}">
+{{!
+Template currently contains 2 versions, pre and post other-statements.
+The second block (^otherStatementsEnabled) can be removed once this feature
+has been enabled everywhere.
+}}
+
+{{#otherStatementsEnabled}}
+<div class="wbmi-item
+			{{#editing}}wbmi-item-edit{{/editing}}
+			{{^editing}}wbmi-item-read{{/editing}}">
+	<div class="wbmi-item-container">
+		<div class="wbmi-entity-header">
+			<div class="wbmi-entity-data">
+				<div class="wbmi-entity-title">
+					<h4 class="wbmi-entity-label">
+						<a target="_blank" href="{{url}}">
+							{{label}}
+						</a>
+					</h4>
+				</div>
+			</div>
+
+			<a class="wbmi-entity-primary
+					  {{#prominent}}wbmi-entity-is-prominent{{/prominent}}
+					  {{^prominent}}wbmi-entity-mark-as-prominent{{/prominent}}"
+			   href="#">
+				{{#prominent}}
+				<span class="oo-ui-widget
+							 oo-ui-widget-enabled
+							 oo-ui-iconElement
+							 oo-ui-iconElement-icon
+							 oo-ui-icon-check
+							 oo-ui-labelElement-invisible
+							 oo-ui-iconWidget"
+					  aria-disabled="false">
+				</span>
+				{{/prominent}}
+				{{prominenceMessage}}
+			</a>
+		</div>
+
+		<div class="wbmi-item-content">
+			{{#qualifiers.length}}
+			<div class="wbmi-item-content-group">
+				{{#qualifiers}}
+				{{{.}}}
+				{{/qualifiers}}
+			</div>
+			{{/qualifiers.length}}
+
+			{{#editing}}{{{addQualifierButton}}}{{/editing}}
+		</div>
+	</div>
+
+	{{#editing}}{{{removeButton}}}{{/editing}}
+</div>
+{{/otherStatementsEnabled}}
+
+{{^otherStatementsEnabled}}
+<div class="wbmi-item
+			wbmi-item--other-statements-disabled
+			{{#editing}}wbmi-item-edit{{/editing}}
+			{{^editing}}wbmi-item-read{{/editing}}">
 	<div class="wbmi-item-container">
 		<div class="wbmi-entity-header">
 			<div class="wbmi-entity-data">
@@ -40,11 +102,11 @@
 
 		<div class="wbmi-item-content">
 			{{#qualifiers.length}}
-				<div class="wbmi-item-content-group">
-					{{#qualifiers}}
-						{{{.}}}
-					{{/qualifiers}}
-				</div>
+			<div class="wbmi-item-content-group">
+				{{#qualifiers}}
+				{{{.}}}
+				{{/qualifiers}}
+			</div>
 			{{/qualifiers.length}}
 
 			{{#editing}}{{{addQualifierButton}}}{{/editing}}
@@ -53,3 +115,5 @@
 
 	{{#editing}}{{{removeButton}}}{{/editing}}
 </div>
+{{/otherStatementsEnabled}}
+

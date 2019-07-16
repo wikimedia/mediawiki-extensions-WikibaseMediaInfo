@@ -7,9 +7,37 @@
 
 	{{^editing}}
 		<div class="wbmi-qualifier-value">
-			{{#property.text}}{{property.text}}{{/property.text}}
-			{{#property.text}}{{#value.text}}<span class="wbmi-qualifier-value-separator">{{separator}}</span>{{/value.text}}{{/property.text}}
-			{{#value.text}}{{value.text}}{{/value.text}}
+			{{#property.text}}
+				{{#property.link}}
+				<a href="{{property.link}}" target="_blank">
+					{{property.text}}
+				</a>
+				{{/property.link}}
+
+				{{^property.link}}
+				{{property.text}}
+				{{/property.link}}
+			{{/property.text}}
+
+			{{#property.text}}
+				{{#value.text}}
+				<span class="wbmi-qualifier-value-separator">
+					&thinsp;{{separator}}&thinsp;
+				</span>
+				{{/value.text}}
+			{{/property.text}}
+
+			{{#value.text}}
+				{{#value.link}}
+				<a href="{{value.link}}" target="_blank">
+					{{value.text}}
+				</a>
+				{{/value.link}}
+
+				{{^value.link}}
+				{{value.text}}
+				{{/value.link}}
+			{{/value.text}}
 		</div>
 	{{/editing}}
 </div>

@@ -154,7 +154,8 @@ ItemWidget.prototype.renderInternal = function () {
 		editing: this.editing,
 		removeButton: removeButton,
 		qualifiers: this.getItems(),
-		addQualifierButton: addQualifierButton
+		addQualifierButton: addQualifierButton,
+		otherStatementsEnabled: mw.config.get( 'wbmiEnableOtherStatements', false )
 	};
 
 	// Render ItemWidget template

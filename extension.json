@@ -270,7 +270,8 @@
 				"resources/statements/QualifierWidget.js",
 				"resources/statements/QualifierAutocompleteWidget.js",
 				"resources/statements/NewQualifierWidget.js",
-				"resources/statements/AddPropertyWidget.js"
+				"resources/statements/AddPropertyWidget.js",
+				"resources/statements/LinkNoticeWidget.js"
 			],
 			"dependencies": [
 				"wikibase.mediainfo.base",
@@ -306,6 +307,8 @@
 				"wikibasemediainfo-statements-item-mark-as-prominent",
 				"wikibasemediainfo-statements-item-remove",
 				"wikibasemediainfo-statements-item-add-qualifier",
+				"wikibasemediainfo-statements-link-notice-text",
+				"wikibasemediainfo-statements-link-notice-dismiss",
 				"wikibasemediainfo-filepage-statement-no-results",
 				"wikibasemediainfo-statements-remove",
 				"wikibasemediainfo-statements-learn-more",
@@ -319,7 +322,7 @@
 				"templates/statements/EntityLabel.mustache+dom",
 				"templates/statements/EntityLabel.mustache+dom",
 				"templates/statements/ItemWidget.mustache+dom",
-				"templates/statements/ItemWidget.mustache+dom",
+				"templates/statements/LinkNoticeWidget.mustache+dom",
 				"templates/statements/QualifierValueInputWidget.mustache+dom",
 				"templates/statements/QualifierWidget.mustache+dom",
 				"templates/statements/StatementWidget.mustache+dom"
@@ -338,7 +341,8 @@
 				"resources/statements/StatementWidget.less",
 				"resources/statements/ItemInputWidget.less",
 				"resources/statements/ItemWidget.less",
-				"resources/statements/QualifierWidget.less"
+				"resources/statements/QualifierWidget.less",
+				"resources/statements/LinkNoticeWidget.less"
 			],
 			"targets": [
 				"desktop",
@@ -421,7 +425,8 @@
 		"remoteExtPath": "WikibaseMediaInfo"
 	},
 	"DefaultUserOptions": {
-		"wbmi-cc0-confirmed": 0
+		"wbmi-cc0-confirmed": 0,
+		"wbmi-wikidata-link-notice-dismissed": 0
 	},
 	"SpecialPages": {},
 	"manifest_version": 2,

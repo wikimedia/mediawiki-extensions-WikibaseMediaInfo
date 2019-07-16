@@ -1,0 +1,5 @@
+{{#canDisplay}}
+{{^isDismissed}}
+	{{{noticeWidget}}}
+{{/isDismissed}}
+{{/canDisplay}}

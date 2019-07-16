@@ -1,8 +1,7 @@
 @import 'mediawiki.mixins';
 @import '../mediainfo-variables.less';
 
-// TODO: refactor this stylesheet and move showing/hiding logic into the
-// ItemWidget/QualifierWidget JS & templates
+// TODO: Is there any other way to do this?
 .wbmi-item-read .wbmi-qualifier > *:not( .wbmi-qualifier-value ),
 .wbmi-item-edit .wbmi-qualifier > .wbmi-qualifier-value {
 	/* stylelint-disable-next-line declaration-no-important */
@@ -25,6 +24,12 @@
 			.flex-display();
 			padding: @sm-spacing;
 			background-color: @color-background;
+		}
+
+		@media screen and ( min-width: @breakpoint-tablet ) {
+			.wbmi-entity-primary:before {
+				@bullet-separator();
+			}
 		}
 
 		.wbmi-entity-primary,

@@ -11,6 +11,7 @@
  * @param {string} [config.editing] True for edit mode, False for read mode
  */
 var FormatValueElement = require( './FormatValueElement.js' ),
+	GetRepoElement = require( './GetRepoElement.js' ),
 	QualifierWidget = require( './QualifierWidget.js' ),
 	NewQualifierWidget = require( './NewQualifierWidget.js' ),
 	DOMLessGroupWidget = require( 'wikibase.mediainfo.base' ).DOMLessGroupWidget,
@@ -26,6 +27,7 @@ var FormatValueElement = require( './FormatValueElement.js' ),
 		this.label = config.label;
 		this.url = config.url;
 		this.config = config;
+		this.repo = undefined;
 
 		ItemWidget.parent.call( this, $.extend( {}, config ) );
 		DOMLessGroupWidget.call( this, $.extend( {}, config ) );
@@ -36,6 +38,7 @@ var FormatValueElement = require( './FormatValueElement.js' ),
 OO.inheritClass( ItemWidget, OO.ui.Widget );
 OO.mixinClass( ItemWidget, DOMLessGroupWidget );
 OO.mixinClass( ItemWidget, FormatValueElement );
+OO.mixinClass( ItemWidget, GetRepoElement );
 
 /**
  * @return {jQuery.Promise}
@@ -59,6 +62,7 @@ ItemWidget.prototype.render = function () {
 				self.label = plain;
 
 				self.url = undefined;
+				self.repo = undefined;
 				try {
 					self.url = $( html ).attr( 'href' );
 				} catch ( e ) {
@@ -67,6 +71,16 @@ ItemWidget.prototype.render = function () {
 				}
 			}
 		);
+	}
+
+	if ( this.repo === undefined ) {
+		promise = promise.then( function () {
+			if ( self.url !== undefined ) {
+				return self.getRepoFromUrl( self.url ).then( function ( repo ) {
+					self.repo = repo;
+				} );
+			}
+		} );
 	}
 
 	return promise.then( this.renderInternal.bind( this ) );
@@ -132,6 +146,7 @@ ItemWidget.prototype.renderInternal = function () {
 		label: this.label,
 		url: this.url,
 		id: id.replace( /^.+:/, '' ),
+		repo: this.repo,
 		prominent: prominent,
 		prominenceMessage: prominent ?
 			mw.message( 'wikibasemediainfo-statements-item-is-prominent' ).text() :
@@ -262,9 +277,10 @@ ItemWidget.prototype.setData = function ( data ) {
 
 	// save & re-render title
 	if ( !this.data.equals( data ) ) {
-		// property has changed: invalidate the label & url
+		// property has changed: invalidate the label, url & repo
 		this.label = undefined;
 		this.url = undefined;
+		this.repo = undefined;
 
 		this.render();
 	}

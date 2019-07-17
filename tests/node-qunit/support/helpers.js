@@ -240,28 +240,44 @@ module.exports.requireULS = function () {
 };
 
 module.exports.registerModules = function () {
+	// eslint-disable-next-line no-undef
+	var extensionJson = this.readJSON( path.join( __dirname, '..', '..', '..', 'extension.json' ) ),
+		modules = extensionJson.ResourceModules;
+
 	mockery.enable( {
 		warnOnReplace: false,
 		warnOnUnregistered: false
 	} );
 
-	// RL loader modules are not exposed, so let's make sure they're
-	// known when source code requires it...
-	mockery.registerMock( 'wikibase.mediainfo.base', require( '../../../resources/base/index.js' ) );
-	mockery.registerMock( 'wikibase.mediainfo.statements', require( '../../../resources/statements/index.js' ) );
+	Object.keys( modules ).forEach( function ( moduleName ) {
+		var packageFiles = modules[ moduleName ].packageFiles;
+		if ( !packageFiles ) {
+			return;
+		}
+
+		try {
+			// eslint-disable-next-line no-undef
+			mockery.registerMock( moduleName, require( path.join( __dirname, '..', '..', '..', packageFiles[ 0 ] ) ) );
+		} catch ( e ) {
+			// failed to include, but that could be ok, it might just expect immediate
+			// execution in the browser - we'll have to deal with this module not
+			// being available for JS tests
+		}
+	} );
 };
 
 module.exports.registerTemplates = function () {
-	var templates = {
-		'wikibase.mediainfo.statements': [
-			'templates/statements/EntityLabel.mustache+dom',
-			'templates/statements/ItemWidget.mustache+dom',
-			'templates/statements/QualifierWidget.mustache+dom'
-		]
-	};
+	// eslint-disable-next-line no-undef
+	var extensionJson = this.readJSON( path.join( __dirname, '..', '..', '..', 'extension.json' ) ),
+		modules = extensionJson.ResourceModules;
 
-	Object.keys( templates ).forEach( function ( moduleName ) {
-		templates[ moduleName ].forEach( function ( templateName ) {
+	Object.keys( modules ).forEach( function ( moduleName ) {
+		var templates = modules[ moduleName ].templates;
+		if ( !templates ) {
+			return;
+		}
+
+		templates.forEach( function ( templateName ) {
 			// eslint-disable-next-line no-undef
 			var template = fs.readFileSync( path.join( __dirname, '..', '..', '..', templateName ), 'utf8' );
 			global.mw.template.add( moduleName, templateName, template );

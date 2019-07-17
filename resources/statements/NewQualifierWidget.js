@@ -1,7 +1,7 @@
 'use strict';
 
 var QualifierWidget,
-	QualifierAutocomplete = require( './QualifierAutocomplete.js' ),
+	QualifierAutocomplete = require( './QualifierAutocompleteWidget.js' ),
 	QualifierValueInput = require( './QualifierValueInputWidget.js' ),
 	FormatValueElement = require( './FormatValueElement.js' );
 

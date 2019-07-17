@@ -1,12 +1,12 @@
 'use strict';
 
-var QualifierAutocomplete,
+var QualifierAutocompleteWidget,
 	EntityLookupElement = require( './EntityLookupElement.js' );
 
 /**
- * QualifierAutocomplete. This widget acts as a text input element with
+ * QualifierAutocompleteWidget. This widget acts as a text input element with
  * auto-suggestion functionality. The suggestions are filtered based on the
- * hard-coded values in QualifierAutocomplete.prototype.getFilters().
+ * hard-coded values in QualifierAutocompleteWidget.prototype.getFilters().
  *
  * This widget stores data about the property which has been chosen,
  * if a selection has been made. This data can be retreived by the parent
@@ -15,7 +15,7 @@ var QualifierAutocomplete,
  * @constructor
  * @param {Object} config
  */
-QualifierAutocomplete = function ( config ) {
+QualifierAutocompleteWidget = function ( config ) {
 	this.config = $.extend(
 		config, {
 			entityType: 'property',
@@ -24,7 +24,7 @@ QualifierAutocomplete = function ( config ) {
 		}
 	);
 
-	QualifierAutocomplete.parent.call( this, this.config );
+	QualifierAutocompleteWidget.parent.call( this, this.config );
 	EntityLookupElement.call( this, $.extend( {}, config, {
 		allowSuggestionsWhenEmpty: false,
 		highlightFirst: false
@@ -37,14 +37,14 @@ QualifierAutocomplete = function ( config ) {
 	this.connect( this, { choose: 'onChoose' } );
 };
 
-OO.inheritClass( QualifierAutocomplete, OO.ui.TextInputWidget );
-OO.mixinClass( QualifierAutocomplete, EntityLookupElement );
+OO.inheritClass( QualifierAutocompleteWidget, OO.ui.TextInputWidget );
+OO.mixinClass( QualifierAutocompleteWidget, EntityLookupElement );
 
 /**
  * Handle the "choose" event from the widget's autocomplete menu.
  * @param {OO.ui.MenuOptionWidget} chosen
  */
-QualifierAutocomplete.prototype.onChoose = function ( chosen ) {
+QualifierAutocompleteWidget.prototype.onChoose = function ( chosen ) {
 	this.setData( {
 		id: chosen.data.id,
 		label: chosen.data.label,
@@ -58,7 +58,7 @@ QualifierAutocomplete.prototype.onChoose = function ( chosen ) {
  * @param {string} data.dataValueType property datatype
  * @param {string} [data.label] human-readable property label
  */
-QualifierAutocomplete.prototype.setData = function ( data ) {
+QualifierAutocompleteWidget.prototype.setData = function ( data ) {
 	this.data = data || {};
 	this.setValue( this.data.label || '' );
 };
@@ -66,7 +66,7 @@ QualifierAutocomplete.prototype.setData = function ( data ) {
 /**
  * @return {Object} data
  */
-QualifierAutocomplete.prototype.getData = function () {
+QualifierAutocompleteWidget.prototype.getData = function () {
 	return this.data || {};
 };
 
@@ -75,7 +75,7 @@ QualifierAutocomplete.prototype.getData = function () {
  * consisting of the hard-coded supportedTypes. This could probably be improved.
  * @return {Object[]} filters
  */
-QualifierAutocomplete.prototype.getFilters = function () {
+QualifierAutocompleteWidget.prototype.getFilters = function () {
 	var supportedTypes = [
 		'wikibase-item',
 		'quantity',
@@ -87,4 +87,4 @@ QualifierAutocomplete.prototype.getFilters = function () {
 	];
 };
 
-module.exports = QualifierAutocomplete;
+module.exports = QualifierAutocompleteWidget;

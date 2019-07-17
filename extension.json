@@ -268,7 +268,7 @@
 				"resources/statements/ItemInputWidget.js",
 				"resources/statements/ItemWidget.js",
 				"resources/statements/QualifierWidget.js",
-				"resources/statements/QualifierAutocomplete.js",
+				"resources/statements/QualifierAutocompleteWidget.js",
 				"resources/statements/NewQualifierWidget.js",
 				"resources/statements/AddPropertyWidget.js"
 			],

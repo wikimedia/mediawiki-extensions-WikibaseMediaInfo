@@ -1,10 +1,10 @@
-var pathToWidget = '../../../../resources/statements/QualifierAutocomplete.js',
+var pathToWidget = '../../../../resources/statements/QualifierAutocompleteWidget.js',
 	hooks = require( '../../support/hooks.js' );
 
-QUnit.module( 'QualifierAutocomplete', hooks.mediainfo, function () {
+QUnit.module( 'QualifierAutocompleteWidget', hooks.mediainfo, function () {
 	QUnit.test( 'Valid data roundtrip', function ( assert ) {
-		var QualifierAutocomplete = require( pathToWidget ),
-			widget = new QualifierAutocomplete(),
+		var QualifierAutocompleteWidget = require( pathToWidget ),
+			widget = new QualifierAutocompleteWidget(),
 			property = { id: 'P1', label: 'Some Property' };
 
 		widget.setData( property );
@@ -12,8 +12,8 @@ QUnit.module( 'QualifierAutocomplete', hooks.mediainfo, function () {
 	} );
 
 	QUnit.test( 'setData() sets input value if optional label argument is provided', function ( assert ) {
-		var QualifierAutocomplete = require( pathToWidget ),
-			widget = new QualifierAutocomplete(),
+		var QualifierAutocompleteWidget = require( pathToWidget ),
+			widget = new QualifierAutocompleteWidget(),
 			property = { id: 'P1', label: 'Some Property' };
 
 		widget.setData( property );

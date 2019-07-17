@@ -1,0 +1,10 @@
+<div class="wbmi-add-property">
+	{{{addPropertyButton}}}
+
+	{{#editing}}
+		<div class="wbmi-entityview-add-statement-property-container">
+			{{{propertyInputWidget}}}
+			{{{removeButton}}}
+		</div>
+	{{/editing}}
+</div>

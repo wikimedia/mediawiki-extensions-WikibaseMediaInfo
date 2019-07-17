@@ -85,5 +85,5 @@
 	"wikibasemediainfo-search-toggle-keywords": "Keyword",
 	"wikibasemediainfo-search-toggle-depicts": "Tags",
 	"wikibasemediainfo-search-toggle-statements": "Other statements",
-	"wikibasemediainfo-unsupported-datatype": "Unsupported data type: $1"
+	"wikibasemediainfo-unsupported-datatype-text": "Unsupported data type"
 }

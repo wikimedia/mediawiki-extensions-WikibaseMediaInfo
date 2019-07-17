@@ -10,14 +10,52 @@ QualifierValueInputWidget = function ( config ) {
 	QualifierValueInputWidget.parent.call( this, this.config );
 	FormatValueElement.call( this, $.extend( {}, config ) );
 
+	this.type = 'string';
 	this.allowEmitChange = true;
 	this.disabled = false;
 
-	this.setInputType( 'string' );
+	this.inputs = {
+		'wikibase-entityid': this.createEntityInput(),
+		quantity: this.createQuantityInput(),
+		string: this.createTextInput(),
+		unsupported: this.createDisabledInput()
+	};
+
+	this.render();
 };
 
 OO.inheritClass( QualifierValueInputWidget, OO.ui.Widget );
 OO.mixinClass( QualifierValueInputWidget, FormatValueElement );
+
+QualifierValueInputWidget.prototype.render = function () {
+	var self = this,
+		data,
+		template,
+		$element;
+
+	template = mw.template.get(
+		'wikibase.mediainfo.statements',
+		'templates/statements/QualifierValueInputWidget.mustache+dom'
+	);
+
+	data = {
+		input: this.inputs,
+		type: Object.keys( this.inputs ).reduce( function ( result, type ) {
+			// `type` will be a map like: { quantity: true, string: false, ... }
+			result[ type ] = self.type === type;
+			return result;
+		}, {} )
+	};
+
+	// detach existing rendered nodes before replacing the content altogether:
+	// if the input type changes and we remove the old input from DOM, that
+	// would also mean its event listeners get removed, and we don't want that
+	// to happen in case we switch back to that input type...
+	this.$element.children().detach();
+
+	$element = template.render( data );
+	this.$element.empty().append( $element );
+};
 
 /**
  * QualifierValueInputWidget is basically a wrapper for multiple different
@@ -28,34 +66,14 @@ OO.mixinClass( QualifierValueInputWidget, FormatValueElement );
  * @return {QualifierValueInputWidget}
  */
 QualifierValueInputWidget.prototype.setInputType = function ( type ) {
-	if ( this.type === type ) {
-		// nothing's changed, move along
-		return this;
+	if ( !( type in this.inputs ) ) {
+		type = 'unsupported';
 	}
 
-	// remove existing element from DOM
-	if ( this.input ) {
-		this.input.$element.remove();
+	if ( this.type !== type ) {
+		this.type = type;
+		this.render();
 	}
-
-	this.type = type;
-
-	switch ( type ) {
-		case 'wikibase-entityid':
-			this.input = this.createEntityInput();
-			break;
-		case 'quantity':
-			this.input = this.createQuantityInput();
-			break;
-		case 'string':
-			this.input = this.createTextInput();
-			break;
-		default:
-			this.input = this.createDisabledInput( type );
-	}
-
-	// add the new element
-	this.$element.append( this.input.$element );
 
 	return this;
 };
@@ -83,6 +101,7 @@ QualifierValueInputWidget.prototype.createQuantityInput = function () {
 	input.connect( this, { enter: [ 'emit', 'enter' ] } );
 	return input;
 };
+
 /**
  * Prepare a text input widget
  * @return {OO.ui.TextInputWidget} Text input
@@ -97,13 +116,12 @@ QualifierValueInputWidget.prototype.createTextInput = function () {
 
 /**
  * Prepare a disabled text input widget w/appropriate message
- * @param {Object} type
  * @return {OO.ui.TextInputWidget} Disabled text input
  */
-QualifierValueInputWidget.prototype.createDisabledInput = function ( type ) {
+QualifierValueInputWidget.prototype.createDisabledInput = function () {
 	var input = new OO.ui.TextInputWidget( $.extend( {}, this.config, { classes: [] } ) );
 	input.setDisabled( true );
-	input.setValue( mw.message( 'wikibasemediainfo-unsupported-datatype', type ).text() );
+	input.setValue( mw.message( 'wikibasemediainfo-unsupported-datatype-text' ).text() );
 	return input;
 };
 
@@ -111,19 +129,21 @@ QualifierValueInputWidget.prototype.createDisabledInput = function ( type ) {
  * @return {Object|string}
  */
 QualifierValueInputWidget.prototype.getInputValue = function () {
+	var input = this.inputs[ this.type ];
+
 	switch ( this.type ) {
 		case 'wikibase-entityid':
 			return {
-				id: this.input.getData()
+				id: input.getData()
 			};
 		case 'quantity':
 			return {
 				// add leading '+' if no unit is present already
-				amount: this.input.getValue().replace( /^(?![+-])/, '+' ),
+				amount: input.getValue().replace( /^(?![+-])/, '+' ),
 				unit: '1'
 			};
 		case 'string':
-			return this.input.getValue();
+			return input.getValue();
 		default:
 			return this.value;
 	}
@@ -152,16 +172,24 @@ QualifierValueInputWidget.prototype.setData = function ( data ) {
 
 	this.setInputType( data.getType() );
 
-	if ( !data.equals( this.data ) ) {
-		this.emit( 'change' );
-	}
-
 	// temporarily save the value so that getValue() calls before below
 	// promise has resolved will already respond with the correct value,
 	// even though the input field doesn't have it yet...
 	this.value = data.toJSON();
 
+	if ( !data.equals( this.data ) ) {
+		this.emit( 'change' );
+	}
+
 	this.formatValue( data, 'text/plain' ).then( function ( plain ) {
+		var input = self.inputs[ data.getType() ];
+
+		if ( data.getType() !== self.type ) {
+			// input type may already have changed by the time this is formatted,
+			// in which case the formatted input is no longer valid
+			return;
+		}
+
 		// setData is supposed to behave asynchronously: we don't want it
 		// to trigger change events when nothing has really changed - it
 		// just takes a little time before we know how to display the input
@@ -172,21 +200,21 @@ QualifierValueInputWidget.prototype.setData = function ( data ) {
 			case 'wikibase-entityid':
 				// entities widget will need to be aware of the id that is associated
 				// with the label
-				self.input.setValue( plain );
-				self.input.setData( data.toJSON().id );
+				input.setValue( plain );
+				input.setData( data.toJSON().id );
 				// reset temporary value workaround - we can now interact with the
 				// value, so we should fetch the result straight from input field
 				self.value = undefined;
 				break;
 			case 'quantity':
 				// replace thousands delimiter - that's only useful for display purposes
-				self.input.setValue( plain.replace( /,/g, '' ) );
+				input.setValue( plain.replace( /,/g, '' ) );
 				// reset temporary value workaround - we can now interact with the
 				// value, so we should fetch the result straight from input field
 				self.value = undefined;
 				break;
 			case 'string':
-				self.input.setValue( plain );
+				input.setValue( plain );
 				// reset temporary value workaround - we can now interact with the
 				// value, so we should fetch the result straight from input field
 				self.value = undefined;
@@ -212,17 +240,20 @@ QualifierValueInputWidget.prototype.isDisabled = function () {
  * @return {QualifierValueInputWidget}
  */
 QualifierValueInputWidget.prototype.setDisabled = function ( disabled ) {
+	var self = this;
+
 	this.disabled = disabled;
 
-	if ( this.input === undefined ||
-		[ 'wikibase-entityid', 'quantity', 'string' ].indexOf( this.type ) < 0 ) {
-		// don't allow enabling the input field for input types that are
-		// not yet supported - those are just a disabled "not supported"
-		// input field and should remain that way
-		return this;
+	// setDisabled is called in constructor, before this.inputs may have been initialized
+	if ( this.inputs ) {
+		Object.keys( this.inputs ).forEach( function ( type ) {
+			self.inputs[ type ].setDisabled( disabled );
+		} );
+
+		// the unsupported input field must always remain disabled
+		this.inputs.unsupported.setDisabled( true );
 	}
 
-	this.input.setDisabled( disabled );
 	return this;
 };
 

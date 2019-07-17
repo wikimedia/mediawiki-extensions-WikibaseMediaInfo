@@ -307,7 +307,7 @@
 				"wikibasemediainfo-filepage-statement-no-results",
 				"wikibasemediainfo-statements-remove",
 				"wikibasemediainfo-statements-learn-more",
-				"wikibasemediainfo-unsupported-datatype",
+				"wikibasemediainfo-unsupported-datatype-text",
 				"colon-separator",
 				"word-separator",
 				"parentheses"
@@ -315,6 +315,7 @@
 			"templates": [
 				"templates/statements/EntityLabel.mustache+dom",
 				"templates/statements/ItemWidget.mustache+dom",
+				"templates/statements/QualifierValueInputWidget.mustache+dom",
 				"templates/statements/QualifierWidget.mustache+dom"
 			],
 			"targets": [

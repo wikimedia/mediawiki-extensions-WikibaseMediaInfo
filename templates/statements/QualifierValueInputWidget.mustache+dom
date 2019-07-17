@@ -1,0 +1,15 @@
+{{#type.wikibase-entityid}}
+	{{{input.wikibase-entityid}}}
+{{/type.wikibase-entityid}}
+
+{{#type.quantity}}
+	{{{input.quantity}}}
+{{/type.quantity}}
+
+{{#type.string}}
+	{{{input.string}}}
+{{/type.string}}
+
+{{#type.unsupported}}
+	{{{input.unsupported}}}
+{{/type.unsupported}}

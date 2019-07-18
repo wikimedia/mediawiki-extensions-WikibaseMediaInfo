@@ -31,6 +31,7 @@ mw.template.registerCompiler( 'mustache+dom', {
 			 */
 			render: function ( data ) {
 				var self = this,
+					$container = $( '<div>' ),
 					dom = [],
 					transformNodes, i, $result;
 
@@ -79,11 +80,12 @@ mw.template.registerCompiler( 'mustache+dom', {
 				) );
 
 				// ... and replace placeholder with actual nodes now
+				$container.append( $result );
 				for ( i = 0; i < dom.length; i++ ) {
-					$result.find( '.tpl-dom-' + i ).replaceWith( dom[ i ] );
+					$container.find( '.tpl-dom-' + i ).replaceWith( dom[ i ] );
 				}
 
-				return $result;
+				return $container.children();
 			}
 		};
 	}

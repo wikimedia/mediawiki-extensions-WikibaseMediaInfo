@@ -144,6 +144,7 @@
 		"wikibase.mediainfo.base": {
 			"packageFiles": [
 				"resources/base/index.js",
+				"resources/base/ComponentWidget.js",
 				"resources/base/DOMLessGroupWidget.js"
 			],
 			"dependencies": [

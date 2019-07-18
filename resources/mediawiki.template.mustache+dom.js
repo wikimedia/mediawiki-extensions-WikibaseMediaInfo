@@ -32,8 +32,9 @@ mw.template.registerCompiler( 'mustache+dom', {
 			render: function ( data ) {
 				var self = this,
 					$container = $( '<div>' ),
+					handlers = {},
 					dom = [],
-					transformNodes, i, $result;
+					random, transformNodes, i, $result;
 
 				transformNodes = function ( d ) {
 					var keys = Object.keys( d ),
@@ -43,7 +44,14 @@ mw.template.registerCompiler( 'mustache+dom', {
 					for ( i = 0; i < keys.length; i++ ) {
 						key = keys[ i ];
 
-						if (
+						if ( d[ key ] instanceof Function ) {
+							// on<event> handlers can't be parsed into the HTML, so we'll
+							// assign them a random name, which will point to a place where
+							// the actual handler will be
+							random = 'fn_' + Math.random().toString( 36 ).substring( 2 );
+							handlers[ random ] = d[ key ];
+							result[ key ] = 'return $( "#' + random + '" ).data( "handler" )( event )';
+						} else if (
 							// check if array or string literal, in which case
 							// we'll want to go recursive
 							d[ key ] instanceof Array ||
@@ -83,6 +91,17 @@ mw.template.registerCompiler( 'mustache+dom', {
 				$container.append( $result );
 				for ( i = 0; i < dom.length; i++ ) {
 					$container.find( '.tpl-dom-' + i ).replaceWith( dom[ i ] );
+				}
+
+				// ... and add nodes with the on<event> callback handlers
+				if ( Object.keys( handlers ).length > 0 ) {
+					Object.keys( handlers ).map( function ( random ) {
+						var handler = handlers[ random ];
+						$( '<script>' )
+							.attr( 'id', random )
+							.data( 'handler', handler )
+							.appendTo( $container );
+					} );
 				}
 
 				return $container.children();

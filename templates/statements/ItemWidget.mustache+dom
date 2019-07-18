@@ -22,7 +22,8 @@
 			<a class="wbmi-entity-primary
 					  {{#prominent}}wbmi-entity-is-prominent{{/prominent}}
 					  {{^prominent}}wbmi-entity-mark-as-prominent{{/prominent}}"
-			   href="#">
+			   href="#"
+			   onclick="{{prominenceToggleHandler}}">
 				{{#prominent}}
 				<span class="oo-ui-widget
 							 oo-ui-widget-enabled

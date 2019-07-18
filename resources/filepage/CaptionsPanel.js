@@ -40,10 +40,11 @@ var AnonWarning = require( './AnonWarning.js' ),
  * @cfg {string} classes.header CSS class of header
  * @cfg {string} classes.content CSS class of content
  * @cfg {string} classes.entityTerm CSS class of entityTerm
- * @cfg {boolean} captionsExist True if there is existing caption data, false if not
  * @cfg {int} warnWithinMaxCaptionLength Show a warning when the caption length is within X
  *   characters of the max
- * @cfg {string[]} userLanguages The language the user has indicated that they use (via babel)
+ * @cfg {string[]} [userLanguages] The language the user has indicated that they use (via babel)
+ * @cfg {string[]} [languageFallbackChain]
+ * @cfg {wb.datamodel.MediaInfo} mediaInfo
  */
 CaptionsPanel = function ( config ) {
 	this.config = config || {};
@@ -54,12 +55,25 @@ CaptionsPanel = function ( config ) {
 	// Mixin constructors
 	OO.ui.mixin.PendingElement.call( this, this.config );
 
-	this.captionsData = {};
-	this.captionsExist = config.captionsExist;
+	this.userLanguages = this.config.userLanguages || [];
+	this.languageFallbackChain = this.config.languageFallbackChain || [ 'en' ];
+
+	// TODO: can we make the dependency on WB object more explicit?
+	this.api = wikibase.api.getLocationAgnosticMwApi(
+		mw.config.get(
+			'wbmiRepoApiUrl',
+			mw.config.get( 'wbRepoApiUrl' )
+		)
+	);
+	this.selectors = {};
+	this.selectors.content = '.' + this.config.classes.content;
+	this.selectors.entityTerm = '.' + this.config.classes.entityTerm;
+
 	this.editing = false;
 	this.languageSelectors = [];
 	this.textInputs = [];
 
+	// Create the various widgets
 	this.licenseDialogWidget = new LicenseDialogWidget();
 
 	this.editToggle = new OO.ui.ButtonWidget( {
@@ -77,19 +91,11 @@ CaptionsPanel = function ( config ) {
 		{ appendToSelector: '.' + config.classes.content },
 		this
 	);
-	// TODO: can we make the dependency on WB object more explicit?
-	this.api = wikibase.api.getLocationAgnosticMwApi(
-		mw.config.get(
-			'wbmiRepoApiUrl',
-			mw.config.get( 'wbRepoApiUrl' )
-		)
-	);
-	this.selectors = {};
-	this.selectors.content = '.' + this.config.classes.content;
-	this.selectors.entityTerm = '.' + this.config.classes.entityTerm;
-	this.captionLanguagesDataAttr = 'data-caption-languages';
 
-	this.userLanguages = this.config.userLanguages || [];
+	this.initializeCaptionsData( config.mediaInfo );
+
+	// Set the target pending element to the layout box
+	this.$pending = $( '.' + this.config.classes.header ).parent();
 };
 
 /* Inheritance */
@@ -97,17 +103,41 @@ OO.inheritClass( CaptionsPanel, OO.ui.Element );
 OO.mixinClass( CaptionsPanel, OO.ui.mixin.PendingElement );
 
 /**
- * @param {Object} $row jquery object representing a caption language and value in the DOM
- * @return {CaptionData} The data contained in the row
+ * @param {wb.datamodel.MediaInfo} mediaInfo
  * @private
  */
-CaptionsPanel.prototype.readDataFromReadOnlyRow = function ( $row ) {
-	var $language = $row.find( '.wbmi-language-label' ),
-		$caption = $row.find( '.wbmi-caption-value' );
-	return new CaptionData(
-		$language.attr( 'lang' ),
-		$caption.hasClass( 'wbmi-entityview-emptyCaption' ) ? '' : $caption.text()
-	);
+CaptionsPanel.prototype.initializeCaptionsData = function ( mediaInfo ) {
+	this.captionsData = this.captionsDataFromMediaInfoEntity( mediaInfo );
+	this.savedCaptionsExist = this.captionsData.length > 0;
+	this.ensureCaptionsDataHasInterfaceLanguage();
+	this.updateLanguageOrder(); // no need to update DOM, captions should already be in order
+	this.refreshRowIndices();
+};
+
+/**
+ * @param {wb.datamodel.MediaInfo} mediaInfo
+ * @return {Object} An object with langCodes as keys and CaptionData objects as values
+ * @private
+ */
+CaptionsPanel.prototype.captionsDataFromMediaInfoEntity = function ( mediaInfo ) {
+	var captionsData = {};
+	if ( mediaInfo.labels !== undefined ) {
+		Object.keys( mediaInfo.labels ).forEach( function ( langCode ) {
+			captionsData[ langCode ] = new CaptionData(
+				langCode,
+				mediaInfo.labels[ langCode ].value
+			);
+		} );
+	}
+	return captionsData;
+};
+
+CaptionsPanel.prototype.ensureCaptionsDataHasInterfaceLanguage = function () {
+	if ( this.captionsData[ this.languageFallbackChain[ 0 ] ] === undefined ) {
+		this.captionsData[ this.languageFallbackChain[ 0 ] ] = new CaptionData(
+			this.languageFallbackChain[ 0 ]
+		);
+	}
 };
 
 /**
@@ -213,18 +243,15 @@ CaptionsPanel.prototype.refreshRowIndices = function () {
 };
 
 /**
- * Adds DOM elements containing empty captions data for every user language that doesn't already
- * have data, and re-orders
+ * Create empty captions data for every user language that doesn't already have data
  *
- * Should only be called on initialisation, because it relies on only the interface language
- * (and possible the first fallback, if the interface language has no caption) having the
- * 'wbmi-entityview-showLabel' class
- *
+ * @return {boolean} Returns true if captions have changed - a user language caption may have been
+ *  added, or captions might have been moved around in the caption order because they're user
+ *  languages
  * @private
  */
 CaptionsPanel.prototype.addCaptionsDataForUserLanguages = function () {
-	var self = this,
-		captionsOrderHasChanged;
+	var self = this;
 
 	// Create CaptionData objects for user languages that we don't already have on the screen
 	this.userLanguages.forEach( function ( langCode ) {
@@ -238,74 +265,59 @@ CaptionsPanel.prototype.addCaptionsDataForUserLanguages = function () {
 		}
 	} );
 
-	captionsOrderHasChanged = this.reorderLanguageList();
-	if ( captionsOrderHasChanged ) {
-		this.redrawCaptionsContent();
-	}
-	this.refreshRowIndices();
+	return this.updateLanguageOrder();
 };
 
 /**
- * Create a re-arranged list of languages, based on the rules specified in the class
- * comments
- *
- * Should only be called on initialisation, because it relies on only the interface language
- * (and possibly the first fallback, if the interface language has no caption) having the
- * 'wbmi-entityview-showLabel' class
+ * Populates this.orderedLanguageCodes with a list of langCodes from this.captionsData, ordered
+ * based on the rules specified in the class comments
  *
  * @return {boolean} True if the language list order has changed
  * @private
  */
-CaptionsPanel.prototype.reorderLanguageList = function () {
-	var captionLanguages = this.getCaptionLanguagesList(),
-		// eslint-disable-next-line no-jquery/no-global-selector
-		$visibleLanguageNodes = $( '.wbmi-entityview-showLabel .wbmi-language-label' ),
+CaptionsPanel.prototype.updateLanguageOrder = function () {
+	var i,
+		captionLanguages = Object.keys( this.captionsData ),
 		rearrangedCaptionLanguages = [];
 
-	$visibleLanguageNodes.each( function () {
-		rearrangedCaptionLanguages.push( $( this ).attr( 'lang' ) );
-	} );
+	// First language in fallback chain (i.e. the interface language) is always first
+	rearrangedCaptionLanguages.push( this.languageFallbackChain[ 0 ] );
+
+	// If there is no data for the interface language, then the first language in the fallback
+	// chain with a value goes next
+	if (
+		typeof this.captionsData[ this.languageFallbackChain[ 0 ] ] !== CaptionData ||
+		this.captionsData[ this.languageFallbackChain[ 0 ] ].text !== ''
+	) {
+		for ( i = 1; i < this.languageFallbackChain.length; i++ ) {
+			if (
+				this.captionsData[ this.languageFallbackChain[ i ] ] &&
+				this.captionsData[ this.languageFallbackChain[ i ] ].text !== ''
+			) {
+				rearrangedCaptionLanguages.push( this.languageFallbackChain[ i ] );
+				break;
+			}
+		}
+	}
+
+	// User languages go next
 	this.userLanguages.forEach( function ( langCode ) {
 		if ( rearrangedCaptionLanguages.indexOf( langCode ) === -1 ) {
 			rearrangedCaptionLanguages.push( langCode );
 		}
 	} );
+
+	// And finally all other languages
 	captionLanguages.forEach( function ( langCode ) {
 		if ( rearrangedCaptionLanguages.indexOf( langCode ) === -1 ) {
 			rearrangedCaptionLanguages.push( langCode );
 		}
 	} );
-	// Save the re-arranged list in the DOM
-	this.setCaptionLanguagesList( rearrangedCaptionLanguages );
+
+	// Store the re-arranged list
+	this.orderedLanguageCodes = rearrangedCaptionLanguages;
+
 	return rearrangedCaptionLanguages !== captionLanguages;
-};
-
-/**
- * @return {string[]} A list of languages for which there are captions
- * @private
- */
-CaptionsPanel.prototype.getCaptionLanguagesList = function () {
-	var knownLanguages = Object.keys( $.uls.data.languages ),
-		captionLanguagesData = $( this.selectors.content ).attr( this.captionLanguagesDataAttr ) || '';
-
-	return captionLanguagesData.split( ',' )
-		// Drop languages that ULS doesn't know about
-		.filter( function ( languageCode ) {
-			return ( knownLanguages.indexOf( languageCode ) !== -1 );
-		} );
-};
-
-/**
- * Saves the list of languages that have captions into the DOM
- *
- * @param {string[]} languagesList Lang codes for languages that have captions
- * @private
- */
-CaptionsPanel.prototype.setCaptionLanguagesList = function ( languagesList ) {
-	$( this.selectors.content ).attr(
-		this.captionLanguagesDataAttr,
-		languagesList.join( ',' )
-	);
 };
 
 /**
@@ -499,13 +511,12 @@ CaptionsPanel.prototype.createRowDeleter = function ( $row ) {
  * textbox for caption)
  *
  * @param {int} index The index of the DOM element (starting at 0, in ascending order on the page)
- * @param {string[]} [captionLangCodes] Lang codes for existing captions
  * @param {CaptionData} [captionData] Data for the caption if it already exists
  * @return {jQuery} jquery element
  * @private
  */
 CaptionsPanel.prototype.createIndexedEditableRow = function (
-	index, captionLangCodes, captionData
+	index, captionData
 ) {
 	var self = this,
 		languageSelector,
@@ -516,12 +527,11 @@ CaptionsPanel.prototype.createIndexedEditableRow = function (
 		captionData = new CaptionData();
 	}
 
-	captionLangCodes = captionLangCodes || [];
 	captionData = captionData || {};
 
 	languageSelector = new UlsWidget( {
 		languages: this.getAvailableLanguages(
-			captionLangCodes.filter( function ( langCode ) {
+			this.orderedLanguageCodes.filter( function ( langCode ) {
 				return langCode !== captionData.languageCode;
 			} )
 		)
@@ -579,17 +589,16 @@ CaptionsPanel.prototype.findRemovedLanguages = function () {
 	var self = this,
 		langCodesWithoutData = [];
 
-	// eslint-disable-next-line no-jquery/no-each-util
-	$.each( this.captionsData, function ( i, captionData ) {
-		var langCodeHasData = false;
+	Object.keys( this.captionsData ).forEach( function ( langCode ) {
+		var langCodeHasData = false,
+			captionData = self.captionsData[ langCode ];
 		self.languageSelectors.forEach( function ( languageSelector ) {
-			if ( languageSelector.getValue() === captionData.languageCode ) {
+			if ( languageSelector.getValue() === langCode ) {
 				langCodeHasData = true;
-				return false;
 			}
 		} );
 		if ( langCodeHasData === false && captionData.text !== '' ) {
-			langCodesWithoutData.push( captionData.languageCode );
+			langCodesWithoutData.push( langCode );
 		}
 	} );
 	return langCodesWithoutData;
@@ -649,7 +658,8 @@ CaptionsPanel.prototype.getWbSetLabelParams = function ( language, text ) {
 		value: text,
 		language: language
 	};
-	if ( this.captionsExist === true ) {
+	// Don't send baserevid unless we already have saved captions (a quirk of the api)
+	if ( this.savedCaptionsExist === true ) {
 		apiParams.baserevid = mw.mediaInfo.structuredData.currentRevision;
 	}
 	return apiParams;
@@ -675,24 +685,17 @@ CaptionsPanel.prototype.sendIndividualLabel = function ( index, language, text )
 		self.getWbSetLabelParams( language, text )
 	)
 		.done( function ( result ) {
-			var showCaptionFlags = self.getShowCaptionFlagsByLangCode(),
-				captionLanguages = self.getCaptionLanguagesList();
-			self.captionsExist = true;
+			var showCaptionFlags = self.getShowCaptionFlagsByLangCode();
+			self.savedCaptionsExist = true;
 			self.captionsData[ language ] = new CaptionData( language, text );
 			mw.mediaInfo.structuredData.currentRevision = result.entity.lastrevid;
 			$( self.selectors.content )
 				.find( self.selectors.entityTerm + '[data-index="' + index + '"]' )
-				.replaceWith(
-					self.createIndexedReadOnlyRow(
-						index,
-						self.captionsData[ language ],
-						showCaptionFlags[ language ]
-					)
-				);
-			if ( captionLanguages.indexOf( language ) === -1 ) {
-				captionLanguages.push( language );
-				self.setCaptionLanguagesList( captionLanguages );
-			}
+				.replaceWith( self.createIndexedReadOnlyRow(
+					index,
+					self.captionsData[ language ],
+					showCaptionFlags[ language ]
+				) );
 			deferred.resolve();
 		} )
 		.fail( function ( errorCode, error ) {
@@ -769,13 +772,11 @@ CaptionsPanel.prototype.deleteIndividualLabel = function ( langCodeToDelete ) {
 		this.getWbSetLabelParams( langCodeToDelete, '' )
 	)
 		.done( function ( result ) {
-			var updatedCaptionLanguages,
-				captionLanguages = self.getCaptionLanguagesList();
 			// Update revision id
 			mw.mediaInfo.structuredData.currentRevision = result.entity.lastrevid;
 			// Update the captions data, and the language list if necessary
 			if (
-				captionLanguages[ 0 ] === langCodeToDelete ||
+				self.orderedLanguageCodes[ 0 ] === langCodeToDelete ||
 				self.userLanguages.indexOf( langCodeToDelete ) !== -1
 			) {
 				// Blank the data if the language is either the first in the language list
@@ -784,31 +785,17 @@ CaptionsPanel.prototype.deleteIndividualLabel = function ( langCodeToDelete ) {
 			} else {
 				// Otherwise delete the data
 				delete self.captionsData[ langCodeToDelete ];
-				// ... and delete the language from the language list
-				updatedCaptionLanguages = [];
-				captionLanguages.forEach( function ( langCode ) {
-					if ( langCode !== langCodeToDelete ) {
-						updatedCaptionLanguages.push( langCode );
-					}
-				} );
-				self.setCaptionLanguagesList( updatedCaptionLanguages );
 			}
 			deferred.resolve();
 		} )
 		.fail( function ( errorCode, error ) {
 			// Display the old data for the language we've attempted and failed to delete
-			var currentlyDisplayedLanguages = [],
-				newIndex,
+			var newIndex,
 				errorRow,
 				rejection;
-			$captionsContent.find( self.selectors.entityTerm ).each( function () {
-				var dataInRow = self.readDataFromReadOnlyRow( $( this ) );
-				currentlyDisplayedLanguages.push( dataInRow.languageCode );
-			} );
 			newIndex = $captionsContent.find( self.selectors.entityTerm ).length;
 			errorRow = self.createIndexedEditableRow(
 				newIndex,
-				currentlyDisplayedLanguages,
 				self.captionsData[ langCodeToDelete ]
 			);
 			errorRow.insertBefore( $captionsContent.find( '.wbmi-entityview-editActions' ) );
@@ -855,27 +842,9 @@ CaptionsPanel.prototype.refreshDataFromApi = function () {
 			ids: entityId
 		} )
 		.done( function ( result ) {
-			var refreshedLabelsData = {};
 			mw.mediaInfo.structuredData.currentRevision = result.entities[ entityId ].lastrevid;
-			// Add any empty CaptionData objects to the list first, as they won't be returned
-			// from the api
-			// eslint-disable-next-line no-jquery/no-each-util
-			$.each( self.captionsData, function ( index, captionData ) {
-				if ( captionData.text === '' ) {
-					refreshedLabelsData[ captionData.languageCode ] = captionData;
-				}
-			} );
-			// eslint-disable-next-line no-jquery/no-each-util
-			$.each(
-				result.entities[ entityId ].labels,
-				function ( languageCode, labelObject ) {
-					refreshedLabelsData[ languageCode ] = new CaptionData(
-						languageCode,
-						labelObject.value
-					);
-				}
-			);
-			self.captionsData = refreshedLabelsData;
+			self.initializeCaptionsData( result.entities[ entityId ] );
+			self.addCaptionsDataForUserLanguages();
 			deferred.resolve();
 		} )
 		.fail( function () {
@@ -892,15 +861,15 @@ CaptionsPanel.prototype.redrawCaptionsContent = function () {
 	var self = this,
 		$captionsContent = $( this.selectors.content ),
 		showCaptionFlags = this.getShowCaptionFlagsByLangCode(),
-		count = 0,
-		languageCodesInOrder = this.getCaptionLanguagesList();
+		count = 0;
 
 	$captionsContent.find( this.selectors.entityTerm ).each( function () {
 		$( this ).remove();
 	} );
 
-	languageCodesInOrder.forEach( function ( langCode ) {
+	this.orderedLanguageCodes.forEach( function ( langCode ) {
 		var captionData = self.captionsData[ langCode ];
+
 		$captionsContent.append(
 			self.createIndexedReadOnlyRow(
 				count,
@@ -909,7 +878,9 @@ CaptionsPanel.prototype.redrawCaptionsContent = function () {
 			)
 		);
 		count++;
+
 	} );
+
 	this.languagesViewWidget.refreshLabel();
 };
 
@@ -923,11 +894,10 @@ CaptionsPanel.prototype.redrawCaptionsContent = function () {
  */
 CaptionsPanel.prototype.getShowCaptionFlagsByLangCode = function () {
 	var self = this,
-		captionLanguages = this.getCaptionLanguagesList(),
 		firstCaptionIsBlank,
 		indexedShowCaptionFlags = {};
 
-	captionLanguages.forEach( function ( langCode, index ) {
+	this.orderedLanguageCodes.forEach( function ( langCode, index ) {
 		var captionData = self.captionsData[ langCode ],
 			showCaption;
 		if ( index === 0 ) {
@@ -961,39 +931,37 @@ CaptionsPanel.prototype.makeEditable = function () {
 
 	// show dialog informing user of licensing
 	self.licenseDialogWidget.getConfirmationIfNecessary().then( function () {
-	// Set the target pending element to the layout box
-		self.$pending = $( '.' + self.config.classes.header ).parent();
 		self.pushPending();
 
 		self.refreshDataFromApi()
 			.always( function () {
-				var $captionsContent, captionLangCodes;
+				var $captionsContent, count = 0;
 
-				self.redrawCaptionsContent();
 				$captionsContent = $( self.selectors.content );
+				// Remove the read only rows
+				$captionsContent.find( self.selectors.entityTerm ).each( function () {
+					$( this ).remove();
+				} );
+				// Add the editable rows
+				self.orderedLanguageCodes.forEach( function ( langCode ) {
+					var captionData = self.captionsData[ langCode ];
+
+					$captionsContent.append(
+						self.createIndexedEditableRow(
+							count,
+							captionData
+						)
+					);
+					count++;
+
+				} );
 				$captionsContent.addClass( 'wbmi-entityview-editable' );
 				self.editToggle.$element.hide();
 				self.languagesViewWidget.hide();
 				self.editActionsWidget.show();
 				self.editActionsWidget.disablePublish();
-				captionLangCodes = [];
-				$captionsContent.find( self.selectors.entityTerm ).each( function () {
-					var dataInRow = self.readDataFromReadOnlyRow( $( this ) );
-					captionLangCodes.push( dataInRow.languageCode );
-				} );
-				$captionsContent.find( self.selectors.entityTerm ).each( function ( index ) {
-					var captionData = self.readDataFromReadOnlyRow( $( this ) );
-
-					$( this ).replaceWith(
-						self.createIndexedEditableRow(
-							index,
-							captionLangCodes,
-							captionData
-						)
-					);
-				} );
-				self.popPending();
 				self.editing = true;
+				self.popPending();
 			} );
 	} );
 };
@@ -1030,6 +998,7 @@ CaptionsPanel.prototype.sendData = function () {
 	chain = this.deleteRemovedData( chain, removedLanguages );
 	chain
 		.then( function () {
+			self.updateLanguageOrder();
 			self.makeReadOnly();
 		} )
 		.catch( function ( error ) {
@@ -1053,22 +1022,20 @@ CaptionsPanel.prototype.sendData = function () {
 };
 
 CaptionsPanel.prototype.initialize = function () {
-	var self = this;
+	var captionsChanged;
 
 	// Only allow editing if we're NOT on a diff page or viewing an older revision
 	// eslint-disable-next-line no-jquery/no-global-selector
 	if ( $( '.diff-currentversion-title' ).length === 0 && $( '.mw-revision' ).length === 0 ) {
 		$( '.' + this.config.classes.header ).append( this.editToggle.$element );
+		captionsChanged = this.addCaptionsDataForUserLanguages();
+		if ( captionsChanged ) {
+			this.redrawCaptionsContent();
+		}
+		this.refreshRowIndices();
+		this.languagesViewWidget.refreshLabel();
 	}
 
-	$( this.selectors.content ).find( this.selectors.entityTerm ).each( function ( index ) {
-		var captionData;
-		$( this ).attr( 'data-index', index );
-		captionData = self.readDataFromReadOnlyRow( $( this ) );
-		self.captionsData[ captionData.languageCode ] = captionData;
-	} );
-	this.addCaptionsDataForUserLanguages();
-	this.languagesViewWidget.refreshLabel();
 	this.languagesViewWidget.collapse();
 };
 

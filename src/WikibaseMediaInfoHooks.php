@@ -297,7 +297,6 @@ class WikibaseMediaInfoHooks {
 				),
 				'wbCurrentRevision' => $entityRevisionId,
 				'wbEntityId' => $entityId->getSerialization(),
-				'wbmiCaptionsExist' => $this->mediaInfoCaptionsExist( $out ),
 				'wbTermsLanguages' => $termsLanguages,
 				'maxCaptionLength' => self::getMaxCaptionLength(),
 				// FIXME: This is horrendous.
@@ -438,16 +437,6 @@ class WikibaseMediaInfoHooks {
 
 		$out->addHTML( $html );
 		return $out;
-	}
-
-	private function mediaInfoCaptionsExist( OutputPage $out ) {
-		$html = $out->getHTML();
-		if (
-			stripos( $html, '<' . MediaInfoEntityTermsView::CAPTIONS_CUSTOM_TAG . '>' ) === false
-		) {
-			return false;
-		}
-		return true;
 	}
 
 	/**

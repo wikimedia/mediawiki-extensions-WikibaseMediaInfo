@@ -39,21 +39,26 @@
 				addPropertyWidget.onStatementPanelRemoved( propertyId );
 			};
 
-		captions = new CaptionsPanel( {
-			classes: {
-				header: 'wbmi-entityview-captions-header',
-				content: 'wbmi-entityview-captionsPanel',
-				entityTerm: 'wbmi-entityview-caption'
-			},
-			warnWithinMaxCaptionLength: 20,
-			captionsExist: mw.config.get( 'wbmiCaptionsExist', false ),
-			userLanguages: mw.config.get( 'wbUserSpecifiedLanguages', [] ).slice()
+		// We need the mediaInfo entity to be available for CaptionsPanel
+		mw.hook( 'wikibase.entityPage.entityLoaded' ).add( function ( mediaInfo ) {
+			captions = new CaptionsPanel( {
+				classes: {
+					header: 'wbmi-entityview-captions-header',
+					content: 'wbmi-entityview-captionsPanel',
+					entityTerm: 'wbmi-entityview-caption'
+				},
+				warnWithinMaxCaptionLength: 20,
+				userLanguages: mw.config.get( 'wbUserSpecifiedLanguages', [] ).slice(),
+				languageFallbackChain: mw.language.getFallbackLanguageChain(),
+				mediaInfo: mediaInfo
+			} );
+			captions.initialize();
 		} );
-		captions.initialize();
 
 		$statements = $content.find( '.wbmi-entityview-statementsGroup' );
 		if (
-			// make sure there's a statements block on the page (e.g. if it's feature-flagged off)
+			// make sure there's a statements block on the page
+			// (e.g. if it's feature-flagged off)
 			$statements.length !== 0 &&
 			// and we have properties configured
 			Object.keys( propertiesInfo ).length > 0
@@ -64,7 +69,8 @@
 				OO.ui.infuse( $tabs );
 			}
 
-			// Only allow editing if we're NOT on a version diff page or viewing an older revision
+			// Only allow editing if we're NOT on a version diff page or viewing an older
+			// revision
 			if (
 				// eslint-disable-next-line no-jquery/no-global-selector
 				$( '.diff-currentversion-title' ).length === 0 &&
@@ -126,6 +132,7 @@
 				}
 			}
 		}
+
 	} );
 
 	// Ensure browser default 'Leave Site' popup triggers when leaving a page with edits

@@ -118,9 +118,12 @@ class MediaInfoEntityTermsView {
 	}
 
 	/**
-	 * Return the language codes for all existing labels, with the languages from the fallback
-	 * chain (whether a label exists or not for the first, and only if a label exists for
-	 * subsequent ones) in order at the front
+	 * Return the language codes for labels, in the following order:
+	 *
+	 * - the first language in the fallback chain (i.e. the interface language), whether or not
+	 * 	 a label exists in that language
+	 * - the rest of the languages in the fallback chain for which a label exists, in order
+	 * - all other languages for which a label exists (in any order)
 	 *
 	 * @param MediaInfo $entity
 	 * @return array

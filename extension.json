@@ -313,6 +313,7 @@
 				"parentheses"
 			],
 			"templates": [
+				"templates/statements/AddPropertyWidget.mustache+dom",
 				"templates/statements/EntityLabel.mustache+dom",
 				"templates/statements/ItemWidget.mustache+dom",
 				"templates/statements/QualifierValueInputWidget.mustache+dom",

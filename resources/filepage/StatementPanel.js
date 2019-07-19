@@ -116,7 +116,7 @@ StatementPanel.prototype.makeEditable = function () {
 				self.showUnsupportedPopup();
 			}
 		},
-		this.statementWidget.setEditing.bind( this.statementWidget, false )
+		this.makeReadOnly.bind( this )
 	);
 };
 

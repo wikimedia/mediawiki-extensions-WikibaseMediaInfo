@@ -3,8 +3,8 @@
 var LicenseDialogWidget;
 
 /**
-	* @constructor
-	*/
+ * @constructor
+ */
 LicenseDialogWidget = function () {
 	this.dialog = new OO.ui.MessageDialog();
 	this.windowManager = new OO.ui.WindowManager();
@@ -14,18 +14,17 @@ LicenseDialogWidget = function () {
 	// eslint-disable-next-line no-jquery/no-global-selector
 	$( 'body' ).append( this.windowManager.$element );
 };
-
 OO.inheritClass( LicenseDialogWidget, OO.ui.Widget );
 
 /**
-	* Returns a promise that will resolve once the window has been closed.
-	*
-	* @return {$.Promise}
-	*/
+ * Returns a promise that will resolve once the window has been closed.
+ *
+ * @return {$.Promise}
+ */
 LicenseDialogWidget.prototype.getConfirmationIfNecessary = function () {
-	var deferred = $.Deferred(),
-		confirmed = this.getLicenseConfirmation(),
-		self = this;
+	var self = this,
+		deferred = $.Deferred(),
+		confirmed = this.getLicenseConfirmation();
 
 	// check if we've agreed to this before, either in present
 	// implementation or in previous cookie-based version
@@ -37,15 +36,15 @@ LicenseDialogWidget.prototype.getConfirmationIfNecessary = function () {
 	}
 
 	this.openDialog();
-	this.dialog.getActions().once( 'click', function ( action ) {
-		// no matter what is clicked, we're good to go: the dialog has no
-		// concept of rejecting the license - we only want to make sure
-		// they've read this message :)
-		deferred.resolve();
-
-		if ( action.getAction() === 'accept' ) {
+	this.dialog.getManager().on( 'closing', function ( window, compatClosing, data ) {
+		if ( data && data.action === 'accept' ) {
+			deferred.resolve();
 			self.storeLicenseConfirmation();
+		} else {
+			// dialog dismissed, e.g. by pressing ESC key
+			deferred.reject();
 		}
+		self.dialog.getManager().off( 'closing' );
 	} );
 
 	return deferred.promise();
@@ -69,12 +68,12 @@ LicenseDialogWidget.prototype.openDialog = function () {
 };
 
 /**
-	* Determines whether or not the user has already accepted the license
-	* terms. For anon users, check if the appropriate value has been set in
-	* localstorage; for logged-in users, check if the appropriate user pref has
-	* been set.
-	* @return {number} 0 or 1
-	*/
+ * Determines whether or not the user has already accepted the license
+ * terms. For anon users, check if the appropriate value has been set in
+ * localstorage; for logged-in users, check if the appropriate user pref has
+ * been set.
+ * @return {number} 0 or 1
+ */
 LicenseDialogWidget.prototype.getLicenseConfirmation = function () {
 	var storage = mw.storage,
 		key = this.prefKey,
@@ -88,11 +87,11 @@ LicenseDialogWidget.prototype.getLicenseConfirmation = function () {
 };
 
 /**
-	* If the user confirms the license dialogue, store this appropriately:
-	* For logged-in users, that means store the confirmation as a hidden user
-	* preference. For non-logged-in users, store the confirmation in
-	* localstorage.
-	*/
+ * If the user confirms the license dialogue, store this appropriately:
+ * For logged-in users, that means store the confirmation as a hidden user
+ * preference. For non-logged-in users, store the confirmation in
+ * localstorage.
+ */
 LicenseDialogWidget.prototype.storeLicenseConfirmation = function () {
 	var storage = mw.storage,
 		key = this.prefKey,

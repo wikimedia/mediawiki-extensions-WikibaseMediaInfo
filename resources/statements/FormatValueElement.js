@@ -80,20 +80,19 @@ FormatValueElement.prototype.formatValue = function ( dataValue, format, languag
 		FormatValueElement.cache[ key ] = promise.then( function ( response ) {
 			return response.result;
 		} ).promise( { abort: function () {
-			// immediately delete from cache
-			// this is also done in .catch below, but in case of abort, we can
-			// already do this right away instead of having to wait until the end
-			// of the call stack - thus ensuring new callers immediately fire off
-			// a new request instead of re-using an already aborted one (if it
-			// has not yet been cleaned up)
-			delete FormatValueElement.cache[ key ];
-			// abort AJAX call
+			// replace the cached promise with a non-abortable one, so we can't
+			// abort this once more (since there's only 1 underlying API request
+			// to cancel...)
+			FormatValueElement.cache[ key ] = FormatValueElement.cache[ key ].promise( { abort: function () {
+				return FormatValueElement.cache[ key ];
+			} } );
+			// actually abort underlying API call
 			promise.abort();
 		} } );
 
 		FormatValueElement.cache[ key ].catch( function () {
-			// this cached value seems to have failed, might as well get rid
-			// of it so it's re-attempted next time we need this...
+			// this promise seems to have failed, might as well remove this from
+			// cache, so it's re-attempted next time we need this...
 			delete FormatValueElement.cache[ key ];
 		} );
 	}

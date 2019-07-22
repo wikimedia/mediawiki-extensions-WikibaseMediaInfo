@@ -145,6 +145,10 @@ StatementPanel.prototype.sendData = function () {
 				self.emit( 'widgetRemoved', self.config.propertyId );
 			}
 		} )
+		.catch( function () {
+			// allow panel to be re-enabled to allow trying submission again
+			self.statementWidget.setDisabled( false );
+		} )
 		.always( function () {
 			self.statementWidget.connect( self, { change: 'makeEditable' } );
 		} );

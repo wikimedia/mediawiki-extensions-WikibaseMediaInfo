@@ -1,6 +1,7 @@
 'use strict';
 
 var QualifierWidget,
+	ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
 	QualifierAutocomplete = require( './QualifierAutocompleteWidget.js' ),
 	QualifierValueInput = require( './QualifierValueInputWidget.js' ),
 	FormatValueElement = require( './FormatValueElement.js' );
@@ -18,15 +19,16 @@ var QualifierWidget,
  *
  * @constructor
  * @param {Object} config
+ * @param {Object} [config.data] Initial data
  * @param {boolean} [config.editing] Edit state of the widget when created;
  * defaults to false.
  */
 QualifierWidget = function ( config ) {
 	config = config || {};
-	this.editing = !!config.editing;
-
-	QualifierWidget.parent.call( this, config );
-	FormatValueElement.call( this, $.extend( {}, config ) );
+	this.state = {
+		data: config.data,
+		editing: !!config.editing
+	};
 
 	// sub-widgets
 	this.propertyInput = new QualifierAutocomplete( {
@@ -37,41 +39,32 @@ QualifierWidget = function ( config ) {
 		classes: [ 'wbmi-qualifier-value-input' ]
 	} );
 
-	this.removeIcon = new OO.ui.ButtonWidget( {
-		classes: [ 'wbmi-qualifier-remove' ],
-		framed: false,
-		icon: 'close'
-	} );
-
 	this.valueInput.setDisabled( true );
 
 	// event listeners
 	this.propertyInput.connect( this, { choose: 'onPropertyChoose' } );
 	this.valueInput.connect( this, { change: 'onValueChange' } );
-	this.removeIcon.connect( this, { click: [ 'emit', 'delete' ] } );
 
-	this.render();
-};
-
-OO.inheritClass( QualifierWidget, OO.ui.Widget );
-OO.mixinClass( QualifierWidget, FormatValueElement );
-
-/**
- * Render the widget's template and update the DOM
- */
-QualifierWidget.prototype.render = function () {
-	var self = this,
-		template,
-		$element;
-
-	template = mw.template.get(
+	QualifierWidget.parent.call( this, config );
+	ComponentWidget.call(
+		this,
 		'wikibase.mediainfo.statements',
 		'templates/statements/QualifierWidget.mustache+dom'
 	);
+	FormatValueElement.call( this, $.extend( {}, config ) );
+};
+OO.inheritClass( QualifierWidget, OO.ui.Widget );
+OO.mixinClass( QualifierWidget, ComponentWidget );
+OO.mixinClass( QualifierWidget, FormatValueElement );
 
-	this.asyncFormatForDisplay().then( function ( propertyResponse, valueResponse ) {
-		var formatResponse,
-			data;
+/**
+ * @inheritDoc
+ */
+QualifierWidget.prototype.getTemplateData = function () {
+	var self = this;
+
+	return this.asyncFormatForDisplay().then( function ( propertyHtml, valueHtml ) {
+		var formatResponse, removeIcon;
 
 		formatResponse = function ( html ) {
 			return $( '<div>' )
@@ -82,19 +75,22 @@ QualifierWidget.prototype.render = function () {
 				.html();
 		};
 
-		data = {
-			editing: self.editing,
+		removeIcon = new OO.ui.ButtonWidget( {
+			classes: [ 'wbmi-qualifier-remove' ],
+			framed: false,
+			icon: 'close'
+		} );
+		removeIcon.connect( self, { click: [ 'emit', 'delete' ] } );
+
+		return {
+			editing: self.state.editing,
 			propertyInput: self.propertyInput,
 			valueInput: self.valueInput,
-			removeIcon: self.removeIcon,
-			property: formatResponse( propertyResponse ),
-			value: formatResponse( valueResponse ),
+			removeIcon: removeIcon,
+			property: formatResponse( propertyHtml ),
+			value: formatResponse( valueHtml ),
 			separator: mw.message( 'colon-separator' ).text()
 		};
-
-		self.$element.children().detach();
-		$element = template.render( data );
-		self.$element.empty().append( $element );
 	} );
 };
 
@@ -111,12 +107,10 @@ QualifierWidget.prototype.focus = function () {
  * Set the read/edit state to the desired value and re-render the widget from
  * its template.
  * @param {boolean} editing
+ * @return {jQuery.Promise} Resolves after rerender
  */
 QualifierWidget.prototype.setEditing = function ( editing ) {
-	if ( this.editing !== editing ) {
-		this.editing = editing;
-		this.render();
-	}
+	return this.setState( { editing: editing } );
 };
 
 /**
@@ -130,18 +124,19 @@ QualifierWidget.prototype.setData = function ( data ) {
 
 	// Bail early and discard existing data if data argument is not a snak
 	if ( !( data instanceof wikibase.datamodel.Snak ) ) {
-		return;
+		throw new Error( 'Invalid snak' );
 	}
 
 	propId = data.getPropertyId();
 	dataValue = data.getValue();
 	dataValueType = dataValue.getType();
 
-	this.data = data;
-
 	this.updatePropertyInput( { id: propId, dataValueType: dataValueType } );
-	this.valueInput.setData( dataValue );
-	this.render();
+	this.updateValueInput( dataValue.getType(), dataValue );
+
+	if ( !this.state.data || this.state.data.equals( data ) ) {
+		this.setState( { data: this.cloneData( data ) } );
+	}
 };
 
 /**
@@ -157,7 +152,7 @@ QualifierWidget.prototype.getData = function () {
 
 	// if snak hasn't changed since `this.setData`,
 	// return the original data (which includes `hash`)
-	return this.data && this.data.equals( snak ) ? this.data : snak;
+	return this.state.data && this.state.data.equals( snak ) ? this.state.data : snak;
 };
 
 /**
@@ -235,7 +230,7 @@ QualifierWidget.prototype.updatePropertyInput = function ( property ) {
 QualifierWidget.prototype.updateValueInput = function ( datatype, value ) {
 	this.valueInput.setInputType( datatype );
 
-	if ( value ) {
+	if ( value !== undefined ) {
 		this.valueInput.setData( value );
 	}
 
@@ -271,6 +266,18 @@ QualifierWidget.prototype.asyncFormatForDisplay = function () {
 		// nothing to render if data is invalid...
 		return $.Deferred().resolve( '', '' ).promise();
 	}
+};
+
+/**
+ * @internal
+ * @param {wikibase.datamodel.Snak} data
+ * @return {wikibase.datamodel.Snak}
+ */
+QualifierWidget.prototype.cloneData = function ( data ) {
+	var serializer = new wikibase.serialization.SnakSerializer(),
+		deserializer = new wikibase.serialization.SnakDeserializer();
+
+	return deserializer.deserialize( serializer.serialize( data ) );
 };
 
 module.exports = QualifierWidget;

@@ -287,6 +287,8 @@
 				"wikibase.api.getLocationAgnosticMwApi",
 				"wikibase.api.RepoApiError",
 				"wikibase.mediainfo.statements.styles",
+				"wikibase.serialization.SnakSerializer",
+				"wikibase.serialization.SnakDeserializer",
 				"wikibase.serialization.StatementListSerializer",
 				"wikibase.serialization.StatementListDeserializer",
 				"wikibase.serialization.StatementSerializer",

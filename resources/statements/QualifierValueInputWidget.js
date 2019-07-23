@@ -177,7 +177,7 @@ QualifierValueInputWidget.prototype.setData = function ( data ) {
 	// even though the input field doesn't have it yet...
 	this.value = data.toJSON();
 
-	if ( !data.equals( this.data ) ) {
+	if ( !data.equals( this.getData() ) ) {
 		this.emit( 'change' );
 	}
 

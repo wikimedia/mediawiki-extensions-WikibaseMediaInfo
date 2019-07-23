@@ -1,30 +1,36 @@
 'use strict';
 
-var ItemInputWidget = require( './ItemInputWidget.js' ),
-	/**
-	 * @constructor
-	 * @param {Object} [config]
-	 * @cfg {array} [propertyIds] An array of property ids of statements that exist on the page
-	 */
-	AddPropertyWidget = function MediaInfoAddPropertyWidget( config ) {
-		config = config || {};
-		AddPropertyWidget.parent.call(
-			this,
-			config
-		);
+var ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
+	ItemInputWidget = require( './ItemInputWidget.js' ),
+	AddPropertyWidget;
 
-		this.propertyIds = config.propertyIds || [];
-		this.editing = false;
-
-		this.render();
+/**
+ * @constructor
+ * @param {Object} [config]
+ * @cfg {array} [propertyIds] An array of property ids of statements that exist on the page
+ */
+AddPropertyWidget = function MediaInfoAddPropertyWidget( config ) {
+	config = config || {};
+	this.state = {
+		propertyIds: config.propertyIds || [],
+		editing: false
 	};
-OO.inheritClass( AddPropertyWidget, OO.ui.Widget );
 
-AddPropertyWidget.prototype.render = function () {
-	var data,
-		template,
-		$element,
-		propertyInputWidget,
+	AddPropertyWidget.parent.call( this, config );
+	ComponentWidget.call(
+		this,
+		'wikibase.mediainfo.statements',
+		'templates/statements/AddPropertyWidget.mustache+dom'
+	);
+};
+OO.inheritClass( AddPropertyWidget, OO.ui.Widget );
+OO.mixinClass( AddPropertyWidget, ComponentWidget );
+
+/**
+ * @inheritDoc
+ */
+AddPropertyWidget.prototype.getTemplateData = function () {
+	var propertyInputWidget,
 		addPropertyButton,
 		removeButton;
 
@@ -36,7 +42,7 @@ AddPropertyWidget.prototype.render = function () {
 		placeholder: mw.message( 'wikibasemediainfo-add-property' ).text()
 	} );
 	propertyInputWidget.connect( this, { choose: 'onChoose' } );
-	propertyInputWidget.connect( this, { choose: [ 'setEditing', false ] } );
+	propertyInputWidget.connect( this, { choose: [ 'setState', { editing: false } ] } );
 	propertyInputWidget.connect( this, { choose: [ 'emit', 'choose' ] } );
 
 	addPropertyButton = new OO.ui.ButtonWidget( {
@@ -46,7 +52,7 @@ AddPropertyWidget.prototype.render = function () {
 		flags: [ 'progressive' ],
 		label: mw.message( 'wikibasemediainfo-add-statement' ).text()
 	} );
-	addPropertyButton.connect( this, { click: [ 'setEditing', !this.editing ] } );
+	addPropertyButton.connect( this, { click: [ 'setState', { editing: !this.state.editing } ] } );
 
 	removeButton = new OO.ui.ButtonWidget( {
 		classes: [ 'wbmi-item-remove' ],
@@ -55,43 +61,14 @@ AddPropertyWidget.prototype.render = function () {
 		icon: 'trash',
 		framed: false
 	} );
-	removeButton.connect( this, { click: [ 'setEditing', false ] } );
+	removeButton.connect( this, { click: [ 'setState', { editing: false } ] } );
 
-	template = mw.template.get(
-		'wikibase.mediainfo.statements',
-		'templates/statements/AddPropertyWidget.mustache+dom'
-	);
-
-	data = {
-		editing: this.editing,
+	return {
+		editing: this.state.editing,
 		addPropertyButton: addPropertyButton,
 		propertyInputWidget: propertyInputWidget,
 		removeButton: removeButton
 	};
-
-	$element = template.render( data );
-	this.$element.empty().append( $element );
-};
-
-AddPropertyWidget.prototype.setEditing = function ( editing ) {
-	if ( this.editing !== editing ) {
-		this.editing = editing;
-		this.render();
-	}
-};
-
-AddPropertyWidget.prototype.addPropertyId = function ( propertyId ) {
-	if ( this.propertyIds.indexOf( propertyId ) === -1 ) {
-		this.propertyIds.push( propertyId );
-	}
-};
-
-/**
- * @param {ItemInputWidget} item
- * @param {Object} data
- */
-AddPropertyWidget.prototype.onChoose = function ( item, data ) {
-	this.propertyIds.push( data.id );
 };
 
 /**
@@ -100,8 +77,25 @@ AddPropertyWidget.prototype.onChoose = function ( item, data ) {
 AddPropertyWidget.prototype.getFilters = function () {
 	return [
 		{ field: 'datatype', value: 'wikibase-item' },
-		{ field: '!id', value: this.propertyIds.join( '|' ) }
+		{ field: '!id', value: this.state.propertyIds.join( '|' ) }
 	];
+};
+
+/**
+ * @param {string} propertyId
+ */
+AddPropertyWidget.prototype.addPropertyId = function ( propertyId ) {
+	if ( this.state.propertyIds.indexOf( propertyId ) === -1 ) {
+		this.setState( { propertyIds: this.state.propertyIds.concat( propertyId ) } );
+	}
+};
+
+/**
+ * @param {ItemInputWidget} item
+ * @param {Object} data
+ */
+AddPropertyWidget.prototype.onChoose = function ( item, data ) {
+	this.addPropertyId( data.id );
 };
 
 /**
@@ -112,8 +106,10 @@ AddPropertyWidget.prototype.getFilters = function () {
  * @param {int} panelPropertyId
  */
 AddPropertyWidget.prototype.onStatementPanelRemoved = function ( panelPropertyId ) {
-	this.propertyIds = this.propertyIds.filter( function ( propertyId ) {
-		return propertyId !== panelPropertyId;
+	this.setState( {
+		propertyIds: this.state.propertyIds.filter( function ( propertyId ) {
+			return propertyId !== panelPropertyId;
+		} )
 	} );
 };
 

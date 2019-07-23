@@ -67,9 +67,9 @@ OO.mixinClass( StatementPanel, OO.ui.mixin.PendingElement );
  * @param {Object} data
  */
 StatementPanel.prototype.populateFormatValueCache = function ( data ) {
-	Object.keys( data ).map( function ( dataValue ) {
-		Object.keys( data[ dataValue ] ).map( function ( format ) {
-			Object.keys( data[ dataValue ][ format ] ).map( function ( language ) {
+	Object.keys( data ).forEach( function ( dataValue ) {
+		Object.keys( data[ dataValue ] ).forEach( function ( format ) {
+			Object.keys( data[ dataValue ][ format ] ).forEach( function ( language ) {
 				var json = JSON.parse( dataValue ),
 					key = FormatValueElement.getKey(
 						dataValues.newDataValue( json.type, json.value ), format, language

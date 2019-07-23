@@ -151,6 +151,7 @@ ItemWidget.prototype.renderInternal = function () {
 		prominenceMessage: prominent ?
 			mw.message( 'wikibasemediainfo-statements-item-is-prominent' ).text() :
 			mw.message( 'wikibasemediainfo-statements-item-mark-as-prominent' ).text(),
+		prominenceToggleHandler: this.toggleItemProminence.bind( this ),
 		editing: this.editing,
 		removeButton: removeButton,
 		qualifiers: this.getItems(),
@@ -160,10 +161,6 @@ ItemWidget.prototype.renderInternal = function () {
 
 	// Render ItemWidget template
 	$container = template.render( data );
-
-	// Attach event listeners to nodes in template
-	$container.find( '.wbmi-entity-primary' ).on( 'click', this.toggleItemProminence.bind( this ) );
-
 	this.$element.empty().append( $container );
 };
 

@@ -107,8 +107,10 @@ QualifierWidget.prototype.focus = function () {
  * @param {boolean} editing
  */
 QualifierWidget.prototype.setEditing = function ( editing ) {
-	this.editing = editing;
-	this.render();
+	if ( this.editing !== editing ) {
+		this.editing = editing;
+		this.render();
+	}
 };
 
 /**
@@ -159,7 +161,6 @@ QualifierWidget.prototype.onPropertyChoose = function () {
 	var property = this.propertyInput.getData();
 	this.updateValueInput( property.dataValueType );
 	this.emit( 'change' );
-	this.render();
 };
 
 /**
@@ -167,7 +168,6 @@ QualifierWidget.prototype.onPropertyChoose = function () {
  */
 QualifierWidget.prototype.onValueChange = function () {
 	this.emit( 'change' );
-	this.render();
 };
 
 /**

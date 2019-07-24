@@ -193,10 +193,9 @@ StatementWidget.prototype.hasChanges = function () {
 
 /**
  * @param {ItemInputWidget} item
- * @param {Object} data
  */
-StatementWidget.prototype.addItemFromInput = function ( item, data ) {
-	var widget = this.createItem( item.getData(), data.label, data.url );
+StatementWidget.prototype.addItemFromInput = function ( item ) {
+	var widget = this.createItem( item.getData() );
 
 	this.addItems( [ widget ] );
 
@@ -213,25 +212,18 @@ StatementWidget.prototype.addItemFromInput = function ( item, data ) {
 
 /**
  * @param {dataValues.DataValue} dataValue
- * @param {string} [label]
- * @param {string} [url]
  * @return {ItemWidget}
  */
-StatementWidget.prototype.createItem = function ( dataValue, label, url ) {
+StatementWidget.prototype.createItem = function ( dataValue ) {
 	var guidGenerator = new wikibase.utilities.ClaimGuidGenerator( this.entityId ),
-		mainSnak = new wikibase.datamodel.PropertyValueSnak( this.propertyId, dataValue, null ),
-		qualifiers = null,
-		claim = new wikibase.datamodel.Claim( mainSnak, qualifiers, guidGenerator.newGuid() ),
-		references = null,
-		rank = wikibase.datamodel.Statement.RANK.NORMAL,
-		statement = new wikibase.datamodel.Statement( claim, references, rank ),
 		widget = new ItemWidget( {
 			disabled: this.disabled,
 			qualifiers: this.qualifiers,
-			data: statement,
 			editing: this.editing,
-			label: label,
-			url: url
+			propertyId: this.propertyId,
+			guid: guidGenerator.newGuid(),
+			rank: wikibase.datamodel.Statement.RANK.NORMAL,
+			dataValue: dataValue
 		} );
 
 	widget.connect( this, { delete: [ 'removeItems', [ widget ] ] } );

@@ -65,7 +65,7 @@ has been enabled everywhere.
 			<div class="wbmi-entity-data">
 				<div class="wbmi-entity-title">
 					<h4 class="wbmi-entity-label">
-						{{label}}
+						{{{label}}}
 					</h4>
 				</div>
 

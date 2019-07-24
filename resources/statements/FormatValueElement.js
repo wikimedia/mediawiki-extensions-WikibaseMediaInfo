@@ -88,6 +88,8 @@ FormatValueElement.prototype.formatValue = function ( dataValue, format, languag
 			} } );
 			// actually abort underlying API call
 			promise.abort();
+			// immediately delete from cache
+			delete FormatValueElement.cache[ key ];
 		} } );
 
 		FormatValueElement.cache[ key ].catch( function () {

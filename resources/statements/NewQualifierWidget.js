@@ -158,6 +158,13 @@ QualifierWidget.prototype.getData = function () {
 QualifierWidget.prototype.onPropertyChoose = function () {
 	var property = this.propertyInput.getData();
 	this.updateValueInput( property.dataValueType );
+
+	// abort in-flight API requests - there's no point in continuing
+	// to fetch the text-to-render when we've already changed it...
+	if ( this.formatDisplayPromise ) {
+		this.formatDisplayPromise.abort();
+	}
+
 	this.emit( 'change' );
 	this.render();
 };
@@ -166,6 +173,12 @@ QualifierWidget.prototype.onPropertyChoose = function () {
  * Handles change of valueInput text from the user
  */
 QualifierWidget.prototype.onValueChange = function () {
+	// abort in-flight API requests - there's no point in continuing
+	// to fetch the text-to-render when we've already changed it...
+	if ( this.formatDisplayPromise ) {
+		this.formatDisplayPromise.abort();
+	}
+
 	this.emit( 'change' );
 	this.render();
 };
@@ -233,12 +246,6 @@ QualifierWidget.prototype.asyncFormatForDisplay = function () {
 
 	try {
 		dataValue = this.valueInput.getData();
-
-		// abort in-flight API requests - there's no point in continuing
-		// to fetch the text-to-render when we've already changed it...
-		if ( this.formatDisplayPromise ) {
-			this.formatDisplayPromise.abort();
-		}
 
 		promises = [
 			this.formatProperty( this.propertyInput.getData().id, 'text/html' ),

@@ -21,14 +21,13 @@ CancelPublishWidget = function ( sdcPanel ) {
 
 				if ( hasChanges ) {
 					OO.ui.confirm(
-						// TODO: Make "Discard changes?" the title
 						mw.msg( 'wikibasemediainfo-filepage-cancel-confirm' ),
 						{
+							title: mw.msg( 'wikibasemediainfo-filepage-cancel-confirm-title' ),
 							actions: [
 								{
 									action: 'accept',
-									// TODO: Change this message to "Discard"
-									label: mw.msg( 'ooui-dialog-message-accept' ),
+									label: mw.msg( 'wikibasemediainfo-filepage-cancel-confirm-accept' ),
 									flags: [ 'primary', 'destructive' ]
 								},
 								{

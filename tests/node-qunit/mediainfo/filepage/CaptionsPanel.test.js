@@ -5,7 +5,8 @@ var sinon = require( 'sinon' ),
 	helpers = require( '../../support/helpers.js' ),
 	hooks = require( '../../support/hooks.js' ),
 	sandbox,
-	dom;
+	dom,
+	mediaInfoEntity;
 
 QUnit.module( 'CaptionsPanel', {}, function () {
 	// CaptionsPanel on page where statements are already present
@@ -14,11 +15,15 @@ QUnit.module( 'CaptionsPanel', {}, function () {
 		beforeEach: function () {
 			sandbox = sinon.createSandbox();
 
-			// pre-construct DOM for jQuery to initialize with
-			dom = helpers.generateTemplate( 'captionspanel.mst', 'captiondata.json' );
-			global.window = dom.window;
-
 			hooks.mediainfo.beforeEach();
+			mediaInfoEntity = helpers.readJSON(
+				// eslint-disable-next-line no-undef
+				__dirname + '/../../support/fixtures/data/mediaInfoEntity.json'
+			);
+
+			// pre-construct DOM for jQuery to initialize with
+			dom = helpers.generateTemplate( 'captionspanel.mst', 'mediaInfoEntity.json' );
+			global.window = dom.window;
 		},
 		afterEach: function () {
 			hooks.mediainfo.afterEach();
@@ -34,8 +39,9 @@ QUnit.module( 'CaptionsPanel', {}, function () {
 						entityTerm: 'wbmi-entityview-caption'
 					},
 					warnWithinMaxCaptionLength: 20,
-					captionsExist: true,
-					userLanguages: []
+					userLanguages: [ 'en' ],
+					languageFallbackChain: [ 'en' ],
+					mediaInfo: mediaInfoEntity
 				},
 				cp = new CaptionsPanel( config );
 
@@ -55,20 +61,17 @@ QUnit.module( 'CaptionsPanel', {}, function () {
 						entityTerm: 'wbmi-entityview-caption'
 					},
 					warnWithinMaxCaptionLength: 20,
-					captionsExist: true,
-					userLanguages: userLanguages
+					userLanguages: userLanguages,
+					languageFallbackChain: [ 'en' ],
+					mediaInfo: mediaInfoEntity
 				},
-				captionData = helpers.readJSON(
-					// eslint-disable-next-line no-undef
-					__dirname + '/../../support/fixtures/data/captiondata.json'
-				),
 				cp = new CaptionsPanel( config );
 
 			cp.initialize();
 
 			// There should be a new caption row for every user language that doesn't already
 			// exist in the caption data
-			captionLanguages = captionData.allLangCodes.split( ',' );
+			captionLanguages = Object.keys( mediaInfoEntity.labels );
 			userLanguages.forEach( function ( langCode ) {
 				if ( captionLanguages.indexOf( langCode ) === -1 ) {
 					captionLanguages.push( langCode );

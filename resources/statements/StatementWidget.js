@@ -87,9 +87,9 @@ StatementWidget = function ( config ) {
 	this.input.connect( this, { choose: 'addItemFromInput' } );
 	this.editButton.connect( this, { click: [ 'emit', 'edit' ] } );
 	this.editButton.connect( this, { click: [ 'setEditing', true ] } );
-	this.cancelButton.connect( this, { click: [ 'emit', 'cancel' ] } );
+	this.cancelButton.connect( this, { click: 'showCancelConfirmationDialog' } );
 	this.publishButton.connect( this, { click: [ 'emit', 'publish' ] } );
-	this.removeButton.connect( this, { click: 'showRemoveConfirmationDialogue' } );
+	this.removeButton.connect( this, { click: 'showRemoveConfirmationDialog' } );
 	this.learnMoreButton.connect( this, { click: window.open.bind( window, this.learnMoreLink, '_blank' ) } );
 	this.connect( this, { change: 'updateControls' } );
 
@@ -524,17 +524,54 @@ StatementWidget.prototype.submit = function ( baseRevId ) {
 };
 
 /**
- * Display the confirmation dialogue to the user when they click the "Remove
+ * Display the confirmation dialog to the user when they click the "Cancel"
+ * button for a given block of statements.
+ */
+StatementWidget.prototype.showCancelConfirmationDialog = function () {
+	var self = this;
+
+	if ( this.hasChanges() ) {
+		OO.ui.confirm(
+			mw.msg( 'wikibasemediainfo-filepage-cancel-confirm' ),
+			{
+				title: mw.msg( 'wikibasemediainfo-filepage-cancel-confirm-title' ),
+				actions: [
+					{
+						action: 'accept',
+						label: mw.msg( 'wikibasemediainfo-filepage-cancel-confirm-accept' ),
+						flags: [ 'primary', 'destructive' ]
+					},
+					{
+						action: 'reject',
+						label: mw.msg( 'ooui-dialog-message-reject' ),
+						flags: 'safe'
+					}
+				]
+			}
+		).then( function ( confirmed ) {
+			if ( confirmed ) {
+				self.emit( 'cancel' );
+			}
+		} );
+	} else {
+		this.emit( 'cancel' );
+	}
+};
+
+/**
+ * Display the confirmation dialog to the user when they click the "Remove
  * All" button for a given block of statements.
  */
-StatementWidget.prototype.showRemoveConfirmationDialogue = function () {
+StatementWidget.prototype.showRemoveConfirmationDialog = function () {
 	var self = this;
 
 	OO.ui.confirm(
-		mw.message( 'wikibasemediainfo-remove-all-statements-confirm' ).text(), {
+		mw.message( 'wikibasemediainfo-remove-all-statements-confirm' ).text(),
+		{
+			title: mw.msg( 'wikibasemediainfo-remove-all-statements-confirm-title' ),
 			actions: [ {
 				action: 'accept',
-				label: mw.message( 'ooui-dialog-message-accept' ).text(),
+				label: mw.message( 'wikibasemediainfo-remove-all-statements-confirm-accept' ).text(),
 				flags: [ 'primary', 'destructive' ]
 			}, {
 				action: 'reject',

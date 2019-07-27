@@ -69,20 +69,26 @@ QualifierWidget.prototype.render = function () {
 		'templates/statements/QualifierWidget.mustache+dom'
 	);
 
-	this.asyncFormatForDisplay().then( function ( propertyHtml, valueHtml ) {
-		var data = {
+	this.asyncFormatForDisplay().then( function ( propertyResponse, valueResponse ) {
+		var formatResponse,
+			data;
+
+		formatResponse = function ( html ) {
+			return $( '<div>' )
+				.append( html )
+				.find( 'a' )
+				.attr( 'target', '_blank' )
+				.end()
+				.html();
+		};
+
+		data = {
 			editing: self.editing,
 			propertyInput: self.propertyInput,
 			valueInput: self.valueInput,
 			removeIcon: self.removeIcon,
-			property: {
-				text: propertyHtml.indexOf( '<' ) >= 0 ? $( propertyHtml ).text() : propertyHtml,
-				link: propertyHtml.indexOf( '<' ) >= 0 ? $( propertyHtml ).attr( 'href' ) : ''
-			},
-			value: {
-				text: valueHtml.indexOf( '<' ) >= 0 ? $( valueHtml ).text() : valueHtml,
-				link: valueHtml.indexOf( '<' ) >= 0 ? $( valueHtml ).attr( 'href' ) : ''
-			},
+			property: formatResponse( propertyResponse ),
+			value: formatResponse( valueResponse ),
 			separator: mw.message( 'colon-separator' ).text()
 		};
 

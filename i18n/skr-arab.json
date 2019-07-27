@@ -10,8 +10,12 @@
 	"wikibasemediainfo-filepage-add-caption": "عنوان شامل کرو",
 	"wikibasemediainfo-filepage-edit-captions": "عنوان وچ تبدیلی کرو",
 	"wikibasemediainfo-filepage-cancel": "منسوخ",
+	"wikibasemediainfo-filepage-cancel-confirm-accept": "مُکاؤ",
 	"wikibasemediainfo-filepage-publish": "تبدیلیاں شائع کرو",
 	"wikibasemediainfo-statements-learn-more": "ٻیا سِکھو",
 	"wikibasemediainfo-statements-remove": "سب ہٹاؤ",
+	"wikibasemediainfo-statements-link-notice-dismiss": "مکاؤ",
+	"wikibasemediainfo-remove-all-statements-confirm-title": "سب ہٹاؤں؟",
+	"wikibasemediainfo-remove-all-statements-confirm-accept": "ہٹاؤ",
 	"wikibasemediainfo-search-statements-cancel": "منسوخ"
 }

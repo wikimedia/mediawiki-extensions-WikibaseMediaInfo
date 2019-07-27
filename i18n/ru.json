@@ -8,7 +8,8 @@
 			"Bloomaround",
 			"Kareyac",
 			"Movses",
-			"Чаховіч Уладзіслаў"
+			"Чаховіч Уладзіслаў",
+			"Saimongoltinio"
 		]
 	},
 	"action-mediainfo-term": "изменение значений метаданных медиафайлов (краткие подписи, опсиания)",
@@ -74,6 +75,7 @@
 	"wikibasemediainfo-filetype-drawing": "Рисунки",
 	"wikibasemediainfo-filetype-3d": "3D модели",
 	"wikibasemediainfo-filetype-office": "Документы",
+	"wikibasemediainfo-remove-all-statements-confirm": "Это действие удалит все существующие значения для этого свойства. Свойства без значений будут удалены при публикации изменений. Всё равно удалять?",
 	"wikibasemediainfo-search-input-placeholder-keywords": "Искать в заголовках и описаниях",
 	"wikibasemediainfo-search-input-placeholder-depicts": "Искать концепты или темы",
 	"wikibasemediainfo-search-input-placeholder-statements": "Поиск по другим утверждениям",
@@ -91,5 +93,5 @@
 	"wikibasemediainfo-search-toggle-keywords": "Ключевое слово",
 	"wikibasemediainfo-search-toggle-depicts": "Метки",
 	"wikibasemediainfo-search-toggle-statements": "Другие утверждения",
-	"wikibasemediainfo-unsupported-datatype": "Неподдерживаемый тип данных: $1"
+	"wikibasemediainfo-unsupported-datatype-text": "Неподдерживаемый тип данных"
 }

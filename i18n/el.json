@@ -17,5 +17,5 @@
 	"wikibasemediainfo-filepage-publish": "Δημοσίευση αλλαγών",
 	"wikibasemediainfo-filepage-caption-empty": "Δεν ορίστηκε λεζάντα",
 	"wikibasemediainfo-statements-unsupported-property-title": "Μη υποστηριζόμενη ιδιότητα",
-	"wikibasemediainfo-unsupported-datatype": "Μη υποστηριζόμενος τύπος δεδομένων: $1"
+	"wikibasemediainfo-unsupported-datatype-text": "Μη υποστηριζόμενος τύπος δεδομένων"
 }

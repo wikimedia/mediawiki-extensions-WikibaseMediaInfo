@@ -63,5 +63,5 @@
 	"wikibasemediainfo-search-qualifiers-save": "Uložit",
 	"wikibasemediainfo-search-statements-add": "Přidat tvrzení",
 	"wikibasemediainfo-search-toggle-statements": "Další tvrzení",
-	"wikibasemediainfo-unsupported-datatype": "Nepodporovaný datový typ: $1"
+	"wikibasemediainfo-unsupported-datatype-text": "Nepodporovaný datový typ"
 }

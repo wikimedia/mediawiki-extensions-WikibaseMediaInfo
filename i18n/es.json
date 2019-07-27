@@ -57,6 +57,7 @@
 	"wikibasemediainfo-filetype-drawing": "Dibujos",
 	"wikibasemediainfo-filetype-3d": "Modelos 3D",
 	"wikibasemediainfo-filetype-office": "Documentos",
+	"wikibasemediainfo-remove-all-statements-confirm": "Esto eliminará todos los valores existentes de esta propiedad. Aquellas propiedades que carezcan de valores se borrarán al publicar los cambios. ¿Quieres continuar?",
 	"wikibasemediainfo-search-input-placeholder-keywords": "Buscar en títulos y descripciones",
 	"wikibasemediainfo-search-input-placeholder-depicts": "Buscar conceptos o temas",
 	"wikibasemediainfo-search-qualifiers-cancel": "Cancelar",
@@ -66,5 +67,5 @@
 	"wikibasemediainfo-search-search": "Buscar",
 	"wikibasemediainfo-search-toggle-keywords": "Palabra clave",
 	"wikibasemediainfo-search-toggle-depicts": "Etiquetas",
-	"wikibasemediainfo-unsupported-datatype": "No se admite el tipo de datos: $1"
+	"wikibasemediainfo-unsupported-datatype-text": "No se admite el tipo de datos"
 }

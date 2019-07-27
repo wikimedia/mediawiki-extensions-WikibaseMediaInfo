@@ -1,11 +1,13 @@
 {
 	"@metadata": {
 		"authors": [
-			"KartikMistry"
+			"KartikMistry",
+			"CptViraj"
 		]
 	},
 	"wikibasemediainfo-filepage-fewer-languages": "ઓછી ભાષાઓ જુઓ",
 	"wikibasemediainfo-filepage-cancel": "રદ કરો",
 	"wikibasemediainfo-filepage-publish": "ફેરફારો પ્રકાશિત કરો",
-	"wikibasemediainfo-filepage-caption-approaching-limit": "$1 {{PLURAL:$1|અક્ષર|અક્ષરો|0=અક્ષર}} બાકી"
+	"wikibasemediainfo-filepage-caption-approaching-limit": "$1 {{PLURAL:$1|અક્ષર|અક્ષરો|0=અક્ષર}} બાકી",
+	"wikibasemediainfo-statements-link-notice-dismiss": "કાઢી નાખો"
 }

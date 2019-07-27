@@ -81,5 +81,5 @@
 	"wikibasemediainfo-search-toggle-keywords": "Nøkkelord",
 	"wikibasemediainfo-search-toggle-depicts": "Tagger",
 	"wikibasemediainfo-search-toggle-statements": "Andre utsagn",
-	"wikibasemediainfo-unsupported-datatype": "Ikke understøttet datatype: $1"
+	"wikibasemediainfo-unsupported-datatype-text": "Ikke understøttet datatype"
 }

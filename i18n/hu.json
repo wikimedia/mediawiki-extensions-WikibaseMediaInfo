@@ -70,5 +70,5 @@
 	"wikibasemediainfo-search-toggle-keywords": "Kulcsszó",
 	"wikibasemediainfo-search-toggle-depicts": "Címkék",
 	"wikibasemediainfo-search-toggle-statements": "Egyéb állítások",
-	"wikibasemediainfo-unsupported-datatype": "Nem támogatott adattípus: $1"
+	"wikibasemediainfo-unsupported-datatype-text": "Nem támogatott adattípus"
 }

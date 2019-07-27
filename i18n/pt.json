@@ -29,7 +29,9 @@
 	"wikibasemediainfo-filepage-edit-captions": "Editar legendas",
 	"wikibasemediainfo-filepage-edit-depicts": "Editar elementos retratados",
 	"wikibasemediainfo-filepage-cancel": "Cancelar",
-	"wikibasemediainfo-filepage-cancel-confirm": "Descartar mudanças? As alterações que fez não serão gravadas.",
+	"wikibasemediainfo-filepage-cancel-confirm": "As alterações que fez não serão gravadas.",
+	"wikibasemediainfo-filepage-cancel-confirm-title": "Descartar alterações?",
+	"wikibasemediainfo-filepage-cancel-confirm-accept": "Descartar",
 	"wikibasemediainfo-filepage-edit": "Editar",
 	"wikibasemediainfo-filepage-publish": "Publicar alterações",
 	"wikibasemediainfo-filepage-caption-empty": "Adicione uma explicação de uma linha do que este ficheiro representa",
@@ -58,6 +60,8 @@
 	"wikibasemediainfo-statements-unsupported-property-title": "Propriedade não suportada",
 	"wikibasemediainfo-statements-unsupported-property-content": "As propriedades para além de $1 ainda não são completamente suportadas, mas sê-lo-ão futuramente. Por enquanto, a funcionalidade de propriedades não suportadas poderá não ser a que espera.",
 	"wikibasemediainfo-statements-unsupported-property-type-content": "Nem todos os tipos de propriedade são completamente suportados, mas irão sê-lo no futuro. Por enquanto, a funcionalidade das propriedades não suportadas poderá não ser a esperada.",
+	"wikibasemediainfo-statements-link-notice-text": "Os rótulos de dados estruturados são hiperligações para as respetivas páginas Wikidata e serão abertos numa nova janela.",
+	"wikibasemediainfo-statements-link-notice-dismiss": "Ignorar",
 	"wikibasemediainfo-operator-placeholder": "Operador",
 	"wikibasemediainfo-operator-value-is": "é",
 	"wikibasemediainfo-operator-value-isnot": "não é",
@@ -71,6 +75,9 @@
 	"wikibasemediainfo-filetype-drawing": "Desenhos",
 	"wikibasemediainfo-filetype-3d": "Modelos 3D",
 	"wikibasemediainfo-filetype-office": "Documentos",
+	"wikibasemediainfo-remove-all-statements-confirm": "Esta operação irá eliminar todos os valores existentes para esta propriedade. As propriedades sem valores serão removidas quando as alterações forem publicadas. Tem a certeza?",
+	"wikibasemediainfo-remove-all-statements-confirm-title": "Remover todas?",
+	"wikibasemediainfo-remove-all-statements-confirm-accept": "Remover",
 	"wikibasemediainfo-search-input-placeholder-keywords": "Pesquisar em títulos e descrições",
 	"wikibasemediainfo-search-input-placeholder-depicts": "Pesquisar conceitos ou tópicos",
 	"wikibasemediainfo-search-input-placeholder-statements": "Pesquisar por outras declarações",
@@ -88,5 +95,5 @@
 	"wikibasemediainfo-search-toggle-keywords": "Palavra-chave",
 	"wikibasemediainfo-search-toggle-depicts": "Etiquetas",
 	"wikibasemediainfo-search-toggle-statements": "Outras declarações",
-	"wikibasemediainfo-unsupported-datatype": "Tipo de dados não suportado: $1"
+	"wikibasemediainfo-unsupported-datatype-text": "Tipo de dados não suportado"
 }

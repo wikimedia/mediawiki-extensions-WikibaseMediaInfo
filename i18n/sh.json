@@ -79,5 +79,5 @@
 	"wikibasemediainfo-search-toggle-keywords": "Ključna riječ",
 	"wikibasemediainfo-search-toggle-depicts": "Oznake",
 	"wikibasemediainfo-search-toggle-statements": "Druge izjave",
-	"wikibasemediainfo-unsupported-datatype": "Nepodržan podatkovni tip: $1"
+	"wikibasemediainfo-unsupported-datatype-text": "Nepodržan podatkovni tip"
 }

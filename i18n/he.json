@@ -57,6 +57,8 @@
 	"wikibasemediainfo-statements-unsupported-property-title": "מאפיין בלתי־נתמך",
 	"wikibasemediainfo-statements-unsupported-property-content": "מאפיינים שאינם $1 עדיין אינם נתמכים באופן מלא, אבל ייתמכו בעתיד. לעת־עתה, ייתכן שמאפיינים שאינם נתמכים לא יעבדו כמצופה.",
 	"wikibasemediainfo-statements-unsupported-property-type-content": "לא כל סוגי המאפיינים נתמכים, אבל הם ייתמכו בעתיד. לעת־עתה, ייתכן שמאפיינים שאינם נתמכים לא יעבדו כמצופה.",
+	"wikibasemediainfo-statements-link-notice-text": "תוויות נתונים מבניים מקשרות לדפי הוויקינתונים המתאימים והן פותחות דף חדש.",
+	"wikibasemediainfo-statements-link-notice-dismiss": "סגירה",
 	"wikibasemediainfo-operator-placeholder": "אופרטור",
 	"wikibasemediainfo-operator-value-is": "הוא",
 	"wikibasemediainfo-operator-value-isnot": "אינו",
@@ -70,6 +72,7 @@
 	"wikibasemediainfo-filetype-drawing": "ציורים",
 	"wikibasemediainfo-filetype-3d": "דגמית תלת־ממדיים",
 	"wikibasemediainfo-filetype-office": "מסמכים",
+	"wikibasemediainfo-remove-all-statements-confirm": "הפעולה הזאת תמחק את כל הערכים הקיימים של המאפיין הזה. מאפיינים בלי ערכים יוסרו כשהשינויים יתפרסמו. האם ברצונך באמת לעשות את זה?",
 	"wikibasemediainfo-search-input-placeholder-keywords": "חיפוש בכותרות ובתיאורים",
 	"wikibasemediainfo-search-input-placeholder-depicts": "חיפוש מושגים או נושאים",
 	"wikibasemediainfo-search-input-placeholder-statements": "חיפוש לפי קביעות אחרות",
@@ -87,5 +90,5 @@
 	"wikibasemediainfo-search-toggle-keywords": "מילת מפתח",
 	"wikibasemediainfo-search-toggle-depicts": "תגים",
 	"wikibasemediainfo-search-toggle-statements": "קביעות אחרות",
-	"wikibasemediainfo-unsupported-datatype": "סוג נתונים בלתי־נתמך: $1"
+	"wikibasemediainfo-unsupported-datatype-text": "סוג נתונים בלתי־נתמך"
 }

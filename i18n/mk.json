@@ -26,7 +26,9 @@
 	"wikibasemediainfo-filepage-edit-captions": "Уреди описи",
 	"wikibasemediainfo-filepage-edit-depicts": "Уреди прикази",
 	"wikibasemediainfo-filepage-cancel": "Откажи",
-	"wikibasemediainfo-filepage-cancel-confirm": "Да ги отфрлам промените? Нема да се зачуваат.",
+	"wikibasemediainfo-filepage-cancel-confirm": "Направените промени нема да се зачуваат.",
+	"wikibasemediainfo-filepage-cancel-confirm-title": "Да ги отфрлам промените?",
+	"wikibasemediainfo-filepage-cancel-confirm-accept": "Отфрли",
 	"wikibasemediainfo-filepage-edit": "Уреди",
 	"wikibasemediainfo-filepage-publish": "Објави промени",
 	"wikibasemediainfo-filepage-caption-empty": "Опишете во еден ред што претставува податотекава",
@@ -55,6 +57,8 @@
 	"wikibasemediainfo-statements-unsupported-property-title": "Неподдржано својство",
 	"wikibasemediainfo-statements-unsupported-property-content": "Сите својства освен $1 сѐ уште не се наполно поддржани, но ќе бидат во иднина. Засега нивните можности нема да работат според очекувањата.",
 	"wikibasemediainfo-statements-unsupported-property-type-content": "Засега нема полна поддршка на сите видови својства, но ќе има во иднина. Дотогаш, нивните можности нема да работат според очекувањата.",
+	"wikibasemediainfo-statements-link-notice-text": "Натписите од структурираните податоци водат до нивните страници на Википодатоците и се отвораат во нови прозорци.",
+	"wikibasemediainfo-statements-link-notice-dismiss": "Тргни",
 	"wikibasemediainfo-operator-placeholder": "Оператор",
 	"wikibasemediainfo-operator-value-is": "е",
 	"wikibasemediainfo-operator-value-isnot": "не е",
@@ -68,6 +72,9 @@
 	"wikibasemediainfo-filetype-drawing": "Цртежи",
 	"wikibasemediainfo-filetype-3d": "3Д-модели",
 	"wikibasemediainfo-filetype-office": "Документи",
+	"wikibasemediainfo-remove-all-statements-confirm": "Со ова дејство ќе се избришат сите постоечки вредности на својствово. Својствата без вредности ќе бидат отстранети кога ќе се објават промените. Дали сте сигурни?",
+	"wikibasemediainfo-remove-all-statements-confirm-title": "Да ги отстранам сите?",
+	"wikibasemediainfo-remove-all-statements-confirm-accept": "Отстрани",
 	"wikibasemediainfo-search-input-placeholder-keywords": "Пребарај по насловите и описите",
 	"wikibasemediainfo-search-input-placeholder-depicts": "Пребарај концепти или теми",
 	"wikibasemediainfo-search-input-placeholder-statements": "Пребарај по други искази",
@@ -85,5 +92,5 @@
 	"wikibasemediainfo-search-toggle-keywords": "Клучен збор",
 	"wikibasemediainfo-search-toggle-depicts": "Ознаки",
 	"wikibasemediainfo-search-toggle-statements": "Други искази",
-	"wikibasemediainfo-unsupported-datatype": "Неподдржан податочен тип: $1"
+	"wikibasemediainfo-unsupported-datatype-text": "Неподдржан податочен тип"
 }

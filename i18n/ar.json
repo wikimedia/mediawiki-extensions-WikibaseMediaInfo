@@ -5,7 +5,8 @@
 			"Mr. Ibrahem",
 			"ديفيد",
 			"Meno25",
-			"Kaganer"
+			"Kaganer",
+			"Habib-d"
 		]
 	},
 	"action-mediainfo-term": "تغيير مصطلحات معلومات الوسائط (التسميات التوضيحية والملخصات)",
@@ -29,7 +30,9 @@
 	"wikibasemediainfo-filepage-edit-captions": "عدل الشروحات",
 	"wikibasemediainfo-filepage-edit-depicts": "تحرير التصوير",
 	"wikibasemediainfo-filepage-cancel": "إلغاء",
-	"wikibasemediainfo-filepage-cancel-confirm": "تجاهل التغييرات؟ لن يتم حفظ التغييرات التي أجريتها.",
+	"wikibasemediainfo-filepage-cancel-confirm": "لن يتم حفظ التغييرات التي أجريتها.",
+	"wikibasemediainfo-filepage-cancel-confirm-title": "تجاهل التغييرات؟",
+	"wikibasemediainfo-filepage-cancel-confirm-accept": "تجاهل",
 	"wikibasemediainfo-filepage-edit": "عدل",
 	"wikibasemediainfo-filepage-publish": "نشر التغييرات",
 	"wikibasemediainfo-filepage-caption-empty": "أضف شرحا من سطر واحد لما يمثله هذا الملف",
@@ -58,6 +61,8 @@
 	"wikibasemediainfo-statements-unsupported-property-title": "خاصية غير مدعومة",
 	"wikibasemediainfo-statements-unsupported-property-content": "الخواص بخلاف $1 ليست مدعومة بالكامل، لكنها ستكون كذلك في المستقبل، في الوقت الحالي، قد لا تعمل وظائف الخصائص غير المدعومة كما تتوقع.",
 	"wikibasemediainfo-statements-unsupported-property-type-content": "ليست جميع أنواع الخواص مدعومة بالكامل، ولكن ستكون هكذا في المستقبل، في الوقت الحالي، قد لا تعمل وظائف الخصائص غير المدعومة كما تتوقع.",
+	"wikibasemediainfo-statements-link-notice-text": "ترتبط تسميات البيانات المهيكلة بصفحات ويكي بيانات الخاصة بها وستفتح في نافذة جديدة.",
+	"wikibasemediainfo-statements-link-notice-dismiss": "رفض",
 	"wikibasemediainfo-operator-placeholder": "المشغل",
 	"wikibasemediainfo-operator-value-is": "هو",
 	"wikibasemediainfo-operator-value-isnot": "ليس",
@@ -71,6 +76,9 @@
 	"wikibasemediainfo-filetype-drawing": "رسومات",
 	"wikibasemediainfo-filetype-3d": "نماذج ثلاثية الأبعاد",
 	"wikibasemediainfo-filetype-office": "مستندات",
+	"wikibasemediainfo-remove-all-statements-confirm": "هذا الإجراء سوف يؤدي إلى حذف كل القيم الموجودة مسبقاً في هذا المجال. المجالات الفارغة سوف يتم إزالتها عندما يتم نشر التعديلات. هل انت متأكد؟",
+	"wikibasemediainfo-remove-all-statements-confirm-title": "إزالة الكل؟",
+	"wikibasemediainfo-remove-all-statements-confirm-accept": "إزالة",
 	"wikibasemediainfo-search-input-placeholder-keywords": "البحث في العناوين والأوصاف",
 	"wikibasemediainfo-search-input-placeholder-depicts": "البحث في المفاهيم أو المواضيع",
 	"wikibasemediainfo-search-input-placeholder-statements": "البحث حسب البيانات الأخرى",
@@ -88,5 +96,5 @@
 	"wikibasemediainfo-search-toggle-keywords": "الكلمة المفتاحية",
 	"wikibasemediainfo-search-toggle-depicts": "الوسوم",
 	"wikibasemediainfo-search-toggle-statements": "بيانات أخرى",
-	"wikibasemediainfo-unsupported-datatype": "نوع البيانات غير مدعوم: $1"
+	"wikibasemediainfo-unsupported-datatype-text": "نوع البيانات غير مدعوم"
 }

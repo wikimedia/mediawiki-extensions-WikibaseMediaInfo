@@ -64,5 +64,5 @@
 	"wikibasemediainfo-search-search": "തിരയുക",
 	"wikibasemediainfo-search-toggle-keywords": "അടയാളവാക്ക്",
 	"wikibasemediainfo-search-toggle-depicts": "ടാഗുകൾ",
-	"wikibasemediainfo-unsupported-datatype": "പിന്തുണയില്ലാത്ത ഡേറ്റാ തരം: $1"
+	"wikibasemediainfo-unsupported-datatype-text": "പിന്തുണയില്ലാത്ത ഡേറ്റാ തരം"
 }

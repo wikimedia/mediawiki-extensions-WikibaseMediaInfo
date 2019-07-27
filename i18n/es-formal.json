@@ -1,0 +1,8 @@
+{
+	"@metadata": {
+		"authors": [
+			"Fitoschido"
+		]
+	},
+	"wikibasemediainfo-remove-all-statements-confirm": "Esto eliminará todos los valores existentes de esta propiedad. Aquellas propiedades que carezcan de valores se borrarán al publicar los cambios. ¿Quiere continuar?"
+}

@@ -49,5 +49,5 @@
 	"wikibasemediainfo-search-search": "Serĉi",
 	"wikibasemediainfo-search-toggle-depicts": "Etikedoj",
 	"wikibasemediainfo-search-toggle-statements": "Aliaj asertoj",
-	"wikibasemediainfo-unsupported-datatype": "Ne subtenata datentipo: $1"
+	"wikibasemediainfo-unsupported-datatype-text": "Ne subtenata datentipo"
 }

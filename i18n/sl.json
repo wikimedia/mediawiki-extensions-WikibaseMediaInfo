@@ -80,5 +80,5 @@
 	"wikibasemediainfo-search-toggle-keywords": "Ključna beseda",
 	"wikibasemediainfo-search-toggle-depicts": "Oznake",
 	"wikibasemediainfo-search-toggle-statements": "Druge izjave",
-	"wikibasemediainfo-unsupported-datatype": "Nepodprta vrsta datoteke: $1"
+	"wikibasemediainfo-unsupported-datatype-text": "Nepodprta vrsta datoteke"
 }

@@ -57,5 +57,9 @@
 	"wikibasemediainfo-operator-placeholder": "Апэратар",
 	"wikibasemediainfo-operator-value-is": "зьяўляецца",
 	"wikibasemediainfo-operator-value-isnot": "не зьяўляецца",
-	"wikibasemediainfo-operator-value-isempty": "пусты"
+	"wikibasemediainfo-operator-value-isempty": "пусты",
+	"wikibasemediainfo-operator-value-isgreaterthan": "большы за",
+	"wikibasemediainfo-operator-value-islessthan": "меншы за",
+	"wikibasemediainfo-filetype-multimedia": "Мультымэдыя",
+	"wikibasemediainfo-filetype-bitmap": "Выявы"
 }

@@ -22,7 +22,9 @@
 	"wikibasemediainfo-filepage-edit-captions": "Cange le 'ndestaziune",
 	"wikibasemediainfo-filepage-edit-depicts": "Cange le retratte",
 	"wikibasemediainfo-filepage-cancel": "Annulle",
-	"wikibasemediainfo-filepage-cancel-confirm": "Scitte le le cangiaminde? Le cangiaminde ca è fatte non g'avènene reggistrate.",
+	"wikibasemediainfo-filepage-cancel-confirm": "Le cangiaminde ca è fatte non g'avènene reggistrate.",
+	"wikibasemediainfo-filepage-cancel-confirm-title": "Scitte le cangiaminde?",
+	"wikibasemediainfo-filepage-cancel-confirm-accept": "Scitte",
 	"wikibasemediainfo-filepage-edit": "Cange",
 	"wikibasemediainfo-filepage-publish": "Pubbleche le cangiaminde",
 	"wikibasemediainfo-filepage-caption-empty": "Aggiunge 'na spiegazione sus a 'na linèe de ce rappresende stu file",
@@ -51,5 +53,8 @@
 	"wikibasemediainfo-filetype-video": "Video",
 	"wikibasemediainfo-filetype-audio": "Suène",
 	"wikibasemediainfo-filetype-3d": "Modelle 3D",
-	"wikibasemediainfo-filetype-office": "Documinde"
+	"wikibasemediainfo-filetype-office": "Documinde",
+	"wikibasemediainfo-remove-all-statements-confirm-title": "Live tutte?",
+	"wikibasemediainfo-remove-all-statements-confirm-accept": "Live",
+	"wikibasemediainfo-unsupported-datatype-text": "Tipe de date non supportate"
 }

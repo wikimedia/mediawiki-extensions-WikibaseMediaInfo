@@ -29,7 +29,9 @@
 	"wikibasemediainfo-filepage-edit-captions": "Modifier les légendes",
 	"wikibasemediainfo-filepage-edit-depicts": "Modifier les représentations",
 	"wikibasemediainfo-filepage-cancel": "Annuler",
-	"wikibasemediainfo-filepage-cancel-confirm": "Abandonner les modifications ? Les modifications que vous avez faites ne seront pas enregistrées.",
+	"wikibasemediainfo-filepage-cancel-confirm": "Les modifications que vous avez faites ne seront pas enregistrées.",
+	"wikibasemediainfo-filepage-cancel-confirm-title": "Abandonner les modifications ?",
+	"wikibasemediainfo-filepage-cancel-confirm-accept": "Abandonner",
 	"wikibasemediainfo-filepage-edit": "Modifier",
 	"wikibasemediainfo-filepage-publish": "Publier les modifications",
 	"wikibasemediainfo-filepage-caption-empty": "Ajoutez la description en une ligne de ce que représente ce fichier",
@@ -58,6 +60,8 @@
 	"wikibasemediainfo-statements-unsupported-property-title": "Propriété non prise en charge",
 	"wikibasemediainfo-statements-unsupported-property-content": "Les propriétés autres que $1 ne sont pas encore complètement prises en charge, mais le seront dans le futur. Pour l'instant, les fonctionnalités pour les propriétés non supportées risquent de ne pas fonctionner comme vous l'espérez.",
 	"wikibasemediainfo-statements-unsupported-property-type-content": "Tous les types de propriété ne sont pas supportés, mais le seront dans l’avenir. Pour le moment, la fonctionnalité pour les propriétés non supportées peut ne pas fonctionner comme attendu.",
+	"wikibasemediainfo-statements-link-notice-text": "Les libellés de données structurées pointent vers leurs pages Wikidata respectives et s’ouvriront dans une nouvelle fenêtre.",
+	"wikibasemediainfo-statements-link-notice-dismiss": "Rejeter",
 	"wikibasemediainfo-operator-placeholder": "Opérateur",
 	"wikibasemediainfo-operator-value-is": "est",
 	"wikibasemediainfo-operator-value-isnot": "n'est pas",
@@ -71,6 +75,9 @@
 	"wikibasemediainfo-filetype-drawing": "Croquis",
 	"wikibasemediainfo-filetype-3d": "Modèles 3D",
 	"wikibasemediainfo-filetype-office": "Documents",
+	"wikibasemediainfo-remove-all-statements-confirm": "Cette action supprimera toutes les valeurs existantes pour cette propriété. Les propriétés sans valeur seront supprimées lorsque les modifications seront publiées. Êtes-vous sûr ?",
+	"wikibasemediainfo-remove-all-statements-confirm-title": "Supprimer tout ?",
+	"wikibasemediainfo-remove-all-statements-confirm-accept": "Supprimer",
 	"wikibasemediainfo-search-input-placeholder-keywords": "Chercher parmi les titres et les descriptions",
 	"wikibasemediainfo-search-input-placeholder-depicts": "Rechercher des concepts ou des sujets",
 	"wikibasemediainfo-search-input-placeholder-statements": "Rechercher par d’autres déclarations",
@@ -88,5 +95,5 @@
 	"wikibasemediainfo-search-toggle-keywords": "Mot-clé",
 	"wikibasemediainfo-search-toggle-depicts": "Balises",
 	"wikibasemediainfo-search-toggle-statements": "Autres déclarations",
-	"wikibasemediainfo-unsupported-datatype": "Type de données non supporté : $1"
+	"wikibasemediainfo-unsupported-datatype-text": "Type de données non supporté"
 }

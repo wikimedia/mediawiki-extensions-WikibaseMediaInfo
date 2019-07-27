@@ -80,5 +80,5 @@
 	"wikibasemediainfo-search-toggle-keywords": "کلیدواژه‌ها",
 	"wikibasemediainfo-search-toggle-depicts": "برچسب‌ها",
 	"wikibasemediainfo-search-toggle-statements": "دیگر اظهارات",
-	"wikibasemediainfo-unsupported-datatype": "نوع داده نامعتبر: $1"
+	"wikibasemediainfo-unsupported-datatype-text": "نوع داده نامعتبر"
 }

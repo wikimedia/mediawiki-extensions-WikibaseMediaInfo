@@ -74,5 +74,5 @@
 	"wikibasemediainfo-search-search": "Pretraži",
 	"wikibasemediainfo-search-toggle-keywords": "Ključna riječ",
 	"wikibasemediainfo-search-toggle-depicts": "Oznake",
-	"wikibasemediainfo-unsupported-datatype": "Nepodržana vrsta podataka: $1"
+	"wikibasemediainfo-unsupported-datatype-text": "Nepodržana vrsta podataka"
 }

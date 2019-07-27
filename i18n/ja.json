@@ -25,7 +25,9 @@
 	"wikibasemediainfo-filepage-edit-captions": "キャプションを編集する",
 	"wikibasemediainfo-filepage-edit-depicts": "題材を編集する",
 	"wikibasemediainfo-filepage-cancel": "キャンセル",
-	"wikibasemediainfo-filepage-cancel-confirm": "編集内容を破棄しますか？ 変更した内容は保存されません。",
+	"wikibasemediainfo-filepage-cancel-confirm": "変更した内容は保存されません。",
+	"wikibasemediainfo-filepage-cancel-confirm-title": "変更内容を破棄しますか？",
+	"wikibasemediainfo-filepage-cancel-confirm-accept": "破棄する",
 	"wikibasemediainfo-filepage-edit": "編集",
 	"wikibasemediainfo-filepage-publish": "変更を公開",
 	"wikibasemediainfo-filepage-caption-empty": "このファイルの内容を1行で説明してください",
@@ -59,6 +61,9 @@
 	"wikibasemediainfo-filetype-drawing": "絵画",
 	"wikibasemediainfo-filetype-3d": "3Dモデル",
 	"wikibasemediainfo-filetype-office": "ドキュメント",
+	"wikibasemediainfo-remove-all-statements-confirm": "このプロパティの既存の値をすべて削除します。変更が公開されたときに、値のないプロパティは削除されます。実行しますか？",
+	"wikibasemediainfo-remove-all-statements-confirm-title": "すべて除去しますか？",
+	"wikibasemediainfo-remove-all-statements-confirm-accept": "除去",
 	"wikibasemediainfo-search-qualifiers-add": "修飾子を追加",
 	"wikibasemediainfo-search-qualifiers-cancel": "キャンセル",
 	"wikibasemediainfo-search-qualifiers-save": "保存",
@@ -67,5 +72,5 @@
 	"wikibasemediainfo-search-search": "検索",
 	"wikibasemediainfo-search-toggle-keywords": "キーワード",
 	"wikibasemediainfo-search-toggle-depicts": "タグ",
-	"wikibasemediainfo-unsupported-datatype": "サポートされていないデータ型です：$1"
+	"wikibasemediainfo-unsupported-datatype-text": "サポートされていないデータ型です"
 }

@@ -25,6 +25,9 @@
 	"wikibasemediainfo-filepage-add-caption": "Aggiungi una didascalia",
 	"wikibasemediainfo-filepage-edit-captions": "Modifica didascalie",
 	"wikibasemediainfo-filepage-cancel": "Annulla",
+	"wikibasemediainfo-filepage-cancel-confirm": "Le modifiche che hai fatto non saranno salvate.",
+	"wikibasemediainfo-filepage-cancel-confirm-title": "Ignora modifiche?",
+	"wikibasemediainfo-filepage-cancel-confirm-accept": "Cancella",
 	"wikibasemediainfo-filepage-edit": "Modifica",
 	"wikibasemediainfo-filepage-publish": "Pubblica modifiche",
 	"wikibasemediainfo-filepage-caption-empty": "Aggiungi una brevissima spiegazione di ciò che questo file rappresenta",
@@ -58,6 +61,8 @@
 	"wikibasemediainfo-filetype-audio": "Suono",
 	"wikibasemediainfo-filetype-3d": "Modelli 3D",
 	"wikibasemediainfo-filetype-office": "Documenti",
+	"wikibasemediainfo-remove-all-statements-confirm-title": "Rimuovi tutto?",
+	"wikibasemediainfo-remove-all-statements-confirm-accept": "Rimuovi",
 	"wikibasemediainfo-search-qualifiers-add": "Aggiungi un qualificatore",
 	"wikibasemediainfo-search-qualifiers-cancel": "Annulla",
 	"wikibasemediainfo-search-qualifiers-save": "Salva",
@@ -69,5 +74,5 @@
 	"wikibasemediainfo-search-toggle-keywords": "Parola chiave",
 	"wikibasemediainfo-search-toggle-depicts": "Etichette",
 	"wikibasemediainfo-search-toggle-statements": "Altre dichiarazioni",
-	"wikibasemediainfo-unsupported-datatype": "Tipo di dati non supportato: $1"
+	"wikibasemediainfo-unsupported-datatype-text": "Tipo di dati non supportato"
 }

@@ -55,6 +55,8 @@
 	"wikibasemediainfo-statements-unsupported-property-title": "Nieobsługiwana właściwość",
 	"wikibasemediainfo-statements-unsupported-property-content": "Właściwości inne niż $1 nie są w pełni obsługiwane, ale jest to możliwe w przyszłości. Na razie działanie nieobsługiwanych właściwości może nie być takie, jak oczekujesz.",
 	"wikibasemediainfo-statements-unsupported-property-type-content": "Nie wszystkie typy własciwości są w pełni obsługiwane, ale jest to możliwe w przyszłości. Na razie działanie nieobsługiwanych właściwości może nie być takie, jak oczekujesz.",
+	"wikibasemediainfo-statements-link-notice-text": "Etykiety elementów wchodzących w skład danych strukturalnych linkują do odpowiadających im stron na Wikidanych i będą otwierać się w nowych oknach.",
+	"wikibasemediainfo-statements-link-notice-dismiss": "Zamknij",
 	"wikibasemediainfo-operator-placeholder": "Operator",
 	"wikibasemediainfo-operator-value-is": "jest",
 	"wikibasemediainfo-operator-value-isnot": "nie jest",
@@ -68,6 +70,7 @@
 	"wikibasemediainfo-filetype-drawing": "Rysunki",
 	"wikibasemediainfo-filetype-3d": "Modele 3D",
 	"wikibasemediainfo-filetype-office": "Dokumenty",
+	"wikibasemediainfo-remove-all-statements-confirm": "Ta czynność spowoduje usunięcie wszystkich wartości tej właściwości. Właściwości bez wartości zostaną usunięte dopiero po opublikowaniu zmian. Czy na pewno chcesz to zrobić?",
 	"wikibasemediainfo-search-input-placeholder-keywords": "Wyszukaj w tytułach i opisach",
 	"wikibasemediainfo-search-input-placeholder-depicts": "Szukaj koncepty i tematy",
 	"wikibasemediainfo-search-input-placeholder-statements": "Wyszukaj według innych określeń",
@@ -85,5 +88,5 @@
 	"wikibasemediainfo-search-toggle-keywords": "Słowo kluczowe",
 	"wikibasemediainfo-search-toggle-depicts": "Tagi",
 	"wikibasemediainfo-search-toggle-statements": "Inne stwierdzenia",
-	"wikibasemediainfo-unsupported-datatype": "Nieobsługiwany typ danych: $1"
+	"wikibasemediainfo-unsupported-datatype-text": "Nieobsługiwany typ danych"
 }

@@ -1,5 +1,3 @@
-/* eslint-disable no-jquery/no-global-selector */
-
 var sinon = require( 'sinon' ),
 	pathToWidget = '../../../../resources/filepage/CaptionsPanel.js',
 	helpers = require( '../../support/helpers.js' ),
@@ -33,18 +31,14 @@ QUnit.module( 'CaptionsPanel', {}, function () {
 		QUnit.test( 'initialization works without errors', function ( assert ) {
 			var CaptionsPanel = require( pathToWidget ),
 				config = {
-					classes: {
-						header: 'wbmi-entityview-captions-header',
-						content: 'wbmi-entityview-captionsPanel',
-						entityTerm: 'wbmi-entityview-caption'
-					},
 					warnWithinMaxCaptionLength: 20,
 					userLanguages: [ 'en' ],
-					languageFallbackChain: [ 'en' ]
+					languageFallbackChain: [ 'en' ],
+					mediaInfo: mediaInfoEntity,
+					canEdit: true
 				},
+				// eslint-disable-next-line no-unused-vars
 				cp = new CaptionsPanel( config );
-
-			cp.initializeCaptionsData( mediaInfoEntity );
 
 			assert.ok( true );
 		} );
@@ -54,18 +48,14 @@ QUnit.module( 'CaptionsPanel', {}, function () {
 				userLanguages = [ 'en', 'ga', 'de' ],
 				captionLanguages,
 				config = {
-					classes: {
-						header: 'wbmi-entityview-captions-header',
-						content: 'wbmi-entityview-captionsPanel',
-						entityTerm: 'wbmi-entityview-caption'
-					},
 					warnWithinMaxCaptionLength: 20,
 					userLanguages: userLanguages,
-					languageFallbackChain: [ 'en' ]
+					languageFallbackChain: [ 'en' ],
+					mediaInfo: mediaInfoEntity,
+					canEdit: true
 				},
-				cp = new CaptionsPanel( config );
-
-			cp.initializeCaptionsData( mediaInfoEntity );
+				cp = new CaptionsPanel( config ),
+				done = assert.async();
 
 			// There should be a new caption row for every user language that doesn't already
 			// exist in the caption data
@@ -76,10 +66,13 @@ QUnit.module( 'CaptionsPanel', {}, function () {
 				}
 			} );
 
-			assert.strictEqual(
-				$( '.wbmi-entityview-caption' ).length,
-				captionLanguages.length
-			);
+			cp.renderPromise.then( function () {
+				assert.strictEqual(
+					cp.$element.find( '.wbmi-entityview-caption' ).length,
+					captionLanguages.length
+				);
+				done();
+			} );
 		} );
 	} );
 } );

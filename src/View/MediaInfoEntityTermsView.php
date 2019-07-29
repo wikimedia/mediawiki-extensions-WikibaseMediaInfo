@@ -45,7 +45,7 @@ class MediaInfoEntityTermsView {
 
 	const CAPTIONS_CUSTOM_TAG = 'mediaInfoViewCaptions';
 	const CAPTION_EMPTY_CLASS = 'wbmi-entityview-emptyCaption';
-	const SHOW_CAPTION_CLASS = 'wbmi-entityview-showLabel';
+	const HIDEABLE_CAPTION_CLASS = 'wbmi-entityview-hideable';
 	const CAPTIONS_CONTAINER = 'wbmi-entityview-captionsPanel';
 
 	/**
@@ -91,10 +91,6 @@ class MediaInfoEntityTermsView {
 				$this->getLanguagesOrderedByFallbackChain( $entity )
 			)
 		);
-		$layout->setAttributes( [
-			'data-caption-languages' =>
-				implode( ',', $this->getLanguagesOrderedByFallbackChain( $entity ) )
-		] );
 		$html = $layout->toString();
 
 		// Wrap the whole thing in a custom tag so we can manipulate its position on the page
@@ -155,10 +151,10 @@ class MediaInfoEntityTermsView {
 	}
 
 	/**
-	 * The following captions get a SHOW_CAPTION_CLASS html class:
+	 * The following captions are always shown
 	 *
 	 * - the first caption
-	 * - The first non-empty caption in the fallback chain IF AND ONLY IF the first caption has no
+	 * - the first non-empty caption in the fallback chain IF AND ONLY IF the first caption has no
 	 *   value
 	 *
 	 * @param TermList $captions
@@ -225,8 +221,8 @@ class MediaInfoEntityTermsView {
 		);
 
 		$classes = [ 'wbmi-entityview-caption' ];
-		if ( $showCaption ) {
-			$classes[] = self::SHOW_CAPTION_CLASS;
+		if ( !$showCaption ) {
+			$classes[] = self::HIDEABLE_CAPTION_CLASS;
 		}
 		$layout = new HorizontalLayout( [
 			'items' => [

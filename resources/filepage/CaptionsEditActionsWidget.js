@@ -11,13 +11,12 @@ CancelPublishWidget = require( './CancelPublishWidget.js' );
 	* For use with CaptionsPanel
 	*
 	* @constructor
-	* @param {Object} [config]
-	* @cfg {Object} appendToSelector Selector for element the widger should be appended to
-	* @param {Object} captionsPanel CaptionsPanel object
+	* @param {Object} config
+	* @cfg {Object} captionsPanel CaptionsPanel object
 	*/
-CaptionsEditActionsWidget = function ( config, captionsPanel ) {
+CaptionsEditActionsWidget = function ( config ) {
 
-	var cancelAndPublishButtons = new CancelPublishWidget( captionsPanel ),
+	var cancelAndPublishButtons = new CancelPublishWidget( config.captionsPanel ),
 
 		addCaptionButton = new OO.ui.ButtonWidget( {
 			icon: 'add',
@@ -27,7 +26,7 @@ CaptionsEditActionsWidget = function ( config, captionsPanel ) {
 			framed: false
 		} )
 			.on( 'click', function () {
-				captionsPanel.addNewEditableLanguageRow();
+				config.captionsPanel.addNewEmptyLanguageRow();
 			} ),
 
 		editActions = new OO.ui.Element( {
@@ -35,13 +34,12 @@ CaptionsEditActionsWidget = function ( config, captionsPanel ) {
 			classes: [ 'wbmi-entityview-editActions' ]
 		} );
 
-	this.hide = function () {
-		editActions.$element.detach();
-	};
-
-	this.show = function () {
-		$( config.appendToSelector ).append( editActions.$element );
-	};
+	CaptionsEditActionsWidget.parent.call(
+		this,
+		{
+			content: [ editActions ]
+		}
+	);
 
 	this.disablePublish = function () {
 		cancelAndPublishButtons.disablePublish();
@@ -61,5 +59,7 @@ CaptionsEditActionsWidget = function ( config, captionsPanel ) {
 		addCaptionButton.$element.show();
 	};
 };
+
+OO.inheritClass( CaptionsEditActionsWidget, OO.ui.Widget );
 
 module.exports = CaptionsEditActionsWidget;

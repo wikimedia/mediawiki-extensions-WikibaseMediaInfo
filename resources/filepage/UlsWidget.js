@@ -1,12 +1,12 @@
 var UlsWidget;
 
 /**
-	* A ULS widget for the captions section of the structured data in a File page
-	*
-	* @constructor
-	* @param {Object} [config]
-	* @cfg {Object} [languages] Keys are 2-letter language codes, values are language autonyms
-	*/
+ * A ULS widget for the captions section of the structured data in a File page
+ *
+ * @constructor
+ * @param {Object} [config]
+ * @cfg {Object} [languages] Keys are 2-letter language codes, values are language autonyms
+ */
 UlsWidget = function ( config ) {
 	UlsWidget.parent.call( this );
 
@@ -30,8 +30,8 @@ OO.inheritClass( UlsWidget, OO.ui.Widget );
 OO.mixinClass( UlsWidget, OO.EventEmitter );
 
 /**
-	* @param {Object} [languages] Keys are 2-letter language codes, values are language autonyms
-	*/
+ * @param {Object} [languages] Keys are 2-letter language codes, values are language autonyms
+ */
 UlsWidget.prototype.initialiseUls = function ( languages ) {
 	var ulsWidget = this;
 
@@ -57,16 +57,16 @@ UlsWidget.prototype.initialiseUls = function ( languages ) {
 };
 
 /**
-	* @param {Object} [languages] Keys are 2-letter language codes, values are language autonyms
-	*/
+ * @param {Object} [languages] Keys are 2-letter language codes, values are language autonyms
+ */
 UlsWidget.prototype.updateLanguages = function ( languages ) {
 	this.uls.off().removeData( 'uls' );
 	this.initialiseUls( languages );
 };
 
 /**
-	* @param {string} value 2-letter language code
-	*/
+ * @param {string} value 2-letter language code
+ */
 UlsWidget.prototype.setValue = function ( value ) {
 	var current = this.languageValue;
 	this.languageValue = value;
@@ -78,8 +78,8 @@ UlsWidget.prototype.setValue = function ( value ) {
 };
 
 /**
-	* @return {string} 2-letter language code
-	*/
+ * @return {string} 2-letter language code
+ */
 UlsWidget.prototype.getValue = function () {
 	return this.languageValue;
 };

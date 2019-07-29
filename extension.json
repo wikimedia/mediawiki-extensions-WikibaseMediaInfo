@@ -150,12 +150,12 @@
 			"packageFiles": [
 				"resources/filepage/init.js",
 				"resources/filepage/AnonWarning.js",
-				"resources/filepage/LanguagesViewWidget.js",
 				"resources/filepage/LicenseDialogWidget.js",
 				"resources/filepage/UlsWidget.js",
 				"resources/filepage/CancelPublishWidget.js",
 				"resources/filepage/CaptionsEditActionsWidget.js",
 				"resources/filepage/CaptionData.js",
+				"resources/filepage/CaptionDataEditor.js",
 				"resources/filepage/CaptionsPanel.js",
 				"resources/filepage/StatementPanel.js",
 				"resources/filepage/ProtectionMsgWidget.js"
@@ -177,6 +177,7 @@
 				"ext.uls.mediawiki"
 			],
 			"messages": [
+				"wikibasemediainfo-entitytermsforlanguagelistview-caption",
 				"wikibasemediainfo-filepage-structured-data-heading",
 				"wikibasemediainfo-filepage-captions-title",
 				"wikibasemediainfo-filepage-more-languages",
@@ -204,7 +205,8 @@
 				"cascadeprotected"
 			],
 			"templates": [
-				"templates/filepage/ProtectionMsgWidget.mustache+dom"
+				"templates/filepage/ProtectionMsgWidget.mustache+dom",
+				"templates/filepage/CaptionsPanel.mustache+dom"
 			],
 			"targets": [
 				"desktop",

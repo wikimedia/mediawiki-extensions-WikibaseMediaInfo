@@ -1,0 +1,20 @@
+<div class="wbmi-entityview-captionsPanel">
+	<h3 class="wbmi-entityview-captions-header">{{title}}{{#editToggle}} {{{editToggle}}}{{/editToggle}}</h3>
+
+	{{#captions}}
+	<div class="wbmi-entityview-caption"{{^show}} style="display: none;"{{/show}}>
+		<div class="wbmi-language-label" dir="{{textDirection}}" lang="{{langCode}}">{{{language}}}</div>
+		<div class="wbmi-caption-value{{#empty}}  wbmi-entityview-emptyCaption{{/empty}}" dir="{{textDirection}}" lang="{{langCode}}">
+			{{{caption}}}
+			{{#inputError}}<div class="wbmi-caption-publishError">{{inputError}}</div>{{/inputError}}
+				{{#inputWarning}}<div class="wbmi-caption-publishWarning">{{inputWarning}}</div>{{/inputWarning}}
+		</div>
+		{{#deleter}}{{{deleter}}}{{/deleter}}
+
+	</div>
+	{{/captions}}
+
+	{{#editActionsWidget}} {{{editActionsWidget}}} {{/editActionsWidget}}
+	{{#languagesViewWidget}} {{{languagesViewWidget}}} {{/languagesViewWidget}}
+
+<div>

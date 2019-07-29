@@ -88,19 +88,19 @@ class MediaInfoEntityTermsViewTest extends \PHPUnit\Framework\TestCase {
 		$labelOrderRegex = '/' . implode( '.+', $expectedLanguageOrder ) . '/s';
 
 		// Expect to find in the output
-		// - at least one SHOW_LABEL_CLASS
-		// - two SHOW_LABEL_CLASSes if the first label in the fallback chain has no value, and
-		//   some other label has a value
-		$showLabelClassCount = 1;
+		// - at least one caption without display:none
+		// - two captions without display:none if the first caption
+		//	 in the fallback chain has no value, and some other captions has a value
+		$shownLabelCount = 1;
 		if (
 			!$testEntity->getLabels()->hasTermForLanguage( $fallbackLangCodes[0] ) &&
 			count( $labels ) > 0
 		) {
-			$showLabelClassCount = 2;
+			$shownLabelCount = 2;
 		}
-		// Labels without SHOW_LABEL_CLASS in the output should be hidden by default - so the string
+		// Labels with HIDEABLE_LABEL_CLASS in the output should be hidden by default - so the string
 		// "display: none" should appear ((the number of languages) - $showLabelClassCount) times
-		$displayNoneCount = count( $expectedLanguageOrder ) - $showLabelClassCount;
+		$displayNoneCount = count( $expectedLanguageOrder ) - $shownLabelCount;
 
 		$sut = new MediaInfoEntityTermsView(
 			$this->langNameLookup,
@@ -117,10 +117,10 @@ class MediaInfoEntityTermsViewTest extends \PHPUnit\Framework\TestCase {
 			'Language codes not found in order in output'
 		);
 
-		// Expect to find the right number of SHOW_LABEL_CLASS strings
+		// Expect to find the right number of HIDEABLE_LABEL_CLASS strings
 		$this->assertEquals(
-			substr_count( $html, MediaInfoEntityTermsView::SHOW_CAPTION_CLASS ),
-			$showLabelClassCount
+			substr_count( $html, MediaInfoEntityTermsView::HIDEABLE_CAPTION_CLASS ),
+			$displayNoneCount
 		);
 
 		// Expect to find the right number of "display:none" strings
@@ -232,10 +232,10 @@ class MediaInfoEntityTermsViewTest extends \PHPUnit\Framework\TestCase {
 		}
 
 		if ( $showLabel ) {
-			$this->assertRegExp(
-				'/' . MediaInfoEntityTermsView::SHOW_CAPTION_CLASS . '/',
+			$this->assertNotRegExp(
+				'/' . MediaInfoEntityTermsView::HIDEABLE_CAPTION_CLASS . '/',
 				$html,
-				'Show label class not found in output'
+				'hideable label class found unexpectedly in output'
 			);
 			$this->assertNotRegExp(
 				'/display:\s*none/i',
@@ -243,10 +243,10 @@ class MediaInfoEntityTermsViewTest extends \PHPUnit\Framework\TestCase {
 				'Expected "display:none" found unexpectedly in output'
 			);
 		} else {
-			$this->assertNotRegExp(
-				'/' . MediaInfoEntityTermsView::SHOW_CAPTION_CLASS . '/',
+			$this->assertRegExp(
+				'/' . MediaInfoEntityTermsView::HIDEABLE_CAPTION_CLASS . '/',
 				$html,
-				'Show label class found unexpectedly in output'
+				'hideable label class not found in output'
 			);
 			$this->assertRegExp(
 				'/display:\s*none/i',

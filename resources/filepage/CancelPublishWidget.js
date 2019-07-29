@@ -6,9 +6,9 @@ var CancelPublishWidget;
  * Widget containing 'cancel' and 'publish' buttons
  *
  * @constructor
- * @param {Object} sdcPanel Panel object with makeReadOnly() and sendData() methods
+ * @param {CaptionsPanel} captionsPanel
  */
-CancelPublishWidget = function ( sdcPanel ) {
+CancelPublishWidget = function ( captionsPanel ) {
 	var cancelButton = new OO.ui.ButtonWidget( {
 			framed: false,
 			flags: [
@@ -17,7 +17,7 @@ CancelPublishWidget = function ( sdcPanel ) {
 			label: mw.message( 'wikibasemediainfo-filepage-cancel' ).text()
 		} )
 			.on( 'click', function () {
-				var hasChanges = sdcPanel.hasChanges();
+				var hasChanges = captionsPanel.hasChanges();
 
 				if ( hasChanges ) {
 					OO.ui.confirm(
@@ -39,11 +39,11 @@ CancelPublishWidget = function ( sdcPanel ) {
 						}
 					).then( function ( confirmed ) {
 						if ( confirmed ) {
-							sdcPanel.makeReadOnly();
+							captionsPanel.restoreToSaved();
 						}
 					} );
 				} else {
-					sdcPanel.makeReadOnly();
+					captionsPanel.restoreToSaved();
 				}
 			} ),
 
@@ -59,21 +59,16 @@ CancelPublishWidget = function ( sdcPanel ) {
 			]
 		} )
 			.on( 'click', function () {
-				sdcPanel.sendData();
-			} ),
+				captionsPanel.sendData();
+			} );
 
-		widget = new OO.ui.Element( {
+	CancelPublishWidget.parent.call(
+		this,
+		{
 			content: [ cancelButton, publishButton ],
 			classes: [ 'wbmi-entityview-cancelAndPublishButtons' ]
-		} );
-
-	this.hide = function () {
-		widget.$element.hide();
-	};
-
-	this.show = function () {
-		widget.$element.show();
-	};
+		}
+	);
 
 	this.disablePublish = function () {
 		publishButton.setDisabled( true );
@@ -91,8 +86,8 @@ CancelPublishWidget = function ( sdcPanel ) {
 	this.setStateReady = function () {
 		cancelButton.$element.show();
 	};
-
-	this.$element = widget.$element;
 };
+
+OO.inheritClass( CancelPublishWidget, OO.ui.Widget );
 
 module.exports = CancelPublishWidget;

@@ -2,10 +2,10 @@
 
 var AnonWarning = require( './AnonWarning.js' ),
 	CaptionData = require( './CaptionData.js' ),
+	CaptionDataEditor = require( './CaptionDataEditor.js' ),
 	CaptionsEditActionsWidget = require( './CaptionsEditActionsWidget.js' ),
-	LanguagesViewWidget = require( './LanguagesViewWidget.js' ),
 	LicenseDialogWidget = require( './LicenseDialogWidget.js' ),
-	UlsWidget = require( './UlsWidget.js' ),
+	ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
 	CaptionsPanel;
 
 /**
@@ -36,29 +36,28 @@ var AnonWarning = require( './AnonWarning.js' ),
  *
  * @constructor
  * @param {Object} [config]
- * @cfg {Object} classes CSS classes of DOM elements
- * @cfg {string} classes.header CSS class of header
- * @cfg {string} classes.content CSS class of content
- * @cfg {string} classes.entityTerm CSS class of entityTerm
  * @cfg {int} warnWithinMaxCaptionLength Show a warning when the caption length is within X
  *   characters of the max
  * @cfg {string[]} [userLanguages] The language the user has indicated that they use (via babel)
  * @cfg {string[]} [languageFallbackChain]
  * @cfg {wb.datamodel.MediaInfo} [mediaInfo]
- * @cfg {boolean} isEditable True if the captions should be editable on the page
+ * @cfg {boolean} canEdit True if the captions should be editable on the page
  */
 CaptionsPanel = function ( config ) {
-	var $header = $( '.' + config.classes.header );
-	this.config = config || {};
+	var self = this;
+	config = config || {};
 
 	// Parent constructor
-	CaptionsPanel.super.apply( this, arguments );
+	CaptionsPanel.parent.call( this, config );
 
-	// Mixin constructors
-	OO.ui.mixin.PendingElement.call( this, this.config );
+	// Mixin constructor
+	OO.ui.mixin.PendingElement.call( this, config );
 
-	this.userLanguages = this.config.userLanguages || [];
-	this.languageFallbackChain = this.config.languageFallbackChain || [ 'en' ];
+	this.userLanguages = config.userLanguages || [];
+	this.languageFallbackChain = config.languageFallbackChain || [ 'en' ];
+	this.canEdit = config.canEdit;
+	this.warnWithinMaxCaptionLength = config.warnWithinMaxCaptionLength;
+	this.savedCaptionsData = this.captionsDataFromMediaInfoEntity( config.mediaInfo );
 
 	// TODO: can we make the dependency on WB object more explicit?
 	this.api = wikibase.api.getLocationAgnosticMwApi(
@@ -67,62 +66,39 @@ CaptionsPanel = function ( config ) {
 			mw.config.get( 'wbRepoApiUrl' )
 		)
 	);
-	this.selectors = {};
-	this.selectors.content = '.' + this.config.classes.content;
-	this.selectors.entityTerm = '.' + this.config.classes.entityTerm;
-
-	this.editing = false;
-	this.languageSelectors = [];
-	this.textInputs = [];
 
 	// Create the various widgets
 	this.licenseDialogWidget = new LicenseDialogWidget();
-	this.languagesViewWidget = new LanguagesViewWidget( this.config );
+	this.editActionsWidget = new CaptionsEditActionsWidget( { captionsPanel: this } );
 
-	if ( this.config.isEditable ) {
-		this.editToggle = new OO.ui.ButtonWidget( {
-			label: mw.message( 'wikibasemediainfo-filepage-edit' ).text(),
-			framed: false,
-			flags: 'progressive',
-			title: mw.message( 'wikibasemediainfo-filepage-edit-captions' ).text(),
-			classes: [ 'wbmi-entityview-editButton' ]
-		} );
-		this.editToggle.connect( this, { click: 'makeEditable' } );
-		$header.append( this.editToggle.$element );
+	this.state = $.extend(
+		{},
+		this.getCaptionsState( this.savedCaptionsData ),
+		{
+			editing: false,
+			disabled: false,
+			captionsDataEditors: {},
+			displayAllLanguages: false
+		}
+	);
 
-		this.editActionsWidget = new CaptionsEditActionsWidget(
-			{ appendToSelector: '.' + config.classes.content },
-			this
-		);
-	}
+	ComponentWidget.call(
+		this,
+		'wikibase.mediainfo.filePageDisplay',
+		'templates/filepage/CaptionsPanel.mustache+dom'
+	);
 
-	this.initializeCaptionsData( config.mediaInfo || {} );
-
-	// Set the target pending element to the layout box
-	this.$pending = $header.parent();
+	// Set the target pending element to first child of $element, which is the first node of the
+	// rendered template
+	this.renderPromise.then( function () {
+		self.$pending = self.$element.children( ':first' );
+	} );
 };
 
 /* Inheritance */
-OO.inheritClass( CaptionsPanel, OO.ui.Element );
+OO.inheritClass( CaptionsPanel, OO.ui.Widget );
+OO.mixinClass( CaptionsPanel, ComponentWidget );
 OO.mixinClass( CaptionsPanel, OO.ui.mixin.PendingElement );
-
-/**
- * @param {wb.datamodel.MediaInfo} mediaInfo
- */
-CaptionsPanel.prototype.initializeCaptionsData = function ( mediaInfo ) {
-	var captionsHaveChanged = false;
-	this.captionsData = this.captionsDataFromMediaInfoEntity( mediaInfo );
-	this.savedCaptionsExist = this.captionsData.length > 0;
-	captionsHaveChanged = this.ensureCaptionsDataHasInterfaceLanguage();
-	captionsHaveChanged = this.addCaptionsDataForUserLanguages() || captionsHaveChanged;
-	this.updateLanguageOrder();
-	if ( captionsHaveChanged ) {
-		this.redrawCaptionsContent();
-	}
-	this.languagesViewWidget.refreshLabel();
-	this.refreshRowIndices();
-	this.languagesViewWidget.collapse();
-};
 
 /**
  * @param {wb.datamodel.MediaInfo} mediaInfo
@@ -143,156 +119,73 @@ CaptionsPanel.prototype.captionsDataFromMediaInfoEntity = function ( mediaInfo )
 };
 
 /**
- * @return {boolean} True if captions data has changed
+ * @param {Object} captionsData An object with langCodes as keys and CaptionData objects as values
+ * @return {{captionsData:Object, orderedLanguageCodes:Array}}
  */
-CaptionsPanel.prototype.ensureCaptionsDataHasInterfaceLanguage = function () {
-	if ( this.captionsData[ this.languageFallbackChain[ 0 ] ] === undefined ) {
-		this.captionsData[ this.languageFallbackChain[ 0 ] ] = new CaptionData(
-			this.languageFallbackChain[ 0 ]
-		);
-		return true;
-	}
-	return false;
-};
-
-/**
- * Get the caption data for a language
- * @param {string} languageCode
- * @return {CaptionData} Caption data for a language
- * @private
- */
-CaptionsPanel.prototype.getDataForLangCode = function ( languageCode ) {
-	var captionData = new CaptionData( languageCode, '' );
-	if ( this.captionsData[ languageCode ] !== undefined ) {
-		captionData = this.captionsData[ languageCode ];
-	}
-	return captionData;
-};
-
-/**
- * Create a DOM element containing caption data
- *
- * @param {int} index Elements containing caption data are indexed in order from 0
- * @param {string} languageCode Language code
- * @param {string} direction 'rtl' or 'ltr'
- * @param {string} languageContent The name of the language in the current interface language
- * @param {string} captionContent The actual text of the caption
- * @param {boolean} showCaption True to show the caption when the page is loaded
- * @return {jQuery} DOM element
- * @private
- */
-CaptionsPanel.prototype.createCaptionRow = function (
-	index, languageCode, direction, languageContent, captionContent, showCaption
-) {
-	var language, caption, row, rowClasses;
-
-	language = new OO.ui.Element( {
-		content: [ languageContent ],
-		classes: [ 'wbmi-language-label' ]
-	} );
-	caption = new OO.ui.Element( {
-		content: [ captionContent ],
-		classes: [ 'wbmi-caption-value' ]
-	} );
-
-	if ( languageCode !== '' ) {
-		language.$element.attr( 'lang', languageCode );
-		caption.$element.attr( 'lang', languageCode );
-	}
-	if ( direction !== '' ) {
-		language.$element.attr( 'dir', direction );
-		caption.$element.attr( 'dir', direction );
-	}
-
-	if ( captionContent === '' ) {
-		caption.$element.addClass( 'wbmi-entityview-emptyCaption' );
-		caption.$element.text( mw.message( 'wikibasemediainfo-filepage-caption-empty' ).text() );
-	}
-
-	rowClasses = [ this.config.classes.entityTerm ];
-	if ( showCaption ) {
-		rowClasses.push( 'wbmi-entityview-showLabel' );
-	}
-	row = new OO.ui.HorizontalLayout( {
-		items: [ language, caption ],
-		classes: rowClasses
-	} );
-	row.$element.attr( 'data-index', index );
-	return row.$element;
-};
-
-/**
- * Create a read-only DOM element containing caption data
- *
- * @param {int} index Elements containing caption data are indexed in order from 0
- * @param {CaptionData} captionData The caption data
- * @param {boolean} showCaption True to show the caption when the page is loaded
- * @return {jQuery} DOM element
- * @private
- */
-CaptionsPanel.prototype.createIndexedReadOnlyRow = function (
-	index,
-	captionData,
-	showCaption
-) {
-	return this.createCaptionRow(
-		index,
-		mw.html.escape( captionData.languageCode ),
-		mw.html.escape( captionData.direction ),
-		mw.html.escape( captionData.languageText ),
-		captionData.text,
-		showCaption
+CaptionsPanel.prototype.getCaptionsState = function ( captionsData ) {
+	// ensure we have the interface language
+	captionsData = this.ensureCaptionDataArrayHasLanguage(
+		captionsData,
+		this.languageFallbackChain[ 0 ]
 	);
+
+	if ( this.canEdit ) {
+		captionsData = this.addCaptionsDataForUserLanguages( captionsData );
+	}
+
+	return {
+		captionsData: captionsData,
+		orderedLanguageCodes: this.getOrderedLangCodes( captionsData )
+	};
 };
 
 /**
- * Refresh the indices of the DOM elements containing caption data so that they start at 0 and
- * proceed in ascending order
+ * If the input object does not have a CaptionData object for the specified langCode, add a
+ * blank one
  *
+ * @param {Object} captionDataArray Object with langCodes as keys and CaptionData objects as values
+ * @param {string} langCode
+ * @return {Object} Object with langCodes as keys and CaptionData objects as values
  * @private
  */
-CaptionsPanel.prototype.refreshRowIndices = function () {
-	$( this.selectors.content ).find( this.selectors.entityTerm ).each( function ( index ) {
-		$( this ).attr( 'data-index', index );
-	} );
+CaptionsPanel.prototype.ensureCaptionDataArrayHasLanguage = function (
+	captionDataArray,
+	langCode
+) {
+	if ( captionDataArray[ langCode ] === undefined ) {
+		captionDataArray[ langCode ] = new CaptionData( langCode );
+	}
+	return captionDataArray;
 };
 
 /**
- * Create empty captions data for every user language that doesn't already have data
+ * If the input object does not have a CaptionData object for each user language,
+ * add a blank one
  *
- * @return {boolean} Returns true if captions have changed - a user language caption may have been
- *  added, or captions might have been moved around in the caption order because they're user
- *  languages
+ * @param {Object} captionDataArray Object with langCodes as keys and CaptionData objects as values
+ * @return {Object} Object with langCodes as keys and CaptionData objects as values
  * @private
  */
-CaptionsPanel.prototype.addCaptionsDataForUserLanguages = function () {
+CaptionsPanel.prototype.addCaptionsDataForUserLanguages = function ( captionDataArray ) {
 	var self = this;
-
 	// Create CaptionData objects for user languages that we don't already have on the screen
 	this.userLanguages.forEach( function ( langCode ) {
-		var caption;
-
-		if (
-			Object.prototype.hasOwnProperty.call( self.captionsData, langCode ) === false
-		) {
-			caption = new CaptionData( langCode, '' );
-			self.captionsData[ langCode ] = caption;
-		}
+		captionDataArray = self.ensureCaptionDataArrayHasLanguage( captionDataArray, langCode );
 	} );
-
-	return this.updateLanguageOrder();
+	return captionDataArray;
 };
 
 /**
- * Populates this.orderedLanguageCodes with a list of langCodes from this.captionsData, ordered
- * based on the rules specified in the class comments
+ * Returns a list of langCodes from captionDataArray, ordered based on the rules specified
+ * in the class comments
  *
- * @return {boolean} True if the language list order has changed
+ * @param {Object} captionDataArray Object with langCodes as keys and CaptionData objects as values
+ * @return {Array}
  * @private
  */
-CaptionsPanel.prototype.updateLanguageOrder = function () {
+CaptionsPanel.prototype.getOrderedLangCodes = function ( captionDataArray ) {
 	var i,
-		captionLanguages = Object.keys( this.captionsData ),
+		captionLanguages = Object.keys( captionDataArray ),
 		rearrangedCaptionLanguages = [];
 
 	// First language in fallback chain (i.e. the interface language) is always first
@@ -301,13 +194,13 @@ CaptionsPanel.prototype.updateLanguageOrder = function () {
 	// If there is no data for the interface language, then the first language in the fallback
 	// chain with a value goes next
 	if (
-		typeof this.captionsData[ this.languageFallbackChain[ 0 ] ] !== CaptionData ||
-		this.captionsData[ this.languageFallbackChain[ 0 ] ].text !== ''
+		typeof captionDataArray[ this.languageFallbackChain[ 0 ] ] !== CaptionData ||
+		captionDataArray[ this.languageFallbackChain[ 0 ] ].text !== ''
 	) {
 		for ( i = 1; i < this.languageFallbackChain.length; i++ ) {
 			if (
-				this.captionsData[ this.languageFallbackChain[ i ] ] &&
-				this.captionsData[ this.languageFallbackChain[ i ] ].text !== ''
+				captionDataArray[ this.languageFallbackChain[ i ] ] &&
+				captionDataArray[ this.languageFallbackChain[ i ] ].text !== ''
 			) {
 				rearrangedCaptionLanguages.push( this.languageFallbackChain[ i ] );
 				break;
@@ -329,10 +222,184 @@ CaptionsPanel.prototype.updateLanguageOrder = function () {
 		}
 	} );
 
-	// Store the re-arranged list
-	this.orderedLanguageCodes = rearrangedCaptionLanguages;
+	return rearrangedCaptionLanguages;
+};
 
-	return rearrangedCaptionLanguages !== captionLanguages;
+/**
+ * @return {Object|jQuery.Promise<Object>}
+ */
+CaptionsPanel.prototype.getTemplateData = function () {
+	if ( this.state.editing === true ) {
+		return this.getTemplateDataEditable();
+	} else {
+		return this.getTemplateDataReadOnly();
+	}
+};
+
+/**
+ * @return {Object|jQuery.Promise<Object>}
+ */
+CaptionsPanel.prototype.getTemplateDataEditable = function () {
+	var self = this,
+		templateCaptions = [],
+		data = {
+			editing: true,
+			title: mw.message( 'wikibasemediainfo-entitytermsforlanguagelistview-caption' ).text(),
+			editActionsWidget: this.editActionsWidget
+		},
+		inputErrorFound = false;
+
+	Object.keys( this.state.captionsDataEditors ).forEach( function ( guid ) {
+		var captionDataEditor = self.state.captionsDataEditors[ guid ];
+
+		templateCaptions.push( {
+			show: true,
+			textDirection: $.uls.data.getDir( captionDataEditor.languageSelector.getValue() ),
+			langCode: captionDataEditor.languageSelector.getValue(),
+			language: captionDataEditor.languageSelector,
+			caption: captionDataEditor.textInput,
+			empty: false,
+			deleter: captionDataEditor.deleter,
+			inputError: captionDataEditor.inputError,
+			inputWarning: captionDataEditor.inputWarning
+		} );
+
+		if ( captionDataEditor.inputError !== '' ) {
+			inputErrorFound = true;
+		}
+	} );
+	data.captions = templateCaptions;
+
+	if ( !this.hasChanges() ) {
+		data.editActionsWidget.disablePublish();
+	} else {
+		if ( inputErrorFound ) {
+			data.editActionsWidget.disablePublish();
+		} else {
+			data.editActionsWidget.enablePublish();
+		}
+	}
+
+	return data;
+};
+
+/**
+ * @return {Object|jQuery.Promise<Object>}
+ */
+CaptionsPanel.prototype.getTemplateDataReadOnly = function () {
+	var self = this,
+		templateCaptions = [],
+		showCaptionFlags = this.getShowCaptionFlagsByLangCode(),
+		count = 0,
+		data;
+
+	// basic template data
+	data = {
+		editing: false,
+		title: mw.message( 'wikibasemediainfo-entitytermsforlanguagelistview-caption' ).text()
+	};
+
+	// the "edit" button
+	if ( this.canEdit ) {
+		data.editToggle = new OO.ui.ButtonWidget( {
+			label: mw.message( 'wikibasemediainfo-filepage-edit' ).text(),
+			framed: false,
+			flags: 'progressive',
+			title: mw.message( 'wikibasemediainfo-filepage-edit-captions' ).text(),
+			classes: [ 'wbmi-entityview-editButton' ]
+		} );
+		data.editToggle.connect( this, { click: [ 'makeEditable' ] } );
+	} else {
+		data.editToggle = '';
+	}
+
+	// "see X more languages"/"see fewer languages" link
+	data.languagesViewWidget = new OO.ui.ButtonWidget( {
+		icon: this.state.displayAllLanguages ? 'collapse' : 'expand',
+		flags: 'progressive',
+		framed: false,
+		label: this.state.displayAllLanguages ?
+			mw.message( 'wikibasemediainfo-filepage-fewer-languages' ).text() :
+			mw.message(
+				'wikibasemediainfo-filepage-more-languages',
+				self.getHideableLanguageCount()
+			).text()
+	} ).on(
+		'click',
+		this.setState.bind( this, { displayAllLanguages: !this.state.displayAllLanguages } )
+	);
+
+	// captions data
+	this.state.orderedLanguageCodes.forEach( function ( langCode ) {
+		var captionData = self.state.captionsData[ langCode ],
+			language,
+			caption;
+
+		language = captionData.languageText;
+		caption = captionData.text ?
+			captionData.text : mw.message( 'wikibasemediainfo-filepage-caption-empty' ).text();
+
+		templateCaptions.push( {
+			show: self.state.displayAllLanguages ? true : showCaptionFlags[ langCode ],
+			index: count,
+			textDirection: captionData.direction,
+			langCode: captionData.languageCode,
+			language: language,
+			caption: caption,
+			empty: captionData.text === ''
+		} );
+		count++;
+
+	} );
+	data.captions = templateCaptions;
+
+	return data;
+};
+
+/**
+ * Recreate this.state.captionsDataEditors with one element removed, and update
+ * this.state.captionsData
+ * @param {string} guidToRemove
+ */
+CaptionsPanel.prototype.onCaptionDeleted = function ( guidToRemove ) {
+	var modifiedCaptionsDataEditors = $.extend( {}, this.state.captionsDataEditors );
+	delete modifiedCaptionsDataEditors[ guidToRemove ];
+	this.setState( {
+		captionsDataEditors: modifiedCaptionsDataEditors
+	} ).then( this.onDataChanged.bind( this ) );
+};
+
+/**
+ * 1. Make sure each language can only be selected once
+ * 2. Update the direction of textInputs based on selected languages
+ * 3. Update this.state.captions from this.state.captionsDataEditors
+ */
+CaptionsPanel.prototype.onDataChanged = function () {
+	var self = this, captionsData = {};
+	this.refreshLanguageSelectorsOptions();
+	Object.keys( this.state.captionsDataEditors ).forEach( function ( guid ) {
+		var langSelector = self.state.captionsDataEditors[ guid ].languageSelector,
+			langCode = langSelector.getValue(),
+			textInput = self.state.captionsDataEditors[ guid ].textInput;
+		if ( langCode ) {
+			textInput.setDir( $.uls.data.getDir( langCode ) );
+			if ( textInput.getValue() ) {
+				captionsData[ langCode ] = new CaptionData( langCode, textInput.getValue() );
+			}
+		}
+	} );
+	this.setState( this.getCaptionsState( captionsData ) );
+};
+
+/**
+ * Restores to a read-only view with the saved captions data
+ */
+CaptionsPanel.prototype.restoreToSaved = function () {
+	var restoredState = $.extend( {}, this.getCaptionsState( this.savedCaptionsData ), {
+		editing: false,
+		disabled: false
+	} );
+	this.setState( restoredState );
 };
 
 /**
@@ -352,20 +419,24 @@ CaptionsPanel.prototype.getAvailableLanguages = function ( excludeLanguages ) {
 };
 
 /**
+ * Make sure available languages in each language selector don't include languages that are
+ * selected in another selector
+ *
  * @private
  */
 CaptionsPanel.prototype.refreshLanguageSelectorsOptions = function () {
 	var self = this,
-		currentlySelectedLanguages = [];
+		currentlySelectedLanguages = [],
+		captionsDataEditors = this.state.captionsDataEditors;
 
-	this.languageSelectors.forEach( function ( languageSelector ) {
-		currentlySelectedLanguages.push( languageSelector.getValue() );
+	Object.keys( captionsDataEditors ).forEach( function ( guid ) {
+		currentlySelectedLanguages.push( captionsDataEditors[ guid ].languageSelector.getValue() );
 	} );
-	this.languageSelectors.forEach( function ( languageSelector ) {
-		languageSelector.updateLanguages(
+	Object.keys( captionsDataEditors ).forEach( function ( guid ) {
+		captionsDataEditors[ guid ].languageSelector.updateLanguages(
 			self.getAvailableLanguages(
 				currentlySelectedLanguages.filter( function ( langCode ) {
-					return langCode !== languageSelector.getValue();
+					return langCode !== captionsDataEditors[ guid ].languageSelector.getValue();
 				} )
 			)
 		);
@@ -373,281 +444,34 @@ CaptionsPanel.prototype.refreshLanguageSelectorsOptions = function () {
 };
 
 /**
- * Update DOM with errors on text input  - connected to text input 'change' events
- *
- *  @param {string} textInput caption text
- *  @private
- */
-CaptionsPanel.prototype.warnIfTextApproachingLimit = function ( textInput ) {
-	var $caption = textInput.$element.parents( '.wbmi-caption-value' ),
-		lengthDiff = mw.config.get( 'wbmiMaxCaptionLength' ) - textInput.getValue().length;
-	$caption.find( 'div.wbmi-caption-publishWarning' ).remove();
-	if ( lengthDiff >= 0 && lengthDiff < this.config.warnWithinMaxCaptionLength ) {
-		$caption.append(
-			$( '<div>' )
-				.addClass( 'wbmi-caption-publishWarning' )
-				.text(
-					mw.message(
-						'wikibasemediainfo-filepage-caption-approaching-limit',
-						lengthDiff
-					).text()
-				)
-		);
-	}
-};
-
-/**
- * Runs validity checks on captions text and returns functions for updating DOM
- *
- * @return {Array<Promise>} show/hide error messages when resolved
- * @private
- */
-CaptionsPanel.prototype.validateCaptionsAndReturnUpdates = function () {
-	var textInputChecks = [];
-	this.textInputs.forEach( function ( textInput ) {
-		textInputChecks.push(
-			textInput.getValidity()
-				.done( function () {
-					textInput.$element.parents( '.wbmi-caption-value' ).find( 'div.wbmi-caption-publishError' ).remove();
-				} )
-				.fail( function () {
-					var $caption = textInput.$element.parents( '.wbmi-caption-value' );
-					$caption.find( 'div.wbmi-caption-publishWarning' ).remove();
-					$caption.find( 'div.wbmi-caption-publishError' ).remove();
-					$caption.append(
-						$( '<div>' )
-							.addClass( 'wbmi-caption-publishError' )
-							.text(
-								mw.message(
-									'wikibasemediainfo-filepage-caption-too-long',
-									textInput.getValue().length - mw.config.get( 'wbmiMaxCaptionLength' )
-								).text()
-							)
-					);
-				} )
-		);
-	} );
-	return textInputChecks;
-};
-
-/**
- * Check for changes to caption text by language or number of captions
  * @return {boolean} True if any captions have been changed/added/deleted
  */
 CaptionsPanel.prototype.hasChanges = function () {
-	var $captions, hasChanges,
-		self = this;
-
-	$captions = $( self.selectors.content ).find( self.selectors.entityTerm );
-	hasChanges = $captions.length < Object.keys( self.captionsData ).length;
-
-	$captions.each( function () {
-		var index = $( this ).attr( 'data-index' ),
-			languageCode = self.languageSelectors[ index ].getValue(),
-			text = self.textInputs[ index ].getValue(),
-			existingDataForLanguage = self.getDataForLangCode( languageCode );
-		if ( languageCode !== undefined && existingDataForLanguage.text !== text ) {
-			hasChanges = true;
-		}
-	} );
-	return hasChanges;
-};
-
-CaptionsPanel.prototype.isEditable = function () {
-	return this.editing;
-};
-
-/**
- * Enable/Disable publish button based on presence of captions changes
- *
- * @private
- */
-CaptionsPanel.prototype.refreshPublishState = function () {
 	var self = this,
-		hasChanges = self.hasChanges();
-	if ( hasChanges ) {
-		self.editActionsWidget.enablePublish();
-	} else {
-		self.editActionsWidget.disablePublish();
-	}
-};
-
-/**
- * Apply validations and refresh publish button - connected to text input 'change' events
- *
- * @private
- */
-CaptionsPanel.prototype.onCaptionsChange = function () {
-	var self = this,
-		validations = self.validateCaptionsAndReturnUpdates(); // This is an array of promises
-
-	$.when.apply( null, validations )
-		.then( function () {
-			self.refreshPublishState();
-		} )
-		.catch( function () {
-			self.editActionsWidget.disablePublish();
-		} );
-};
-
-/**
- * @param {jQuery} $row jQuery element representing language/caption in the DOM
- * @return {OO.ui.ButtonWidget} deleter OOUI widget to delete a single caption from the DOM
- * @private
- */
-CaptionsPanel.prototype.createRowDeleter = function ( $row ) {
-	var self = this,
-		deleter = new OO.ui.ButtonWidget( {
-			icon: 'trash',
-			framed: false,
-			flags: 'destructive',
-			classes: [ 'wbmi-caption-deleteButton' ]
-		} );
-
-	deleter.$element.on( 'click', function () {
-		self.languageSelectors.splice(
-			$row.attr( 'data-index' ),
-			1
-		);
-		self.textInputs.splice(
-			$row.attr( 'data-index' ),
-			1
-		);
-		$row.remove();
-		self.refreshRowIndices();
-		self.refreshLanguageSelectorsOptions();
-		self.refreshPublishState();
-	} );
-	return deleter;
-};
-
-/**
- * Create an indexed jquery element that allows editing of a caption (ULS for lang,
- * textbox for caption)
- *
- * @param {int} index The index of the DOM element (starting at 0, in ascending order on the page)
- * @param {CaptionData} [captionData] Data for the caption if it already exists
- * @return {jQuery} jquery element
- * @private
- */
-CaptionsPanel.prototype.createIndexedEditableRow = function (
-	index, captionData
-) {
-	var self = this,
-		languageSelector,
-		textInput,
-		$row;
-
-	if ( captionData === undefined ) {
-		captionData = new CaptionData();
-	}
-
-	captionData = captionData || {};
-
-	languageSelector = new UlsWidget( {
-		languages: this.getAvailableLanguages(
-			this.orderedLanguageCodes.filter( function ( langCode ) {
-				return langCode !== captionData.languageCode;
-			} )
-		)
-	} );
-	if ( captionData.languageCode !== '' ) {
-		languageSelector.setValue( captionData.languageCode );
-	}
-	languageSelector.on( 'select', function () {
-		var dir,
-			$parentRow;
-		self.refreshLanguageSelectorsOptions();
-		dir = $.uls.data.getDir( languageSelector.getValue() );
-		$parentRow = languageSelector.$element.parents( self.selectors.entityTerm );
-		$parentRow.find( '.wbmi-language-label' ).attr( 'dir', dir );
-		$parentRow.find( '.wbmi-caption-value' ).attr( 'dir', dir );
-		$parentRow.find( '.wbmi-caption-textInput' ).attr( 'dir', dir );
-		self.refreshPublishState();
-	} );
-	this.languageSelectors[ index ] = languageSelector;
-
-	textInput = new OO.ui.TextInputWidget( {
-		validate: function ( value ) {
-			return value.length <= mw.config.get( 'wbmiMaxCaptionLength' );
-		},
-		value: captionData.text,
-		dir: captionData.direction,
-		placeholder: captionData.text === '' ? mw.message( 'wikibasemediainfo-filepage-caption-empty' ).text() : '',
-		classes: [ 'wbmi-caption-textInput' ]
-	} );
-
-	textInput.connect( this, {
-		change: [ 'onCaptionsChange', 'warnIfTextApproachingLimit' ],
-		enter: 'sendData'
-	} );
-
-	this.textInputs[ index ] = textInput;
-
-	$row = this.createCaptionRow(
-		index,
-		mw.html.escape( captionData.languageCode ),
-		mw.html.escape( captionData.direction ),
-		this.languageSelectors[ index ].$element,
-		this.textInputs[ index ].$element,
-		false
-	);
-	$row.append( this.createRowDeleter( $row ).$element );
-	return $row;
-};
-
-/**
- * @return {string[]} Any languages for which captions have been removed
- * @private
- */
-CaptionsPanel.prototype.findRemovedLanguages = function () {
-	var self = this,
-		langCodesWithoutData = [];
-
-	Object.keys( this.captionsData ).forEach( function ( langCode ) {
-		var langCodeHasData = false,
-			captionData = self.captionsData[ langCode ];
-		self.languageSelectors.forEach( function ( languageSelector ) {
-			if ( languageSelector.getValue() === langCode ) {
-				langCodeHasData = true;
+		nonEmptyCaptionsData = {},
+		hasChanges;
+	hasChanges = Object.keys( this.state.captionsData ).some( function ( langCode ) {
+		if ( self.state.captionsData[ langCode ].text !== '' ) {
+			nonEmptyCaptionsData[ langCode ] = self.state.captionsData[ langCode ];
+			if ( !self.savedCaptionsData[ langCode ] ) {
+				hasChanges = true;
+				return true;
+			} else if (
+				self.state.captionsData[ langCode ].text !== self.savedCaptionsData[ langCode ].text
+			) {
+				hasChanges = true;
+				return true;
 			}
-		} );
-		if ( langCodeHasData === false && captionData.text !== '' ) {
-			langCodesWithoutData.push( langCode );
 		}
+		return false;
 	} );
-	return langCodesWithoutData;
-};
-
-/**
- * @private
- */
-CaptionsPanel.prototype.disableAllFormInputs = function () {
-	var self = this;
-	this.languageSelectors.forEach( function ( languageSelector ) {
-		languageSelector.setDisabled( true );
-	} );
-	this.textInputs.forEach( function ( textInput ) {
-		textInput.disconnect( self, { change: 'onCaptionsChange' } );
-		textInput.setDisabled( true );
-		textInput.$element.parents( '.wbmi-caption-value' ).find( '.wbmi-caption-deleteButton' ).hide();
-	} );
-};
-
-/**
- * @private
- */
-CaptionsPanel.prototype.enableAllFormInputs = function () {
-	var self = this;
-
-	this.languageSelectors.forEach( function ( languageSelector ) {
-		languageSelector.setDisabled( false );
-	} );
-	this.textInputs.forEach( function ( textInput ) {
-		textInput.setDisabled( false );
-		textInput.$element.parents( '.wbmi-caption-value' ).find( '.wbmi-caption-deleteButton' ).show();
-		textInput.connect( self, { change: 'onCaptionsChange' } );
-	} );
+	if (
+		Object.keys( nonEmptyCaptionsData ).length !==
+		Object.keys( this.savedCaptionsData ).length
+	) {
+		hasChanges = true;
+	}
+	return hasChanges;
 };
 
 /**
@@ -674,236 +498,20 @@ CaptionsPanel.prototype.getWbSetLabelParams = function ( language, text ) {
 		language: language
 	};
 	// Don't send baserevid unless we already have saved captions (a quirk of the api)
-	if ( this.savedCaptionsExist === true ) {
+	if ( Object.keys( this.savedCaptionsData ).length > 0 ) {
 		apiParams.baserevid = mw.mediaInfo.structuredData.currentRevision;
 	}
 	return apiParams;
 };
 
 /**
- * Send an individual caption to the backend
- *
- * @param {int} index Index to keep track of what's been sent (starts at 0)
- * @param {string} language Language of the caption
- * @param {string} text Text of the caption
- * @return {Promise} Promise for chaining
- * @private
- */
-CaptionsPanel.prototype.sendIndividualLabel = function ( index, language, text ) {
-	var self = this,
-		textInput = self.textInputs[ index ],
-		deferred = $.Deferred();
-
-	textInput.disconnect( self, { change: 'onCaptionsChange' } );
-	self.api.postWithToken(
-		'csrf',
-		self.getWbSetLabelParams( language, text )
-	)
-		.done( function ( result ) {
-			var showCaptionFlags = self.getShowCaptionFlagsByLangCode();
-			self.savedCaptionsExist = true;
-			self.captionsData[ language ] = new CaptionData( language, text );
-			mw.mediaInfo.structuredData.currentRevision = result.entity.lastrevid;
-			$( self.selectors.content )
-				.find( self.selectors.entityTerm + '[data-index="' + index + '"]' )
-				.replaceWith( self.createIndexedReadOnlyRow(
-					index,
-					self.captionsData[ language ],
-					showCaptionFlags[ language ]
-				) );
-			deferred.resolve();
-		} )
-		.fail( function ( errorCode, error ) {
-			var rejection = wikibase.api.RepoApiError.newFromApiResponse( error, 'save' );
-
-			rejection.index = index;
-			deferred.reject( rejection );
-		} )
-		.always( function () {
-			textInput.connect( self, { change: 'onCaptionsChange' } );
-		} );
-	return deferred.promise();
-};
-
-/**
- * @param {Promise} chain Promise chain to add to
- * @return {Promise} Promise chain with new promise added
- * @private
- */
-CaptionsPanel.prototype.sendDataToAPI = function ( chain ) {
-	var self = this,
-		rowsWithoutLanguage = [];
-
-	$( this.selectors.content ).find( this.selectors.entityTerm ).each( function () {
-		var showCaptionFlags,
-			index = $( this ).attr( 'data-index' ),
-			languageCode = self.languageSelectors[ index ].getValue(),
-			text = self.textInputs[ index ].getValue(),
-			existingDataForLanguage = self.getDataForLangCode( languageCode );
-
-		// Ignore rows where no language code has been selected
-		if ( languageCode === undefined ) {
-			rowsWithoutLanguage.push( $( self ) );
-			return true;
-		}
-
-		if ( existingDataForLanguage.text !== text ) {
-			chain = chain.then( function () {
-				return self.sendIndividualLabel(
-					index,
-					languageCode,
-					text
-				);
-			} );
-		} else {
-			showCaptionFlags = self.getShowCaptionFlagsByLangCode();
-			$( this ).replaceWith(
-				self.createIndexedReadOnlyRow(
-					index,
-					existingDataForLanguage,
-					showCaptionFlags[ languageCode ]
-				)
-			);
-		}
-	} );
-
-	rowsWithoutLanguage.forEach( function ( row ) {
-		row.remove();
-	} );
-	return chain;
-};
-
-/**
- * @param {string} langCodeToDelete The language code of the label to be deleted
- * @return {Promise} Promise from async 'delete' api call
- * @private
- */
-CaptionsPanel.prototype.deleteIndividualLabel = function ( langCodeToDelete ) {
-	var self = this,
-		deferred = $.Deferred(),
-		$captionsContent = $( this.selectors.content );
-	this.api.postWithToken(
-		'csrf',
-		this.getWbSetLabelParams( langCodeToDelete, '' )
-	)
-		.done( function ( result ) {
-			// Update revision id
-			mw.mediaInfo.structuredData.currentRevision = result.entity.lastrevid;
-			// Update the captions data, and the language list if necessary
-			if (
-				self.orderedLanguageCodes[ 0 ] === langCodeToDelete ||
-				self.userLanguages.indexOf( langCodeToDelete ) !== -1
-			) {
-				// Blank the data if the language is either the first in the language list
-				// (i.e. it's the interface language) or it's one of the user's languages
-				self.captionsData[ langCodeToDelete ].text = '';
-			} else {
-				// Otherwise delete the data
-				delete self.captionsData[ langCodeToDelete ];
-			}
-			deferred.resolve();
-		} )
-		.fail( function ( errorCode, error ) {
-			// Display the old data for the language we've attempted and failed to delete
-			var newIndex,
-				errorRow,
-				rejection;
-			newIndex = $captionsContent.find( self.selectors.entityTerm ).length;
-			errorRow = self.createIndexedEditableRow(
-				newIndex,
-				self.captionsData[ langCodeToDelete ]
-			);
-			errorRow.insertBefore( $captionsContent.find( '.wbmi-entityview-editActions' ) );
-			rejection = wikibase.api.RepoApiError.newFromApiResponse( error, 'save' );
-			rejection.index = newIndex;
-			self.editActionsWidget.disablePublish();
-			deferred.reject( rejection );
-		} );
-	return deferred.promise();
-};
-
-/**
- * @param {Promise} chain Promise chain to add async api call to
- * @param {string[]} removedLanguages Array of languages for which captions have been deleted
- * @return {Promise} Promise chain with all delete api calls added
- * @private
- */
-CaptionsPanel.prototype.deleteRemovedData = function ( chain, removedLanguages ) {
-	var self = this;
-
-	removedLanguages.forEach( function ( languageCode ) {
-		chain = chain.then( function () {
-			return self.deleteIndividualLabel(
-				languageCode
-			);
-		} );
-	} );
-	return chain;
-};
-
-/**
- * @return {Promise} Promise returned from async refresh api call
- * @private
- */
-CaptionsPanel.prototype.refreshDataFromApi = function () {
-	var self = this,
-		deferred = $.Deferred(),
-		entityId = mw.config.get( 'wbEntityId' );
-
-	this.api
-		.get( {
-			action: 'wbgetentities',
-			props: 'info|labels',
-			ids: entityId
-		} )
-		.done( function ( result ) {
-			mw.mediaInfo.structuredData.currentRevision = result.entities[ entityId ].lastrevid;
-			self.initializeCaptionsData( result.entities[ entityId ] );
-			deferred.resolve();
-		} )
-		.fail( function () {
-			// Ignore the failure and just make do with the data we already have
-			deferred.reject();
-		} );
-	return deferred.promise();
-};
-
-/**
- * @private
- */
-CaptionsPanel.prototype.redrawCaptionsContent = function () {
-	var self = this,
-		$captionsContent = $( this.selectors.content ),
-		showCaptionFlags = this.getShowCaptionFlagsByLangCode(),
-		count = 0;
-
-	$captionsContent.find( this.selectors.entityTerm ).each( function () {
-		$( this ).remove();
-	} );
-
-	this.orderedLanguageCodes.forEach( function ( langCode ) {
-		var captionData = self.captionsData[ langCode ];
-
-		$captionsContent.append(
-			self.createIndexedReadOnlyRow(
-				count,
-				captionData,
-				showCaptionFlags[ captionData.languageCode ]
-			)
-		);
-		count++;
-
-	} );
-
-	this.languagesViewWidget.refreshLabel();
-};
-
-/**
- * Returns an array of showCaption flags for each element of labelsData, indexed by langCode
+ * Returns an object containing of showCaption flags for each element of labelsData, indexed by
+ * langCode. Flags are set to true if a caption *must always* be shown
  *
  * See class comments for rules on when to show/hide captions
  *
- * @return {Object} Array of showCaption flags, indexed by langCode
+ * @return {Object}
+ * Array of showCaption flags, indexed by langCode
  * @private
  */
 CaptionsPanel.prototype.getShowCaptionFlagsByLangCode = function () {
@@ -911,8 +519,8 @@ CaptionsPanel.prototype.getShowCaptionFlagsByLangCode = function () {
 		firstCaptionIsBlank,
 		indexedShowCaptionFlags = {};
 
-	this.orderedLanguageCodes.forEach( function ( langCode, index ) {
-		var captionData = self.captionsData[ langCode ],
+	this.state.orderedLanguageCodes.forEach( function ( langCode, index ) {
+		var captionData = self.state.captionsData[ langCode ],
 			showCaption;
 		if ( index === 0 ) {
 			showCaption = true;
@@ -935,6 +543,24 @@ CaptionsPanel.prototype.getShowCaptionFlagsByLangCode = function () {
 	return indexedShowCaptionFlags;
 };
 
+/**
+ * Returns the number of languages which may be hidden from the user
+ *
+ * See class comments for rules on when to show/hide captions
+ *
+ * @return {int}
+ * @private
+ */
+CaptionsPanel.prototype.getHideableLanguageCount = function () {
+	var showCaptionFlags = this.getShowCaptionFlagsByLangCode();
+
+	return Object.keys( showCaptionFlags ).filter(
+		function ( langCode ) {
+			return showCaptionFlags[ langCode ] === false;
+		}
+	).length;
+};
+
 CaptionsPanel.prototype.makeEditable = function () {
 	var self = this;
 
@@ -945,94 +571,206 @@ CaptionsPanel.prototype.makeEditable = function () {
 
 	// show dialog informing user of licensing
 	self.licenseDialogWidget.getConfirmationIfNecessary().then( function () {
+		var entityId = mw.config.get( 'wbEntityId' );
 		self.pushPending();
-
-		self.refreshDataFromApi()
+		// refresh caption data from the api
+		self.api
+			.get( {
+				action: 'wbgetentities',
+				props: 'info|labels',
+				ids: entityId
+			} )
+			.done( function ( result ) {
+				mw.mediaInfo.structuredData.currentRevision = result.entities[ entityId ].lastrevid;
+				self.savedCaptionsData = self.captionsDataFromMediaInfoEntity(
+					result.entities[ entityId ]
+				);
+			} )
+			.fail( function () {
+				// Ignore the failure and just make do with the data we already have saved
+			} )
 			.always( function () {
-				var $captionsContent, count = 0;
-
-				$captionsContent = $( self.selectors.content );
-				// Remove the read only rows
-				$captionsContent.find( self.selectors.entityTerm ).each( function () {
-					$( this ).remove();
-				} );
-				// Add the editable rows
-				self.orderedLanguageCodes.forEach( function ( langCode ) {
-					var captionData = self.captionsData[ langCode ];
-
-					$captionsContent.append(
-						self.createIndexedEditableRow(
-							count,
-							captionData
-						)
+				var captionsDataEditors = {},
+					captionsState = self.getCaptionsState(
+						// Copy by value so the saved data isn't modified
+						$.extend( {}, self.savedCaptionsData )
 					);
-					count++;
 
+				captionsState.orderedLanguageCodes.forEach( function ( langCode ) {
+					var captionData =
+							self.savedCaptionsData[ langCode ] || new CaptionData( langCode ),
+						guid = self.createGuid();
+
+					captionsDataEditors[ guid ] = new CaptionDataEditor(
+						guid,
+						captionData,
+						self
+					);
 				} );
-				$captionsContent.addClass( 'wbmi-entityview-editable' );
-				self.editToggle.$element.hide();
-				self.languagesViewWidget.hide();
-				self.editActionsWidget.show();
-				self.editActionsWidget.disablePublish();
-				self.editing = true;
-				self.popPending();
+
+				self.setState(
+					$.extend(
+						captionsState,
+						{
+							captionsDataEditors: captionsDataEditors,
+							editing: true
+						}
+					)
+				).then( function () {
+					self.refreshLanguageSelectorsOptions();
+					self.popPending();
+				} );
 			} );
 	} );
 };
 
-CaptionsPanel.prototype.makeReadOnly = function () {
-	var $captionsContent = $( this.selectors.content );
-
-	this.editing = false;
-	$captionsContent.removeClass( 'wbmi-entityview-editable' );
-	this.editActionsWidget.hide();
-	this.redrawCaptionsContent();
-	this.languagesViewWidget.expand();
-	this.editToggle.$element.show();
-};
-
-CaptionsPanel.prototype.addNewEditableLanguageRow = function () {
-	var $captionsContent = $( this.selectors.content ),
-		row = this.createIndexedEditableRow(
-			$captionsContent.find( this.selectors.entityTerm ).length
+CaptionsPanel.prototype.addNewEmptyLanguageRow = function () {
+	var guid = this.createGuid(),
+		captionsDataEditors = $.extend(
+			{},
+			this.state.captionsDataEditors
+		),
+		newCaptionsDataEditor = new CaptionDataEditor(
+			guid,
+			new CaptionData(),
+			this
 		);
-	row.insertBefore( $captionsContent.find( '.wbmi-entityview-editActions' ) );
-	this.refreshLanguageSelectorsOptions();
+	captionsDataEditors[ guid ] = newCaptionsDataEditor;
+	this.setState( {
+		captionsDataEditors: captionsDataEditors
+	} ).then( this.refreshLanguageSelectorsOptions.bind( this ) );
 };
 
 CaptionsPanel.prototype.sendData = function () {
-	var chain = $.Deferred().resolve().promise(),
-		removedLanguages = this.findRemovedLanguages(),
-		self = this;
+	var self = this,
+		captionsDataEditors = $.extend( {}, this.state.captionsDataEditors ),
+		promise = $.Deferred().resolve().promise();
 
-	this.editActionsWidget.setStateSending();
-	this.disableAllFormInputs();
+	this.setSending();
 
-	chain = this.sendDataToAPI( chain );
-	chain = this.deleteRemovedData( chain, removedLanguages );
-	chain
-		.then( function () {
-			self.updateLanguageOrder();
-			self.makeReadOnly();
-		} )
-		.catch( function ( error ) {
-			var $caption;
-			self.enableAllFormInputs();
-			$caption =
-				$( self.selectors.content ).find(
-					self.selectors.entityTerm + '[data-index="' + error.index + '"] .wbmi-caption-value'
-				);
-			$caption.find( 'div.wbmi-caption-publishError' ).remove();
-			$caption.find( 'div.wbmi-caption-publishWarning' ).remove();
-			$caption.append(
-				$( '<div>' )
-					.addClass( 'wbmi-caption-publishError' )
-					.html( error.detailedMessage )
-			);
-		} )
-		.always( function () {
-			self.editActionsWidget.setStateReady();
+	// Send changed data
+	Object.keys( captionsDataEditors ).forEach( function ( guid ) {
+		var captionDataEditor = captionsDataEditors[ guid ],
+			langCode = captionDataEditor.languageSelector.getValue(),
+			text = captionDataEditor.textInput.getValue(),
+			savedData = self.savedCaptionsData[ langCode ];
+
+		if ( text && langCode && ( !savedData || savedData.text !== text ) ) {
+			promise = promise.then( function () {
+				return self.api.postWithToken(
+					'csrf',
+					self.getWbSetLabelParams( langCode, text )
+				)
+					.done( function ( result ) {
+						mw.mediaInfo.structuredData.currentRevision = result.entity.lastrevid;
+						self.savedCaptionsData[ langCode ] =
+							new CaptionData( langCode, text );
+					} )
+					.fail( function ( errorCode, error ) {
+						var apiError =
+							wikibase.api.RepoApiError.newFromApiResponse( error, 'save' );
+						captionDataEditor.inputError = apiError.detailedMessage;
+					} );
+			} );
+		}
+
+	} );
+
+	// Delete removed data
+	Object.keys( this.savedCaptionsData ).forEach( function ( langCode ) {
+		var captionsData = self.state.captionsData[ langCode ];
+		if ( !captionsData || captionsData.text === '' ) {
+			promise = promise.then( function () {
+				return self.api.postWithToken(
+					'csrf',
+					self.getWbSetLabelParams( langCode, '' )
+				)
+					.done( function ( result ) {
+						mw.mediaInfo.structuredData.currentRevision = result.entity.lastrevid;
+						delete self.savedCaptionsData[ langCode ];
+					} )
+					.fail( function ( errorCode, error ) {
+						var apiError =
+								wikibase.api.RepoApiError.newFromApiResponse( error, 'save' ),
+							guid = self.createGuid(),
+							captionDataEditor = new CaptionDataEditor(
+								guid,
+								self.savedCaptionsData[ langCode ],
+								self
+							);
+						captionDataEditor.inputError = apiError.detailedMessage;
+						captionsDataEditors[ guid ] = captionDataEditor;
+					} );
+			} );
+		}
+	} );
+
+	promise.then( function () {
+		self.setState(
+			$.extend(
+				{},
+				self.getCaptionsState( self.savedCaptionsData ),
+				{
+					editing: false,
+					captionsDataEditors: {},
+					displayAllLanguages: true
+				}
+			)
+		);
+	} ).catch( function () {
+		self.setState( {
+			editing: true,
+			captionsDataEditors: captionsDataEditors
 		} );
+	} ).always( function () {
+		self.setReady();
+	} );
+};
+
+/**
+ * Puts the panel into a 'sending' state without re-rendering
+ */
+CaptionsPanel.prototype.setSending = function () {
+	var self = this;
+	this.editActionsWidget.setStateSending();
+	Object.keys( this.state.captionsDataEditors ).forEach( function ( guid ) {
+		self.state.captionsDataEditors[ guid ].disable();
+	} );
+	this.pushPending();
+};
+
+/**
+ * Puts the panel into a ready' state without re-rendering
+ */
+CaptionsPanel.prototype.setReady = function () {
+	var self = this;
+	this.editActionsWidget.setStateReady();
+	Object.keys( this.state.captionsDataEditors ).forEach( function ( guid ) {
+		self.state.captionsDataEditors[ guid ].enable();
+	} );
+	this.popPending();
+};
+
+/**
+ * Create a GUID for keeping track of CaptionDataEditWidgets
+ *
+ * @see derived from https://stackoverflow.com/questions/105034/create-guid-uuid-in-javascript
+ * @return {string}
+ */
+CaptionsPanel.prototype.createGuid = function () {
+	return 'xxxxxxxx-xxxx-4xxx-8xxx-xxxxxxxxxxxx'.replace(
+		/[x]/g, function () {
+			return ( Math.random() * 16 ).toString( 16 ).substring( 0, 1 );
+		}
+	);
+};
+
+CaptionsPanel.prototype.isEditable = function () {
+	return this.state.editable;
+};
+
+CaptionsPanel.prototype.isDisabled = function () {
+	return false;
 };
 
 module.exports = CaptionsPanel;

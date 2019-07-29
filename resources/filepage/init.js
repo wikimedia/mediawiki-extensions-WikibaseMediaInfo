@@ -4,7 +4,7 @@
 
 	var statementPanels = {},
 		$statements,
-		captions,
+		captionsPanel,
 		CaptionsPanel,
 		statementPanel,
 		StatementPanel,
@@ -56,18 +56,15 @@
 		// Add the protection message widget above the tabs container.
 		$content.find( '.wbmi-tabs-container' ).first().before( protectionMsgWidget.$element );
 
-		captions = new CaptionsPanel( {
-			classes: {
-				header: 'wbmi-entityview-captions-header',
-				content: 'wbmi-entityview-captionsPanel',
-				entityTerm: 'wbmi-entityview-caption'
-			},
+		captionsPanel = new CaptionsPanel( {
 			warnWithinMaxCaptionLength: 20,
 			userLanguages: mw.config.get( 'wbUserSpecifiedLanguages', [] ).slice(),
 			languageFallbackChain: mw.language.getFallbackLanguageChain(),
-			isEditable: panelsAreEditable,
+			canEdit: panelsAreEditable,
 			mediaInfo: mediaInfoEntity
 		} );
+		// eslint-disable-next-line no-jquery/no-global-selector
+		$( '.wbmi-entityview-captionsPanel' ).replaceWith( captionsPanel.$element );
 
 		$statements = $content.find( '.wbmi-entityview-statementsGroup' );
 		if (
@@ -139,10 +136,10 @@
 	window.onbeforeunload = function () {
 		var allPanels, hasChanges;
 
-		// combine statement panels with captions
+		// combine statement panels with captions panel
 		allPanels = Object.keys( statementPanels ).map( function ( propertyId ) {
 			return statementPanels[ propertyId ];
-		} ).concat( captions );
+		} ).concat( captionsPanel );
 
 		hasChanges = allPanels.some( function ( panel ) {
 			return panel && panel.isEditable() && panel.hasChanges();

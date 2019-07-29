@@ -4,5 +4,10 @@
 			"Sultanselim baloch"
 		]
 	},
-	"wikibasemediainfo-diffview-label": "نشان جنگ"
+	"wikibasemediainfo-diffview-label": "نشان جنگ",
+	"wikibasemediainfo-filepage-cancel-confirm": "جۏڑ اِتگݔں ٹگل سپت بہ بئ اَنت۔",
+	"wikibasemediainfo-filepage-cancel-confirm-title": "ٹگلان نہ چارئ؟",
+	"wikibasemediainfo-filepage-cancel-confirm-accept": "نہ چارگ",
+	"wikibasemediainfo-remove-all-statements-confirm-title": "دراھیگݔنان پاک کنئ؟",
+	"wikibasemediainfo-remove-all-statements-confirm-accept": "پاک کنگ"
 }

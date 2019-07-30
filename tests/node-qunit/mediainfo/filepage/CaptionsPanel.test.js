@@ -40,12 +40,11 @@ QUnit.module( 'CaptionsPanel', {}, function () {
 					},
 					warnWithinMaxCaptionLength: 20,
 					userLanguages: [ 'en' ],
-					languageFallbackChain: [ 'en' ],
-					mediaInfo: mediaInfoEntity
+					languageFallbackChain: [ 'en' ]
 				},
 				cp = new CaptionsPanel( config );
 
-			cp.initialize();
+			cp.initializeCaptionsData( mediaInfoEntity );
 
 			assert.ok( true );
 		} );
@@ -62,12 +61,11 @@ QUnit.module( 'CaptionsPanel', {}, function () {
 					},
 					warnWithinMaxCaptionLength: 20,
 					userLanguages: userLanguages,
-					languageFallbackChain: [ 'en' ],
-					mediaInfo: mediaInfoEntity
+					languageFallbackChain: [ 'en' ]
 				},
 				cp = new CaptionsPanel( config );
 
-			cp.initialize();
+			cp.initializeCaptionsData( mediaInfoEntity );
 
 			// There should be a new caption row for every user language that doesn't already
 			// exist in the caption data

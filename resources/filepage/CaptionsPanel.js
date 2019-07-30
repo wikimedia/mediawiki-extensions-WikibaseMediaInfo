@@ -44,9 +44,11 @@ var AnonWarning = require( './AnonWarning.js' ),
  *   characters of the max
  * @cfg {string[]} [userLanguages] The language the user has indicated that they use (via babel)
  * @cfg {string[]} [languageFallbackChain]
- * @cfg {wb.datamodel.MediaInfo} mediaInfo
+ * @cfg {wb.datamodel.MediaInfo} [mediaInfo]
+ * @cfg {boolean} isEditable True if the captions should be editable on the page
  */
 CaptionsPanel = function ( config ) {
+	var $header = $( '.' + config.classes.header );
 	this.config = config || {};
 
 	// Parent constructor
@@ -75,27 +77,29 @@ CaptionsPanel = function ( config ) {
 
 	// Create the various widgets
 	this.licenseDialogWidget = new LicenseDialogWidget();
-
-	this.editToggle = new OO.ui.ButtonWidget( {
-		label: mw.message( 'wikibasemediainfo-filepage-edit' ).text(),
-		framed: false,
-		flags: 'progressive',
-		title: mw.message( 'wikibasemediainfo-filepage-edit-captions' ).text(),
-		classes: [ 'wbmi-entityview-editButton' ]
-	} );
-	this.editToggle.connect( this, { click: 'makeEditable' } );
-
 	this.languagesViewWidget = new LanguagesViewWidget( this.config );
 
-	this.editActionsWidget = new CaptionsEditActionsWidget(
-		{ appendToSelector: '.' + config.classes.content },
-		this
-	);
+	if ( this.config.isEditable ) {
+		this.editToggle = new OO.ui.ButtonWidget( {
+			label: mw.message( 'wikibasemediainfo-filepage-edit' ).text(),
+			framed: false,
+			flags: 'progressive',
+			title: mw.message( 'wikibasemediainfo-filepage-edit-captions' ).text(),
+			classes: [ 'wbmi-entityview-editButton' ]
+		} );
+		this.editToggle.connect( this, { click: 'makeEditable' } );
+		$header.append( this.editToggle.$element );
 
-	this.initializeCaptionsData( config.mediaInfo );
+		this.editActionsWidget = new CaptionsEditActionsWidget(
+			{ appendToSelector: '.' + config.classes.content },
+			this
+		);
+	}
+
+	this.initializeCaptionsData( config.mediaInfo || {} );
 
 	// Set the target pending element to the layout box
-	this.$pending = $( '.' + this.config.classes.header ).parent();
+	this.$pending = $header.parent();
 };
 
 /* Inheritance */
@@ -104,14 +108,20 @@ OO.mixinClass( CaptionsPanel, OO.ui.mixin.PendingElement );
 
 /**
  * @param {wb.datamodel.MediaInfo} mediaInfo
- * @private
  */
 CaptionsPanel.prototype.initializeCaptionsData = function ( mediaInfo ) {
+	var captionsHaveChanged = false;
 	this.captionsData = this.captionsDataFromMediaInfoEntity( mediaInfo );
 	this.savedCaptionsExist = this.captionsData.length > 0;
-	this.ensureCaptionsDataHasInterfaceLanguage();
-	this.updateLanguageOrder(); // no need to update DOM, captions should already be in order
+	captionsHaveChanged = this.ensureCaptionsDataHasInterfaceLanguage();
+	captionsHaveChanged = this.addCaptionsDataForUserLanguages() || captionsHaveChanged;
+	this.updateLanguageOrder();
+	if ( captionsHaveChanged ) {
+		this.redrawCaptionsContent();
+	}
+	this.languagesViewWidget.refreshLabel();
 	this.refreshRowIndices();
+	this.languagesViewWidget.collapse();
 };
 
 /**
@@ -132,12 +142,17 @@ CaptionsPanel.prototype.captionsDataFromMediaInfoEntity = function ( mediaInfo )
 	return captionsData;
 };
 
+/**
+ * @return {boolean} True if captions data has changed
+ */
 CaptionsPanel.prototype.ensureCaptionsDataHasInterfaceLanguage = function () {
 	if ( this.captionsData[ this.languageFallbackChain[ 0 ] ] === undefined ) {
 		this.captionsData[ this.languageFallbackChain[ 0 ] ] = new CaptionData(
 			this.languageFallbackChain[ 0 ]
 		);
+		return true;
 	}
+	return false;
 };
 
 /**
@@ -844,7 +859,6 @@ CaptionsPanel.prototype.refreshDataFromApi = function () {
 		.done( function ( result ) {
 			mw.mediaInfo.structuredData.currentRevision = result.entities[ entityId ].lastrevid;
 			self.initializeCaptionsData( result.entities[ entityId ] );
-			self.addCaptionsDataForUserLanguages();
 			deferred.resolve();
 		} )
 		.fail( function () {
@@ -1019,24 +1033,6 @@ CaptionsPanel.prototype.sendData = function () {
 		.always( function () {
 			self.editActionsWidget.setStateReady();
 		} );
-};
-
-CaptionsPanel.prototype.initialize = function () {
-	var captionsChanged;
-
-	// Only allow editing if we're NOT on a diff page or viewing an older revision
-	// eslint-disable-next-line no-jquery/no-global-selector
-	if ( $( '.diff-currentversion-title' ).length === 0 && $( '.mw-revision' ).length === 0 ) {
-		$( '.' + this.config.classes.header ).append( this.editToggle.$element );
-		captionsChanged = this.addCaptionsDataForUserLanguages();
-		if ( captionsChanged ) {
-			this.redrawCaptionsContent();
-		}
-		this.refreshRowIndices();
-		this.languagesViewWidget.refreshLabel();
-	}
-
-	this.languagesViewWidget.collapse();
 };
 
 module.exports = CaptionsPanel;

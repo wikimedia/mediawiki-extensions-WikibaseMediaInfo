@@ -37,22 +37,29 @@
 				removed.$element.remove();
 				// and make sure this property can be added again later
 				addPropertyWidget.onStatementPanelRemoved( propertyId );
-			};
+			},
+			panelsAreEditable;
 
-		// We need the mediaInfo entity to be available for CaptionsPanel
+		// Only allow editing if we're NOT on a version diff page or viewing an older
+		// revision
+		// eslint-disable-next-line no-jquery/no-global-selector
+		panelsAreEditable = $( '.diff-currentversion-title' ).length === 0 &&
+			// eslint-disable-next-line no-jquery/no-global-selector
+			$( '.mw-revision' ).length === 0;
+
+		captions = new CaptionsPanel( {
+			classes: {
+				header: 'wbmi-entityview-captions-header',
+				content: 'wbmi-entityview-captionsPanel',
+				entityTerm: 'wbmi-entityview-caption'
+			},
+			warnWithinMaxCaptionLength: 20,
+			userLanguages: mw.config.get( 'wbUserSpecifiedLanguages', [] ).slice(),
+			languageFallbackChain: mw.language.getFallbackLanguageChain(),
+			isEditable: panelsAreEditable
+		} );
 		mw.hook( 'wikibase.entityPage.entityLoaded' ).add( function ( mediaInfo ) {
-			captions = new CaptionsPanel( {
-				classes: {
-					header: 'wbmi-entityview-captions-header',
-					content: 'wbmi-entityview-captionsPanel',
-					entityTerm: 'wbmi-entityview-caption'
-				},
-				warnWithinMaxCaptionLength: 20,
-				userLanguages: mw.config.get( 'wbUserSpecifiedLanguages', [] ).slice(),
-				languageFallbackChain: mw.language.getFallbackLanguageChain(),
-				mediaInfo: mediaInfo
-			} );
-			captions.initialize();
+			captions.initializeCaptionsData( mediaInfo );
 		} );
 
 		$statements = $content.find( '.wbmi-entityview-statementsGroup' );
@@ -69,14 +76,7 @@
 				OO.ui.infuse( $tabs );
 			}
 
-			// Only allow editing if we're NOT on a version diff page or viewing an older
-			// revision
-			if (
-				// eslint-disable-next-line no-jquery/no-global-selector
-				$( '.diff-currentversion-title' ).length === 0 &&
-				// eslint-disable-next-line no-jquery/no-global-selector
-				$( '.mw-revision' ).length === 0
-			) {
+			if ( panelsAreEditable ) {
 				if ( mw.config.get( 'wbmiEnableOtherStatements', false ) ) {
 					addPropertyWidget = new AddPropertyWidget();
 					addPropertyWidget.on( 'choose', function ( data ) {

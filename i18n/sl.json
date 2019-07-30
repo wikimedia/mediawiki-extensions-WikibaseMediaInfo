@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"Janezdrilc"
+			"Janezdrilc",
+			"Dbc334"
 		]
 	},
 	"action-mediainfo-term": "sprememba informacij datoteke (podnapisi, povzetki)",
@@ -24,7 +25,7 @@
 	"wikibasemediainfo-filepage-edit-captions": "Uredi podnapis",
 	"wikibasemediainfo-filepage-edit-depicts": "Uredi prikazane predmete",
 	"wikibasemediainfo-filepage-cancel": "Prekliči",
-	"wikibasemediainfo-filepage-cancel-confirm": "Opustim spremembe? V tem primeru ne bodo shranjene.",
+	"wikibasemediainfo-filepage-cancel-confirm": "Spremembe, ki ste jih naredili, ne bodo shranjene.",
 	"wikibasemediainfo-filepage-edit": "Uredi",
 	"wikibasemediainfo-filepage-publish": "Objavi spremembe",
 	"wikibasemediainfo-filepage-caption-empty": "Dodaj enovrstični opis, kaj ta datoteka predstavlja",

@@ -4,6 +4,7 @@ namespace Wikibase\MediaInfo\Rdf;
 
 use Wikibase\DataModel\Entity\EntityDocument;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
+use Wikibase\MediaInfo\DataModel\MediaInfoId;
 use Wikibase\Rdf\EntityRdfBuilder;
 use Wikibase\Rdf\RdfVocabulary;
 use Wikimedia\Purtle\RdfWriter;
@@ -37,17 +38,20 @@ class MediaInfoRdfBuilder implements EntityRdfBuilder {
 		if ( !$entity instanceof MediaInfo ) {
 			return;
 		}
-		$mediaLName = $this->vocabulary->getEntityLName( $entity->getId() );
 
-		$this->addTypes( $mediaLName );
+		$this->addTypes( $entity->getId() );
 	}
 
 	/**
 	 * Produce MediaInfo types
-	 * @param string $mediaLName Local name
+	 * @param MediaInfoId $id
 	 */
-	private function addTypes( $mediaLName ) {
-		$this->writer->about( RdfVocabulary::NS_ENTITY, $mediaLName )
+	private function addTypes( MediaInfoId $id ) {
+		$mediaLName = $this->vocabulary->getEntityLName( $id );
+
+		$mediaRepository = $this->vocabulary->getEntityRepositoryName( $id );
+
+		$this->writer->about( $this->vocabulary->entityNamespaceNames[$mediaRepository], $mediaLName )
 			->a( RdfVocabulary::NS_SCHEMA_ORG, 'MediaObject' );
 	}
 

@@ -28,6 +28,7 @@
 	mw.hook( 'wikipage.content' ).add( function ( $content ) {
 		var addPropertyWidget = new AddPropertyWidget(),
 			linkNoticeWidget = new LinkNoticeWidget(),
+			mediaInfoEntity = mw.config.get( 'wbEntity' ),
 			onStatementPanelRemoved = function ( propertyId ) {
 				var removed = statementPanels[ propertyId ];
 				// remove statement from the list we keep (e.g. to detect
@@ -56,10 +57,8 @@
 			warnWithinMaxCaptionLength: 20,
 			userLanguages: mw.config.get( 'wbUserSpecifiedLanguages', [] ).slice(),
 			languageFallbackChain: mw.language.getFallbackLanguageChain(),
-			isEditable: panelsAreEditable
-		} );
-		mw.hook( 'wikibase.entityPage.entityLoaded' ).add( function ( mediaInfo ) {
-			captions.initializeCaptionsData( mediaInfo );
+			isEditable: panelsAreEditable,
+			mediaInfo: mediaInfoEntity
 		} );
 
 		$statements = $content.find( '.wbmi-entityview-statementsGroup' );

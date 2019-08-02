@@ -215,8 +215,7 @@
 				"wikibase.api.getLocationAgnosticMwApi",
 				"wikibase.api.RepoApi",
 				"wikibase.api.RepoApiError",
-				"ext.uls.mediawiki",
-				"wikibase.entityPage.entityLoaded"
+				"ext.uls.mediawiki"
 			],
 			"messages": [
 				"wikibasemediainfo-filepage-structured-data-heading",

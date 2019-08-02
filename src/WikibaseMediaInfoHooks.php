@@ -284,6 +284,9 @@ class WikibaseMediaInfoHooks {
 			$wbRepo = WikibaseRepo::getDefaultInstance();
 			$entityLookup = $wbRepo->getEntityLookup();
 			$entityRevisionId = $entityLookup->hasEntity( $entityId ) ? $revision->getId() : null;
+			$entity = $entityLookup->getEntity( $entityId );
+			$serializer = $wbRepo->getAllTypesEntitySerializer( $entityId );
+			$entityData = ( $entity ? $serializer->serialize( $entity ) : [] );
 
 			$modules[] = 'wikibase.mediainfo.filePageDisplay';
 			$moduleStyles[] = 'wikibase.mediainfo.filepage.styles';
@@ -297,6 +300,7 @@ class WikibaseMediaInfoHooks {
 				),
 				'wbCurrentRevision' => $entityRevisionId,
 				'wbEntityId' => $entityId->getSerialization(),
+				'wbEntity' => $entityData,
 				'wbTermsLanguages' => $termsLanguages,
 				'maxCaptionLength' => self::getMaxCaptionLength(),
 				// FIXME: This is horrendous.

@@ -11,3 +11,4 @@
 tests/selenium/log/
 /.nyc_output/
 /coverage
+/.vscode/

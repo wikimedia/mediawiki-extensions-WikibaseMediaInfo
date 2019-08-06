@@ -51,6 +51,7 @@ StatementPanel = function StatementPanel( config ) {
 
 	this.statementWidget.connect( this, { edit: 'makeEditable' } ); // clicked 'edit'
 	this.statementWidget.connect( this, { change: 'makeEditable' } ); // changed otherwise (e.g. 'make prominent')
+	this.statementWidget.connect( this, { widgetRemoved: 'remove' } );
 
 	// attach the widget to DOM, replacing the server-side rendered equivalent
 	this.$element.empty().append( this.statementWidget.$element );
@@ -89,10 +90,16 @@ StatementPanel.prototype.hasChanges = function () {
 	return this.statementWidget.hasChanges();
 };
 
+/**
+ * @return {bool}
+ */
 StatementPanel.prototype.isEditable = function () {
 	return this.statementWidget.isEditing();
 };
 
+/**
+ * Toggle the panel into edit mode. This method is asynchronous.
+ */
 StatementPanel.prototype.makeEditable = function () {
 	var self = this;
 
@@ -120,6 +127,9 @@ StatementPanel.prototype.makeEditable = function () {
 	);
 };
 
+/**
+ * Toggle the panel into read mode. This method is asynchronous.
+ */
 StatementPanel.prototype.makeReadOnly = function () {
 	var self = this;
 	this.statementWidget.disconnect( this, { change: 'makeEditable' } );
@@ -132,33 +142,35 @@ StatementPanel.prototype.sendData = function () {
 	var self = this;
 
 	this.statementWidget.disconnect( this, { change: 'makeEditable' } );
+
 	this.statementWidget.submit( mw.mediaInfo.structuredData.currentRevision )
 		.then( function ( response ) {
 			mw.mediaInfo.structuredData.currentRevision = response.pageinfo.lastrevid;
 			self.makeReadOnly();
 
 			// if the statement widget is removed then also remove the panel
-			if (
-				self.statementWidget.getData().length === 0 &&
-				!self.config.isDefaultProperty
-			) {
-				self.emit( 'widgetRemoved', self.config.propertyId );
+			if ( self.statementWidget.getData().length === 0 && !self.config.isDefaultProperty ) {
+				self.remove();
 			}
-		} )
-		.catch( function () {
+		} ).catch( function () {
 			// allow panel to be re-enabled to allow trying submission again
 			self.statementWidget.setDisabled( false );
-		} )
-		.always( function () {
+		} ).always( function () {
 			self.statementWidget.connect( self, { change: 'makeEditable' } );
 		} );
 };
 
+/**
+ * TODO: this entire method can be removed once other statements feature flag is
+ * no longer needed
+ */
 StatementPanel.prototype.showUnsupportedPopup = function () {
 	var popup, popupMsg, $content;
 
 	if ( mw.config.get( 'wbmiEnableOtherStatements', false ) ) {
-		popupMsg = mw.message( 'wikibasemediainfo-statements-unsupported-property-type-content' ).parse();
+		popupMsg = mw.message(
+			'wikibasemediainfo-statements-unsupported-property-type-content'
+		).parse();
 	} else {
 		// TODO: remove the 'else' (and getSupportedProperties) when feature flag
 		// MediaInfoEnableOtherStatements is removed
@@ -169,7 +181,9 @@ StatementPanel.prototype.showUnsupportedPopup = function () {
 	}
 
 	$content = $( '<div>' ).append(
-		$( '<h4>' ).html( mw.message( 'wikibasemediainfo-statements-unsupported-property-title' ).parse() ),
+		$( '<h4>' ).html(
+			mw.message( 'wikibasemediainfo-statements-unsupported-property-title' ).parse()
+		),
 		$( '<p>' ).html( popupMsg )
 	);
 
@@ -207,6 +221,15 @@ StatementPanel.prototype.getSupportedProperties = function () {
 		.map( function ( element ) {
 			return $( '.wbmi-statement-header .wbmi-entity-label', element ).text();
 		} );
+};
+
+/**
+ * Notifies the top-level Filepage/UploadWizard JS of removal so that it can be
+ * handled properly.
+ * @fires widgetRemoved
+ */
+StatementPanel.prototype.remove = function () {
+	this.emit( 'widgetRemoved', this.config.propertyId );
 };
 
 module.exports = StatementPanel;

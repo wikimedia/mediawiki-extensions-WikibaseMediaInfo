@@ -25,8 +25,9 @@ var ItemInputWidget = require( './ItemInputWidget.js' ),
 StatementWidget = function ( config ) {
 	config = config || {};
 	config.helpUrls = config.helpUrls || {};
-	config.qualifiers = config.qualifiers || mw.config.get( 'wbmiDepictsQualifierProperties' ) || {};
-
+	config.qualifiers = config.qualifiers ||
+		mw.config.get( 'wbmiDepictsQualifierProperties' ) ||
+		{};
 	StatementWidget.parent.call( this, config );
 	DOMLessGroupWidget.call( this );
 
@@ -37,9 +38,10 @@ StatementWidget = function ( config ) {
 	this.properties = config.properties || mw.config.get( 'wbmiProperties' ) || {};
 	this.propertyId = config.propertyId;
 	this.qualifiers = config.qualifiers;
-	this.title = config.title || ( mw.config.get( 'wbmiPropertyTitles' ) || [] )[ this.propertyId ];
+	this.title = config.title ||
+		( mw.config.get( 'wbmiPropertyTitles' ) || [] )[ this.propertyId ];
 	this.data = new wikibase.datamodel.StatementList();
-	this.editing = false;
+	this.editing = config.editing || false;
 
 	this.input = new ItemInputWidget( {
 		classes: [ 'wbmi-statement-input' ],
@@ -582,7 +584,10 @@ StatementWidget.prototype.showRemoveConfirmationDialog = function () {
 	).done( function ( confirmed ) {
 		if ( confirmed ) {
 			self.clearItems();
-			self.render();
+			self.submit().then( function () {
+				self.render();
+				self.emit( 'widgetRemoved', self.propertyId );
+			} );
 		}
 	} );
 };

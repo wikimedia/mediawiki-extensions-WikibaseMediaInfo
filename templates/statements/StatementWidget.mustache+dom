@@ -78,9 +78,7 @@
 			{{/learnMoreLink}}
 
 			{{^isDefaultProperty}}
-			{{#items.length}}
 			{{{removeAll}}}
-			{{/items.length}}
 			{{/isDefaultProperty}}
 		</div>
 

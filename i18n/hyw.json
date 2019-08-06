@@ -1,8 +1,10 @@
 {
 	"@metadata": {
 		"authors": [
-			"Թալին Նայիր"
+			"Թալին Նայիր",
+			"Kareyac"
 		]
 	},
-	"wikibasemediainfo-statements-link-notice-dismiss": "Հեռացնել"
+	"wikibasemediainfo-statements-link-notice-dismiss": "Հեռացնել",
+	"wikibasemediainfo-remove-all-statements-confirm-accept": "Հանել"
 }

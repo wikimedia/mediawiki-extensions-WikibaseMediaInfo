@@ -11,6 +11,8 @@
 	"wikibase-mediainfo-summary-wbsetlabel-add": "Lisatud [$2]-pealdis",
 	"wikibase-mediainfo-summary-wbsetlabel-remove": "Eemaldatud [$2]-pealdis",
 	"wikibase-mediainfo-summary-wbsetlabel-set": "Muudetud [$2]-pealdist",
+	"wikibasemediainfo-add-property": "Otsi omadusi, mida lisada (osa, asukoht jne)",
+	"wikibasemediainfo-add-statement": "Lisa avaldus",
 	"wikibasemediainfo-desc": "Vikibaasi lisa meediumifailide struktureeritud metaandmete haldamiseks",
 	"wikibasemediainfo-diffview-label": "pealdis",
 	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Pealdised",
@@ -23,7 +25,9 @@
 	"wikibasemediainfo-filepage-edit-captions": "Redigeeri pealdiseid",
 	"wikibasemediainfo-filepage-edit-depicts": "Redigeeri kujutatud üksusi",
 	"wikibasemediainfo-filepage-cancel": "Loobu",
-	"wikibasemediainfo-filepage-cancel-confirm": "Kas hülgad muudatused? Tehtud muudatusi ei salvestata.",
+	"wikibasemediainfo-filepage-cancel-confirm": "Tehtud muudatusi ei salvestata.",
+	"wikibasemediainfo-filepage-cancel-confirm-title": "Kas hülgad muudatused?",
+	"wikibasemediainfo-filepage-cancel-confirm-accept": "Hülga",
 	"wikibasemediainfo-filepage-edit": "Redigeeri",
 	"wikibasemediainfo-filepage-publish": "Avalda muudatused",
 	"wikibasemediainfo-filepage-caption-empty": "Lisa üherealine seletus sellest, mida fail esitab",
@@ -48,5 +52,10 @@
 	"wikibasemediainfo-statements-item-remove": "Eemalda",
 	"wikibasemediainfo-statements-learn-more": "Lisateave",
 	"wikibasemediainfo-statements-remove": "Eemalda kõik",
-	"wikibasemediainfo-statements-title-depicts": "Selles failis kujutatud üksused"
+	"wikibasemediainfo-statements-title-depicts": "Selles failis kujutatud üksused",
+	"wikibasemediainfo-statements-link-notice-text": "Struktuurandmete sildid viitavad vastavatele Vikiandmete lehekülgedele, mis avanevad uues aknas.",
+	"wikibasemediainfo-statements-link-notice-dismiss": "Peida",
+	"wikibasemediainfo-remove-all-statements-confirm": "Selle tominguga kustutad selle omaduse kõik olemasolevad väärtused. Ilma väärtusteta omadused eemaldatakse, kui muudatused salvestad. Kas oled kindel?",
+	"wikibasemediainfo-remove-all-statements-confirm-title": "Kas eemaldad kõik?",
+	"wikibasemediainfo-remove-all-statements-confirm-accept": "Eemalda"
 }

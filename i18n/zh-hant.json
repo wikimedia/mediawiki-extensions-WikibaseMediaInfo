@@ -3,7 +3,8 @@
 		"authors": [
 			"Kly",
 			"蘭斯特",
-			"神樂坂秀吉"
+			"神樂坂秀吉",
+			"Winston Sung"
 		]
 	},
 	"action-mediainfo-term": "更改多媒體資訊項目（說明、摘要等）",
@@ -26,7 +27,9 @@
 	"wikibasemediainfo-filepage-edit-captions": "編輯說明",
 	"wikibasemediainfo-filepage-edit-depicts": "編輯描述",
 	"wikibasemediainfo-filepage-cancel": "取消",
-	"wikibasemediainfo-filepage-cancel-confirm": "要放棄更改嗎？您所做出的更改將不會被儲存。",
+	"wikibasemediainfo-filepage-cancel-confirm": "您所做出的變更將不會被儲存。",
+	"wikibasemediainfo-filepage-cancel-confirm-title": "捨棄變更？",
+	"wikibasemediainfo-filepage-cancel-confirm-accept": "捨棄",
 	"wikibasemediainfo-filepage-edit": "編輯",
 	"wikibasemediainfo-filepage-publish": "發佈更改",
 	"wikibasemediainfo-filepage-caption-empty": "添加單行說明來描述出檔案所代表的內容",
@@ -66,6 +69,8 @@
 	"wikibasemediainfo-filetype-drawing": "繪畫",
 	"wikibasemediainfo-filetype-3d": "3D 模型",
 	"wikibasemediainfo-filetype-office": "文件",
+	"wikibasemediainfo-remove-all-statements-confirm-title": "全部移除？",
+	"wikibasemediainfo-remove-all-statements-confirm-accept": "移除",
 	"wikibasemediainfo-search-input-placeholder-keywords": "在標題和描述裡搜尋",
 	"wikibasemediainfo-search-input-placeholder-depicts": "搜尋概念或主題",
 	"wikibasemediainfo-search-input-placeholder-statements": "依其它陳述來搜尋",

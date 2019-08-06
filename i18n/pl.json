@@ -2,7 +2,8 @@
 	"@metadata": {
 		"authors": [
 			"Chrumps",
-			"Woytecr"
+			"Woytecr",
+			"Railfail536"
 		]
 	},
 	"action-mediainfo-term": "zmiany strukturalnych opisów multimediów (podpisy, podsumowania)",
@@ -26,7 +27,9 @@
 	"wikibasemediainfo-filepage-edit-captions": "Zmień podpisy",
 	"wikibasemediainfo-filepage-edit-depicts": "Edytuj przedstawione obiekty",
 	"wikibasemediainfo-filepage-cancel": "Anuluj",
-	"wikibasemediainfo-filepage-cancel-confirm": "Porzucić zmiany? Wprowadzone w formularzu zmiany nie zostaną zapisane.",
+	"wikibasemediainfo-filepage-cancel-confirm": "Wprowadzone w formularzu zmiany nie zostaną zapisane.",
+	"wikibasemediainfo-filepage-cancel-confirm-title": "Porzucić zmiany?",
+	"wikibasemediainfo-filepage-cancel-confirm-accept": "Porzuć",
 	"wikibasemediainfo-filepage-edit": "Edytuj",
 	"wikibasemediainfo-filepage-publish": "Opublikuj zmiany",
 	"wikibasemediainfo-filepage-caption-empty": "Dodaj jednolinijkowe objaśnienie tego, co ten plik pokazuje",
@@ -71,6 +74,7 @@
 	"wikibasemediainfo-filetype-3d": "Modele 3D",
 	"wikibasemediainfo-filetype-office": "Dokumenty",
 	"wikibasemediainfo-remove-all-statements-confirm": "Ta czynność spowoduje usunięcie wszystkich wartości tej właściwości. Właściwości bez wartości zostaną usunięte dopiero po opublikowaniu zmian. Czy na pewno chcesz to zrobić?",
+	"wikibasemediainfo-remove-all-statements-confirm-accept": "Usuń",
 	"wikibasemediainfo-search-input-placeholder-keywords": "Wyszukaj w tytułach i opisach",
 	"wikibasemediainfo-search-input-placeholder-depicts": "Szukaj koncepty i tematy",
 	"wikibasemediainfo-search-input-placeholder-statements": "Wyszukaj według innych określeń",

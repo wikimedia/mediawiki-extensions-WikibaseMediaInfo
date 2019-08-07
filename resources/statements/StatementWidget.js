@@ -92,7 +92,9 @@ StatementWidget = function ( config ) {
 	this.cancelButton.connect( this, { click: 'showCancelConfirmationDialog' } );
 	this.publishButton.connect( this, { click: [ 'emit', 'publish' ] } );
 	this.removeButton.connect( this, { click: 'showRemoveConfirmationDialog' } );
-	this.learnMoreButton.connect( this, { click: window.open.bind( window, this.learnMoreLink, '_blank' ) } );
+	this.learnMoreButton.connect( this, {
+		click: window.open.bind( window, this.learnMoreLink, '_blank' )
+	} );
 	this.connect( this, { change: 'updateControls' } );
 
 	this.updateControls();
@@ -113,8 +115,17 @@ StatementWidget.prototype.render = function () {
 		this.formatValue( dataValue, 'text/plain' ),
 		this.formatValue( dataValue, 'text/html' )
 	).then( function ( plain, html ) {
+		var formatResponse = function ( response ) {
+			return $( '<div>' )
+				.append( response )
+				.find( 'a' )
+				.attr( 'target', '_blank' )
+				.end()
+				.html();
+		};
+
 		self.url = $( html ).attr( 'href' );
-		self.label = plain;
+		self.label = formatResponse( html );
 		self.getRepoFromUrl( self.url ).then( function ( repo ) {
 			// @todo remove repo after enabling wbmiEnableOtherStatements everywhere
 			self.repo = repo;

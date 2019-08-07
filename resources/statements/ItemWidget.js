@@ -57,20 +57,27 @@ ItemWidget.prototype.render = function () {
 		promise = $.when(
 			this.formatValue( dataValue, 'text/plain' ),
 			this.formatValue( dataValue, 'text/html' )
-		).then(
-			function ( plain, html ) {
-				self.label = plain;
+		).then( function ( plain, html ) {
+			var formatResponse = function ( response ) {
+				return $( '<div>' )
+					.append( response )
+					.find( 'a' )
+					.attr( 'target', '_blank' )
+					.end()
+					.html();
+			};
 
-				self.url = undefined;
-				self.repo = undefined;
-				try {
-					self.url = $( html ).attr( 'href' );
-				} catch ( e ) {
-					// nothing to worry about, it's just not something with a link - we'll
-					// deal with it where we want to display the link
-				}
+			self.label = formatResponse( html );
+			self.url = undefined;
+			self.repo = undefined;
+
+			try {
+				self.url = $( html ).attr( 'href' );
+			} catch ( e ) {
+				// nothing to worry about, it's just not something with a link - we'll
+				// deal with it where we want to display the link
 			}
-		);
+		} );
 	}
 
 	if ( this.repo === undefined ) {

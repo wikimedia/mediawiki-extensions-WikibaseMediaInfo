@@ -13,9 +13,7 @@ has been enabled everywhere.
 			<div class="wbmi-entity-data">
 				<div class="wbmi-entity-title">
 					<h4 class="wbmi-entity-label">
-						<a target="_blank" href="{{url}}">
-							{{label}}
-						</a>
+						{{{label}}}
 					</h4>
 				</div>
 			</div>

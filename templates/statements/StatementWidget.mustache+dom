@@ -9,15 +9,7 @@
 				{{/title}}
 
 				<h4 class="wbmi-entity-label">
-					{{#url}}
-					<a class="wbmi-entity-link" target="_blank" href="{{url}}">
-						{{label}}
-					</a>
-					{{/url}}
-
-					{{^url}}
-					{{label}}
-					{{/url}}
+					{{{label}}}
 				</h4>
 			</div>
 		</div>

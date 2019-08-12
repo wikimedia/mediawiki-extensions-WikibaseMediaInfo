@@ -1,0 +1,12 @@
+{
+	"@metadata": {
+		"authors": [
+			"Eitvys200"
+		]
+	},
+	"wikibasemediainfo-filepage-cancel-confirm": "Jūsų atlikti pakeitimus nebus išsaugoti.",
+	"wikibasemediainfo-filepage-cancel-confirm-title": "Ištrinti Pakeitimus?",
+	"wikibasemediainfo-filepage-cancel-confirm-accept": "Ištrinti",
+	"wikibasemediainfo-remove-all-statements-confirm-title": "Pašalinti visus?",
+	"wikibasemediainfo-remove-all-statements-confirm-accept": "Pašalinti"
+}

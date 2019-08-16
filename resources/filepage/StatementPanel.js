@@ -116,8 +116,9 @@ StatementPanel.prototype.makeEditable = function () {
 
 			if (
 				self.$element.hasClass( 'wbmi-entityview-statementsGroup-unsupported' ) ||
-				// TODO: the following line (with '-undefined') is for BC, can be removed ~30days after
-				// T224461 gets released to production and parser cache has expired
+				// TODO: the following line (with '-undefined') is for BC, can
+				// be removed ~30days after T224461 gets released to production
+				// and parser cache has expired.
 				self.$element.hasClass( 'wbmi-entityview-statementsGroup-undefined' )
 			) {
 				self.showUnsupportedPopup();

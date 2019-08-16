@@ -311,6 +311,8 @@ class WikibaseMediaInfoHooks {
 					// Sign-up link
 					'{{fullurl:Special:UserLogin/signup|returnto={{FULLPAGENAMEE}}}}'
 				)->parseAsBlock(),
+				'protectionMsg' => $this->getProtectionMsg( $out ),
+				'userCanEdit' => $this->userCanEdit( $out )
 			];
 		}
 
@@ -556,6 +558,72 @@ class WikibaseMediaInfoHooks {
 			MediaInfo::ENTITY_TYPE,
 			$pageId
 		);
+	}
+
+	/**
+	 * If this file is protected, get the appropriate message for the user.
+	 *
+	 * Passing the message HTML to JS may not be ideal, but some messages are
+	 * templates and template syntax isn't supported in JS. See
+	 * https://www.mediawiki.org/wiki/Manual:Messages_API#Using_messages_in_JavaScript.
+	 *
+	 * @param OutputPage $out
+	 * @return string|NULL
+	 */
+	private function getProtectionMsg( $out ) {
+		$imgTitle = $out->getTitle();
+		$msg = null;
+
+		// Full protection.
+		if ( $imgTitle->isProtected( 'edit' ) ) {
+			$msg = $out->msg( 'protectedpagetext', 'editprotected', 'edit' )->parseAsBlock();
+		}
+
+		// Semi-protection.
+		if ( $imgTitle->isSemiProtected( 'edit' ) ) {
+			$msg = $out->msg( 'protectedpagetext', 'editsemiprotected', 'edit' )->parseAsBlock();
+		}
+
+		// Cascading protection.
+		if ( $imgTitle->isCascadeProtected() ) {
+			// Get the protected page(s) causing this file to be protected.
+			list( $cascadeSources ) = $imgTitle->getCascadeProtectionSources() ?: [];
+			$sources = '';
+			foreach ( $cascadeSources as $page ) {
+				$sources .= '* [[:' . $page->getPrefixedText() . "]]\n";
+			}
+
+			$msg = $out->msg( 'cascadeprotected', count( $cascadeSources ), $sources )->parseAsBlock();
+		}
+
+		return $msg;
+	}
+
+	/**
+	 * Return whether or not a user can edit captions and structured data.
+	 *
+	 * @param OutputPage $out
+	 * @return bool
+	 */
+	private function userCanEdit( $out ) {
+		$user = $out->getUser();
+		$roles = $user->getGroups();
+		$isAnon = $user->isAnon();
+		$imgTitle = $out->getTitle();
+
+		// 1. Admins can always edit.
+		// 2. Anyone can edit non-protected pages (isProtected covers full and
+		//    semi-protection).
+		// 3. Authenticated users can edit semi-protected pages.
+		if (
+			in_array( 'sysop', $roles ) ||
+			!$imgTitle->isProtected( 'edit' ) && !$imgTitle->isCascadeProtected() ||
+			$imgTitle->isSemiProtected( 'edit' ) && !$isAnon
+		) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public static function onGetEntityByLinkedTitleLookup( EntityByLinkedTitleLookup &$lookup ) {

@@ -19,19 +19,19 @@ has been enabled everywhere.
 			</div>
 
 			<a class="wbmi-entity-primary
-					  {{#prominent}}wbmi-entity-is-prominent{{/prominent}}
-					  {{^prominent}}wbmi-entity-mark-as-prominent{{/prominent}}"
-			   href="#"
-			   onclick="{{prominenceToggleHandler}}">
+					{{#prominent}}wbmi-entity-is-prominent{{/prominent}}
+					{{^prominent}}wbmi-entity-mark-as-prominent{{/prominent}}"
+				href="#"
+				onclick="{{prominenceToggleHandler}}">
 				{{#prominent}}
 				<span class="oo-ui-widget
-							 oo-ui-widget-enabled
-							 oo-ui-iconElement
-							 oo-ui-iconElement-icon
-							 oo-ui-icon-check
-							 oo-ui-labelElement-invisible
-							 oo-ui-iconWidget"
-					  aria-disabled="false">
+							oo-ui-widget-enabled
+							oo-ui-iconElement
+							oo-ui-iconElement-icon
+							oo-ui-icon-check
+							oo-ui-labelElement-invisible
+							oo-ui-iconWidget"
+					aria-disabled="false">
 				</span>
 				{{/prominent}}
 				{{prominenceMessage}}
@@ -116,4 +116,3 @@ has been enabled everywhere.
 	{{#editing}}{{{removeButton}}}{{/editing}}
 </div>
 {{/otherStatementsEnabled}}
-

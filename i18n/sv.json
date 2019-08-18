@@ -19,7 +19,7 @@
 	"wikibasemediainfo-filepage-add-caption": "Lägg till en bildtext",
 	"wikibasemediainfo-filepage-edit-captions": "Redigera bildtexter",
 	"wikibasemediainfo-filepage-cancel": "Avbryt",
-	"wikibasemediainfo-filepage-cancel-confirm": "Släng ändringarna? Ändringarna som du gjorde kommer inte sparas.",
+	"wikibasemediainfo-filepage-cancel-confirm": "Ändringar du har gjort kommer inte att sparas.",
 	"wikibasemediainfo-filepage-edit": "Redigera",
 	"wikibasemediainfo-filepage-publish": "Publicera ändringar",
 	"wikibasemediainfo-filepage-caption-empty": "Ingen bildtext har definierats",

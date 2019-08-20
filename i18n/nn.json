@@ -41,5 +41,6 @@
 	"wikibasemediainfo-statements-item-mark-as-prominent": "Merk som framståande",
 	"wikibasemediainfo-statements-learn-more": "Lær meir",
 	"wikibasemediainfo-statements-remove": "Fjern alle",
-	"wikibasemediainfo-statements-title-depicts": "Element som er med i denne fila"
+	"wikibasemediainfo-statements-title-depicts": "Element som er med i denne fila",
+	"wikibasemediainfo-statements-link-notice-text": "Merkelappar i strukturerte data lenkjar til sidene sine på Wikidata og vil opna i eit nytt vindauga."
 }

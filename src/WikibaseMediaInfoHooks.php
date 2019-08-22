@@ -575,7 +575,7 @@ class WikibaseMediaInfoHooks {
 		$msg = null;
 
 		// Full protection.
-		if ( $imgTitle->isProtected( 'edit' ) ) {
+		if ( $imgTitle->isProtected( 'edit' ) && !$imgTitle->isSemiProtected( 'edit' ) ) {
 			$msg = $out->msg( 'protectedpagetext', 'editprotected', 'edit' )->parseAsBlock();
 		}
 
@@ -590,7 +590,7 @@ class WikibaseMediaInfoHooks {
 			list( $cascadeSources ) = $imgTitle->getCascadeProtectionSources() ?: [];
 			$sources = '';
 			foreach ( $cascadeSources as $page ) {
-				$sources .= '* [[:' . $page->getPrefixedText() . "]]\n";
+				$sources .= '* [[:' . $page->getPrefixedText() . ']]\n';
 			}
 
 			$msg = $out->msg( 'cascadeprotected', count( $cascadeSources ), $sources )->parseAsBlock();
@@ -607,7 +607,7 @@ class WikibaseMediaInfoHooks {
 	 */
 	private function userCanEdit( $out ) {
 		$user = $out->getUser();
-		$roles = $user->getGroups();
+		$groups = $user->getGroups();
 		$isAnon = $user->isAnon();
 		$imgTitle = $out->getTitle();
 
@@ -616,7 +616,7 @@ class WikibaseMediaInfoHooks {
 		//    semi-protection).
 		// 3. Authenticated users can edit semi-protected pages.
 		if (
-			in_array( 'sysop', $roles ) ||
+			in_array( 'sysop', $groups ) ||
 			!$imgTitle->isProtected( 'edit' ) && !$imgTitle->isCascadeProtected() ||
 			$imgTitle->isSemiProtected( 'edit' ) && !$isAnon
 		) {

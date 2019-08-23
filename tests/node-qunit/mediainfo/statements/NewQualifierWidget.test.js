@@ -4,40 +4,49 @@ var sinon = require( 'sinon' ),
 
 QUnit.module( 'NewQualifierWidget', hooks.mediainfo, function () {
 	QUnit.test( 'Valid data roundtrip', function ( assert ) {
-		var QualifierWidget = require( pathToWidget ),
+		var done = assert.async(),
+			QualifierWidget = require( pathToWidget ),
 			widget = new QualifierWidget(),
 			data = new wikibase.datamodel.PropertyValueSnak(
 				'P1',
 				new wikibase.datamodel.EntityId( 'Q1' )
 			);
 
-		widget.setData( data );
-		assert.ok( widget.getData() );
-		assert.strictEqual( data.equals( widget.getData() ), true );
+		widget.setData( data ).then( function () {
+			assert.ok( widget.getData() );
+			assert.strictEqual( data.equals( widget.getData() ), true );
+			done();
+		} );
 	} );
 
 	QUnit.test( 'setData() sets property ID in the PropertyInput widget', function ( assert ) {
-		var QualifierWidget = require( pathToWidget ),
+		var done = assert.async(),
+			QualifierWidget = require( pathToWidget ),
 			widget = new QualifierWidget(),
 			data = new wikibase.datamodel.PropertyValueSnak(
 				'P1',
 				new wikibase.datamodel.EntityId( 'Q1' )
 			);
 
-		widget.setData( data );
-		assert.strictEqual( widget.propertyInput.getData().id, data.getPropertyId() );
+		widget.setData( data ).then( function () {
+			assert.strictEqual( widget.propertyInput.getData().id, data.getPropertyId() );
+			done();
+		} );
 	} );
 
 	QUnit.test( 'setData() sets value data in the valueInput widget', function ( assert ) {
-		var QualifierWidget = require( pathToWidget ),
+		var done = assert.async(),
+			QualifierWidget = require( pathToWidget ),
 			widget = new QualifierWidget(),
 			data = new wikibase.datamodel.PropertyValueSnak(
 				'P1',
 				new wikibase.datamodel.EntityId( 'Q1' )
 			);
 
-		widget.setData( data );
-		assert.strictEqual( widget.valueInput.getData().equals( data.getValue() ), true );
+		widget.setData( data ).then( function () {
+			assert.strictEqual( widget.valueInput.getData().equals( data.getValue() ), true );
+			done();
+		} );
 	} );
 
 	QUnit.test( 'Property labels are available after API calls complete', function ( assert ) {

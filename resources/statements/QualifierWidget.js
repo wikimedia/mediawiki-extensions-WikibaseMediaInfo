@@ -74,8 +74,11 @@ QualifierWidget.prototype.getData = function () {
 
 /**
  * @param {wikibase.datamodel.PropertyValueSnak} data
+ * @return {jQuery.Promise}
  */
 QualifierWidget.prototype.setData = function ( data ) {
+	var self = this;
+
 	this.data = data;
 
 	// make sure the property exists in the dropdown (it's supposed to be,
@@ -87,7 +90,9 @@ QualifierWidget.prototype.setData = function ( data ) {
 	this.populatePropertiesDropdown();
 
 	this.propertyDropdown.getMenu().selectItemByData( data.getPropertyId() );
-	this.valueInput.setData( data.getValue() );
+	return this.valueInput.setData( data.getValue() ).then( function () {
+		return self.$element;
+	} );
 };
 
 QualifierWidget.prototype.updateValueWidget = function () {

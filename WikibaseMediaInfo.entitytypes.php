@@ -117,7 +117,6 @@ return [
 				$defaultPropertyIdsForView[] = new PropertyId( $propertyId );
 			}
 
-			$qualifierPropertyIds = $mwConfig->get( 'DepictsQualifierProperties' );
 			$statementsView = new MediaInfoEntityStatementsView(
 				$propertyOrderProvider,
 				$textProvider,
@@ -127,8 +126,7 @@ return [
 				$wbRepo->getValueFormatterFactory(),
 				$wbRepo->getCompactBaseDataModelSerializerFactory(),
 				$languageCode,
-				$properties,
-				$qualifierPropertyIds
+				$properties
 			);
 
 			return new MediaInfoView(

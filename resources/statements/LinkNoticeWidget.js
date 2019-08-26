@@ -98,13 +98,7 @@ LinkNoticeWidget.prototype.isDismissed = function () {
  */
 LinkNoticeWidget.prototype.canDisplay = function () {
 	var message = mw.message( 'wikibasemediainfo-statements-link-notice-text' );
-
-	// never display if other statements is not enabled, regardless of message
-	if ( mw.config.get( 'wbmiEnableOtherStatements', false ) ) {
-		return message.exists() && message.text() !== '-';
-	} else {
-		return false;
-	}
+	return message.exists() && message.text() !== '-';
 };
 
 module.exports = LinkNoticeWidget;

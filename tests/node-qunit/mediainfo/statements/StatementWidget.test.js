@@ -12,7 +12,6 @@ QUnit.module( 'StatementWidget', hooks.mediainfo, function () {
 				entityId: 'M1'
 			} ),
 			formatValueStub = sinon.stub( widget, 'formatValue' ),
-			getRepoFromUrlStub = sinon.stub( widget, 'getRepoFromUrl' ),
 			data = new wikibase.datamodel.StatementList( [
 				new wikibase.datamodel.Statement(
 					new wikibase.datamodel.Claim(
@@ -25,7 +24,6 @@ QUnit.module( 'StatementWidget', hooks.mediainfo, function () {
 			] );
 
 		formatValueStub.returns( $.Deferred().resolve( 'formatted' ).promise() );
-		getRepoFromUrlStub.returns( $.Deferred().resolve( 'local' ).promise() );
 
 		widget.setData( data ).then( function () {
 			assert.ok( widget.getData() );

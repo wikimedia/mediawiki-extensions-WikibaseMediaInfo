@@ -68,21 +68,6 @@ $wgMediaInfoProperties = [
 ];
 ```
 
-#### Qualifier Properties
-[Qualifiers](https://www.mediawiki.org/wiki/Wikibase/DataModel/Primer#Qualifiers)
-are an optional component of Wikibase statements. To use them in WikibaseMediaInfo,
-create additional properties in Wikibase as described above, and add their label
-and ID to the `$wgDepictsQualifierProperties` config variable in
-`LocalSettings.php`. Only the `item` and `quantity` types are currently supported.
-
-```
-$wgDepictsQualifierProperties = [
-	'features' => 'P80',
-	'color' => 'P24',
-	'quantity' => 'P25',
-];
-```
-
 ### Entities
 In order to add values to statements, you will also need to add Entity items to
 your local Wikibase instance. This can be done manually at: `Special:NewItem`,
@@ -106,9 +91,7 @@ are available for this extension:
 | variable | example value | default | notes |
 |----------|---------------|---------|-------|
 | $wgMediaInfoEnableSearch | true/false | false | Feature-flag to enable search features |
-| $wgMediaInfoEnableOtherStatements | true/false | false | Feature-flag to enable arbitrary statements |
 | $wgMediaInfoProperties | `[ 'depicts' => 'P123' ]` | {} | default WB properties to show (e.g. "depicts") |
-| $wgDepictsQualifierProperties | `[ 'features' => 'P80', 'color' => 'P24', 'quantity' => 'P25' ]` | {} | WB properties to allow for qualifiers |
 | $wgMediaInfoHelpUrls | `[ 'P1' => 'https://commons.wikimedia.org/wiki/Special:MyLanguage/Commons:Depicts' ]` | {} | Links to pages to learn more about wikibase properties |
 | $wgMediaInfoSearchFileTypes | see extension.json | see extension.json | List of file types to search in |
 | $wgUploadWizardConfig[ 'wikibase' ][ 'enabled' ] | true/false | false | UploadWizard feature-flag |

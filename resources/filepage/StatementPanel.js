@@ -116,14 +116,7 @@ StatementPanel.prototype.makeEditable = function () {
 	this.licenseDialogWidget.getConfirmationIfNecessary().then(
 		function () {
 			self.statementWidget.setEditing.bind( self.statementWidget, true );
-
-			if (
-				self.$element.hasClass( 'wbmi-entityview-statementsGroup-unsupported' ) ||
-				// TODO: the following line (with '-undefined') is for BC, can
-				// be removed ~30days after T224461 gets released to production
-				// and parser cache has expired.
-				self.$element.hasClass( 'wbmi-entityview-statementsGroup-undefined' )
-			) {
+			if ( self.$element.hasClass( 'wbmi-entityview-statementsGroup-unsupported' ) ) {
 				self.showUnsupportedPopup();
 			}
 		},
@@ -164,25 +157,12 @@ StatementPanel.prototype.sendData = function () {
 		} );
 };
 
-/**
- * TODO: this entire method can be removed once other statements feature flag is
- * no longer needed
- */
 StatementPanel.prototype.showUnsupportedPopup = function () {
 	var popup, popupMsg, $content;
 
-	if ( mw.config.get( 'wbmiEnableOtherStatements', false ) ) {
-		popupMsg = mw.message(
-			'wikibasemediainfo-statements-unsupported-property-type-content'
-		).parse();
-	} else {
-		// TODO: remove the 'else' (and getSupportedProperties) when feature flag
-		// MediaInfoEnableOtherStatements is removed
-		popupMsg = mw.message(
-			'wikibasemediainfo-statements-unsupported-property-content',
-			mw.language.listToText( this.getSupportedProperties() )
-		).parse();
-	}
+	popupMsg = mw.message(
+		'wikibasemediainfo-statements-unsupported-property-type-content'
+	).parse();
 
 	$content = $( '<div>' ).append(
 		$( '<h4>' ).html(
@@ -201,30 +181,6 @@ StatementPanel.prototype.showUnsupportedPopup = function () {
 
 	this.$element.append( popup.$element );
 	popup.toggle( true );
-};
-
-/**
- * this is a bit of a hack: there's no great way to figure out
- * what properties are "supported" (what even means "supported"
- * in this project - Commons focuses on 'depicts' ATM, but other
- * wikis could use this with any other property they like, as
- * long as it's a supported data type...
- * so... let's just grab the names from DOM instead of trying to
- * figure out better methods of getting these to JS (either
- * expose as a JS config var or via an API call to format) because
- * this is only a temporary measure
- *
- * TODO: remove when feature flag MediaInfoEnableOtherStatements is removed
- *
- * @return {[string]}
- */
-StatementPanel.prototype.getSupportedProperties = function () {
-	// eslint-disable-next-line no-jquery/no-global-selector
-	return $( '.wbmi-entityview-statementsGroup:not( .wbmi-entityview-statementsGroup-undefined )' )
-		.toArray()
-		.map( function ( element ) {
-			return $( '.wbmi-statement-header .wbmi-entity-label', element ).text();
-		} );
 };
 
 /**

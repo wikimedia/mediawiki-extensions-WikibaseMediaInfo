@@ -84,27 +84,25 @@
 			}
 
 			if ( panelsAreEditable ) {
-				if ( mw.config.get( 'wbmiEnableOtherStatements', false ) ) {
-					addPropertyWidget = new AddPropertyWidget();
-					addPropertyWidget.on( 'choose', function ( data ) {
-						var statementPanel,
-							statementPanelContainer = $( '<div>' )
-								.addClass( 'wbmi-entityview-statementsGroup' )
-								.insertBefore( addPropertyWidget.$element );
+				addPropertyWidget = new AddPropertyWidget();
+				addPropertyWidget.on( 'choose', function ( data ) {
+					var statementPanel,
+						statementPanelContainer = $( '<div>' )
+							.addClass( 'wbmi-entityview-statementsGroup' )
+							.insertBefore( addPropertyWidget.$element );
 
-						propertiesInfo[ data.id ] = 'wikibase-entityid';
-						statementPanel = new StatementPanel( {
-							$element: statementPanelContainer,
-							propertyId: data.id,
-							entityId: mw.config.get( 'wbEntityId' ),
-							properties: propertiesInfo,
-							isDefaultProperty: false,
-							helpUrls: helpUrls
-						} );
-						statementPanels[ data.id ] = statementPanel;
-						statementPanel.on( 'widgetRemoved', onStatementPanelRemoved );
+					propertiesInfo[ data.id ] = 'wikibase-entityid';
+					statementPanel = new StatementPanel( {
+						$element: statementPanelContainer,
+						propertyId: data.id,
+						entityId: mw.config.get( 'wbEntityId' ),
+						properties: propertiesInfo,
+						isDefaultProperty: false,
+						helpUrls: helpUrls
 					} );
-				}
+					statementPanels[ data.id ] = statementPanel;
+					statementPanel.on( 'widgetRemoved', onStatementPanelRemoved );
+				} );
 
 				$statements.each( function () {
 					var propertyId = $( this ).data( 'property' );
@@ -127,16 +125,11 @@
 					statementPanels[ propertyId ] = statementPanel;
 					statementPanel.on( 'widgetRemoved', onStatementPanelRemoved );
 
-					if ( mw.config.get( 'wbmiEnableOtherStatements', false ) ) {
-						addPropertyWidget.addPropertyId( propertyId );
-					}
+					addPropertyWidget.addPropertyId( propertyId );
 				} );
 
 				$statements.first().before( linkNoticeWidget.$element );
-
-				if ( mw.config.get( 'wbmiEnableOtherStatements', false ) ) {
-					$statements.last().after( addPropertyWidget.$element );
-				}
+				$statements.last().after( addPropertyWidget.$element );
 			}
 		}
 

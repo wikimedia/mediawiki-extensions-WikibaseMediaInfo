@@ -14,10 +14,6 @@ QUnit.module( 'LinkNoticeWidget', Object.assign( {}, hooks.mediainfo, {
 			exists: sinon.stub().withArgs( 'wikibasemediainfo-statements-link-notice-text' ).returns( true ),
 			text: sinon.stub().withArgs( 'wikibasemediainfo-statements-link-notice-text' ).returns( 'Stub text' )
 		} );
-		// eslint-disable-next-line no-restricted-properties
-		global.mw.config = Object.assign( {}, global.mw.config, {
-			get: sinon.stub().withArgs( 'wbmiEnableOtherStatements' ).returns( true )
-		} );
 	}
 } ), function () {
 	QUnit.test( 'constructor', function ( assert ) {

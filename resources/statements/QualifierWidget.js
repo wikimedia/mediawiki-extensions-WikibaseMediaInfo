@@ -1,178 +1,298 @@
 'use strict';
 
-var FormatValueElement = require( './FormatValueElement.js' ),
-	QualifierValueInputWidget = require( './QualifierValueInputWidget.js' ),
-	/**
-	 * @constructor
-	 * @param {Object} config Configuration options
-	 * @param {Object} config.qualifiers Qualifiers map: { propertyId: datatype, ...}
-	 */
-	QualifierWidget = function MediaInfoStatementsQualifierWidget( config ) {
-		config = config || {};
+var QualifierWidget,
+	ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
+	QualifierAutocomplete = require( './QualifierAutocompleteWidget.js' ),
+	QualifierValueInput = require( './QualifierValueInputWidget.js' ),
+	FormatValueElement = require( './FormatValueElement.js' );
 
-		QualifierWidget.parent.call( this, config );
-		FormatValueElement.call( this, $.extend( {}, config ) );
-
-		this.config = config;
-		this.qualifiers = config.qualifiers || {};
-
-		this.valueWidget = new OO.ui.Widget( { classes: [ 'wbmi-qualifier-value' ] } );
-
-		this.removeIcon = new OO.ui.ButtonWidget( { classes: [ 'wbmi-qualifier-remove' ], framed: false, icon: 'close' } );
-		this.removeIcon.connect( this, { click: [ 'emit', 'delete' ] } );
-
-		this.propertyDropdown = new OO.ui.DropdownWidget( { classes: [ 'wbmi-qualifier-property' ] } );
-		this.propertyDropdown.getMenu().connect( this, { select: 'populateValueInput' } );
-		this.propertyDropdown.getMenu().connect( this, { select: 'updateValueWidget' } );
-		this.propertyDropdown.getMenu().connect( this, { select: [ 'emit', 'change' ] } );
-		this.populatePropertiesDropdown();
-
-		this.valueInput = new QualifierValueInputWidget( { classes: [ 'wbmi-qualifier-value-input' ] } );
-		this.valueInput.connect( this, { change: 'updateValueWidget' } );
-		this.valueInput.connect( this, { change: [ 'emit', 'change' ] } );
-		// disable - will be enabled once a property has been selected
-		this.valueInput.setDisabled( true );
-
-		this.layout = new OO.ui.HorizontalLayout( {
-			items: [
-				this.valueWidget,
-				this.propertyDropdown,
-				this.valueInput,
-				this.removeIcon
-			],
-			classes: [ 'wbmi-qualifier' ]
-		} );
-
-		this.$element = this.layout.$element;
+/**
+ * QualifierWidget (new version). This widget represents a single row of
+ * qualifier-related widgets within a single ItemWidget inside a StatementPanel.
+ * These widgets handle both the "read" and "edit" UI modes. Actual management
+ * of UI state and the showing/hiding of widgets is handled at the level of the
+ * ItemWidget.
+ *
+ * This widget listens for events from its children and updates its
+ * data in response to user actions. Data can also be set programatically by
+ * calling the setData() method.
+ *
+ * @constructor
+ * @param {Object} config
+ * @param {Object} [config.data] Initial data
+ * @param {boolean} [config.editing] Edit state of the widget when created;
+ * defaults to false.
+ */
+QualifierWidget = function ( config ) {
+	config = config || {};
+	this.state = {
+		data: config.data,
+		editing: !!config.editing
 	};
+
+	// sub-widgets
+	this.propertyInput = new QualifierAutocomplete( {
+		classes: [ 'wbmi-qualifier-property' ]
+	} );
+
+	this.valueInput = new QualifierValueInput( {
+		classes: [ 'wbmi-qualifier-value-input' ]
+	} );
+
+	this.valueInput.setDisabled( true );
+
+	// event listeners
+	this.propertyInput.connect( this, { choose: 'onPropertyChoose' } );
+	this.valueInput.connect( this, { change: 'onValueChange' } );
+
+	QualifierWidget.parent.call( this, config );
+	ComponentWidget.call(
+		this,
+		'wikibase.mediainfo.statements',
+		'templates/statements/QualifierWidget.mustache+dom'
+	);
+	FormatValueElement.call( this, $.extend( {}, config ) );
+};
 OO.inheritClass( QualifierWidget, OO.ui.Widget );
+OO.mixinClass( QualifierWidget, ComponentWidget );
 OO.mixinClass( QualifierWidget, FormatValueElement );
 
 /**
+ * @inheritDoc
+ */
+QualifierWidget.prototype.getTemplateData = function () {
+	var self = this;
+
+	return this.asyncFormatForDisplay().then( function ( propertyHtml, valueHtml ) {
+		var formatResponse, removeIcon;
+
+		formatResponse = function ( html ) {
+			return $( '<div>' )
+				.append( html )
+				.find( 'a' )
+				.attr( 'target', '_blank' )
+				.end()
+				.html();
+		};
+
+		removeIcon = new OO.ui.ButtonWidget( {
+			classes: [ 'wbmi-qualifier-remove' ],
+			framed: false,
+			icon: 'close'
+		} );
+		removeIcon.connect( self, { click: [ 'emit', 'delete' ] } );
+
+		return {
+			editing: self.state.editing,
+			propertyInput: self.propertyInput,
+			valueInput: self.valueInput,
+			removeIcon: removeIcon,
+			property: formatResponse( propertyHtml ),
+			value: formatResponse( valueHtml ),
+			separator: mw.message( 'colon-separator' ).text()
+		};
+	} );
+};
+
+/**
  * @chainable
- * @return {OO.ui.Element} The element, for chaining
+ * @return {QualifierWidget} widget
  */
 QualifierWidget.prototype.focus = function () {
-	this.propertyDropdown.focus();
+	this.propertyInput.focus();
 	return this;
 };
 
 /**
- * @return {wikibase.datamodel.PropertyValueSnak}
+ * Set the read/edit state to the desired value and re-render the widget from
+ * its template.
+ * @param {boolean} editing
+ * @return {jQuery.Promise} Resolves after rerender
+ */
+QualifierWidget.prototype.setEditing = function ( editing ) {
+	return this.setState( { editing: editing } );
+};
+
+/**
+ * Sets the child widgets' data and updates label elements asynchronously.
+ * @param {wikibase.datamodel.Snak} data
+ * @return {jQuery.Promise}
+ */
+QualifierWidget.prototype.setData = function ( data ) {
+	var self = this,
+		propId,
+		dataValue,
+		dataValueType;
+
+	// Bail early and discard existing data if data argument is not a snak
+	if ( !( data instanceof wikibase.datamodel.Snak ) ) {
+		throw new Error( 'Invalid snak' );
+	}
+
+	propId = data.getPropertyId();
+	dataValue = data.getValue();
+	dataValueType = dataValue.getType();
+
+	return $.when(
+		this.updatePropertyInput( { id: propId, dataValueType: dataValueType } ),
+		this.updateValueInput( dataValue.getType(), dataValue ),
+		this.setState( { data: this.cloneData( data ) } )
+	).then( function () {
+		return self.$element;
+	} );
+};
+
+/**
+ * Extracts data from child widgets for use elsewhere.
+ * @return {wikibase.datamodel.Snak} data
  */
 QualifierWidget.prototype.getData = function () {
-	var property = this.propertyDropdown.getMenu().findSelectedItem(),
+	var property = this.propertyInput.getData(),
 		snak = new wikibase.datamodel.PropertyValueSnak(
-			property.getData(),
+			property.id,
 			this.valueInput.getData()
 		);
 
 	// if snak hasn't changed since `this.setData`,
 	// return the original data (which includes `hash`)
-	return this.data && this.data.equals( snak ) ? this.data : snak;
+	return this.state.data && this.state.data.equals( snak ) ? this.state.data : snak;
 };
 
 /**
- * @param {wikibase.datamodel.PropertyValueSnak} data
- * @return {jQuery.Promise}
+ * Handles property selection by the user
  */
-QualifierWidget.prototype.setData = function ( data ) {
+QualifierWidget.prototype.onPropertyChoose = function () {
+	var property = this.propertyInput.getData();
+	this.updateValueInput( property.dataValueType );
+
+	// abort in-flight API requests - there's no point in continuing
+	// to fetch the text-to-render when we've already changed it...
+	if ( this.formatDisplayPromise ) {
+		this.formatDisplayPromise.abort();
+	}
+
+	this.emit( 'change' );
+};
+
+/**
+ * Handles change of valueInput text from the user
+ */
+QualifierWidget.prototype.onValueChange = function () {
+	// abort in-flight API requests - there's no point in continuing
+	// to fetch the text-to-render when we've already changed it...
+	if ( this.formatDisplayPromise ) {
+		this.formatDisplayPromise.abort();
+	}
+
+	this.emit( 'change' );
+};
+
+/**
+ * Ergonomic wrapper around formatValue() to make it easier to deal with
+ * properties.
+ * @param {string} propId
+ * @param {string} [format] e.g. text/plain or text/html
+ * @param {string} [language]
+ * @return {$.Promise} promise
+ */
+QualifierWidget.prototype.formatProperty = function ( propId, format, language ) {
+	return this.formatValue( new wikibase.datamodel.EntityId( propId ), format, language );
+};
+
+/**
+ * @param {Object} property
+ * @param {string} property.id property ID
+ * @param {string} property.dataValueType datavalue type
+ * @param {string} [property.label] human-readable property label
+ * @return {jQuery.Promise}
+ * @internal
+ */
+QualifierWidget.prototype.updatePropertyInput = function ( property ) {
 	var self = this;
 
-	this.data = data;
+	if ( this.formatPropertyPromise ) {
+		this.formatPropertyPromise.abort();
+	}
 
-	// make sure the property exists in the dropdown (it's supposed to be,
-	// but it's not unthinkable someone crafted an API call to add a property
-	// that's not configured, or that we've changed our minds and updated
-	// the list of properties...)
-	this.qualifiers = $.extend( {}, this.config.qualifiers );
-	this.qualifiers[ data.getPropertyId() ] = data.getValue().getType();
-	this.populatePropertiesDropdown();
+	if ( 'label' in property ) {
+		this.propertyInput.setData( property );
+	} else {
+		// if the label is not yet known, format it to feed to the input field
+		this.formatPropertyPromise = this.formatProperty( property.id );
+		return this.formatPropertyPromise.then( function ( formatted ) {
+			return self.updatePropertyInput( $.extend( {}, property, {
+				label: formatted
+			} ) );
+		} );
+	}
 
-	this.propertyDropdown.getMenu().selectItemByData( data.getPropertyId() );
-	return this.valueInput.setData( data.getValue() ).then( function () {
+	return $.Deferred().resolve( this.$element ).promise();
+};
+
+/**
+ * @param {string} datatype datavalue type
+ * @param {dataValues.DataValue} [value]
+ * @return {jQuery.Promise}
+ * @internal
+ */
+QualifierWidget.prototype.updateValueInput = function ( datatype, value ) {
+	var self = this,
+		promise;
+
+	this.valueInput.setDisabled( false );
+
+	if ( value !== undefined ) {
+		promise = this.valueInput.setData( value );
+	} else {
+		promise = this.valueInput.setInputType( datatype );
+	}
+
+	return promise.then( function () {
 		return self.$element;
 	} );
 };
 
-QualifierWidget.prototype.updateValueWidget = function () {
-	var self = this,
-		data, dataValue;
+/**
+ * Asynchronously update the label elements with data from the API.
+ * @return {jQuery.Promise}
+ */
+QualifierWidget.prototype.asyncFormatForDisplay = function () {
+	var promises,
+		dataValue;
 
 	try {
-		data = this.getData();
-		dataValue = data.getValue();
+		dataValue = this.valueInput.getData();
 
-		// abort in-flight API requests - there's no point in continuing
-		// to fetch the text-to-render when we've already changed it...
-		if ( this.updatePromise ) {
-			this.updatePromise.abort();
-		}
+		promises = [
+			this.formatProperty( this.propertyInput.getData().id, 'text/html' ),
+			this.formatValue( dataValue, 'text/html' )
+		];
 
-		// if the value input is not empty, format it
-		this.updatePromise = this.formatValue( dataValue, 'text/plain' );
-		this.updatePromise.then( function ( plain ) {
-			self.valueWidget.$element.text(
-				( self.propertyDropdown.getMenu().findSelectedItem().getLabel() || '' ) +
-				mw.message( 'colon-separator' ).text() +
-				plain
-			);
+		this.formatDisplayPromise = $.when.apply( $, promises ).promise( {
+			abort: function () {
+				promises.forEach( function ( promise ) {
+					promise.abort();
+				} );
+			}
 		} );
+
+		return this.formatDisplayPromise;
 	} catch ( e ) {
 		// nothing to render if data is invalid...
+		return $.Deferred().resolve( '', '' ).promise();
 	}
 };
 
 /**
- * @param {string} propertyId
- * @return {jQuery.Promise}
+ * @internal
+ * @param {wikibase.datamodel.Snak} data
+ * @return {wikibase.datamodel.Snak}
  */
-QualifierWidget.prototype.addProperty = function ( propertyId ) {
-	var self = this,
-		dataValue = new wikibase.datamodel.EntityId( propertyId );
+QualifierWidget.prototype.cloneData = function ( data ) {
+	var serializer = new wikibase.serialization.SnakSerializer(),
+		deserializer = new wikibase.serialization.SnakDeserializer();
 
-	// skip if property already exists in dropdown
-	if ( this.propertyDropdown.getMenu().findItemFromData( propertyId ) !== null ) {
-		return $.Deferred().resolve().promise();
-	}
-
-	// add property to dropdown
-	this.propertyDropdown.getMenu().addItems( [
-		new OO.ui.MenuOptionWidget( { data: propertyId } )
-	] );
-
-	// enable dropdown now that it has items
-	this.propertyDropdown.setDisabled( false );
-
-	// now fetch the formatted value for the property and update the
-	// dropdown menu item's label
-	return self.formatValue( dataValue, 'text/plain' ).then( function ( formatted ) {
-		// set property label
-		var item = self.propertyDropdown.getMenu().findItemFromData( propertyId );
-		item.setLabel( formatted );
-		if ( item.isSelected() ) {
-			self.propertyDropdown.setLabel( formatted );
-			self.updateValueWidget();
-		}
-	} );
-};
-
-QualifierWidget.prototype.populatePropertiesDropdown = function () {
-	// reset dropdown
-	this.propertyDropdown.getMenu().clearItems();
-	this.propertyDropdown.setLabel( mw.message( 'wikibasemediainfo-property-placeholder' ).text() );
-	this.propertyDropdown.setDisabled( true );
-
-	Object.keys( this.qualifiers ).forEach( this.addProperty.bind( this ) );
-};
-
-QualifierWidget.prototype.populateValueInput = function () {
-	var property = this.propertyDropdown.getMenu().findSelectedItem().getData();
-
-	// update input to reflect the correct type for this property
-	this.valueInput.setInputType( this.qualifiers[ property ] );
-
-	this.valueInput.setDisabled( false );
+	return deserializer.deserialize( serializer.serialize( data ) );
 };
 
 module.exports = QualifierWidget;

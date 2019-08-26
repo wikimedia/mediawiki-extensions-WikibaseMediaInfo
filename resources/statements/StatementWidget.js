@@ -2,7 +2,6 @@
 
 var ItemInputWidget = require( './ItemInputWidget.js' ),
 	FormatValueElement = require( './FormatValueElement.js' ),
-	GetRepoElement = require( './GetRepoElement.js' ),
 	ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
 	DOMLessGroupWidget = require( 'wikibase.mediainfo.base' ).DOMLessGroupWidget,
 	ItemWidget = require( './ItemWidget.js' ),
@@ -14,7 +13,6 @@ var ItemInputWidget = require( './ItemInputWidget.js' ),
  * @param {string} config.entityId Entity ID (e.g. M123 id of the file you just uploaded)
  * @param {string} config.propertyId Property ID (e.g. P123 id of `depicts` property)
  * @param {string} [config.properties] Properties map: { propertyId: datatype, ...}
- * @param {Object} [config.qualifiers] Qualifiers map: { propertyId: datatype, ...}
  * @param {Object} [config.data] Initial data
  * @param {string} [config.title]
  * @param {string} [config.editing] True for edit mode, False for read mode
@@ -29,17 +27,11 @@ StatementWidget = function ( config ) {
 	config = config || {};
 	config.helpUrls = config.helpUrls || {};
 	config.isDefaultProperty = !!config.isDefaultProperty;
-	config.qualifiers = config.qualifiers ||
-		mw.config.get( 'wbmiDepictsQualifierProperties' ) ||
-		{};
 	this.config = config;
 
-	// TODO: remove unnecessary props after enabling wbmiEnableOtherStatements everywhere;
-	// this includes `properties` and `qualifiers`
 	this.state = {
 		entityId: config.entityId,
 		propertyId: config.propertyId,
-		qualifiers: config.qualifiers,
 		initialData: new wikibase.datamodel.StatementList(),
 		title: config.title || ( mw.config.get( 'wbmiPropertyTitles' ) || {} )[ config.propertyId ] || '',
 		editing: config.editing || false
@@ -79,7 +71,6 @@ OO.inheritClass( StatementWidget, OO.ui.Widget );
 OO.mixinClass( StatementWidget, DOMLessGroupWidget );
 OO.mixinClass( StatementWidget, ComponentWidget );
 OO.mixinClass( StatementWidget, FormatValueElement );
-OO.mixinClass( StatementWidget, GetRepoElement );
 
 /**
  * @inheritDoc
@@ -90,7 +81,7 @@ StatementWidget.prototype.getTemplateData = function () {
 
 	// fetch property value & url
 	return this.formatValue( dataValue, 'text/html' ).then( function ( html ) {
-		var label, url, formatResponse;
+		var formatResponse, editButton, cancelButton, removeButton, learnMoreLink, learnMoreButton;
 
 		formatResponse = function ( response ) {
 			return $( '<div>' )
@@ -101,70 +92,61 @@ StatementWidget.prototype.getTemplateData = function () {
 				.html();
 		};
 
-		label = formatResponse( html );
-		url = $( html ).attr( 'href' );
-
-		return self.getRepoFromUrl( url ).then( function ( repo ) {
-			var editButton, cancelButton, removeButton, learnMoreLink, learnMoreButton;
-
-			editButton = new OO.ui.ButtonWidget( {
-				label: mw.message( 'wikibasemediainfo-filepage-edit' ).text(),
-				framed: false,
-				flags: 'progressive',
-				title: mw.message( 'wikibasemediainfo-filepage-edit-depicts' ).text(),
-				classes: [ 'wbmi-entityview-editButton' ],
-				disabled: self.isDisabled() || self.isEditing()
-			} );
-
-			cancelButton = new OO.ui.ButtonWidget( {
-				label: mw.message( 'wikibasemediainfo-filepage-cancel' ).text(),
-				framed: false,
-				flags: 'destructive'
-			} );
-
-			removeButton = new OO.ui.ButtonWidget( {
-				label: mw.message( 'wikibasemediainfo-statements-remove' ).text(),
-				framed: false,
-				flags: 'destructive',
-				classes: [ 'wbmi-statement-remove' ]
-			} );
-
-			learnMoreLink = self.config.helpUrls[ self.state.propertyId ];
-			learnMoreButton = new OO.ui.ButtonWidget( {
-				label: mw.message( 'wikibasemediainfo-statements-learn-more' ).text(),
-				framed: false,
-				flags: 'progressive',
-				classes: [ 'wbmi-statement-learn-more' ]
-			} );
-
-			editButton.connect( self, { click: [ 'emit', 'edit' ] } );
-			editButton.connect( self, { click: [ 'setEditing', true ] } );
-			cancelButton.connect( self, { click: 'showCancelConfirmationDialog' } );
-			removeButton.connect( self, { click: 'showRemoveConfirmationDialog' } );
-			learnMoreButton.connect( self, {
-				click: window.open.bind( window, learnMoreLink, '_blank' )
-			} );
-
-			return {
-				title: self.state.title,
-				id: self.state.propertyId,
-				label: label,
-				url: url,
-				repo: repo, // @todo remove repo after enabling wbmiEnableOtherStatements everywhere
-				isDefaultProperty: self.config.isDefaultProperty,
-				showControls: self.config.showControls,
-				editing: self.isEditing(),
-				items: self.getItems(),
-				input: self.input,
-				publishButton: self.publishButton,
-				editButton: editButton,
-				cancelButton: cancelButton,
-				removeAll: removeButton,
-				learnMoreLink: learnMoreLink,
-				learnMoreButton: learnMoreButton,
-				otherStatementsEnabled: mw.config.get( 'wbmiEnableOtherStatements', false )
-			};
+		editButton = new OO.ui.ButtonWidget( {
+			label: mw.message( 'wikibasemediainfo-filepage-edit' ).text(),
+			framed: false,
+			flags: 'progressive',
+			title: mw.message( 'wikibasemediainfo-filepage-edit-depicts' ).text(),
+			classes: [ 'wbmi-entityview-editButton' ],
+			disabled: self.isDisabled() || self.isEditing()
 		} );
+
+		cancelButton = new OO.ui.ButtonWidget( {
+			label: mw.message( 'wikibasemediainfo-filepage-cancel' ).text(),
+			framed: false,
+			flags: 'destructive'
+		} );
+
+		removeButton = new OO.ui.ButtonWidget( {
+			label: mw.message( 'wikibasemediainfo-statements-remove' ).text(),
+			framed: false,
+			flags: 'destructive',
+			classes: [ 'wbmi-statement-remove' ]
+		} );
+
+		learnMoreLink = self.config.helpUrls[ self.state.propertyId ];
+		learnMoreButton = new OO.ui.ButtonWidget( {
+			label: mw.message( 'wikibasemediainfo-statements-learn-more' ).text(),
+			framed: false,
+			flags: 'progressive',
+			classes: [ 'wbmi-statement-learn-more' ]
+		} );
+
+		editButton.connect( self, { click: [ 'emit', 'edit' ] } );
+		editButton.connect( self, { click: [ 'setEditing', true ] } );
+		cancelButton.connect( self, { click: 'showCancelConfirmationDialog' } );
+		removeButton.connect( self, { click: 'showRemoveConfirmationDialog' } );
+		learnMoreButton.connect( self, {
+			click: window.open.bind( window, learnMoreLink, '_blank' )
+		} );
+
+		return {
+			title: self.state.title,
+			id: self.state.propertyId,
+			label: formatResponse( html ),
+			url: $( html ).attr( 'href' ),
+			isDefaultProperty: self.config.isDefaultProperty,
+			showControls: self.config.showControls,
+			editing: self.isEditing(),
+			items: self.getItems(),
+			input: self.input,
+			publishButton: self.publishButton,
+			editButton: editButton,
+			cancelButton: cancelButton,
+			removeAll: removeButton,
+			learnMoreLink: learnMoreLink,
+			learnMoreButton: learnMoreButton
+		};
 	} );
 };
 
@@ -203,7 +185,6 @@ StatementWidget.prototype.addItemFromInput = function ( item ) {
 StatementWidget.prototype.createItem = function ( dataValue ) {
 	var widget = new ItemWidget( {
 		disabled: this.isDisabled(),
-		qualifiers: this.state.qualifiers,
 		editing: this.state.editing,
 		entityId: this.state.entityId,
 		propertyId: this.state.propertyId,

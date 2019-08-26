@@ -29,11 +29,6 @@
 			"description": "Map of { indicative name: property id }. E.g. { depicts: 'P1' }. The key doesn't really matter, except to construct a title (grep for wikibasemediainfo-statements-title-)",
 			"value": {}
 		},
-		"DepictsQualifierProperties": {
-			"description": "Map of all available properties for depicts qualifiers dropdown. Map of { (unused) indicative name: property id }. E.g. { color: 'P2', wears: 'P3' }",
-			"value": {},
-			"merge_strategy": "array_plus_2d"
-		},
 		"MediaInfoHelpUrls": {
 			"description": "Links to pages to learn more about wikibase properties. E.g. { P1: 'https://commons.wikimedia.org/wiki/Special:MyLanguage/Commons:Depicts' }",
 			"value":  {}
@@ -82,9 +77,6 @@
 		},
 		"MediaInfoExternalEntitySearchBaseUri": {
 			"value": ""
-		},
-		"MediaInfoEnableOtherStatements": {
-			"value": false
 		}
 	},
 	"ServiceWiringFiles": [
@@ -271,7 +263,6 @@
 			"packageFiles": [
 				"resources/statements/index.js",
 				"resources/statements/FormatValueElement.js",
-				"resources/statements/GetRepoElement.js",
 				"resources/statements/EntityLookupElement.js",
 				"resources/statements/EntityInputWidget.js",
 				"resources/statements/QualifierValueInputWidget.js",
@@ -280,7 +271,6 @@
 				"resources/statements/ItemWidget.js",
 				"resources/statements/QualifierWidget.js",
 				"resources/statements/QualifierAutocompleteWidget.js",
-				"resources/statements/NewQualifierWidget.js",
 				"resources/statements/AddPropertyWidget.js",
 				"resources/statements/LinkNoticeWidget.js"
 			],

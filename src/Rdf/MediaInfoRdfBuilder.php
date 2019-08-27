@@ -2,9 +2,12 @@
 
 namespace Wikibase\MediaInfo\Rdf;
 
+use File;
+use RepoGroup;
 use Wikibase\DataModel\Entity\EntityDocument;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\MediaInfo\DataModel\MediaInfoId;
+use Wikibase\MediaInfo\Services\FilePageLookup;
 use Wikibase\Rdf\EntityRdfBuilder;
 use Wikibase\Rdf\RdfVocabulary;
 use Wikimedia\Purtle\RdfWriter;
@@ -24,9 +27,26 @@ class MediaInfoRdfBuilder implements EntityRdfBuilder {
 	 */
 	private $writer;
 
-	public function __construct( RdfVocabulary $vocabulary, RdfWriter $writer ) {
+	/**
+	 * @var FilePageLookup
+	 */
+	private $filePageLookup;
+
+	/**
+	 * @var RepoGroup
+	 */
+	private $repoGroup;
+
+	public function __construct(
+		RdfVocabulary $vocabulary,
+		RdfWriter $writer,
+		FilePageLookup $filePageLookup,
+		RepoGroup $repoGroup
+	) {
 		$this->vocabulary = $vocabulary;
 		$this->writer = $writer;
+		$this->filePageLookup = $filePageLookup;
+		$this->repoGroup = $repoGroup;
 	}
 
 	/**
@@ -40,6 +60,21 @@ class MediaInfoRdfBuilder implements EntityRdfBuilder {
 		}
 
 		$this->addTypes( $entity->getId() );
+		$this->addFileMetadataFromEntityId( $entity->getId() );
+	}
+
+	/**
+	 * Start an "about" clause for the given ID in the RDF writer.
+	 *
+	 * @param MediaInfoId $id
+	 * @return RDFWriter for chaining
+	 */
+	private function aboutId( MediaInfoId $id ): RDFWriter {
+		$mediaLName = $this->vocabulary->getEntityLName( $id );
+
+		$mediaRepository = $this->vocabulary->getEntityRepositoryName( $id );
+
+		return $this->writer->about( $this->vocabulary->entityNamespaceNames[$mediaRepository], $mediaLName );
 	}
 
 	/**
@@ -47,12 +82,58 @@ class MediaInfoRdfBuilder implements EntityRdfBuilder {
 	 * @param MediaInfoId $id
 	 */
 	private function addTypes( MediaInfoId $id ) {
-		$mediaLName = $this->vocabulary->getEntityLName( $id );
-
-		$mediaRepository = $this->vocabulary->getEntityRepositoryName( $id );
-
-		$this->writer->about( $this->vocabulary->entityNamespaceNames[$mediaRepository], $mediaLName )
+		$this->aboutId( $id )
 			->a( RdfVocabulary::NS_SCHEMA_ORG, 'MediaObject' );
+	}
+
+	/**
+	 * Add file metadata to RDF representation
+	 *
+	 * @param MediaInfoId $id
+	 */
+	private function addFileMetadataFromEntityId( MediaInfoId $id ) {
+		$fileTitle = $this->filePageLookup->getFilePage( $id );
+		if ( $fileTitle === null ) {
+			return;
+		}
+		$file = $this->repoGroup->findFile( $fileTitle );
+		if ( $file === false ) {
+			return;
+		}
+		$this->addFileMetadataFromFile( $id, $file );
+	}
+
+	private function addFileMetadataFromFile( MediaInfoId $id, File $file ) {
+		$this->addFileSpecificType( $id, $file );
+		$this->addEncodingFormat( $id, $file );
+	}
+
+	private function addFileSpecificType( MediaInfoId $id, File $file ) {
+		$specificType = $this->getFileSpecificType( $file );
+		if ( $specificType !== null ) {
+			$this->aboutId( $id )
+				->a( RdfVocabulary::NS_SCHEMA_ORG, $specificType );
+		}
+	}
+
+	private function getFileSpecificType( File $file ) {
+		switch ( $file->getMediaType() ) {
+			case MEDIATYPE_BITMAP:
+			case MEDIATYPE_DRAWING:
+				return 'ImageObject';
+			case MEDIATYPE_AUDIO:
+				return 'AudioObject';
+			case MEDIATYPE_VIDEO:
+				return 'VideoObject';
+			default:
+				return null;
+		}
+	}
+
+	private function addEncodingFormat( MediaInfoId $id, File $file ) {
+		$this->aboutId( $id )
+			->say( RdfVocabulary::NS_SCHEMA_ORG, 'encodingFormat' )
+			->value( $file->getMimeType() );
 	}
 
 	/**

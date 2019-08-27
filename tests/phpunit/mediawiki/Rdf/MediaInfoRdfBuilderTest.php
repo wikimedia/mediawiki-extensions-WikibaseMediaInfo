@@ -2,10 +2,14 @@
 
 namespace Wikibase\MediaInfo\Tests\MediaWiki\Rdf;
 
+use File;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use PHPUnit4And6Compat;
+use RepoGroup;
 use Wikibase\Lib\Store\EntityTitleLookup;
+use Wikibase\MediaInfo\Rdf\MediaInfoRdfBuilder;
+use Wikibase\MediaInfo\Services\FilePageLookup;
 use Wikibase\Rdf\HashDedupeBag;
 use Wikibase\Rdf\RdfBuilder;
 use Wikibase\Rdf\RdfProducer;
@@ -57,6 +61,62 @@ class MediaInfoRdfBuilderTest extends TestCase {
 
 	/**
 	 * @param RdfWriter $writer
+	 * @param FilePageLookup $filePageLookup
+	 * @param RepoGroup $repoGroup
+	 * @return MediaInfoRdfBuilder
+	 */
+	private function newBuilderWithFile( RdfWriter $writer, FilePageLookup $filePageLookup, RepoGroup $repoGroup ) {
+		$vocabulary = $this->getTestData()->getVocabulary();
+		$builder = new MediaInfoRdfBuilder( $vocabulary, $writer, $filePageLookup, $repoGroup );
+		$writer->start();
+		return $builder;
+	}
+
+	public function provideMediaInfoPartialRDFWithFile() {
+		return [
+			[ 'M1', 'M1_base', null ],
+			[ 'M1', 'M1_jpg', new FileMock( 'Test.jpg', MEDIATYPE_BITMAP, 'image/jpeg' ) ],
+			[ 'M1', 'M1_svg', new FileMock( 'Test.svg', MEDIATYPE_DRAWING, 'image/svg+xml' ) ],
+			[ 'M1', 'M1_pdf', new FileMock( 'Test.pdf', MEDIATYPE_UNKNOWN, 'application/pdf' ) ],
+			[ 'M1', 'M1_ogg', new FileMock( 'Test.ogg', MEDIATYPE_AUDIO, 'audio/ogg' ) ],
+			[ 'M1', 'M1_webm', new FileMock( 'Test.webm', MEDIATYPE_VIDEO, 'video/webm' ) ],
+		];
+	}
+
+	/**
+	 * @dataProvider provideMediaInfoPartialRDFWithFile
+	 */
+	public function testMediaInfoPartialRDFWithFile( $entityName, $dataSetName, File $file = null ) {
+		$entity = $this->getTestData()->getEntity( $entityName );
+		$writer = $this->getTestData()->getNTriplesWriter( false );
+		$filePageLookup = $this->getMockBuilder( FilePageLookup::class )
+			->disableOriginalConstructor()
+			->getMock();
+		$filePageLookup->expects( $this->once() )
+			->method( 'getFilePage' )
+			->with( $entity->getId() )
+			->willReturn( ( $file === null ) ? null : $file->getTitle() );
+
+		$repoGroup = $this->getMockBuilder( RepoGroup::class )
+			->disableOriginalConstructor()
+			->getMock();
+		if ( $file === null ) {
+			$repoGroup->expects( $this->never() )
+				->method( 'findFile' );
+		} else {
+			$repoGroup->expects( $this->once() )
+				->method( 'findFile' )
+				->with( $file->getTitle() )
+				->willReturn( $file );
+		}
+
+		$builder = $this->newBuilderWithFile( $writer, $filePageLookup, $repoGroup );
+		$builder->addEntity( $entity );
+		$this->assertOrCreateNTriples( $dataSetName, $writer );
+	}
+
+	/**
+	 * @param RdfWriter $writer
 	 * @param int $produce One of the RdfProducer::PRODUCE_... constants.
 	 * @param EntityTitleLookup $entityTitleLookup
 	 *
@@ -81,16 +141,16 @@ class MediaInfoRdfBuilderTest extends TestCase {
 		return $builder;
 	}
 
-	public function provideMediaInfoRDF() {
+	public function provideMediaInfoFullRDF() {
 		return [
 			[ 'M1', 'M1_full' ],
 		];
 	}
 
 	/**
-	 * @dataProvider provideMediaInfoRDF
+	 * @dataProvider provideMediaInfoFullRDF
 	 */
-	public function testMediaInfoRDF( $entityName, $dataSetName ) {
+	public function testMediaInfoFullRDF( $entityName, $dataSetName ) {
 		$entity = $this->getTestData()->getEntity( $entityName );
 		$writer = $this->getTestData()->getNTriplesWriter( false );
 		$entityTitleLookup = $this->getMock( EntityTitleLookup::class );

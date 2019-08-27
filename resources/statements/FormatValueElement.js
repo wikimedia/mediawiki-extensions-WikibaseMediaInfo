@@ -80,6 +80,10 @@ FormatValueElement.prototype.formatValue = function ( dataValue, format, languag
 		FormatValueElement.cache[ key ] = promise.then( function ( response ) {
 			return response.result;
 		} ).promise( { abort: function () {
+			if ( !( key in FormatValueElement.cache ) ) {
+				// request already aborted/failed and cleaned out of cache
+				return;
+			}
 			// replace the cached promise with a non-abortable one, so we can't
 			// abort this once more (since there's only 1 underlying API request
 			// to cancel...)

@@ -4,6 +4,7 @@
  * @constructor
  * @param {Object} config Configuration options
  * @param {Object} config.qualifiers Qualifiers map: { propertyId: datatype, ...}
+ * @param {string} config.entityId Entity ID (e.g. M123)
  * @param {string} config.propertyId Property ID (e.g. P123 id of `depicts` property)
  * @param {string} [config.guid] GUID of existing statement, or null for new
  * @param {number} [config.rank] One of wikibase.datamodel.Statement.RANK.*
@@ -19,6 +20,8 @@ var FormatValueElement = require( './FormatValueElement.js' ),
 	ItemWidget = function MediaInfoStatementsItemWidget( config ) {
 		config = config || {};
 
+		this.guidGenerator = new wikibase.utilities.ClaimGuidGenerator( config.entityId );
+
 		// set these first - the parent constructor could call other methods
 		// (e.g. setDisabled) which may cause a re-render, and will need
 		// some of these...
@@ -26,7 +29,7 @@ var FormatValueElement = require( './FormatValueElement.js' ),
 			editing: !!config.editing,
 			qualifiers: config.qualifiers || {}, // @todo remove when wbmiEnableOtherStatements gets removed
 			propertyId: config.propertyId,
-			guid: config.guid || null,
+			guid: config.guid || this.guidGenerator.newGuid(),
 			rank: config.rank || wikibase.datamodel.Statement.RANK.NORMAL,
 			dataValue: config.dataValue || null
 		};
@@ -136,7 +139,7 @@ ItemWidget.prototype.toggleItemProminence = function ( e ) {
 };
 
 /**
- * @param {wikibase.datamodel.Snak|undefined} data
+ * @param {wikibase.datamodel.Snak|undefined} [data]
  * @return {QualifierWidget}
  */
 ItemWidget.prototype.createQualifier = function ( data ) {
@@ -174,21 +177,21 @@ ItemWidget.prototype.addQualifier = function ( data ) {
 
 /**
  * @param {boolean} editing
- * @return {jQuery.Deferred}
+ * @return {jQuery.Promise}
  */
 ItemWidget.prototype.setEditing = function ( editing ) {
+	var promises = [];
+
 	// TODO: remove conditional wrapper when OtherStatements is enabled;
 	// setEditing and templates are only implemented for the new version of
 	// the QualifierWidget
 	if ( mw.config.get( 'wbmiEnableOtherStatements', false ) ) {
-		this.getItems().forEach( function ( widget ) {
-			widget.setEditing( editing );
+		promises = this.getItems().map( function ( widget ) {
+			return widget.setEditing( editing );
 		} );
 	}
 
-	this.setState( { editing: editing } );
-
-	return this;
+	return $.when.apply( $, promises ).then( this.setState.bind( this, { editing: editing } ) );
 };
 
 /**
@@ -226,7 +229,9 @@ ItemWidget.prototype.getData = function () {
  * @return {jQuery.Deferred}
  */
 ItemWidget.prototype.setData = function ( data ) {
-	var self = this;
+	var self = this,
+		existing = {},
+		promises = [];
 
 	// Bail early and discard existing data if data argument is not a snak
 	if ( !( data instanceof wikibase.datamodel.Statement ) ) {
@@ -247,26 +252,34 @@ ItemWidget.prototype.setData = function ( data ) {
 		return !data.getClaim().getQualifiers().hasItem( qualifier );
 	} ) );
 
-	// add new qualifiers that don't already exist
+	// figure out which items have an existing widget already
+	// we're doing this outside of the creation below, because
+	// setData is async, and new objects may not immediately
+	// have their data set
 	data.getClaim().getQualifiers().each( function ( i, qualifier ) {
-		var widget = self.findItemFromData( qualifier );
-		if ( widget ) {
-			self.moveItem( widget, i );
-			widget.setData( qualifier );
-		} else {
-			widget = self.createQualifier( qualifier );
-			self.insertItem( widget, i );
-		}
+		existing[ i ] = self.findItemFromData( qualifier );
 	} );
 
-	return this.setState( {
+	// add new qualifiers that don't already exist
+	data.getClaim().getQualifiers().each( function ( i, qualifier ) {
+		var widget = existing[ i ];
+		if ( widget !== null ) {
+			self.moveItem( widget, i );
+		} else {
+			widget = self.createQualifier();
+			self.insertItem( widget, i );
+		}
+		promises.push( widget.setData( qualifier ) );
+	} );
+
+	return $.when.apply( $, promises ).then( this.setState.bind( this, {
 		propertyId: data.getClaim().getMainSnak().getPropertyId(),
-		guid: data.getClaim().getGuid(),
+		guid: data.getClaim().getGuid() || this.guidGenerator.newGuid(),
 		rank: data.getRank(),
 		dataValue: data.getClaim().getMainSnak().getType() === 'value' ?
 			data.getClaim().getMainSnak().getValue() :
 			null
-	} );
+	} ) );
 };
 
 module.exports = ItemWidget;

@@ -147,8 +147,8 @@ module.exports.createWikibaseEnv = function () {
 	global.wikibase = {
 		api: {
 			getLocationAgnosticMwApi: sinon.stub().returns( {
-				get: sinon.stub().returns( $.Deferred().promise() ),
-				post: sinon.stub().returns( $.Deferred().promise() )
+				get: sinon.stub().returns( $.Deferred().resolve( {} ).promise( { abort: function () {} } ) ),
+				post: sinon.stub().returns( $.Deferred().resolve( {} ).promise( { abort: function () {} } ) )
 			} )
 		},
 		datamodel: {},
@@ -161,6 +161,8 @@ module.exports.createWikibaseEnv = function () {
 	global.util = {};
 
 	requireAgain( 'wikibase-data-values/lib/util/util.inherit.js' );
+	requireAgain( 'wikibase-data-values/src/values/StringValue.js' );
+	requireAgain( 'wikibase-data-values/src/values/QuantityValue.js' );
 	requireAgain( 'wikibase-data-model/src/EntityId.js' );
 	requireAgain( 'wikibase-data-model/src/GroupableCollection.js' );
 	requireAgain( 'wikibase-data-model/src/List.js' );

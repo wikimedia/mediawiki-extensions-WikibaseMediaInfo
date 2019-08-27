@@ -106,6 +106,17 @@ class MediaInfoRdfBuilder implements EntityRdfBuilder {
 	private function addFileMetadataFromFile( MediaInfoId $id, File $file ) {
 		$this->addFileSpecificType( $id, $file );
 		$this->addEncodingFormat( $id, $file );
+		$this->addFileUrl( $id, $file );
+
+		$this->addPositiveIntegerValue( $id, 'contentSize', $file->getSize() );
+		if ( $file->isMultipage() ) {
+			$this->addPositiveIntegerValue( $id, 'numberOfPages', $file->pageCount() );
+			// Width and height of a file is not always the same for all pages of multi-pages files
+		} else {
+			$this->addPositiveIntegerValue( $id, 'height', $file->getHeight() );
+			$this->addPositiveIntegerValue( $id, 'width', $file->getWidth() );
+		}
+		$this->addDuration( $id, $file );
 	}
 
 	private function addFileSpecificType( MediaInfoId $id, File $file ) {
@@ -134,6 +145,29 @@ class MediaInfoRdfBuilder implements EntityRdfBuilder {
 		$this->aboutId( $id )
 			->say( RdfVocabulary::NS_SCHEMA_ORG, 'encodingFormat' )
 			->value( $file->getMimeType() );
+	}
+
+	private function addFileUrl( MediaInfoId $id, File $file ) {
+		$this->aboutId( $id )
+			->say( RdfVocabulary::NS_SCHEMA_ORG, 'contentUrl' )
+			->is( $file->getCanonicalUrl() );
+	}
+
+	private function addDuration( MediaInfoID $id, File $file ) {
+		$duration = $file->getLength();
+		if ( $duration > 0 ) {
+			$this->aboutId( $id )
+				->say( RdfVocabulary::NS_SCHEMA_ORG, 'duration' )
+				->value( 'PT' . $duration . 'S', 'xsd', 'duration' );
+		}
+	}
+
+	private function addPositiveIntegerValue( MediaInfoID $id, $schemaProperty, $value ) {
+		if ( is_int( $value ) && $value > 0 ) {
+			$this->aboutId( $id )
+				->say( RdfVocabulary::NS_SCHEMA_ORG, $schemaProperty )
+				->value( $value, 'xsd', 'integer' );
+		}
 	}
 
 	/**

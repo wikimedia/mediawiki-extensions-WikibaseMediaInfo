@@ -75,11 +75,36 @@ class MediaInfoRdfBuilderTest extends TestCase {
 	public function provideMediaInfoPartialRDFWithFile() {
 		return [
 			[ 'M1', 'M1_base', null ],
-			[ 'M1', 'M1_jpg', new FileMock( 'Test.jpg', MEDIATYPE_BITMAP, 'image/jpeg' ) ],
-			[ 'M1', 'M1_svg', new FileMock( 'Test.svg', MEDIATYPE_DRAWING, 'image/svg+xml' ) ],
-			[ 'M1', 'M1_pdf', new FileMock( 'Test.pdf', MEDIATYPE_UNKNOWN, 'application/pdf' ) ],
-			[ 'M1', 'M1_ogg', new FileMock( 'Test.ogg', MEDIATYPE_AUDIO, 'audio/ogg' ) ],
-			[ 'M1', 'M1_webm', new FileMock( 'Test.webm', MEDIATYPE_VIDEO, 'video/webm' ) ],
+			[ 'M1', 'M1_jpg', new FileMock( 'Test.jpg', [
+				'canonicalUrl' => 'http://example.com/Test.jpg',
+				'mediaType' => MEDIATYPE_BITMAP,
+				'mimeType' => 'image/jpeg',
+				'size' => 123445,
+				'height' => 1024,
+				'width' => 2048,
+			] ) ],
+			[ 'M1', 'M1_svg', new FileMock( 'Test.svg', [
+				'canonicalUrl' => 'http://example.com/Test.svg',
+				'mediaType' => MEDIATYPE_DRAWING,
+				'mimeType' => 'image/svg+xml',
+			] ) ],
+			[ 'M1', 'M1_pdf', new FileMock( 'Test.pdf', [
+				'canonicalUrl' => 'http://example.com/Test.pdf',
+				'mimeType' => 'application/pdf',
+				'pageCount' => 10,
+			] ) ],
+			[ 'M1', 'M1_ogg', new FileMock( 'Test.ogg', [
+				'canonicalUrl' => 'http://example.com/Test.ogg',
+				'mediaType' => MEDIATYPE_AUDIO,
+				'mimeType' => 'audio/ogg',
+				'length' => 60.3,
+			] ) ],
+			[ 'M1', 'M1_webm', new FileMock( 'Test.webm', [
+				'canonicalUrl' => 'http://example.com/Test.webm',
+				'mediaType' => MEDIATYPE_VIDEO,
+				'mimeType' => 'video/webm',
+				'length' => 60.30,
+			] ) ],
 		];
 	}
 

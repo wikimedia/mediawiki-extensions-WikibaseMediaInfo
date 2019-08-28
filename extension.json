@@ -282,7 +282,8 @@
 				"resources/statements/QualifierAutocompleteWidget.js",
 				"resources/statements/NewQualifierWidget.js",
 				"resources/statements/AddPropertyWidget.js",
-				"resources/statements/LinkNoticeWidget.js"
+				"resources/statements/LinkNoticeWidget.js",
+				"resources/statements/GlobeCoordinateInputWidget.js"
 			],
 			"dependencies": [
 				"wikibase.mediainfo.base",
@@ -331,6 +332,16 @@
 				"wikibasemediainfo-statements-remove",
 				"wikibasemediainfo-statements-learn-more",
 				"wikibasemediainfo-unsupported-datatype-text",
+				"wikibasemediainfo-latitude-input-label",
+				"wikibasemediainfo-latitude-input-placeholder",
+				"wikibasemediainfo-longitude-input-label",
+				"wikibasemediainfo-longitude-input-placeholder",
+				"wikibasemediainfo-precision-input-label",
+				"wikibasemediainfo-arcminute-label",
+				"wikibasemediainfo-arcsecond-label",
+				"wikibasemediainfo-tenth-of-arcsecond-label",
+				"wikibasemediainfo-hundreth-of-arcsecond-label",
+				"wikibasemediainfo-thousanth-of-arcsecond-label",
 				"colon-separator",
 				"word-separator",
 				"parentheses"
@@ -338,6 +349,7 @@
 			"templates": [
 				"templates/statements/AddPropertyWidget.mustache+dom",
 				"templates/statements/EntityLabel.mustache+dom",
+				"templates/statements/GlobeCoordinateInputWidget.mustache+dom",
 				"templates/statements/ItemWidget.mustache+dom",
 				"templates/statements/LinkNoticeWidget.mustache+dom",
 				"templates/statements/QualifierValueInputWidget.mustache+dom",
@@ -359,7 +371,8 @@
 				"resources/statements/ItemInputWidget.less",
 				"resources/statements/ItemWidget.less",
 				"resources/statements/QualifierWidget.less",
-				"resources/statements/LinkNoticeWidget.less"
+				"resources/statements/LinkNoticeWidget.less",
+				"resources/statements/GlobeCoordinateInputWidget.less"
 			],
 			"targets": [
 				"desktop",

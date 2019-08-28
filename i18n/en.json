@@ -91,5 +91,15 @@
 	"wikibasemediainfo-search-toggle-keywords": "Keyword",
 	"wikibasemediainfo-search-toggle-depicts": "Tags",
 	"wikibasemediainfo-search-toggle-statements": "Other statements",
-	"wikibasemediainfo-unsupported-datatype-text": "Unsupported data type"
+	"wikibasemediainfo-unsupported-datatype-text": "Unsupported data type",
+	"wikibasemediainfo-latitude-input-label": "Latitude",
+	"wikibasemediainfo-latitude-input-placeholder": "Decimal degree between -90 and 90",
+	"wikibasemediainfo-longitude-input-label": "Longitude",
+	"wikibasemediainfo-longitude-input-placeholder": "Decimal degree between -180 and 180",
+	"wikibasemediainfo-precision-input-label": "Precision",
+	"wikibasemediainfo-arcminute-label": "to an arcminute",
+	"wikibasemediainfo-arcsecond-label": "to an arcsecond",
+	"wikibasemediainfo-tenth-of-arcsecond-label": "to 1/10 of an arcsecond",
+	"wikibasemediainfo-hundreth-of-arcsecond-label": "to 1/100 of an arcsecond",
+	"wikibasemediainfo-thousanth-of-arcsecond-label": "to 1/1000 of an arcsecond"
 }

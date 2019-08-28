@@ -96,5 +96,15 @@
 	"wikibasemediainfo-search-toggle-keywords": "Text for button to toggle to 'keyword' search mode",
 	"wikibasemediainfo-search-toggle-depicts": "Text for button to toggle to 'depicts' search mode",
 	"wikibasemediainfo-search-toggle-statements": "Text for button to toggle to 'other statements' search mode",
-	"wikibasemediainfo-unsupported-datatype-text": "Message to display for unsupported data types."
+	"wikibasemediainfo-unsupported-datatype-text": "Message to display for unsupported data types.",
+	"wikibasemediainfo-latitude-input-label": "Label for globe coordinate latitude input.",
+	"wikibasemediainfo-latitude-input-placeholder": "Placeholder for latitude input informing users of data format",
+	"wikibasemediainfo-longitude-input-label": "Label for globe coordinate longitude input.",
+	"wikibasemediainfo-longitude-input-placeholder": "Placeholder for longitude input informing users of data format",
+	"wikibasemediainfo-precision-input-label": "Label for globe coordinate precision input.",
+	"wikibasemediainfo-arcminute-label": "Label for globe coordinate precision option to an arcminute",
+	"wikibasemediainfo-arcsecond-label": "Label for globe coordinate precision option to an arcsecond",
+	"wikibasemediainfo-tenth-of-arcsecond-label": "Label for globe coordinate precision option to 1/10 of an arcsecond",
+	"wikibasemediainfo-hundreth-of-arcsecond-label": "Label for globe coordinate precision option to 1/100 of an arcsecond",
+	"wikibasemediainfo-thousanth-of-arcsecond-label": "Label for globe coordinate precision option to 1/1000 of an arcsecond"
 }

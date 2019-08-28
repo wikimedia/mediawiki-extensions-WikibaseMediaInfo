@@ -3,6 +3,7 @@
 var ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
 	FormatValueElement = require( './FormatValueElement.js' ),
 	EntityInputWidget = require( './EntityInputWidget.js' ),
+	GlobeCoordinateInputWidget = require( './GlobeCoordinateInputWidget.js' ),
 	QualifierValueInputWidget;
 
 QualifierValueInputWidget = function ( config ) {
@@ -11,6 +12,7 @@ QualifierValueInputWidget = function ( config ) {
 		'wikibase-entityid': this.createEntityInput.bind( this ),
 		quantity: this.createQuantityInput.bind( this ),
 		string: this.createTextInput.bind( this ),
+		globecoordinate: this.createGlobeCoordinateInput.bind( this ),
 		unsupported: this.createDisabledInput.bind( this )
 	};
 	this.allowEmitChange = true;
@@ -56,7 +58,8 @@ QualifierValueInputWidget.prototype.getTemplateData = function () {
  * QualifierValueInputWidget is basically a wrapper for multiple different
  * input types - this'll let you change the input type.
  *
- * @param {string} type One of 'wikibase-entityid', 'quantity' or 'string'
+ * @param {string} type One of 'wikibase-entityid', 'quantity', 'string' or
+ *  'globecoordinate'
  * @return {jQuery.Promise}
  */
 QualifierValueInputWidget.prototype.setInputType = function ( type ) {
@@ -109,6 +112,18 @@ QualifierValueInputWidget.prototype.createTextInput = function () {
 };
 
 /**
+ * Prepare a globe coordinate input widget
+ * @return {GlobeCoordinateInputWidget} Globe coordinate input
+ */
+QualifierValueInputWidget.prototype.createGlobeCoordinateInput = function () {
+	var input = new GlobeCoordinateInputWidget( $.extend( {}, this.config, { classes: [] } ) );
+	input.setDisabled( this.disabled );
+	input.connect( this, { change: 'onChange' } );
+	input.connect( this, { enter: [ 'emit', 'enter' ] } );
+	return input;
+};
+
+/**
  * Prepare a disabled text input widget w/appropriate message
  * @return {OO.ui.TextInputWidget} Disabled text input
  */
@@ -135,6 +150,8 @@ QualifierValueInputWidget.prototype.getInputValue = function () {
 			};
 		case 'string':
 			return this.state.input.getValue();
+		case 'globecoordinate':
+			return this.state.input.getData();
 		default:
 			return null;
 	}
@@ -194,6 +211,9 @@ QualifierValueInputWidget.prototype.setData = function ( data ) {
 				break;
 			case 'string':
 				input.setValue( plain );
+				break;
+			case 'globecoordinate':
+				input.setData( data );
 				break;
 		}
 		self.allowEmitChange = true;

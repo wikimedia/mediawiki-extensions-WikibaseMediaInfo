@@ -20,7 +20,7 @@ GetRepoElement.prototype.getRepoFromUrl = function ( url ) {
 			sifilteriw: 'local'
 		} ).then(
 			function ( result ) {
-				return result.query.interwikimap;
+				return result.query && result.query.interwikimap ? result.query.interwikimap : [];
 			},
 			function () {
 				// error = delete promise, allowing API call to be executed again next time

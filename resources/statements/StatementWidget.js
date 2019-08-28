@@ -40,7 +40,7 @@ StatementWidget = function ( config ) {
 		entityId: config.entityId,
 		propertyId: config.propertyId,
 		qualifiers: config.qualifiers,
-		data: config.data || new wikibase.datamodel.StatementList(),
+		initialData: new wikibase.datamodel.StatementList(),
 		title: config.title || ( mw.config.get( 'wbmiPropertyTitles' ) || {} )[ config.propertyId ] || '',
 		editing: config.editing || false
 	};
@@ -69,6 +69,10 @@ StatementWidget = function ( config ) {
 	this.input.connect( this, { choose: 'addItemFromInput' } );
 	this.publishButton.connect( this, { click: [ 'emit', 'publish' ] } );
 	this.connect( this, { change: 'updatePublishButtonState' } );
+
+	if ( config.data ) {
+		this.resetData( config.data );
+	}
 };
 
 OO.inheritClass( StatementWidget, OO.ui.Widget );
@@ -197,16 +201,15 @@ StatementWidget.prototype.addItemFromInput = function ( item ) {
  * @return {ItemWidget}
  */
 StatementWidget.prototype.createItem = function ( dataValue ) {
-	var guidGenerator = new wikibase.utilities.ClaimGuidGenerator( this.state.entityId ),
-		widget = new ItemWidget( {
-			disabled: this.isDisabled(),
-			qualifiers: this.state.qualifiers,
-			editing: this.state.editing,
-			propertyId: this.state.propertyId,
-			guid: guidGenerator.newGuid(),
-			rank: wikibase.datamodel.Statement.RANK.NORMAL,
-			dataValue: dataValue
-		} );
+	var widget = new ItemWidget( {
+		disabled: this.isDisabled(),
+		qualifiers: this.state.qualifiers,
+		editing: this.state.editing,
+		entityId: this.state.entityId,
+		propertyId: this.state.propertyId,
+		rank: wikibase.datamodel.Statement.RANK.NORMAL,
+		dataValue: dataValue
+	} );
 
 	widget.connect( this, { delete: [ 'removeItems', [ widget ] ] } );
 	widget.connect( this, { delete: [ 'emit', 'change' ] } );
@@ -228,11 +231,12 @@ StatementWidget.prototype.getData = function () {
 /**
  * Update DOM with latest data, sorted by prominence
  * @param {wikibase.datamodel.StatementList} data
- * @return {jQuery.Deferred}
+ * @return {jQuery.Promise}
  */
 StatementWidget.prototype.setData = function ( data ) {
 	var self = this,
-		existingItems = this.getItems(),
+		existing = [],
+		promises = [],
 		sortedData;
 
 	// Bail early and discard existing data if data argument is not a statement list
@@ -249,13 +253,21 @@ StatementWidget.prototype.setData = function ( data ) {
 
 	// get rid of existing widgets that are no longer present in the
 	// new set of data we've been fed
-	this.removeItems( existingItems.filter( function ( item ) {
+	this.removeItems( this.getItems().filter( function ( item ) {
 		return !data.hasItem( item.getData() );
 	} ) );
 
+	// figure out which items have an existing widget already
+	// we're doing this outside of the creation below, because
+	// setData is async, and new objects may not immediately
+	// have their data set
+	sortedData.forEach( function ( statement, i ) {
+		existing[ i ] = self.findItemFromData( statement );
+	} );
+
 	sortedData.forEach( function ( statement, i ) {
 		var mainSnak = statement.getClaim().getMainSnak(),
-			widget = self.findItemFromData( statement );
+			widget = existing[ i ];
 
 		if ( statement.getClaim().getMainSnak().getPropertyId() !== self.state.propertyId ) {
 			throw new Error( 'Invalid statement' );
@@ -270,23 +282,27 @@ StatementWidget.prototype.setData = function ( data ) {
 		// adjust the input type, if needed
 		self.input.setInputType( mainSnak.getValue().getType() );
 
-		if ( widget ) {
+		if ( widget !== null ) {
 			self.moveItem( widget, i );
 		} else {
 			widget = self.createItem( mainSnak.getValue() );
 			self.insertItem( widget, i );
 		}
 
-		widget.setData( statement );
+		promises.push( widget.setData( statement ) );
 	} );
 
-	return this.setState( { data: this.cloneData( data ) } );
+	return $.when.apply( $, promises ).then( function () {
+		return self.$element;
+	} );
 };
 
 StatementWidget.prototype.updatePublishButtonState = function () {
 	if ( this.publishButton && this.items ) {
 		this.publishButton.setDisabled( this.isDisabled() || !this.hasChanges() );
 	}
+
+	return $.Deferred().resolve( this.$element ).promise();
 };
 
 /**
@@ -294,19 +310,21 @@ StatementWidget.prototype.updatePublishButtonState = function () {
  * @return {jQuery.Deferred}
  */
 StatementWidget.prototype.setEditing = function ( editing ) {
-	var self = this;
+	var self = this,
+		promises = [];
 
 	this.getItems().forEach( function ( item ) {
 		try {
-			item.setEditing( editing );
+			promises.push( item.setEditing( editing ) );
 		} catch ( e ) {
 			// when switching modes, make sure to remove invalid (incomplete) items
 			self.removeItems( [ item ] );
 		}
 	} );
 
-	this.updatePublishButtonState();
-	return this.setState( { editing: editing } );
+	return $.when( promises )
+		.then( this.setState.bind( this, { editing: editing } ) )
+		.then( this.updatePublishButtonState.bind( this ) );
 };
 
 /**
@@ -338,7 +356,7 @@ StatementWidget.prototype.setDisabled = function ( disabled ) {
  */
 StatementWidget.prototype.getChanges = function () {
 	var currentStatements = this.getData().toArray(),
-		previousStatements = this.state.data.toArray().reduce( function ( result, statement ) {
+		previousStatements = this.state.initialData.toArray().reduce( function ( result, statement ) {
 			result[ statement.getClaim().getGuid() ] = statement;
 			return result;
 		}, {} );
@@ -359,22 +377,32 @@ StatementWidget.prototype.getRemovals = function () {
 			return result;
 		}, {} );
 
-	return this.state.data.toArray().filter( function ( statement ) {
+	return this.state.initialData.toArray().filter( function ( statement ) {
 		return !( statement.getClaim().getGuid() in currentStatements );
 	} );
 };
 
 /**
- * Undo any changes that have been made in any of the items.
+ * Set data to a specific state (or reset it to last state, if data argument
+ * is not provided)
  *
+ * This is different from `setData` in that this one will also modify the
+ * known state, which is then used to compare for changes.
+ * The data that is set via `resetData` is the default state; data set via
+ * `setData` is working state, and any changes between that state and the
+ * default state, can then be submitted via `submit`.
+ *
+ * @param {wikibase.datamodel.StatementList} [data]
  * @return {jQuery.Promise}
  */
-StatementWidget.prototype.reset = function () {
-	this.setData( this.state.data );
-	this.setEditing( false );
+StatementWidget.prototype.resetData = function ( data ) {
+	data = this.cloneData( data === undefined ? this.state.initialData : data );
+
 	this.$element.find( '.wbmi-statement-publish-error-msg' ).remove();
 
-	return $.Deferred().resolve().promise();
+	return this.setState( { initialData: data } )
+		.then( this.setData.bind( this, data ) )
+		.then( this.setEditing.bind( this, false ) );
 };
 
 /**
@@ -425,7 +453,7 @@ StatementWidget.prototype.submit = function ( baseRevId ) {
 					// replace statement with what we previously had, since we failed
 					// to submit the changes...
 					data.removeItem( statement );
-					data.addItem( self.state.data.toArray().filter( function ( statement ) {
+					data.addItem( self.state.initialData.toArray().filter( function ( statement ) {
 						return statement.getClaim().getGuid() === guid;
 					} )[ 0 ] );
 
@@ -484,13 +512,13 @@ StatementWidget.prototype.submit = function ( baseRevId ) {
 			// if we've had failures, put the widget back in edit mode, and reject
 			// this promise, so callers will know something went wrong
 			$.when(
-				self.setData( data ),
+				self.resetData( data ),
 				self.setEditing( true )
 			).then( deferred.reject );
 		} else {
 			// reset data to what we've just submitted to the API (items that failed
 			// to submit have been reset to their previous state in `data`)
-			self.setData( data ).then( deferred.resolve.bind( deferred, response ) );
+			self.resetData( data ).then( deferred.resolve.bind( deferred, response ) );
 		}
 
 		return deferred.promise();

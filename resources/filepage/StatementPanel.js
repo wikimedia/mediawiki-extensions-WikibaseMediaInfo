@@ -24,7 +24,8 @@ var AnonWarning = require( './AnonWarning.js' ),
  *  as values e.g. { P1: "https://commons.wikimedia.org/wiki/Special:MyLanguage/Commons:Depicts" }
  */
 StatementPanel = function StatementPanel( config ) {
-	var deserializer = new wikibase.serialization.StatementListDeserializer(),
+	var self = this,
+		deserializer = new wikibase.serialization.StatementListDeserializer(),
 		statementsJson;
 
 	// Parent constructor
@@ -43,15 +44,17 @@ StatementPanel = function StatementPanel( config ) {
 
 	statementsJson = JSON.parse( this.$element.attr( 'data-statements' ) || '[]' );
 	this.statementWidget = new StatementWidget( $.extend( { showControls: true }, this.config ) );
-	this.statementWidget.setData( deserializer.deserialize( statementsJson ) );
-	this.statementWidget.connect( this, { cancel: [ 'makeReadOnly' ] } );
-	this.statementWidget.connect( this, { publish: [ 'sendData' ] } );
+	// don't start subscribing to events until statementwidget has been
+	// pre-populated with storage data
+	this.statementWidget.resetData( deserializer.deserialize( statementsJson ) ).then( function () {
+		self.statementWidget.connect( self, { cancel: [ 'makeReadOnly' ] } );
+		self.statementWidget.connect( self, { publish: [ 'sendData' ] } );
+		self.statementWidget.connect( self, { edit: 'makeEditable' } ); // clicked 'edit'
+		self.statementWidget.connect( self, { change: 'makeEditable' } ); // changed otherwise (e.g. 'make prominent')
+		self.statementWidget.connect( self, { widgetRemoved: 'remove' } );
+	} );
 
 	this.panelRemovalListener = config.panelRemovalListener || undefined;
-
-	this.statementWidget.connect( this, { edit: 'makeEditable' } ); // clicked 'edit'
-	this.statementWidget.connect( this, { change: 'makeEditable' } ); // changed otherwise (e.g. 'make prominent')
-	this.statementWidget.connect( this, { widgetRemoved: 'remove' } );
 
 	// attach the widget to DOM, replacing the server-side rendered equivalent
 	this.$element.empty().append( this.statementWidget.$element );
@@ -133,7 +136,7 @@ StatementPanel.prototype.makeEditable = function () {
 StatementPanel.prototype.makeReadOnly = function () {
 	var self = this;
 	this.statementWidget.disconnect( this, { change: 'makeEditable' } );
-	this.statementWidget.reset().then( function () {
+	this.statementWidget.resetData().then( function () {
 		self.statementWidget.connect( self, { change: 'makeEditable' } );
 	} );
 };

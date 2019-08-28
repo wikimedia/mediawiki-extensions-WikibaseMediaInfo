@@ -78,7 +78,7 @@ FormatValueElement.prototype.formatValue = function ( dataValue, format, languag
 		} );
 
 		FormatValueElement.cache[ key ] = promise.then( function ( response ) {
-			return response.result;
+			return response.result || '';
 		} ).promise( { abort: function () {
 			if ( !( key in FormatValueElement.cache ) ) {
 				// request already aborted/failed and cleaned out of cache

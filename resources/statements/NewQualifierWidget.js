@@ -116,9 +116,11 @@ QualifierWidget.prototype.setEditing = function ( editing ) {
 /**
  * Sets the child widgets' data and updates label elements asynchronously.
  * @param {wikibase.datamodel.Snak} data
+ * @return {jQuery.Promise}
  */
 QualifierWidget.prototype.setData = function ( data ) {
-	var propId,
+	var self = this,
+		propId,
 		dataValue,
 		dataValueType;
 
@@ -131,12 +133,13 @@ QualifierWidget.prototype.setData = function ( data ) {
 	dataValue = data.getValue();
 	dataValueType = dataValue.getType();
 
-	this.updatePropertyInput( { id: propId, dataValueType: dataValueType } );
-	this.updateValueInput( dataValue.getType(), dataValue );
-
-	if ( !this.state.data || this.state.data.equals( data ) ) {
-		this.setState( { data: this.cloneData( data ) } );
-	}
+	return $.when(
+		this.updatePropertyInput( { id: propId, dataValueType: dataValueType } ),
+		this.updateValueInput( dataValue.getType(), dataValue ),
+		this.setState( { data: this.cloneData( data ) } )
+	).then( function () {
+		return self.$element;
+	} );
 };
 
 /**
@@ -201,40 +204,52 @@ QualifierWidget.prototype.formatProperty = function ( propId, format, language )
  * @param {string} property.id property ID
  * @param {string} property.dataValueType datavalue type
  * @param {string} [property.label] human-readable property label
+ * @return {jQuery.Promise}
+ * @internal
  */
 QualifierWidget.prototype.updatePropertyInput = function ( property ) {
 	var self = this;
-
-	this.propertyInput.setData( property );
-	this.updateValueInput( property.dataValueType );
 
 	if ( this.formatPropertyPromise ) {
 		this.formatPropertyPromise.abort();
 	}
 
-	// if the label is not yet known, format it to feed to the input field
-	if ( !( 'label' in property ) ) {
+	if ( 'label' in property ) {
+		this.propertyInput.setData( property );
+	} else {
+		// if the label is not yet known, format it to feed to the input field
 		this.formatPropertyPromise = this.formatProperty( property.id );
-		this.formatPropertyPromise.then( function ( formatted ) {
-			self.updatePropertyInput( $.extend( {}, property, {
+		return this.formatPropertyPromise.then( function ( formatted ) {
+			return self.updatePropertyInput( $.extend( {}, property, {
 				label: formatted
 			} ) );
 		} );
 	}
+
+	return $.Deferred().resolve( this.$element ).promise();
 };
 
 /**
  * @param {string} datatype datavalue type
  * @param {dataValues.DataValue} [value]
+ * @return {jQuery.Promise}
+ * @internal
  */
 QualifierWidget.prototype.updateValueInput = function ( datatype, value ) {
-	this.valueInput.setInputType( datatype );
-
-	if ( value !== undefined ) {
-		this.valueInput.setData( value );
-	}
+	var self = this,
+		promise;
 
 	this.valueInput.setDisabled( false );
+
+	if ( value !== undefined ) {
+		promise = this.valueInput.setData( value );
+	} else {
+		promise = this.valueInput.setInputType( datatype );
+	}
+
+	return promise.then( function () {
+		return self.$element;
+	} );
 };
 
 /**

@@ -297,6 +297,9 @@ StatementWidget.prototype.setData = function ( data ) {
 	} );
 };
 
+/**
+ * @return {jQuery.Deferred}
+ */
 StatementWidget.prototype.updatePublishButtonState = function () {
 	if ( this.publishButton && this.items ) {
 		this.publishButton.setDisabled( this.isDisabled() || !this.hasChanges() );

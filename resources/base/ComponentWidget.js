@@ -203,9 +203,9 @@ ComponentWidget.prototype.rebuildDOM = function ( $old, $new, preserve ) {
 		newNode = $newNode.get( 0 );
 		newIndex = $new.contents().index( $newNode );
 
-		if ( $newNode.length > 0 && !oldNode.isEqualNode( newNode ) ) {
+		if ( $newNode.length > 0 ) {
 			if ( preserve.indexOf( newNode ) >= 0 ) {
-				// if we've indicated that we want to preserve the node as-is,
+				// if we've indicated we want to preserve the new node as-is,
 				// (e.g. because an exact node was passed in, which could have
 				// event handlers bound etc), just swap them around instead
 				// of trying to merge them
@@ -216,7 +216,7 @@ ComponentWidget.prototype.rebuildDOM = function ( $old, $new, preserve ) {
 				oldNode = $oldNode.get( 0 );
 				$newNode = $new.contents().eq( newIndex );
 				newNode = $newNode.get( 0 );
-			} else {
+			} else if ( !this.isEqualNodeAndProps( oldNode, newNode ) ) {
 				// node is not an exact match - some of its characteristics
 				// (attributes, children, ...) don't match - let's fix those!
 				// remove existing attributes & copy attributes from new node
@@ -258,7 +258,7 @@ ComponentWidget.prototype.rebuildDOM = function ( $old, $new, preserve ) {
 			$nodes = $new.contents().slice( oldIndex, newIndex );
 			$oldNode.before( $nodes );
 			$newNode.before( $nodes.clone() );
-			// we just changes both new & old structured - update the iterating indexes
+			// we just changed both new & old structure - update the iterating indexes
 			oldIndex = $old.contents().index( $oldNode );
 		}
 
@@ -281,7 +281,7 @@ ComponentWidget.prototype.rebuildDOM = function ( $old, $new, preserve ) {
  */
 ComponentWidget.prototype.extractDOMNodes = function ( data ) {
 	var self = this,
-		originals = [],
+		transformed,
 		getNode,
 		transformNodes;
 
@@ -292,7 +292,7 @@ ComponentWidget.prototype.extractDOMNodes = function ( data ) {
 			return [ variable ];
 		} else if ( variable instanceof $ ) {
 			return variable.toArray();
-		} else if ( variable instanceof OO.ui.Element ) {
+		} else if ( variable.$element !== undefined ) {
 			return variable.$element.toArray();
 		}
 		throw new Error( 'Not a node-like variable' );
@@ -301,18 +301,21 @@ ComponentWidget.prototype.extractDOMNodes = function ( data ) {
 	transformNodes = function ( d ) {
 		var keys = Object.keys( d ),
 			result = new d.constructor(),
-			key, i, nodes;
+			originals = [],
+			key, i, recursive, nodes;
 
 		for ( i = 0; i < keys.length; i++ ) {
 			key = keys[ i ];
 
 			if (
 				// check if array or string literal, in which case
-			// we'll want to go recursive
+				// we'll want to go recursive
 				d[ key ] instanceof Array ||
 				Object.getPrototypeOf( d[ key ] || '' ) === Object.prototype
 			) {
-				result[ key ] = transformNodes( d[ key ] );
+				recursive = transformNodes( d[ key ] );
+				result[ key ] = recursive.data;
+				originals.concat( recursive.nodes );
 			} else {
 				try {
 					// clone the node we might want to parse into the template;
@@ -339,10 +342,11 @@ ComponentWidget.prototype.extractDOMNodes = function ( data ) {
 			}
 		}
 
-		return result;
+		return { data: result, nodes: originals };
 	};
 
-	return $.Deferred().resolve( transformNodes( data ), originals ).promise();
+	transformed = transformNodes( data );
+	return $.Deferred().resolve( transformed.data, transformed.nodes ).promise();
 };
 
 /**
@@ -389,6 +393,46 @@ ComponentWidget.prototype.findMatchingNode = function ( $needle, $haystack ) {
 	}
 
 	return $();
+};
+
+/**
+ * Similar to Node.isEqualNode, except that it will also compare live properties.
+ *
+ * @private
+ * @param {Node} one
+ * @param {Node} two
+ * @return {boolean}
+ */
+ComponentWidget.prototype.isEqualNodeAndProps = function ( one, two ) {
+	var self = this,
+		property, descriptor;
+
+	if ( !one.isEqualNode( two ) ) {
+		return false;
+	}
+
+	// isEqualNode doesn't compare props, so an input field with some manual
+	// text input (where `value` prop is different from the `value` attribute,
+	// because the one doesn't sync back when it changes) could be considered
+	// equal even if they have different values - hence the added value compare
+	for ( property in one.constructor.prototype ) {
+		// some properties or getters are auto computed and can't be set
+		// comparing these (e.g. `webkitEntries`) makes no sense
+		descriptor = Object.getOwnPropertyDescriptor( one.constructor.prototype, property );
+		if ( descriptor === undefined || !descriptor.writable || descriptor.set === undefined ) {
+			continue;
+		}
+
+		// if properties don't match, these nodes are not equal...
+		if ( one[ property ] !== two[ property ] ) {
+			return false;
+		}
+	}
+
+	// nodes are the same, but there may be similar prop differences in children...
+	return !one.children || ![].slice.call( one.children ).some( function ( child, i ) {
+		return !self.isEqualNodeAndProps( child, two.children[ i ] );
+	} );
 };
 
 /**

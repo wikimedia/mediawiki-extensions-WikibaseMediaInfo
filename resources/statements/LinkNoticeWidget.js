@@ -1,23 +1,45 @@
 'use strict';
 
+var ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
+	LinkNoticeWidget;
+
 /**
  * Dismissable message box which appears above statements UI in both Filepage
  * and UploadWizard.
  * @param {Object} config
  */
-var LinkNoticeWidget = function ( config ) {
+LinkNoticeWidget = function ( config ) {
 	this.prefKey = 'wbmi-wikidata-link-notice-dismissed';
 
-	LinkNoticeWidget.parent.call( this, this.config );
+	this.state = {
+		isDismissed: this.isDismissed(),
+		canDisplay: this.canDisplay()
+	};
 
-	this.noticeWidget = new OO.ui.MessageWidget( $.extend( {
+	LinkNoticeWidget.parent.call( this, config );
+	ComponentWidget.call(
+		this,
+		'wikibase.mediainfo.statements',
+		'templates/statements/LinkNoticeWidget.mustache+dom'
+	);
+};
+OO.inheritClass( LinkNoticeWidget, OO.ui.Widget );
+OO.mixinClass( LinkNoticeWidget, ComponentWidget );
+
+/**
+ * @inheritDoc
+ */
+LinkNoticeWidget.prototype.getTemplateData = function () {
+	var noticeWidget, dismissControl;
+
+	noticeWidget = new OO.ui.MessageWidget( {
 		type: 'warning',
 		label: mw.message( 'wikibasemediainfo-statements-link-notice-text' ).text(),
 		classes: [ 'wbmi-link-notice' ]
-	}, config ) );
-	this.noticeWidget.setIcon( 'info' );
+	} );
+	noticeWidget.setIcon( 'info' );
 
-	this.dismissControl = new OO.ui.ButtonWidget( {
+	dismissControl = new OO.ui.ButtonWidget( {
 		framed: false,
 		icon: 'close',
 		label: mw.message( 'wikibasemediainfo-statements-link-notice-dismiss' ).text(),
@@ -26,49 +48,29 @@ var LinkNoticeWidget = function ( config ) {
 		classes: [ 'wbmi-link-notice__dismiss-icon' ]
 	} );
 
-	this.dismissControl.connect( this, { click: 'dismiss' } );
+	noticeWidget.$element.append( dismissControl.$element );
+	dismissControl.connect( this, { click: 'dismiss' } );
 
-	this.render();
-};
-OO.inheritClass( LinkNoticeWidget, OO.ui.Widget );
-
-LinkNoticeWidget.prototype.render = function () {
-	var $container,
-		data,
-		template;
-
-	this.noticeWidget.$element.append( this.dismissControl.$element );
-
-	data = {
-		canDisplay: this.canDisplay(),
-		isDismissed: this.isDismissed(),
-		noticeWidget: this.noticeWidget
+	return {
+		canDisplay: this.state.canDisplay,
+		isDismissed: this.state.isDismissed,
+		noticeWidget: noticeWidget
 	};
-
-	template = mw.template.get(
-		'wikibase.mediainfo.statements',
-		'templates/statements/LinkNoticeWidget.mustache+dom'
-	);
-
-	$container = template.render( data );
-	this.$element.empty().append( $container );
 };
 
 /**
  * Store the user's decision and rerender.
+ * @return {jQuery.Promise}
  */
 LinkNoticeWidget.prototype.dismiss = function () {
-	var storage = mw.storage,
-		user = mw.user;
-
-	if ( user.isAnon() ) {
-		storage.set( this.prefKey, 1 );
+	if ( mw.user.isAnon() ) {
+		mw.storage.set( this.prefKey, 1 );
 	} else {
 		new mw.Api().saveOption( this.prefKey, 1 );
-		user.options.set( this.prefKey, 1 );
+		mw.user.options.set( this.prefKey, 1 );
 	}
 
-	this.render();
+	return this.setState( { isDismissed: true } );
 };
 
 /**
@@ -78,14 +80,12 @@ LinkNoticeWidget.prototype.dismiss = function () {
  * @return {boolean}
  */
 LinkNoticeWidget.prototype.isDismissed = function () {
-	var storage = mw.storage,
-		user = mw.user,
-		numVal;
+	var numVal;
 
-	if ( user.isAnon() ) {
-		numVal = Number( storage.get( this.prefKey ) ) || 0;
+	if ( mw.user.isAnon() ) {
+		numVal = Number( mw.storage.get( this.prefKey ) ) || 0;
 	} else {
-		numVal = Number( user.options.get( this.prefKey ) );
+		numVal = Number( mw.user.options.get( this.prefKey ) );
 	}
 
 	return Boolean( numVal );

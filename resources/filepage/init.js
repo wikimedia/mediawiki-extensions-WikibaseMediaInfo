@@ -9,10 +9,12 @@
 		statementPanel,
 		StatementPanel,
 		$tabs,
+		ProtectionMsgWidget,
 		AddPropertyWidget,
 		LinkNoticeWidget,
 		propertiesInfo = mw.config.get( 'wbmiProperties' ) || {},
-		helpUrls = mw.config.get( 'wbmiHelpUrls' ) || {};
+		helpUrls = mw.config.get( 'wbmiHelpUrls' ) || {},
+		userCanEdit = mw.config.get( 'userCanEdit' );
 
 	mw.mediaInfo = mw.mediaInfo || {};
 	mw.mediaInfo.structuredData = mw.mediaInfo.structuredData || {};
@@ -20,13 +22,15 @@
 
 	CaptionsPanel = require( './CaptionsPanel.js' );
 	StatementPanel = require( './StatementPanel.js' );
+	ProtectionMsgWidget = require( './ProtectionMsgWidget.js' );
 	AddPropertyWidget = require( 'wikibase.mediainfo.statements' ).AddPropertyWidget;
 	LinkNoticeWidget = require( 'wikibase.mediainfo.statements' ).LinkNoticeWidget;
 
 	// This has to go inside hooks to allow proper creation of js elements when content is
 	// replaced by the RevisionSlider extension
 	mw.hook( 'wikipage.content' ).add( function ( $content ) {
-		var addPropertyWidget = new AddPropertyWidget(),
+		var protectionMsgWidget = new ProtectionMsgWidget(),
+			addPropertyWidget = new AddPropertyWidget(),
 			linkNoticeWidget = new LinkNoticeWidget(),
 			mediaInfoEntity = mw.config.get( 'wbEntity' ),
 			onStatementPanelRemoved = function ( propertyId ) {
@@ -41,12 +45,16 @@
 			},
 			panelsAreEditable;
 
-		// Only allow editing if we're NOT on a version diff page or viewing an older
-		// revision
+		// Only allow editing if we're NOT on a version diff page or viewing an
+		// older revision, and there is no page protection.
 		// eslint-disable-next-line no-jquery/no-global-selector
 		panelsAreEditable = $( '.diff-currentversion-title' ).length === 0 &&
 			// eslint-disable-next-line no-jquery/no-global-selector
-			$( '.mw-revision' ).length === 0;
+			$( '.mw-revision' ).length === 0 &&
+			userCanEdit;
+
+		// Add the protection message widget above the tabs container.
+		$content.find( '.wbmi-tabs-container' ).first().before( protectionMsgWidget.$element );
 
 		captions = new CaptionsPanel( {
 			classes: {

@@ -24,9 +24,11 @@ use Wikibase\DataModel\SerializerFactory;
 use Wikibase\DataModel\Services\EntityId\EntityIdFormatter;
 use Wikibase\DataModel\Services\Lookup\InProcessCachingDataTypeLookup;
 use Wikibase\LanguageFallbackChain;
+use Wikibase\MediaInfo\DataAccess\Store\EntityIdFixingRevisionLookup;
 use Wikibase\Lib\LanguageNameLookup;
 use Wikibase\Lib\Store\CachingPropertyOrderProvider;
 use Wikibase\Lib\Store\EntityInfo;
+use Wikibase\Lib\Store\EntityRevisionLookup;
 use Wikibase\Lib\Store\WikiPagePropertyOrderProvider;
 use Wikibase\Lib\Store\Sql\WikiPageEntityMetaDataLookup;
 use Wikibase\MediaInfo\ChangeOp\Deserialization\MediaInfoChangeOpDeserializer;
@@ -267,5 +269,11 @@ return [
 			[ RdfVocabulary::NS_SCHEMA_ORG, 'caption' ],
 			[ 'rdfs', 'label' ],
 		],
+		'entity-revision-lookup-factory-callback' => function (
+			EntityRevisionLookup $defaultLookup
+		) {
+			$wbRepo = WikibaseRepo::getDefaultInstance();
+			return new EntityIdFixingRevisionLookup( $defaultLookup, $wbRepo->getLogger() );
+		},
 	]
 ];

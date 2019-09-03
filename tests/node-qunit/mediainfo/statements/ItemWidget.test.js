@@ -7,7 +7,6 @@ QUnit.module( 'ItemWidget', hooks.mediainfo, function () {
 		var done = assert.async(),
 			ItemWidget = require( pathToWidget ),
 			widget = new ItemWidget( { propertyId: 'P1' } ),
-			getPropertyDataStub = sinon.stub( widget, 'getPropertyData' ),
 			data = new wikibase.datamodel.Statement(
 				new wikibase.datamodel.Claim(
 					new wikibase.datamodel.PropertyValueSnak(
@@ -16,8 +15,6 @@ QUnit.module( 'ItemWidget', hooks.mediainfo, function () {
 					)
 				)
 			);
-
-		getPropertyDataStub.returns( $.Deferred().resolve( 'label', 'url', 'repo' ).promise() );
 
 		widget.setData( data ).then( function () {
 			assert.ok( widget.getData() );
@@ -112,6 +109,74 @@ QUnit.module( 'ItemWidget', hooks.mediainfo, function () {
 			} );
 	} );
 
+	QUnit.test( 'Widget updates qualifier widgets with new data', function ( assert ) {
+		var done = assert.async(),
+			ItemWidget = require( pathToWidget ),
+			widget = new ItemWidget( { propertyId: 'P1' } ),
+			noQualifiers = new wikibase.datamodel.Statement(
+				new wikibase.datamodel.Claim(
+					new wikibase.datamodel.PropertyValueSnak(
+						'P1',
+						new wikibase.datamodel.EntityId( 'Q1' )
+					)
+				)
+			),
+			oneQualifier = new wikibase.datamodel.Statement(
+				new wikibase.datamodel.Claim(
+					new wikibase.datamodel.PropertyValueSnak(
+						'P1',
+						new wikibase.datamodel.EntityId( 'Q1' )
+					),
+					new wikibase.datamodel.SnakList( [
+						new wikibase.datamodel.PropertyValueSnak(
+							'P2',
+							new dataValues.StringValue( 'This is a string value' )
+						)
+					] )
+				)
+			),
+			twoQualifiers = new wikibase.datamodel.Statement(
+				new wikibase.datamodel.Claim(
+					new wikibase.datamodel.PropertyValueSnak(
+						'P1',
+						new wikibase.datamodel.EntityId( 'Q1' )
+					),
+					new wikibase.datamodel.SnakList( [
+						new wikibase.datamodel.PropertyValueSnak(
+							'P2',
+							new dataValues.StringValue( 'This is a string value' )
+						),
+						new wikibase.datamodel.PropertyValueSnak(
+							'P3',
+							new wikibase.datamodel.EntityId( 'Q4' )
+						)
+					] )
+				)
+			);
+
+		widget.setData( oneQualifier )
+			.then( function () {
+				assert.strictEqual( widget.getItems().length, 1 );
+				assert.strictEqual( oneQualifier.equals( widget.getData() ), true );
+			} )
+			.then( widget.setData.bind( widget, twoQualifiers ) )
+			.then( function () {
+				assert.strictEqual( widget.getItems().length, 2 );
+				assert.strictEqual( twoQualifiers.equals( widget.getData() ), true );
+			} )
+			.then( widget.setData.bind( widget, oneQualifier ) )
+			.then( function () {
+				assert.strictEqual( widget.getItems().length, 1 );
+				assert.strictEqual( oneQualifier.equals( widget.getData() ), true );
+			} )
+			.then( widget.setData.bind( widget, noQualifiers ) )
+			.then( function () {
+				assert.strictEqual( widget.getItems().length, 0 );
+				assert.strictEqual( noQualifiers.equals( widget.getData() ), true );
+				done();
+			} );
+	} );
+
 	QUnit.test( 'createQualifier() returns a new QualifierWidget', function ( assert ) {
 		var ItemWidget = require( pathToWidget ),
 			QualifierWidget = require( '../../../../resources/statements/QualifierWidget.js' ),
@@ -149,7 +214,6 @@ QUnit.module( 'ItemWidget', hooks.mediainfo, function () {
 		var done = assert.async(),
 			ItemWidget = require( pathToWidget ),
 			widget = new ItemWidget( { propertyId: 'P1' } ),
-			getPropertyDataStub = sinon.stub( widget, 'getPropertyData' ),
 			spy = sinon.spy( widget, 'createQualifier' ),
 			data = new wikibase.datamodel.Statement(
 				new wikibase.datamodel.Claim(
@@ -159,8 +223,6 @@ QUnit.module( 'ItemWidget', hooks.mediainfo, function () {
 					)
 				)
 			);
-
-		getPropertyDataStub.returns( $.Deferred().resolve( 'label', 'url', 'repo' ).promise() );
 
 		widget.setData( data );
 		widget.render().then( function () {
@@ -174,5 +236,86 @@ QUnit.module( 'ItemWidget', hooks.mediainfo, function () {
 
 			done();
 		} );
+	} );
+
+	QUnit.test( 'Test enabling edit state', function ( assert ) {
+		var done = assert.async(),
+			ItemWidget = require( pathToWidget ),
+			widget = new ItemWidget( { propertyId: 'P1' } ),
+			data = new wikibase.datamodel.Statement(
+				new wikibase.datamodel.Claim(
+					new wikibase.datamodel.PropertyValueSnak(
+						'P1',
+						new wikibase.datamodel.EntityId( 'Q1' )
+					)
+				)
+			);
+
+		widget.setData( data )
+			.then( widget.setEditing.bind( widget, true ) )
+			.then( function ( $element ) {
+				assert.strictEqual( $element.find( '.wbmi-item-read' ).length, 0 );
+				assert.strictEqual( $element.find( '.wbmi-item-edit' ).length, 1 );
+
+				// buttons to add qualifier or remove item are available in edit mode
+				assert.strictEqual( $element.find( '.wbmi-item-qualifier-add' ).length, 1 );
+				assert.strictEqual( $element.find( '.wbmi-item-remove' ).length, 1 );
+				done();
+			} );
+	} );
+
+	QUnit.test( 'Test disabling edit state', function ( assert ) {
+		var done = assert.async(),
+			ItemWidget = require( pathToWidget ),
+			widget = new ItemWidget( { propertyId: 'P1' } ),
+			data = new wikibase.datamodel.Statement(
+				new wikibase.datamodel.Claim(
+					new wikibase.datamodel.PropertyValueSnak(
+						'P1',
+						new wikibase.datamodel.EntityId( 'Q1' )
+					)
+				)
+			);
+
+		widget.setData( data )
+			.then( widget.setEditing.bind( widget, false ) )
+			.then( function ( $element ) {
+				assert.strictEqual( $element.find( '.wbmi-item-read' ).length, 1 );
+				assert.strictEqual( $element.find( '.wbmi-item-edit' ).length, 0 );
+
+				// buttons to add qualifier or remove item are not available in read mode
+				assert.strictEqual( $element.find( '.wbmi-item-qualifier-add' ).length, 0 );
+				assert.strictEqual( $element.find( '.wbmi-item-remove' ).length, 0 );
+				done();
+			} );
+	} );
+
+	QUnit.test( 'Toggling item prominence changes item rank', function ( assert ) {
+		var done = assert.async(),
+			ItemWidget = require( pathToWidget ),
+			widget = new ItemWidget( { propertyId: 'P1' } ),
+			data = new wikibase.datamodel.Statement(
+				new wikibase.datamodel.Claim(
+					new wikibase.datamodel.PropertyValueSnak(
+						'P1',
+						new wikibase.datamodel.EntityId( 'Q1' )
+					)
+				)
+			);
+
+		widget.setData( data )
+			.then( function () {
+				// default rank: normal
+				assert.strictEqual( widget.getData().getRank(), wikibase.datamodel.Statement.RANK.NORMAL );
+			} )
+			.then( widget.toggleItemProminence.bind( widget, { preventDefault: sinon.stub() } ) )
+			.then( function () {
+				assert.strictEqual( widget.getData().getRank(), wikibase.datamodel.Statement.RANK.PREFERRED );
+			} )
+			.then( widget.toggleItemProminence.bind( widget, { preventDefault: sinon.stub() } ) )
+			.then( function () {
+				assert.strictEqual( widget.getData().getRank(), wikibase.datamodel.Statement.RANK.NORMAL );
+				done();
+			} );
 	} );
 } );

@@ -116,14 +116,18 @@ ItemWidget.prototype.getPropertyData = function () {
 	return $.when( labelPromise, urlPromise );
 };
 
+/**
+ * @param {Object} e
+ * @return {jQuery.Promise}
+ */
 ItemWidget.prototype.toggleItemProminence = function ( e ) {
 	e.preventDefault();
 
 	if ( this.isDisabled() ) {
-		return;
+		return $.Deferred().resolve( this.$element ).promise();
 	}
 
-	this.setState( {
+	return this.setState( {
 		rank: this.state.rank === wikibase.datamodel.Statement.RANK.PREFERRED ?
 			wikibase.datamodel.Statement.RANK.NORMAL :
 			wikibase.datamodel.Statement.RANK.PREFERRED

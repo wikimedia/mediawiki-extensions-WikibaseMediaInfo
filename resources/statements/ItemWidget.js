@@ -12,9 +12,7 @@
  * @param {string} [config.editing] True for edit mode, False for read mode
  */
 var FormatValueElement = require( './FormatValueElement.js' ),
-	GetRepoElement = require( './GetRepoElement.js' ),
 	QualifierWidget = require( './QualifierWidget.js' ),
-	NewQualifierWidget = require( './NewQualifierWidget.js' ),
 	ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
 	DOMLessGroupWidget = require( 'wikibase.mediainfo.base' ).DOMLessGroupWidget,
 	ItemWidget = function MediaInfoStatementsItemWidget( config ) {
@@ -27,7 +25,6 @@ var FormatValueElement = require( './FormatValueElement.js' ),
 		// some of these...
 		this.state = {
 			editing: !!config.editing,
-			qualifiers: config.qualifiers || {}, // @todo remove when wbmiEnableOtherStatements gets removed
 			propertyId: config.propertyId,
 			guid: config.guid || this.guidGenerator.newGuid(),
 			rank: config.rank || wikibase.datamodel.Statement.RANK.NORMAL,
@@ -47,7 +44,6 @@ OO.inheritClass( ItemWidget, OO.ui.Widget );
 OO.mixinClass( ItemWidget, DOMLessGroupWidget );
 OO.mixinClass( ItemWidget, ComponentWidget );
 OO.mixinClass( ItemWidget, FormatValueElement );
-OO.mixinClass( ItemWidget, GetRepoElement );
 
 /**
  * @inheritDoc
@@ -55,7 +51,7 @@ OO.mixinClass( ItemWidget, GetRepoElement );
 ItemWidget.prototype.getTemplateData = function () {
 	var self = this;
 
-	return this.getPropertyData().then( function ( label, url, repo ) {
+	return this.getPropertyData().then( function ( label, url ) {
 		var id = self.dataValue ? self.dataValue.toJSON().id : '',
 			prominent = self.state.rank === wikibase.datamodel.Statement.RANK.PREFERRED,
 			removeButton,
@@ -83,7 +79,6 @@ ItemWidget.prototype.getTemplateData = function () {
 			qualifiers: self.getItems(),
 			label: label,
 			url: url,
-			repo: repo,
 			id: id.replace( /^.+:/, '' ),
 			prominent: prominent,
 			prominenceMessage: prominent ?
@@ -91,8 +86,7 @@ ItemWidget.prototype.getTemplateData = function () {
 				mw.message( 'wikibasemediainfo-statements-item-mark-as-prominent' ).text(),
 			prominenceToggleHandler: self.toggleItemProminence.bind( self ),
 			removeButton: removeButton,
-			addQualifierButton: addQualifierButton,
-			otherStatementsEnabled: mw.config.get( 'wbmiEnableOtherStatements', false )
+			addQualifierButton: addQualifierButton
 		};
 	} );
 };
@@ -102,11 +96,10 @@ ItemWidget.prototype.getTemplateData = function () {
  */
 ItemWidget.prototype.getPropertyData = function () {
 	var labelPromise,
-		urlPromise,
-		repoPromise;
+		urlPromise;
 
 	if ( !this.state.dataValue ) {
-		return $.Deferred().resolve( '', '', '' ).promise();
+		return $.Deferred().resolve( '', '' ).promise();
 	}
 
 	labelPromise = this.formatValue( this.state.dataValue, 'text/html' );
@@ -119,9 +112,8 @@ ItemWidget.prototype.getPropertyData = function () {
 			return undefined;
 		}
 	} );
-	repoPromise = urlPromise.then( this.getRepoFromUrl.bind( this ) );
 
-	return $.when( labelPromise, urlPromise, repoPromise );
+	return $.when( labelPromise, urlPromise );
 };
 
 ItemWidget.prototype.toggleItemProminence = function ( e ) {
@@ -143,16 +135,7 @@ ItemWidget.prototype.toggleItemProminence = function ( e ) {
  * @return {QualifierWidget}
  */
 ItemWidget.prototype.createQualifier = function ( data ) {
-	var widget;
-
-	// use alternative QualifierWidget if feature flag is set
-	if ( mw.config.get( 'wbmiEnableOtherStatements', false ) ) {
-		widget = new NewQualifierWidget( { editing: this.state.editing } );
-	} else {
-		widget = new QualifierWidget( {
-			qualifiers: this.state.qualifiers
-		} );
-	}
+	var widget = new QualifierWidget( { editing: this.state.editing } );
 
 	if ( data ) {
 		widget.setData( data );
@@ -180,16 +163,9 @@ ItemWidget.prototype.addQualifier = function ( data ) {
  * @return {jQuery.Promise}
  */
 ItemWidget.prototype.setEditing = function ( editing ) {
-	var promises = [];
-
-	// TODO: remove conditional wrapper when OtherStatements is enabled;
-	// setEditing and templates are only implemented for the new version of
-	// the QualifierWidget
-	if ( mw.config.get( 'wbmiEnableOtherStatements', false ) ) {
-		promises = this.getItems().map( function ( widget ) {
-			return widget.setEditing( editing );
-		} );
-	}
+	var promises = this.getItems().map( function ( widget ) {
+		return widget.setEditing( editing );
+	} );
 
 	return $.when.apply( $, promises ).then( this.setState.bind( this, { editing: editing } ) );
 };

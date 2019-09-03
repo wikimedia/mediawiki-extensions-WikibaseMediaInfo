@@ -46,7 +46,6 @@ class MediaInfoEntityStatementsView {
 	private $serializerFactory;
 	private $languageCode;
 	private $properties;
-	private $qualifiers;
 
 	const STATEMENTS_CUSTOM_TAG = 'mediaInfoViewStatements';
 
@@ -61,7 +60,6 @@ class MediaInfoEntityStatementsView {
 	 * @param SerializerFactory $serializerFactory
 	 * @param string $languageCode
 	 * @param string[] $properties Array of property IDs
-	 * @param string[] $qualifiers Array of qualifier property IDs
 	 */
 	public function __construct(
 		PropertyOrderProvider $propertyOrderProvider,
@@ -72,8 +70,7 @@ class MediaInfoEntityStatementsView {
 		OutputFormatValueFormatterFactory $valueFormatterFactory,
 		SerializerFactory $serializerFactory,
 		$languageCode,
-		$properties,
-		$qualifiers
+		$properties
 	) {
 		OutputPage::setupOOUI();
 
@@ -86,7 +83,6 @@ class MediaInfoEntityStatementsView {
 		$this->serializerFactory = $serializerFactory;
 		$this->languageCode = $languageCode;
 		$this->properties = $properties;
-		$this->qualifiers = $qualifiers;
 	}
 
 	/**
@@ -187,7 +183,6 @@ class MediaInfoEntityStatementsView {
 	 * @return PanelLayout
 	 */
 	private function getLayoutForProperty( $propertyIdString, array $statements ) {
-		global $wgMediaInfoEnableOtherStatements;
 		$statementSerializer = $this->serializerFactory->newStatementSerializer();
 
 		$serializedStatements = [];
@@ -207,13 +202,6 @@ class MediaInfoEntityStatementsView {
 			new EntityIdValue( $statement->getPropertyId() ),
 			[ SnakFormatter::FORMAT_PLAIN, SnakFormatter::FORMAT_HTML ]
 		);
-		// format properties suggested in qualifier dropdown (e.g. color, wears, ...)
-		foreach ( $this->qualifiers as $id ) {
-			$formatValueCache += $this->getValueFormatValueCache(
-				new EntityIdValue( new PropertyId( $id ) ),
-				[ SnakFormatter::FORMAT_PLAIN ]
-			);
-		}
 
 		/*
 		 * Here's quite an odd way to render a title...
@@ -242,26 +230,16 @@ class MediaInfoEntityStatementsView {
 			$title->appendContent( $message->text() );
 		}
 
-		// TODO refactor when feature flag MediaInfoEnableOtherStatements is removed
-		$panelExtraClasses = [];
-		if ( $wgMediaInfoEnableOtherStatements ) {
-			if ( $propertyDataTypeIsSupportedForEditing === false ) {
-				$panelExtraClasses[] = 'wbmi-entityview-statementsGroup-unsupported';
-			}
-		} else {
-			if ( $name === false ) {
-				$panelExtraClasses[] = 'wbmi-entityview-statementsGroup-undefined';
-			}
+		$panelClasses = [
+			'wbmi-entityview-statementsGroup',
+			self::getHtmlContainerClass( $propertyIdString ),
+		];
+		if ( $propertyDataTypeIsSupportedForEditing === false ) {
+			$panelClasses[] = 'wbmi-entityview-statementsGroup-unsupported';
 		}
 
 		$panel = new PanelLayout( [
-			'classes' => array_merge(
-				[
-					'wbmi-entityview-statementsGroup',
-					self::getHtmlContainerClass( $propertyIdString ),
-				],
-				$panelExtraClasses
-			),
+			'classes' => $panelClasses,
 			'scrollable' => false,
 			'padded' => false,
 			'expanded' => false,
@@ -377,11 +355,9 @@ class MediaInfoEntityStatementsView {
 		);
 
 		$statementDiv->appendContent( $mainSnakDiv );
-		if ( count( $this->qualifiers ) > 0 ) {
-			$qualifiers = $statement->getQualifiers();
-			if ( count( $qualifiers ) > 0 ) {
-				$statementDiv->appendContent( $this->createQualifiersDiv( $qualifiers ) );
-			}
+		$qualifiers = $statement->getQualifiers();
+		if ( count( $qualifiers ) > 0 ) {
+			$statementDiv->appendContent( $this->createQualifiersDiv( $qualifiers ) );
 		}
 		return $statementDiv;
 	}

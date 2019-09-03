@@ -1,6 +1,5 @@
 <div class="wbmi-statements-widget">
 	<!-- statement widget header -->
-	{{#otherStatementsEnabled}}
 	<div class="wbmi-statement-header">
 		<div class="wbmi-entity-data">
 			<div class="wbmi-entity-title">
@@ -20,36 +19,6 @@
 		{{/editing}}
 		{{/showControls}}
 	</div>
-	{{/otherStatementsEnabled}}
-
-	{{^otherStatementsEnabled}}
-	<div class="wbmi-statement-header wbmi-statement-header--other-statements-disabled">
-		<div class="wbmi-entity-data">
-			<div class="wbmi-entity-title">
-				{{#title}}
-				<h3 class="wbmi-statements-title">{{title}}</h3>
-				{{/title}}
-				<h4 class="wbmi-entity-label">{{label}}</h4>
-			</div>
-
-			{{#url}}
-			<a class="wbmi-entity-link
-					  {{#repo}}wbmi-entity-link-foreign-repo-{{repo}} {{/repo}}
-					  {{^repo}}wbmi-entity-link-local-repo{{/repo}}"
-			   target="_blank"
-			   href="{{url}}">
-				{{id}}
-			</a>
-			{{/url}}
-		</div>
-
-		{{#showControls}}
-		{{^editing}}
-		{{{editButton}}}
-		{{/editing}}
-		{{/showControls}}
-	</div>
-	{{/otherStatementsEnabled}}
 
 	<!-- statement widget input -->
 	{{{input}}}

@@ -100,7 +100,7 @@
 			// necessarily a safe assumption - this should be revisited once we resume
 			// work on searching depicts, and replaced with a better solution
 			property: Object.keys( mw.config.get( 'wbmiProperties' ) )[ 0 ], // assumed to be 'depicts'
-			qualifiers: mw.config.get( 'wbmiDepictsQualifierProperties' ),
+			qualifiers: { /* @todo remove this key - this used to be a map of qualifiers, but has since been removed... */ },
 			data: data,
 			label: label,
 			$overlay: this.$overlay

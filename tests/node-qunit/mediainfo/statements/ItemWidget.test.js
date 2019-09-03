@@ -2,17 +2,7 @@ var sinon = require( 'sinon' ),
 	pathToWidget = '../../../../resources/statements/ItemWidget.js',
 	hooks = require( '../../support/hooks.js' );
 
-// eslint-disable-next-line no-restricted-properties
-QUnit.module( 'ItemWidget', Object.assign( {}, hooks.mediainfo, {
-	beforeEach: function () {
-		hooks.mediainfo.beforeEach();
-
-		// eslint-disable-next-line no-restricted-properties
-		global.mw.config = Object.assign( {}, global.mw.config, {
-			get: sinon.stub().withArgs( 'wbmiEnableOtherStatements', false ).returns( true )
-		} );
-	}
-} ), function () {
+QUnit.module( 'ItemWidget', hooks.mediainfo, function () {
 	QUnit.test( 'Valid data roundtrip', function ( assert ) {
 		var done = assert.async(),
 			ItemWidget = require( pathToWidget ),
@@ -39,18 +29,6 @@ QUnit.module( 'ItemWidget', Object.assign( {}, hooks.mediainfo, {
 	QUnit.test( 'createQualifier() returns a new QualifierWidget', function ( assert ) {
 		var ItemWidget = require( pathToWidget ),
 			QualifierWidget = require( '../../../../resources/statements/QualifierWidget.js' ),
-			widget = new ItemWidget( { propertyId: 'P1' } ),
-			featureFlagStub = global.mw.config.get,
-			qualifier;
-
-		featureFlagStub.withArgs( 'wbmiEnableOtherStatements', false ).returns( false );
-		qualifier = widget.createQualifier();
-		assert.strictEqual( qualifier instanceof QualifierWidget, true );
-	} );
-
-	QUnit.test( 'createQualifier() returns alternate new QualifierWidget with other statements enabled', function ( assert ) {
-		var ItemWidget = require( pathToWidget ),
-			QualifierWidget = require( '../../../../resources/statements/NewQualifierWidget.js' ),
 			widget = new ItemWidget( { propertyId: 'P1' } ),
 			qualifier;
 

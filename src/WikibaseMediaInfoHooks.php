@@ -171,13 +171,11 @@ class WikibaseMediaInfoHooks {
 	 * @throws \OOUI\Exception
 	 */
 	public static function onBeforePageDisplay( $out, $skin ) {
-		global $wgDepictsQualifierProperties,
-				$wgMediaInfoHelpUrls,
+		global $wgMediaInfoHelpUrls,
 				$wgMediaInfoProperties,
 				$wgMediaInfoExternalEntitySearchBaseUri,
 				$wgMediaInfoSearchFiletypes,
-				$wgMediaInfoEnableSearch,
-				$wgMediaInfoEnableOtherStatements;
+				$wgMediaInfoEnableSearch;
 
 		// Hide any MediaInfo content and UI on a page, if the target page is a redirect.
 		if ( $out->getTitle()->isRedirect() ) {
@@ -200,15 +198,7 @@ class WikibaseMediaInfoHooks {
 			\Action::getActionName( $out->getContext() ) === 'view';
 
 		$properties = [];
-		$qualifiers = [];
 		$titles = [];
-		foreach ( $wgDepictsQualifierProperties as $property ) {
-			try {
-				$qualifiers[$property] = static::getValueType( new PropertyId( $property ) );
-			} catch ( PropertyDataTypeLookupException $e ) {
-				// ignore invalid properties...
-			}
-		}
 		foreach ( $wgMediaInfoProperties as $name => $property ) {
 			try {
 				// some properties/statements may have custom titles, in addition to their property
@@ -238,14 +228,12 @@ class WikibaseMediaInfoHooks {
 			$wbRepo->getEntityViewFactory(),
 			[
 				'wbmiProperties' => $properties,
-				'wbmiDepictsQualifierProperties' => $qualifiers,
 				'wbmiPropertyTitles' => $titles,
 				'wbmiHelpUrls' => $wgMediaInfoHelpUrls,
 				'wbmiExternalEntitySearchBaseUri' => $wgMediaInfoExternalEntitySearchBaseUri,
 				'wbmiSearchFiletypes' => $wgMediaInfoSearchFiletypes,
 				'wbmiMediaInfoEnableSearch' => $wgMediaInfoEnableSearch,
 				'wbmiRepoApiUrl' => wfScript( 'api' ),
-				'wbmiEnableOtherStatements' => $wgMediaInfoEnableOtherStatements,
 			]
 		);
 	}

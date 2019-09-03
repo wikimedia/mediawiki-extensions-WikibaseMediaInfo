@@ -19,6 +19,52 @@ QUnit.module( 'QualifierWidget', hooks.mediainfo, function () {
 		} );
 	} );
 
+	QUnit.test( 'Setting other data triggers a change event', function ( assert ) {
+		var done = assert.async(),
+			QualifierWidget = require( pathToWidget ),
+			widget = new QualifierWidget(),
+			data = new wikibase.datamodel.PropertyValueSnak(
+				'P1',
+				new wikibase.datamodel.EntityId( 'Q1' )
+			),
+			newData = new wikibase.datamodel.PropertyValueSnak(
+				'P1',
+				new wikibase.datamodel.EntityId( 'Q2' )
+			),
+			onChange = sinon.stub();
+
+		widget.setData( data )
+			.then( widget.on.bind( widget, 'change', onChange, [] ) )
+			.then( widget.setData.bind( widget, newData ) )
+			.then( function () {
+				assert.strictEqual( onChange.called, true );
+				done();
+			} );
+	} );
+
+	QUnit.test( 'Setting same data does not trigger a change event', function ( assert ) {
+		var done = assert.async(),
+			QualifierWidget = require( pathToWidget ),
+			widget = new QualifierWidget(),
+			data = new wikibase.datamodel.PropertyValueSnak(
+				'P1',
+				new wikibase.datamodel.EntityId( 'Q1' )
+			),
+			sameData = new wikibase.datamodel.PropertyValueSnak(
+				'P1',
+				new wikibase.datamodel.EntityId( 'Q1' )
+			),
+			onChange = sinon.stub();
+
+		widget.setData( data )
+			.then( widget.on.bind( widget, 'change', onChange, [] ) )
+			.then( widget.setData.bind( widget, sameData ) )
+			.then( function () {
+				assert.strictEqual( onChange.called, false );
+				done();
+			} );
+	} );
+
 	QUnit.test( 'setData() sets property ID in the PropertyInput widget', function ( assert ) {
 		var done = assert.async(),
 			QualifierWidget = require( pathToWidget ),

@@ -26,6 +26,92 @@ QUnit.module( 'ItemWidget', hooks.mediainfo, function () {
 		} );
 	} );
 
+	QUnit.test( 'Setting other data triggers a change event', function ( assert ) {
+		var done = assert.async(),
+			ItemWidget = require( pathToWidget ),
+			widget = new ItemWidget( { propertyId: 'P1' } ),
+			data = new wikibase.datamodel.Statement(
+				new wikibase.datamodel.Claim(
+					new wikibase.datamodel.PropertyValueSnak(
+						'P1',
+						new wikibase.datamodel.EntityId( 'Q1' )
+					),
+					new wikibase.datamodel.SnakList( [
+						new wikibase.datamodel.PropertyValueSnak(
+							'P2',
+							new dataValues.StringValue( 'This is a string value' )
+						)
+					] )
+				)
+			),
+			newData = new wikibase.datamodel.Statement(
+				new wikibase.datamodel.Claim(
+					new wikibase.datamodel.PropertyValueSnak(
+						'P1',
+						new wikibase.datamodel.EntityId( 'Q1' )
+					),
+					new wikibase.datamodel.SnakList( [
+						new wikibase.datamodel.PropertyValueSnak(
+							'P2',
+							new dataValues.StringValue( 'This is a different string value' )
+						)
+					] )
+				)
+			),
+			onChange = sinon.stub();
+
+		widget.setData( data )
+			.then( widget.on.bind( widget, 'change', onChange, [] ) )
+			.then( widget.setData.bind( widget, newData ) )
+			.then( function () {
+				assert.strictEqual( onChange.called, true );
+				done();
+			} );
+	} );
+
+	QUnit.test( 'Setting same data does not trigger a change event', function ( assert ) {
+		var done = assert.async(),
+			ItemWidget = require( pathToWidget ),
+			widget = new ItemWidget( { propertyId: 'P1' } ),
+			data = new wikibase.datamodel.Statement(
+				new wikibase.datamodel.Claim(
+					new wikibase.datamodel.PropertyValueSnak(
+						'P1',
+						new wikibase.datamodel.EntityId( 'Q1' )
+					),
+					new wikibase.datamodel.SnakList( [
+						new wikibase.datamodel.PropertyValueSnak(
+							'P2',
+							new dataValues.StringValue( 'This is a string value' )
+						)
+					] )
+				)
+			),
+			sameData = new wikibase.datamodel.Statement(
+				new wikibase.datamodel.Claim(
+					new wikibase.datamodel.PropertyValueSnak(
+						'P1',
+						new wikibase.datamodel.EntityId( 'Q1' )
+					),
+					new wikibase.datamodel.SnakList( [
+						new wikibase.datamodel.PropertyValueSnak(
+							'P2',
+							new dataValues.StringValue( 'This is a string value' )
+						)
+					] )
+				)
+			),
+			onChange = sinon.stub();
+
+		widget.setData( data )
+			.then( widget.on.bind( widget, 'change', onChange, [] ) )
+			.then( widget.setData.bind( widget, sameData ) )
+			.then( function () {
+				assert.strictEqual( onChange.called, false );
+				done();
+			} );
+	} );
+
 	QUnit.test( 'createQualifier() returns a new QualifierWidget', function ( assert ) {
 		var ItemWidget = require( pathToWidget ),
 			QualifierWidget = require( '../../../../resources/statements/QualifierWidget.js' ),
@@ -89,8 +175,4 @@ QUnit.module( 'ItemWidget', hooks.mediainfo, function () {
 			done();
 		} );
 	} );
-
-	QUnit.skip( 'generates a QualifierWidget for each qualifier in its data' );
-	QUnit.skip( 'emits change events appropriately' );
-	QUnit.skip( 'handles change events from child widgets appropriately' );
 } );

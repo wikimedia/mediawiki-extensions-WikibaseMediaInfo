@@ -43,7 +43,7 @@ describe( 'Upload tasks - logged in user', function () {
 			// Wait for redirect to File page of newly uploaded image
 			browser.waitUntil( function () {
 				return UploadPage.heading.getText() === 'File:' + destinationName;
-			}, 5000, 'Expected file to be saved.' );
+			}, 10000, 'Expected file to be saved.' );
 
 			assert( FilePage.captionsPanel.waitForVisible() );
 		} );

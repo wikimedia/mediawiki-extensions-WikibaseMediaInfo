@@ -12,8 +12,7 @@ QualifierValueInputWidget = function ( config ) {
 		'wikibase-entityid': this.createEntityInput.bind( this ),
 		quantity: this.createQuantityInput.bind( this ),
 		string: this.createTextInput.bind( this ),
-		globecoordinate: this.createGlobeCoordinateInput.bind( this ),
-		unsupported: this.createDisabledInput.bind( this )
+		globecoordinate: this.createGlobeCoordinateInput.bind( this )
 	};
 	this.allowEmitChange = true;
 
@@ -30,7 +29,6 @@ QualifierValueInputWidget = function ( config ) {
 	);
 	FormatValueElement.call( this, $.extend( {}, config ) );
 };
-
 OO.inheritClass( QualifierValueInputWidget, OO.ui.Widget );
 OO.mixinClass( QualifierValueInputWidget, ComponentWidget );
 OO.mixinClass( QualifierValueInputWidget, FormatValueElement );
@@ -42,7 +40,7 @@ QualifierValueInputWidget.prototype.getTemplateData = function () {
 	var self = this;
 
 	// make sure input accurately reflects disabled state
-	this.state.input.setDisabled( this.isDisabled() || this.state.type === 'unsupported' );
+	this.state.input.setDisabled( this.isDisabled() || !( this.state.type in this.types ) );
 
 	return {
 		input: this.state.input,
@@ -50,7 +48,7 @@ QualifierValueInputWidget.prototype.getTemplateData = function () {
 			// `type` will be a map like: { quantity: true, string: false, ... }
 			result[ type ] = self.state.type === type;
 			return result;
-		}, {} )
+		}, { unsupported: !( this.state.type in this.types ) } )
 	};
 };
 
@@ -64,12 +62,13 @@ QualifierValueInputWidget.prototype.getTemplateData = function () {
  */
 QualifierValueInputWidget.prototype.setInputType = function ( type ) {
 	var self = this,
-		changed = this.state.type !== type;
+		changed = this.state.type !== type,
+		input = type in this.types ? this.types[ type ]() : this.createDisabledInput();
 
 	return this.setState( {
 		type: type,
 		// re-use existing input if the type has not changed
-		input: this.state.type === type ? this.state.input : this.types[ type ]()
+		input: changed ? input : this.state.input
 	} ).then( function ( $element ) {
 		if ( changed ) {
 			self.emit( 'change' );
@@ -153,7 +152,7 @@ QualifierValueInputWidget.prototype.getInputValue = function () {
 		case 'globecoordinate':
 			return this.state.input.getData();
 		default:
-			return null;
+			return this.state.input.getData();
 	}
 };
 
@@ -175,8 +174,7 @@ QualifierValueInputWidget.prototype.getData = function () {
  * @return {jQuery.Deferred}
  */
 QualifierValueInputWidget.prototype.setData = function ( data ) {
-	var self = this,
-		type = data.getType() in this.types ? data.getType() : 'unsupported';
+	var self = this;
 
 	try {
 		if ( data.equals( this.getData() ) ) {
@@ -196,11 +194,11 @@ QualifierValueInputWidget.prototype.setData = function ( data ) {
 	// own later on!
 	this.allowEmitChange = false;
 	return $.Deferred().resolve().promise()
-		.then( this.createInputFromData.bind( this, type, data ) )
+		.then( this.createInputFromData.bind( this, data.getType(), data ) )
 		.then( function ( input ) {
 			self.allowEmitChange = true;
 			return self.setState( {
-				type: type,
+				type: data.getType(),
 				input: input
 			} );
 		} )
@@ -216,7 +214,7 @@ QualifierValueInputWidget.prototype.setData = function ( data ) {
  * @return {jQuery.Promise|*} Input object, or promise resolving with one
  */
 QualifierValueInputWidget.prototype.createInputFromData = function ( type, data ) {
-	var input = this.types[ type ]();
+	var input = type in this.types ? this.types[ type ]() : this.createDisabledInput();
 
 	switch ( type ) {
 		case 'wikibase-entityid':
@@ -241,6 +239,7 @@ QualifierValueInputWidget.prototype.createInputFromData = function ( type, data 
 			} );
 		default:
 			// unsupported data types
+			input.setData( data.toJSON() );
 			return input;
 	}
 };

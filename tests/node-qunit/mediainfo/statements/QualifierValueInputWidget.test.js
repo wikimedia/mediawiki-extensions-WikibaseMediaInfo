@@ -53,4 +53,17 @@ QUnit.module( 'QualifierValueInputWidget', hooks.mediainfo, function () {
 			done();
 		} );
 	} );
+
+	QUnit.test( 'Valid data roundtrip (unsupported)', function ( assert ) {
+		var done = assert.async(),
+			QualifierValueInputWidget = require( pathToWidget ),
+			widget = new QualifierValueInputWidget(),
+			data = new dataValues.UnknownValue( 'an unknown value' );
+
+		widget.setData( data ).then( function () {
+			assert.ok( widget.getData() );
+			assert.strictEqual( data.equals( widget.getData() ), true );
+			done();
+		} );
+	} );
 } );

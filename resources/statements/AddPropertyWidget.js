@@ -42,7 +42,7 @@ AddPropertyWidget.prototype.getTemplateData = function () {
 		placeholder: mw.message( 'wikibasemediainfo-add-property' ).text()
 	} );
 	propertyInputWidget.connect( this, { choose: 'onChoose' } );
-	propertyInputWidget.connect( this, { choose: [ 'setState', { editing: false } ] } );
+	propertyInputWidget.connect( this, { choose: [ 'setEditing', false ] } );
 	propertyInputWidget.connect( this, { choose: [ 'emit', 'choose' ] } );
 
 	addPropertyButton = new OO.ui.ButtonWidget( {
@@ -52,7 +52,7 @@ AddPropertyWidget.prototype.getTemplateData = function () {
 		flags: [ 'progressive' ],
 		label: mw.message( 'wikibasemediainfo-add-statement' ).text()
 	} );
-	addPropertyButton.connect( this, { click: [ 'setState', { editing: !this.state.editing } ] } );
+	addPropertyButton.connect( this, { click: [ 'setEditing', !this.state.editing ] } );
 
 	removeButton = new OO.ui.ButtonWidget( {
 		classes: [ 'wbmi-item-remove' ],
@@ -61,7 +61,7 @@ AddPropertyWidget.prototype.getTemplateData = function () {
 		icon: 'trash',
 		framed: false
 	} );
-	removeButton.connect( this, { click: [ 'setState', { editing: false } ] } );
+	removeButton.connect( this, { click: [ 'setEditing', false ] } );
 
 	return {
 		editing: this.state.editing,
@@ -83,11 +83,22 @@ AddPropertyWidget.prototype.getFilters = function () {
 
 /**
  * @param {string} propertyId
+ * @return {jQuery.Promise}
  */
 AddPropertyWidget.prototype.addPropertyId = function ( propertyId ) {
-	if ( this.state.propertyIds.indexOf( propertyId ) === -1 ) {
-		this.setState( { propertyIds: this.state.propertyIds.concat( propertyId ) } );
+	if ( this.state.propertyIds.indexOf( propertyId ) >= 0 ) {
+		return $.Deferred().resolve( this.$element ).promise();
 	}
+
+	return this.setState( { propertyIds: this.state.propertyIds.concat( propertyId ) } );
+};
+
+/**
+ * @param {boolean} editing
+ * @return {jQuery.Promise} Resolves after rerender
+ */
+AddPropertyWidget.prototype.setEditing = function ( editing ) {
+	return this.setState( { editing: editing } );
 };
 
 /**

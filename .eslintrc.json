@@ -12,6 +12,7 @@
 		"util": false,
 		"wikibase": false,
 		"dataValues": false,
+		"globeCoordinate": false,
 		"mw": false,
 		"OO": false
 	}

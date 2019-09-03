@@ -175,7 +175,8 @@ QualifierValueInputWidget.prototype.getData = function () {
  * @return {jQuery.Deferred}
  */
 QualifierValueInputWidget.prototype.setData = function ( data ) {
-	var self = this;
+	var self = this,
+		type = data.getType() in this.types ? data.getType() : 'unsupported';
 
 	try {
 		if ( data.equals( this.getData() ) ) {
@@ -186,46 +187,62 @@ QualifierValueInputWidget.prototype.setData = function ( data ) {
 		// to set new data...
 	}
 
-	return this.formatValue( data, 'text/plain' ).then( function ( plain ) {
-		var type = data.getType() in self.types ? data.getType() : 'unsupported',
-			input = self.types[ type ]();
+	// we just confirmed that data *has* changed
+	// we don't want these new input fields to cause change events when
+	// we populate then with the given data, because that'd be unreliable
+	// (e.g. it might *not* fire an event when we populate it with an
+	// empty value...)
+	// we'll make sure below events don't propagate, but then emit our
+	// own later on!
+	this.allowEmitChange = false;
+	return $.Deferred().resolve().promise()
+		.then( this.createInputFromData.bind( this, type, data ) )
+		.then( function ( input ) {
+			self.allowEmitChange = true;
+			return self.setState( {
+				type: type,
+				input: input
+			} );
+		} )
+		.then( function ( $element ) {
+			self.emit( 'change' );
+			return $element;
+		} );
+};
 
-		// we just confirmed that data *has* changed
-		// we don't want these new input fields to cause change events when
-		// we populate then with the given data, because that'd be unreliable
-		// (e.g. it might *not* fire an event when we populate it with an
-		// empty value...)
-		// we'll make sure below events don't propagate, but then emit our
-		// own later on!
-		self.allowEmitChange = false;
-		switch ( type ) {
-			case 'wikibase-entityid':
-				// entities widget will need to be aware of the id that is associated
-				// with the label
+/**
+ * @param {string} type
+ * @param {dataValues.DataValue} data
+ * @return {jQuery.Promise|*} Input object, or promise resolving with one
+ */
+QualifierValueInputWidget.prototype.createInputFromData = function ( type, data ) {
+	var input = this.types[ type ]();
+
+	switch ( type ) {
+		case 'wikibase-entityid':
+			// entities widget will need to be aware of the id that is associated
+			// with the label
+			return this.formatValue( data, 'text/plain' ).then( function ( plain ) {
 				input.setValue( plain );
 				input.setData( data.toJSON().id );
-				break;
-			case 'quantity':
-				// replace thousands delimiter - that's only useful for display purposes
-				input.setValue( plain.replace( /,/g, '' ) );
-				break;
-			case 'string':
-				input.setValue( plain );
-				break;
-			case 'globecoordinate':
-				input.setData( data );
-				break;
-		}
-		self.allowEmitChange = true;
-
-		return self.setState( {
-			type: type,
-			input: input
-		} );
-	} ).then( function ( $element ) {
-		self.emit( 'change' );
-		return $element;
-	} );
+				return input;
+			} );
+		case 'quantity':
+			// replace leading '+' unit - that's only needed for internal storage,
+			// but obvious for human input
+			input.setValue( data.getAmount().getValue().replace( /^\+/, '' ) );
+			return input;
+		case 'string':
+			input.setValue( data.getValue() );
+			return input;
+		case 'globecoordinate':
+			return input.setData( data ).then( function () {
+				return input;
+			} );
+		default:
+			// unsupported data types
+			return input;
+	}
 };
 
 module.exports = QualifierValueInputWidget;

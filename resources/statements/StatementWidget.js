@@ -382,12 +382,18 @@ StatementWidget.prototype.getRemovals = function () {
  * @return {jQuery.Promise}
  */
 StatementWidget.prototype.resetData = function ( data ) {
+	var self = this;
+
 	data = this.cloneData( data === undefined ? this.state.initialData : data );
 
 	this.$element.find( '.wbmi-statement-publish-error-msg' ).remove();
 
-	return this.setState( { initialData: data } )
-		.then( this.setData.bind( this, data ) )
+	return this.setData( data )
+		.then( function () {
+			// use the `.getData()` result instead of `data` because that'll
+			// already include valid GUIDs, whereas `data` might not
+			return self.setState( { initialData: self.getData() } );
+		} )
 		.then( this.setEditing.bind( this, false ) );
 };
 

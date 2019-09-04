@@ -106,4 +106,150 @@ QUnit.module( 'StatementWidget', hooks.mediainfo, function () {
 				done();
 			} );
 	} );
+
+	QUnit.test( 'Test detection of changes', function ( assert ) {
+		var done = assert.async(),
+			StatementWidget = require( pathToWidget ),
+			widget = new StatementWidget( {
+				$element: $( '<div>' ),
+				propertyId: 'P1',
+				entityId: 'M1'
+			} ),
+			data = new wikibase.datamodel.StatementList( [
+				new wikibase.datamodel.Statement(
+					new wikibase.datamodel.Claim(
+						new wikibase.datamodel.PropertyValueSnak(
+							'P1',
+							new wikibase.datamodel.EntityId( 'Q1' )
+						),
+						null,
+						'guid-1'
+					)
+				),
+				new wikibase.datamodel.Statement(
+					new wikibase.datamodel.Claim(
+						new wikibase.datamodel.PropertyValueSnak(
+							'P1',
+							new wikibase.datamodel.EntityId( 'Q2' )
+						),
+						null,
+						'guid-2'
+					)
+				)
+			] ),
+			changedData = new wikibase.datamodel.StatementList( [
+				new wikibase.datamodel.Statement(
+					new wikibase.datamodel.Claim(
+						new wikibase.datamodel.PropertyValueSnak(
+							'P1',
+							new wikibase.datamodel.EntityId( 'Q1' )
+						),
+						null,
+						'guid-1'
+					)
+				),
+				new wikibase.datamodel.Statement(
+					new wikibase.datamodel.Claim(
+						new wikibase.datamodel.PropertyValueSnak(
+							'P1',
+							new wikibase.datamodel.EntityId( 'Q3' )
+						),
+						null,
+						'guid-2'
+					)
+				)
+			] ),
+			removedData = new wikibase.datamodel.StatementList( [
+				new wikibase.datamodel.Statement(
+					new wikibase.datamodel.Claim(
+						new wikibase.datamodel.PropertyValueSnak(
+							'P1',
+							new wikibase.datamodel.EntityId( 'Q1' )
+						),
+						null,
+						'guid-1'
+					)
+				)
+			] );
+
+		widget.resetData( data )
+			.then( function () {
+				assert.strictEqual( widget.hasChanges(), false );
+				assert.strictEqual( widget.getChanges().length, 0 );
+				assert.strictEqual( widget.getRemovals().length, 0 );
+			} )
+			.then( widget.setData.bind( widget, changedData ) )
+			.then( function () {
+				assert.strictEqual( widget.hasChanges(), true );
+				assert.strictEqual( widget.getChanges().length, 1 );
+				assert.strictEqual( widget.getRemovals().length, 0 );
+			} )
+			.then( widget.setData.bind( widget, removedData ) )
+			.then( function () {
+				assert.strictEqual( widget.hasChanges(), true );
+				assert.strictEqual( widget.getChanges().length, 0 );
+				assert.strictEqual( widget.getRemovals().length, 1 );
+				done();
+			} );
+	} );
+
+	QUnit.test( 'Test enabling edit state', function ( assert ) {
+		var done = assert.async(),
+			StatementWidget = require( pathToWidget ),
+			widget = new StatementWidget( {
+				$element: $( '<div>' ),
+				propertyId: 'P1',
+				entityId: 'M1',
+				showControls: true
+			} ),
+			data = new wikibase.datamodel.StatementList( [
+				new wikibase.datamodel.Statement(
+					new wikibase.datamodel.Claim(
+						new wikibase.datamodel.PropertyValueSnak(
+							'P1',
+							new wikibase.datamodel.EntityId( 'Q1' )
+						)
+					)
+				)
+			] );
+
+		widget.setData( data )
+			.then( widget.setEditing.bind( widget, true ) )
+			.then( function ( $element ) {
+				// missing in edit mode: edit button; present: footer
+				assert.strictEqual( $element.find( '.wbmi-entityview-editButton' ).length, 0 );
+				assert.strictEqual( $element.find( '.wbmi-statement-footer' ).length, 1 );
+				done();
+			} );
+	} );
+
+	QUnit.test( 'Test disabling edit state', function ( assert ) {
+		var done = assert.async(),
+			StatementWidget = require( pathToWidget ),
+			widget = new StatementWidget( {
+				$element: $( '<div>' ),
+				propertyId: 'P1',
+				entityId: 'M1',
+				showControls: true
+			} ),
+			data = new wikibase.datamodel.StatementList( [
+				new wikibase.datamodel.Statement(
+					new wikibase.datamodel.Claim(
+						new wikibase.datamodel.PropertyValueSnak(
+							'P1',
+							new wikibase.datamodel.EntityId( 'Q1' )
+						)
+					)
+				)
+			] );
+
+		widget.setData( data )
+			.then( widget.setEditing.bind( widget, false ) )
+			.then( function ( $element ) {
+				// missing in read mode: footer; present: edit button
+				assert.strictEqual( $element.find( '.wbmi-entityview-editButton' ).length, 1 );
+				assert.strictEqual( $element.find( '.wbmi-statement-footer' ).length, 0 );
+				done();
+			} );
+	} );
 } );

@@ -187,7 +187,7 @@ module.exports.createWikibaseEnv = function () {
 		datamodel: {},
 		serialization: {},
 		utilities: {
-			ClaimGuidGenerator: sinon.stub().returns( { newGuid: sinon.stub() } )
+			ClaimGuidGenerator: sinon.stub().returns( { newGuid: function () { return Math.random().toString( 36 ).slice( 2 ); } } )
 		}
 	};
 

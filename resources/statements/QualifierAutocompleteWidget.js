@@ -79,7 +79,8 @@ QualifierAutocompleteWidget.prototype.getFilters = function () {
 	var supportedTypes = [
 		'wikibase-item',
 		'quantity',
-		'string'
+		'string',
+		'globe-coordinate'
 	];
 
 	return [

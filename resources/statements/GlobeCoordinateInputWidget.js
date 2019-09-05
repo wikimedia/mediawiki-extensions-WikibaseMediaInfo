@@ -105,15 +105,13 @@ GlobeCoordinateInputWidget.prototype.getData = function () {
 /**
  * Set field values based on GlobeCoordinate object passed down by parent.
  *
- * @param {GlobeCoordinate} data
+ * @param {Object} data
  * @return {jQuery.Promise}
  */
 GlobeCoordinateInputWidget.prototype.setData = function ( data ) {
-	var values = data.toJSON();
-
-	this.latitudeInput.setValue( values.latitude );
-	this.longitudeInput.setValue( values.longitude );
-	this.precisionInput.setValue( values.precision );
+	this.latitudeInput.setValue( String( data.latitude ) );
+	this.longitudeInput.setValue( String( data.longitude ) );
+	this.precisionInput.setValue( String( data.precision ) );
 
 	return $.Deferred().resolve( this.$element ).promise();
 };

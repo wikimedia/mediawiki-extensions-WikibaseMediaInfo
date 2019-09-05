@@ -234,7 +234,7 @@ QualifierValueInputWidget.prototype.createInputFromData = function ( type, data 
 			input.setValue( data.getValue() );
 			return input;
 		case 'globecoordinate':
-			return input.setData( data ).then( function () {
+			return input.setData( data.toJSON() ).then( function () {
 				return input;
 			} );
 		default:

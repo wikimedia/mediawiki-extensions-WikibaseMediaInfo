@@ -1,0 +1,9 @@
+<a href="#" onclick="{{toggleEdit}}">
+	{{#editing}}stop editing{{/editing}}
+	{{^editing}}start editing{{/editing}}
+</a>
+
+{{#editing}}
+	{{{input}}}
+	{{{button}}}
+{{/editing}}

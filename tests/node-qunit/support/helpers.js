@@ -100,6 +100,11 @@ module.exports.createMediaWikiEnv = function () {
 		// eslint-disable-next-line no-undef
 		templates: new Map(),
 
+		Title: sinon.stub().returns( {
+			getNameText: sinon.stub(),
+			getNamespaceId: sinon.stub()
+		} ),
+
 		html: {
 			escape: sinon.stub()
 		}

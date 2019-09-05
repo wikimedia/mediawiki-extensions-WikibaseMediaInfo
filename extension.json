@@ -133,6 +133,22 @@
 				"mobile"
 			]
 		},
+		"wikibase.mediainfo.readme": {
+			"packageFiles": [
+				"resources/README/index.js",
+				"resources/README/1.ExampleComponentWidget.js",
+				"resources/README/2.TemplatingFeatures.js",
+				"resources/README/3.BestPractices.js"
+			],
+			"templates": [
+				"templates/README/1.ExampleComponentWidget.mustache+dom",
+				"templates/README/2.TemplatingFeatures.mustache+dom",
+				"templates/README/3.BestPractices.mustache+dom"
+			],
+			"dependencies": [
+				"wikibase.mediainfo.base"
+			]
+		},
 		"wikibase.mediainfo.getDeserializer": {
 			"scripts": "resources/getDeserializer.js",
 			"dependencies": [

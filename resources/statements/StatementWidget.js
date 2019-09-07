@@ -20,8 +20,8 @@ var ItemInputWidget = require( './ItemInputWidget.js' ),
  *  no values for the property
  * @param {Object} [config.helpUrls]  An object with property id as members and help urls for
  *  the property as values
- * @param {bool} [config.showControls] Whether or not to display editing controls
  *  e.g. { P1: "https://commons.wikimedia.org/wiki/Special:MyLanguage/Commons:Depicts" }
+ * @param {bool} [config.showControls] Whether or not to display editing controls
  */
 StatementWidget = function ( config ) {
 	config = config || {};

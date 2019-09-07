@@ -22,6 +22,8 @@ var ItemInputWidget = require( './ItemInputWidget.js' ),
  *  the property as values
  *  e.g. { P1: "https://commons.wikimedia.org/wiki/Special:MyLanguage/Commons:Depicts" }
  * @param {bool} [config.showControls] Whether or not to display editing controls
+ * @param {string} [config.summary] Summary for edits
+ * @param {string[]} [config.tags] Change tags to apply to edits
  */
 StatementWidget = function ( config ) {
 	config = config || {};
@@ -420,6 +422,8 @@ StatementWidget.prototype.submit = function ( baseRevId ) {
 				// fetch the previous response's rev id and feed it to the next
 				baserevid: prevResponse.pageinfo ? prevResponse.pageinfo.lastrevid : undefined,
 				bot: 1,
+				summary: self.config.summary || undefined,
+				tags: self.config.tags || undefined,
 				assertuser: !mw.user.isAnon() ? mw.user.getName() : undefined
 			} ).catch(
 				function ( errorCode, error ) {
@@ -462,6 +466,8 @@ StatementWidget.prototype.submit = function ( baseRevId ) {
 				// fetch the previous response's rev id and feed it to the next
 				baserevid: prevResponse.pageinfo ? prevResponse.pageinfo.lastrevid : undefined,
 				bot: 1,
+				summary: self.config.summary || undefined,
+				tags: self.config.tags || undefined,
 				assertuser: !mw.user.isAnon() ? mw.user.getName() : undefined
 			} ).catch( function ( errorCode, error ) {
 				var apiError = wikibase.api.RepoApiError.newFromApiResponse( error, 'save' );

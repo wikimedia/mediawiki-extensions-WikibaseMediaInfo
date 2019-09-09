@@ -578,7 +578,7 @@ class WikibaseMediaInfoHooks {
 			list( $cascadeSources ) = $imgTitle->getCascadeProtectionSources() ?: [];
 			$sources = '';
 			foreach ( $cascadeSources as $page ) {
-				$sources .= '* [[:' . $page->getPrefixedText() . ']]\n';
+				$sources .= '* [[:' . $page->getPrefixedText() . "]]\n";
 			}
 
 			$msg = $out->msg( 'cascadeprotected', count( $cascadeSources ), $sources )->parseAsBlock();

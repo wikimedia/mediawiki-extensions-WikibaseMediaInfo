@@ -78,7 +78,7 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiUnitTestCase {
 			->willReturn( $title );
 		$out->expects( $this->once() )
 			->method( 'msg' )
-			->withConsecutive( [ 'cascadeprotected', 1, '* [[:Cascade Source]]\n' ] )
+			->withConsecutive( [ 'cascadeprotected', 1, "* [[:Cascade Source]]\n" ] )
 			->willReturn( $message );
 		$wrapper->getProtectionMsg( $out );
 	}

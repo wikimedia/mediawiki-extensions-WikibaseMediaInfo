@@ -102,6 +102,35 @@ module.exports.createMediaWikiEnv = function () {
 };
 
 /**
+ * Stubs out and/or loads a basic "globeCoordinate" object for use in testing.
+ *
+ * @return {Object}
+ */
+module.exports.createGlobeCoordinateEnv = function () {
+	var globeCoordinate,
+		jQuery,
+		$;
+
+	// wikibase-data-values needs jquery...
+	jQuery = global.jQuery;
+	$ = global.$;
+	global.jQuery = global.$ = requireAgain( 'jquery' );
+
+	global.globeCoordinate = requireAgain( 'wikibase-data-values/lib/globeCoordinate/globeCoordinate.js' ).globeCoordinate;
+	requireAgain( 'wikibase-data-values/lib/globeCoordinate/globeCoordinate.GlobeCoordinate.js' );
+
+	// remove from global scope before returning
+	globeCoordinate = global.globeCoordinate;
+	delete global.globeCoordinate;
+
+	// restore original jQuery/$ code/versions
+	global.jQuery = jQuery;
+	global.$ = $;
+
+	return globeCoordinate;
+};
+
+/**
  * Stubs out and/or loads a basic "dataValues" object for use in testing.
  *
  * @return {Object}
@@ -118,10 +147,14 @@ module.exports.createDataValuesEnv = function () {
 
 	global.dataValues = requireAgain( 'wikibase-data-values/src/dataValues.js' ).dataValues;
 	global.util = {};
+
 	requireAgain( 'wikibase-data-values/lib/util/util.inherit.js' );
 	requireAgain( 'wikibase-data-values/src/DataValue.js' );
+	requireAgain( 'wikibase-data-values/src/values/StringValue.js' );
 	requireAgain( 'wikibase-data-values/src/values/DecimalValue.js' );
 	requireAgain( 'wikibase-data-values/src/values/QuantityValue.js' );
+	requireAgain( 'wikibase-data-values/src/values/GlobeCoordinateValue.js' );
+	requireAgain( 'wikibase-data-values/src/values/UnknownValue.js' );
 	requireAgain( 'wikibase-data-model/src/__namespace.js' );
 
 	// remove from global scope before returning
@@ -161,8 +194,6 @@ module.exports.createWikibaseEnv = function () {
 	global.util = {};
 
 	requireAgain( 'wikibase-data-values/lib/util/util.inherit.js' );
-	requireAgain( 'wikibase-data-values/src/values/StringValue.js' );
-	requireAgain( 'wikibase-data-values/src/values/QuantityValue.js' );
 	requireAgain( 'wikibase-data-model/src/EntityId.js' );
 	requireAgain( 'wikibase-data-model/src/GroupableCollection.js' );
 	requireAgain( 'wikibase-data-model/src/List.js' );

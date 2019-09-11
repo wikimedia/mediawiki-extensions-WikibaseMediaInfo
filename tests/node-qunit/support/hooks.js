@@ -81,6 +81,7 @@ module.exports.wikibase = Object.assign( {}, module.exports.mediawiki, {
 
 		sandboxes.wikibase = sinon.createSandbox();
 
+		global.globeCoordinate = helpers.createGlobeCoordinateEnv();
 		global.dataValues = helpers.createDataValuesEnv();
 		global.wikibase = helpers.createWikibaseEnv();
 	},

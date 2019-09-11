@@ -1,6 +1,16 @@
+@import '../mediainfo-variables.less';
+
+.wbmi-entityselector-itemcontent {
+	&:hover,
+	&:focus {
+		text-decoration: none;
+	}
+}
+
 .wbmi-entityselector-label,
 .wbmi-entityselector-description,
 .wbmi-entityselector-aliases {
+	color: @base10;
 	display: block;
 	overflow: hidden;
 	-o-text-overflow: ellipsis; /* Opera 9 to 10 */

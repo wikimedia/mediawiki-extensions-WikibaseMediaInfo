@@ -176,6 +176,7 @@ EntityLookupElement.prototype.createLabelFromSuggestion = function ( entityStub 
 
 	data.label = entityStub.label || entityStub.id;
 	data.description = entityStub.description;
+	data.url = entityStub.url;
 
 	if ( entityStub.aliases ) {
 		data.aliases =

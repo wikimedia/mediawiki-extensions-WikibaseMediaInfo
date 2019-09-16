@@ -1,4 +1,4 @@
-<span class="wbmi-entityselector-itemcontent">
+<a class="wbmi-entityselector-itemcontent" href={{url}}>
 	<span class="wbmi-entityselector-label">
 		{{label}}
 	</span>
@@ -14,4 +14,4 @@
 		{{description}}
 	</span>
 	{{/description}}
-</span>
+</a>

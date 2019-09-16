@@ -96,5 +96,15 @@
 	"wikibasemediainfo-search-toggle-keywords": "الكلمة المفتاحية",
 	"wikibasemediainfo-search-toggle-depicts": "الوسوم",
 	"wikibasemediainfo-search-toggle-statements": "بيانات أخرى",
-	"wikibasemediainfo-unsupported-datatype-text": "نوع البيانات غير مدعوم"
+	"wikibasemediainfo-unsupported-datatype-text": "نوع البيانات غير مدعوم",
+	"wikibasemediainfo-latitude-input-label": "دائرة العرض",
+	"wikibasemediainfo-latitude-input-placeholder": "درجة عشرية بين -90 و90",
+	"wikibasemediainfo-longitude-input-label": "خط الطول",
+	"wikibasemediainfo-longitude-input-placeholder": "درجة عشرية بين -180 و180",
+	"wikibasemediainfo-precision-input-label": "الدقة",
+	"wikibasemediainfo-arcminute-label": "لدقيقة قوسية",
+	"wikibasemediainfo-arcsecond-label": "لثانية قوسية",
+	"wikibasemediainfo-tenth-of-arcsecond-label": "ل1/10 من الثانية قالوسية",
+	"wikibasemediainfo-hundreth-of-arcsecond-label": "ل1/100 من الثانية قالوسية",
+	"wikibasemediainfo-thousanth-of-arcsecond-label": "ل1/1000 من الثانية قالوسية"
 }

@@ -96,5 +96,8 @@
 	"wikibasemediainfo-search-toggle-keywords": "关键词",
 	"wikibasemediainfo-search-toggle-depicts": "标签",
 	"wikibasemediainfo-search-toggle-statements": "其他陈述",
-	"wikibasemediainfo-unsupported-datatype-text": "不支持的数据类型"
+	"wikibasemediainfo-unsupported-datatype-text": "不支持的数据类型",
+	"wikibasemediainfo-latitude-input-label": "纬度",
+	"wikibasemediainfo-longitude-input-label": "经度",
+	"wikibasemediainfo-precision-input-label": "精度"
 }

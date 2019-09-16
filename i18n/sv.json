@@ -58,5 +58,8 @@
 	"wikibasemediainfo-search-search": "Sök",
 	"wikibasemediainfo-search-toggle-keywords": "Nyckelord",
 	"wikibasemediainfo-search-toggle-depicts": "Taggar",
-	"wikibasemediainfo-search-toggle-statements": "Andra uttalanden"
+	"wikibasemediainfo-search-toggle-statements": "Andra uttalanden",
+	"wikibasemediainfo-latitude-input-label": "Latitud",
+	"wikibasemediainfo-longitude-input-label": "Longitud",
+	"wikibasemediainfo-precision-input-label": "Precision"
 }

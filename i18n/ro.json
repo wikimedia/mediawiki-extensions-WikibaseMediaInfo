@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"GabiBil"
+		]
+	},
+	"wikibasemediainfo-latitude-input-label": "Latitudine",
+	"wikibasemediainfo-longitude-input-label": "Longitudine",
+	"wikibasemediainfo-precision-input-label": "Precizie"
+}

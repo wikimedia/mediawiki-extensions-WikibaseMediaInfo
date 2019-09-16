@@ -92,5 +92,15 @@
 	"wikibasemediainfo-search-toggle-keywords": "Клучен збор",
 	"wikibasemediainfo-search-toggle-depicts": "Ознаки",
 	"wikibasemediainfo-search-toggle-statements": "Други искази",
-	"wikibasemediainfo-unsupported-datatype-text": "Неподдржан податочен тип"
+	"wikibasemediainfo-unsupported-datatype-text": "Неподдржан податочен тип",
+	"wikibasemediainfo-latitude-input-label": "Гео. ширина",
+	"wikibasemediainfo-latitude-input-placeholder": "Дицимален степен помеѓу -90 и 90",
+	"wikibasemediainfo-longitude-input-label": "Гео. должина",
+	"wikibasemediainfo-longitude-input-placeholder": "Дицимален степен помеѓу -180 и 180",
+	"wikibasemediainfo-precision-input-label": "Уточнетост",
+	"wikibasemediainfo-arcminute-label": "до лачна минута",
+	"wikibasemediainfo-arcsecond-label": "до лачна секунда",
+	"wikibasemediainfo-tenth-of-arcsecond-label": "до 1/10 лачна секунда",
+	"wikibasemediainfo-hundreth-of-arcsecond-label": "до 1/100 лачна секунда",
+	"wikibasemediainfo-thousanth-of-arcsecond-label": "до 1/1000 лачна секунда"
 }

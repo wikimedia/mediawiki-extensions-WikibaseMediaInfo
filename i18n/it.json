@@ -75,5 +75,8 @@
 	"wikibasemediainfo-search-toggle-keywords": "Parola chiave",
 	"wikibasemediainfo-search-toggle-depicts": "Etichette",
 	"wikibasemediainfo-search-toggle-statements": "Altre dichiarazioni",
-	"wikibasemediainfo-unsupported-datatype-text": "Tipo di dati non supportato"
+	"wikibasemediainfo-unsupported-datatype-text": "Tipo di dati non supportato",
+	"wikibasemediainfo-latitude-input-label": "Latitudine",
+	"wikibasemediainfo-longitude-input-label": "Longitudine",
+	"wikibasemediainfo-precision-input-label": "Precisione"
 }

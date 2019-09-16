@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"Red Winged Duck"
+			"Red Winged Duck",
+			"Renessaince"
 		]
 	},
 	"action-mediainfo-term": "зьмену тэрмінаў мэдыязьвестак (подпісы, кароткія апісаньні)",
@@ -25,7 +26,7 @@
 	"wikibasemediainfo-filepage-edit-captions": "Рэдагаваць подпісы",
 	"wikibasemediainfo-filepage-edit-depicts": "Рэдагаваць апісаньне адлюстраванага",
 	"wikibasemediainfo-filepage-cancel": "Адмяніць",
-	"wikibasemediainfo-filepage-cancel-confirm": "Скасаваць зьмены? Зробленыя вамі зьмены ня будуць захаваныя.",
+	"wikibasemediainfo-filepage-cancel-confirm": "Зробленыя вамі зьмены ня будуць захаваныя.",
 	"wikibasemediainfo-filepage-edit": "Рэдагаваць",
 	"wikibasemediainfo-filepage-publish": "Апублікаваць зьмены",
 	"wikibasemediainfo-filepage-caption-empty": "Дадайце аднарадковае тлумачэньне, што зь сябе ўяўляе гэты файл",

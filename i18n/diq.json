@@ -3,9 +3,14 @@
 		"authors": [
 			"Orbot707",
 			"Mirzali",
-			"Asmen"
+			"Asmen",
+			"1917 Ekim Devrimi"
 		]
 	},
+	"wikibase-entity-mediainfo": "melumatê medya",
+	"wikibase-mediainfo-summary-wbsetlabel-add": "Bınnuşteyo [$2] biyo cı",
+	"wikibase-mediainfo-summary-wbsetlabel-remove": "Bınnuşteyo [$2] dariyo we",
+	"wikibase-mediainfo-summary-wbsetlabel-set": "Bınnuştey [$2] vuriyayo",
 	"wikibasemediainfo-filepage-fileinfo-heading": "Melumatê dosya",
 	"wikibasemediainfo-filepage-edit-depicts": "Resıman bıvurne",
 	"wikibasemediainfo-filepage-cancel": "Bıtexelne",
@@ -24,12 +29,18 @@
 	"wikibasemediainfo-filetype-bitmap": "Resımi",
 	"wikibasemediainfo-filetype-video": "Video",
 	"wikibasemediainfo-filetype-audio": "Veng",
+	"wikibasemediainfo-filetype-3d": "Modelê 3Dyi",
 	"wikibasemediainfo-filetype-office": "Dokumani",
+	"wikibasemediainfo-remove-all-statements-confirm-title": "Pêroyıne wedare?",
+	"wikibasemediainfo-remove-all-statements-confirm-accept": "Wedare",
 	"wikibasemediainfo-search-qualifiers-cancel": "Bıtexelne",
 	"wikibasemediainfo-search-qualifiers-save": "Qeyd ke",
 	"wikibasemediainfo-search-statements-cancel": "Bıtexelne",
 	"wikibasemediainfo-search-statements-save": "Cı geyre",
 	"wikibasemediainfo-search-search": "Cı geyre",
 	"wikibasemediainfo-search-toggle-keywords": "Çekuya kıliti",
-	"wikibasemediainfo-search-toggle-depicts": "Etiketi"
+	"wikibasemediainfo-search-toggle-depicts": "Etiketi",
+	"wikibasemediainfo-latitude-input-label": "Verıniye",
+	"wikibasemediainfo-longitude-input-label": "Derganiye",
+	"wikibasemediainfo-precision-input-label": "Hesasiyet"
 }

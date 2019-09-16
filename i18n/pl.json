@@ -3,7 +3,8 @@
 		"authors": [
 			"Chrumps",
 			"Woytecr",
-			"Railfail536"
+			"Railfail536",
+			"Rail"
 		]
 	},
 	"action-mediainfo-term": "zmiany strukturalnych opisów multimediów (podpisy, podsumowania)",
@@ -41,7 +42,7 @@
 	"wikibasemediainfo-filepage-statement-some-value": "Ta właściwość jest podana, ale jako nieznana",
 	"wikibasemediainfo-filepage-statement-error": "Wystąpił błąd podczas pobierania wartości tej właściwości",
 	"wikibasemediainfo-filepage-license-title": "Zmienianie podpisów i innych danych strukturalnych",
-	"wikibasemediainfo-filepage-license-content": "Klikając \"Opublikuj zmiany\" zgadzasz się z [[wmf:Terms_of_Use|warunkami użytkowania]] oraz wyrażasz nieodwołalną zgodę na wydanie swojego wkładu na licencji [https://creativecommons.org/publicdomain/zero/1.0/ Creative Commons CC0].",
+	"wikibasemediainfo-filepage-license-content": "Klikając „Opublikuj zmiany” zgadzasz się z [[wmf:Terms_of_Use|warunkami użytkowania]] oraz wyrażasz nieodwołalną zgodę na wydanie swojego wkładu na licencji [https://creativecommons.org/publicdomain/zero/1.0/ Creative Commons CC0].",
 	"wikibasemediainfo-filepage-license-content-acceptance": "Akceptuję te warunki dla moich przyszłych edycji. Nie pokazuj więcej tego komunikatu.",
 	"wikibasemediainfo-property-placeholder": "Właściwość",
 	"wikibasemediainfo-filepage-license-agree": "Akceptuję",
@@ -93,5 +94,6 @@
 	"wikibasemediainfo-search-toggle-keywords": "Słowo kluczowe",
 	"wikibasemediainfo-search-toggle-depicts": "Tagi",
 	"wikibasemediainfo-search-toggle-statements": "Inne stwierdzenia",
-	"wikibasemediainfo-unsupported-datatype-text": "Nieobsługiwany typ danych"
+	"wikibasemediainfo-unsupported-datatype-text": "Nieobsługiwany typ danych",
+	"wikibasemediainfo-precision-input-label": "Precyzja"
 }

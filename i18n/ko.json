@@ -62,5 +62,7 @@
 	"wikibasemediainfo-search-search": "검색",
 	"wikibasemediainfo-search-toggle-keywords": "키워드",
 	"wikibasemediainfo-search-toggle-depicts": "태그",
-	"wikibasemediainfo-unsupported-datatype-text": "미지원 자료형"
+	"wikibasemediainfo-unsupported-datatype-text": "미지원 자료형",
+	"wikibasemediainfo-latitude-input-label": "위도",
+	"wikibasemediainfo-longitude-input-label": "경도"
 }

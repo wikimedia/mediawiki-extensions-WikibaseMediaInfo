@@ -16,5 +16,7 @@
 	"wikibasemediainfo-search-statements-cancel": "မလုပ်တော့ပါ",
 	"wikibasemediainfo-search-statements-save": "ရှာဖွေရန်",
 	"wikibasemediainfo-search-search": "ရှာဖွေရန်",
-	"wikibasemediainfo-search-toggle-depicts": "အမည်တွဲများ"
+	"wikibasemediainfo-search-toggle-depicts": "အမည်တွဲများ",
+	"wikibasemediainfo-latitude-input-label": "လတ္တီကျု",
+	"wikibasemediainfo-longitude-input-label": "လောင်ဂျီကျု"
 }

@@ -56,5 +56,14 @@
 	"wikibasemediainfo-filetype-office": "Documinde",
 	"wikibasemediainfo-remove-all-statements-confirm-title": "Live tutte?",
 	"wikibasemediainfo-remove-all-statements-confirm-accept": "Live",
-	"wikibasemediainfo-unsupported-datatype-text": "Tipe de date non supportate"
+	"wikibasemediainfo-search-search": "Cirche",
+	"wikibasemediainfo-search-toggle-keywords": "Parole chiave",
+	"wikibasemediainfo-search-toggle-depicts": "Tag",
+	"wikibasemediainfo-search-toggle-statements": "Otre dichiarazziune",
+	"wikibasemediainfo-unsupported-datatype-text": "Tipe de date non supportate",
+	"wikibasemediainfo-latitude-input-label": "Latitudene",
+	"wikibasemediainfo-latitude-input-placeholder": "Grade decimale 'mbrà -90 e 90",
+	"wikibasemediainfo-longitude-input-label": "Longitudene",
+	"wikibasemediainfo-longitude-input-placeholder": "Grade decimale 'mbrà -180 e 180",
+	"wikibasemediainfo-precision-input-label": "Precisione"
 }

@@ -61,5 +61,7 @@
 	"wikibasemediainfo-search-toggle-keywords": "Schlësselwuert",
 	"wikibasemediainfo-search-toggle-depicts": "Markéierungen",
 	"wikibasemediainfo-search-toggle-statements": "Aner Aussoen",
+	"wikibasemediainfo-latitude-input-label": "Geografesch Breet",
+	"wikibasemediainfo-longitude-input-label": "Geografesch Längt",
 	"wikibasemediainfo-precision-input-label": "Prezisioun"
 }

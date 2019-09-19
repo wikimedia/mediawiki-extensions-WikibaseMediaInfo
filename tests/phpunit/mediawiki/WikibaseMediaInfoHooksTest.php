@@ -200,68 +200,7 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 		return $testEntityId;
 	}
 
-	public function testOnCirrusSearchBuildDocumentParse_NoRevision() {
-		$page = $this->getMockBuilder( \WikiPage::class )
-			->disableOriginalConstructor()
-			->getMock();
-		$page->method( 'getRevisionRecord' )
-			->willReturn( null );
-
-		$hookObject = $this->createHookObjectWithMocks();
-
-		$document = $this->getMockBuilder( Document::class )
-			->disableOriginalConstructor()
-			->getMock();
-		$document->expects( $this->never() )
-			->method( 'set' );
-
-		$hookObject->doCirrusSearchBuildDocumentParse(
-			$document,
-			$page,
-			$this->getMockBuilder( MediaInfoHandler::class )
-				->disableOriginalConstructor()
-				->getMock()
-		);
-	}
-
-	public function testOnCirrusSearchBuildDocumentParse_NoSlot() {
-		$revisionRecord = $this->getMockBuilder( RevisionRecord::class )
-			->disableOriginalConstructor()
-			->getMock();
-		$revisionRecord->method( 'hasSlot' )
-			->willReturn( false );
-
-		$page = $this->getMockBuilder( \WikiPage::class )
-			->disableOriginalConstructor()
-			->getMock();
-		$page->method( 'getRevisionRecord' )
-			->willReturn( $revisionRecord );
-
-		$hookObject = $this->createHookObjectWithMocks();
-
-		$document = $this->getMockBuilder( Document::class )
-			->disableOriginalConstructor()
-			->getMock();
-		$document->expects( $this->never() )
-			->method( 'set' );
-
-		$hookObject->doCirrusSearchBuildDocumentParse(
-			$document,
-			$page,
-			$this->getMockBuilder( MediaInfoHandler::class )
-				->disableOriginalConstructor()
-				->getMock()
-		);
-	}
-
-	/**
-	 * @dataProvider provideTestCSBDP
-	 */
-	public function testOnCirrusSearchBuildDocumentParse( $searchIndexData, $engineHints ) {
-		$content = $this->getMockBuilder( MediaInfoContent::class )
-			->disableOriginalConstructor()
-			->getMock();
-
+	private function mockSlot( MediaInfoContent $content = null ) {
 		$slot = $this->getMockBuilder( SlotRecord::class )
 			->disableOriginalConstructor()
 			->getMock();
@@ -269,14 +208,47 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 			->willReturn( MediaInfo::ENTITY_TYPE );
 		$slot->method( 'getContent' )
 			->willReturn( $content );
+		return $slot;
+	}
 
+	private function mockRevisionRecord( SlotRecord $slot = null ) {
 		$revisionRecord = $this->getMockBuilder( RevisionRecord::class )
 			->disableOriginalConstructor()
 			->getMock();
-		$revisionRecord->method( 'hasSlot' )
-			->willReturn( true );
-		$revisionRecord->method( 'getSlot' )
-			->willReturn( $slot );
+		if ( $slot === null ) {
+			$revisionRecord->method( 'hasSlot' )
+				->willReturn( false );
+		} else {
+			$revisionRecord->method( 'hasSlot' )
+				->willReturn( true );
+			$revisionRecord->method( 'getSlot' )
+				->willReturn( $slot );
+		}
+		return $revisionRecord;
+	}
+
+	private function mockTermIndexField( array $engineHints ) {
+		return $mockField;
+	}
+
+	/**
+	 * @dataProvider provideTestCSBDP
+	 */
+	public function testOnCirrusSearchBuildDocumentParse( $mode, $searchIndexData, $engineHints ) {
+		$content = null;
+		if ( $mode === 'no-revision-record' ) {
+			$revisionRecord = null;
+		} elseif ( $mode === 'no-slot' ) {
+			$slot = null;
+			$revisionRecord = $this->mockRevisionRecord( $slot );
+		} elseif ( $mode === 'has-slot' ) {
+			$content = $this->getMockBuilder( MediaInfoContent::class )
+				->disableOriginalConstructor()
+				->getMock();
+
+			$slot = $this->mockSlot( $content );
+			$revisionRecord = $this->mockRevisionRecord( $slot );
+		}
 
 		// Fields for search index, with engine hints
 		$fieldsForSearchIndex = [];
@@ -294,16 +266,17 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 			->getMock();
 		$mediaInfoHandler->expects( $this->once() )
 			->method( 'getSlotDataForSearchIndex' )
-			->with( $content )
+			->with( $content ?? MediaInfoContent::emptyContent() )
 			->willReturn( $searchIndexData );
 		$mediaInfoHandler->expects( $this->once() )
 			->method( 'getFieldsForSearchIndex' )
 			->with( $this->isInstanceOf( \CirrusSearch::class ) )
 			->willReturn( $fieldsForSearchIndex );
-
 		$page = $this->getMockBuilder( \WikiPage::class )
 			->disableOriginalConstructor()
 			->getMock();
+		$page->method( 'getTitle' )
+			->willReturn( Title::makeTitle( NS_FILE, 'HooksTest' ) );
 		$page->method( 'getRevisionRecord' )
 			->willReturn( $revisionRecord );
 		$page->method( 'getContentHandler' )
@@ -387,11 +360,23 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 
 	public function provideTestCSBDP() {
 		return [
+			'no revision' => [
+				'mode' => 'no-revision-record',
+				'searchIndexData' => [],
+				'engineHints' => [],
+			],
+			'no slot' => [
+				'mode' => 'no-slot',
+				'searchIndexData' => [],
+				'engineHints' => [],
+			],
 			'no data' => [
+				'mode' => 'has-slot',
 				'searchIndexData' => [],
 				'engineHints' => [],
 			],
 			'index data, no hints' => [
+				'mode' => 'has-slot',
 				'searchIndexData' => [
 					'field_1' => 'test data 1',
 					'field_2' => 'test data 2',
@@ -399,6 +384,7 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 				'engineHints' => [],
 			],
 			'index data, some hints' => [
+				'mode' => 'has-slot',
 				'searchIndexData' => [
 					'field_1' => 'test data 1',
 					'field_2' => 'test data 2',
@@ -408,6 +394,7 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 				],
 			],
 			'index data, all hints' => [
+				'mode' => 'has-slot',
 				'searchIndexData' => [
 					'field_1' => 'test data 1',
 					'field_2' => 'test data 2',

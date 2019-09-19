@@ -649,25 +649,29 @@ class WikibaseMediaInfoHooks {
 		WikiPage $page,
 		MediaInfoHandler $handler
 	) {
+		if ( $page->getTitle()->getNamespace() !== NS_FILE ) {
+			return;
+		}
 		$revisionRecord = $page->getRevisionRecord();
 		if (
-			$revisionRecord !== null && $revisionRecord->hasSlot( MediaInfo::ENTITY_TYPE )
+			$revisionRecord === null || !$revisionRecord->hasSlot( MediaInfo::ENTITY_TYPE )
 		) {
+			$content = MediaInfoContent::emptyContent();
+		} else {
 			/** @var SlotRecord $mediaInfoSlot */
 			$mediaInfoSlot = $page->getRevisionRecord()->getSlot( MediaInfo::ENTITY_TYPE );
+			$content = $mediaInfoSlot->getContent();
+		}
 
-			$engine = new \CirrusSearch();
-			$fieldDefinitions = $handler->getFieldsForSearchIndex( $engine );
-			$slotData = $handler->getSlotDataForSearchIndex(
-				// @phan-suppress-next-line PhanTypeMismatchArgument It is a MediaInfoContent
-				$mediaInfoSlot->getContent()
-			);
-			foreach ( $slotData as $field => $fieldData ) {
-				$document->set( $field, $fieldData );
-				if ( isset( $fieldDefinitions[$field] ) ) {
-					$hints = $fieldDefinitions[$field]->getEngineHints( $engine );
-					CirrusIndexField::addIndexingHints( $document, $field, $hints );
-				}
+		$engine = new \CirrusSearch();
+		$fieldDefinitions = $handler->getFieldsForSearchIndex( $engine );
+		$slotData = $handler->getSlotDataForSearchIndex( $content );
+
+		foreach ( $slotData as $field => $fieldData ) {
+			$document->set( $field, $fieldData );
+			if ( isset( $fieldDefinitions[$field] ) ) {
+				$hints = $fieldDefinitions[$field]->getEngineHints( $engine );
+				CirrusIndexField::addIndexingHints( $document, $field, $hints );
 			}
 		}
 	}

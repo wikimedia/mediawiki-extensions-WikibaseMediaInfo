@@ -157,6 +157,8 @@ class MediaInfoHandler extends EntityHandler {
 	public function getSlotDataForSearchIndex(
 		MediaInfoContent $content
 	) {
+		// Empty field data is acceptable when content is a redirect as CirrusSearch
+		// does not directly index redirects.
 		$fieldsData = [];
 		if ( !$content->isRedirect() ) {
 			$entity = $content->getEntity();
@@ -175,7 +177,10 @@ class MediaInfoHandler extends EntityHandler {
 			if ( isset( $fieldsData[ LabelsField::NAME ] ) ) {
 				$fieldsData[DescriptionsField::NAME] = $fieldsData[LabelsField::NAME];
 				$fieldsData[LabelsField::NAME] = [];
+			} else {
+				$fieldsData[DescriptionsField::NAME] = [];
 			}
+
 			$fieldsData[LabelCountField::NAME] = 0;
 		}
 

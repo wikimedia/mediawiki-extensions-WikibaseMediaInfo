@@ -47,6 +47,29 @@ class MediaInfoContent extends EntityContent {
 		$this->mediaInfoHolder = $mediaInfoHolder;
 	}
 
+	/**
+	 * Constructs an empty content object.
+	 *
+	 * @return MediaInfoContent
+	 */
+	public static function emptyContent(): MediaInfoContent {
+		return new self( new class() implements EntityHolder {
+
+			public function getEntity( $expectedClass = MediaInfo::class ) {
+				return new MediaInfo();
+			}
+
+			public function getEntityId() {
+				return null;
+			}
+
+			public function getEntityType() {
+				return MediaInfo::ENTITY_TYPE;
+			}
+
+		} );
+	}
+
 	protected function getIgnoreKeysForFilters() {
 		// We explicitly want to allow the 'labels' block's 'language' keys through, so that AbuseFilters
 		// can be written that check if e.g. Latin characters are written in a zh-hans label slot.

@@ -95,5 +95,7 @@
 	"wikibasemediainfo-search-toggle-depicts": "Tagi",
 	"wikibasemediainfo-search-toggle-statements": "Inne stwierdzenia",
 	"wikibasemediainfo-unsupported-datatype-text": "Nieobsługiwany typ danych",
+	"wikibasemediainfo-latitude-input-label": "Szerokość geograficzna",
+	"wikibasemediainfo-longitude-input-label": "Długość geograficzna",
 	"wikibasemediainfo-precision-input-label": "Precyzja"
 }

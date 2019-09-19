@@ -5,7 +5,8 @@
 			"Hamilton Abreu",
 			"Ruila",
 			"CaiusSPQR",
-			"Fúlvio"
+			"Fúlvio",
+			"Mansil alfalb"
 		]
 	},
 	"action-mediainfo-term": "alterar os termos da informação de ficheiros multimédia (legendas, resumos)",
@@ -95,5 +96,7 @@
 	"wikibasemediainfo-search-toggle-keywords": "Palavra-chave",
 	"wikibasemediainfo-search-toggle-depicts": "Etiquetas",
 	"wikibasemediainfo-search-toggle-statements": "Outras declarações",
-	"wikibasemediainfo-unsupported-datatype-text": "Tipo de dados não suportado"
+	"wikibasemediainfo-unsupported-datatype-text": "Tipo de dados não suportado",
+	"wikibasemediainfo-latitude-input-label": "Latitude",
+	"wikibasemediainfo-longitude-input-label": "Longitude"
 }

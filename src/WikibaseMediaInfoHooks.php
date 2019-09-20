@@ -273,7 +273,7 @@ class WikibaseMediaInfoHooks {
 			$entityLookup = $wbRepo->getEntityLookup();
 			$entityRevisionId = $entityLookup->hasEntity( $entityId ) ? $revision->getId() : null;
 			$entity = $entityLookup->getEntity( $entityId );
-			$serializer = $wbRepo->getAllTypesEntitySerializer( $entityId );
+			$serializer = $wbRepo->getAllTypesEntitySerializer();
 			$entityData = ( $entity ? $serializer->serialize( $entity ) : [] );
 
 			$modules[] = 'wikibase.mediainfo.filePageDisplay';

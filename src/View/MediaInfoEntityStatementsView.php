@@ -341,11 +341,11 @@ class MediaInfoEntityStatementsView {
 
 		$mainSnakDiv = new Tag( 'div' );
 		$mainSnakValueEntityId = null;
-		if (
-			( $mainSnak instanceof PropertyValueSnak ) &&
-			( $mainSnak->getDataValue() instanceof EntityIdValue )
-		) {
-			$mainSnakValueEntityId = $mainSnak->getDataValue()->getEntityId();
+		if ( $mainSnak instanceof PropertyValueSnak ) {
+			$dataValue = $mainSnak->getDataValue();
+			if ( $dataValue instanceof EntityIdValue ) {
+				$mainSnakValueEntityId = $dataValue->getEntityId();
+			}
 		}
 		$mainSnakDiv->appendContent(
 			$this->createFormattedDataValue(
@@ -435,7 +435,7 @@ class MediaInfoEntityStatementsView {
 
 		$innerDiv = new Tag( 'div' );
 		$innerDiv->addClasses( [ 'wbmi-item-content-group' ] );
-		$innerDiv->appendContent( $qualifierDivs );
+		$innerDiv->appendContent( ...$qualifierDivs );
 		$container->appendContent(
 			$innerDiv
 		);

@@ -4,7 +4,6 @@ namespace Wikibase\MediaInfo\Services;
 
 use Wikibase\DataModel\Entity\EntityId;
 use Wikibase\Lib\Store\Sql\PageTableEntityQueryBase;
-use Wikibase\MediaInfo\DataModel\MediaInfoId;
 
 /**
  * PageTableEntityQuery that assumes the entity IDs numeric part matches page_id of the page
@@ -17,10 +16,11 @@ use Wikibase\MediaInfo\DataModel\MediaInfoId;
 class MediaInfoEntityQuery extends PageTableEntityQueryBase {
 
 	/**
-	 * @param MediaInfoId $entityId
+	 * @param EntityId $entityId
 	 * @return array SQL condition
 	 */
 	protected function getConditionForEntityId( EntityId $entityId ) {
+		'@phan-var \Wikibase\MediaInfo\DataModel\MediaInfoId $entityId';
 		return [ 'page_id' => $entityId->getNumericId() ];
 	}
 

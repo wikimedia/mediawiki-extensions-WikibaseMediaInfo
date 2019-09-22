@@ -7,7 +7,6 @@ use InvalidArgumentException;
 use Wikibase\DataModel\Entity\EntityDocument;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\View\EntityDocumentView;
-use Wikibase\View\LanguageDirectionalityLookup;
 use Wikibase\View\ViewContent;
 
 /**
@@ -36,7 +35,6 @@ class MediaInfoView implements EntityDocumentView {
 
 	/**
 	 * @param MediaInfoEntityTermsView $captionsView
-	 * @param LanguageDirectionalityLookup $languageDirectionalityLookup
 	 * @param string $languageCode
 	 * @param MediaInfoEntityStatementsView $statementsView
 	 * @codeCoverageIgnore

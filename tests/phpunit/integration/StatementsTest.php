@@ -13,6 +13,7 @@ use Wikimedia\Assert\Assert;
  * - delete an existing claim
  * - get all existing claims for entity
  * - search/lookup statement (just that the search works without falling over, results not tested)
+ * - clear entity, deleting all statements
 *
  * @group medium
  * @group upload
@@ -156,8 +157,10 @@ class StatementsTest extends WBMIApiTestCase {
 		$statements = $result['entities'][$entityId]['statements'];
 
 		$testPropertyId = $testStatement['mainsnak']['property'];
+		if ( !array_key_exists( $testPropertyId, $statements ) ) {
+			return false;
+		}
 
-		$this->assertArrayHasKey( $testPropertyId, $statements );
 		$statementOk = false;
 		foreach ( $statements[$testPropertyId] as $statement ) {
 			if (
@@ -242,6 +245,21 @@ class StatementsTest extends WBMIApiTestCase {
 			],
 			null,
 			self::$users['wbeditor']->getUser()
+		);
+
+		// Clear entity and check that statement 1 is also gone
+		$this->doApiRequestWithToken(
+			[
+				'action' => 'wbeditentity',
+				'id' => $entityId,
+				'data' => '{}',
+				'clear' => true,
+			],
+			null,
+			self::$users['wbeditor']->getUser()
+		);
+		$this->assertFalse(
+			$this->entityHasStatement( $entityId, $testClaim_1 )
 		);
 
 		$this->restoreFederation();

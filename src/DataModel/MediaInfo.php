@@ -3,6 +3,7 @@
 namespace Wikibase\MediaInfo\DataModel;
 
 use InvalidArgumentException;
+use Wikibase\DataModel\Entity\ClearableEntity;
 use Wikibase\DataModel\Entity\EntityDocument;
 use Wikibase\DataModel\Entity\EntityId;
 use Wikibase\DataModel\Statement\StatementList;
@@ -20,7 +21,7 @@ use Wikibase\DataModel\Term\TermList;
  * @author Bene* < benestar.wikimedia@gmail.com >
  */
 class MediaInfo implements EntityDocument, LabelsProvider, DescriptionsProvider,
-	StatementListProvider {
+	StatementListProvider, ClearableEntity {
 
 	const ENTITY_TYPE = 'mediainfo';
 
@@ -153,6 +154,15 @@ class MediaInfo implements EntityDocument, LabelsProvider, DescriptionsProvider,
 		$this->labels = clone $this->labels;
 		$this->descriptions = clone $this->descriptions;
 		$this->statements = clone $this->statements;
+	}
+
+	/**
+	 * @see ClearableEntity::clear
+	 */
+	public function clear() {
+		$this->labels = new TermList();
+		$this->descriptions = new TermList();
+		$this->statements = new StatementList();
 	}
 
 }

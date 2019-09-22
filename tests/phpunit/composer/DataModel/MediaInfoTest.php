@@ -295,4 +295,15 @@ class MediaInfoTest extends \PHPUnit\Framework\TestCase {
 		);
 	}
 
+	public function testClear() {
+		$mediaInfo = new MediaInfo();
+		$mediaInfo->getLabels()->setTextForLanguage( 'en', 'label' );
+		$mediaInfo->getDescriptions()->setTextForLanguage( 'en', 'description' );
+		$mediaInfo->getStatements()->addNewStatement( new PropertyNoValueSnak( 42 ) );
+
+		$mediaInfo->clear();
+
+		$this->assertTrue( $mediaInfo->isEmpty() );
+	}
+
 }

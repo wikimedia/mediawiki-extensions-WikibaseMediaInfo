@@ -9,7 +9,8 @@
 			"Kareyac",
 			"Movses",
 			"Чаховіч Уладзіслаў",
-			"Saimongoltinio"
+			"Saimongoltinio",
+			"Katunchik"
 		]
 	},
 	"action-mediainfo-term": "изменение значений метаданных медиафайлов (краткие подписи, опсиания)",
@@ -93,5 +94,15 @@
 	"wikibasemediainfo-search-toggle-keywords": "Ключевое слово",
 	"wikibasemediainfo-search-toggle-depicts": "Метки",
 	"wikibasemediainfo-search-toggle-statements": "Другие утверждения",
-	"wikibasemediainfo-unsupported-datatype-text": "Неподдерживаемый тип данных"
+	"wikibasemediainfo-unsupported-datatype-text": "Неподдерживаемый тип данных",
+	"wikibasemediainfo-latitude-input-label": "Широта",
+	"wikibasemediainfo-latitude-input-placeholder": "Десятичная шкала градусов от -90 до 90",
+	"wikibasemediainfo-longitude-input-label": "Долгота",
+	"wikibasemediainfo-longitude-input-placeholder": "Десятичная шкала градусов от -180 до 180",
+	"wikibasemediainfo-precision-input-label": "Точность",
+	"wikibasemediainfo-arcminute-label": "в угловых минутах",
+	"wikibasemediainfo-arcsecond-label": "в угловых секундах",
+	"wikibasemediainfo-tenth-of-arcsecond-label": "в 1/10 угловых секунд",
+	"wikibasemediainfo-hundreth-of-arcsecond-label": "в 1/100 угловых секунд",
+	"wikibasemediainfo-thousanth-of-arcsecond-label": "в 1/1000 угловых секунд"
 }

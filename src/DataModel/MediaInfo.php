@@ -78,7 +78,7 @@ class MediaInfo implements EntityDocument, LabelsProvider, DescriptionsProvider,
 	}
 
 	/**
-	 * @param MediaInfoId $id
+	 * @param EntityId $id
 	 *
 	 * @throws InvalidArgumentException
 	 */

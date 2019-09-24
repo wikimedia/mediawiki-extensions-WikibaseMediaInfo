@@ -54,6 +54,8 @@ class MediaInfoDiffer implements EntityDifferStrategy {
 		$this->assertIsMediaInfo( $from );
 		$this->assertIsMediaInfo( $to );
 
+		'@phan-var MediaInfo $from';
+		'@phan-var MediaInfo $to';
 		return $this->diffMediaInfos( $from, $to );
 	}
 

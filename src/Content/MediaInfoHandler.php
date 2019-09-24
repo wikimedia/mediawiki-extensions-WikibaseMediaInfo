@@ -185,11 +185,12 @@ class MediaInfoHandler extends EntityHandler {
 	/**
 	 * Returns the Title of the page in which this MediaInfo item is a slot
 	 *
-	 * @param MediaInfoId $id
+	 * @param EntityId $id
 	 *
 	 * @return Title
 	 */
 	public function getTitleForId( EntityId $id ) {
+		'@phan-var MediaInfoId $id';
 		return Title::newFromID( $id->getNumericId() );
 	}
 

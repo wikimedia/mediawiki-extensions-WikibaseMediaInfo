@@ -639,6 +639,7 @@ class WikibaseMediaInfoHooks {
 		self::newFromGlobalState()->doCirrusSearchBuildDocumentParse(
 			$document,
 			WikiPage::factory( $title ),
+			// @phan-suppress-next-line PhanTypeMismatchArgument It is a MediaInfoHandler
 			ContentHandler::getForModelID( MediaInfoContent::CONTENT_MODEL_ID )
 		);
 	}
@@ -658,6 +659,7 @@ class WikibaseMediaInfoHooks {
 			$engine = new \CirrusSearch();
 			$fieldDefinitions = $handler->getFieldsForSearchIndex( $engine );
 			$slotData = $handler->getSlotDataForSearchIndex(
+				// @phan-suppress-next-line PhanTypeMismatchArgument It is a MediaInfoContent
 				$mediaInfoSlot->getContent()
 			);
 			foreach ( $slotData as $field => $fieldData ) {

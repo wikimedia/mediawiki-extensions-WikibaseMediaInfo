@@ -302,7 +302,7 @@ ComponentWidget.prototype.extractDOMNodes = function ( data ) {
 		var keys = Object.keys( d ),
 			result = new d.constructor(),
 			originals = [],
-			key, i, recursive, nodes;
+			key, i, j, recursive, nodes, node;
 
 		for ( i = 0; i < keys.length; i++ ) {
 			key = keys[ i ];
@@ -315,7 +315,7 @@ ComponentWidget.prototype.extractDOMNodes = function ( data ) {
 			) {
 				recursive = transformNodes( d[ key ] );
 				result[ key ] = recursive.data;
-				originals.concat( recursive.nodes );
+				originals = originals.concat( recursive.nodes );
 			} else {
 				try {
 					// clone the node we might want to parse into the template;
@@ -326,15 +326,18 @@ ComponentWidget.prototype.extractDOMNodes = function ( data ) {
 					// our post-render processing (`rebuildDOM`) will recognize
 					// these nodes are the same and use the original one instead
 					nodes = getNode( d[ key ] );
-					result[ key ] = nodes.map( function ( node ) {
+					result[ key ] = [];
+					for ( j = 0; j < nodes.length; j++ ) {
+						node = nodes[ j ];
 						// only clone nodes that are currently rendered - others
 						// should actually render the real nodes
 						if ( self.$element.find( node ).length > 0 ) {
-							return node.cloneNode( true );
+							result[ key ].push( node.cloneNode( true ) );
+						} else {
+							originals.push( node );
+							result[ key ].push( node );
 						}
-						originals.push( node );
-						return node;
-					} );
+					}
 				} catch ( e ) {
 					// fall through, leaving data unaltered
 					result[ key ] = d[ key ];

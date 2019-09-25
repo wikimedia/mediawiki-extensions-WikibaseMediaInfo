@@ -4,10 +4,9 @@ namespace Wikibase\MediaInfo\DataModel;
 
 use InvalidArgumentException;
 use Wikibase\DataModel\Entity\ClearableEntity;
-use Wikibase\DataModel\Entity\EntityDocument;
 use Wikibase\DataModel\Entity\EntityId;
+use Wikibase\DataModel\Entity\StatementListProvidingEntity;
 use Wikibase\DataModel\Statement\StatementList;
-use Wikibase\DataModel\Statement\StatementListProvider;
 use Wikibase\DataModel\Term\DescriptionsProvider;
 use Wikibase\DataModel\Term\LabelsProvider;
 use Wikibase\DataModel\Term\TermList;
@@ -20,8 +19,8 @@ use Wikibase\DataModel\Term\TermList;
  * @license GPL-2.0-or-later
  * @author Bene* < benestar.wikimedia@gmail.com >
  */
-class MediaInfo implements EntityDocument, LabelsProvider, DescriptionsProvider,
-	StatementListProvider, ClearableEntity {
+class MediaInfo implements StatementListProvidingEntity, LabelsProvider, DescriptionsProvider,
+	ClearableEntity {
 
 	const ENTITY_TYPE = 'mediainfo';
 

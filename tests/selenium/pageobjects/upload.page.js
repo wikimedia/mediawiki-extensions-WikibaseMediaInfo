@@ -14,15 +14,7 @@ class UploadPage extends Page {
 	}
 
 	get summary() {
-		return browser.element( '#wpDescText1' );
-	}
-
-	get author() {
-		return browser.element( '#wpAuthor' );
-	}
-
-	get originalSource() {
-		return browser.element( '#wpSource' );
+		return browser.element( '#wpUploadDescription' );
 	}
 
 	get heading() {
@@ -33,15 +25,13 @@ class UploadPage extends Page {
 		super.openTitle( 'Special:Upload' );
 	}
 
-	upload( file, destinationName, summaryText, originalSource, license ) {
+	upload( file, destinationName, summaryText, license ) {
 		// Choose file to upload
 		browser.chooseFile( '#wpUploadFile', file );
 
 		// Input all attributes required by Commons
 		this.filename.setValue( destinationName );
-		this.author.setValue( 'Automated test' );
 		this.summary.setValue( summaryText );
-		this.originalSource.setValue( originalSource );
 		browser.selectByValue( '#wpLicense', license );
 
 		// Submit the form

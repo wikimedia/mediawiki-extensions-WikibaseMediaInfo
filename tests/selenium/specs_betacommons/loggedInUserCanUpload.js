@@ -20,11 +20,10 @@ describe( 'Upload tasks - logged in user', function () {
 			tmpDir = tmp.dirSync(),
 			filePath = path.join( tmpDir.name, filename ),
 			summaryText = 'This is a test image',
-			originalSource = 'Randomly generated image',
 			license = 'self|Cc-zero';
 
 		// Generate a random unique image to upload
-		imageGenerator.generateImage( 800, 600, 80, function ( err, image ) {
+		imageGenerator.generateImage( 100, 100, 80, function ( err, image ) {
 			fs.writeFileSync( filePath, image.data );
 
 			LoginPage.loginUser();
@@ -36,7 +35,6 @@ describe( 'Upload tasks - logged in user', function () {
 				filePath,
 				destinationName,
 				summaryText,
-				originalSource,
 				license
 			);
 

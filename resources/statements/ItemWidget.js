@@ -51,11 +51,21 @@ OO.mixinClass( ItemWidget, FormatValueElement );
 ItemWidget.prototype.getTemplateData = function () {
 	var self = this;
 
-	return this.getPropertyData().then( function ( label, url ) {
+	return this.formatValue( this.state.dataValue, 'text/html' ).then( function ( label ) {
 		var id = self.dataValue ? self.dataValue.toJSON().id : '',
 			prominent = self.state.rank === wikibase.datamodel.Statement.RANK.PREFERRED,
 			removeButton,
-			addQualifierButton;
+			addQualifierButton,
+			formatResponse;
+
+		formatResponse = function ( html ) {
+			return $( '<div>' )
+				.append( html )
+				.find( 'a' )
+				.attr( 'target', '_blank' )
+				.end()
+				.html();
+		};
 
 		removeButton = new OO.ui.ButtonWidget( {
 			classes: [ 'wbmi-item-remove' ],
@@ -77,8 +87,7 @@ ItemWidget.prototype.getTemplateData = function () {
 		return {
 			editing: self.state.editing,
 			qualifiers: self.getItems(),
-			label: label,
-			url: url,
+			label: formatResponse( label ),
 			id: id.replace( /^.+:/, '' ),
 			prominent: prominent,
 			prominenceMessage: prominent ?
@@ -89,31 +98,6 @@ ItemWidget.prototype.getTemplateData = function () {
 			addQualifierButton: addQualifierButton
 		};
 	} );
-};
-
-/**
- * @return {jQuery.Promise}
- */
-ItemWidget.prototype.getPropertyData = function () {
-	var labelPromise,
-		urlPromise;
-
-	if ( !this.state.dataValue ) {
-		return $.Deferred().resolve( '', '' ).promise();
-	}
-
-	labelPromise = this.formatValue( this.state.dataValue, 'text/html' );
-	urlPromise = labelPromise.then( function ( formatted ) {
-		try {
-			return $( formatted ).attr( 'href' );
-		} catch ( e ) {
-			// nothing to worry about, it's just not something with a link - we'll
-			// deal with it where we want to display the link
-			return undefined;
-		}
-	} );
-
-	return $.when( labelPromise, urlPromise );
 };
 
 /**

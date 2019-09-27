@@ -54,11 +54,13 @@ class MediaInfoDiffer implements EntityDifferStrategy {
 		$this->assertIsMediaInfo( $from );
 		$this->assertIsMediaInfo( $to );
 
-		'@phan-var MediaInfo $from';
-		'@phan-var MediaInfo $to';
 		return $this->diffMediaInfos( $from, $to );
 	}
 
+	/**
+	 * @param EntityDocument $mediaInfo
+	 * @phan-assert MediaInfo $mediaInfo
+	 */
 	private function assertIsMediaInfo( EntityDocument $mediaInfo ) {
 		if ( !( $mediaInfo instanceof MediaInfo ) ) {
 			throw new InvalidArgumentException( '$mediaInfo must be an instance of MediaInfo' );

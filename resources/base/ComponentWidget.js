@@ -167,6 +167,8 @@ ComponentWidget.prototype.rebuildDOM = function ( $old, $new, preserve ) {
 		$terminatorOld = $( '<span data-random="terminator-' + random + '">' ),
 		$terminatorNew = $( '<span data-random="terminator-' + random + '">' ),
 		lastIndex = -1,
+		oldNodesMap,
+		matchingNodesMap,
 		$nodes,
 		oldNode,
 		$oldNode,
@@ -184,6 +186,9 @@ ComponentWidget.prototype.rebuildDOM = function ( $old, $new, preserve ) {
 	$old.append( $terminatorOld );
 	$new.append( $terminatorNew );
 
+	oldNodesMap = $old.contents().get();
+	matchingNodesMap = this.matchNodes( $old.contents(), $new.contents() );
+
 	for ( oldIndex = 0; oldIndex < $old.contents().length; oldIndex++ ) {
 		$oldNode = $old.contents().eq( oldIndex );
 		oldNode = $oldNode.get( 0 );
@@ -199,7 +204,7 @@ ComponentWidget.prototype.rebuildDOM = function ( $old, $new, preserve ) {
 			continue;
 		}
 
-		$newNode = this.findMatchingNode( $oldNode, $new.contents().slice( lastIndex + 1 ) );
+		$newNode = matchingNodesMap[ oldNodesMap.indexOf( oldNode ) ] || $();
 		newNode = $newNode.get( 0 );
 		newIndex = $new.contents().index( $newNode );
 
@@ -330,7 +335,7 @@ ComponentWidget.prototype.extractDOMNodes = function ( data ) {
 					for ( j = 0; j < nodes.length; j++ ) {
 						node = nodes[ j ];
 						// only clone nodes that are currently rendered - others
-						// should actually render the real nodes
+						// should actually render the real nodes (not clones)
 						if ( self.$element.find( node ).length > 0 ) {
 							result[ key ].push( node.cloneNode( true ) );
 						} else {
@@ -353,15 +358,68 @@ ComponentWidget.prototype.extractDOMNodes = function ( data ) {
 };
 
 /**
- * Locate the same node in a haystack, either by being the first exact same
- * node (`.isEqualNode`), or the best possible match with the same children.
+ * Given 2 collection of nodes ($one and $two), this will return
+ * an array of the same size as $one, where the indices correspond
+ * to the nodes in $one, and the values are the best matching/most
+ * similar node in $two.
+ *
+ * @private
+ * @param {jQuery} $one
+ * @param {jQuery} $two
+ * @return {Array}
+ */
+ComponentWidget.prototype.matchNodes = function ( $one, $two ) {
+	var self = this,
+		used = [],
+		mapOne, mapTwo;
+
+	// fnd best matching nodes in both data sets
+	mapOne = $one.get().map( function ( node ) {
+		return self.findBestMatchingNodes( $( node ), $two );
+	} );
+	mapTwo = $two.get().map( function ( node ) {
+		return self.findBestMatchingNodes( $( node ), $one );
+	} );
+
+	return mapOne
+		// we'll first eliminate all matches that don't cross-reference
+		// one another (e.g. where $two finds that there is a better match
+		// in $one)
+		.map( function ( $nodesInTwo, i ) {
+			var nodeInOne = $one.eq( i );
+			return $nodesInTwo.filter( function ( i, nodeInTwo ) {
+				var $nodesInOne = mapTwo[ $two.index( nodeInTwo ) ];
+				return $nodesInOne.filter( nodeInOne ).length > 0;
+			} );
+		} )
+		// next, we'll make sure to only keep 1 best match: the first
+		// remaining one (except if already matched elsewhere)
+		.map( function ( $nodesInTwo ) {
+			// grab the first (available) node
+			// there may still be multiple matches, so let's make
+			// sure we don't match one already matched earlier...
+			var $nodeInTwo = $nodesInTwo.filter( function ( i, nodeInTwo ) {
+				return used.indexOf( nodeInTwo ) < 0;
+			} ).eq( 0 );
+
+			// append to array of used nodes, so next node can't use
+			// it anymore
+			used.push( $nodeInTwo.get( 0 ) );
+
+			return $nodeInTwo;
+		} );
+};
+
+/**
+ * Locate the same node in a haystack, either by being the exact same
+ * node (`.isEqualNode`), or the best possible matches with the same children.
  *
  * @private
  * @param {jQuery} $needle
  * @param {jQuery} $haystack
  * @return {jQuery}
  */
-ComponentWidget.prototype.findMatchingNode = function ( $needle, $haystack ) {
+ComponentWidget.prototype.findBestMatchingNodes = function ( $needle, $haystack ) {
 	var self = this,
 		$match,
 		$potentialMatches,
@@ -372,7 +430,7 @@ ComponentWidget.prototype.findMatchingNode = function ( $needle, $haystack ) {
 	$match = $haystack
 		.filter( function ( i, newNode ) {
 			return $needle.get( 0 ).isEqualNode( newNode );
-		} ).first();
+		} );
 
 	if ( $match.length > 0 ) {
 		return $match;
@@ -380,18 +438,28 @@ ComponentWidget.prototype.findMatchingNode = function ( $needle, $haystack ) {
 
 	// find similar nodes based on them having the same children
 	if ( $match.length === 0 && $needle.prop( 'tagName' ) ) {
-		// narrow down to potential matches, based on tag name
-		$potentialMatches = $haystack.filter( $needle.prop( 'tagName' ) );
+		// narrow down to potential matches, based on tag name and node characteristics
+		$potentialMatches = $haystack
+			.filter( $needle.prop( 'tagName' ) )
+			.filter( function ( i, node ) {
+				// test whether nodes are similar enough
+				// (we'll do this again for all their children to find the
+				// *most similar* later on - this just eliminates some,
+				// e.g. when id of node doesn't even match)
+				return self.getNumberOfEqualNodes( $needle, $( node ) ) > 0;
+			} );
 
 		// find the largest amount of matching children
-		matchingChildrenAmounts = $potentialMatches.map( function ( i, newNode ) {
+		matchingChildrenAmounts = $potentialMatches.get().map( function ( newNode ) {
 			return self.getNumberOfEqualNodes( $needle.children(), $( newNode ).children() );
-		} ).get();
+		} );
 		maxMatchingChildren = Math.max.apply( Math, matchingChildrenAmounts.concat( 0 ) );
 
 		if ( maxMatchingChildren > 0 ) {
-			// use the best matching node - the one with the largest amount of matching children
-			return $potentialMatches.eq( matchingChildrenAmounts.indexOf( maxMatchingChildren ) );
+			// return the best matching node(s) - the one(s) with the largest amount of matching children
+			return $potentialMatches.filter( function ( i ) {
+				return matchingChildrenAmounts[ i ] === maxMatchingChildren;
+			} );
 		}
 	}
 
@@ -440,7 +508,7 @@ ComponentWidget.prototype.isEqualNodeAndProps = function ( one, two ) {
 
 /**
  * Find the amount of equal nodes, based on the nodes themselves being
- * `.isEqualNode`, or their children (or theirs, recursive) matching.
+ * `.isEqualNode`, or their children (or theirs, recursively) matching.
  *
  * @private
  * @param {jQuery} $one

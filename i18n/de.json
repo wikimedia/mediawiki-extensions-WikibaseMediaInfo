@@ -59,7 +59,7 @@
 	"wikibasemediainfo-statements-unsupported-property-title": "Nicht unterstützte Eigenschaft",
 	"wikibasemediainfo-statements-unsupported-property-content": "Andere Eigenschaften als $1 werden noch nicht voll unterstützt, jedoch in Zukunft. Derzeit kann die Funktion für nicht unterstützte Eigenschaften unerwartet fehlerhaft arbeiten.",
 	"wikibasemediainfo-statements-unsupported-property-type-content": "Nicht alle Eigenschaftstypen werden vollständig unterstützt; dies ist aber für die Zukunft geplant. Aktuell kann nicht erwartet werden, dass nicht unterstützte Eigenschaften korrekt funktionieren.",
-	"wikibasemediainfo-statements-link-notice-text": "Beschreibungen der strukturierten Daten verlinken auf die zugehörigen Wikidataseiten und werden in einem neuen Fenster geöffnt.",
+	"wikibasemediainfo-statements-link-notice-text": "Beschreibungen der strukturierten Daten verlinken auf die zugehörigen Wikidataseiten und werden in einem neuen Fenster geöffnet.",
 	"wikibasemediainfo-statements-link-notice-dismiss": "Schließen",
 	"wikibasemediainfo-operator-placeholder": "Operator",
 	"wikibasemediainfo-operator-value-is": "ist",

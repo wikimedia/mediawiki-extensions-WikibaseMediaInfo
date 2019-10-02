@@ -207,7 +207,6 @@
 				"wikibase.mediainfo.filepage.styles",
 				"wikibase.mediainfo.statements",
 				"wikibase",
-				"wikibase.api.getLocationAgnosticMwApi",
 				"wikibase.api.RepoApi",
 				"wikibase.api.RepoApiError",
 				"ext.uls.mediawiki"
@@ -283,7 +282,7 @@
 				"oojs-ui-core",
 				"oojs-ui-widgets",
 				"oojs-ui-windows",
-				"wikibase.api.getLocationAgnosticMwApi",
+				"wikibase.api.RepoApi",
 				"wikibase.api.RepoApiError",
 				"wikibase.mediainfo.statements.styles",
 				"wikibase.serialization.SnakSerializer",

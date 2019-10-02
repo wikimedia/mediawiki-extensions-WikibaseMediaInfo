@@ -1,13 +1,13 @@
 ( function ( wb, util ) {
 	'use strict';
 
-	var SERIALIZER = wb.serialization,
+	var SERIALIZER = require( 'wikibase.serialization' ),
 		PARENT = SERIALIZER.Deserializer,
 		MediaInfo = require( '../datamodel/MediaInfo.js' );
 
 	/**
-	 * @class wikibase.serialization.MediaInfoDeserializer
-	 * @extends wikibase.serialization.Deserializer
+	 * @class wikibase.mediainfo.serialization.MediaInfoDeserializer
+	 * @extends SERIALIZER.Deserializer
 	 * @license GPL-2.0-or-later
 	 * @author Adrian Heine <adrian.heine@wikimedia.de>
 	 *

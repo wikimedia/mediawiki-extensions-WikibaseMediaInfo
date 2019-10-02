@@ -91,6 +91,7 @@ module.exports.wikibase = Object.assign( {}, module.exports.mediawiki, {
 		global.dataValues = helpers.createDataValuesEnv();
 		global.wikibase = helpers.createWikibaseEnv();
 		global.wikibase.datamodel = helpers.registerWbDataModel();
+		helpers.registerWbSerialization();
 	},
 	afterEach: function () {
 		helpers.deregisterWbDataModel();

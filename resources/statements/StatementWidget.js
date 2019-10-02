@@ -6,7 +6,8 @@ var ItemInputWidget = require( './ItemInputWidget.js' ),
 	DOMLessGroupWidget = require( 'wikibase.mediainfo.base' ).DOMLessGroupWidget,
 	ItemWidget = require( './ItemWidget.js' ),
 	StatementWidget,
-	datamodel = require( 'wikibase.datamodel' );
+	datamodel = require( 'wikibase.datamodel' ),
+	serialization = require( 'wikibase.serialization' );
 
 /**
  * @constructor
@@ -408,7 +409,7 @@ StatementWidget.prototype.submit = function ( baseRevId ) {
 			mw.config.get( 'wbmiRepoApiUrl', mw.config.get( 'wbRepoApiUrl' ) )
 		),
 		data = this.getData(),
-		serializer = new wikibase.serialization.StatementSerializer(),
+		serializer = new serialization.StatementSerializer(),
 		promise = $.Deferred().resolve( { pageinfo: { lastrevid: baseRevId } } ).promise(),
 		changedStatements = this.getChanges(),
 		removedStatements = this.getRemovals(),
@@ -530,8 +531,8 @@ StatementWidget.prototype.submit = function ( baseRevId ) {
  * @return {datamodel.StatementList}
  */
 StatementWidget.prototype.cloneData = function ( data ) {
-	var serializer = new wikibase.serialization.StatementListSerializer(),
-		deserializer = new wikibase.serialization.StatementListDeserializer();
+	var serializer = new serialization.StatementListSerializer(),
+		deserializer = new serialization.StatementListDeserializer();
 
 	return deserializer.deserialize( serializer.serialize( data ) );
 };

@@ -202,11 +202,7 @@ module.exports.createDataValuesEnv = function () {
  * @return {Object}
  */
 module.exports.createWikibaseEnv = function () {
-	var oldWikibase = global.wikibase,
-		oldUtil = global.util,
-		wikibase;
-
-	global.wikibase = {
+	return {
 		api: {
 			getLocationAgnosticMwApi: sinon.stub().returns( {
 				get: sinon.stub().returns( $.Deferred().resolve( {} ).promise( { abort: function () {} } ) ),
@@ -219,34 +215,6 @@ module.exports.createWikibaseEnv = function () {
 			ClaimGuidGenerator: sinon.stub().returns( { newGuid: function () { return Math.random().toString( 36 ).slice( 2 ); } } )
 		}
 	};
-	global.util = {};
-
-	requireAgain( 'wikibase-data-values/lib/util/util.inherit.js' );
-
-	requireAgain( 'wikibase-serialization/src/Serializers/Serializer.js' );
-	requireAgain( 'wikibase-serialization/src/Deserializers/Deserializer.js' );
-	requireAgain( 'wikibase-serialization/src/Serializers/SnakSerializer.js' );
-	requireAgain( 'wikibase-serialization/src/Serializers/SnakListSerializer.js' );
-	requireAgain( 'wikibase-serialization/src/Serializers/ClaimSerializer.js' );
-	requireAgain( 'wikibase-serialization/src/Serializers/ReferenceSerializer.js' );
-	requireAgain( 'wikibase-serialization/src/Serializers/ReferenceListSerializer.js' );
-	requireAgain( 'wikibase-serialization/src/Serializers/StatementSerializer.js' );
-	requireAgain( 'wikibase-serialization/src/Serializers/StatementListSerializer.js' );
-	requireAgain( 'wikibase-serialization/src/Deserializers/SnakDeserializer.js' );
-	requireAgain( 'wikibase-serialization/src/Deserializers/SnakListDeserializer.js' );
-	requireAgain( 'wikibase-serialization/src/Deserializers/ClaimDeserializer.js' );
-	requireAgain( 'wikibase-serialization/src/Deserializers/ReferenceDeserializer.js' );
-	requireAgain( 'wikibase-serialization/src/Deserializers/ReferenceListDeserializer.js' );
-	requireAgain( 'wikibase-serialization/src/Deserializers/StatementDeserializer.js' );
-	requireAgain( 'wikibase-serialization/src/Deserializers/StatementListDeserializer.js' );
-
-	wikibase = global.wikibase;
-
-	// restore global scope before returning
-	global.wikibase = oldWikibase;
-	global.util = oldUtil;
-
-	return wikibase;
 };
 
 /**
@@ -336,6 +304,31 @@ module.exports.registerWbDataModel = function () {
 
 module.exports.deregisterWbDataModel = function () {
 	mockery.deregisterMock( 'wikibase.datamodel' );
+};
+
+module.exports.registerWbSerialization = function () {
+	global.util = {};
+
+	requireAgain( 'wikibase-data-values/lib/util/util.inherit.js' );
+
+	requireAgain( 'wikibase-serialization/src/Serializers/Serializer.js' );
+	requireAgain( 'wikibase-serialization/src/Deserializers/Deserializer.js' );
+	requireAgain( 'wikibase-serialization/src/Serializers/SnakSerializer.js' );
+	requireAgain( 'wikibase-serialization/src/Serializers/SnakListSerializer.js' );
+	requireAgain( 'wikibase-serialization/src/Serializers/ClaimSerializer.js' );
+	requireAgain( 'wikibase-serialization/src/Serializers/ReferenceSerializer.js' );
+	requireAgain( 'wikibase-serialization/src/Serializers/ReferenceListSerializer.js' );
+	requireAgain( 'wikibase-serialization/src/Serializers/StatementSerializer.js' );
+	requireAgain( 'wikibase-serialization/src/Serializers/StatementListSerializer.js' );
+	requireAgain( 'wikibase-serialization/src/Deserializers/SnakDeserializer.js' );
+	requireAgain( 'wikibase-serialization/src/Deserializers/SnakListDeserializer.js' );
+	requireAgain( 'wikibase-serialization/src/Deserializers/ClaimDeserializer.js' );
+	requireAgain( 'wikibase-serialization/src/Deserializers/ReferenceDeserializer.js' );
+	requireAgain( 'wikibase-serialization/src/Deserializers/ReferenceListDeserializer.js' );
+	requireAgain( 'wikibase-serialization/src/Deserializers/StatementDeserializer.js' );
+	requireAgain( 'wikibase-serialization/src/Deserializers/StatementListDeserializer.js' );
+
+	mockery.registerSubstitute( 'wikibase.serialization', 'wikibase-serialization/src/index.js' );
 };
 
 /**

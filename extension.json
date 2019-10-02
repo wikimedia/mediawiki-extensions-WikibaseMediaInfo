@@ -134,9 +134,7 @@
 			"dependencies": [
 				"util.inherit",
 				"wikibase.datamodel",
-				"wikibase.serialization.Deserializer",
-				"wikibase.serialization.StatementGroupSetDeserializer",
-				"wikibase.serialization.TermMapDeserializer"
+				"wikibase.serialization"
 			],
 			"targets": [
 				"desktop",
@@ -171,7 +169,8 @@
 				"wikibase",
 				"wikibase.api.RepoApi",
 				"wikibase.api.RepoApiError",
-				"ext.uls.mediawiki"
+				"ext.uls.mediawiki",
+				"wikibase.serialization"
 			],
 			"messages": [
 				"wikibasemediainfo-entitytermsforlanguagelistview-caption",
@@ -249,12 +248,7 @@
 				"wikibase.api.RepoApi",
 				"wikibase.api.RepoApiError",
 				"wikibase.mediainfo.statements.styles",
-				"wikibase.serialization.SnakSerializer",
-				"wikibase.serialization.SnakDeserializer",
-				"wikibase.serialization.StatementListSerializer",
-				"wikibase.serialization.StatementListDeserializer",
-				"wikibase.serialization.StatementSerializer",
-				"wikibase.serialization.StatementDeserializer",
+				"wikibase.serialization",
 				"wikibase.datamodel",
 				"wikibase.utilities.ClaimGuidGenerator",
 				"dataValues.values"

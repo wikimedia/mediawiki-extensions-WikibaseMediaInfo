@@ -5,7 +5,8 @@ var QualifierWidget,
 	QualifierAutocomplete = require( './QualifierAutocompleteWidget.js' ),
 	QualifierValueInput = require( './QualifierValueInputWidget.js' ),
 	FormatValueElement = require( './FormatValueElement.js' ),
-	datamodel = require( 'wikibase.datamodel' );
+	datamodel = require( 'wikibase.datamodel' ),
+	serialization = require( 'wikibase.serialization' );
 
 /**
  * QualifierWidget (new version). This widget represents a single row of
@@ -290,8 +291,8 @@ QualifierWidget.prototype.asyncFormatForDisplay = function () {
  * @return {datamodel.Snak}
  */
 QualifierWidget.prototype.cloneData = function ( data ) {
-	var serializer = new wikibase.serialization.SnakSerializer(),
-		deserializer = new wikibase.serialization.SnakDeserializer();
+	var serializer = new serialization.SnakSerializer(),
+		deserializer = new serialization.SnakDeserializer();
 
 	return deserializer.deserialize( serializer.serialize( data ) );
 };

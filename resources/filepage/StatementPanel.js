@@ -4,6 +4,7 @@ var AnonWarning = require( './AnonWarning.js' ),
 	FormatValueElement = require( 'wikibase.mediainfo.statements' ).FormatValueElement,
 	LicenseDialogWidget = require( './LicenseDialogWidget.js' ),
 	StatementWidget = require( 'wikibase.mediainfo.statements' ).StatementWidget,
+	StatementListDeserializer = require( 'wikibase.serialization' ).StatementListDeserializer,
 	StatementPanel;
 
 /**
@@ -25,7 +26,7 @@ var AnonWarning = require( './AnonWarning.js' ),
  */
 StatementPanel = function StatementPanel( config ) {
 	var self = this,
-		deserializer = new wikibase.serialization.StatementListDeserializer(),
+		deserializer = new StatementListDeserializer(),
 		statementsJson;
 
 	// Parent constructor

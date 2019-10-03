@@ -71,5 +71,8 @@
 	"wikibasemediainfo-arcsecond-label": "to an arcsecond",
 	"wikibasemediainfo-tenth-of-arcsecond-label": "to 1/10 of an arcsecond",
 	"wikibasemediainfo-hundreth-of-arcsecond-label": "to 1/100 of an arcsecond",
-	"wikibasemediainfo-thousanth-of-arcsecond-label": "to 1/1000 of an arcsecond"
+	"wikibasemediainfo-thousanth-of-arcsecond-label": "to 1/1000 of an arcsecond",
+	"wikibasemediainfo-search-suggestions-title-depicts": "files depicting…",
+	"wikibasemediainfo-search-suggestions-preference-label": "Search autocomplete suggestions based on structured data",
+	"wikibasemediainfo-search-suggestions-preference-disable-confirm": "Are you sure you want to remove autocomplete suggestions based on structured data? (This setting can be changed in [[Special:Preferences#mw-prefsection-searchoptions|Preferences]].)"
 }

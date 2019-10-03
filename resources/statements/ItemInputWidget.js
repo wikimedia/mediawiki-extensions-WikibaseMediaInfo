@@ -1,6 +1,6 @@
 'use strict';
 
-var FormatValueElement = require( './FormatValueElement.js' ),
+var FormatValueElement = require( 'wikibase.mediainfo.base' ).FormatValueElement,
 	EntityLookupElement = require( './EntityLookupElement.js' ),
 	ItemInputWidget;
 

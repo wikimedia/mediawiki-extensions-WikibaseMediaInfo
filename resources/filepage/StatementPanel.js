@@ -1,7 +1,7 @@
 'use strict';
 
 var AnonWarning = require( './AnonWarning.js' ),
-	FormatValueElement = require( 'wikibase.mediainfo.statements' ).FormatValueElement,
+	FormatValueElement = require( 'wikibase.mediainfo.base' ).FormatValueElement,
 	LicenseDialogWidget = require( './LicenseDialogWidget.js' ),
 	StatementWidget = require( 'wikibase.mediainfo.statements' ).StatementWidget,
 	StatementListDeserializer = require( 'wikibase.serialization' ).StatementListDeserializer,

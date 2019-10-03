@@ -208,7 +208,8 @@ class WikibaseMediaInfoHooks {
 
 		$properties = [];
 		$propertyTypes = [];
-		$titles = [];
+		$propertyTitles = [];
+		$searchTitles = [];
 		foreach ( $wgMediaInfoProperties as $name => $property ) {
 			try {
 				// some properties/statements may have custom titles, in addition to their property
@@ -217,7 +218,12 @@ class WikibaseMediaInfoHooks {
 				// wikibasemediainfo-statements-title-depicts
 				$message = wfMessage( 'wikibasemediainfo-statements-title-' . ( $name ?: '' ) );
 				if ( $message->exists() ) {
-					$titles[$property] = $message->text();
+					$propertyTitles[$property] = $message->text();
+				}
+
+				$message = wfMessage( 'wikibasemediainfo-search-suggestions-title-' . ( $name ?: '' ) );
+				if ( $message->exists() ) {
+					$searchTitles[$property] = $message->text();
 				}
 
 				// get data type for values associated with this property
@@ -244,8 +250,9 @@ class WikibaseMediaInfoHooks {
 				// wbmiProperties can be removed soon, once all code using it has been updated
 				'wbmiProperties' => $properties,
 				'wbmiDefaultProperties' => array_values( $wgMediaInfoProperties ),
-				'wbmiPropertyTitles' => $titles,
+				'wbmiPropertyTitles' => $propertyTitles,
 				'wbmiPropertyTypes' => $propertyTypes,
+				'wbmiSearchTitles' => $searchTitles,
 				'wbmiHelpUrls' => $wgMediaInfoHelpUrls,
 				'wbmiExternalEntitySearchBaseUri' => $wgMediaInfoExternalEntitySearchBaseUri,
 				'wbmiMediaInfoEnableSearch' => $wgMediaInfoEnableSearch,
@@ -716,6 +723,12 @@ class WikibaseMediaInfoHooks {
 
 		$preferences['wbmi-wikidata-link-notice-dismissed'] = [
 			'type' => 'api'
+		];
+
+		$preferences['wbmi-search-suggestions'] = [
+			'type' => 'toggle',
+			'section' => 'searchoptions',
+			'label-message' => 'wikibasemediainfo-search-suggestions-preference-label'
 		];
 	}
 

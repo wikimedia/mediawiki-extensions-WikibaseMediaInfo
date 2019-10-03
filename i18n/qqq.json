@@ -76,5 +76,8 @@
 	"wikibasemediainfo-arcsecond-label": "Label for globe coordinate precision option to an arcsecond",
 	"wikibasemediainfo-tenth-of-arcsecond-label": "Label for globe coordinate precision option to 1/10 of an arcsecond",
 	"wikibasemediainfo-hundreth-of-arcsecond-label": "Label for globe coordinate precision option to 1/100 of an arcsecond",
-	"wikibasemediainfo-thousanth-of-arcsecond-label": "Label for globe coordinate precision option to 1/1000 of an arcsecond"
+	"wikibasemediainfo-thousanth-of-arcsecond-label": "Label for globe coordinate precision option to 1/1000 of an arcsecond",
+	"wikibasemediainfo-search-suggestions-title-depicts": "Title of 'depicts' search suggestions",
+	"wikibasemediainfo-search-suggestions-preference-label": "Title of preference setting to enable search autocomplete suggestions based on structured data",
+	"wikibasemediainfo-search-suggestions-preference-disable-confirm": "Text displayed when dismissing search autocomplete suggestions based on structured data, asking to confirm they want to remove such results"
 }

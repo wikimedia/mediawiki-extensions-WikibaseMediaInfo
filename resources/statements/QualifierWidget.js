@@ -2,11 +2,11 @@
 
 var QualifierWidget,
 	ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
+	FormatValueElement = require( 'wikibase.mediainfo.base' ).FormatValueElement,
 	QualifierAutocomplete = require( './QualifierAutocompleteWidget.js' ),
 	QualifierValueInput = require( './QualifierValueInputWidget.js' ),
-	FormatValueElement = require( './FormatValueElement.js' ),
-	datamodel = require( 'wikibase.datamodel' ),
-	serialization = require( 'wikibase.serialization' );
+	serialization = require( 'wikibase.serialization' ),
+	datamodel = require( 'wikibase.datamodel' );
 
 /**
  * QualifierWidget (new version). This widget represents a single row of

@@ -136,12 +136,19 @@ ComponentWidget.prototype.render = function () {
 				$( self.$element.get( 0 ).cloneNode( false ) ).append( $rendered ),
 				preserve
 			);
+
 			return self.$element;
 		} )
-		.catch( function () {
+		.catch( function ( e ) {
 			// something somewhere in the render process failed, but that's ok
 			// we won't handle this except for just catching it & turning the
-			// promise back into a thenable state
+			// promise back into a thenable state, so that follow-up renders
+			// can still proceed
+
+			// eslint-disable-next-line no-console
+			console.warn( e );
+
+			return $();
 		} );
 };
 

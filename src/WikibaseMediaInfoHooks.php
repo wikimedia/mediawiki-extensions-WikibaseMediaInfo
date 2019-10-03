@@ -174,7 +174,6 @@ class WikibaseMediaInfoHooks {
 		global $wgMediaInfoHelpUrls,
 				$wgMediaInfoProperties,
 				$wgMediaInfoExternalEntitySearchBaseUri,
-				$wgMediaInfoSearchFiletypes,
 				$wgMediaInfoEnableSearch;
 
 		// Hide any MediaInfo content and UI on a page, if the target page is a redirect.
@@ -231,7 +230,6 @@ class WikibaseMediaInfoHooks {
 				'wbmiPropertyTitles' => $titles,
 				'wbmiHelpUrls' => $wgMediaInfoHelpUrls,
 				'wbmiExternalEntitySearchBaseUri' => $wgMediaInfoExternalEntitySearchBaseUri,
-				'wbmiSearchFiletypes' => $wgMediaInfoSearchFiletypes,
 				'wbmiMediaInfoEnableSearch' => $wgMediaInfoEnableSearch,
 				'wbmiRepoApiUrl' => wfScript( 'api' ),
 			]

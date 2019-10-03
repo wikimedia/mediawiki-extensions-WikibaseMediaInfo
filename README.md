@@ -93,7 +93,6 @@ are available for this extension:
 | $wgMediaInfoEnableSearch | true/false | false | Feature-flag to enable search features |
 | $wgMediaInfoProperties | `[ 'depicts' => 'P123' ]` | {} | default WB properties to show (e.g. "depicts") |
 | $wgMediaInfoHelpUrls | `[ 'P1' => 'https://commons.wikimedia.org/wiki/Special:MyLanguage/Commons:Depicts' ]` | {} | Links to pages to learn more about wikibase properties |
-| $wgMediaInfoSearchFileTypes | see extension.json | see extension.json | List of file types to search in |
 | $wgUploadWizardConfig[ 'wikibase' ][ 'enabled' ] | true/false | false | UploadWizard feature-flag |
 | $wgUploadWizardConfig[ 'wikibase' ][ 'captions' ] | true/false | false | UploadWizard feature-flag |
 | $wgUploadWizardConfig[ 'wikibase' ][ 'statements' ] | true/false | false | UploadWizard feature-flag |

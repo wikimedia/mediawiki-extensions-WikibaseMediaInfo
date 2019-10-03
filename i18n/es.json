@@ -70,5 +70,8 @@
 	"wikibasemediainfo-search-search": "Buscar",
 	"wikibasemediainfo-search-toggle-keywords": "Palabra clave",
 	"wikibasemediainfo-search-toggle-depicts": "Etiquetas",
-	"wikibasemediainfo-unsupported-datatype-text": "No se admite el tipo de datos"
+	"wikibasemediainfo-unsupported-datatype-text": "No se admite el tipo de datos",
+	"wikibasemediainfo-latitude-input-label": "Latitud",
+	"wikibasemediainfo-longitude-input-label": "Longitud",
+	"wikibasemediainfo-precision-input-label": "Precisión"
 }

@@ -38,9 +38,5 @@
 	"wikibasemediainfo-statements-depicts-title": "Обекти, показани на изображението",
 	"wikibasemediainfo-statements-item-input-label": "от Уикиданни",
 	"wikibasemediainfo-statements-item-input-placeholder": "Търсете за да добавите обекти (котка, планина, Тадж Махал и т.н.)",
-	"wikibasemediainfo-statements-item-remove": "Премахване",
-	"wikibasemediainfo-search-qualifiers-cancel": "Отказ",
-	"wikibasemediainfo-search-statements-cancel": "Отказ",
-	"wikibasemediainfo-search-statements-save": "Търсене",
-	"wikibasemediainfo-search-search": "Търсене"
+	"wikibasemediainfo-statements-item-remove": "Премахване"
 }

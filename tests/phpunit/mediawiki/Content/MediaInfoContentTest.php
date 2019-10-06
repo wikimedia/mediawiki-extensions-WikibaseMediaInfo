@@ -7,7 +7,6 @@ use DataValues\Geo\Values\LatLongValue;
 use DataValues\StringValue;
 use DataValues\TimeValue;
 use InvalidArgumentException;
-use PHPUnit4And6Compat;
 use Wikibase\Content\EntityInstanceHolder;
 use Wikibase\DataModel\Entity\Item;
 use Wikibase\DataModel\Entity\PropertyId;
@@ -34,10 +33,9 @@ use Wikibase\MediaInfo\DataModel\MediaInfoId;
  * @author Bene* < benestar.wikimedia@gmail.com >
  */
 class MediaInfoContentTest extends \PHPUnit\Framework\TestCase {
-	use PHPUnit4And6Compat;
 
 	public function testInvalidEntityType() {
-		$this->setExpectedException( InvalidArgumentException::class );
+		$this->expectException( InvalidArgumentException::class );
 		new MediaInfoContent( new EntityInstanceHolder( new Item() ) );
 	}
 

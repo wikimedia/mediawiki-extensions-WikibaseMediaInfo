@@ -5,7 +5,6 @@ namespace Wikibase\MediaInfo\Tests\MediaWiki\Content;
 use FauxRequest;
 use Language;
 use ParserOutput;
-use PHPUnit4And6Compat;
 use RequestContext;
 use Title;
 use Wikibase\Client\Store\TitleFactory;
@@ -26,13 +25,12 @@ use Wikibase\Repo\ParserOutput\EntityParserOutputGeneratorFactory;
  * @author Daniel Kinzler
  */
 class MissingMediaInfoHandlerTest extends \PHPUnit\Framework\TestCase {
-	use PHPUnit4And6Compat;
 
 	/**
 	 * @return TitleFactory
 	 */
 	private function getTitleFactory() {
-		$titleFactory = $this->getMock( TitleFactory::class );
+		$titleFactory = $this->createMock( TitleFactory::class );
 
 		$titleFactory->expects( $this->any() )
 			->method( 'newFromID' )

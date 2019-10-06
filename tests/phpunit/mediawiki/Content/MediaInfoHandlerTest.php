@@ -4,7 +4,6 @@ namespace Wikibase\MediaInfo\Tests\MediaWiki\Content;
 
 use FauxRequest;
 use IContextSource;
-use PHPUnit4And6Compat;
 use RequestContext;
 use Title;
 use Wikibase\DataModel\Entity\EntityId;
@@ -36,7 +35,6 @@ use Wikibase\TermIndex;
  * @author Bene* < benestar.wikimedia@gmail.com >
  */
 class MediaInfoHandlerTest extends \PHPUnit\Framework\TestCase {
-	use PHPUnit4And6Compat;
 
 	private function getMockWithoutConstructor( $className ) {
 		return $this->getMockBuilder( $className )
@@ -47,7 +45,7 @@ class MediaInfoHandlerTest extends \PHPUnit\Framework\TestCase {
 	private function newMediaInfoHandler( array $replacements = [] ) {
 		$m17 = new MediaInfoId( 'M17' );
 
-		$propertyLookup = $this->getMock( PropertyDataTypeLookup::class );
+		$propertyLookup = $this->createMock( PropertyDataTypeLookup::class );
 		$propertyLookup->expects( $this->any() )
 			->method( 'getDataTypeIdForProperty' )
 			->willReturn( 'string' );
@@ -76,10 +74,10 @@ class MediaInfoHandlerTest extends \PHPUnit\Framework\TestCase {
 			} );
 
 		return new MediaInfoHandler(
-			$this->getMock( TermIndex::class ),
+			$this->createMock( TermIndex::class ),
 			$this->getMockWithoutConstructor( EntityContentDataCodec::class ),
 			$this->getMockWithoutConstructor( EntityConstraintProvider::class ),
-			$this->getMock( ValidatorErrorLocalizer::class ),
+			$this->createMock( ValidatorErrorLocalizer::class ),
 			new ItemIdParser(),
 			$missingMediaInfoHandler,
 			!empty( $replacements[ 'filePageLookup' ] )

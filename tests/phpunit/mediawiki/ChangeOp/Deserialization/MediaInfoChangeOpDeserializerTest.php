@@ -3,7 +3,6 @@
 namespace Wikibase\MediaInfo\Tests\MediaWiki\ChangeOp\Deserialization;
 
 use PHPUnit_Framework_MockObject_MockObject;
-use PHPUnit4And6Compat;
 use Wikibase\Repo\ChangeOp\ChangeOpDescription;
 use Wikibase\Repo\ChangeOp\ChangeOpLabel;
 use Wikibase\Repo\ChangeOp\ChangeOpRemoveStatement;
@@ -34,7 +33,6 @@ class MediaInfoChangeOpDeserializerTest extends \PHPUnit\Framework\TestCase {
 
 	use LabelsChangeOpDeserializationTester;
 	use DescriptionsChangeOpDeserializationTester;
-	use PHPUnit4And6Compat;
 
 	public function testCreateEntityChangeOp() {
 		$changeRequest = [
@@ -89,7 +87,7 @@ class MediaInfoChangeOpDeserializerTest extends \PHPUnit\Framework\TestCase {
 			$this->getClaimsChangeOpDeserializer()
 		);
 
-		$this->setExpectedException( ChangeOpDeserializationException::class );
+		$this->expectException( ChangeOpDeserializationException::class );
 		$mediaInfoChangeOpDeserializer->createEntityChangeOp( [ 'aliases' => [] ] );
 	}
 
@@ -100,7 +98,7 @@ class MediaInfoChangeOpDeserializerTest extends \PHPUnit\Framework\TestCase {
 			$this->getClaimsChangeOpDeserializer()
 		);
 
-		$this->setExpectedException( ChangeOpDeserializationException::class );
+		$this->expectException( ChangeOpDeserializationException::class );
 		$mediaInfoChangeOpDeserializer->createEntityChangeOp( [ 'sitelinks' => [] ] );
 	}
 

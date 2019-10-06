@@ -2,7 +2,6 @@
 
 namespace Wikibase\MediaInfo\Tests\MediaWiki\Search;
 
-use PHPUnit4And6Compat;
 use Wikibase\MediaInfo\Search\MediaInfoFieldDefinitions;
 use Wikibase\Repo\Search\Fields\FieldDefinitions;
 
@@ -13,22 +12,21 @@ use Wikibase\Repo\Search\Fields\FieldDefinitions;
  * @author Katie Filbert < aude.wiki@gmail.com >
  */
 class MediaInfoFieldDefinitionsTest extends \PHPUnit\Framework\TestCase {
-	use PHPUnit4And6Compat;
 
 	public function testGetFields() {
-		$labelsProviderFieldDefinitions = $this->getMock( FieldDefinitions::class );
+		$labelsProviderFieldDefinitions = $this->createMock( FieldDefinitions::class );
 		$labelsProviderFieldDefinitions->method( 'getFields' )
 			->willReturn( [
 				'test_only_labels' => null,
 			] );
 
-		$descriptionsProviderFieldDefinitions = $this->getMock( FieldDefinitions::class );
+		$descriptionsProviderFieldDefinitions = $this->createMock( FieldDefinitions::class );
 		$descriptionsProviderFieldDefinitions->method( 'getFields' )
 			->willReturn( [
 				'test_only_descriptions' => null,
 			] );
 
-		$statementProviderFieldDefinitions = $this->getMock( FieldDefinitions::class );
+		$statementProviderFieldDefinitions = $this->createMock( FieldDefinitions::class );
 		$statementProviderFieldDefinitions->method( 'getFields' )
 			->willReturn( [
 				'test_only_statements' => null,

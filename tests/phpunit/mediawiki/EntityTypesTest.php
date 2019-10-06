@@ -5,7 +5,6 @@ namespace Wikibase\MediaInfo\Tests\MediaWiki;
 use Deserializers\Deserializer;
 use Language;
 use Serializers\Serializer;
-use PHPUnit4And6Compat;
 use Wikibase\DataModel\DeserializerFactory;
 use Wikibase\DataModel\SerializerFactory;
 use Wikibase\LanguageFallbackChain;
@@ -27,7 +26,6 @@ use Wikibase\MediaInfo\View\MediaInfoView;
  * @author Bene* < benestar.wikimedia@gmail.com >
  */
 class EntityTypesTest extends \PHPUnit\Framework\TestCase {
-	use PHPUnit4And6Compat;
 
 	private function getRegistry() {
 		return require __DIR__ . '/../../../WikibaseMediaInfo.entitytypes.php';
@@ -52,11 +50,11 @@ class EntityTypesTest extends \PHPUnit\Framework\TestCase {
 
 		$serializerFactory->expects( $this->once() )
 			->method( 'newTermListSerializer' )
-			->will( $this->returnValue( $this->getMock( Serializer::class ) ) );
+			->will( $this->returnValue( $this->createMock( Serializer::class ) ) );
 
 		$serializerFactory->expects( $this->once() )
 			->method( 'newStatementListSerializer' )
-			->will( $this->returnValue( $this->getMock( Serializer::class ) ) );
+			->will( $this->returnValue( $this->createMock( Serializer::class ) ) );
 
 		return $serializerFactory;
 	}
@@ -81,15 +79,15 @@ class EntityTypesTest extends \PHPUnit\Framework\TestCase {
 
 		$deserializerFactory->expects( $this->once() )
 			->method( 'newEntityIdDeserializer' )
-			->will( $this->returnValue( $this->getMock( Deserializer::class ) ) );
+			->will( $this->returnValue( $this->createMock( Deserializer::class ) ) );
 
 		$deserializerFactory->expects( $this->once() )
 			->method( 'newTermListDeserializer' )
-			->will( $this->returnValue( $this->getMock( Deserializer::class ) ) );
+			->will( $this->returnValue( $this->createMock( Deserializer::class ) ) );
 
 		$deserializerFactory->expects( $this->once() )
 			->method( 'newStatementListDeserializer' )
-			->will( $this->returnValue( $this->getMock( Deserializer::class ) ) );
+			->will( $this->returnValue( $this->createMock( Deserializer::class ) ) );
 
 		return $deserializerFactory;
 	}

@@ -4,7 +4,6 @@ namespace Wikibase\MediaInfo\Tests\DataModel\Serialization;
 
 use Deserializers\Deserializer;
 use Deserializers\Exceptions\DeserializationException;
-use PHPUnit4And6Compat;
 use Wikibase\DataModel\Snak\PropertyNoValueSnak;
 use Wikibase\DataModel\Statement\StatementList;
 use Wikibase\DataModel\Term\TermList;
@@ -21,17 +20,16 @@ use Wikibase\MediaInfo\DataModel\Serialization\MediaInfoDeserializer;
  * @author Bene* < benestar.wikimedia@gmail.com >
  */
 class MediaInfoDeserializerTest extends \PHPUnit\Framework\TestCase {
-	use PHPUnit4And6Compat;
 
 	private function newDeserializer() {
-		$idDeserializer = $this->getMock( Deserializer::class );
+		$idDeserializer = $this->createMock( Deserializer::class );
 		$idDeserializer->expects( $this->any() )
 			->method( 'deserialize' )
 			->will( $this->returnCallback( function( $serialization ) {
 				return new MediaInfoId( $serialization );
 			} ) );
 
-		$termListDeserializer = $this->getMock( Deserializer::class );
+		$termListDeserializer = $this->createMock( Deserializer::class );
 		$termListDeserializer->expects( $this->any() )
 			->method( 'deserialize' )
 			->will( $this->returnCallback( function( array $serialization ) {
@@ -44,7 +42,7 @@ class MediaInfoDeserializerTest extends \PHPUnit\Framework\TestCase {
 				return $termList;
 			} ) );
 
-		$statementListDeserializer = $this->getMock( Deserializer::class );
+		$statementListDeserializer = $this->createMock( Deserializer::class );
 		$statementListDeserializer->expects( $this->any() )
 			->method( 'deserialize' )
 			->will( $this->returnCallback( function( array $serialization ) {
@@ -170,7 +168,7 @@ class MediaInfoDeserializerTest extends \PHPUnit\Framework\TestCase {
 	public function testDeserializeException( $serialization ) {
 		$deserializer = $this->newDeserializer();
 
-		$this->setExpectedException( DeserializationException::class );
+		$this->expectException( DeserializationException::class );
 		$deserializer->deserialize( $serialization );
 	}
 

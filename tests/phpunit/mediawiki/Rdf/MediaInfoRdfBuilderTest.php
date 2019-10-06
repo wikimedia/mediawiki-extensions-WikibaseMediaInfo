@@ -5,7 +5,6 @@ namespace Wikibase\MediaInfo\Tests\MediaWiki\Rdf;
 use File;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
-use PHPUnit4And6Compat;
 use RepoGroup;
 use Wikibase\Lib\Store\EntityTitleLookup;
 use Wikibase\MediaInfo\Rdf\MediaInfoRdfBuilder;
@@ -26,7 +25,6 @@ use Wikimedia\Purtle\RdfWriter;
  * @license GPL-2.0-or-later
  */
 class MediaInfoRdfBuilderTest extends TestCase {
-	use PHPUnit4And6Compat;
 
 	/**
 	 * @var NTriplesRdfTestHelper
@@ -178,7 +176,7 @@ class MediaInfoRdfBuilderTest extends TestCase {
 	public function testMediaInfoFullRDF( $entityName, $dataSetName ) {
 		$entity = $this->getTestData()->getEntity( $entityName );
 		$writer = $this->getTestData()->getNTriplesWriter( false );
-		$entityTitleLookup = $this->getMock( EntityTitleLookup::class );
+		$entityTitleLookup = $this->createMock( EntityTitleLookup::class );
 
 		$builder = $this->newFullBuilder( $writer, RdfProducer::PRODUCE_ALL, $entityTitleLookup );
 		$builder->addEntity( $entity );

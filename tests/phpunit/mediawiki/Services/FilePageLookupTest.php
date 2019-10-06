@@ -2,7 +2,6 @@
 
 namespace Wikibase\MediaInfo\Tests\MediaWiki\Services;
 
-use PHPUnit4And6Compat;
 use Title;
 use Wikibase\Client\Store\TitleFactory;
 use Wikibase\Lib\Store\StorageException;
@@ -18,13 +17,12 @@ use Wikibase\MediaInfo\Services\FilePageLookup;
  * @author Daniel Kinzler
  */
 class FilePageLookupTest extends \PHPUnit\Framework\TestCase {
-	use PHPUnit4And6Compat;
 
 	/**
 	 * @return TitleFactory
 	 */
 	private function getTitleFactory() {
-		$titleFactory = $this->getMock( TitleFactory::class );
+		$titleFactory = $this->createMock( TitleFactory::class );
 
 		$titleFactory->expects( $this->any() )
 			->method( 'newFromId' )

@@ -2,7 +2,7 @@
 
 namespace Wikibase\MediaInfo\Tests\MediaWiki\ChangeOp\Deserialization;
 
-use PHPUnit_Framework_MockObject_MockObject;
+use PHPUnit\Framework\MockObject\MockObject;
 use Wikibase\Repo\ChangeOp\ChangeOpDescription;
 use Wikibase\Repo\ChangeOp\ChangeOpLabel;
 use Wikibase\Repo\ChangeOp\ChangeOpRemoveStatement;
@@ -103,7 +103,7 @@ class MediaInfoChangeOpDeserializerTest extends \PHPUnit\Framework\TestCase {
 	}
 
 	/**
-	 * @return LabelsChangeOpDeserializer|PHPUnit_Framework_MockObject_MockObject
+	 * @return LabelsChangeOpDeserializer|MockObject
 	 */
 	private function getLabelsChangeOpDeserializer() {
 		return $this->getMockBuilder( LabelsChangeOpDeserializer::class )
@@ -131,7 +131,7 @@ class MediaInfoChangeOpDeserializerTest extends \PHPUnit\Framework\TestCase {
 	}
 
 	/**
-	 * @return DescriptionsChangeOpDeserializer|PHPUnit_Framework_MockObject_MockObject
+	 * @return DescriptionsChangeOpDeserializer|MockObject
 	 */
 	private function getDescriptionsChangeOpDeserializer() {
 		return $this->getMockBuilder( DescriptionsChangeOpDeserializer::class )
@@ -159,7 +159,7 @@ class MediaInfoChangeOpDeserializerTest extends \PHPUnit\Framework\TestCase {
 	}
 
 	/**
-	 * @return ClaimsChangeOpDeserializer|PHPUnit_Framework_MockObject_MockObject
+	 * @return ClaimsChangeOpDeserializer|MockObject
 	 */
 	private function getClaimsChangeOpDeserializer() {
 		return $this->getMockBuilder( ClaimsChangeOpDeserializer::class )

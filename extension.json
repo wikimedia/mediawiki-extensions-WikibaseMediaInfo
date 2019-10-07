@@ -117,12 +117,9 @@
 			]
 		},
 		"wikibase.mediainfo.serialization.MediaInfoDeserializer": {
-			"scripts": [
-				"resources/__namespace.js",
-				"resources/datamodel/__namespace.js",
-				"resources/datamodel/MediaInfo.js",
-				"resources/serialization/__namespace.js",
-				"resources/serialization/MediaInfoDeserializer.js"
+			"packageFiles": [
+				"resources/serialization/MediaInfoDeserializer.js",
+				"resources/datamodel/MediaInfo.js"
 			],
 			"dependencies": [
 				"util.inherit",

@@ -21,7 +21,7 @@
 		 *
 		 * @throws {Error} if a required parameter is not specified properly.
 		 */
-		SELF = wb.datamodel.MediaInfo = util.inherit(
+		SELF = util.inherit(
 			'WbDataModelMediaInfo',
 			PARENT,
 			function ( mediaInfoId, labels, descriptions, statementGroupSet ) {
@@ -84,5 +84,7 @@
 	 * @static
 	 */
 	SELF.TYPE = 'mediainfo';
+
+	module.exports = SELF;
 
 }( wikibase, util ) );

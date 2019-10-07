@@ -1,6 +1,8 @@
-( function ( wb ) {
+( function () {
 	'use strict';
+	var MediaInfoDeserializer = require( 'wikibase.mediainfo.serialization.MediaInfoDeserializer' );
+
 	module.exports = function () {
-		return new wb.mediainfo.serialization.MediaInfoDeserializer();
+		return new MediaInfoDeserializer();
 	};
-}( wikibase ) );
+}() );

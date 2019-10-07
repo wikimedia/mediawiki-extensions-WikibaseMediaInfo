@@ -1,9 +1,9 @@
 ( function ( wb, util ) {
 	'use strict';
 
-	var MODULE = wb.mediainfo.serialization,
-		SERIALIZER = wb.serialization,
-		PARENT = SERIALIZER.Deserializer;
+	var SERIALIZER = wb.serialization,
+		PARENT = SERIALIZER.Deserializer,
+		MediaInfo = require( '../datamodel/MediaInfo.js' );
 
 	/**
 	 * @class wikibase.serialization.MediaInfoDeserializer
@@ -13,25 +13,25 @@
 	 *
 	 * @constructor
 	 */
-	MODULE.MediaInfoDeserializer = util.inherit( 'WbMediaInfoDeserializer', PARENT, {
+	module.exports = util.inherit( 'WbMediaInfoDeserializer', PARENT, {
 		/**
 		 * @inheritdoc
 		 *
-		 * @return {wikibase.datamodel.MediaInfo}
+		 * @return {MediaInfo}
 		 *
 		 * @throws {Error} if serialization does not resolve to a serialized MediaInfo.
 		 */
 		deserialize: function ( serialization ) {
 			var statementGroupSetDeserializer, termMapDeserializer;
 
-			if ( serialization.type !== wb.datamodel.MediaInfo.TYPE ) {
+			if ( serialization.type !== MediaInfo.TYPE ) {
 				throw new Error( 'Serialization does not resolve to an MediaInfo' );
 			}
 
 			statementGroupSetDeserializer = new SERIALIZER.StatementGroupSetDeserializer();
 			termMapDeserializer = new SERIALIZER.TermMapDeserializer();
 
-			return new wikibase.datamodel.MediaInfo(
+			return new MediaInfo(
 				serialization.id,
 				termMapDeserializer.deserialize( serialization.labels ),
 				termMapDeserializer.deserialize( serialization.descriptions ),

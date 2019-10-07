@@ -2,6 +2,7 @@
 	"private": true,
 	"scripts": {
 		"chromedriver": "npx chromedriver --url-base=/wd/hub --port=4444",
+		"selenium-daily": "npm run selenium-test-betacommons",
 		"selenium-test-betacommons": "wdio tests/selenium/wdio.conf.js",
 		"test": "grunt test && npm run test:unit",
 		"test:unit": "nyc --include='resources/**/*.js' --reporter=lcov --reporter=lcovonly --reporter=text --reporter=text-summary qunit 'tests/node-qunit/**/*.test.js'",

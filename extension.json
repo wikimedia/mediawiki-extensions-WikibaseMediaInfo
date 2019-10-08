@@ -21,6 +21,9 @@
 		"Wikibase\\MediaInfo\\Tests\\MediaWiki\\": "tests/phpunit/mediawiki/",
 		"Wikibase\\MediaInfo\\Tests\\Integration\\": "tests/phpunit/integration/"
 	},
+	"ConfigRegistry": {
+		"WikibaseMediaInfo": "GlobalVarConfig::newInstance"
+	},
 	"config": {
 		"WikibasePerRepositoryServiceWiringFiles": {
 			"value": [

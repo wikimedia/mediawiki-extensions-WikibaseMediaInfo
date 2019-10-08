@@ -15,6 +15,7 @@
 	"wikibase-mediainfo-summary-wbsetlabel-add": "已添加說明[$2]",
 	"wikibase-mediainfo-summary-wbsetlabel-remove": "已移除說明[$2]",
 	"wikibase-mediainfo-summary-wbsetlabel-set": "已編輯說明[$2]",
+	"wikibasemediainfo-add-property": "搜尋以添加屬性（多媒體類型部分、其它。）",
 	"wikibasemediainfo-add-statement": "添加陳述",
 	"wikibasemediainfo-desc": "管理結構化多媒體檔案詮釋資料的 Wikibase 擴充",
 	"wikibasemediainfo-diffview-label": "說明",
@@ -59,5 +60,8 @@
 	"wikibasemediainfo-statements-unsupported-property-title": "未支援的屬性",
 	"wikibasemediainfo-remove-all-statements-confirm-title": "全部移除？",
 	"wikibasemediainfo-remove-all-statements-confirm-accept": "移除",
-	"wikibasemediainfo-unsupported-datatype-text": "未支援的資料類型"
+	"wikibasemediainfo-unsupported-datatype-text": "未支援的資料類型",
+	"wikibasemediainfo-latitude-input-label": "緯度",
+	"wikibasemediainfo-longitude-input-label": "經度",
+	"wikibasemediainfo-precision-input-label": "精確度"
 }

@@ -12,6 +12,7 @@
 	"wikibase-mediainfo-summary-wbsetlabel-add": "Dodan [$2] opis",
 	"wikibase-mediainfo-summary-wbsetlabel-remove": "Uklonjen [$2] opis",
 	"wikibase-mediainfo-summary-wbsetlabel-set": "Uređen [$2] opis",
+	"wikibasemediainfo-add-statement": "Dodaj izjavu",
 	"wikibasemediainfo-desc": "Wikibase proširenje za upravljanje strukturiranim metapodatcima medijskih datoteka",
 	"wikibasemediainfo-diffview-label": "opis",
 	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Opisi",

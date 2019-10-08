@@ -66,5 +66,10 @@
 	"wikibasemediainfo-latitude-input-placeholder": "Grade decimale 'mbrà -90 e 90",
 	"wikibasemediainfo-longitude-input-label": "Longitudene",
 	"wikibasemediainfo-longitude-input-placeholder": "Grade decimale 'mbrà -180 e 180",
-	"wikibasemediainfo-precision-input-label": "Precisione"
+	"wikibasemediainfo-precision-input-label": "Precisione",
+	"wikibasemediainfo-arcminute-label": "a 'n'archeminute",
+	"wikibasemediainfo-arcsecond-label": "a 'n'archeseconde",
+	"wikibasemediainfo-tenth-of-arcsecond-label": "a 1/10 de 'n'archeseconde",
+	"wikibasemediainfo-hundreth-of-arcsecond-label": "a 1/100 de 'n'archeseconde",
+	"wikibasemediainfo-thousanth-of-arcsecond-label": "a 1/1000 de 'n'archeseconde"
 }

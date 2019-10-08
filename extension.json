@@ -133,10 +133,7 @@
 			],
 			"dependencies": [
 				"util.inherit",
-				"wikibase.datamodel.Entity",
-				"wikibase.datamodel.Fingerprint",
-				"wikibase.datamodel.StatementGroupSet",
-				"wikibase.datamodel.TermMap",
+				"wikibase.datamodel",
 				"wikibase.serialization.Deserializer",
 				"wikibase.serialization.StatementGroupSetDeserializer",
 				"wikibase.serialization.TermMapDeserializer"
@@ -258,8 +255,7 @@
 				"wikibase.serialization.StatementListDeserializer",
 				"wikibase.serialization.StatementSerializer",
 				"wikibase.serialization.StatementDeserializer",
-				"wikibase.datamodel.Statement",
-				"wikibase.datamodel.EntityId",
+				"wikibase.datamodel",
 				"wikibase.utilities.ClaimGuidGenerator",
 				"dataValues.values"
 			],

@@ -2,6 +2,7 @@
 
 var EntityLookupElement = require( './EntityLookupElement.js' ),
 	FormatValueElement = require( './FormatValueElement.js' ),
+	datamodel = require( 'wikibase.datamodel' ),
 	ItemInputWidget = function MediaInfoStatementsItemInputWidget( config ) {
 		config = config || {};
 
@@ -57,12 +58,11 @@ ItemInputWidget.prototype.onLookupMenuItemChoose = function ( item ) {
 };
 
 /**
- * @param {wikibase.datamodel.EntityId|undefined} data
+ * @param {datamodel.EntityId|undefined} data
  */
 ItemInputWidget.prototype.setData = function ( data ) {
 	var self = this;
-
-	if ( data instanceof wikibase.datamodel.EntityId ) {
+	if ( data instanceof datamodel.EntityId ) {
 		this.id = data.toJSON().id;
 		this.formatValue( data, 'text/plain' ).then( function ( plain ) {
 			self.setValue( plain );
@@ -74,10 +74,10 @@ ItemInputWidget.prototype.setData = function ( data ) {
 };
 
 /**
- * @return {wikibase.datamodel.EntityId}
+ * @return {datamodel.EntityId}
  */
 ItemInputWidget.prototype.getData = function () {
-	return new wikibase.datamodel.EntityId( this.id );
+	return new datamodel.EntityId( this.id );
 };
 
 module.exports = ItemInputWidget;

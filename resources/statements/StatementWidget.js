@@ -5,7 +5,8 @@ var ItemInputWidget = require( './ItemInputWidget.js' ),
 	ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
 	DOMLessGroupWidget = require( 'wikibase.mediainfo.base' ).DOMLessGroupWidget,
 	ItemWidget = require( './ItemWidget.js' ),
-	StatementWidget;
+	StatementWidget,
+	datamodel = require( 'wikibase.datamodel' );
 
 /**
  * @constructor
@@ -34,7 +35,7 @@ StatementWidget = function ( config ) {
 	this.state = {
 		entityId: config.entityId,
 		propertyId: config.propertyId,
-		initialData: new wikibase.datamodel.StatementList(),
+		initialData: new datamodel.StatementList(),
 		title: config.title || ( mw.config.get( 'wbmiPropertyTitles' ) || {} )[ config.propertyId ] || '',
 		editing: config.editing || false
 	};
@@ -79,7 +80,7 @@ OO.mixinClass( StatementWidget, FormatValueElement );
  */
 StatementWidget.prototype.getTemplateData = function () {
 	var self = this,
-		dataValue = new wikibase.datamodel.EntityId( this.state.propertyId );
+		dataValue = new datamodel.EntityId( this.state.propertyId );
 
 	// fetch property value & url
 	return this.formatValue( dataValue, 'text/html' ).then( function ( html ) {
@@ -190,7 +191,7 @@ StatementWidget.prototype.createItem = function ( dataValue ) {
 		editing: this.state.editing,
 		entityId: this.state.entityId,
 		propertyId: this.state.propertyId,
-		rank: wikibase.datamodel.Statement.RANK.NORMAL,
+		rank: datamodel.Statement.RANK.NORMAL,
 		dataValue: dataValue
 	} );
 
@@ -203,17 +204,17 @@ StatementWidget.prototype.createItem = function ( dataValue ) {
 };
 
 /**
- * @return {wikibase.datamodel.StatementList}
+ * @return {datamodel.StatementList}
  */
 StatementWidget.prototype.getData = function () {
-	return new wikibase.datamodel.StatementList( this.getItems().map( function ( item ) {
+	return new datamodel.StatementList( this.getItems().map( function ( item ) {
 		return item.getData();
 	} ) );
 };
 
 /**
  * Update DOM with latest data, sorted by prominence
- * @param {wikibase.datamodel.StatementList} data
+ * @param {datamodel.StatementList} data
  * @return {jQuery.Promise}
  */
 StatementWidget.prototype.setData = function ( data ) {
@@ -223,7 +224,7 @@ StatementWidget.prototype.setData = function ( data ) {
 		sortedData;
 
 	// Bail early and discard existing data if data argument is not a statement list
-	if ( !( data instanceof wikibase.datamodel.StatementList ) ) {
+	if ( !( data instanceof datamodel.StatementList ) ) {
 		throw new Error( 'Invalid statement list' );
 	}
 
@@ -256,7 +257,7 @@ StatementWidget.prototype.setData = function ( data ) {
 			throw new Error( 'Invalid statement' );
 		}
 
-		if ( !( mainSnak instanceof wikibase.datamodel.PropertyValueSnak ) ) {
+		if ( !( mainSnak instanceof datamodel.PropertyValueSnak ) ) {
 			// ignore value-less snak
 			data.removeItem( statement );
 			return;
@@ -338,7 +339,7 @@ StatementWidget.prototype.setDisabled = function ( disabled ) {
 };
 
 /**
- * @return {wikibase.datamodel.Statement[]}
+ * @return {datamodel.Statement[]}
  */
 StatementWidget.prototype.getChanges = function () {
 	var currentStatements = this.getData().toArray(),
@@ -354,7 +355,7 @@ StatementWidget.prototype.getChanges = function () {
 };
 
 /**
- * @return {wikibase.datamodel.Statement[]}
+ * @return {datamodel.Statement[]}
  */
 StatementWidget.prototype.getRemovals = function () {
 	var data = this.getData(),
@@ -378,7 +379,7 @@ StatementWidget.prototype.getRemovals = function () {
  * `setData` is working state, and any changes between that state and the
  * default state, can then be submitted via `submit`.
  *
- * @param {wikibase.datamodel.StatementList} [data]
+ * @param {datamodel.StatementList} [data]
  * @return {jQuery.Promise}
  */
 StatementWidget.prototype.resetData = function ( data ) {
@@ -525,8 +526,8 @@ StatementWidget.prototype.submit = function ( baseRevId ) {
 
 /**
  * @internal
- * @param {wikibase.datamodel.StatementList} data
- * @return {wikibase.datamodel.StatementList}
+ * @param {datamodel.StatementList} data
+ * @return {datamodel.StatementList}
  */
 StatementWidget.prototype.cloneData = function ( data ) {
 	var serializer = new wikibase.serialization.StatementListSerializer(),

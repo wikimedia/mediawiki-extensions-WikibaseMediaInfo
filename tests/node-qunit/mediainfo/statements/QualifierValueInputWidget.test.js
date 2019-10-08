@@ -5,9 +5,10 @@ var sinon = require( 'sinon' ),
 QUnit.module( 'QualifierValueInputWidget', hooks.mediainfo, function () {
 	QUnit.test( 'Valid data roundtrip (wikibase-entityid)', function ( assert ) {
 		var done = assert.async(),
+			datamodel = require( 'wikibase.datamodel' ),
 			QualifierValueInputWidget = require( pathToWidget ),
 			widget = new QualifierValueInputWidget(),
-			data = new wikibase.datamodel.EntityId( 'Q1' );
+			data = new datamodel.EntityId( 'Q1' );
 
 		widget.setData( data ).then( function () {
 			assert.ok( widget.getData() );

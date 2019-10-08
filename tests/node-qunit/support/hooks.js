@@ -1,6 +1,7 @@
 var sinon = require( 'sinon' ),
 	jsdom = require( 'jsdom' ),
 	helpers = require( './helpers.js' ),
+	mockery = require( 'mockery' ),
 	sandboxes = {},
 	dom;
 
@@ -79,14 +80,22 @@ module.exports.wikibase = Object.assign( {}, module.exports.mediawiki, {
 		// MediaWiki is a requirement for Wikibase
 		module.exports.mediawiki.beforeEach();
 
+		mockery.enable( {
+			warnOnReplace: false,
+			warnOnUnregistered: false
+		} );
+
 		sandboxes.wikibase = sinon.createSandbox();
 
 		global.globeCoordinate = helpers.createGlobeCoordinateEnv();
 		global.dataValues = helpers.createDataValuesEnv();
 		global.wikibase = helpers.createWikibaseEnv();
+		global.wikibase.datamodel = helpers.registerWbDataModel();
 	},
 	afterEach: function () {
+		helpers.deregisterWbDataModel();
 		sandboxes.wikibase.restore();
+		mockery.disable();
 		module.exports.mediawiki.afterEach();
 	}
 } );

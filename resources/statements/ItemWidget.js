@@ -7,7 +7,7 @@
  * @param {string} config.entityId Entity ID (e.g. M123)
  * @param {string} config.propertyId Property ID (e.g. P123 id of `depicts` property)
  * @param {string} [config.guid] GUID of existing statement, or null for new
- * @param {number} [config.rank] One of wikibase.datamodel.Statement.RANK.*
+ * @param {number} [config.rank] One of datamodel.Statement.RANK.*
  * @param {dataValues.DataValue} [config.dataValue] Relevant DataValue object, or null for valueless
  * @param {string} [config.editing] True for edit mode, False for read mode
  */
@@ -15,6 +15,7 @@ var FormatValueElement = require( './FormatValueElement.js' ),
 	QualifierWidget = require( './QualifierWidget.js' ),
 	ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
 	DOMLessGroupWidget = require( 'wikibase.mediainfo.base' ).DOMLessGroupWidget,
+	datamodel = require( 'wikibase.datamodel' ),
 	ItemWidget = function MediaInfoStatementsItemWidget( config ) {
 		config = config || {};
 
@@ -27,7 +28,7 @@ var FormatValueElement = require( './FormatValueElement.js' ),
 			editing: !!config.editing,
 			propertyId: config.propertyId,
 			guid: config.guid || this.guidGenerator.newGuid(),
-			rank: config.rank || wikibase.datamodel.Statement.RANK.NORMAL,
+			rank: config.rank || datamodel.Statement.RANK.NORMAL,
 			dataValue: config.dataValue || null
 		};
 
@@ -53,7 +54,7 @@ ItemWidget.prototype.getTemplateData = function () {
 
 	return this.formatValue( this.state.dataValue, 'text/html' ).then( function ( label ) {
 		var id = self.dataValue ? self.dataValue.toJSON().id : '',
-			prominent = self.state.rank === wikibase.datamodel.Statement.RANK.PREFERRED,
+			prominent = self.state.rank === datamodel.Statement.RANK.PREFERRED,
 			removeButton,
 			addQualifierButton,
 			formatResponse;
@@ -112,14 +113,14 @@ ItemWidget.prototype.toggleItemProminence = function ( e ) {
 	}
 
 	return this.setState( {
-		rank: this.state.rank === wikibase.datamodel.Statement.RANK.PREFERRED ?
-			wikibase.datamodel.Statement.RANK.NORMAL :
-			wikibase.datamodel.Statement.RANK.PREFERRED
+		rank: this.state.rank === datamodel.Statement.RANK.PREFERRED ?
+			datamodel.Statement.RANK.NORMAL :
+			datamodel.Statement.RANK.PREFERRED
 	} ).then( this.emit.bind( this, 'change' ) );
 };
 
 /**
- * @param {wikibase.datamodel.Snak|undefined} [data]
+ * @param {datamodel.Snak|undefined} [data]
  * @return {QualifierWidget}
  */
 ItemWidget.prototype.createQualifier = function ( data ) {
@@ -137,7 +138,7 @@ ItemWidget.prototype.createQualifier = function ( data ) {
 };
 
 /**
- * @param {wikibase.datamodel.Snak|undefined} data
+ * @param {datamodel.Snak|undefined} data
  */
 ItemWidget.prototype.addQualifier = function ( data ) {
 	var widget = this.createQualifier( data );
@@ -159,15 +160,15 @@ ItemWidget.prototype.setEditing = function ( editing ) {
 };
 
 /**
- * @return {wikibase.datamodel.Statement}
+ * @return {datamodel.Statement}
  */
 ItemWidget.prototype.getData = function () {
-	return new wikibase.datamodel.Statement(
-		new wikibase.datamodel.Claim(
+	return new datamodel.Statement(
+		new datamodel.Claim(
 			this.state.dataValue ?
-				new wikibase.datamodel.PropertyValueSnak( this.state.propertyId, this.state.dataValue, null ) :
-				new wikibase.datamodel.PropertyNoValueSnak( this.state.propertyId ),
-			new wikibase.datamodel.SnakList( this.getItems()
+				new datamodel.PropertyValueSnak( this.state.propertyId, this.state.dataValue, null ) :
+				new datamodel.PropertyNoValueSnak( this.state.propertyId ),
+			new datamodel.SnakList( this.getItems()
 				.map( function ( item ) {
 					// try to fetch data - if it fails (likely because of incomplete input),
 					// we'll just ignore that qualifier
@@ -178,7 +179,7 @@ ItemWidget.prototype.getData = function () {
 					}
 				} )
 				.filter( function ( data ) {
-					return data instanceof wikibase.datamodel.Snak;
+					return data instanceof datamodel.Snak;
 				} )
 			),
 			this.state.guid
@@ -189,7 +190,7 @@ ItemWidget.prototype.getData = function () {
 };
 
 /**
- * @param {wikibase.datamodel.Statement} data
+ * @param {datamodel.Statement} data
  * @return {jQuery.Deferred}
  */
 ItemWidget.prototype.setData = function ( data ) {
@@ -198,7 +199,7 @@ ItemWidget.prototype.setData = function ( data ) {
 		promises = [];
 
 	// Bail early and discard existing data if data argument is not a snak
-	if ( !( data instanceof wikibase.datamodel.Statement ) ) {
+	if ( !( data instanceof datamodel.Statement ) ) {
 		throw new Error( 'Invalid statement' );
 	}
 

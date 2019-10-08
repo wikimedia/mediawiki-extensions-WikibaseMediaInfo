@@ -5,7 +5,8 @@ QUnit.module( 'ItemInputWidget', hooks.mediainfo, function () {
 	QUnit.test( 'Valid data roundtrip', function ( assert ) {
 		var ItemInputWidget = require( pathToWidget ),
 			widget = new ItemInputWidget(),
-			data = new wikibase.datamodel.EntityId( 'Q1' );
+			datamodel = require( 'wikibase.datamodel' ),
+			data = new datamodel.EntityId( 'Q1' );
 
 		widget.setData( data );
 

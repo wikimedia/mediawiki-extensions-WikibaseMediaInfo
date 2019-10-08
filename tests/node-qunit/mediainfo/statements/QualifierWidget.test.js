@@ -5,11 +5,12 @@ var sinon = require( 'sinon' ),
 QUnit.module( 'QualifierWidget', hooks.mediainfo, function () {
 	QUnit.test( 'Valid data roundtrip', function ( assert ) {
 		var done = assert.async(),
+			datamodel = require( 'wikibase.datamodel' ),
 			QualifierWidget = require( pathToWidget ),
 			widget = new QualifierWidget(),
-			data = new wikibase.datamodel.PropertyValueSnak(
+			data = new datamodel.PropertyValueSnak(
 				'P1',
-				new wikibase.datamodel.EntityId( 'Q1' )
+				new datamodel.EntityId( 'Q1' )
 			);
 
 		widget.setData( data ).then( function () {
@@ -23,13 +24,14 @@ QUnit.module( 'QualifierWidget', hooks.mediainfo, function () {
 		var done = assert.async(),
 			QualifierWidget = require( pathToWidget ),
 			widget = new QualifierWidget(),
-			data = new wikibase.datamodel.PropertyValueSnak(
+			datamodel = require( 'wikibase.datamodel' ),
+			data = new datamodel.PropertyValueSnak(
 				'P1',
-				new wikibase.datamodel.EntityId( 'Q1' )
+				new datamodel.EntityId( 'Q1' )
 			),
-			newData = new wikibase.datamodel.PropertyValueSnak(
+			newData = new datamodel.PropertyValueSnak(
 				'P1',
-				new wikibase.datamodel.EntityId( 'Q2' )
+				new datamodel.EntityId( 'Q2' )
 			),
 			onChange = sinon.stub();
 
@@ -46,13 +48,14 @@ QUnit.module( 'QualifierWidget', hooks.mediainfo, function () {
 		var done = assert.async(),
 			QualifierWidget = require( pathToWidget ),
 			widget = new QualifierWidget(),
-			data = new wikibase.datamodel.PropertyValueSnak(
+			datamodel = require( 'wikibase.datamodel' ),
+			data = new datamodel.PropertyValueSnak(
 				'P1',
-				new wikibase.datamodel.EntityId( 'Q1' )
+				new datamodel.EntityId( 'Q1' )
 			),
-			sameData = new wikibase.datamodel.PropertyValueSnak(
+			sameData = new datamodel.PropertyValueSnak(
 				'P1',
-				new wikibase.datamodel.EntityId( 'Q1' )
+				new datamodel.EntityId( 'Q1' )
 			),
 			onChange = sinon.stub();
 
@@ -69,9 +72,10 @@ QUnit.module( 'QualifierWidget', hooks.mediainfo, function () {
 		var done = assert.async(),
 			QualifierWidget = require( pathToWidget ),
 			widget = new QualifierWidget(),
-			data = new wikibase.datamodel.PropertyValueSnak(
+			datamodel = require( 'wikibase.datamodel' ),
+			data = new datamodel.PropertyValueSnak(
 				'P1',
-				new wikibase.datamodel.EntityId( 'Q1' )
+				new datamodel.EntityId( 'Q1' )
 			);
 
 		widget.setData( data ).then( function () {
@@ -84,9 +88,10 @@ QUnit.module( 'QualifierWidget', hooks.mediainfo, function () {
 		var done = assert.async(),
 			QualifierWidget = require( pathToWidget ),
 			widget = new QualifierWidget(),
-			data = new wikibase.datamodel.PropertyValueSnak(
+			datamodel = require( 'wikibase.datamodel' ),
+			data = new datamodel.PropertyValueSnak(
 				'P1',
-				new wikibase.datamodel.EntityId( 'Q1' )
+				new datamodel.EntityId( 'Q1' )
 			);
 
 		widget.setData( data ).then( function () {
@@ -98,9 +103,10 @@ QUnit.module( 'QualifierWidget', hooks.mediainfo, function () {
 	QUnit.test( 'Property labels are available after API calls complete', function ( assert ) {
 		var QualifierWidget = require( pathToWidget ),
 			widget = new QualifierWidget(),
-			data = new wikibase.datamodel.PropertyValueSnak(
+			datamodel = require( 'wikibase.datamodel' ),
+			data = new datamodel.PropertyValueSnak(
 				'P1',
-				new wikibase.datamodel.EntityId( 'Q1' )
+				new datamodel.EntityId( 'Q1' )
 			),
 			propertyLabel = 'some property',
 			valueLabel = 'some value',
@@ -122,12 +128,13 @@ QUnit.module( 'QualifierWidget', hooks.mediainfo, function () {
 	QUnit.test( 'Test enabling edit state', function ( assert ) {
 		var done = assert.async(),
 			QualifierWidget = require( pathToWidget ),
+			datamodel = require( 'wikibase.datamodel' ),
 			widget = new QualifierWidget( { editing: false } ),
 			formatPropertyStub = sinon.stub( widget, 'formatProperty' ),
 			formatValueStub = sinon.stub( widget, 'formatValue' ),
-			data = new wikibase.datamodel.PropertyValueSnak(
+			data = new datamodel.PropertyValueSnak(
 				'P1',
-				new wikibase.datamodel.EntityId( 'Q1' )
+				new datamodel.EntityId( 'Q1' )
 			);
 
 		formatPropertyStub.returns( $.Deferred().resolve( 'some property' ).promise( { abort: function () {} } ) );
@@ -151,9 +158,10 @@ QUnit.module( 'QualifierWidget', hooks.mediainfo, function () {
 			widget = new QualifierWidget( { editing: true } ),
 			formatPropertyStub = sinon.stub( widget, 'formatProperty' ),
 			formatValueStub = sinon.stub( widget, 'formatValue' ),
-			data = new wikibase.datamodel.PropertyValueSnak(
+			datamodel = require( 'wikibase.datamodel' ),
+			data = new datamodel.PropertyValueSnak(
 				'P1',
-				new wikibase.datamodel.EntityId( 'Q1' )
+				new datamodel.EntityId( 'Q1' )
 			);
 
 		formatPropertyStub.returns( $.Deferred().resolve( 'some property' ).promise( { abort: function () {} } ) );

@@ -7,11 +7,12 @@ QUnit.module( 'ItemWidget', hooks.mediainfo, function () {
 		var done = assert.async(),
 			ItemWidget = require( pathToWidget ),
 			widget = new ItemWidget( { propertyId: 'P1' } ),
-			data = new wikibase.datamodel.Statement(
-				new wikibase.datamodel.Claim(
-					new wikibase.datamodel.PropertyValueSnak(
+			datamodel = require( 'wikibase.datamodel' ),
+			data = new datamodel.Statement(
+				new datamodel.Claim(
+					new datamodel.PropertyValueSnak(
 						'P1',
-						new wikibase.datamodel.EntityId( 'Q1' )
+						new datamodel.EntityId( 'Q1' )
 					)
 				)
 			);
@@ -27,28 +28,29 @@ QUnit.module( 'ItemWidget', hooks.mediainfo, function () {
 		var done = assert.async(),
 			ItemWidget = require( pathToWidget ),
 			widget = new ItemWidget( { propertyId: 'P1' } ),
-			data = new wikibase.datamodel.Statement(
-				new wikibase.datamodel.Claim(
-					new wikibase.datamodel.PropertyValueSnak(
+			datamodel = require( 'wikibase.datamodel' ),
+			data = new datamodel.Statement(
+				new datamodel.Claim(
+					new datamodel.PropertyValueSnak(
 						'P1',
-						new wikibase.datamodel.EntityId( 'Q1' )
+						new datamodel.EntityId( 'Q1' )
 					),
-					new wikibase.datamodel.SnakList( [
-						new wikibase.datamodel.PropertyValueSnak(
+					new datamodel.SnakList( [
+						new datamodel.PropertyValueSnak(
 							'P2',
 							new dataValues.StringValue( 'This is a string value' )
 						)
 					] )
 				)
 			),
-			newData = new wikibase.datamodel.Statement(
-				new wikibase.datamodel.Claim(
-					new wikibase.datamodel.PropertyValueSnak(
+			newData = new datamodel.Statement(
+				new datamodel.Claim(
+					new datamodel.PropertyValueSnak(
 						'P1',
-						new wikibase.datamodel.EntityId( 'Q1' )
+						new datamodel.EntityId( 'Q1' )
 					),
-					new wikibase.datamodel.SnakList( [
-						new wikibase.datamodel.PropertyValueSnak(
+					new datamodel.SnakList( [
+						new datamodel.PropertyValueSnak(
 							'P2',
 							new dataValues.StringValue( 'This is a different string value' )
 						)
@@ -70,28 +72,29 @@ QUnit.module( 'ItemWidget', hooks.mediainfo, function () {
 		var done = assert.async(),
 			ItemWidget = require( pathToWidget ),
 			widget = new ItemWidget( { propertyId: 'P1' } ),
-			data = new wikibase.datamodel.Statement(
-				new wikibase.datamodel.Claim(
-					new wikibase.datamodel.PropertyValueSnak(
+			datamodel = require( 'wikibase.datamodel' ),
+			data = new datamodel.Statement(
+				new datamodel.Claim(
+					new datamodel.PropertyValueSnak(
 						'P1',
-						new wikibase.datamodel.EntityId( 'Q1' )
+						new datamodel.EntityId( 'Q1' )
 					),
-					new wikibase.datamodel.SnakList( [
-						new wikibase.datamodel.PropertyValueSnak(
+					new datamodel.SnakList( [
+						new datamodel.PropertyValueSnak(
 							'P2',
 							new dataValues.StringValue( 'This is a string value' )
 						)
 					] )
 				)
 			),
-			sameData = new wikibase.datamodel.Statement(
-				new wikibase.datamodel.Claim(
-					new wikibase.datamodel.PropertyValueSnak(
+			sameData = new datamodel.Statement(
+				new datamodel.Claim(
+					new datamodel.PropertyValueSnak(
 						'P1',
-						new wikibase.datamodel.EntityId( 'Q1' )
+						new datamodel.EntityId( 'Q1' )
 					),
-					new wikibase.datamodel.SnakList( [
-						new wikibase.datamodel.PropertyValueSnak(
+					new datamodel.SnakList( [
+						new datamodel.PropertyValueSnak(
 							'P2',
 							new dataValues.StringValue( 'This is a string value' )
 						)
@@ -113,42 +116,43 @@ QUnit.module( 'ItemWidget', hooks.mediainfo, function () {
 		var done = assert.async(),
 			ItemWidget = require( pathToWidget ),
 			widget = new ItemWidget( { propertyId: 'P1' } ),
-			noQualifiers = new wikibase.datamodel.Statement(
-				new wikibase.datamodel.Claim(
-					new wikibase.datamodel.PropertyValueSnak(
+			datamodel = require( 'wikibase.datamodel' ),
+			noQualifiers = new datamodel.Statement(
+				new datamodel.Claim(
+					new datamodel.PropertyValueSnak(
 						'P1',
-						new wikibase.datamodel.EntityId( 'Q1' )
+						new datamodel.EntityId( 'Q1' )
 					)
 				)
 			),
-			oneQualifier = new wikibase.datamodel.Statement(
-				new wikibase.datamodel.Claim(
-					new wikibase.datamodel.PropertyValueSnak(
+			oneQualifier = new datamodel.Statement(
+				new datamodel.Claim(
+					new datamodel.PropertyValueSnak(
 						'P1',
-						new wikibase.datamodel.EntityId( 'Q1' )
+						new datamodel.EntityId( 'Q1' )
 					),
-					new wikibase.datamodel.SnakList( [
-						new wikibase.datamodel.PropertyValueSnak(
+					new datamodel.SnakList( [
+						new datamodel.PropertyValueSnak(
 							'P2',
 							new dataValues.StringValue( 'This is a string value' )
 						)
 					] )
 				)
 			),
-			twoQualifiers = new wikibase.datamodel.Statement(
-				new wikibase.datamodel.Claim(
-					new wikibase.datamodel.PropertyValueSnak(
+			twoQualifiers = new datamodel.Statement(
+				new datamodel.Claim(
+					new datamodel.PropertyValueSnak(
 						'P1',
-						new wikibase.datamodel.EntityId( 'Q1' )
+						new datamodel.EntityId( 'Q1' )
 					),
-					new wikibase.datamodel.SnakList( [
-						new wikibase.datamodel.PropertyValueSnak(
+					new datamodel.SnakList( [
+						new datamodel.PropertyValueSnak(
 							'P2',
 							new dataValues.StringValue( 'This is a string value' )
 						),
-						new wikibase.datamodel.PropertyValueSnak(
+						new datamodel.PropertyValueSnak(
 							'P3',
-							new wikibase.datamodel.EntityId( 'Q4' )
+							new datamodel.EntityId( 'Q4' )
 						)
 					] )
 				)
@@ -190,13 +194,14 @@ QUnit.module( 'ItemWidget', hooks.mediainfo, function () {
 	QUnit.test( 'createQualifier sets QualifierWidget data when snak is provided', function ( assert ) {
 		var done = assert.async(),
 			ItemWidget = require( pathToWidget ),
+			datamodel = require( 'wikibase.datamodel' ),
 			widget = new ItemWidget( { propertyId: 'P1' } ),
 			qualifier,
 			data;
 
-		data = new wikibase.datamodel.PropertyValueSnak(
+		data = new datamodel.PropertyValueSnak(
 			'P1',
-			new wikibase.datamodel.EntityId( 'Q1' )
+			new datamodel.EntityId( 'Q1' )
 		);
 
 		qualifier = widget.createQualifier( data );
@@ -215,11 +220,12 @@ QUnit.module( 'ItemWidget', hooks.mediainfo, function () {
 			ItemWidget = require( pathToWidget ),
 			widget = new ItemWidget( { propertyId: 'P1' } ),
 			spy = sinon.spy( widget, 'createQualifier' ),
-			data = new wikibase.datamodel.Statement(
-				new wikibase.datamodel.Claim(
-					new wikibase.datamodel.PropertyValueSnak(
+			datamodel = require( 'wikibase.datamodel' ),
+			data = new datamodel.Statement(
+				new datamodel.Claim(
+					new datamodel.PropertyValueSnak(
 						'P1',
-						new wikibase.datamodel.EntityId( 'Q1' )
+						new datamodel.EntityId( 'Q1' )
 					)
 				)
 			);
@@ -242,11 +248,12 @@ QUnit.module( 'ItemWidget', hooks.mediainfo, function () {
 		var done = assert.async(),
 			ItemWidget = require( pathToWidget ),
 			widget = new ItemWidget( { propertyId: 'P1' } ),
-			data = new wikibase.datamodel.Statement(
-				new wikibase.datamodel.Claim(
-					new wikibase.datamodel.PropertyValueSnak(
+			datamodel = require( 'wikibase.datamodel' ),
+			data = new datamodel.Statement(
+				new datamodel.Claim(
+					new datamodel.PropertyValueSnak(
 						'P1',
-						new wikibase.datamodel.EntityId( 'Q1' )
+						new datamodel.EntityId( 'Q1' )
 					)
 				)
 			);
@@ -268,11 +275,12 @@ QUnit.module( 'ItemWidget', hooks.mediainfo, function () {
 		var done = assert.async(),
 			ItemWidget = require( pathToWidget ),
 			widget = new ItemWidget( { propertyId: 'P1' } ),
-			data = new wikibase.datamodel.Statement(
-				new wikibase.datamodel.Claim(
-					new wikibase.datamodel.PropertyValueSnak(
+			datamodel = require( 'wikibase.datamodel' ),
+			data = new datamodel.Statement(
+				new datamodel.Claim(
+					new datamodel.PropertyValueSnak(
 						'P1',
-						new wikibase.datamodel.EntityId( 'Q1' )
+						new datamodel.EntityId( 'Q1' )
 					)
 				)
 			);
@@ -294,11 +302,12 @@ QUnit.module( 'ItemWidget', hooks.mediainfo, function () {
 		var done = assert.async(),
 			ItemWidget = require( pathToWidget ),
 			widget = new ItemWidget( { propertyId: 'P1' } ),
-			data = new wikibase.datamodel.Statement(
-				new wikibase.datamodel.Claim(
-					new wikibase.datamodel.PropertyValueSnak(
+			datamodel = require( 'wikibase.datamodel' ),
+			data = new datamodel.Statement(
+				new datamodel.Claim(
+					new datamodel.PropertyValueSnak(
 						'P1',
-						new wikibase.datamodel.EntityId( 'Q1' )
+						new datamodel.EntityId( 'Q1' )
 					)
 				)
 			);
@@ -306,15 +315,15 @@ QUnit.module( 'ItemWidget', hooks.mediainfo, function () {
 		widget.setData( data )
 			.then( function () {
 				// default rank: normal
-				assert.strictEqual( widget.getData().getRank(), wikibase.datamodel.Statement.RANK.NORMAL );
+				assert.strictEqual( widget.getData().getRank(), datamodel.Statement.RANK.NORMAL );
 			} )
 			.then( widget.toggleItemProminence.bind( widget, { preventDefault: sinon.stub() } ) )
 			.then( function () {
-				assert.strictEqual( widget.getData().getRank(), wikibase.datamodel.Statement.RANK.PREFERRED );
+				assert.strictEqual( widget.getData().getRank(), datamodel.Statement.RANK.PREFERRED );
 			} )
 			.then( widget.toggleItemProminence.bind( widget, { preventDefault: sinon.stub() } ) )
 			.then( function () {
-				assert.strictEqual( widget.getData().getRank(), wikibase.datamodel.Statement.RANK.NORMAL );
+				assert.strictEqual( widget.getData().getRank(), datamodel.Statement.RANK.NORMAL );
 				done();
 			} );
 	} );

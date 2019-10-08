@@ -3,7 +3,8 @@ var sinon = require( 'sinon' ),
 	fs = require( 'fs' ),
 	path = require( 'path' ),
 	Mustache = require( 'mustache' ),
-	mockery = require( 'mockery' );
+	mockery = require( 'mockery' ),
+	mockCache = {};
 
 /**
  * Allows requiring a module more than once.
@@ -107,27 +108,40 @@ module.exports.createMediaWikiEnv = function () {
  * @return {Object}
  */
 module.exports.createGlobeCoordinateEnv = function () {
-	var globeCoordinate,
-		jQuery,
-		$;
+	var oldglobeCoordinate = global.globeCoordinate,
+		oldJQuery = global.jQuery,
+		old$ = global.$;
+
+	// `require` caches the exports and reuses them the next require
+	// the files required below have no exports, though - they just
+	// execute and are assigned as properties of an object
+	// `requireAgain` would make sure they keep doing that over and
+	// over, but then they'll end up creating the same functions/objects
+	// more than once, but different instances...
+	// other modules, with actual exports, that use these functions
+	// might encounter side-effects though, because the instances of
+	// those objects are different when loaded at different times,
+	// so to be safe, we'll try to emulate regular `require` behavior
+	// by running these files once, grabbing the result, caching it,
+	// and re-using the result from cache
+	if ( mockCache.globeCoordinate ) {
+		return mockCache.globeCoordinate;
+	}
 
 	// wikibase-data-values needs jquery...
-	jQuery = global.jQuery;
-	$ = global.$;
 	global.jQuery = global.$ = requireAgain( 'jquery' );
 
 	global.globeCoordinate = requireAgain( 'wikibase-data-values/lib/globeCoordinate/globeCoordinate.js' ).globeCoordinate;
 	requireAgain( 'wikibase-data-values/lib/globeCoordinate/globeCoordinate.GlobeCoordinate.js' );
 
-	// remove from global scope before returning
-	globeCoordinate = global.globeCoordinate;
-	delete global.globeCoordinate;
+	mockCache.globeCoordinate = global.globeCoordinate;
+	global.globeCoordinate = oldglobeCoordinate;
 
-	// restore original jQuery/$ code/versions
-	global.jQuery = jQuery;
-	global.$ = $;
+	// restore global scope before returning
+	global.jQuery = oldJQuery;
+	global.$ = old$;
 
-	return globeCoordinate;
+	return mockCache.globeCoordinate;
 };
 
 /**
@@ -136,13 +150,28 @@ module.exports.createGlobeCoordinateEnv = function () {
  * @return {Object}
  */
 module.exports.createDataValuesEnv = function () {
-	var dataValues,
-		jQuery,
-		$;
+	var oldDataValues = global.dataValues,
+		oldUtil = global.util,
+		oldJQuery = global.jQuery,
+		old$ = global.$;
+
+	// `require` caches the exports and reuses them the next require
+	// the files required below have no exports, though - they just
+	// execute and are assigned as properties of an object
+	// `requireAgain` would make sure they keep doing that over and
+	// over, but then they'll end up creating the same functions/objects
+	// more than once, but different instances...
+	// other modules, with actual exports, that use these functions
+	// might encounter side-effects though, because the instances of
+	// those objects are different when loaded at different times,
+	// so to be safe, we'll try to emulate regular `require` behavior
+	// by running these files once, grabbing the result, caching it,
+	// and re-using the result from cache
+	if ( mockCache.dataValues ) {
+		return mockCache.dataValues;
+	}
 
 	// wikibase-data-values needs jquery...
-	jQuery = global.jQuery;
-	$ = global.$;
 	global.jQuery = global.$ = requireAgain( 'jquery' );
 
 	global.dataValues = requireAgain( 'wikibase-data-values/src/dataValues.js' ).dataValues;
@@ -155,18 +184,16 @@ module.exports.createDataValuesEnv = function () {
 	requireAgain( 'wikibase-data-values/src/values/QuantityValue.js' );
 	requireAgain( 'wikibase-data-values/src/values/GlobeCoordinateValue.js' );
 	requireAgain( 'wikibase-data-values/src/values/UnknownValue.js' );
-	requireAgain( 'wikibase-data-model/src/__namespace.js' );
 
-	// remove from global scope before returning
-	dataValues = global.dataValues;
-	delete global.dataValues;
-	delete global.util;
+	mockCache.dataValues = global.dataValues;
 
-	// restore original jQuery/$ code/versions
-	global.jQuery = jQuery;
-	global.$ = $;
+	// restore global scope before returning
+	global.dataValues = oldDataValues;
+	global.util = oldUtil;
+	global.jQuery = oldJQuery;
+	global.$ = old$;
 
-	return dataValues;
+	return mockCache.dataValues;
 };
 
 /**
@@ -175,7 +202,9 @@ module.exports.createDataValuesEnv = function () {
  * @return {Object}
  */
 module.exports.createWikibaseEnv = function () {
-	var wikibase;
+	var oldWikibase = global.wikibase,
+		oldUtil = global.util,
+		wikibase;
 
 	global.wikibase = {
 		api: {
@@ -190,22 +219,10 @@ module.exports.createWikibaseEnv = function () {
 			ClaimGuidGenerator: sinon.stub().returns( { newGuid: function () { return Math.random().toString( 36 ).slice( 2 ); } } )
 		}
 	};
-
 	global.util = {};
 
 	requireAgain( 'wikibase-data-values/lib/util/util.inherit.js' );
-	requireAgain( 'wikibase-data-model/src/EntityId.js' );
-	requireAgain( 'wikibase-data-model/src/GroupableCollection.js' );
-	requireAgain( 'wikibase-data-model/src/List.js' );
-	requireAgain( 'wikibase-data-model/src/Snak.js' );
-	requireAgain( 'wikibase-data-model/src/SnakList.js' );
-	requireAgain( 'wikibase-data-model/src/PropertyNoValueSnak.js' );
-	requireAgain( 'wikibase-data-model/src/PropertyValueSnak.js' );
-	requireAgain( 'wikibase-data-model/src/Claim.js' );
-	requireAgain( 'wikibase-data-model/src/Reference.js' );
-	requireAgain( 'wikibase-data-model/src/ReferenceList.js' );
-	requireAgain( 'wikibase-data-model/src/Statement.js' );
-	requireAgain( 'wikibase-data-model/src/StatementList.js' );
+
 	requireAgain( 'wikibase-serialization/src/Serializers/Serializer.js' );
 	requireAgain( 'wikibase-serialization/src/Deserializers/Deserializer.js' );
 	requireAgain( 'wikibase-serialization/src/Serializers/SnakSerializer.js' );
@@ -223,12 +240,102 @@ module.exports.createWikibaseEnv = function () {
 	requireAgain( 'wikibase-serialization/src/Deserializers/StatementDeserializer.js' );
 	requireAgain( 'wikibase-serialization/src/Deserializers/StatementListDeserializer.js' );
 
-	// remove from global scope before returning
 	wikibase = global.wikibase;
-	delete global.wikibase;
-	delete global.util;
+
+	// restore global scope before returning
+	global.wikibase = oldWikibase;
+	global.util = oldUtil;
 
 	return wikibase;
+};
+
+/**
+ * Loads a "wikibase.datamodel" object for use in testing.
+ *
+ * @return {Object}
+ */
+module.exports.registerWbDataModel = function () {
+	var oldWikibase = global.wikibase,
+		oldDataValues = global.dataValues,
+		oldUtil = global.util;
+
+	// `require` caches the exports and reuses them the next require
+	// the files required below have no exports, though - they just
+	// execute and are assigned as properties of an object
+	// `requireAgain` would make sure they keep doing that over and
+	// over, but then they'll end up creating the same functions/objects
+	// more than once, but different instances...
+	// other modules, with actual exports, that use these functions
+	// might encounter side-effects though, because the instances of
+	// those objects are different when loaded at different times,
+	// so to be safe, we'll try to emulate regular `require` behavior
+	// by running these files once, grabbing the result, caching it,
+	// and re-using the result from cache
+	if ( mockCache.datamodel ) {
+		mockery.registerMock( 'wikibase.datamodel', mockCache.datamodel );
+		return mockCache.datamodel;
+	}
+
+	global.wikibase = { datamodel: {} };
+	global.dataValues = this.createDataValuesEnv();
+	global.util = {};
+
+	requireAgain( 'wikibase-data-values/lib/util/util.inherit.js' );
+
+	// wikibase-data-model/src/index.js exports all objects, but it
+	// first expects all of them to already exist in wikibase.datamodel
+	// namespace, so we're first going to have to load all of them,
+	// in correct order, to make that so
+	// I suspect that eventually, they'll be `required` independently
+	// from index.js, in which case this block of requires can be dropped
+	requireAgain( 'wikibase-data-model/src/__namespace.js' );
+	requireAgain( 'wikibase-data-model/src/GroupableCollection.js' );
+	requireAgain( 'wikibase-data-model/src/Group.js' );
+	requireAgain( 'wikibase-data-model/src/List.js' );
+	requireAgain( 'wikibase-data-model/src/Set.js' );
+	requireAgain( 'wikibase-data-model/src/Snak.js' );
+	requireAgain( 'wikibase-data-model/src/SnakList.js' );
+	requireAgain( 'wikibase-data-model/src/Claim.js' );
+	requireAgain( 'wikibase-data-model/src/Entity.js' );
+	requireAgain( 'wikibase-data-model/src/EntityId.js' );
+	requireAgain( 'wikibase-data-model/src/Fingerprint.js' );
+	requireAgain( 'wikibase-data-model/src/FingerprintableEntity.js' );
+	requireAgain( 'wikibase-data-model/src/SiteLink.js' );
+	requireAgain( 'wikibase-data-model/src/SiteLinkSet.js' );
+	requireAgain( 'wikibase-data-model/src/StatementGroup.js' );
+	requireAgain( 'wikibase-data-model/src/StatementGroupSet.js' );
+	requireAgain( 'wikibase-data-model/src/Item.js' );
+	requireAgain( 'wikibase-data-model/src/Map.js' );
+	requireAgain( 'wikibase-data-model/src/MultiTerm.js' );
+	requireAgain( 'wikibase-data-model/src/MultiTermMap.js' );
+	requireAgain( 'wikibase-data-model/src/Property.js' );
+	requireAgain( 'wikibase-data-model/src/PropertyNoValueSnak.js' );
+	requireAgain( 'wikibase-data-model/src/PropertySomeValueSnak.js' );
+	requireAgain( 'wikibase-data-model/src/PropertyValueSnak.js' );
+	requireAgain( 'wikibase-data-model/src/Reference.js' );
+	requireAgain( 'wikibase-data-model/src/ReferenceList.js' );
+	requireAgain( 'wikibase-data-model/src/Statement.js' );
+	requireAgain( 'wikibase-data-model/src/StatementList.js' );
+	requireAgain( 'wikibase-data-model/src/Term.js' );
+	requireAgain( 'wikibase-data-model/src/TermMap.js' );
+	mockCache.datamodel = requireAgain( 'wikibase-data-model/src/index.js' );
+
+	mockery.registerSubstitute( 'wikibase.datamodel', 'wikibase-data-model/src/index.js' );
+
+	// restore global scope before returning
+	global.wikibase = oldWikibase;
+	global.dataValues = oldDataValues;
+	global.util = oldUtil;
+
+	// once wikibase-data-model abandons the wikibase.datamodel namespace,
+	// we should no longer need to use/return this object (but it currently
+	// still uses objects in wikibase.datamodel in its inner workings, instead
+	// of requiring them individually as needed)
+	return mockCache.datamodel;
+};
+
+module.exports.deregisterWbDataModel = function () {
+	mockery.deregisterMock( 'wikibase.datamodel' );
 };
 
 /**
@@ -268,11 +375,6 @@ module.exports.registerModules = function () {
 	var extensionJson = this.readJSON( path.join( __dirname, '..', '..', '..', 'extension.json' ) ),
 		modules = extensionJson.ResourceModules;
 
-	mockery.enable( {
-		warnOnReplace: false,
-		warnOnUnregistered: false
-	} );
-
 	Object.keys( modules ).forEach( function ( moduleName ) {
 		var packageFiles = modules[ moduleName ].packageFiles;
 		if ( !packageFiles ) {
@@ -310,6 +412,11 @@ module.exports.registerTemplates = function () {
 };
 
 module.exports.deregisterModules = function () {
-	mockery.deregisterAll();
-	mockery.disable();
+	// eslint-disable-next-line no-undef
+	var extensionJson = this.readJSON( path.join( __dirname, '..', '..', '..', 'extension.json' ) ),
+		modules = extensionJson.ResourceModules;
+
+	Object.keys( modules ).forEach( function ( moduleName ) {
+		mockery.deregisterMock( moduleName );
+	} );
 };

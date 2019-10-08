@@ -11,12 +11,13 @@ QUnit.module( 'StatementWidget', hooks.mediainfo, function () {
 				propertyId: 'P1',
 				entityId: 'M1'
 			} ),
-			data = new wikibase.datamodel.StatementList( [
-				new wikibase.datamodel.Statement(
-					new wikibase.datamodel.Claim(
-						new wikibase.datamodel.PropertyValueSnak(
+			datamodel = require( 'wikibase.datamodel' ),
+			data = new datamodel.StatementList( [
+				new datamodel.Statement(
+					new datamodel.Claim(
+						new datamodel.PropertyValueSnak(
 							'P1',
-							new wikibase.datamodel.EntityId( 'Q1' )
+							new datamodel.EntityId( 'Q1' )
 						)
 					)
 				)
@@ -37,22 +38,23 @@ QUnit.module( 'StatementWidget', hooks.mediainfo, function () {
 				propertyId: 'P1',
 				entityId: 'M1'
 			} ),
-			data = new wikibase.datamodel.StatementList( [
-				new wikibase.datamodel.Statement(
-					new wikibase.datamodel.Claim(
-						new wikibase.datamodel.PropertyValueSnak(
+			datamodel = require( 'wikibase.datamodel' ),
+			data = new datamodel.StatementList( [
+				new datamodel.Statement(
+					new datamodel.Claim(
+						new datamodel.PropertyValueSnak(
 							'P1',
-							new wikibase.datamodel.EntityId( 'Q1' )
+							new datamodel.EntityId( 'Q1' )
 						)
 					)
 				)
 			] ),
-			newData = new wikibase.datamodel.StatementList( [
-				new wikibase.datamodel.Statement(
-					new wikibase.datamodel.Claim(
-						new wikibase.datamodel.PropertyValueSnak(
+			newData = new datamodel.StatementList( [
+				new datamodel.Statement(
+					new datamodel.Claim(
+						new datamodel.PropertyValueSnak(
 							'P1',
-							new wikibase.datamodel.EntityId( 'Q2' )
+							new datamodel.EntityId( 'Q2' )
 						)
 					)
 				)
@@ -76,22 +78,23 @@ QUnit.module( 'StatementWidget', hooks.mediainfo, function () {
 				propertyId: 'P1',
 				entityId: 'M1'
 			} ),
-			data = new wikibase.datamodel.StatementList( [
-				new wikibase.datamodel.Statement(
-					new wikibase.datamodel.Claim(
-						new wikibase.datamodel.PropertyValueSnak(
+			datamodel = require( 'wikibase.datamodel' ),
+			data = new datamodel.StatementList( [
+				new datamodel.Statement(
+					new datamodel.Claim(
+						new datamodel.PropertyValueSnak(
 							'P1',
-							new wikibase.datamodel.EntityId( 'Q1' )
+							new datamodel.EntityId( 'Q1' )
 						)
 					)
 				)
 			] ),
-			sameData = new wikibase.datamodel.StatementList( [
-				new wikibase.datamodel.Statement(
-					new wikibase.datamodel.Claim(
-						new wikibase.datamodel.PropertyValueSnak(
+			sameData = new datamodel.StatementList( [
+				new datamodel.Statement(
+					new datamodel.Claim(
+						new datamodel.PropertyValueSnak(
 							'P1',
-							new wikibase.datamodel.EntityId( 'Q1' )
+							new datamodel.EntityId( 'Q1' )
 						)
 					)
 				)
@@ -115,56 +118,57 @@ QUnit.module( 'StatementWidget', hooks.mediainfo, function () {
 				propertyId: 'P1',
 				entityId: 'M1'
 			} ),
-			data = new wikibase.datamodel.StatementList( [
-				new wikibase.datamodel.Statement(
-					new wikibase.datamodel.Claim(
-						new wikibase.datamodel.PropertyValueSnak(
+			datamodel = require( 'wikibase.datamodel' ),
+			data = new datamodel.StatementList( [
+				new datamodel.Statement(
+					new datamodel.Claim(
+						new datamodel.PropertyValueSnak(
 							'P1',
-							new wikibase.datamodel.EntityId( 'Q1' )
+							new datamodel.EntityId( 'Q1' )
 						),
 						null,
 						'guid-1'
 					)
 				),
-				new wikibase.datamodel.Statement(
-					new wikibase.datamodel.Claim(
-						new wikibase.datamodel.PropertyValueSnak(
+				new datamodel.Statement(
+					new datamodel.Claim(
+						new datamodel.PropertyValueSnak(
 							'P1',
-							new wikibase.datamodel.EntityId( 'Q2' )
+							new datamodel.EntityId( 'Q2' )
 						),
 						null,
 						'guid-2'
 					)
 				)
 			] ),
-			changedData = new wikibase.datamodel.StatementList( [
-				new wikibase.datamodel.Statement(
-					new wikibase.datamodel.Claim(
-						new wikibase.datamodel.PropertyValueSnak(
+			changedData = new datamodel.StatementList( [
+				new datamodel.Statement(
+					new datamodel.Claim(
+						new datamodel.PropertyValueSnak(
 							'P1',
-							new wikibase.datamodel.EntityId( 'Q1' )
+							new datamodel.EntityId( 'Q1' )
 						),
 						null,
 						'guid-1'
 					)
 				),
-				new wikibase.datamodel.Statement(
-					new wikibase.datamodel.Claim(
-						new wikibase.datamodel.PropertyValueSnak(
+				new datamodel.Statement(
+					new datamodel.Claim(
+						new datamodel.PropertyValueSnak(
 							'P1',
-							new wikibase.datamodel.EntityId( 'Q3' )
+							new datamodel.EntityId( 'Q3' )
 						),
 						null,
 						'guid-2'
 					)
 				)
 			] ),
-			removedData = new wikibase.datamodel.StatementList( [
-				new wikibase.datamodel.Statement(
-					new wikibase.datamodel.Claim(
-						new wikibase.datamodel.PropertyValueSnak(
+			removedData = new datamodel.StatementList( [
+				new datamodel.Statement(
+					new datamodel.Claim(
+						new datamodel.PropertyValueSnak(
 							'P1',
-							new wikibase.datamodel.EntityId( 'Q1' )
+							new datamodel.EntityId( 'Q1' )
 						),
 						null,
 						'guid-1'
@@ -202,12 +206,13 @@ QUnit.module( 'StatementWidget', hooks.mediainfo, function () {
 				entityId: 'M1',
 				showControls: true
 			} ),
-			data = new wikibase.datamodel.StatementList( [
-				new wikibase.datamodel.Statement(
-					new wikibase.datamodel.Claim(
-						new wikibase.datamodel.PropertyValueSnak(
+			datamodel = require( 'wikibase.datamodel' ),
+			data = new datamodel.StatementList( [
+				new datamodel.Statement(
+					new datamodel.Claim(
+						new datamodel.PropertyValueSnak(
 							'P1',
-							new wikibase.datamodel.EntityId( 'Q1' )
+							new datamodel.EntityId( 'Q1' )
 						)
 					)
 				)
@@ -232,12 +237,13 @@ QUnit.module( 'StatementWidget', hooks.mediainfo, function () {
 				entityId: 'M1',
 				showControls: true
 			} ),
-			data = new wikibase.datamodel.StatementList( [
-				new wikibase.datamodel.Statement(
-					new wikibase.datamodel.Claim(
-						new wikibase.datamodel.PropertyValueSnak(
+			datamodel = require( 'wikibase.datamodel' ),
+			data = new datamodel.StatementList( [
+				new datamodel.Statement(
+					new datamodel.Claim(
+						new datamodel.PropertyValueSnak(
 							'P1',
-							new wikibase.datamodel.EntityId( 'Q1' )
+							new datamodel.EntityId( 'Q1' )
 						)
 					)
 				)

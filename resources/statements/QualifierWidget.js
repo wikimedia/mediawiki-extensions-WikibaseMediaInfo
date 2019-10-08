@@ -4,7 +4,8 @@ var QualifierWidget,
 	ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
 	QualifierAutocomplete = require( './QualifierAutocompleteWidget.js' ),
 	QualifierValueInput = require( './QualifierValueInputWidget.js' ),
-	FormatValueElement = require( './FormatValueElement.js' );
+	FormatValueElement = require( './FormatValueElement.js' ),
+	datamodel = require( 'wikibase.datamodel' );
 
 /**
  * QualifierWidget (new version). This widget represents a single row of
@@ -115,7 +116,7 @@ QualifierWidget.prototype.setEditing = function ( editing ) {
 
 /**
  * Sets the child widgets' data and updates label elements asynchronously.
- * @param {wikibase.datamodel.Snak} data
+ * @param {datamodel.Snak} data
  * @return {jQuery.Promise}
  */
 QualifierWidget.prototype.setData = function ( data ) {
@@ -125,7 +126,7 @@ QualifierWidget.prototype.setData = function ( data ) {
 		dataValueType;
 
 	// Bail early and discard existing data if data argument is not a snak
-	if ( !( data instanceof wikibase.datamodel.Snak ) ) {
+	if ( !( data instanceof datamodel.Snak ) ) {
 		throw new Error( 'Invalid snak' );
 	}
 
@@ -144,11 +145,11 @@ QualifierWidget.prototype.setData = function ( data ) {
 
 /**
  * Extracts data from child widgets for use elsewhere.
- * @return {wikibase.datamodel.Snak} data
+ * @return {datamodel.Snak} data
  */
 QualifierWidget.prototype.getData = function () {
 	var property = this.propertyInput.getData(),
-		snak = new wikibase.datamodel.PropertyValueSnak(
+		snak = new datamodel.PropertyValueSnak(
 			property.id,
 			this.valueInput.getData()
 		);
@@ -196,7 +197,7 @@ QualifierWidget.prototype.onValueChange = function () {
  * @return {$.Promise} promise
  */
 QualifierWidget.prototype.formatProperty = function ( propId, format, language ) {
-	return this.formatValue( new wikibase.datamodel.EntityId( propId ), format, language );
+	return this.formatValue( new datamodel.EntityId( propId ), format, language );
 };
 
 /**
@@ -285,8 +286,8 @@ QualifierWidget.prototype.asyncFormatForDisplay = function () {
 
 /**
  * @internal
- * @param {wikibase.datamodel.Snak} data
- * @return {wikibase.datamodel.Snak}
+ * @param {datamodel.Snak} data
+ * @return {datamodel.Snak}
  */
 QualifierWidget.prototype.cloneData = function ( data ) {
 	var serializer = new wikibase.serialization.SnakSerializer(),

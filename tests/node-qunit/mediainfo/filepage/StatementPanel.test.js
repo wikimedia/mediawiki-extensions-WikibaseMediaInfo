@@ -31,7 +31,7 @@ QUnit.module( 'StatementPanel', {}, function () {
 					$element: $( '.wbmi-entityview-statementsGroup' ),
 					propertyId: 'P1',
 					entityId: 'M1',
-					properties: { P1: 'wikibase-entityid' }
+					properties: { P1: 'wikibase-item' }
 				};
 
 			// eslint-disable-next-line no-new
@@ -46,7 +46,7 @@ QUnit.module( 'StatementPanel', {}, function () {
 					$element: $( '.wbmi-entityview-statementsGroup' ),
 					propertyId: 'P1',
 					entityId: 'M1',
-					properties: { P1: 'wikibase-entityid' }
+					properties: { P1: 'wikibase-item' }
 				},
 				sp = new StatementPanel( config );
 
@@ -66,7 +66,7 @@ QUnit.module( 'StatementPanel', {}, function () {
 						$element: $( '.wbmi-entityview-statementsGroup' ),
 						propertyId: 'P1',
 						entityId: 'M1',
-						properties: { P1: 'wikibase-entityid' }
+						properties: { P1: 'wikibase-item' }
 					},
 					sp = new StatementPanel( config ),
 					spy,

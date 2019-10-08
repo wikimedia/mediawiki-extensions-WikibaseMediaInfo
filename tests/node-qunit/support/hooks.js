@@ -2,6 +2,7 @@ var sinon = require( 'sinon' ),
 	jsdom = require( 'jsdom' ),
 	helpers = require( './helpers.js' ),
 	mockery = require( 'mockery' ),
+	wbDataTypes = require( '../support/fixtures/data/wbDataTypes.json' ),
 	sandboxes = {},
 	dom;
 
@@ -91,6 +92,8 @@ module.exports.wikibase = Object.assign( {}, module.exports.mediawiki, {
 		global.dataValues = helpers.createDataValuesEnv();
 		global.wikibase = helpers.createWikibaseEnv();
 		global.wikibase.datamodel = helpers.registerWbDataModel();
+		global.mw.config.get.withArgs( 'wbDataTypes' ).returns( wbDataTypes );
+
 		helpers.registerWbSerialization();
 	},
 	afterEach: function () {

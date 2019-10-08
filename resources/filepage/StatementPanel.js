@@ -17,8 +17,8 @@ var AnonWarning = require( './AnonWarning.js' ),
  * @param {Object} [config]
  * @cfg {jQuery} $element
  * @cfg {string} propertyId
+ * @cfg {string} propertyType
  * @cfg {string} entityId
- * @cfg {Object} properties
  * @cfg {Object} [panelRemovalListener] Object on which onStatementPanelRemoved() will be called if
  *  this panel is removed from the DOM
  * @cfg {Object} helpUrls An object with property id as members and help urls for the property

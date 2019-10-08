@@ -1,0 +1,41 @@
+{
+	"commonsMedia": {
+		"dataValueType": "string"
+	},
+	"geo-shape": {
+		"dataValueType": "string"
+	},
+	"globe-coordinate": {
+		"dataValueType": "globecoordinate"
+	},
+	"monolingualtext": {
+		"dataValueType": "monolingualtext"
+	},
+	"quantity": {
+		"dataValueType": "quantity"
+	},
+	"string": {
+		"dataValueType": "string"
+	},
+	"tabular-data": {
+		"dataValueType": "string"
+	},
+	"entity-schema": {
+		"dataValueType": "string"
+	},
+	"time": {
+		"dataValueType": "time"
+	},
+	"url": {
+		"dataValueType": "string"
+	},
+	"external-id": {
+		"dataValueType": "string"
+	},
+	"wikibase-item": {
+		"dataValueType": "wikibase-entityid"
+	},
+	"wikibase-property": {
+		"dataValueType": "wikibase-entityid"
+	}
+}

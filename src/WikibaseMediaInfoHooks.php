@@ -152,13 +152,21 @@ class WikibaseMediaInfoHooks {
 	 * @return string
 	 * @throws \ConfigException
 	 */
-	public static function getValueType( PropertyId $id ) {
-		$mwConfig = MediaWikiServices::getInstance()->getMainConfig();
+	public static function getPropertyType( PropertyId $id ) {
 		$wbRepo = WikibaseRepo::getDefaultInstance();
 		$propertyDataTypeLookup = $wbRepo->getPropertyDataTypeLookup();
-		$dataTypes = $mwConfig->get( 'WBRepoDataTypes' );
+		return $propertyDataTypeLookup->getDataTypeIdForProperty( $id );
+	}
 
-		$propertyDatatype = $propertyDataTypeLookup->getDataTypeIdForProperty( $id );
+	/**
+	 * @param PropertyId $id
+	 * @return string
+	 * @throws \ConfigException
+	 */
+	public static function getValueType( PropertyId $id ) {
+		$mwConfig = MediaWikiServices::getInstance()->getMainConfig();
+		$dataTypes = $mwConfig->get( 'WBRepoDataTypes' );
+		$propertyDatatype = static::getPropertyType( $id );
 		return $dataTypes['PT:' . $propertyDatatype]['value-type'];
 	}
 
@@ -197,6 +205,7 @@ class WikibaseMediaInfoHooks {
 			\Action::getActionName( $out->getContext() ) === 'view';
 
 		$properties = [];
+		$propertyTypes = [];
 		$titles = [];
 		foreach ( $wgMediaInfoProperties as $name => $property ) {
 			try {
@@ -211,6 +220,7 @@ class WikibaseMediaInfoHooks {
 
 				// get data type for values associated with this property
 				$properties[$property] = static::getValueType( new PropertyId( $property ) );
+				$propertyTypes[$property] = static::getPropertyType( new PropertyId( $property ) );
 			} catch ( PropertyDataTypeLookupException $e ) {
 				// ignore invalid properties...
 			}
@@ -226,8 +236,14 @@ class WikibaseMediaInfoHooks {
 			new BabelUserLanguageLookup(),
 			$wbRepo->getEntityViewFactory(),
 			[
+				// wbmiProperties (a property id => datavalue type map for default properties)
+				// has been replaced by wbmiDefaultProperties (an array of default property ids)
+				// and wbmiPropertyTypes (property id => property type map)
+				// wbmiProperties can be removed soon, once all code using it has been updated
 				'wbmiProperties' => $properties,
+				'wbmiDefaultProperties' => array_values( $wgMediaInfoProperties ),
 				'wbmiPropertyTitles' => $titles,
+				'wbmiPropertyTypes' => $propertyTypes,
 				'wbmiHelpUrls' => $wgMediaInfoHelpUrls,
 				'wbmiExternalEntitySearchBaseUri' => $wgMediaInfoExternalEntitySearchBaseUri,
 				'wbmiMediaInfoEnableSearch' => $wgMediaInfoEnableSearch,
@@ -274,11 +290,18 @@ class WikibaseMediaInfoHooks {
 			$serializer = $wbRepo->getAllTypesEntitySerializer();
 			$entityData = ( $entity ? $serializer->serialize( $entity ) : [] );
 
+			$existingPropertyTypes = [];
+			if ( $entity instanceof MediaInfo ) {
+				foreach ( $entity->getStatements()->getPropertyIds() as $propertyId ) {
+					$existingPropertyTypes[$propertyId->serialize()] = static::getPropertyType( $propertyId );
+				}
+			}
+
 			$modules[] = 'wikibase.mediainfo.filePageDisplay';
 			$moduleStyles[] = 'wikibase.mediainfo.filepage.styles';
 			$moduleStyles[] = 'wikibase.mediainfo.statements.styles';
 
-			$jsConfigVars += [
+			$jsConfigVars = array_merge( $jsConfigVars, [
 				'wbUserSpecifiedLanguages' => array_values(
 					$userLanguageLookup->getAllUserLanguages(
 						$out->getUser()
@@ -298,8 +321,11 @@ class WikibaseMediaInfoHooks {
 					'{{fullurl:Special:UserLogin/signup|returnto={{FULLPAGENAMEE}}}}'
 				)->parseAsBlock(),
 				'wbmiProtectionMsg' => $this->getProtectionMsg( $out ),
-				'wbmiUserCanEdit' => $this->userCanEdit( $out )
-			];
+				'wbmiUserCanEdit' => $this->userCanEdit( $out ),
+				// extend/override wbmiPropertyTypes (which already contains a property type map
+				// for all default properties) with property types for existing statements
+				'wbmiPropertyTypes' => $jsConfigVars['wbmiPropertyTypes'] + $existingPropertyTypes
+			] );
 		}
 
 		$out->addJsConfigVars( $jsConfigVars );

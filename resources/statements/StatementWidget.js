@@ -1,6 +1,7 @@
 'use strict';
 
-var ItemInputWidget = require( './ItemInputWidget.js' ),
+var dataTypesMap = mw.config.get( 'wbDataTypes' ),
+	ItemInputWidget = require( './ItemInputWidget.js' ),
 	FormatValueElement = require( './FormatValueElement.js' ),
 	ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
 	DOMLessGroupWidget = require( 'wikibase.mediainfo.base' ).DOMLessGroupWidget,
@@ -14,7 +15,7 @@ var ItemInputWidget = require( './ItemInputWidget.js' ),
  * @param {Object} config Configuration options
  * @param {string} config.entityId Entity ID (e.g. M123 id of the file you just uploaded)
  * @param {string} config.propertyId Property ID (e.g. P123 id of `depicts` property)
- * @param {string} [config.properties] Properties map: { propertyId: datatype, ...}
+ * @param {string} config.propertyType Property datatype (e.g. 'wikibase-item', 'url', 'string', ...)
  * @param {Object} [config.data] Initial data
  * @param {string} [config.title]
  * @param {string} [config.editing] True for edit mode, False for read mode
@@ -28,24 +29,43 @@ var ItemInputWidget = require( './ItemInputWidget.js' ),
  * @param {string[]} [config.tags] Change tags to apply to edits
  */
 StatementWidget = function ( config ) {
+	// fallback for backward compatibility from before this was required and only 'wikibase-item' was supported
+	var title,
+		propertyType,
+		valueType;
+
 	config = config || {};
 	config.helpUrls = config.helpUrls || {};
 	config.isDefaultProperty = !!config.isDefaultProperty;
 	this.config = config;
 
+	if ( config.propertyType !== undefined ) {
+		propertyType = config.propertyType;
+		valueType = dataTypesMap[ propertyType ].dataValueType;
+	} else {
+		// fallback from before propertyType was required, just to make
+		// sure things still work the same for existing callers that have
+		// not been updated
+		valueType = ( config.properties || mw.config.get( 'wbmiProperties' ) || {} )[ config.propertyId ] || 'string';
+	}
+
+	title = config.title ||
+		( mw.config.get( 'wbmiPropertyTitles' ) || {} )[ config.propertyId ] || '';
+
 	this.state = {
 		entityId: config.entityId,
 		propertyId: config.propertyId,
 		initialData: new datamodel.StatementList(),
-		title: config.title || ( mw.config.get( 'wbmiPropertyTitles' ) || {} )[ config.propertyId ] || '',
+		title: title,
 		editing: config.editing || false
 	};
 
 	this.input = new ItemInputWidget( {
 		classes: [ 'wbmi-statement-input' ],
-		type: ( config.properties || mw.config.get( 'wbmiProperties' ) || {} )[ this.state.propertyId ] || 'string',
+		type: valueType || 'string',
 		disabled: this.disabled
 	} );
+
 	this.publishButton = new OO.ui.ButtonInputWidget( {
 		type: 'submit',
 		useInputTag: true,

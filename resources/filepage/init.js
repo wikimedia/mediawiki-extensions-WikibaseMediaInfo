@@ -14,7 +14,7 @@
 		LinkNoticeWidget,
 		propertiesInfo = mw.config.get( 'wbmiProperties' ) || {},
 		helpUrls = mw.config.get( 'wbmiHelpUrls' ) || {},
-		userCanEdit = mw.config.get( 'userCanEdit' );
+		userCanEdit = mw.config.get( 'wbmiUserCanEdit' );
 
 	mw.mediaInfo = mw.mediaInfo || {};
 	mw.mediaInfo.structuredData = mw.mediaInfo.structuredData || {};

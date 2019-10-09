@@ -288,17 +288,17 @@ class WikibaseMediaInfoHooks {
 				'wbEntityId' => $entityId->getSerialization(),
 				'wbEntity' => $entityData,
 				'wbTermsLanguages' => $termsLanguages,
-				'maxCaptionLength' => self::getMaxCaptionLength(),
+				'wbmiMaxCaptionLength' => self::getMaxCaptionLength(),
 				// FIXME: This is horrendous.
-				'parsedMessageAnonEditWarning' => $out->msg(
+				'wbmiParsedMessageAnonEditWarning' => $out->msg(
 					'anoneditwarning',
 					// Log-in link
 					'{{fullurl:Special:UserLogin|returnto={{FULLPAGENAMEE}}}}',
 					// Sign-up link
 					'{{fullurl:Special:UserLogin/signup|returnto={{FULLPAGENAMEE}}}}'
 				)->parseAsBlock(),
-				'protectionMsg' => $this->getProtectionMsg( $out ),
-				'userCanEdit' => $this->userCanEdit( $out )
+				'wbmiProtectionMsg' => $this->getProtectionMsg( $out ),
+				'wbmiUserCanEdit' => $this->userCanEdit( $out )
 			];
 		}
 

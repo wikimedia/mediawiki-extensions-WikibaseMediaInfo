@@ -380,7 +380,7 @@ CaptionsPanel.prototype.refreshLanguageSelectorsOptions = function () {
  */
 CaptionsPanel.prototype.warnIfTextApproachingLimit = function ( textInput ) {
 	var $caption = textInput.$element.parents( '.wbmi-caption-value' ),
-		lengthDiff = mw.config.get( 'maxCaptionLength' ) - textInput.getValue().length;
+		lengthDiff = mw.config.get( 'wbmiMaxCaptionLength' ) - textInput.getValue().length;
 	$caption.find( 'div.wbmi-caption-publishWarning' ).remove();
 	if ( lengthDiff >= 0 && lengthDiff < this.config.warnWithinMaxCaptionLength ) {
 		$caption.append(
@@ -420,7 +420,7 @@ CaptionsPanel.prototype.validateCaptionsAndReturnUpdates = function () {
 							.text(
 								mw.message(
 									'wikibasemediainfo-filepage-caption-too-long',
-									textInput.getValue().length - mw.config.get( 'maxCaptionLength' )
+									textInput.getValue().length - mw.config.get( 'wbmiMaxCaptionLength' )
 								).text()
 							)
 					);
@@ -569,7 +569,7 @@ CaptionsPanel.prototype.createIndexedEditableRow = function (
 
 	textInput = new OO.ui.TextInputWidget( {
 		validate: function ( value ) {
-			return value.length <= mw.config.get( 'maxCaptionLength' );
+			return value.length <= mw.config.get( 'wbmiMaxCaptionLength' );
 		},
 		value: captionData.text,
 		dir: captionData.direction,

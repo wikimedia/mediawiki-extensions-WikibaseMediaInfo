@@ -15,7 +15,7 @@ QUnit.module( 'ProtectionMsgWidget', hooks.mediainfo, function () {
 
 	QUnit.module( 'Page is not protected', {
 		beforeEach: function () {
-			global.mw.config.get.withArgs( 'protectionMsg' ).returns( null );
+			global.mw.config.get.withArgs( 'wbmiProtectionMsg' ).returns( null );
 		}
 	}, function () {
 		QUnit.test( 'Protection message widget does not display', function ( assert ) {
@@ -28,10 +28,10 @@ QUnit.module( 'ProtectionMsgWidget', hooks.mediainfo, function () {
 
 	QUnit.module( 'Page is protected', {
 		beforeEach: function () {
-			global.mw.config.get.withArgs( 'protectionMsg' ).returns( msg );
+			global.mw.config.get.withArgs( 'wbmiProtectionMsg' ).returns( msg );
 		},
 		afterEach: function () {
-			global.mw.config.get.withArgs( 'protectionMsg' ).returns( null );
+			global.mw.config.get.withArgs( 'wbmiProtectionMsg' ).returns( null );
 		}
 	}, function () {
 		QUnit.test( 'Protection message widget displays', function ( assert ) {

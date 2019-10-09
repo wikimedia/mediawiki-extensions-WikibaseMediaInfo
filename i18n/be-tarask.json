@@ -54,5 +54,21 @@
 	"wikibasemediainfo-statements-title-depicts": "Элемэнты, выяўленыя на гэтым файле",
 	"wikibasemediainfo-statements-unsupported-property-title": "Уласьцівасьць не падтрымліваецца",
 	"wikibasemediainfo-statements-unsupported-property-content": "Уласьцівасьці, акрамя $1, яшчэ ня цалкам падтрымліваюцца, але будуць падтрымлівацца ў будучыні. Цяпер функцыянал уласьцівасьцяў, якія не падтрымліваюцца, можа не працаваць так, як вы чакаеце.",
-	"wikibasemediainfo-statements-unsupported-property-type-content": "Ня ўсе ўласьцівасьці цалкам падтрымліваюцца, але будуць падтрымлівацца ў будучыні. Цяпер функцыянал уласьцівасьцяў, якія не падтрымліваюцца, можа не працаваць так, як вы чакаеце."
+	"wikibasemediainfo-statements-unsupported-property-type-content": "Ня ўсе ўласьцівасьці цалкам падтрымліваюцца, але будуць падтрымлівацца ў будучыні. Цяпер функцыянал уласьцівасьцяў, якія не падтрымліваюцца, можа не працаваць так, як вы чакаеце.",
+	"wikibasemediainfo-statements-link-notice-text": "Меткі структураваных зьвестак спасылаюцца на адпаведныя ім старонкі Вікізьвестак і адкрыюцца ў новым вакне.",
+	"wikibasemediainfo-statements-link-notice-dismiss": "Адхіліць",
+	"wikibasemediainfo-remove-all-statements-confirm": "Гэтае дзеяньне выдаліць з уласьцівасьці ўсе існыя значэньні. Уласьцівасьці без значэньняў будуць выдаленыя пры захаваньні. Вы ўпэўненыя?",
+	"wikibasemediainfo-remove-all-statements-confirm-title": "Выдаліць усё?",
+	"wikibasemediainfo-remove-all-statements-confirm-accept": "Выдаліць",
+	"wikibasemediainfo-unsupported-datatype-text": "Непадтрымваны тып зьвестак",
+	"wikibasemediainfo-latitude-input-label": "Шырата",
+	"wikibasemediainfo-latitude-input-placeholder": "Дзесятковая шкала ад -90 да 90",
+	"wikibasemediainfo-longitude-input-label": "Даўгата",
+	"wikibasemediainfo-longitude-input-placeholder": "Дзесятковая шкала ад -180 да 180",
+	"wikibasemediainfo-precision-input-label": "Дакладнасьць",
+	"wikibasemediainfo-arcminute-label": "да кутняй хвіліны",
+	"wikibasemediainfo-arcsecond-label": "да кутняй сэкунды",
+	"wikibasemediainfo-tenth-of-arcsecond-label": "да 1/10 кутняй сэкунды",
+	"wikibasemediainfo-hundreth-of-arcsecond-label": "да 1/100 кутняй сэкунды",
+	"wikibasemediainfo-thousanth-of-arcsecond-label": "да 1/1000 кутняй сэкунды"
 }

@@ -58,10 +58,22 @@
 	"wikibasemediainfo-statements-remove": "全部移除",
 	"wikibasemediainfo-statements-title-depicts": "在此檔案描寫的項目",
 	"wikibasemediainfo-statements-unsupported-property-title": "未支援的屬性",
+	"wikibasemediainfo-statements-unsupported-property-content": "$1之外的屬性尚未支援，需在後續提供。目前未支援屬性的功能可能不會如您預期般運作。",
+	"wikibasemediainfo-statements-unsupported-property-type-content": "尚未能支援所有屬性類型，需在後續提供。目前未支援屬性的功能可能不會如您預期般運作。",
+	"wikibasemediainfo-statements-link-notice-text": "結構化資料標籤會連接到各自的維基數據頁面，並會開啟新視窗。",
+	"wikibasemediainfo-statements-link-notice-dismiss": "去除",
+	"wikibasemediainfo-remove-all-statements-confirm": "此操作會刪除所有用於此屬性的現有值，沒帶值的屬性會在更改發佈時移除掉，您確定嗎？",
 	"wikibasemediainfo-remove-all-statements-confirm-title": "全部移除？",
 	"wikibasemediainfo-remove-all-statements-confirm-accept": "移除",
 	"wikibasemediainfo-unsupported-datatype-text": "未支援的資料類型",
 	"wikibasemediainfo-latitude-input-label": "緯度",
+	"wikibasemediainfo-latitude-input-placeholder": "介於 -90 與 90 的十進制度數",
 	"wikibasemediainfo-longitude-input-label": "經度",
-	"wikibasemediainfo-precision-input-label": "精確度"
+	"wikibasemediainfo-longitude-input-placeholder": "介於 -180 與 180 的十進制度數",
+	"wikibasemediainfo-precision-input-label": "精確度",
+	"wikibasemediainfo-arcminute-label": "為弧分",
+	"wikibasemediainfo-arcsecond-label": "為弧秒",
+	"wikibasemediainfo-tenth-of-arcsecond-label": "為 1/10 弧秒",
+	"wikibasemediainfo-hundreth-of-arcsecond-label": "為 1/100 弧秒",
+	"wikibasemediainfo-thousanth-of-arcsecond-label": "為 1/1000 弧秒"
 }

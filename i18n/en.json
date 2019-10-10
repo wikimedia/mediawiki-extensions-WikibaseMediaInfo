@@ -31,6 +31,7 @@
 	"wikibasemediainfo-filepage-edit": "Edit",
 	"wikibasemediainfo-filepage-publish": "Publish changes",
 	"wikibasemediainfo-filepage-caption-empty": "Add a one-line explanation of what this file represents",
+	"wikibasemediainfo-filepage-caption-too-short": "$1 more {{PLURAL:$1|character|characters}} required",
 	"wikibasemediainfo-filepage-caption-too-long": "$1 {{PLURAL:$1|character|characters}} over the limit",
 	"wikibasemediainfo-filepage-caption-approaching-limit": "$1 {{PLURAL:$1|character|characters|0=characters}} left",
 	"wikibasemediainfo-filepage-statement-no-value": "No value exists for this property",

@@ -36,6 +36,7 @@
 	"wikibasemediainfo-filepage-edit": "Label for 'edit' button for editing structured data on file page",
 	"wikibasemediainfo-filepage-publish": "Label for 'publish' button for editing structured data on file page",
 	"wikibasemediainfo-filepage-caption-empty": "Text to display when a caption is missing for a language, as a call-to-action for the user to add a caption",
+	"wikibasemediainfo-filepage-caption-too-short": "Error text for when a caption is too short. Parameters:\n* $1 - Number of characters under minimum, for PLURAL support",
 	"wikibasemediainfo-filepage-caption-too-long": "Error text for when a caption is too long. Parameters:\n* $1 - Number of characters over maximum, for PLURAL support",
 	"wikibasemediainfo-filepage-caption-approaching-limit": "Warning text when a caption is approaching the length limit. Parameters:\n* $1 - Number of characters left before reaching max character count, for PLURAL support",
 	"wikibasemediainfo-filepage-statement-no-value": "Text to display when a statement has an explicit 'NO VALUE' value.",

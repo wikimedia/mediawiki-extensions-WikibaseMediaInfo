@@ -50,9 +50,12 @@ OO.mixinClass( ItemWidget, FormatValueElement );
  * @inheritDoc
  */
 ItemWidget.prototype.getTemplateData = function () {
-	var self = this;
+	var self = this,
+		labelPromise = this.state.dataValue ?
+			this.formatValue( this.state.dataValue, 'text/html' ) :
+			$.Deferred().resolve( '' ).promise();
 
-	return this.formatValue( this.state.dataValue, 'text/html' ).then( function ( label ) {
+	return labelPromise.then( function ( label ) {
 		var id = self.dataValue ? self.dataValue.toJSON().id : '',
 			prominent = self.state.rank === datamodel.Statement.RANK.PREFERRED,
 			removeButton,

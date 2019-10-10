@@ -317,20 +317,22 @@ CaptionsPanel.prototype.getTemplateDataReadOnly = function () {
 	}
 
 	// "see X more languages"/"see fewer languages" link
-	data.languagesViewWidget = new OO.ui.ButtonWidget( {
-		icon: this.state.displayAllLanguages ? 'collapse' : 'expand',
-		flags: 'progressive',
-		framed: false,
-		label: this.state.displayAllLanguages ?
-			mw.message( 'wikibasemediainfo-filepage-fewer-languages' ).text() :
-			mw.message(
-				'wikibasemediainfo-filepage-more-languages',
-				self.getHideableLanguageCount()
-			).text()
-	} ).on(
-		'click',
-		this.setState.bind( this, { displayAllLanguages: !this.state.displayAllLanguages } )
-	);
+	if ( self.getHideableLanguageCount() > 0 ) {
+		data.languagesViewWidget = new OO.ui.ButtonWidget( {
+			icon: this.state.displayAllLanguages ? 'collapse' : 'expand',
+			flags: 'progressive',
+			framed: false,
+			label: this.state.displayAllLanguages ?
+				mw.message( 'wikibasemediainfo-filepage-fewer-languages' ).text() :
+				mw.message(
+					'wikibasemediainfo-filepage-more-languages',
+					self.getHideableLanguageCount()
+				).text()
+		} ).on(
+			'click',
+			this.setState.bind( this, { displayAllLanguages: !this.state.displayAllLanguages } )
+		);
+	}
 
 	// captions data
 	this.state.orderedLanguageCodes.forEach( function ( langCode ) {

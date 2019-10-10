@@ -6,47 +6,15 @@ var CancelPublishWidget;
  * Widget containing 'cancel' and 'publish' buttons
  *
  * @constructor
- * @param {CaptionsPanel} captionsPanel
  */
-CancelPublishWidget = function ( captionsPanel ) {
+CancelPublishWidget = function () {
 	var cancelButton = new OO.ui.ButtonWidget( {
 			framed: false,
 			flags: [
 				'destructive'
 			],
 			label: mw.message( 'wikibasemediainfo-filepage-cancel' ).text()
-		} )
-			.on( 'click', function () {
-				var hasChanges = captionsPanel.hasChanges();
-
-				if ( hasChanges ) {
-					OO.ui.confirm(
-						mw.msg( 'wikibasemediainfo-filepage-cancel-confirm' ),
-						{
-							title: mw.msg( 'wikibasemediainfo-filepage-cancel-confirm-title' ),
-							actions: [
-								{
-									action: 'accept',
-									label: mw.msg( 'wikibasemediainfo-filepage-cancel-confirm-accept' ),
-									flags: [ 'primary', 'destructive' ]
-								},
-								{
-									action: 'reject',
-									label: mw.msg( 'ooui-dialog-message-reject' ),
-									flags: 'safe'
-								}
-							]
-						}
-					).then( function ( confirmed ) {
-						if ( confirmed ) {
-							captionsPanel.restoreToSaved();
-						}
-					} );
-				} else {
-					captionsPanel.restoreToSaved();
-				}
-			} ),
-
+		} ),
 		publishButton = new OO.ui.ButtonInputWidget( {
 			// disabled by default
 			disabled: true,
@@ -57,10 +25,10 @@ CancelPublishWidget = function ( captionsPanel ) {
 				'primary',
 				'progressive'
 			]
-		} )
-			.on( 'click', function () {
-				captionsPanel.sendData();
-			} );
+		} );
+
+	cancelButton.connect( this, { click: [ 'emit', 'cancel' ] } );
+	publishButton.connect( this, { click: [ 'emit', 'publish' ] } );
 
 	CancelPublishWidget.parent.call(
 		this,

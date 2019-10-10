@@ -9,15 +9,19 @@ var CaptionDataEditor,
  * @constructor
  * @param {string} guid
  * @param {CaptionData} captionData
- * @param {CaptionsPanel} captionsPanel
+ * @param {Object} [config]
+ * @param {number} [config.maxCaptionLength]
+ * @param {number} [config.warnWithinMaxCaptionLength]
  */
-CaptionDataEditor = function ( guid, captionData, captionsPanel ) {
+CaptionDataEditor = function ( guid, captionData, config ) {
 	var self = this;
+
+	config = config || {};
 
 	OO.EventEmitter.call( this );
 
-	this.captionsPanel = captionsPanel;
-	this.maxCaptionLength = mw.config.get( 'wbmiMaxCaptionLength' );
+	this.maxCaptionLength = config.maxCaptionLength || mw.config.get( 'wbmiMaxCaptionLength' );
+	this.warnWithinMaxCaptionLength = config.warnWithinMaxCaptionLength || 0;
 
 	this.languageSelector = new UlsWidget( {
 		languages: mw.config.get( 'wbTermsLanguages' )
@@ -44,25 +48,25 @@ CaptionDataEditor = function ( guid, captionData, captionsPanel ) {
 				.done( function () {
 					var lengthDiff =
 						self.maxCaptionLength - self.textInput.getValue().length;
-					self.inputError = '';
+					self.setInputError( '' );
 					if (
 						lengthDiff >= 0 &&
-						lengthDiff < self.captionsPanel.warnWithinMaxCaptionLength
+						lengthDiff < self.warnWithinMaxCaptionLength
 					) {
-						self.inputWarning = mw.message(
+						self.setInputWarning( mw.message(
 							'wikibasemediainfo-filepage-caption-approaching-limit',
 							lengthDiff
-						).text();
+						).text() );
 					} else {
-						self.inputWarning = '';
+						self.setInputWarning( '' );
 					}
 				} )
 				.fail( function () {
-					self.inputWarning = '';
-					self.inputError = mw.message(
+					self.setInputWarning( '' );
+					self.setInputError( mw.message(
 						'wikibasemediainfo-filepage-caption-too-long',
 						self.textInput.getValue().length - self.maxCaptionLength
-					).text();
+					).text() );
 				} )
 				.always( function () {
 					self.emit( 'textInputChanged' );
@@ -88,26 +92,78 @@ CaptionDataEditor = function ( guid, captionData, captionsPanel ) {
 
 	this.inputError = '';
 	this.inputWarning = '';
-
-	this.enable();
 };
 
 OO.mixinClass( CaptionDataEditor, OO.EventEmitter );
 
-CaptionDataEditor.prototype.disable = function () {
-	this.textInput.setDisabled( true );
-	this.disconnect( this.captionsPanel, { captionDeleted: 'onCaptionDeleted' } );
-	this.disconnect( this.captionsPanel, { languageSelectorUpdated: 'onDataChanged' } );
-	this.disconnect( this.captionsPanel, { textInputChanged: 'onDataChanged' } );
-	this.disconnect( this.captionsPanel, { textInputSubmitted: 'sendData' } );
+/**
+ * @return {UlsWidget}
+ */
+CaptionDataEditor.prototype.getLanguageSelector = function () {
+	return this.languageSelector;
 };
 
-CaptionDataEditor.prototype.enable = function () {
-	this.textInput.setDisabled( false );
-	this.connect( this.captionsPanel, { captionDeleted: 'onCaptionDeleted' } );
-	this.connect( this.captionsPanel, { languageSelectorUpdated: 'onDataChanged' } );
-	this.connect( this.captionsPanel, { textInputChanged: 'onDataChanged' } );
-	this.connect( this.captionsPanel, { textInputSubmitted: 'sendData' } );
+/**
+ * @return {OO.ui.TextInputWidget}
+ */
+CaptionDataEditor.prototype.getTextInput = function () {
+	return this.textInput;
+};
+
+/**
+ * @return {OO.ui.ButtonWidget}
+ */
+CaptionDataEditor.prototype.getDeleter = function () {
+	return this.deleter;
+};
+
+/**
+ * @param {boolean} disabled
+ */
+CaptionDataEditor.prototype.setDisabled = function ( disabled ) {
+	this.textInput.setDisabled( disabled );
+};
+
+/**
+ * @param {string} text
+ */
+CaptionDataEditor.prototype.setInputError = function ( text ) {
+	this.inputError = text;
+};
+
+/**
+ * @param {string} text
+ */
+CaptionDataEditor.prototype.setInputWarning = function ( text ) {
+	this.inputWarning = text;
+};
+
+/**
+ * @return {string}
+ */
+CaptionDataEditor.prototype.getInputError = function () {
+	return this.inputError;
+};
+
+/**
+ * @return {string}
+ */
+CaptionDataEditor.prototype.getInputWarning = function () {
+	return this.inputWarning;
+};
+
+/**
+ * @return {string}
+ */
+CaptionDataEditor.prototype.getLanguageCode = function () {
+	return this.languageSelector.getValue();
+};
+
+/**
+ * @return {string}
+ */
+CaptionDataEditor.prototype.getText = function () {
+	return this.textInput.getValue();
 };
 
 module.exports = CaptionDataEditor;

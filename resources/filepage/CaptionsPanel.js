@@ -69,7 +69,10 @@ CaptionsPanel = function ( config ) {
 
 	// Create the various widgets
 	this.licenseDialogWidget = new LicenseDialogWidget();
-	this.editActionsWidget = new CaptionsEditActionsWidget( { captionsPanel: this } );
+	this.editActionsWidget = new CaptionsEditActionsWidget();
+	this.editActionsWidget.connect( this, { add: 'addNewEmptyLanguageRow' } );
+	this.editActionsWidget.connect( this, { publish: 'sendData' } );
+	this.editActionsWidget.connect( this, { cancel: 'onCancel' } );
 
 	this.state = $.extend(
 		{},
@@ -254,17 +257,17 @@ CaptionsPanel.prototype.getTemplateDataEditable = function () {
 
 		templateCaptions.push( {
 			show: true,
-			textDirection: $.uls.data.getDir( captionDataEditor.languageSelector.getValue() ),
-			langCode: captionDataEditor.languageSelector.getValue(),
-			language: captionDataEditor.languageSelector,
-			caption: captionDataEditor.textInput,
 			empty: false,
-			deleter: captionDataEditor.deleter,
-			inputError: captionDataEditor.inputError,
-			inputWarning: captionDataEditor.inputWarning
+			textDirection: $.uls.data.getDir( captionDataEditor.getLanguageCode() ),
+			langCode: captionDataEditor.getLanguageCode(),
+			language: captionDataEditor.getLanguageSelector(),
+			caption: captionDataEditor.getTextInput(),
+			deleter: captionDataEditor.getDeleter(),
+			inputError: captionDataEditor.getInputError(),
+			inputWarning: captionDataEditor.getInputWarning()
 		} );
 
-		if ( captionDataEditor.inputError !== '' ) {
+		if ( captionDataEditor.getInputError() !== '' ) {
 			inputErrorFound = true;
 		}
 	} );
@@ -354,6 +357,40 @@ CaptionsPanel.prototype.getTemplateDataReadOnly = function () {
 	data.captions = templateCaptions;
 
 	return data;
+};
+
+/**
+ * Triggered when cancelling the edit mode.
+ */
+CaptionsPanel.prototype.onCancel = function () {
+	var self = this;
+
+	if ( this.hasChanges() ) {
+		OO.ui.confirm(
+			mw.msg( 'wikibasemediainfo-filepage-cancel-confirm' ),
+			{
+				title: mw.msg( 'wikibasemediainfo-filepage-cancel-confirm-title' ),
+				actions: [
+					{
+						action: 'accept',
+						label: mw.msg( 'wikibasemediainfo-filepage-cancel-confirm-accept' ),
+						flags: [ 'primary', 'destructive' ]
+					},
+					{
+						action: 'reject',
+						label: mw.msg( 'ooui-dialog-message-reject' ),
+						flags: 'safe'
+					}
+				]
+			}
+		).then( function ( confirmed ) {
+			if ( confirmed ) {
+				self.restoreToSaved();
+			}
+		} );
+	} else {
+		this.restoreToSaved();
+	}
 };
 
 /**
@@ -597,14 +634,10 @@ CaptionsPanel.prototype.makeEditable = function () {
 					);
 
 				captionsState.orderedLanguageCodes.forEach( function ( langCode ) {
-					var captionData =
-							self.savedCaptionsData[ langCode ] || new CaptionData( langCode ),
-						guid = self.createGuid();
-
-					captionsDataEditors[ guid ] = new CaptionDataEditor(
+					var guid = self.createGuid();
+					captionsDataEditors[ guid ] = self.createCaptionDataEditor(
 						guid,
-						captionData,
-						self
+						self.savedCaptionsData[ langCode ] || new CaptionData( langCode )
 					);
 				} );
 
@@ -629,13 +662,8 @@ CaptionsPanel.prototype.addNewEmptyLanguageRow = function () {
 		captionsDataEditors = $.extend(
 			{},
 			this.state.captionsDataEditors
-		),
-		newCaptionsDataEditor = new CaptionDataEditor(
-			guid,
-			new CaptionData(),
-			this
 		);
-	captionsDataEditors[ guid ] = newCaptionsDataEditor;
+	captionsDataEditors[ guid ] = this.createCaptionDataEditor( guid, new CaptionData() );
 	this.setState( {
 		captionsDataEditors: captionsDataEditors
 	} ).then( this.refreshLanguageSelectorsOptions.bind( this ) );
@@ -651,8 +679,8 @@ CaptionsPanel.prototype.sendData = function () {
 	// Send changed data
 	Object.keys( captionsDataEditors ).forEach( function ( guid ) {
 		var captionDataEditor = captionsDataEditors[ guid ],
-			langCode = captionDataEditor.languageSelector.getValue(),
-			text = captionDataEditor.textInput.getValue(),
+			langCode = captionDataEditor.getLanguageCode(),
+			text = captionDataEditor.getText(),
 			savedData = self.savedCaptionsData[ langCode ];
 
 		if ( text && langCode && ( !savedData || savedData.text !== text ) ) {
@@ -669,11 +697,10 @@ CaptionsPanel.prototype.sendData = function () {
 					.fail( function ( errorCode, error ) {
 						var apiError =
 							wikibase.api.RepoApiError.newFromApiResponse( error, 'save' );
-						captionDataEditor.inputError = apiError.detailedMessage;
+						captionDataEditor.setInputError( apiError.detailedMessage );
 					} );
 			} );
 		}
-
 	} );
 
 	// Delete removed data
@@ -693,12 +720,8 @@ CaptionsPanel.prototype.sendData = function () {
 						var apiError =
 								wikibase.api.RepoApiError.newFromApiResponse( error, 'save' ),
 							guid = self.createGuid(),
-							captionDataEditor = new CaptionDataEditor(
-								guid,
-								self.savedCaptionsData[ langCode ],
-								self
-							);
-						captionDataEditor.inputError = apiError.detailedMessage;
+							captionDataEditor = self.createCaptionDataEditor( guid, self.savedCaptionsData[ langCode ] );
+						captionDataEditor.setInputError( apiError.detailedMessage );
 						captionsDataEditors[ guid ] = captionDataEditor;
 					} );
 			} );
@@ -728,13 +751,48 @@ CaptionsPanel.prototype.sendData = function () {
 };
 
 /**
+ * @param {string} guid
+ * @param {CaptionData} captionData
+ * @return {CaptionDataEditor}
+ */
+CaptionsPanel.prototype.createCaptionDataEditor = function ( guid, captionData ) {
+	var captionDataEditor = new CaptionDataEditor( guid, captionData );
+	this.enableCaptionDataEditor( captionDataEditor );
+	return captionDataEditor;
+};
+
+/**
+ * @param {CaptionDataEditor} captionDataEditor
+ */
+CaptionsPanel.prototype.enableCaptionDataEditor = function ( captionDataEditor ) {
+	captionDataEditor.setDisabled( false );
+
+	captionDataEditor.connect( this, { captionDeleted: 'onCaptionDeleted' } );
+	captionDataEditor.connect( this, { languageSelectorUpdated: 'onDataChanged' } );
+	captionDataEditor.connect( this, { textInputChanged: 'onDataChanged' } );
+	captionDataEditor.connect( this, { textInputSubmitted: 'sendData' } );
+};
+
+/**
+ * @param {CaptionDataEditor} captionDataEditor
+ */
+CaptionsPanel.prototype.disableCaptionDataEditor = function ( captionDataEditor ) {
+	captionDataEditor.setDisabled( true );
+
+	captionDataEditor.disconnect( this, { captionDeleted: 'onCaptionDeleted' } );
+	captionDataEditor.disconnect( this, { languageSelectorUpdated: 'onDataChanged' } );
+	captionDataEditor.disconnect( this, { textInputChanged: 'onDataChanged' } );
+	captionDataEditor.disconnect( this, { textInputSubmitted: 'sendData' } );
+};
+
+/**
  * Puts the panel into a 'sending' state without re-rendering
  */
 CaptionsPanel.prototype.setSending = function () {
 	var self = this;
 	this.editActionsWidget.setStateSending();
 	Object.keys( this.state.captionsDataEditors ).forEach( function ( guid ) {
-		self.state.captionsDataEditors[ guid ].disable();
+		self.disableCaptionDataEditor( self.state.captionsDataEditors[ guid ] );
 	} );
 	this.pushPending();
 };
@@ -746,7 +804,7 @@ CaptionsPanel.prototype.setReady = function () {
 	var self = this;
 	this.editActionsWidget.setStateReady();
 	Object.keys( this.state.captionsDataEditors ).forEach( function ( guid ) {
-		self.state.captionsDataEditors[ guid ].enable();
+		self.enableCaptionDataEditor( self.state.captionsDataEditors[ guid ] );
 	} );
 	this.popPending();
 };

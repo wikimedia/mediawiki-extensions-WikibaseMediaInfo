@@ -59,6 +59,10 @@ StatementPanel = function StatementPanel( config ) {
 
 	// attach the widget to DOM, replacing the server-side rendered equivalent
 	this.$element.empty().append( this.statementWidget.$element );
+
+	if ( !this.isSupportedType() ) {
+		this.$element.addClass( 'wbmi-entityview-statementsGroup-unsupported' );
+	}
 };
 
 /* Inheritance */
@@ -102,6 +106,14 @@ StatementPanel.prototype.isEditable = function () {
 };
 
 /**
+ * @return {bool}
+ */
+StatementPanel.prototype.isSupportedType = function () {
+	var supportedTypes = mw.config.get( 'wbmiSupportedDataTypes' ) || [];
+	return supportedTypes.indexOf( this.config.propertyType ) >= 0;
+};
+
+/**
  * Toggle the panel into edit mode. This method is asynchronous.
  */
 StatementPanel.prototype.makeEditable = function () {
@@ -117,7 +129,8 @@ StatementPanel.prototype.makeEditable = function () {
 	this.licenseDialogWidget.getConfirmationIfNecessary().then(
 		function () {
 			self.statementWidget.setEditing.bind( self.statementWidget, true );
-			if ( self.$element.hasClass( 'wbmi-entityview-statementsGroup-unsupported' ) ) {
+
+			if ( !self.isSupportedType() ) {
 				self.showUnsupportedPopup();
 			}
 		},

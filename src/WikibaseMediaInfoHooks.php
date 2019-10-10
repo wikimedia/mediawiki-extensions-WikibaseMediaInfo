@@ -182,7 +182,8 @@ class WikibaseMediaInfoHooks {
 		global $wgMediaInfoHelpUrls,
 				$wgMediaInfoProperties,
 				$wgMediaInfoExternalEntitySearchBaseUri,
-				$wgMediaInfoEnableSearch;
+				$wgMediaInfoEnableSearch,
+				$wgMediaInfoSupportedDataTypes;
 
 		// Hide any MediaInfo content and UI on a page, if the target page is a redirect.
 		if ( $out->getTitle()->isRedirect() ) {
@@ -248,6 +249,7 @@ class WikibaseMediaInfoHooks {
 				'wbmiExternalEntitySearchBaseUri' => $wgMediaInfoExternalEntitySearchBaseUri,
 				'wbmiMediaInfoEnableSearch' => $wgMediaInfoEnableSearch,
 				'wbmiRepoApiUrl' => wfScript( 'api' ),
+				'wbmiSupportedDataTypes' => $wgMediaInfoSupportedDataTypes,
 			]
 		);
 	}
@@ -288,7 +290,7 @@ class WikibaseMediaInfoHooks {
 			$entityRevisionId = $entityLookup->hasEntity( $entityId ) ? $revision->getId() : null;
 			$entity = $entityLookup->getEntity( $entityId );
 			$serializer = $wbRepo->getAllTypesEntitySerializer();
-			$entityData = ( $entity ? $serializer->serialize( $entity ) : [] );
+			$entityData = ( $entity ? $serializer->serialize( $entity ) : null );
 
 			$existingPropertyTypes = [];
 			if ( $entity instanceof MediaInfo ) {

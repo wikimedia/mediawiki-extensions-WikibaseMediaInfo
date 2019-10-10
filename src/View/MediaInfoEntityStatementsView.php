@@ -195,7 +195,6 @@ class MediaInfoEntityStatementsView {
 			$serializedStatements[] = $statementSerializer->serialize( $statement );
 			$formatValueCache += $this->getStatementFormatValueCache( $statement );
 		}
-		$propertyDataTypeIsSupportedForEditing = $this->isPropertyDataTypeSupported( $statement );
 
 		// format main property (e.g. depicts)
 		$formatValueCache += $this->getValueFormatValueCache(
@@ -234,9 +233,6 @@ class MediaInfoEntityStatementsView {
 			'wbmi-entityview-statementsGroup',
 			self::getHtmlContainerClass( $propertyIdString ),
 		];
-		if ( $propertyDataTypeIsSupportedForEditing === false ) {
-			$panelClasses[] = 'wbmi-entityview-statementsGroup-unsupported';
-		}
 
 		$panel = new PanelLayout( [
 			'classes' => $panelClasses,
@@ -262,20 +258,6 @@ class MediaInfoEntityStatementsView {
 			]
 		);
 		return $panel;
-	}
-
-	private function isPropertyDataTypeSupported( Statement $statement ) {
-		$mainSnak = $statement->getMainSnak();
-		if (
-			$mainSnak instanceof PropertyValueSnak &&
-			$mainSnak->getDataValue() instanceof EntityIdValue
-		) {
-			return true;
-		}
-		if ( $mainSnak instanceof PropertyNoValueSnak ) {
-			return true;
-		}
-		return false;
 	}
 
 	private function createPropertyHeader( $propertyIdString ) {

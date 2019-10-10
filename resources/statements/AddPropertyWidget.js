@@ -41,6 +41,7 @@ AddPropertyWidget.prototype.getTemplateData = function () {
 		maxSuggestions: 7,
 		placeholder: mw.message( 'wikibasemediainfo-add-property' ).text()
 	} );
+
 	propertyInputWidget.connect( this, { choose: 'onChoose' } );
 	propertyInputWidget.connect( this, { choose: [ 'setEditing', false ] } );
 	propertyInputWidget.connect( this, { choose: [ 'emit', 'choose' ] } );
@@ -52,6 +53,7 @@ AddPropertyWidget.prototype.getTemplateData = function () {
 		flags: [ 'progressive' ],
 		label: mw.message( 'wikibasemediainfo-add-statement' ).text()
 	} );
+
 	addPropertyButton.connect( this, { click: [ 'setEditing', !this.state.editing ] } );
 
 	removeButton = new OO.ui.ButtonWidget( {
@@ -61,6 +63,7 @@ AddPropertyWidget.prototype.getTemplateData = function () {
 		icon: 'trash',
 		framed: false
 	} );
+
 	removeButton.connect( this, { click: [ 'setEditing', false ] } );
 
 	return {
@@ -75,8 +78,13 @@ AddPropertyWidget.prototype.getTemplateData = function () {
  * @return {Array}
  */
 AddPropertyWidget.prototype.getFilters = function () {
+	var supportedTypes = mw.config.get( 'wbmiSupportedDataTypes' ) || [],
+		uniqueTypes = supportedTypes.filter( function ( item, index, self ) {
+			return self.indexOf( item ) === index;
+		} );
+
 	return [
-		{ field: 'datatype', value: 'wikibase-item' },
+		{ field: 'datatype', value: uniqueTypes.join( '|' ) },
 		{ field: '!id', value: this.state.propertyIds.join( '|' ) }
 	];
 };

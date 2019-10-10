@@ -1,11 +1,11 @@
 'use strict';
 
 var dataTypesMap = mw.config.get( 'wbDataTypes' ),
-	ItemInputWidget = require( './ItemInputWidget.js' ),
+	ItemWidget = require( './ItemWidget.js' ),
 	FormatValueElement = require( './FormatValueElement.js' ),
 	ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
 	DOMLessGroupWidget = require( 'wikibase.mediainfo.base' ).DOMLessGroupWidget,
-	ItemWidget = require( './ItemWidget.js' ),
+	StatementInputWidget = require( './StatementInputWidget.js' ),
 	StatementWidget,
 	datamodel = require( 'wikibase.datamodel' ),
 	serialization = require( 'wikibase.serialization' );
@@ -29,7 +29,8 @@ var dataTypesMap = mw.config.get( 'wbDataTypes' ),
  * @param {string[]} [config.tags] Change tags to apply to edits
  */
 StatementWidget = function ( config ) {
-	// fallback for backward compatibility from before this was required and only 'wikibase-item' was supported
+	// fallback for backward compatibility from before this was required and
+	// only 'wikibase-item' was supported
 	var title,
 		propertyType,
 		valueType;
@@ -46,7 +47,8 @@ StatementWidget = function ( config ) {
 		// fallback from before propertyType was required, just to make
 		// sure things still work the same for existing callers that have
 		// not been updated
-		valueType = ( config.properties || mw.config.get( 'wbmiProperties' ) || {} )[ config.propertyId ] || 'string';
+		valueType = ( config.properties || mw.config.get( 'wbmiProperties' ) || {} )[ config.propertyId ] ||
+			'string';
 	}
 
 	title = config.title ||
@@ -60,9 +62,10 @@ StatementWidget = function ( config ) {
 		editing: config.editing || false
 	};
 
-	this.input = new ItemInputWidget( {
+	this.input = new StatementInputWidget( {
 		classes: [ 'wbmi-statement-input' ],
-		type: valueType || 'string',
+		propertyType: propertyType,
+		valueType: valueType,
 		disabled: this.disabled
 	} );
 
@@ -82,7 +85,7 @@ StatementWidget = function ( config ) {
 		'templates/statements/StatementWidget.mustache+dom'
 	);
 
-	this.input.connect( this, { choose: 'addItemFromInput' } );
+	this.input.connect( this, { addItem: 'addItemFromInput' } );
 	this.publishButton.connect( this, { click: [ 'emit', 'publish' ] } );
 	this.connect( this, { change: 'updatePublishButtonState' } );
 
@@ -185,11 +188,13 @@ StatementWidget.prototype.hasChanges = function () {
 };
 
 /**
- * @param {ItemInputWidget} item
- */
+ * Receives a DataValue from the StatementInputWidget and uses it to create a
+ * new ItemWidget, add it to the list, and set the widget into edit mode.
+ * @param {datavalues.DataValue} item
+ * @fires change
+*/
 StatementWidget.prototype.addItemFromInput = function ( item ) {
-	var widget = this.createItem( item.getData() );
-
+	var widget = this.createItem( item );
 	this.addItems( [ widget ] );
 
 	// we just added a new item - let's switch all of them into editing mode
@@ -197,7 +202,6 @@ StatementWidget.prototype.addItemFromInput = function ( item ) {
 
 	// clear the autocomplete input field to select entities to add
 	this.input.setData( undefined );
-
 	this.emit( 'manual-add', widget );
 	this.emit( 'change', widget );
 };
@@ -284,8 +288,9 @@ StatementWidget.prototype.setData = function ( data ) {
 			return;
 		}
 
-		// adjust the input type, if needed
-		self.input.setInputType( mainSnak.getValue().getType() );
+		// TODO: is this necessary? Existing snak will only give us value
+		// datatype; if things have changed somehow (how?) then we need the property datatype
+		// self.input.setInputType( mainSnak.getValue().getType() );
 
 		if ( widget !== null ) {
 			self.moveItem( widget, i );

@@ -8,9 +8,12 @@ module.exports = {
 	GlobeCoordinateInputWidget: require( './GlobeCoordinateInputWidget.js' ),
 	ItemInputWidget: require( './ItemInputWidget.js' ),
 	ItemWidget: require( './ItemWidget.js' ),
-	QualifierAutocompleteWidget: require( './QualifierAutocompleteWidget.js' ),
 	LinkNoticeWidget: require( './LinkNoticeWidget.js' ),
+	QualifierAutocompleteWidget: require( './QualifierAutocompleteWidget.js' ),
 	QualifierValueInputWidget: require( './QualifierValueInputWidget.js' ),
 	QualifierWidget: require( './QualifierWidget.js' ),
-	StatementWidget: require( './StatementWidget.js' )
+	QuantityInputWidget: require( './QuantityInputWidget.js' ),
+	StatementInputWidget: require( './StatementInputWidget.js' ),
+	StatementWidget: require( './StatementWidget.js' ),
+	StringInputWidget: require( './StringInputWidget.js' )
 };

@@ -1,83 +1,53 @@
 'use strict';
 
-var EntityLookupElement = require( './EntityLookupElement.js' ),
-	FormatValueElement = require( './FormatValueElement.js' ),
-	datamodel = require( 'wikibase.datamodel' ),
-	ItemInputWidget = function MediaInfoStatementsItemInputWidget( config ) {
-		config = config || {};
+var FormatValueElement = require( './FormatValueElement.js' ),
+	EntityLookupElement = require( './EntityLookupElement.js' ),
+	ItemInputWidget;
 
-		ItemInputWidget.parent.call( this, $.extend( {
-			placeholder: mw.message( 'wikibasemediainfo-statements-item-input-placeholder' ).text(),
-			icon: 'search',
-			label: mw.message( 'wikibasemediainfo-statements-item-input-label' ).text()
-		}, config ) );
+/**
+ * @constructor
+ * @param {Object} [config]
+ */
+ItemInputWidget = function ( config ) {
+	config = config || {};
 
-		EntityLookupElement.call( this, $.extend( {
-			minLookupCharacters: 1,
-			allowSuggestionsWhenEmpty: false,
-			highlightFirst: false,
-			entityType: 'item'
-		}, config ) );
+	ItemInputWidget.parent.call( this, $.extend( {
+		placeholder: mw.message( 'wikibasemediainfo-statements-item-input-placeholder' ).text(),
+		icon: 'search',
+		label: mw.message( 'wikibasemediainfo-statements-item-input-label' ).text()
+	}, config ) );
 
-		FormatValueElement.call( this, $.extend( {}, config ) );
+	EntityLookupElement.call( this, $.extend( {
+		minLookupCharacters: 1,
+		allowSuggestionsWhenEmpty: false,
+		highlightFirst: false,
+		entityType: 'item'
+	}, config ) );
 
-		if ( config.entityType !== 'property' ) {
-			this.setInputType( config.type || 'string' );
-		}
-	};
+	FormatValueElement.call( this, $.extend( {}, config ) );
+};
+
 OO.inheritClass( ItemInputWidget, OO.ui.TextInputWidget );
 OO.mixinClass( ItemInputWidget, EntityLookupElement );
 OO.mixinClass( ItemInputWidget, FormatValueElement );
-
-/**
- * @param {string} type 'wikibase-entityid'
- * @chainable
- * @return {ItemInputWidget}
- */
-ItemInputWidget.prototype.setInputType = function ( type ) {
-	if ( type === 'wikibase-entityid' ) {
-		this.$element.show();
-	} else {
-		// don't show this input field if the data type is anything other than
-		// wikibase-entityid, the only datatype this thing is equiped to deal with;
-		// we'll figure out how to deal with other types later...
-		this.$element.hide();
-	}
-
-	return this;
-};
 
 /**
  * @inheritdoc
  */
 ItemInputWidget.prototype.onLookupMenuItemChoose = function ( item ) {
 	var data = item.getData();
+
 	this.setValue( data.label );
 	this.id = data.id;
+
+	// TODO
+	// this widget is used in two different contexts: to select properties along
+	// with AddPropertyWidget, and to input items into StatementWidgets which
+	// accept "wikibase-item" values.
+	// Right now a different event is emitted in each context, since the
+	// payloads differ. This is not ideal.
+	this.emit( 'addItem', data.id );
 	this.emit( 'choose', this, data );
-};
-
-/**
- * @param {datamodel.EntityId|undefined} data
- */
-ItemInputWidget.prototype.setData = function ( data ) {
-	var self = this;
-	if ( data instanceof datamodel.EntityId ) {
-		this.id = data.toJSON().id;
-		this.formatValue( data, 'text/plain' ).then( function ( plain ) {
-			self.setValue( plain );
-		} );
-	} else {
-		this.id = undefined;
-		this.setValue( '' );
-	}
-};
-
-/**
- * @return {datamodel.EntityId}
- */
-ItemInputWidget.prototype.getData = function () {
-	return new datamodel.EntityId( this.id );
 };
 
 module.exports = ItemInputWidget;

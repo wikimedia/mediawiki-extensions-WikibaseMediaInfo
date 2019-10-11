@@ -16,7 +16,7 @@ var ComponentWidget = function MediaInfoComponentWidget( moduleName, templateNam
 	this.templateName = templateName;
 
 	// force initial render
-	this.renderPromise = this.render();
+	this.render();
 };
 
 /**
@@ -66,53 +66,19 @@ ComponentWidget.prototype.getTemplateData = function () {
  * @return {jQuery.Promise}
  */
 ComponentWidget.prototype.setState = function ( state ) {
-	var self = this,
-		previousPendingState = this.pendingState;
+	var deferred = $.Deferred();
 
 	// add the newest state changes - expanding on previous (if any)
 	// changes that have no yet been rendered (because previous render
 	// was still happening, possibly)
 	this.pendingState = $.extend( {}, this.pendingState, state );
 
-	// multiple setState calls could happen while an earlier change
-	// is still being rendered, in which case the new state changes
-	// will be bundled (into pendingState) until we're ready to render;
-	// we'll schedule a new render as soon as the previous one is done,
-	// which will then apply all new incoming state changes at once
-	if ( Object.keys( previousPendingState ).length === 0 && Object.keys( this.pendingState ).length > 0 ) {
-		this.renderPromise = this.renderPromise
-			.then( function ( $element ) {
-				// this will prevent new data from starting a render right
-				// away (there may be more changes coming in and it'd be
-				// better if we can combine them) - it'll kick off a new
-				// render at the end of the current call stack instead
-				var deferred = $.Deferred();
-				setTimeout( deferred.resolve.bind( deferred, $element ) );
-				return deferred.promise();
-			} )
-			.then( function ( $element ) {
-				var previousState = $.extend( {}, self.state ),
-					changed = false;
-
-				Object.keys( self.pendingState ).forEach( function ( key ) {
-					var value = self.pendingState[ key ];
-
-					if ( !( key in self.state ) || self.state[ key ] !== value ) {
-						self.state[ key ] = value;
-						changed = true;
-					}
-				} );
-				self.pendingState = {};
-
-				if ( changed && self.shouldRerender( previousState ) ) {
-					return self.render();
-				}
-
-				return $element;
-			} );
-	}
-
-	return this.renderPromise;
+	// this will prevent new data from starting a render right
+	// away (there may be more changes coming in and it'd be
+	// better if we can combine them) - it'll kick off a new
+	// render at the end of the current call stack instead
+	setTimeout( deferred.resolve );
+	return deferred.promise().then( this.render.bind( this ) );
 };
 
 /**
@@ -124,6 +90,49 @@ ComponentWidget.prototype.setState = function ( state ) {
 ComponentWidget.prototype.render = function () {
 	var self = this;
 
+	if ( this.renderPromise === undefined ) {
+		// initial render
+		this.renderPromise = this.renderInternal();
+		return this.renderPromise;
+	}
+
+	this.renderPromise = this.renderPromise
+		.then( function ( $element ) {
+			var previousState = $.extend( {}, self.state ),
+				hasChanges = Object.keys( self.pendingState ).some( function ( key ) {
+					return ( !( key in self.state ) || self.state[ key ] !== self.pendingState[ key ] );
+				} );
+
+			self.state = $.extend( {}, self.state, self.pendingState );
+			self.pendingState = {};
+
+			if ( !hasChanges ) {
+				// if there are no changes, the existing render is still valid
+				return $element;
+			}
+
+			if ( !self.shouldRerender( previousState ) ) {
+				// if code indicates the changes are not worth rerendering, the existing render will do
+				return $element;
+			}
+
+			return self.renderInternal();
+		} );
+	return this.renderPromise;
+};
+
+/**
+ * Returns a promise that will resolve with the jQuery $element
+ * as soon as it is done rendering.
+ *
+ * @private
+ * @return {jQuery.Promise<jQuery>}
+ */
+ComponentWidget.prototype.renderInternal = function () {
+	var self = this;
+
+	// always chain renders on top of the previous one, so a new
+	// render does not conflict with an in-progress one
 	return $.Deferred().resolve().promise()
 		.then( this.getTemplateData.bind( this ) )
 		.then( this.extractDOMNodes.bind( this ) )

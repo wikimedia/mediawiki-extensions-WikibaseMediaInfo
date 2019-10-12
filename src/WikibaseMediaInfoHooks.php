@@ -96,7 +96,7 @@ class WikibaseMediaInfoHooks {
 	 *
 	 * @see WikibaseMediaInfo.entitytypes.php
 	 *
-	 * @note: This is bootstrap code, it is executed for EVERY request. Avoid instantiating
+	 * @note This is bootstrap code, it is executed for EVERY request. Avoid instantiating
 	 * objects or loading classes here!
 	 *
 	 * @param array[] $entityTypeDefinitions
@@ -159,7 +159,7 @@ class WikibaseMediaInfoHooks {
 		$dataTypes = $mwConfig->get( 'WBRepoDataTypes' );
 
 		$propertyDatatype = $propertyDataTypeLookup->getDataTypeIdForProperty( $id );
-		return $dataTypes['PT:'.$propertyDatatype]['value-type'];
+		return $dataTypes['PT:' . $propertyDatatype]['value-type'];
 	}
 
 	/**

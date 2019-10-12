@@ -74,7 +74,7 @@ class MediaInfoDeserializer extends TypedObjectDeserializer {
 		if ( array_key_exists( 'id', $serialization ) ) {
 			$id = $this->idDeserializer->deserialize( $serialization['id'] );
 
-			if ( ! $id instanceof MediaInfoId ) {
+			if ( !$id instanceof MediaInfoId ) {
 				throw new InvalidArgumentException(
 					'Expected MediaInfoId, got a ' . get_class( $id ) .
 					' from deserializing ' . var_export( $serialization, true )

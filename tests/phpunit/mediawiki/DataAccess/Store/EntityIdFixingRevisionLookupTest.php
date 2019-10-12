@@ -19,7 +19,7 @@ class EntityIdFixingRevisionLookupTest extends TestCase {
 	private $defaultLookup;
 	private $logger;
 
-	public function setUp() {
+	public function setUp() : void {
 		$this->defaultLookup = $this->getMockBuilder( EntityRevisionLookup::class )
 			->disableOriginalConstructor()
 			->getMock();

@@ -28,7 +28,7 @@ abstract class WBMIApiTestCase extends \ApiUploadTestCase {
 		] );
 	}
 
-	protected function setUp() {
+	protected function setUp() : void {
 		parent::setUp();
 
 		$this->setupWbEditorUser();

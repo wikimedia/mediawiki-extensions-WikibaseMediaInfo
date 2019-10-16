@@ -164,7 +164,7 @@ ComponentWidget.prototype.renderInternal = function () {
 /**
  * This method will take 2 jQuery collections: $old and $new.
  * $old will be populated with nodes from $new, except for nodes that match,
- * those will be left as they were - only new (additions or removals) changes
+ * those will be left as they were - only new changes (additions or removals)
  * will be taken from $new.
  *
  * This is done to preserve existing nodes as much as possible, because if they
@@ -182,16 +182,8 @@ ComponentWidget.prototype.rebuildDOM = function ( $old, $new, preserve ) {
 		random = Math.random().toString( 36 ).substring( 2 ),
 		$terminatorOld = $( '<span data-random="terminator-' + random + '">' ),
 		$terminatorNew = $( '<span data-random="terminator-' + random + '">' ),
-		lastIndex = -1,
-		oldNodesMap,
-		matchingNodesMap,
-		$nodes,
-		oldNode,
-		$oldNode,
-		oldIndex,
-		newNode,
-		$newNode,
-		newIndex;
+		$newNodes,
+		$oldNodes;
 
 	preserve = preserve || [];
 
@@ -202,89 +194,60 @@ ComponentWidget.prototype.rebuildDOM = function ( $old, $new, preserve ) {
 	$old.append( $terminatorOld );
 	$new.append( $terminatorNew );
 
-	oldNodesMap = $old.contents().get();
-	matchingNodesMap = this.matchNodes( $old.contents(), $new.contents() );
+	$newNodes = $new.contents();
+	$oldNodes = $old.contents();
 
-	for ( oldIndex = 0; oldIndex < $old.contents().length; oldIndex++ ) {
-		$oldNode = $old.contents().eq( oldIndex );
-		oldNode = $oldNode.get( 0 );
+	this.matchNodes( $newNodes, $oldNodes ).map( function ( $oldNode, newIndex ) {
+		var oldIndex = $oldNodes.index( $oldNode ),
+			oldNode = $oldNodes.get( oldIndex ),
+			newNode = $newNodes.get( newIndex ),
+			currentIndex = $old.contents().index( oldNode );
 
-		// let's ignore empty (whitespace-only) text nodes - we don't want to
-		// try to match them because the odds of getting them mixed up and
-		// disrupting the order are way too significant
-		if ( oldNode.tagName === undefined && oldNode.textContent.trim() === '' ) {
-			// remove from DOM
-			$oldNode.remove();
-			// we just dropped a node - decrease the iterating index
-			oldIndex--;
-			continue;
+		if ( oldIndex < 0 ) {
+			// if new node did not previously exist, insert it at this index
+			$old.contents().get( newIndex ).before( newNode );
+			return;
 		}
 
-		$newNode = matchingNodesMap[ oldNodesMap.indexOf( oldNode ) ] || $();
-		newNode = $newNode.get( 0 );
-		newIndex = $new.contents().index( $newNode );
-
-		if ( $newNode.length > 0 ) {
-			if ( preserve.indexOf( newNode ) >= 0 ) {
-				// if we've indicated we want to preserve the new node as-is,
-				// (e.g. because an exact node was passed in, which could have
-				// event handlers bound etc), just swap them around instead
-				// of trying to merge them
-				$oldNode.replaceWith( $newNode.after( $oldNode.clone() ) );
-				// fix variables pointing to the relevant nodes now that they've
-				// been swapped
-				$oldNode = $old.contents().eq( oldIndex );
-				oldNode = $oldNode.get( 0 );
-				$newNode = $new.contents().eq( newIndex );
-				newNode = $newNode.get( 0 );
-			} else if ( !this.isEqualNodeAndProps( oldNode, newNode ) ) {
-				// node is not an exact match - some of its characteristics
-				// (attributes, children, ...) don't match - let's fix those!
-				// remove existing attributes & copy attributes from new node
-				// eslint-disable-next-line no-loop-func
-				[].slice.call( oldNode.attributes ).forEach( function ( attribute ) {
-					oldNode.removeAttribute( attribute.name );
-				} );
-				// eslint-disable-next-line no-loop-func
-				[].slice.call( newNode.attributes ).forEach( function ( attribute ) {
-					oldNode.setAttribute( attribute.name, attribute.value );
-				} );
-
-				// rebuild children as needed
-				$oldNode = self.rebuildDOM( $oldNode, $newNode, preserve );
-			}
+		if ( currentIndex > newIndex ) {
+			// if node already exists, but further away in DOM, detach everything
+			// in between (could be old nodes that will end up removed;
+			// could be old nodes that we'll still need elsewhere later on)
+			$old.contents().slice( newIndex, currentIndex ).detach();
 		}
 
-		if ( newIndex < 0 ) {
-			// remove from DOM
-			// (only detach, to retain event handlers, should we need
-			// to bring it back on a later rerender)
-			$oldNode.detach();
-			// we just dropped a node - decrease the iterating index
-			oldIndex--;
-		} else if ( newIndex < oldIndex ) {
-			// match in newly generated content has a lower index than
-			// in our old DOM, which means some content that used to exist
-			// has now been removed remove from DOM
-			// (only detach, to retain event handlers, should we need
-			// to bring it back on a later rerender)
-			$old.contents().slice( newIndex, oldIndex ).detach();
-			// we just dropped nodes to match new structure - update the iterating index
-			oldIndex = newIndex;
-		} else if ( newIndex > oldIndex ) {
-			// match in newly generated content has a higher index,
-			// so there's new content that should be added!
-			// move nodes into our original DOM & keep a clone around
-			// in the alternative version, to retain matching indexes
-			$nodes = $new.contents().slice( oldIndex, newIndex );
-			$oldNode.before( $nodes );
-			$newNode.before( $nodes.clone() );
-			// we just changed both new & old structure - update the iterating indexes
-			oldIndex = $old.contents().index( $oldNode );
-		}
+		if ( preserve.indexOf( oldNode ) >= 0 ) {
+			// oldNode is a node that needs to be preserved: it was a DOM node
+			// directly assigned as a variable to the template and it may have
+			// context that we must not lose (event listeners, focus state...)
+			// leave this node alone!
+			// (this block is intentionally blank to make above reasoning clear)
+		} else if ( preserve.indexOf( newNode ) >= 0 ) {
+			// same as above: it was assigned to the template, but it did not
+			// yet exist in the old render (a very similar node might exist,
+			// but not this exact one, which might have other events handlers
+			// bound or so)
+			// we must not try to merge old & new nodes, this is the exact
+			// right node - it was passed into the template as such
+			$( oldNode ).replaceWith( $( newNode ).after( $( oldNode ).clone() ) );
+		} else if ( !self.isEqualNodeAndProps( oldNode, newNode ) && preserve.indexOf( oldNode ) < 0 ) {
+			// this is for all other nodes, that were built from the HTML in
+			// the template
+			// we don't want to simply swap out these nodes, because then we
+			// could lose context (e.g. focus state or input values), so let's
+			// just try to apply the new characteristics on to the existing nodes
 
-		lastIndex = newIndex >= 0 ? newIndex : lastIndex;
-	}
+			[].slice.call( oldNode.attributes ).forEach( function ( attribute ) {
+				oldNode.removeAttribute( attribute.name );
+			} );
+			[].slice.call( newNode.attributes ).forEach( function ( attribute ) {
+				oldNode.setAttribute( attribute.name, attribute.value );
+			} );
+
+			// rebuild children as needed, recursively
+			self.rebuildDOM( $( oldNode ), $( newNode ), preserve );
+		}
+	} );
 
 	// remove terminator and return relevant nodes
 	$terminatorOld.remove();
@@ -350,12 +313,12 @@ ComponentWidget.prototype.extractDOMNodes = function ( data ) {
 					result[ key ] = [];
 					for ( j = 0; j < nodes.length; j++ ) {
 						node = nodes[ j ];
+						originals.push( node );
 						// only clone nodes that are currently rendered - others
 						// should actually render the real nodes (not clones)
 						if ( self.$element.find( node ).length > 0 ) {
 							result[ key ].push( node.cloneNode( true ) );
 						} else {
-							originals.push( node );
 							result[ key ].push( node );
 						}
 					}
@@ -462,12 +425,12 @@ ComponentWidget.prototype.findBestMatchingNodes = function ( $needle, $haystack 
 				// (we'll do this again for all their children to find the
 				// *most similar* later on - this just eliminates some,
 				// e.g. when id of node doesn't even match)
-				return self.getNumberOfEqualNodes( $needle, $( node ) ) > 0;
+				return self.getNumberOfEqualNodes( $needle.get(), [ node ] ) > 0;
 			} );
 
 		// find the largest amount of matching children
 		matchingChildrenAmounts = $potentialMatches.get().map( function ( newNode ) {
-			return self.getNumberOfEqualNodes( $needle.children(), $( newNode ).children() );
+			return self.getNumberOfEqualNodes( $needle.children().get(), $( newNode ).children().get() );
 		} );
 		maxMatchingChildren = Math.max.apply( Math, matchingChildrenAmounts.concat( 0 ) );
 
@@ -527,16 +490,16 @@ ComponentWidget.prototype.isEqualNodeAndProps = function ( one, two ) {
  * `.isEqualNode`, or their children (or theirs, recursively) matching.
  *
  * @private
- * @param {jQuery} $one
- * @param {jQuery} $two
+ * @param {jQuery[]} one
+ * @param {jQuery[]} two
  * @return {number}
  */
-ComponentWidget.prototype.getNumberOfEqualNodes = function ( $one, $two ) {
+ComponentWidget.prototype.getNumberOfEqualNodes = function ( one, two ) {
 	var self = this;
 
-	return $two
-		.map( function ( j, twoNode ) {
-			return $one.filter( function ( k, oneNode ) {
+	return two
+		.map( function ( twoNode ) {
+			return one.filter( function ( oneNode ) {
 				if ( oneNode.id ) {
 					// nodes that have an id must match
 					return oneNode.id === twoNode.id;
@@ -556,10 +519,9 @@ ComponentWidget.prototype.getNumberOfEqualNodes = function ( $one, $two ) {
 
 				// node is not a perfect match - let's run their children
 				// through the same set of criteria
-				return self.getNumberOfEqualNodes( $( oneNode ).children(), $( twoNode ).children() ) > 0;
+				return self.getNumberOfEqualNodes( $( oneNode ).children().get(), $( twoNode ).children().get() ) > 0;
 			} ).length;
 		} )
-		.get()
 		.reduce( function ( sum, count ) {
 			return sum + count;
 		}, 0 );

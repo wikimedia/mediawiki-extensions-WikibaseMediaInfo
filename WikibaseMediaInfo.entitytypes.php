@@ -25,6 +25,8 @@ use Wikibase\DataModel\SerializerFactory;
 use Wikibase\DataModel\Services\EntityId\EntityIdFormatter;
 use Wikibase\DataModel\Services\Lookup\InProcessCachingDataTypeLookup;
 use Wikibase\LanguageFallbackChain;
+use Wikibase\Lib\Store\EntityContentDataCodec;
+use Wikibase\Lib\Store\Sql\WikiPageEntityDataLoader;
 use Wikibase\MediaInfo\DataAccess\Store\EntityIdFixingRevisionLookup;
 use Wikibase\Lib\LanguageNameLookup;
 use Wikibase\Lib\Store\CachingPropertyOrderProvider;
@@ -36,6 +38,7 @@ use Wikibase\MediaInfo\ChangeOp\Deserialization\MediaInfoChangeOpDeserializer;
 use Wikibase\MediaInfo\Content\MediaInfoContent;
 use Wikibase\MediaInfo\Content\MediaInfoHandler;
 use Wikibase\MediaInfo\Content\MissingMediaInfoHandler;
+use Wikibase\MediaInfo\DataAccess\Store\FilePageRedirectHandlingRevisionLookup;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\MediaInfo\DataModel\MediaInfoId;
 use Wikibase\MediaInfo\DataModel\Serialization\MediaInfoDeserializer;
@@ -274,8 +277,25 @@ return [
 		'entity-revision-lookup-factory-callback' => function (
 			EntityRevisionLookup $defaultLookup
 		) {
+			$revisionStoreFactory = MediaWikiServices::getInstance()->getRevisionStoreFactory();
+			$blobStoreFactory = MediaWikiServices::getInstance()->getBlobStoreFactory();
+
 			$wbRepo = WikibaseRepo::getDefaultInstance();
-			return new EntityIdFixingRevisionLookup( $defaultLookup, $wbRepo->getLogger() );
+			// TODO: this all scaffolding should probably be somehow moved to Wikibase Repo or so?
+			$databaseName = $wbRepo->getEntitySourceDefinitions()->getSourceForEntityType( MediaInfo::ENTITY_TYPE )->getDatabaseName();
+
+			$contentCodec = new EntityContentDataCodec(
+				$wbRepo->getEntityIdParser(),
+				$wbRepo->getStorageEntitySerializer(),
+				$wbRepo->getInternalFormatEntityDeserializer(),
+				$wbRepo->getDataAccessSettings()->maxSerializedEntitySizeInBytes()
+			);
+
+			return new FilePageRedirectHandlingRevisionLookup(
+				new EntityIdFixingRevisionLookup( $defaultLookup, $wbRepo->getLogger() ),
+				$revisionStoreFactory->getRevisionStore( $databaseName ),
+				new WikiPageEntityDataLoader( $contentCodec, $blobStoreFactory->newBlobStore( $databaseName ) )
+			);
 		},
 		'prefetching-term-lookup-callback' => function( SingleEntitySourceServices $services ) {
 			return new MediaInfoPrefetchingTermLookup( $services->getEntityRevisionLookup() );

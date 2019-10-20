@@ -3,6 +3,7 @@
 namespace Wikibase\MediaInfo\Tests\MediaWiki\Services;
 
 use Wikibase\DataModel\Entity\EntityId;
+use Wikibase\DataModel\Services\Lookup\TermLookupException;
 use Wikibase\DataModel\Term\Term;
 use Wikibase\DataModel\Term\TermList;
 use Wikibase\Lib\Store\EntityRevision;
@@ -117,11 +118,9 @@ class MediaInfoPrefetchingTermLookupTest extends \PHPUnit\Framework\TestCase {
 		);
 	}
 
-	/**
-	 * @expectedException \Wikibase\DataModel\Services\Lookup\TermLookupException
-	 */
 	public function testGetPrefetchedNonExistingTerm() {
 		$termLookup = $this->getDefaultMediaInfoPrefetchingTermLookup();
+		$this->expectException( TermLookupException::class );
 		$termLookup->prefetchTerms( [ static::$defaultRevisionId ], [ 'blahblah' ], [ 'qqq' ] );
 	}
 
@@ -184,13 +183,11 @@ class MediaInfoPrefetchingTermLookupTest extends \PHPUnit\Framework\TestCase {
 		);
 	}
 
-	/**
-	 * @expectedException \Wikibase\DataModel\Services\Lookup\TermLookupException
-	 */
 	public function testGetLabelNonExistingEntity() {
 		$termLookup = $this->getDefaultMediaInfoPrefetchingTermLookup();
 		$termLookup->prefetchTerms( [ static::$nonExistingRevisionId ] );
 
+		$this->expectException( TermLookupException::class );
 		$termLookup->getLabel( static::$nonExistingRevisionId, 'en' );
 	}
 
@@ -229,13 +226,11 @@ class MediaInfoPrefetchingTermLookupTest extends \PHPUnit\Framework\TestCase {
 		);
 	}
 
-	/**
-	 * @expectedException \Wikibase\DataModel\Services\Lookup\TermLookupException
-	 */
 	public function testGetLabelsNonExistingEntity() {
 		$termLookup = $this->getDefaultMediaInfoPrefetchingTermLookup();
 		$termLookup->prefetchTerms( [ static::$nonExistingRevisionId ] );
 
+		$this->expectException( TermLookupException::class );
 		$termLookup->getLabels( static::$nonExistingRevisionId, [ 'en', 'nl' ] );
 	}
 
@@ -271,13 +266,11 @@ class MediaInfoPrefetchingTermLookupTest extends \PHPUnit\Framework\TestCase {
 		);
 	}
 
-	/**
-	 * @expectedException \Wikibase\DataModel\Services\Lookup\TermLookupException
-	 */
 	public function testGetDescriptionNonExistingEntity() {
 		$termLookup = $this->getDefaultMediaInfoPrefetchingTermLookup();
 		$termLookup->prefetchTerms( [ static::$nonExistingRevisionId ] );
 
+		$this->expectException( TermLookupException::class );
 		$termLookup->getDescription( static::$nonExistingRevisionId, 'en' );
 	}
 
@@ -316,13 +309,11 @@ class MediaInfoPrefetchingTermLookupTest extends \PHPUnit\Framework\TestCase {
 		);
 	}
 
-	/**
-	 * @expectedException \Wikibase\DataModel\Services\Lookup\TermLookupException
-	 */
 	public function testGetDescriptionsNonExistingEntity() {
 		$termLookup = $this->getDefaultMediaInfoPrefetchingTermLookup();
 		$termLookup->prefetchTerms( [ static::$nonExistingRevisionId ] );
 
+		$this->expectException( TermLookupException::class );
 		$termLookup->getDescriptions( static::$nonExistingRevisionId, [ 'en', 'nl' ] );
 	}
 

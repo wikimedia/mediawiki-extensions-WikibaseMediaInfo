@@ -3,7 +3,6 @@
 	<rule ref="./vendor/wikibase/wikibase-codesniffer/Wikibase">
 		<exclude name="Wikibase.Namespaces.FullQualifiedClassName" />
 		<exclude name="PSR12.Properties.ConstantVisibility.NotFound" />
-		<exclude name="MediaWiki.Commenting.PhpunitAnnotations.ForbiddenExpectedException" />
 		<exclude name="PSR2.Classes.ClassDeclaration.FirstInterfaceSameLine" />
 		<exclude name="PSR2.Classes.ClassDeclaration.InterfaceSameLine" />
 		<exclude name="PSR2.Classes.ClassDeclaration.InterfaceWrongIndent" />

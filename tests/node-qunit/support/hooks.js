@@ -91,13 +91,12 @@ module.exports.wikibase = Object.assign( {}, module.exports.mediawiki, {
 		global.globeCoordinate = helpers.createGlobeCoordinateEnv();
 		global.dataValues = helpers.createDataValuesEnv();
 		global.wikibase = helpers.createWikibaseEnv();
-		global.wikibase.datamodel = helpers.registerWbDataModel();
+		helpers.registerWbDataModel();
 		global.mw.config.get.withArgs( 'wbDataTypes' ).returns( wbDataTypes );
 
 		helpers.registerWbSerialization();
 	},
 	afterEach: function () {
-		helpers.deregisterWbDataModel();
 		sandboxes.wikibase.restore();
 		mockery.disable();
 		module.exports.mediawiki.afterEach();

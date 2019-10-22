@@ -10,6 +10,7 @@
 	"wikibasemediainfo-filepage-more-languages": "Skatīt vēl $1 {{PLURAL:$1|valodas|valodu|valodas}}",
 	"wikibasemediainfo-filepage-fewer-languages": "Redzēt mazāk valodas",
 	"wikibasemediainfo-filepage-cancel": "Atcelt",
+	"wikibasemediainfo-filepage-cancel-confirm": "Veiktās izmaiņas netiks saglabātas.",
 	"wikibasemediainfo-filepage-cancel-confirm-title": "Atmest izmaiņas?",
 	"wikibasemediainfo-filepage-cancel-confirm-accept": "Atmest",
 	"wikibasemediainfo-filepage-edit": "Labot",

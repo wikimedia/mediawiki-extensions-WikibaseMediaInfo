@@ -209,8 +209,6 @@ module.exports.createWikibaseEnv = function () {
 				post: sinon.stub().returns( $.Deferred().resolve( {} ).promise( { abort: function () {} } ) )
 			} )
 		},
-		datamodel: {},
-		serialization: {},
 		utilities: {
 			ClaimGuidGenerator: sinon.stub().returns( { newGuid: function () { return Math.random().toString( 36 ).slice( 2 ); } } )
 		}
@@ -219,114 +217,20 @@ module.exports.createWikibaseEnv = function () {
 
 /**
  * Loads a "wikibase.datamodel" object for use in testing.
- *
- * @return {Object}
  */
 module.exports.registerWbDataModel = function () {
-	var oldWikibase = global.wikibase,
-		oldDataValues = global.dataValues,
-		oldUtil = global.util;
-
-	// `require` caches the exports and reuses them the next require
-	// the files required below have no exports, though - they just
-	// execute and are assigned as properties of an object
-	// `requireAgain` would make sure they keep doing that over and
-	// over, but then they'll end up creating the same functions/objects
-	// more than once, but different instances...
-	// other modules, with actual exports, that use these functions
-	// might encounter side-effects though, because the instances of
-	// those objects are different when loaded at different times,
-	// so to be safe, we'll try to emulate regular `require` behavior
-	// by running these files once, grabbing the result, caching it,
-	// and re-using the result from cache
-	if ( mockCache.datamodel ) {
-		mockery.registerMock( 'wikibase.datamodel', mockCache.datamodel );
-		return mockCache.datamodel;
-	}
-
-	global.wikibase = { datamodel: {} };
 	global.dataValues = this.createDataValuesEnv();
 	global.util = {};
 
 	requireAgain( 'wikibase-data-values/lib/util/util.inherit.js' );
 
-	// wikibase-data-model/src/index.js exports all objects, but it
-	// first expects all of them to already exist in wikibase.datamodel
-	// namespace, so we're first going to have to load all of them,
-	// in correct order, to make that so
-	// I suspect that eventually, they'll be `required` independently
-	// from index.js, in which case this block of requires can be dropped
-	requireAgain( 'wikibase-data-model/src/__namespace.js' );
-	requireAgain( 'wikibase-data-model/src/GroupableCollection.js' );
-	requireAgain( 'wikibase-data-model/src/Group.js' );
-	requireAgain( 'wikibase-data-model/src/List.js' );
-	requireAgain( 'wikibase-data-model/src/Set.js' );
-	requireAgain( 'wikibase-data-model/src/Snak.js' );
-	requireAgain( 'wikibase-data-model/src/SnakList.js' );
-	requireAgain( 'wikibase-data-model/src/Claim.js' );
-	requireAgain( 'wikibase-data-model/src/Entity.js' );
-	requireAgain( 'wikibase-data-model/src/EntityId.js' );
-	requireAgain( 'wikibase-data-model/src/Fingerprint.js' );
-	requireAgain( 'wikibase-data-model/src/FingerprintableEntity.js' );
-	requireAgain( 'wikibase-data-model/src/SiteLink.js' );
-	requireAgain( 'wikibase-data-model/src/SiteLinkSet.js' );
-	requireAgain( 'wikibase-data-model/src/StatementGroup.js' );
-	requireAgain( 'wikibase-data-model/src/StatementGroupSet.js' );
-	requireAgain( 'wikibase-data-model/src/Item.js' );
-	requireAgain( 'wikibase-data-model/src/Map.js' );
-	requireAgain( 'wikibase-data-model/src/MultiTerm.js' );
-	requireAgain( 'wikibase-data-model/src/MultiTermMap.js' );
-	requireAgain( 'wikibase-data-model/src/Property.js' );
-	requireAgain( 'wikibase-data-model/src/PropertyNoValueSnak.js' );
-	requireAgain( 'wikibase-data-model/src/PropertySomeValueSnak.js' );
-	requireAgain( 'wikibase-data-model/src/PropertyValueSnak.js' );
-	requireAgain( 'wikibase-data-model/src/Reference.js' );
-	requireAgain( 'wikibase-data-model/src/ReferenceList.js' );
-	requireAgain( 'wikibase-data-model/src/Statement.js' );
-	requireAgain( 'wikibase-data-model/src/StatementList.js' );
-	requireAgain( 'wikibase-data-model/src/Term.js' );
-	requireAgain( 'wikibase-data-model/src/TermMap.js' );
-	mockCache.datamodel = requireAgain( 'wikibase-data-model/src/index.js' );
-
 	mockery.registerSubstitute( 'wikibase.datamodel', 'wikibase-data-model/src/index.js' );
-
-	// restore global scope before returning
-	global.wikibase = oldWikibase;
-	global.dataValues = oldDataValues;
-	global.util = oldUtil;
-
-	// once wikibase-data-model abandons the wikibase.datamodel namespace,
-	// we should no longer need to use/return this object (but it currently
-	// still uses objects in wikibase.datamodel in its inner workings, instead
-	// of requiring them individually as needed)
-	return mockCache.datamodel;
-};
-
-module.exports.deregisterWbDataModel = function () {
-	mockery.deregisterMock( 'wikibase.datamodel' );
 };
 
 module.exports.registerWbSerialization = function () {
 	global.util = {};
 
 	requireAgain( 'wikibase-data-values/lib/util/util.inherit.js' );
-
-	requireAgain( 'wikibase-serialization/src/Serializers/Serializer.js' );
-	requireAgain( 'wikibase-serialization/src/Deserializers/Deserializer.js' );
-	requireAgain( 'wikibase-serialization/src/Serializers/SnakSerializer.js' );
-	requireAgain( 'wikibase-serialization/src/Serializers/SnakListSerializer.js' );
-	requireAgain( 'wikibase-serialization/src/Serializers/ClaimSerializer.js' );
-	requireAgain( 'wikibase-serialization/src/Serializers/ReferenceSerializer.js' );
-	requireAgain( 'wikibase-serialization/src/Serializers/ReferenceListSerializer.js' );
-	requireAgain( 'wikibase-serialization/src/Serializers/StatementSerializer.js' );
-	requireAgain( 'wikibase-serialization/src/Serializers/StatementListSerializer.js' );
-	requireAgain( 'wikibase-serialization/src/Deserializers/SnakDeserializer.js' );
-	requireAgain( 'wikibase-serialization/src/Deserializers/SnakListDeserializer.js' );
-	requireAgain( 'wikibase-serialization/src/Deserializers/ClaimDeserializer.js' );
-	requireAgain( 'wikibase-serialization/src/Deserializers/ReferenceDeserializer.js' );
-	requireAgain( 'wikibase-serialization/src/Deserializers/ReferenceListDeserializer.js' );
-	requireAgain( 'wikibase-serialization/src/Deserializers/StatementDeserializer.js' );
-	requireAgain( 'wikibase-serialization/src/Deserializers/StatementListDeserializer.js' );
 
 	mockery.registerSubstitute( 'wikibase.serialization', 'wikibase-serialization/src/index.js' );
 };

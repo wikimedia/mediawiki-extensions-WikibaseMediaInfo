@@ -15,6 +15,7 @@
 
 use MediaWiki\MediaWikiServices;
 use Wikibase\DataAccess\DataAccessSettings;
+use Wikibase\DataAccess\SingleEntitySourceServices;
 use Wikibase\DataAccess\UnusableEntitySource;
 use Wikibase\DataModel\DeserializerFactory;
 use Wikibase\DataModel\Entity\EntityDocument;
@@ -44,6 +45,7 @@ use Wikibase\MediaInfo\DataModel\Services\Diff\MediaInfoPatcher;
 use Wikibase\MediaInfo\Diff\BasicMediaInfoDiffVisualizer;
 use Wikibase\MediaInfo\Rdf\MediaInfoRdfBuilder;
 use Wikibase\MediaInfo\Search\MediaInfoFieldDefinitions;
+use Wikibase\MediaInfo\Services\MediaInfoPrefetchingTermLookup;
 use Wikibase\MediaInfo\Services\MediaInfoServices;
 use Wikibase\MediaInfo\Services\MediaInfoEntityQuery;
 use Wikibase\MediaInfo\View\MediaInfoEntityTermsView;
@@ -275,5 +277,8 @@ return [
 			$wbRepo = WikibaseRepo::getDefaultInstance();
 			return new EntityIdFixingRevisionLookup( $defaultLookup, $wbRepo->getLogger() );
 		},
+		'prefetching-term-lookup-callback' => function( SingleEntitySourceServices $services ) {
+			return new MediaInfoPrefetchingTermLookup( $services->getEntityRevisionLookup() );
+		}
 	]
 ];

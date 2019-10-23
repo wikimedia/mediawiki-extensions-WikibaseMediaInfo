@@ -45,6 +45,12 @@
 		},
 		"MediaInfoExternalEntitySearchBaseUri": {
 			"value": ""
+		},
+		"MediaInfoSupportedDataTypes": {
+			"description": "List of property datatypes which are supported in the UI",
+			"value": [
+				"wikibase-item"
+			]
 		}
 	},
 	"ServiceWiringFiles": [
@@ -235,7 +241,10 @@
 				"resources/statements/QualifierAutocompleteWidget.js",
 				"resources/statements/AddPropertyWidget.js",
 				"resources/statements/LinkNoticeWidget.js",
-				"resources/statements/GlobeCoordinateInputWidget.js"
+				"resources/statements/GlobeCoordinateInputWidget.js",
+				"resources/statements/StatementInputWidget.js",
+				"resources/statements/StringInputWidget.js",
+				"resources/statements/QuantityInputWidget.js"
 			],
 			"dependencies": [
 				"wikibase.mediainfo.base",

@@ -174,7 +174,6 @@
 				"wikibase.mediainfo.statements",
 				"wikibase",
 				"wikibase.api.RepoApi",
-				"wikibase.api.RepoApiError",
 				"ext.uls.mediawiki",
 				"wikibase.serialization"
 			],
@@ -255,7 +254,6 @@
 				"oojs-ui-widgets",
 				"oojs-ui-windows",
 				"wikibase.api.RepoApi",
-				"wikibase.api.RepoApiError",
 				"wikibase.mediainfo.statements.styles",
 				"wikibase.serialization",
 				"wikibase.datamodel",

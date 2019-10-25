@@ -19,8 +19,9 @@ use Wikibase\DataModel\Term\TermList;
  * @license GPL-2.0-or-later
  * @author Bene* < benestar.wikimedia@gmail.com >
  */
-class MediaInfo implements StatementListProvidingEntity, LabelsProvider, DescriptionsProvider,
-	ClearableEntity {
+class MediaInfo
+	implements StatementListProvidingEntity, LabelsProvider, DescriptionsProvider, ClearableEntity
+{
 
 	const ENTITY_TYPE = 'mediainfo';
 

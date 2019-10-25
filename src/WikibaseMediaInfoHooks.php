@@ -21,6 +21,7 @@ use Wikibase\DataModel\Entity\EntityId;
 use Wikibase\DataModel\Entity\PropertyId;
 use Wikibase\DataModel\Services\EntityId\EntityIdComposer;
 use Wikibase\DataModel\Services\Lookup\PropertyDataTypeLookupException;
+use Wikibase\EntityContent;
 use Wikibase\LanguageFallbackChainFactory;
 use Wikibase\Lib\Store\EntityByLinkedTitleLookup;
 use Wikibase\Lib\Store\EntityInfo;
@@ -137,7 +138,7 @@ class WikibaseMediaInfoHooks {
 	}
 
 	public static function onRegistration() {
-		if ( !class_exists( \Wikibase\EntityContent::class ) ) {
+		if ( !class_exists( EntityContent::class ) ) {
 			// HACK: Declaring a depency on Wikibase in extension.json requires Wikibase to have its own extension.json
 			throw new \ExtensionDependencyError( [ [
 				'msg' => 'WikibaseMediaInfo requires Wikibase to be installed.',

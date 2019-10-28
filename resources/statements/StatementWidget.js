@@ -47,8 +47,9 @@ StatementWidget = function ( config ) {
 		// fallback from before propertyType was required, just to make
 		// sure things still work the same for existing callers that have
 		// not been updated
-		valueType = ( config.properties || mw.config.get( 'wbmiProperties' ) || {} )[ config.propertyId ] ||
-			'string';
+		valueType = (
+			config.properties || mw.config.get( 'wbmiProperties' ) || {}
+		)[ config.propertyId ] || 'string';
 	}
 
 	title = config.title ||

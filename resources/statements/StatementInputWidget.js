@@ -26,16 +26,24 @@ OO.inheritClass( StatementInputWidget, OO.ui.Widget );
 StatementInputWidget.prototype.setInputType = function ( type ) {
 	switch ( type ) {
 		case 'wikibase-entityid':
-			this.input = new ItemInputWidget();
+			this.input = new ItemInputWidget( {
+				classes: this.config.classes
+			} );
 			break;
 		case 'quantity':
-			this.input = new QuantityInputWidget();
+			this.input = new QuantityInputWidget( {
+				classes: this.config.classes
+			} );
 			break;
 		case 'string':
-			this.input = new StringInputWidget();
+			this.input = new StringInputWidget( {
+				classes: this.config.classes
+			} );
 			break;
 		default:
-			this.input = new StringInputWidget();
+			this.input = new StringInputWidget( {
+				classes: this.config.classes
+			} );
 	}
 
 	this.input.connect( this, { addItem: 'onAddItem' } );

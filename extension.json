@@ -193,6 +193,7 @@
 				"wikibasemediainfo-filepage-cancel-confirm-accept",
 				"wikibasemediainfo-filepage-edit",
 				"wikibasemediainfo-filepage-caption-empty",
+				"wikibasemediainfo-filepage-caption-too-short",
 				"wikibasemediainfo-filepage-caption-too-long",
 				"wikibasemediainfo-filepage-caption-approaching-limit",
 				"wikibasemediainfo-filepage-license-title",

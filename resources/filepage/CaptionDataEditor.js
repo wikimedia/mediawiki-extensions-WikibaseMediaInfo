@@ -10,6 +10,7 @@ var CaptionDataEditor,
  * @param {string} guid
  * @param {CaptionData} captionData
  * @param {Object} [config]
+ * @param {number} [config.minCaptionLength]
  * @param {number} [config.maxCaptionLength]
  * @param {number} [config.warnWithinMaxCaptionLength]
  */
@@ -20,6 +21,7 @@ CaptionDataEditor = function ( guid, captionData, config ) {
 
 	OO.EventEmitter.call( this );
 
+	this.minCaptionLength = config.minCaptionLength || mw.config.get( 'wbmiMinCaptionLength' );
 	this.maxCaptionLength = config.maxCaptionLength || mw.config.get( 'wbmiMaxCaptionLength' );
 	this.warnWithinMaxCaptionLength = config.warnWithinMaxCaptionLength || 0;
 
@@ -35,7 +37,8 @@ CaptionDataEditor = function ( guid, captionData, config ) {
 
 	this.textInput = new OO.ui.TextInputWidget( {
 		validate: function ( value ) {
-			return value.length <= self.maxCaptionLength;
+			return ( self.minCaptionLength === undefined || value.length >= self.minCaptionLength ) &&
+				( self.maxCaptionLength === undefined || value.length <= self.maxCaptionLength );
 		},
 		value: captionData.text,
 		dir: captionData.direction,
@@ -46,27 +49,42 @@ CaptionDataEditor = function ( guid, captionData, config ) {
 		.on( 'change', function () {
 			self.textInput.getValidity()
 				.done( function () {
-					var lengthDiff =
-						self.maxCaptionLength - self.textInput.getValue().length;
+					var length = self.textInput.getValue().length,
+						lengthDiff;
+
 					self.setInputError( '' );
-					if (
-						lengthDiff >= 0 &&
-						lengthDiff < self.warnWithinMaxCaptionLength
-					) {
-						self.setInputWarning( mw.message(
-							'wikibasemediainfo-filepage-caption-approaching-limit',
-							lengthDiff
-						).text() );
-					} else {
-						self.setInputWarning( '' );
+
+					if ( self.maxCaptionLength !== undefined ) {
+						lengthDiff = self.maxCaptionLength - length;
+						if (
+							lengthDiff >= 0 &&
+							lengthDiff < self.warnWithinMaxCaptionLength
+						) {
+							self.setInputWarning( mw.message(
+								'wikibasemediainfo-filepage-caption-approaching-limit',
+								lengthDiff
+							).text() );
+						} else {
+							self.setInputWarning( '' );
+						}
 					}
 				} )
 				.fail( function () {
+					var length = self.textInput.getValue().length;
+
 					self.setInputWarning( '' );
-					self.setInputError( mw.message(
-						'wikibasemediainfo-filepage-caption-too-long',
-						self.textInput.getValue().length - self.maxCaptionLength
-					).text() );
+
+					if ( self.minCaptionLength !== undefined && self.minCaptionLength - length > 0 ) {
+						self.setInputError( mw.message(
+							'wikibasemediainfo-filepage-caption-too-short',
+							self.minCaptionLength - length
+						).text() );
+					} else if ( self.maxCaptionLength !== undefined && length - self.maxCaptionLength > 0 ) {
+						self.setInputError( mw.message(
+							'wikibasemediainfo-filepage-caption-too-long',
+							length - self.maxCaptionLength
+						).text() );
+					}
 				} )
 				.always( function () {
 					self.emit( 'textInputChanged' );

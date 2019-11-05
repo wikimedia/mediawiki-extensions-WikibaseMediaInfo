@@ -314,6 +314,7 @@ class WikibaseMediaInfoHooks {
 				'wbEntityId' => $entityId->getSerialization(),
 				'wbEntity' => $entityData,
 				'wbTermsLanguages' => $termsLanguages,
+				'wbmiMinCaptionLength' => 5,
 				'wbmiMaxCaptionLength' => self::getMaxCaptionLength(),
 				// FIXME: This is horrendous.
 				'wbmiParsedMessageAnonEditWarning' => $out->msg(

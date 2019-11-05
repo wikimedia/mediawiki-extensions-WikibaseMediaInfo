@@ -19,6 +19,7 @@ use Wikibase\Search\Elastic\Fields\DescriptionsField;
 use Wikibase\Search\Elastic\Fields\LabelCountField;
 use Wikibase\Search\Elastic\Fields\LabelsField;
 use Wikibase\TermIndex;
+use Wikimedia\Assert\Assert;
 
 /**
  * @license GPL-2.0-or-later
@@ -188,15 +189,38 @@ class MediaInfoHandler extends EntityHandler {
 	}
 
 	/**
-	 * Returns the Title of the page in which this MediaInfo item is a slot
+	 * Returns the Title of the page in which this MediaInfoId is a slot
 	 *
 	 * @param EntityId $id
-	 *
 	 * @return Title
 	 */
 	public function getTitleForId( EntityId $id ) {
 		'@phan-var MediaInfoId $id';
 		return Title::newFromID( $id->getNumericId() );
+	}
+
+	/**
+	 * Returns an array of Titles of page in which these MediaInfoIds are slots, indexed
+	 * by the MediaInfoId serialization
+	 *
+	 * @param EntityId[] $ids
+	 * @return Title[]
+	 */
+	public function getTitlesForIds( array $ids ) {
+		'@phan-var MediaInfoId[] $ids';
+		Assert::parameterElementType( 'Wikibase\MediaInfo\DataModel\MediaInfoId', $ids, '$ids' );
+		$titles = [];
+		$numericIds = array_map(
+			function ( $entityId ) {
+				return $entityId->getNumericId();
+			},
+			$ids
+		);
+		$unindexedTitles = Title::newFromIDs( $numericIds );
+		foreach ( $unindexedTitles as $title ) {
+			$titles[ $this->getIdForTitle( $title )->getSerialization() ] = $title;
+		}
+		return $titles;
 	}
 
 	/**

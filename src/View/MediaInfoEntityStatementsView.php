@@ -467,7 +467,7 @@ class MediaInfoEntityStatementsView {
 	 * values
 	 *
 	 * @param StatementList $statementList
-	 * @return array
+	 * @return array[]
 	 */
 	private function statementsByPropertyId( StatementList $statementList ) {
 
@@ -505,7 +505,7 @@ class MediaInfoEntityStatementsView {
 	 * of statements are ordered by rank.
 	 *
 	 * @param StatementList $statementList
-	 * @return array
+	 * @return array[]
 	 */
 	private function getOrderedStatementsByProperty( StatementList $statementList ) {
 		$statementsByPropertyAndRank = [];

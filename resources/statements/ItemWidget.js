@@ -11,10 +11,10 @@
  * @param {dataValues.DataValue} [config.dataValue] Relevant DataValue object, or null for valueless
  * @param {string} [config.editing] True for edit mode, False for read mode
  */
-var FormatValueElement = require( './FormatValueElement.js' ),
-	QualifierWidget = require( './QualifierWidget.js' ),
+var QualifierWidget = require( './QualifierWidget.js' ),
 	ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
 	DOMLessGroupWidget = require( 'wikibase.mediainfo.base' ).DOMLessGroupWidget,
+	FormatValueElement = require( 'wikibase.mediainfo.base' ).FormatValueElement,
 	datamodel = require( 'wikibase.datamodel' ),
 	ItemWidget = function MediaInfoStatementsItemWidget( config ) {
 		config = config || {};

@@ -36,7 +36,7 @@
 			"value": false
 		},
 		"MediaInfoProperties": {
-			"description": "Map of { indicative name: property id }. E.g. { depicts: 'P1' }. The key doesn't really matter, except to construct a title (grep for wikibasemediainfo-statements-title-)",
+			"description": "Map of { indicative name: property id }. E.g. { depicts: 'P1' }. The key doesn't really matter, except to construct a title (grep for wikibasemediainfo-statements-title- and wikibasemediainfo-search-suggestions-title-)",
 			"value": {}
 		},
 		"MediaInfoHelpUrls": {
@@ -111,7 +111,8 @@
 			"packageFiles": [
 				"resources/base/index.js",
 				"resources/base/ComponentWidget.js",
-				"resources/base/DOMLessGroupWidget.js"
+				"resources/base/DOMLessGroupWidget.js",
+				"resources/base/FormatValueElement.js"
 			],
 			"dependencies": [
 				"oojs",
@@ -227,10 +228,42 @@
 				"mobile"
 			]
 		},
+		"wikibase.mediainfo.search": {
+			"packageFiles": [
+				"resources/search/index.js",
+				"resources/search/PropertySuggestionsWidget.js"
+			],
+			"styles": [
+				"resources/search/PropertySuggestionsWidget.less"
+			],
+			"dependencies": [
+				"wikibase.mediainfo.base",
+				"mediawiki.template.mustache+dom",
+				"oojs",
+				"oojs-ui-core",
+				"oojs-ui-widgets",
+				"oojs-ui-windows",
+				"wikibase.datamodel",
+				"wikibase.api.RepoApi"
+			],
+			"messages": [
+				"wikibasemediainfo-search-suggestions-preference-disable-confirm",
+				"ooui-dialog-message-accept",
+				"ooui-dialog-message-reject",
+				"word-separator",
+				"parentheses"
+			],
+			"templates": [
+				"templates/search/PropertySuggestionsWidget.mustache+dom"
+			],
+			"targets": [
+				"desktop",
+				"mobile"
+			]
+		},
 		"wikibase.mediainfo.statements": {
 			"packageFiles": [
 				"resources/statements/index.js",
-				"resources/statements/FormatValueElement.js",
 				"resources/statements/EntityLookupElement.js",
 				"resources/statements/EntityInputWidget.js",
 				"resources/statements/QualifierValueInputWidget.js",
@@ -340,7 +373,8 @@
 	},
 	"DefaultUserOptions": {
 		"wbmi-cc0-confirmed": 0,
-		"wbmi-wikidata-link-notice-dismissed": 0
+		"wbmi-wikidata-link-notice-dismissed": 0,
+		"wbmi-search-suggestions": 1
 	},
 	"SpecialPages": {},
 	"manifest_version": 2,

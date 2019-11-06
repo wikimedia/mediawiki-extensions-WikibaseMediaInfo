@@ -1,7 +1,7 @@
 'use strict';
 
 var ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
-	FormatValueElement = require( './FormatValueElement.js' ),
+	FormatValueElement = require( 'wikibase.mediainfo.base' ).FormatValueElement,
 	EntityInputWidget = require( './EntityInputWidget.js' ),
 	GlobeCoordinateInputWidget = require( './GlobeCoordinateInputWidget.js' ),
 	QualifierValueInputWidget;

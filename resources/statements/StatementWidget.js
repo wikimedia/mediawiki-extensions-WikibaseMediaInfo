@@ -2,13 +2,13 @@
 
 var dataTypesMap = mw.config.get( 'wbDataTypes' ),
 	ItemWidget = require( './ItemWidget.js' ),
-	FormatValueElement = require( './FormatValueElement.js' ),
+	FormatValueElement = require( 'wikibase.mediainfo.base' ).FormatValueElement,
 	ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
 	DOMLessGroupWidget = require( 'wikibase.mediainfo.base' ).DOMLessGroupWidget,
 	StatementInputWidget = require( './StatementInputWidget.js' ),
-	StatementWidget,
 	datamodel = require( 'wikibase.datamodel' ),
-	serialization = require( 'wikibase.serialization' );
+	serialization = require( 'wikibase.serialization' ),
+	StatementWidget;
 
 /**
  * @constructor

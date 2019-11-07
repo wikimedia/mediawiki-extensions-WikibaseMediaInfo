@@ -31,6 +31,7 @@
 	"wikibasemediainfo-filepage-edit": "Cange",
 	"wikibasemediainfo-filepage-publish": "Pubbleche le cangiaminde",
 	"wikibasemediainfo-filepage-caption-empty": "Aggiunge 'na spiegazione sus a 'na linèe de ce rappresende stu file",
+	"wikibasemediainfo-filepage-caption-too-short": "$1 cercate otre {{PLURAL:$1|carattere}}",
 	"wikibasemediainfo-filepage-caption-too-long": "$1 {{PLURAL:$1|carattere}} sus a 'u limite",
 	"wikibasemediainfo-filepage-caption-approaching-limit": "$1 {{PLURAL:$1|carattere|0=carattere}} rumaste",
 	"wikibasemediainfo-filepage-statement-no-value": "Non g'esiste nisciune valore pe sta probbietà",
@@ -71,5 +72,8 @@
 	"wikibasemediainfo-arcsecond-label": "a 'n'archeseconde",
 	"wikibasemediainfo-tenth-of-arcsecond-label": "a 1/10 de 'n'archeseconde",
 	"wikibasemediainfo-hundreth-of-arcsecond-label": "a 1/100 de 'n'archeseconde",
-	"wikibasemediainfo-thousanth-of-arcsecond-label": "a 1/1000 de 'n'archeseconde"
+	"wikibasemediainfo-thousanth-of-arcsecond-label": "a 1/1000 de 'n'archeseconde",
+	"wikibasemediainfo-search-suggestions-title-depicts": "file ca raffegurane...",
+	"wikibasemediainfo-search-suggestions-preference-label": "Cirche le suggereminde de l'autocombletamende basate sus a le date strutturate",
+	"wikibasemediainfo-search-suggestions-preference-disable-confirm": "Sì secure ca vuè luà le suggereminde de l'autocombletamende basate susa le date strutturate? (Sta 'mbostazione pò essere cangiate jndr'à le [[Special:Preferences#mw-prefsection-searchoptions|Preferenze]].)"
 }

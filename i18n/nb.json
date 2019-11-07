@@ -33,6 +33,7 @@
 	"wikibasemediainfo-filepage-edit": "Rediger",
 	"wikibasemediainfo-filepage-publish": "Publiser endringer",
 	"wikibasemediainfo-filepage-caption-empty": "Legg til en kort forklaring på hva filen representerer",
+	"wikibasemediainfo-filepage-caption-too-short": "$1 {{PLURAL:$1|tegn}} til påkrevd",
 	"wikibasemediainfo-filepage-caption-too-long": "$1 {{PLURAL:$1|tegn}} over grensen",
 	"wikibasemediainfo-filepage-caption-approaching-limit": "{{PLURAL:$1|$1|0=Ingen}} tegn igjen",
 	"wikibasemediainfo-filepage-statement-no-value": "Ingen verdi finnes for denne egenskapen",

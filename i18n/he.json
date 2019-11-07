@@ -35,6 +35,7 @@
 	"wikibasemediainfo-filepage-edit": "עריכה",
 	"wikibasemediainfo-filepage-publish": "פרסום השינויים",
 	"wikibasemediainfo-filepage-caption-empty": "נא להוסיף משפט שמסביר מה הקובץ מייצג",
+	"wikibasemediainfo-filepage-caption-too-short": "{{PLURAL:$1|נדרש עוד תו אחד|נדרשים עוד $1 תווים}}",
 	"wikibasemediainfo-filepage-caption-too-long": "{{PLURAL:$1|תו אחד|$1 תווים}} מעבר למגבלה",
 	"wikibasemediainfo-filepage-caption-approaching-limit": "{{PLURAL:$1|נותר תו אחד|נותרו $1 תווים}}",
 	"wikibasemediainfo-filepage-statement-no-value": "אין ערך למאפיין הזה",
@@ -75,5 +76,8 @@
 	"wikibasemediainfo-arcsecond-label": "שניית קשת",
 	"wikibasemediainfo-tenth-of-arcsecond-label": "1/10 של שניית קשת",
 	"wikibasemediainfo-hundreth-of-arcsecond-label": "1/100 של שניית קשת",
-	"wikibasemediainfo-thousanth-of-arcsecond-label": "1/1000 של שניית קשת"
+	"wikibasemediainfo-thousanth-of-arcsecond-label": "1/1000 של שניית קשת",
+	"wikibasemediainfo-search-suggestions-title-depicts": "קבצים שמציגים...",
+	"wikibasemediainfo-search-suggestions-preference-label": "הצעות השלמה אוטומטית מבוססות על נתונים מבניים",
+	"wikibasemediainfo-search-suggestions-preference-disable-confirm": "האם ברצונך באמת להסיר את הצעות ההשלמה האוטומטית שמבוססות על נתונים מבניים? (אפשר לשנות את ההגדרה הזאת ב[[Special:Preferences#mw-prefsection-searchoptions|העדפות]].)"
 }

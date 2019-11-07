@@ -34,6 +34,7 @@
 	"wikibasemediainfo-filepage-edit": "Editovat",
 	"wikibasemediainfo-filepage-publish": "Zveřejnit změny",
 	"wikibasemediainfo-filepage-caption-empty": "Přidejte jednořádkové vysvětlení, co tento soubor představuje",
+	"wikibasemediainfo-filepage-caption-too-short": "{{PLURAL:$1|Vyžadován|Vyžadovány|Vyžadováno}} ještě $1 {{PLURAL:$1|znak|znaky|znaků}}",
 	"wikibasemediainfo-filepage-caption-too-long": "$1 {{PLURAL:$1|znak|znaky|znaků}} přes limit",
 	"wikibasemediainfo-filepage-caption-approaching-limit": "Zbývá $1 {{PLURAL:$1|znak|znaky|znaků}}",
 	"wikibasemediainfo-filepage-statement-no-value": "Pro tuto vlastnost neexistuje žádná hodnota",
@@ -60,5 +61,8 @@
 	"wikibasemediainfo-statements-unsupported-property-type-content": "Ne všechny typy vlastností jsou plně podporovány, ale v budoucnu budou. Momentálně nemusí nepodporované vlastnosti pracovat tak, jak byste čekali.",
 	"wikibasemediainfo-statements-link-notice-text": "Štítky strukturovaných dat odkazují na příslušné stránky Wikidat, které se otevřou v novém okně.",
 	"wikibasemediainfo-statements-link-notice-dismiss": "Skrýt",
+	"wikibasemediainfo-remove-all-statements-confirm": "Tato akce odstraní všechny existující hodnoty této vlastnosti. Vlastnosti bez hodnot budou při zveřejnění změn odstraněny. Jste si jist(a)?",
+	"wikibasemediainfo-remove-all-statements-confirm-title": "Odstranit vše?",
+	"wikibasemediainfo-remove-all-statements-confirm-accept": "Odstranit",
 	"wikibasemediainfo-unsupported-datatype-text": "Nepodporovaný datový typ"
 }

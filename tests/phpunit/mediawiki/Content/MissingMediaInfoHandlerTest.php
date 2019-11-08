@@ -8,6 +8,8 @@ use ParserOutput;
 use RequestContext;
 use Title;
 use Wikibase\Client\Store\TitleFactory;
+use Wikibase\DataModel\Entity\EntityId;
+use Wikibase\DataModel\Services\EntityId\EntityIdComposer;
 use Wikibase\Lib\Store\StorageException;
 use Wikibase\MediaInfo\Content\MissingMediaInfoHandler;
 use Wikibase\MediaInfo\DataModel\MediaInfoId;
@@ -72,7 +74,16 @@ class MissingMediaInfoHandlerTest extends \PHPUnit\Framework\TestCase {
 	 * @return MissingMediaInfoHandler
 	 */
 	private function newHandler( Title $title, $text = '' ) {
-		$idLookup = new MediaInfoIdLookup( 112 );
+		$entityIdComposer = new EntityIdComposer( [
+			'mediainfo' => function( $repositoryName, $uniquePart ) {
+				return new MediaInfoId( EntityId::joinSerialization( [
+					$repositoryName,
+					'',
+					'M' . $uniquePart
+				] ) );
+			},
+		] );
+		$idLookup = new MediaInfoIdLookup( $entityIdComposer, NS_FILE );
 		$filePageLookup = new FilePageLookup( $this->getTitleFactory() );
 
 		$outputGenerator = $this->getMockBuilder( EntityParserOutputGenerator::class )
@@ -102,24 +113,21 @@ class MissingMediaInfoHandlerTest extends \PHPUnit\Framework\TestCase {
 	}
 
 	public function provideGetMediaInfoId() {
-		// NOTE: getTitleFactory() defines a file with page ID 1 exists (M1),
-		// a non-file page with id 11 exists (M11), and no other pages exist.
+		// NOTE: getTitleFactory() defines a file with page ID 1 exists (File:Test-1.png),
+		// a non-file page with id 11 exists (User:Test-11.png), and no other pages exist.
+		$titleFactory = $this->getTitleFactory();
 
 		return [
-			'media info page, file page exists' => [
-				Title::makeTitle( 112, 'M1' ),
+			'media info page exists and is file page' => [
+				$titleFactory->newFromID( 1 ),
 				new MediaInfoId( 'M1' )
 			],
-			'media info page, non-file page exists' => [
-				Title::makeTitle( 112, 'M11' ),
+			'media info page exists but is no file page' => [
+				$titleFactory->newFromID( 11 ),
 				null
 			],
-			'media info page, file page does not exist' => [
-				Title::makeTitle( 112, 'M111' ),
-				null
-			],
-			'not a media info page' => [
-				Title::makeTitle( 1, 'M1' ),
+			'media info page/file page does not exist' => [
+				Title::makeTitle( NS_FILE, 'Test-111.png' ),
 				null
 			],
 		];
@@ -145,7 +153,8 @@ class MissingMediaInfoHandlerTest extends \PHPUnit\Framework\TestCase {
 	}
 
 	public function testShowVirtualMediaInfo() {
-		$title = Title::makeTitle( 112, 'M1' );
+		$title = Title::makeTitle( NS_FILE, 'Some_file.jpg' );
+		$title->resetArticleID( 1 );
 		$id = new MediaInfoId( 'M1' );
 		$dummyText = '((MEDIAINFO VIEW))';
 

@@ -11,6 +11,7 @@ use Wikibase\Lib\Store\EntityContentDataCodec;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\MediaInfo\DataModel\MediaInfoId;
 use Wikibase\MediaInfo\Services\FilePageLookup;
+use Wikibase\MediaInfo\Services\MediaInfoIdLookup;
 use Wikibase\Repo\Content\EntityHandler;
 use Wikibase\Repo\Search\Fields\FieldDefinitions;
 use Wikibase\Repo\Validators\EntityConstraintProvider;
@@ -18,6 +19,7 @@ use Wikibase\Repo\Validators\ValidatorErrorLocalizer;
 use Wikibase\Search\Elastic\Fields\DescriptionsField;
 use Wikibase\Search\Elastic\Fields\LabelCountField;
 use Wikibase\Search\Elastic\Fields\LabelsField;
+use Wikibase\Store\EntityIdLookup;
 use Wikibase\TermIndex;
 
 /**
@@ -40,6 +42,11 @@ class MediaInfoHandler extends EntityHandler {
 	private $filePageLookup;
 
 	/**
+	 * @var EntityIdLookup
+	 */
+	private $idLookup;
+
+	/**
 	 * @param TermIndex $termIndex
 	 * @param EntityContentDataCodec $contentCodec
 	 * @param EntityConstraintProvider $constraintProvider
@@ -57,6 +64,7 @@ class MediaInfoHandler extends EntityHandler {
 		ValidatorErrorLocalizer $errorLocalizer,
 		EntityIdParser $entityIdParser,
 		MissingMediaInfoHandler $missingMediaInfoHandler,
+		MediaInfoIdLookup $idLookup,
 		FilePageLookup $filePageLookup,
 		FieldDefinitions $mediaInfoFieldDefinitions,
 		$legacyExportFormatDetector = null
@@ -72,6 +80,7 @@ class MediaInfoHandler extends EntityHandler {
 			$legacyExportFormatDetector
 		);
 		$this->missingMediaInfoHandler = $missingMediaInfoHandler;
+		$this->idLookup = $idLookup;
 		$this->filePageLookup = $filePageLookup;
 	}
 
@@ -204,9 +213,11 @@ class MediaInfoHandler extends EntityHandler {
 	 * @return EntityId
 	 */
 	public function getIdForTitle( Title $target ) {
-		if ( $target->inNamespace( NS_FILE ) && $target->getArticleID() ) {
-			return new MediaInfoId( 'M' . $target->getArticleID() );
+		$mediaInfoId = $this->idLookup->getEntityIdForTitle( $target );
+		if ( $mediaInfoId instanceof MediaInfoId ) {
+			return $mediaInfoId;
 		}
+
 		return parent::getIdForTitle( $target );
 	}
 

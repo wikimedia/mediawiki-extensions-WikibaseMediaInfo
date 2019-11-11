@@ -13,6 +13,8 @@
 	"wikibase-mediainfo-summary-wbsetlabel-add": "Додат натпис ([$2])",
 	"wikibase-mediainfo-summary-wbsetlabel-remove": "Уклоњен натпис ([$2])",
 	"wikibase-mediainfo-summary-wbsetlabel-set": "Уређен натпис ([$2])",
+	"wikibasemediainfo-add-property": "Претражите да бисте додали својства (је део, тип медија итд.)",
+	"wikibasemediainfo-add-statement": "Додај изјаву",
 	"wikibasemediainfo-desc": "Есктензија Wikibase за управљање структурисаним метаподацима медијских датотека",
 	"wikibasemediainfo-diffview-label": "натпис",
 	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Натписи",
@@ -38,10 +40,13 @@
 	"wikibasemediainfo-filepage-license-agree": "Прихватам",
 	"wikibasemediainfo-statements-item-add-qualifier": "Додај квалификатор",
 	"wikibasemediainfo-statements-item-input-label": "са Википодатака",
+	"wikibasemediainfo-statements-item-input-placeholder": "Претражите да бисте додали ставке (домаћа мачка, планина, Таџ Махал итд.)",
 	"wikibasemediainfo-statements-item-is-prominent": "Истакнуто",
 	"wikibasemediainfo-statements-item-mark-as-prominent": "Истакни",
 	"wikibasemediainfo-statements-item-remove": "Уклони",
 	"wikibasemediainfo-statements-learn-more": "Сазнајте више",
 	"wikibasemediainfo-statements-remove": "Уклони све",
-	"wikibasemediainfo-statements-title-depicts": "Ставке приказане у овој датотеци"
+	"wikibasemediainfo-statements-title-depicts": "Ставке приказане у овој датотеци",
+	"wikibasemediainfo-remove-all-statements-confirm": "Ова радња ће обрисати све постојеће вредности за ово својство. Својства без вредности биће уклоњена када се измене објаве. Да ли сте сигурни?",
+	"wikibasemediainfo-remove-all-statements-confirm-accept": "Уклони"
 }

@@ -60,5 +60,7 @@
 	"wikibasemediainfo-remove-all-statements-confirm": "このプロパティの既存の値をすべて削除します。変更が公開されたときに、値のないプロパティは削除されます。実行しますか？",
 	"wikibasemediainfo-remove-all-statements-confirm-title": "すべて除去しますか？",
 	"wikibasemediainfo-remove-all-statements-confirm-accept": "除去",
-	"wikibasemediainfo-unsupported-datatype-text": "サポートされていないデータ型です"
+	"wikibasemediainfo-unsupported-datatype-text": "サポートされていないデータ型です",
+	"wikibasemediainfo-search-suggestions-preference-label": "構造化データに基づく自動補完候補を検索",
+	"wikibasemediainfo-search-suggestions-preference-disable-confirm": "構造化データに従って、自動補完の候補をほんとうに削除しますか？ (この設定は[[Special:Preferences#mw-prefsection-searchoptions|個人設定]]で変更が可能です。)"
 }

@@ -34,6 +34,7 @@
 	"wikibasemediainfo-filepage-edit": "Bearbeiten",
 	"wikibasemediainfo-filepage-publish": "Änderungen veröffentlichen",
 	"wikibasemediainfo-filepage-caption-empty": "Ergänze eine einzeilige Erklärung, was diese Datei darstellt.",
+	"wikibasemediainfo-filepage-caption-too-short": "$1 {{PLURAL:$1|weiteres Zeichen|weitere Zeichen}} sind notwendig",
 	"wikibasemediainfo-filepage-caption-too-long": "{{PLURAL:$1|Ein|$1}} Zeichen über der Grenze",
 	"wikibasemediainfo-filepage-caption-approaching-limit": "Noch {{PLURAL:$1|ein|$1|0=$1}} Zeichen",
 	"wikibasemediainfo-filepage-statement-no-value": "Für diese Eigenschaft ist kein Wert vorhanden",
@@ -74,5 +75,6 @@
 	"wikibasemediainfo-arcsecond-label": "auf eine Bogensekunde",
 	"wikibasemediainfo-tenth-of-arcsecond-label": "auf 1/10 einer Bogensekunde",
 	"wikibasemediainfo-hundreth-of-arcsecond-label": "auf 1/100 einer Bogensekunde",
-	"wikibasemediainfo-thousanth-of-arcsecond-label": "auf 1/1000 einer Bogensekunde"
+	"wikibasemediainfo-thousanth-of-arcsecond-label": "auf 1/1000 einer Bogensekunde",
+	"wikibasemediainfo-search-suggestions-title-depicts": "Dateien stellen dar ..."
 }

@@ -5,6 +5,7 @@ namespace Wikibase\MediaInfo\Tests\MediaWiki\Content;
 use FauxRequest;
 use Language;
 use ParserOutput;
+use PHPUnit6And8Compat;
 use RequestContext;
 use Title;
 use Wikibase\Client\Store\TitleFactory;
@@ -25,6 +26,7 @@ use Wikibase\Repo\ParserOutput\EntityParserOutputGeneratorFactory;
  * @author Daniel Kinzler
  */
 class MissingMediaInfoHandlerTest extends \PHPUnit\Framework\TestCase {
+	use PHPUnit6And8Compat;
 
 	/**
 	 * @return TitleFactory

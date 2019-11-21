@@ -4,7 +4,6 @@ namespace Wikibase\MediaInfo\Tests\MediaWiki;
 
 use Deserializers\Deserializer;
 use Language;
-use PHPUnit6And8Compat;
 use Serializers\Serializer;
 use Wikibase\DataModel\DeserializerFactory;
 use Wikibase\DataModel\SerializerFactory;
@@ -27,7 +26,6 @@ use Wikibase\MediaInfo\View\MediaInfoView;
  * @author Bene* < benestar.wikimedia@gmail.com >
  */
 class EntityTypesTest extends \PHPUnit\Framework\TestCase {
-	use PHPUnit6And8Compat;
 
 	private function getRegistry() {
 		return require __DIR__ . '/../../../WikibaseMediaInfo.entitytypes.php';

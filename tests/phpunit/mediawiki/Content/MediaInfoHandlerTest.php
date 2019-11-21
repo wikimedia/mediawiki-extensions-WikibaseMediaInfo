@@ -4,7 +4,6 @@ namespace Wikibase\MediaInfo\Tests\MediaWiki\Content;
 
 use FauxRequest;
 use IContextSource;
-use PHPUnit6And8Compat;
 use RequestContext;
 use Title;
 use Wikibase\DataModel\Entity\EntityId;
@@ -36,7 +35,6 @@ use Wikibase\TermIndex;
  * @author Bene* < benestar.wikimedia@gmail.com >
  */
 class MediaInfoHandlerTest extends \PHPUnit\Framework\TestCase {
-	use PHPUnit6And8Compat;
 
 	private function getMockWithoutConstructor( $className ) {
 		return $this->getMockBuilder( $className )

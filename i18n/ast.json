@@ -5,9 +5,30 @@
 			"Fitoschido"
 		]
 	},
+	"action-mediainfo-term": "cambiar los términos d'información de multimedia (pies, resumes)",
 	"right-mediainfo-term": "Cambiar términos de la información del mediu (pies, sumarios)",
+	"slot-name-mediainfo": "Información estructurada de multimedia",
 	"wikibase-entity-mediainfo": "información multimedia",
+	"wikibase-mediainfo-summary-wbsetlabel-add": "Amestáu pie en [$2]",
+	"wikibase-mediainfo-summary-wbsetlabel-remove": "Desaniciáu pie en [$2]",
+	"wikibase-mediainfo-summary-wbsetlabel-set": "Editáu pie en [$2]",
+	"wikibasemediainfo-add-property": "Busca p'amestar propiedaes (parte de, tipu de multimedia, etc.)",
+	"wikibasemediainfo-add-statement": "Añadir declaración",
 	"wikibasemediainfo-desc": "Estensión de Wikibase pa xestionar los metadatos estructuraos de los ficheros multimedia",
-	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Pie",
-	"wikibasemediainfo-filepage-cancel": "Encaboxar"
+	"wikibasemediainfo-diffview-label": "pie",
+	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Pies",
+	"wikibasemediainfo-filepage-fileinfo-heading": "Información de ficheru",
+	"wikibasemediainfo-filepage-structured-data-heading": "Datos estructuraos",
+	"wikibasemediainfo-filepage-captions-title": "Pies",
+	"wikibasemediainfo-filepage-more-languages": "Ver $1 {{PLURAL:$1|llingua|llingües}} más",
+	"wikibasemediainfo-filepage-fewer-languages": "Ver menos llingües",
+	"wikibasemediainfo-filepage-add-caption": "Añadir un pie",
+	"wikibasemediainfo-filepage-edit-captions": "Editar pies",
+	"wikibasemediainfo-filepage-edit-depicts": "Editar les representaciones",
+	"wikibasemediainfo-filepage-cancel": "Encaboxar",
+	"wikibasemediainfo-filepage-cancel-confirm": "Nun van guardase los cambeos que ficisti.",
+	"wikibasemediainfo-filepage-cancel-confirm-title": "¿Descartar los cambeos?",
+	"wikibasemediainfo-filepage-cancel-confirm-accept": "Descartar",
+	"wikibasemediainfo-filepage-edit": "Editar",
+	"wikibasemediainfo-filepage-publish": "Espublizar los cambeos"
 }

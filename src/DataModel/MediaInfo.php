@@ -157,7 +157,7 @@ class MediaInfo
 	}
 
 	/**
-	 * @see ClearableEntity::clear
+	 * @inheritDoc
 	 */
 	public function clear() {
 		$this->labels = new TermList();

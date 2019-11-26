@@ -37,7 +37,7 @@ class EntityIdFixingRevisionLookup implements EntityRevisionLookup {
 	}
 
 	/**
-	 * @see EntityRevisionLookup::getEntityRevision
+	 * @inheritDoc
 	 */
 	public function getEntityRevision(
 		EntityId $entityId,
@@ -57,7 +57,7 @@ class EntityIdFixingRevisionLookup implements EntityRevisionLookup {
 	}
 
 	/**
-	 * @see EntityRevisionLookup::getLatestRevisionId
+	 * @inheritDoc
 	 */
 	public function getLatestRevisionId( EntityId $entityId, $mode = self::LATEST_FROM_REPLICA ) {
 		return $this->lookup->getLatestRevisionId( $entityId, $mode );

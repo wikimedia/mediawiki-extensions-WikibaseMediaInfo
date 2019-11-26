@@ -89,6 +89,9 @@
 		],
 		"GetPreferences": [
 			"Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onGetPreferences"
+		],
+		"ScribuntoExternalLibraries": [
+			"Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onScribuntoExternalLibraries"
 		]
 	},
 	"MessagesDirs": {

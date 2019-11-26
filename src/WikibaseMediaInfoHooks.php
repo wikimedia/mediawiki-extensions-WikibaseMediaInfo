@@ -17,6 +17,7 @@ use OOUI\TabPanelLayout;
 use OutputPage;
 use ParserOutput;
 use Title;
+use Wikibase\Client\WikibaseClient;
 use Wikibase\DataModel\Entity\EntityId;
 use Wikibase\DataModel\Entity\PropertyId;
 use Wikibase\DataModel\Services\EntityId\EntityIdComposer;
@@ -28,6 +29,8 @@ use Wikibase\Lib\Store\EntityInfo;
 use Wikibase\Lib\UserLanguageLookup;
 use Wikibase\MediaInfo\Content\MediaInfoContent;
 use Wikibase\MediaInfo\Content\MediaInfoHandler;
+use Wikibase\MediaInfo\DataAccess\Scribunto\Scribunto_LuaWikibaseMediaInfoEntityLibrary;
+use Wikibase\MediaInfo\DataAccess\Scribunto\Scribunto_LuaWikibaseMediaInfoLibrary;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\MediaInfo\Services\MediaInfoByLinkedTitleLookup;
 use Wikibase\MediaInfo\Services\MediaInfoServices;
@@ -131,7 +134,7 @@ class WikibaseMediaInfoHooks {
 
 	public static function onRegistration() {
 		if ( !class_exists( EntityContent::class ) ) {
-			// HACK: Declaring a depency on Wikibase in extension.json requires Wikibase to have its own extension.json
+			// HACK: Declaring a dependency on Wikibase in extension.json requires Wikibase to have its own extension.json
 			throw new \ExtensionDependencyError( [ [
 				'msg' => 'WikibaseMediaInfo requires Wikibase to be installed.',
 				'type' => 'missing-phpExtension',
@@ -707,6 +710,24 @@ class WikibaseMediaInfoHooks {
 			'section' => 'searchoptions',
 			'label-message' => 'wikibasemediainfo-search-suggestions-preference-label'
 		];
+	}
+
+	/**
+	 * External libraries for Scribunto
+	 *
+	 * @param string $engine
+	 * @param string[] &$extraLibraries
+	 */
+	public static function onScribuntoExternalLibraries( $engine, array &$extraLibraries ) {
+		$wbClient = WikibaseClient::getDefaultInstance();
+		$allowDataTransclusion = $wbClient->getSettings()->getSetting( 'allowDataTransclusion' );
+		if ( $engine === 'lua' && $allowDataTransclusion === true ) {
+			$extraLibraries['mw.wikibase.mediainfo'] = Scribunto_LuaWikibaseMediaInfoLibrary::class;
+			$extraLibraries['mw.wikibase.mediainfo.entity'] = [
+				'class' => Scribunto_LuaWikibaseMediaInfoEntityLibrary::class,
+				'deferLoad' => true,
+			];
+		}
 	}
 
 }

@@ -91,15 +91,15 @@ PropertySuggestionsWidget.prototype.getTemplateData = function () {
 				title: title,
 				count: result.search && result.search.length || 0,
 				results: ( result.search || [] ).map( function ( entity ) {
-					var data = $.extend( {}, entity );
+					var d = $.extend( {}, entity );
 
 					if ( entity.aliases ) {
 						// pre-format aliases array into a proper textual list
-						data.aliases = mw.message( 'word-separator' ).text() +
+						d.aliases = mw.message( 'word-separator' ).text() +
 							mw.message( 'parentheses', mw.language.listToText( entity.aliases ) ).text();
 					}
 
-					return data;
+					return d;
 				} )
 			} );
 		},

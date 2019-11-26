@@ -92,10 +92,15 @@ class MediaInfoPrefetchingTermLookup extends EntityTermLookupBase implements Pre
 	 */
 	public function prefetchTerms( array $entityIds, array $termTypes = null, array $languageCodes = null ) {
 		foreach ( $entityIds as $entityId ) {
+			$serialization = $entityId->getSerialization();
+			if ( isset( $this->terms[$serialization] ) && $this->terms[$serialization] === false ) {
+				// entity is already known not to exist
+				continue;
+			}
 			// omit term types that we've already fetched before
 			// there's no need to omit (or even check for) existing language codes -
 			// they don't matter: if we have the term type, we have it in all languages
-			$existingTermTypes = array_keys( $this->terms[$entityId->getSerialization()] ?? [] );
+			$existingTermTypes = array_keys( $this->terms[$serialization] ?? [] );
 			$diffTermTypes = array_diff( $termTypes ?? $this->supportedTermTypes, $existingTermTypes );
 			// if there were no $termTypes to begin with, call prefetchTerm anyway
 			// (might be intentional for the side-effect of checking entity existence)

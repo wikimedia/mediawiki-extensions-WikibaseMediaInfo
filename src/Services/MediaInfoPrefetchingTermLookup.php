@@ -99,7 +99,7 @@ class MediaInfoPrefetchingTermLookup extends EntityTermLookupBase implements Pre
 			$diffTermTypes = array_diff( $termTypes ?? $this->supportedTermTypes, $existingTermTypes );
 			// if there were no $termTypes to begin with, call prefetchTerm anyway
 			// (might be intentional for the side-effect of checking entity existence)
-			if ( count( $diffTermTypes ) > 0 || ( is_array( $termTypes ) && count( $termTypes ) === 0 ) ) {
+			if ( $diffTermTypes || $termTypes === [] ) {
 				$this->prefetchTerm( $entityId, $termTypes, $languageCodes );
 			}
 		}

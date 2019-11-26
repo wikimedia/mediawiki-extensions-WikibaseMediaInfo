@@ -94,15 +94,12 @@ mw.template.registerCompiler( 'mustache+dom', {
 				}
 
 				// ... and add nodes with the on<event> callback handlers
-				if ( Object.keys( handlers ).length > 0 ) {
-					Object.keys( handlers ).map( function ( random ) {
-						var handler = handlers[ random ];
-						$( '<script>' )
-							.attr( 'id', random )
-							.data( 'handler', handler )
-							.appendTo( $container );
-					} );
-				}
+				Object.keys( handlers ).forEach( function ( random ) {
+					$( '<script>' )
+						.attr( 'id', random )
+						.data( 'handler', handlers[ random ] )
+						.appendTo( $container );
+				} );
 
 				return $container.children();
 			}

@@ -9,15 +9,16 @@ use Wikibase\Repo\WikibaseRepo;
 
 return [
 	'MediaInfoIdLookup' => function( MediaWikiServices $services ) {
-		// XXX: is there no better way?
-		$nsLookup = WikibaseRepo::getDefaultInstance()->getEntityNamespaceLookup();
+		$wbRepo = WikibaseRepo::getDefaultInstance();
+		$nsLookup = $wbRepo->getEntityNamespaceLookup();
+		$entityIdComposer = $wbRepo->getEntityIdComposer();
 		$mediaInfoNamespace = $nsLookup->getEntityNamespace( MediaInfo::ENTITY_TYPE );
 
 		if ( !is_int( $mediaInfoNamespace ) ) {
 			throw new MWException( 'No namespace configured for MediaInfo entities!' );
 		}
 
-		return new MediaInfoIdLookup( $mediaInfoNamespace );
+		return new MediaInfoIdLookup( $entityIdComposer, $mediaInfoNamespace );
 	},
 
 	'MediaInfoFilePageLookup' => function( MediaWikiServices $services ) {

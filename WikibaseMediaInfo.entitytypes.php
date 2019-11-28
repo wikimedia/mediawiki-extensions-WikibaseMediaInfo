@@ -95,7 +95,6 @@ return [
 			EntityDocument $entity,
 			EntityInfo $entityInfo
 		) {
-
 			$mwConfig = MediaWikiServices::getInstance()->getMainConfig();
 			$languageCode = $language->getCode();
 
@@ -171,6 +170,7 @@ return [
 					MediaInfoServices::getFilePageLookup(),
 					$wikibaseRepo->getEntityParserOutputGeneratorFactory()
 				),
+				MediaInfoServices::getMediaInfoIdLookup(),
 				MediaInfoServices::getFilePageLookup(),
 				$wikibaseRepo->getFieldDefinitionsByType( MediaInfo::ENTITY_TYPE ),
 				null
@@ -297,8 +297,8 @@ return [
 				new WikiPageEntityDataLoader( $contentCodec, $blobStoreFactory->newBlobStore( $databaseName ) )
 			);
 		},
-		'prefetching-term-lookup-callback' => function( SingleEntitySourceServices $services ) {
+		'prefetching-term-lookup-callback' => function ( SingleEntitySourceServices $services ) {
 			return new MediaInfoPrefetchingTermLookup( $services->getEntityRevisionLookup() );
-		}
+		},
 	]
 ];

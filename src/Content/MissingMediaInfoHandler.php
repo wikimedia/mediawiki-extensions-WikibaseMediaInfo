@@ -4,6 +4,7 @@ namespace Wikibase\MediaInfo\Content;
 
 use IContextSource;
 use MediaWiki\Linker\LinkTarget;
+use Title;
 use Wikibase\Lib\Store\EntityRevision;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\MediaInfo\DataModel\MediaInfoId;
@@ -66,14 +67,12 @@ class MissingMediaInfoHandler {
 	 * @return MediaInfoId|null
 	 */
 	public function getMediaInfoId( LinkTarget $title, IContextSource $context ) {
-		$mediaInfoId = $this->idLookup->getIdFromLinkTarget( $title );
-
-		if ( $mediaInfoId === null ) {
+		$mediaInfoId = $this->idLookup->getEntityIdForTitle( Title::newFromLinkTarget( $title ) );
+		if ( $mediaInfoId === null || !( $mediaInfoId instanceof MediaInfoId ) ) {
 			return null;
 		}
 
 		$filePageTitle = $this->filePageLookup->getFilePage( $mediaInfoId );
-
 		if ( $filePageTitle === null || !$filePageTitle->exists() ) {
 			return null;
 		}

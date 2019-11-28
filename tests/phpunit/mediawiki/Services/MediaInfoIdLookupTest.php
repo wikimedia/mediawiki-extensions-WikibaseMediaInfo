@@ -2,13 +2,14 @@
 
 namespace Wikibase\MediaInfo\Tests\MediaWiki\Services;
 
-use MediaWiki\Linker\LinkTarget;
-use TitleValue;
+use Title;
+use Wikibase\DataModel\Entity\EntityId;
+use Wikibase\DataModel\Services\EntityId\EntityIdComposer;
 use Wikibase\MediaInfo\DataModel\MediaInfoId;
 use Wikibase\MediaInfo\Services\MediaInfoIdLookup;
 
 /**
- * @covers Wikibase\MediaInfo\Services\MediaInfoIdLookup
+ * @covers \Wikibase\MediaInfo\Services\MediaInfoIdLookup
  *
  * @group WikibaseMediaInfo
  *
@@ -17,40 +18,59 @@ use Wikibase\MediaInfo\Services\MediaInfoIdLookup;
  */
 class MediaInfoIdLookupTest extends \PHPUnit\Framework\TestCase {
 
-	public function provideGetIdFromLinkTarget() {
+	private function getEntityIdComposer() {
+		return new EntityIdComposer( [
+			'mediainfo' => function( $repositoryName, $uniquePart ) {
+				return new MediaInfoId( EntityId::joinSerialization( [
+					$repositoryName,
+					'',
+					'M' . $uniquePart
+				] ) );
+			},
+		] );
+	}
+
+	public function provideGetEntityIdForTitle() {
+		$title = Title::makeTitle( NS_FILE, 'File:Test.jpg' );
+		$title->resetArticleID( 13 );
+
 		return [
-			[ new TitleValue( 112, 'M13' ), 'M13' ],
+			[ $title, 'M13' ]
 		];
 	}
 
 	/**
-	 * @dataProvider provideGetIdFromLinkTarget
+	 * @dataProvider provideGetEntityIdForTitle
 	 */
-	public function testGetIdFromLinkTarget( LinkTarget $title, $expected ) {
-		$lookup = new MediaInfoIdLookup( 112 );
+	public function testGetEntityIdForTitle( Title $title, $expected ) {
+		$entityIdComposer = $this->getEntityIdComposer();
+		$lookup = new MediaInfoIdLookup( $entityIdComposer, NS_FILE );
 
-		$id = $lookup->getIdFromLinkTarget( $title );
+		$entityId = $lookup->getEntityIdForTitle( $title );
 
-		$this->assertInstanceOf( MediaInfoId::class, $id );
-		$this->assertEquals( $expected, $id->getSerialization() );
+		$this->assertInstanceOf( MediaInfoId::class, $entityId );
+		$this->assertEquals( $expected, $entityId->getSerialization() );
 	}
 
-	public function provideGetIdFromLinkTarget_fail() {
+	public function provideGetEntityIdForTitle_fail() {
+		$badNamespaceTitle = Title::makeTitle( NS_MAIN, 'File:Test.jpg' );
+		$badNamespaceTitle->resetArticleID( 13 );
+
 		return [
-			'bad namespace' => [ new TitleValue( 123, 'M13' ) ],
-			'malformed id' => [ new TitleValue( 112, 'MXX' ) ],
+			'bad namespace' => [ $badNamespaceTitle ],
 		];
 	}
 
 	/**
-	 * @dataProvider provideGetIdFromLinkTarget_fail
+	 * @dataProvider provideGetEntityIdForTitle_fail
 	 */
-	public function testGetIdFromLinkTarget_fail( LinkTarget $title ) {
-		$lookup = new MediaInfoIdLookup( 112 );
+	public function testGetEntityIdForTitle_fail( Title $title ) {
+		$entityIdComposer = $this->getEntityIdComposer();
+		$lookup = new MediaInfoIdLookup( $entityIdComposer, NS_FILE );
 
-		$id = $lookup->getIdFromLinkTarget( $title );
+		$entityId = $lookup->getEntityIdForTitle( $title );
 
-		$this->assertNull( $id );
+		$this->assertNull( $entityId );
 	}
 
 }

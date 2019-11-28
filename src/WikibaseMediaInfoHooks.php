@@ -30,6 +30,7 @@ use Wikibase\MediaInfo\Content\MediaInfoContent;
 use Wikibase\MediaInfo\Content\MediaInfoHandler;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\MediaInfo\Services\MediaInfoByLinkedTitleLookup;
+use Wikibase\MediaInfo\Services\MediaInfoServices;
 use Wikibase\MediaInfo\View\MediaInfoEntityStatementsView;
 use Wikibase\MediaInfo\View\MediaInfoEntityTermsView;
 use Wikibase\MediaInfo\View\MediaInfoView;
@@ -55,16 +56,7 @@ class WikibaseMediaInfoHooks {
 	private $entityIdComposer;
 
 	private static function newFromGlobalState() {
-		$wikibaseRepo = WikibaseRepo::getDefaultInstance();
-		return new self( $wikibaseRepo->getEntityIdComposer() );
-	}
-
-	/**
-	 * @param EntityIdComposer $entityIdComposer
-	 * @codeCoverageIgnore
-	 */
-	public function __construct( EntityIdComposer $entityIdComposer ) {
-		$this->entityIdComposer = $entityIdComposer;
+		return new self();
 	}
 
 	/**
@@ -289,9 +281,8 @@ class WikibaseMediaInfoHooks {
 			$out->preventClickjacking();
 			$imgTitle = $out->getTitle();
 
-			$pageId = $imgTitle->getArticleID();
 			$revision = $out->getWikiPage()->getRevision();
-			$entityId = $this->entityIdFromPageId( $pageId );
+			$entityId = MediaInfoServices::getMediaInfoIdLookup()->getEntityIdForTitle( $imgTitle );
 
 			$wbRepo = WikibaseRepo::getDefaultInstance();
 			$entityLookup = $wbRepo->getEntityLookup();
@@ -566,21 +557,6 @@ class WikibaseMediaInfoHooks {
 	private static function getMaxCaptionLength() {
 		global $wgWBRepoSettings;
 		return $wgWBRepoSettings['string-limits']['multilang']['length'];
-	}
-
-	/**
-	 * The ID for a MediaInfo item is the same as the ID of its associated File page, with an
-	 * 'M' prepended - this is encapsulated by EntityIdComposer::composeEntityId()
-	 *
-	 * @param int $pageId
-	 * @return EntityId
-	 */
-	private function entityIdFromPageId( $pageId ) {
-		return $this->entityIdComposer->composeEntityId(
-			'',
-			MediaInfo::ENTITY_TYPE,
-			$pageId
-		);
 	}
 
 	/**

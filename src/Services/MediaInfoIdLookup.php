@@ -3,17 +3,25 @@
 namespace Wikibase\MediaInfo\Services;
 
 use InvalidArgumentException;
-use MediaWiki\Linker\LinkTarget;
-use Wikibase\MediaInfo\DataModel\MediaInfoId;
+use Title;
+use UnexpectedValueException;
+use Wikibase\DataModel\Services\EntityId\EntityIdComposer;
+use Wikibase\MediaInfo\DataModel\MediaInfo;
+use Wikibase\Store\EntityIdLookup;
 use Wikimedia\Assert\Assert;
 
 /**
- * Lookup service for getting the MediaInfoId that corresponds to a LinkTarget.
+ * Lookup service for getting the MediaInfoId that corresponds to a Title.
  *
  * @license GPL-2.0-or-later
  * @author Daniel Kinzler
  */
-class MediaInfoIdLookup {
+class MediaInfoIdLookup implements EntityIdLookup {
+
+	/**
+	 * @var EntityIdComposer
+	 */
+	private $entityIdComposer;
 
 	/**
 	 * @var integer
@@ -21,30 +29,42 @@ class MediaInfoIdLookup {
 	private $mediaInfoNamespace;
 
 	/**
+	 * @param EntityIdComposer $entityIdComposer
 	 * @param int $mediaInfoNamespace numeric namespace ID of the namespace in which MediaInfo
 	 * entities reside.
 	 */
-	public function __construct( $mediaInfoNamespace ) {
+	public function __construct( EntityIdComposer $entityIdComposer, $mediaInfoNamespace ) {
 		Assert::parameterType( 'integer', $mediaInfoNamespace, '$mediaInfoNamespace' );
 		Assert::parameter( $mediaInfoNamespace >= 0, '$mediaInfoNamespace', 'Must not be negative' );
 
+		$this->entityIdComposer = $entityIdComposer;
 		$this->mediaInfoNamespace = $mediaInfoNamespace;
 	}
 
-	/**
-	 * @param LinkTarget $title The page the MediaInfo object would be stored on.
-	 *
-	 * @return null|MediaInfoId The ID of the MediaInfo object that is (or could be) stored on
-	 * the given page, or null if the LinkTarget does not correspond to any MediaInfoId.
-	 */
-	public function getIdFromLinkTarget( LinkTarget $title ) {
+	public function getEntityIds( array $titles ) {
+		$results = [];
+		foreach ( $titles as $title ) {
+			$results[$title->getArticleID()] = $this->getEntityIdForTitle( $title );
+		}
+		return $results;
+	}
+
+	public function getEntityIdForTitle( Title $title ) {
 		if ( !$title->inNamespace( $this->mediaInfoNamespace ) ) {
 			return null;
 		}
 
+		// The ID for a MediaInfo item is the same as the ID of its associated File page, with
+		// an 'M' prepended - this is encapsulated by EntityIdComposer::composeEntityId()
 		try {
-			return new MediaInfoId( $title->getText() );
-		} catch ( InvalidArgumentException $ex ) {
+			return $this->entityIdComposer->composeEntityId(
+				'',
+				MediaInfo::ENTITY_TYPE,
+				$title->getArticleID()
+			);
+		} catch ( InvalidArgumentException $e ) {
+			return null;
+		} catch ( UnexpectedValueException $e ) {
 			return null;
 		}
 	}

@@ -17,6 +17,7 @@ use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\MediaInfo\DataModel\MediaInfoId;
 use Wikibase\MediaInfo\Search\MediaInfoFieldDefinitions;
 use Wikibase\MediaInfo\Services\FilePageLookup;
+use Wikibase\MediaInfo\Services\MediaInfoIdLookup;
 use Wikibase\Repo\Search\Fields\FieldDefinitions;
 use Wikibase\Repo\Search\Fields\WikibaseIndexField;
 use Wikibase\Repo\Validators\EntityConstraintProvider;
@@ -62,6 +63,17 @@ class MediaInfoHandlerTest extends \PHPUnit\Framework\TestCase {
 				$context->getOutput()->addHTML( 'MISSING!' );
 			} );
 
+		$idLookup = $this->getMockWithoutConstructor( MediaInfoIdLookup::class );
+		$idLookup->expects( $this->any() )
+			->method( 'getEntityIdForTitle' )
+			->willReturnCallback( function ( Title $title ) {
+				if ( $title->getPrefixedDBkey() !== 'Test-M1.png' ) {
+					return null;
+				}
+
+				return new MediaInfoId( 'M1' );
+			} );
+
 		$filePageLookup = $this->getMockWithoutConstructor( FilePageLookup::class );
 		$filePageLookup->expects( $this->any() )
 			->method( 'getFilePage' )
@@ -80,6 +92,8 @@ class MediaInfoHandlerTest extends \PHPUnit\Framework\TestCase {
 			$this->createMock( ValidatorErrorLocalizer::class ),
 			new ItemIdParser(),
 			$missingMediaInfoHandler,
+			!empty( $replacements[ 'idLookup' ] )
+				? $replacements[ 'idLookup' ] : $idLookup,
 			!empty( $replacements[ 'filePageLookup' ] )
 				? $replacements[ 'filePageLookup' ] : $filePageLookup,
 			new MediaInfoFieldDefinitions(

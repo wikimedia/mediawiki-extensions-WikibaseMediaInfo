@@ -50,7 +50,8 @@
 			"description": "List of property datatypes which are supported in the UI",
 			"value": [
 				"wikibase-item",
-				"string"
+				"string",
+				"quantity"
 			]
 		}
 	},
@@ -331,6 +332,7 @@
 				"wikibasemediainfo-hundreth-of-arcsecond-label",
 				"wikibasemediainfo-thousanth-of-arcsecond-label",
 				"wikibasemediainfo-string-input-button-text",
+				"wikibasemediainfo-quantity-input-button-text",
 				"colon-separator",
 				"word-separator",
 				"parentheses"
@@ -344,7 +346,8 @@
 				"templates/statements/QualifierValueInputWidget.mustache+dom",
 				"templates/statements/QualifierWidget.mustache+dom",
 				"templates/statements/StatementWidget.mustache+dom",
-				"templates/statements/StringInputWidget.mustache+dom"
+				"templates/statements/StringInputWidget.mustache+dom",
+				"templates/statements/QuantityInputWidget.mustache+dom"
 			],
 			"targets": [
 				"desktop",
@@ -363,7 +366,8 @@
 				"resources/statements/QualifierWidget.less",
 				"resources/statements/LinkNoticeWidget.less",
 				"resources/statements/GlobeCoordinateInputWidget.less",
-				"resources/statements/StringInputWidget.less"
+				"resources/statements/StringInputWidget.less",
+				"resources/statements/QuantityInputWidget.less"
 			],
 			"targets": [
 				"desktop",

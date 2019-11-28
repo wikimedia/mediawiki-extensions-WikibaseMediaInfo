@@ -1,0 +1,32 @@
+@import 'mediawiki.mixins';
+
+.wbmi-quantity-input-widget.wbmi-quantity-input-widget-with-button {
+	.flex-display();
+
+	.wbmi-quantity-input-input {
+		.flex( 1 );
+		vertical-align: middle;
+
+		// remove gap between input & button
+		margin-right: -1px;
+
+		// let's get rid of this input's border & the radius where both elements meet
+		/* stylelint-disable-next-line selector-class-pattern */
+		.oo-ui-numberInputWidget-plusButton > .oo-ui-buttonElement-button {
+			border-top-right-radius: 0;
+			border-bottom-right-radius: 0;
+		}
+	}
+
+	.wbmi-quantity-input-button {
+		.flex( 0 );
+		vertical-align: middle;
+
+		// as with above input, get rid of the border radius where these elements meet
+		/* stylelint-disable-next-line selector-class-pattern */
+		.oo-ui-buttonElement-framed > .oo-ui-buttonElement-button {
+			border-top-left-radius: 0;
+			border-bottom-left-radius: 0;
+		}
+	}
+}

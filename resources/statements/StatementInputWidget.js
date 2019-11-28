@@ -37,7 +37,8 @@ StatementInputWidget.prototype.setInputType = function ( type ) {
 			break;
 		case 'string':
 			this.input = new StringInputWidget( {
-				classes: this.config.classes
+				classes: this.config.classes,
+				isQualifier: false
 			} );
 			break;
 		default:
@@ -80,7 +81,8 @@ StatementInputWidget.prototype.onAddItem = function ( item ) {
 };
 
 StatementInputWidget.prototype.clearInput = function () {
-	this.input.setValue( undefined );
+	// instead of attempting to empty the input, just create a brand new one
+	this.setInputType( this.config.valueType );
 };
 
 module.exports = StatementInputWidget;

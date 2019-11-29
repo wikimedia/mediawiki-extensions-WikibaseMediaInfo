@@ -42,6 +42,12 @@
 
 			{{#editing}}{{{addQualifierButton}}}{{/editing}}
 		</div>
+
+		{{#error}}
+		<div class="wbmi-statement-publish-error-msg">
+			{{{error}}}
+		</div>
+		{{/error}}
 	</div>
 
 	{{#editing}}{{{removeButton}}}{{/editing}}

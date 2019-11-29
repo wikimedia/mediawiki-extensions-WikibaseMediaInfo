@@ -25,6 +25,7 @@ var QualifierWidget = require( './QualifierWidget.js' ),
 		// (e.g. setDisabled) which may cause a re-render, and will need
 		// some of these...
 		this.state = {
+			error: '',
 			editing: !!config.editing,
 			propertyId: config.propertyId,
 			guid: config.guid || this.guidGenerator.newGuid(),
@@ -100,6 +101,7 @@ ItemWidget.prototype.getTemplateData = function () {
 		addQualifierButton.connect( self, { click: [ 'addQualifier' ] } );
 
 		return {
+			error: self.state.error,
 			editing: self.state.editing,
 			qualifiers: self.getItems(),
 			label: formatResponse( label ),
@@ -257,8 +259,18 @@ ItemWidget.prototype.setData = function ( data ) {
 		rank: data.getRank(),
 		dataValue: data.getClaim().getMainSnak().getType() === 'value' ?
 			data.getClaim().getMainSnak().getValue() :
-			null
+			null,
+		// if new data was passed in, error is no longer valid
+		error: data.equals( this.getData() ) ? this.state.error : ''
 	} ) );
+};
+
+/**
+ * @param {string} text
+ * @return {jQuery.Deferred}
+ */
+ItemWidget.prototype.setError = function ( text ) {
+	return this.setState( { error: text } );
 };
 
 module.exports = ItemWidget;

@@ -4,6 +4,7 @@ var ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
 	FormatValueElement = require( 'wikibase.mediainfo.base' ).FormatValueElement,
 	EntityInputWidget = require( './EntityInputWidget.js' ),
 	GlobeCoordinateInputWidget = require( './GlobeCoordinateInputWidget.js' ),
+	StringInputWidget = require( './StringInputWidget.js' ),
 	QualifierValueInputWidget;
 
 QualifierValueInputWidget = function ( config ) {
@@ -11,7 +12,7 @@ QualifierValueInputWidget = function ( config ) {
 	this.types = {
 		'wikibase-entityid': this.createEntityInput.bind( this ),
 		quantity: this.createQuantityInput.bind( this ),
-		string: this.createTextInput.bind( this ),
+		string: this.createStringInput.bind( this ),
 		globecoordinate: this.createGlobeCoordinateInput.bind( this )
 	};
 	this.allowEmitChange = true;
@@ -101,10 +102,10 @@ QualifierValueInputWidget.prototype.createQuantityInput = function () {
 
 /**
  * Prepare a text input widget
- * @return {OO.ui.TextInputWidget} Text input
+ * @return {StringInputWidget} String input
  */
-QualifierValueInputWidget.prototype.createTextInput = function () {
-	var input = new OO.ui.TextInputWidget( $.extend( {}, this.config, { classes: [] } ) );
+QualifierValueInputWidget.prototype.createStringInput = function () {
+	var input = new StringInputWidget( $.extend( {}, this.config, { classes: [], isQualifier: true } ) );
 	input.connect( this, { change: 'onChange' } );
 	input.connect( this, { enter: [ 'emit', 'enter' ] } );
 	return input;
@@ -148,7 +149,7 @@ QualifierValueInputWidget.prototype.getInputValue = function () {
 				unit: '1'
 			};
 		case 'string':
-			return this.state.input.getValue();
+			return this.state.input.getData();
 		case 'globecoordinate':
 			return this.state.input.getData();
 		default:
@@ -231,7 +232,7 @@ QualifierValueInputWidget.prototype.createInputFromData = function ( type, data 
 			input.setValue( data.getAmount().getValue().replace( /^\+/, '' ) );
 			return input;
 		case 'string':
-			input.setValue( data.getValue() );
+			input.setData( data.toJSON() );
 			return input;
 		case 'globecoordinate':
 			return input.setData( data.toJSON() ).then( function () {

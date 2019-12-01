@@ -49,7 +49,8 @@
 		"MediaInfoSupportedDataTypes": {
 			"description": "List of property datatypes which are supported in the UI",
 			"value": [
-				"wikibase-item"
+				"wikibase-item",
+				"string"
 			]
 		}
 	},
@@ -329,6 +330,7 @@
 				"wikibasemediainfo-tenth-of-arcsecond-label",
 				"wikibasemediainfo-hundreth-of-arcsecond-label",
 				"wikibasemediainfo-thousanth-of-arcsecond-label",
+				"wikibasemediainfo-string-input-button-text",
 				"colon-separator",
 				"word-separator",
 				"parentheses"
@@ -341,7 +343,8 @@
 				"templates/statements/LinkNoticeWidget.mustache+dom",
 				"templates/statements/QualifierValueInputWidget.mustache+dom",
 				"templates/statements/QualifierWidget.mustache+dom",
-				"templates/statements/StatementWidget.mustache+dom"
+				"templates/statements/StatementWidget.mustache+dom",
+				"templates/statements/StringInputWidget.mustache+dom"
 			],
 			"targets": [
 				"desktop",
@@ -359,7 +362,8 @@
 				"resources/statements/ItemWidget.less",
 				"resources/statements/QualifierWidget.less",
 				"resources/statements/LinkNoticeWidget.less",
-				"resources/statements/GlobeCoordinateInputWidget.less"
+				"resources/statements/GlobeCoordinateInputWidget.less",
+				"resources/statements/StringInputWidget.less"
 			],
 			"targets": [
 				"desktop",

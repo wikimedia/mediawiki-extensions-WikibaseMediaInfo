@@ -5,6 +5,7 @@ var ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
 	EntityInputWidget = require( './EntityInputWidget.js' ),
 	GlobeCoordinateInputWidget = require( './GlobeCoordinateInputWidget.js' ),
 	StringInputWidget = require( './StringInputWidget.js' ),
+	QuantityInputWidget = require( './QuantityInputWidget.js' ),
 	QualifierValueInputWidget;
 
 QualifierValueInputWidget = function ( config ) {
@@ -91,10 +92,10 @@ QualifierValueInputWidget.prototype.createEntityInput = function () {
 
 /**
  * Prepare a numerical input widget
- * @return {OO.ui.NumberInputWidget} Numerical input
+ * @return {QuantityInputWidget} Numerical input
  */
 QualifierValueInputWidget.prototype.createQuantityInput = function () {
-	var input = new OO.ui.NumberInputWidget( $.extend( {}, this.config, { classes: [] } ) );
+	var input = new QuantityInputWidget( $.extend( {}, this.config, { classes: [], isQualifier: true } ) );
 	input.connect( this, { change: 'onChange' } );
 	input.connect( this, { enter: [ 'emit', 'enter' ] } );
 	return input;
@@ -143,11 +144,7 @@ QualifierValueInputWidget.prototype.getInputValue = function () {
 				id: this.state.input.getData()
 			};
 		case 'quantity':
-			return {
-				// add leading '+' if no unit is present already
-				amount: this.state.input.getValue().replace( /^(?![+-])/, '+' ),
-				unit: '1'
-			};
+			return this.state.input.getData();
 		case 'string':
 			return this.state.input.getData();
 		case 'globecoordinate':
@@ -227,9 +224,7 @@ QualifierValueInputWidget.prototype.createInputFromData = function ( type, data 
 				return input;
 			} );
 		case 'quantity':
-			// replace leading '+' unit - that's only needed for internal storage,
-			// but obvious for human input
-			input.setValue( data.getAmount().getValue().replace( /^\+/, '' ) );
+			input.setData( data.toJSON() );
 			return input;
 		case 'string':
 			input.setData( data.toJSON() );

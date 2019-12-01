@@ -1,0 +1,4 @@
+<div class="wbmi-quantity-input-widget {{^isQualifier}}wbmi-quantity-input-widget-with-button{{/isQualifier}}">
+	{{{input}}}
+	{{^isQualifier}}{{{button}}}{{/isQualifier}}
+</div>

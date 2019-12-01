@@ -32,7 +32,8 @@ StatementInputWidget.prototype.setInputType = function ( type ) {
 			break;
 		case 'quantity':
 			this.input = new QuantityInputWidget( {
-				classes: this.config.classes
+				classes: this.config.classes,
+				isQualifier: false
 			} );
 			break;
 		case 'string':

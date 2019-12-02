@@ -21,7 +21,6 @@ use Wikibase\Lib\Formatters\DispatchingValueFormatter;
 use Wikibase\Lib\Formatters\OutputFormatSnakFormatterFactory;
 use Wikibase\Lib\Formatters\OutputFormatValueFormatterFactory;
 use Wikibase\Lib\Formatters\SnakFormatter;
-use Wikibase\Lib\Store\EntityTitleLookup;
 use Wikibase\Lib\Store\PropertyOrderProvider;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\MediaInfo\View\MediaInfoEntityStatementsView;
@@ -43,10 +42,6 @@ class MediaInfoEntityStatementsViewTest extends \PHPUnit\Framework\TestCase {
 	 */
 	private $textProvider;
 	/**
-	 * @var EntityTitleLookup
-	 */
-	private $entityTitleLookup;
-	/**
 	 * @var OutputFormatSnakFormatterFactory
 	 */
 	private $snakFormatterFactory;
@@ -66,7 +61,7 @@ class MediaInfoEntityStatementsViewTest extends \PHPUnit\Framework\TestCase {
 			$languages[] = LanguageWithConversion::factory( $langCode );
 		}
 		$this->textProvider = new MediaWikiLocalizedTextProvider( $languages[0]->getLanguage() );
-		$this->entityTitleLookup = $wbRepo->getEntityTitleLookup();
+
 		$this->serializerFactory = $wbRepo->getCompactBaseDataModelSerializerFactory();
 
 		$snakFormatter = $this->getMockBuilder( SnakFormatter::class )
@@ -163,7 +158,6 @@ class MediaInfoEntityStatementsViewTest extends \PHPUnit\Framework\TestCase {
 		$sut = new MediaInfoEntityStatementsView(
 			$orderProvider,
 			$this->textProvider,
-			$this->entityTitleLookup,
 			[ new PropertyId( 'P1' ) ],
 			$this->snakFormatterFactory,
 			$this->valueFormatterFactory,

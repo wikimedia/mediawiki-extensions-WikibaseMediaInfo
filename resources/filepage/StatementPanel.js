@@ -79,12 +79,22 @@ StatementPanel.prototype.populateFormatValueCache = function ( data ) {
 	Object.keys( data ).forEach( function ( dataValue ) {
 		Object.keys( data[ dataValue ] ).forEach( function ( format ) {
 			Object.keys( data[ dataValue ][ format ] ).forEach( function ( language ) {
-				var json = JSON.parse( dataValue ),
-					key = FormatValueElement.getKey(
-						dataValues.newDataValue( json.type, json.value ), format, language
-					),
-					result = data[ dataValue ][ format ][ language ];
-				FormatValueElement.toCache( key, result );
+				var properties = data[ dataValue ][ format ][ language ];
+				// backward compatibility for output generated before property ids
+				// were included - this can be deleted after parser caches expire
+				// (30 days after this patch got deployed, so probably ~ february 2020)
+				if ( !( properties instanceof Object ) ) {
+					properties = { '': properties };
+				}
+
+				Object.keys( properties ).forEach( function ( propertyId ) {
+					var json = JSON.parse( dataValue ),
+						key = FormatValueElement.getKey(
+							dataValues.newDataValue( json.type, json.value ), format, language, propertyId || undefined
+						),
+						result = properties[ propertyId ];
+					FormatValueElement.toCache( key, result );
+				} );
 			} );
 		} );
 	} );

@@ -126,7 +126,6 @@ return [
 			$statementsView = new MediaInfoEntityStatementsView(
 				$propertyOrderProvider,
 				$textProvider,
-				$wbRepo->getEntityTitleLookup(),
 				$defaultPropertyIdsForView,
 				$wbRepo->getSnakFormatterFactory(),
 				$wbRepo->getValueFormatterFactory(),

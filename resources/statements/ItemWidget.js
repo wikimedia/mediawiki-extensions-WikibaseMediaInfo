@@ -51,9 +51,20 @@ OO.mixinClass( ItemWidget, FormatValueElement );
  */
 ItemWidget.prototype.getTemplateData = function () {
 	var self = this,
-		labelPromise = this.state.dataValue ?
-			this.formatValue( this.state.dataValue, 'text/html' ) :
-			$.Deferred().resolve( '' ).promise();
+		labelPromise;
+
+	// Get the formatted label text for the value if necessary,
+	// or else use a dummy promise
+	if ( this.state.dataValue ) {
+		labelPromise = this.formatValue(
+			this.state.dataValue,
+			'text/html',
+			null,
+			this.state.propertyId
+		);
+	} else {
+		labelPromise = $.Deferred().resolve( '' ).promise();
+	}
 
 	return labelPromise.then( function ( label ) {
 		var id = self.dataValue ? self.dataValue.toJSON().id : '',

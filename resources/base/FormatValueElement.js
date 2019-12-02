@@ -9,13 +9,15 @@ FormatValueElement.cache = {};
  * @param {dataValues.DataValue} dataValue
  * @param {string} format
  * @param {string} language
+ * @param {string} [propertyId]
  * @return {string}
  */
-FormatValueElement.getKey = function ( dataValue, format, language ) {
+FormatValueElement.getKey = function ( dataValue, format, language, propertyId ) {
 	return JSON.stringify( {
 		data: { type: dataValue.getType(), value: dataValue.toJSON() },
 		format: format,
-		language: language
+		language: language,
+		property: propertyId
 	}, function ( key, value ) {
 		// make sure the data gets sorted during stringify, or we might
 		// end up with a different key for data that is essentially the
@@ -48,14 +50,17 @@ FormatValueElement.toCache = function ( key, result ) {
  * @param {dataValues.DataValue} dataValue
  * @param {string} [format] e.g. text/plain or text/html
  * @param {string} [language]
+ * @param {string} [propertyId] Used when property-specific formatting rules are required
  * @return {jQuery.Promise}
  */
-FormatValueElement.prototype.formatValue = function ( dataValue, format, language ) {
+FormatValueElement.prototype.formatValue = function ( dataValue, format, language, propertyId ) {
 	var api,
 		data = { type: dataValue.getType(), value: dataValue.toJSON() },
 		stringified = JSON.stringify( data ),
 		promise,
-		key;
+		params,
+		key,
+		otherKey;
 
 	api = wikibase.api.getLocationAgnosticMwApi(
 		mw.config.get(
@@ -66,16 +71,28 @@ FormatValueElement.prototype.formatValue = function ( dataValue, format, languag
 
 	format = format || 'text/plain';
 	language = language || mw.config.get( 'wgUserLanguage' );
-	key = FormatValueElement.getKey( dataValue, format, language );
+	key = FormatValueElement.getKey( dataValue, format, language, propertyId );
+
+	// backward compatibility for output generated before property ids
+	// were included - this can be deleted after parser caches expire
+	// (30 days after this patch got deployed, so probably ~ february 2020)
+	if ( !( key in FormatValueElement.cache ) && propertyId !== undefined ) {
+		otherKey = FormatValueElement.getKey( dataValue, format, language );
+		if ( otherKey in FormatValueElement.cache ) {
+			return FormatValueElement.cache[ otherKey ];
+		}
+	}
 
 	if ( !( key in FormatValueElement.cache ) ) {
-		promise = api.get( {
+		params = {
 			action: 'wbformatvalue',
-			format: 'json',
 			datavalue: stringified,
+			format: 'json',
+			generate: format,
 			options: JSON.stringify( { lang: language } ),
-			generate: format
-		} );
+			property: propertyId
+		};
+		promise = api.get( params );
 
 		FormatValueElement.cache[ key ] = promise.then( function ( response ) {
 			return response.result || '';

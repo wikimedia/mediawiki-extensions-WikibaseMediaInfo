@@ -220,7 +220,7 @@ QualifierWidget.prototype.updatePropertyInput = function ( property ) {
 		this.propertyInput.setData( property );
 	} else {
 		// if the label is not yet known, format it to feed to the input field
-		this.formatPropertyPromise = this.formatProperty( property.id );
+		this.formatPropertyPromise = this.formatProperty( property.id, 'text/plain' );
 		return this.formatPropertyPromise.then( function ( formatted ) {
 			return self.updatePropertyInput( $.extend( {}, property, {
 				label: formatted
@@ -260,14 +260,16 @@ QualifierWidget.prototype.updateValueInput = function ( datatype, value ) {
  */
 QualifierWidget.prototype.asyncFormatForDisplay = function () {
 	var promises,
-		dataValue;
+		dataValue,
+		propertyId;
 
 	try {
 		dataValue = this.valueInput.getData();
+		propertyId = this.propertyInput.getData().id;
 
 		promises = [
-			this.formatProperty( this.propertyInput.getData().id, 'text/html' ),
-			this.formatValue( dataValue, 'text/html' )
+			this.formatProperty( propertyId, 'text/html' ),
+			this.formatValue( dataValue, 'text/html', null, propertyId )
 		];
 
 		this.formatDisplayPromise = $.when.apply( $, promises ).promise( {

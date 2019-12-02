@@ -79,6 +79,8 @@
 	"wikibasemediainfo-tenth-of-arcsecond-label": "à 1/10 de seconde d’arc près (~3 m max. à l’équateur)",
 	"wikibasemediainfo-hundreth-of-arcsecond-label": "à 1/100 de seconde d’arc près (~30 cm max. à l’équateur)",
 	"wikibasemediainfo-thousanth-of-arcsecond-label": "à 1/1000 de seconde d’arc près (~3 cm max. à l’équateur)",
+	"wikibasemediainfo-string-input-button-text": "Ajouter",
+	"wikibasemediainfo-quantity-input-button-text": "Ajouter",
 	"wikibasemediainfo-search-suggestions-title-depicts": "fichiers qui représentent...",
 	"wikibasemediainfo-search-suggestions-preference-label": "Suggestions de complétion automatique de recherche basées sur les données structurées",
 	"wikibasemediainfo-search-suggestions-preference-disable-confirm": "Êtes-vous sûr{{GENDER:||e}} de vouloir supprimer les suggestions de complétion automatique basées sur les données structurées ? (Ce paramètre peut être changé dans [[Special:Preferences#mw-prefsection-searchoptions|vos préférences]].)"

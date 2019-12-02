@@ -35,6 +35,7 @@
 	"wikibasemediainfo-filepage-edit": "Редагувати",
 	"wikibasemediainfo-filepage-publish": "Опублікувати зміни",
 	"wikibasemediainfo-filepage-caption-empty": "Додайте однорядкове пояснення, що саме репрезентує цей файл",
+	"wikibasemediainfo-filepage-caption-too-short": "Необхідно ще $1 {{PLURAL:$1|символ|символи|символів}}",
 	"wikibasemediainfo-filepage-caption-too-long": "Ліміт перевищено на $1 {{PLURAL:$1|символ|символи|символів}}",
 	"wikibasemediainfo-filepage-caption-approaching-limit": "{{PLURAL:$1|Залишився $1 символ|Залишилося $1 символи|Залишилось $1 символів}}",
 	"wikibasemediainfo-filepage-statement-no-value": "Для цієї властивості значення відсутнє",
@@ -65,5 +66,15 @@
 	"wikibasemediainfo-remove-all-statements-confirm": "Ця дія вилучить усі наявні значення цієї властивості. Властивості без значень будуть вилучені при публікації змін. Ви впевнені?",
 	"wikibasemediainfo-remove-all-statements-confirm-title": "Вилучити всі?",
 	"wikibasemediainfo-remove-all-statements-confirm-accept": "Вилучити",
-	"wikibasemediainfo-unsupported-datatype-text": "Непідтримуваний тип даних"
+	"wikibasemediainfo-unsupported-datatype-text": "Непідтримуваний тип даних",
+	"wikibasemediainfo-latitude-input-label": "Широта",
+	"wikibasemediainfo-latitude-input-placeholder": "Десяткова шкала градусів від -90 до 90",
+	"wikibasemediainfo-longitude-input-label": "Довгота",
+	"wikibasemediainfo-longitude-input-placeholder": "Десяткова шкала градусів від -180 до 180",
+	"wikibasemediainfo-precision-input-label": "Точність",
+	"wikibasemediainfo-arcminute-label": "до кутової хвилини",
+	"wikibasemediainfo-arcsecond-label": "до кутової секунди",
+	"wikibasemediainfo-tenth-of-arcsecond-label": "до 1/10 кутової секунди",
+	"wikibasemediainfo-hundreth-of-arcsecond-label": "до 1/100 кутової секунди",
+	"wikibasemediainfo-thousanth-of-arcsecond-label": "до 1/1000 кутової секунди"
 }

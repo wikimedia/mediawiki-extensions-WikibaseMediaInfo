@@ -53,7 +53,8 @@
 				"string",
 				"quantity",
 				"external-id",
-				"globe-coordinate"
+				"globe-coordinate",
+				"url"
 			]
 		}
 	},

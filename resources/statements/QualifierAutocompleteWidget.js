@@ -81,7 +81,8 @@ QualifierAutocompleteWidget.prototype.getFilters = function () {
 		'quantity',
 		'string',
 		'globe-coordinate',
-		'external-id'
+		'external-id',
+		'url'
 	];
 
 	return [

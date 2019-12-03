@@ -80,7 +80,8 @@ QualifierAutocompleteWidget.prototype.getFilters = function () {
 		'wikibase-item',
 		'quantity',
 		'string',
-		'globe-coordinate'
+		'globe-coordinate',
+		'external-id'
 	];
 
 	return [

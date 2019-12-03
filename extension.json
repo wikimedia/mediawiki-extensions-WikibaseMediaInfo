@@ -51,7 +51,8 @@
 			"value": [
 				"wikibase-item",
 				"string",
-				"quantity"
+				"quantity",
+				"external-id"
 			]
 		}
 	},

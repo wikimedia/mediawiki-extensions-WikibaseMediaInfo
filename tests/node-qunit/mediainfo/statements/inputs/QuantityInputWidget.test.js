@@ -1,20 +1,17 @@
 var sinon = require( 'sinon' ),
-	pathToWidget = '../../../../resources/statements/QuantityInputWidget.js',
-	hooks = require( '../../support/hooks.js' );
+	pathToWidget = '../../../../../resources/statements/inputs/QuantityInputWidget.js',
+	hooks = require( '../../../support/hooks.js' );
 
 QUnit.module( 'QuantityInputWidget', hooks.mediainfo, function () {
 	QUnit.test( 'Valid data roundtrip', function ( assert ) {
 		var done = assert.async(),
 			QuantityInputWidget = require( pathToWidget ),
 			widget = new QuantityInputWidget(),
-			data = { amount: '+1', unit: '1' };
+			data = dataValues.QuantityValue.newFromJSON( { amount: '+1', unit: '1' } );
 
 		widget.setData( data ).then( function () {
-			var oldData = dataValues.QuantityValue.newFromJSON( data ),
-				newData = dataValues.QuantityValue.newFromJSON( widget.getData() );
-
 			assert.ok( widget.getData() );
-			assert.strictEqual( oldData.equals( newData ), true );
+			assert.strictEqual( data.equals( widget.getData() ), true );
 			done();
 		} );
 	} );
@@ -23,8 +20,8 @@ QUnit.module( 'QuantityInputWidget', hooks.mediainfo, function () {
 		var done = assert.async(),
 			QuantityInputWidget = require( pathToWidget ),
 			widget = new QuantityInputWidget(),
-			data = { amount: '+1', unit: '1' },
-			newData = { amount: '+2', unit: '1' },
+			data = dataValues.QuantityValue.newFromJSON( { amount: '+1', unit: '1' } ),
+			newData = dataValues.QuantityValue.newFromJSON( { amount: '+2', unit: '1' } ),
 			onChange = sinon.stub();
 
 		widget.setData( data )
@@ -40,8 +37,8 @@ QUnit.module( 'QuantityInputWidget', hooks.mediainfo, function () {
 		var done = assert.async(),
 			QuantityInputWidget = require( pathToWidget ),
 			widget = new QuantityInputWidget(),
-			data = { amount: '+1', unit: '1' },
-			sameData = { amount: '+1', unit: '1' },
+			data = dataValues.QuantityValue.newFromJSON( { amount: '+1', unit: '1' } ),
+			sameData = dataValues.QuantityValue.newFromJSON( { amount: '+1', unit: '1' } ),
 			onChange = sinon.stub();
 
 		widget.setData( data )
@@ -57,10 +54,10 @@ QUnit.module( 'QuantityInputWidget', hooks.mediainfo, function () {
 		var done = assert.async(),
 			QuantityInputWidget = require( pathToWidget ),
 			widget = new QuantityInputWidget( { isQualifier: true } ),
-			data = { amount: '+1', unit: '1' };
+			data = dataValues.QuantityValue.newFromJSON( { amount: '+1', unit: '1' } );
 
 		widget.setData( data ).then( function ( $element ) {
-			assert.strictEqual( $element.find( '.wbmi-quantity-input-button' ).length, 0 );
+			assert.strictEqual( $element.find( '.wbmi-input-button' ).length, 0 );
 			done();
 		} );
 	} );
@@ -69,10 +66,10 @@ QUnit.module( 'QuantityInputWidget', hooks.mediainfo, function () {
 		var done = assert.async(),
 			QuantityInputWidget = require( pathToWidget ),
 			widget = new QuantityInputWidget( { isQualifier: false } ),
-			data = { amount: '+1', unit: '1' };
+			data = dataValues.QuantityValue.newFromJSON( { amount: '+1', unit: '1' } );
 
 		widget.setData( data ).then( function ( $element ) {
-			assert.strictEqual( $element.find( '.wbmi-quantity-input-button' ).length, 1 );
+			assert.strictEqual( $element.find( '.wbmi-input-button' ).length, 1 );
 			done();
 		} );
 	} );

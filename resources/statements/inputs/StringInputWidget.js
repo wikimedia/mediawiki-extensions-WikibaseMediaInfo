@@ -1,24 +1,24 @@
 'use strict';
 
 var ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
+	AbstractInputWidget = require( './AbstractInputWidget.js' ),
 	StringInputWidget;
 
 /**
  * @param {Object} config Configuration options
- * @param {string} [config.value]
  * @param {boolean} [config.isQualifier]
  */
 StringInputWidget = function MediaInfoStatementsStringInputWidget( config ) {
 	config = config || {};
 
 	this.state = {
-		value: config.value || '',
+		value: '',
 		isQualifier: !!config.isQualifier
 	};
 
 	this.input = new OO.ui.TextInputWidget( {
 		value: this.state.value,
-		classes: [ 'wbmi-string-input-input' ],
+		classes: [ 'wbmi-input-input' ],
 		isRequired: true
 	} );
 	this.input.connect( this, { enter: 'onEnter' } );
@@ -28,10 +28,11 @@ StringInputWidget = function MediaInfoStatementsStringInputWidget( config ) {
 	ComponentWidget.call(
 		this,
 		'wikibase.mediainfo.statements',
-		'templates/statements/StringInputWidget.mustache+dom'
+		'templates/statements/inputs/StringInputWidget.mustache+dom'
 	);
 };
 OO.inheritClass( StringInputWidget, OO.ui.Widget );
+OO.mixinClass( StringInputWidget, AbstractInputWidget );
 OO.mixinClass( StringInputWidget, ComponentWidget );
 
 /**
@@ -39,7 +40,7 @@ OO.mixinClass( StringInputWidget, ComponentWidget );
  */
 StringInputWidget.prototype.getTemplateData = function () {
 	var button = new OO.ui.ButtonWidget( {
-		classes: [ 'wbmi-string-input-button' ],
+		classes: [ 'wbmi-input-button' ],
 		label: mw.message( 'wikibasemediainfo-string-input-button-text' ).text(),
 		flags: [ 'primary', 'progressive' ],
 		disabled: this.input.getValue() === ''
@@ -54,28 +55,34 @@ StringInputWidget.prototype.getTemplateData = function () {
 };
 
 StringInputWidget.prototype.onEnter = function () {
-	this.emit( 'addItem', this.input.getValue() );
+	this.emit( 'add', this );
 };
 
 StringInputWidget.prototype.onChange = function () {
 	// update state to make sure template rerenders
 	this.setState( { value: this.input.getValue() } )
-		.then( this.emit.bind( this, 'change', this.input.getValue() ) );
+		.then( this.emit.bind( this, 'change', this ) );
 };
 
 /**
- * @return {string}
+ * @inheritDoc
  */
-StringInputWidget.prototype.getData = function () {
+StringInputWidget.prototype.getRawValue = function () {
 	return this.input.getValue();
 };
 
 /**
- * @param {string} data
- * @return {jQuery.Promise}
+ * @inheritDoc
+ */
+StringInputWidget.prototype.getData = function () {
+	return dataValues.newDataValue( 'string', this.getRawValue() );
+};
+
+/**
+ * @inheritDoc
  */
 StringInputWidget.prototype.setData = function ( data ) {
-	this.input.setValue( String( data ) );
+	this.input.setValue( data.toJSON() );
 	return this.setState( { value: this.input.getValue() } );
 };
 

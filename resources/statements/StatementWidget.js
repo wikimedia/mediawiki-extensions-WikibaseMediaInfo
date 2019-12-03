@@ -86,7 +86,7 @@ StatementWidget = function ( config ) {
 		'templates/statements/StatementWidget.mustache+dom'
 	);
 
-	this.input.connect( this, { addItem: 'addItemFromInput' } );
+	this.input.connect( this, { add: 'addItemFromInput' } );
 	this.publishButton.connect( this, { click: [ 'emit', 'publish' ] } );
 	this.connect( this, { change: 'updatePublishButtonState' } );
 

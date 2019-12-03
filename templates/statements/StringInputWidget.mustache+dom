@@ -1,4 +1,0 @@
-<div class="wbmi-string-input-widget {{^isQualifier}}wbmi-string-input-widget-with-button{{/isQualifier}}">
-	{{{input}}}
-	{{^isQualifier}}{{{button}}}{{/isQualifier}}
-</div>

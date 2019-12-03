@@ -279,8 +279,11 @@
 				"resources/statements/LinkNoticeWidget.js",
 				"resources/statements/GlobeCoordinateInputWidget.js",
 				"resources/statements/StatementInputWidget.js",
-				"resources/statements/StringInputWidget.js",
-				"resources/statements/QuantityInputWidget.js"
+				"resources/statements/inputs/index.js",
+				"resources/statements/inputs/AbstractInputWidget.js",
+				"resources/statements/inputs/QuantityInputWidget.js",
+				"resources/statements/inputs/StringInputWidget.js",
+				"resources/statements/inputs/UnsupportedInputWidget.js"
 			],
 			"dependencies": [
 				"wikibase.mediainfo.base",
@@ -347,8 +350,9 @@
 				"templates/statements/QualifierValueInputWidget.mustache+dom",
 				"templates/statements/QualifierWidget.mustache+dom",
 				"templates/statements/StatementWidget.mustache+dom",
-				"templates/statements/StringInputWidget.mustache+dom",
-				"templates/statements/QuantityInputWidget.mustache+dom"
+				"templates/statements/inputs/QuantityInputWidget.mustache+dom",
+				"templates/statements/inputs/StringInputWidget.mustache+dom",
+				"templates/statements/inputs/UnsupportedInputWidget.mustache+dom"
 			],
 			"targets": [
 				"desktop",
@@ -367,8 +371,7 @@
 				"resources/statements/QualifierWidget.less",
 				"resources/statements/LinkNoticeWidget.less",
 				"resources/statements/GlobeCoordinateInputWidget.less",
-				"resources/statements/StringInputWidget.less",
-				"resources/statements/QuantityInputWidget.less"
+				"resources/statements/inputs/InputWidgetWithButton.less"
 			],
 			"targets": [
 				"desktop",

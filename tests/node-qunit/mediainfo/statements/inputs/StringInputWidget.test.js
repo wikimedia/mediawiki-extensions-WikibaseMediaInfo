@@ -1,20 +1,17 @@
 var sinon = require( 'sinon' ),
-	pathToWidget = '../../../../resources/statements/StringInputWidget.js',
-	hooks = require( '../../support/hooks.js' );
+	pathToWidget = '../../../../../resources/statements/inputs/StringInputWidget.js',
+	hooks = require( '../../../support/hooks.js' );
 
 QUnit.module( 'StringInputWidget', hooks.mediainfo, function () {
 	QUnit.test( 'Valid data roundtrip', function ( assert ) {
 		var done = assert.async(),
 			StringInputWidget = require( pathToWidget ),
 			widget = new StringInputWidget(),
-			data = 'this is a string';
+			data = new dataValues.StringValue( 'this is a string' );
 
 		widget.setData( data ).then( function () {
-			var oldData = new dataValues.StringValue( data ),
-				newData = new dataValues.StringValue( widget.getData() );
-
 			assert.ok( widget.getData() );
-			assert.strictEqual( oldData.equals( newData ), true );
+			assert.strictEqual( data.equals( widget.getData() ), true );
 			done();
 		} );
 	} );
@@ -23,8 +20,8 @@ QUnit.module( 'StringInputWidget', hooks.mediainfo, function () {
 		var done = assert.async(),
 			StringInputWidget = require( pathToWidget ),
 			widget = new StringInputWidget(),
-			data = 'this is a string',
-			newData = 'this is another string',
+			data = new dataValues.StringValue( 'this is a string' ),
+			newData = new dataValues.StringValue( 'this is another string' ),
 			onChange = sinon.stub();
 
 		widget.setData( data )
@@ -40,8 +37,8 @@ QUnit.module( 'StringInputWidget', hooks.mediainfo, function () {
 		var done = assert.async(),
 			StringInputWidget = require( pathToWidget ),
 			widget = new StringInputWidget(),
-			data = 'this is a string',
-			sameData = 'this is a string',
+			data = new dataValues.StringValue( 'this is a string' ),
+			sameData = new dataValues.StringValue( 'this is a string' ),
 			onChange = sinon.stub();
 
 		widget.setData( data )
@@ -57,10 +54,10 @@ QUnit.module( 'StringInputWidget', hooks.mediainfo, function () {
 		var done = assert.async(),
 			StringInputWidget = require( pathToWidget ),
 			widget = new StringInputWidget( { isQualifier: true } ),
-			data = 'this is a string';
+			data = new dataValues.StringValue( 'this is a string' );
 
 		widget.setData( data ).then( function ( $element ) {
-			assert.strictEqual( $element.find( '.wbmi-string-input-button' ).length, 0 );
+			assert.strictEqual( $element.find( '.wbmi-input-button' ).length, 0 );
 			done();
 		} );
 	} );
@@ -69,10 +66,10 @@ QUnit.module( 'StringInputWidget', hooks.mediainfo, function () {
 		var done = assert.async(),
 			StringInputWidget = require( pathToWidget ),
 			widget = new StringInputWidget( { isQualifier: false } ),
-			data = 'this is a string';
+			data = new dataValues.StringValue( 'this is a string' );
 
 		widget.setData( data ).then( function ( $element ) {
-			assert.strictEqual( $element.find( '.wbmi-string-input-button' ).length, 1 );
+			assert.strictEqual( $element.find( '.wbmi-input-button' ).length, 1 );
 			done();
 		} );
 	} );

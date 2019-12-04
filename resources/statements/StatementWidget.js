@@ -131,8 +131,7 @@ StatementWidget.prototype.getTemplateData = function () {
 
 		cancelButton = new OO.ui.ButtonWidget( {
 			label: mw.message( 'wikibasemediainfo-filepage-cancel' ).text(),
-			framed: false,
-			flags: 'destructive'
+			framed: false
 		} );
 
 		removeButton = new OO.ui.ButtonWidget( {

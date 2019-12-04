@@ -40,5 +40,7 @@
 	"wikibasemediainfo-latitude-input-placeholder": "Decimālie grādi starp -90 un 90",
 	"wikibasemediainfo-longitude-input-label": "Ģeogrāfiskais garums",
 	"wikibasemediainfo-longitude-input-placeholder": "Decimālie grādi starp -180 un 180",
-	"wikibasemediainfo-precision-input-label": "Precizitāte"
+	"wikibasemediainfo-precision-input-label": "Precizitāte",
+	"wikibasemediainfo-string-input-button-text": "Pievienot",
+	"wikibasemediainfo-quantity-input-button-text": "Pievienot"
 }

@@ -51,5 +51,7 @@
 	"wikibasemediainfo-unsupported-datatype-text": "No se admite el tipo de datos",
 	"wikibasemediainfo-latitude-input-label": "Latitud",
 	"wikibasemediainfo-longitude-input-label": "Longitud",
-	"wikibasemediainfo-precision-input-label": "Precisión"
+	"wikibasemediainfo-precision-input-label": "Precisión",
+	"wikibasemediainfo-string-input-button-text": "Añadir",
+	"wikibasemediainfo-quantity-input-button-text": "Añadir"
 }

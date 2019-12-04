@@ -3,7 +3,8 @@
 		"authors": [
 			"Hedda",
 			"Arbormedi",
-			"Mirzali"
+			"Mirzali",
+			"BaRaN6161 TURK"
 		]
 	},
 	"wikibasemediainfo-add-property": "Özellik eklemek için arama yapın (parçası, medya türü, vb.)",
@@ -16,5 +17,7 @@
 	"wikibasemediainfo-property-placeholder": "Özellik",
 	"wikibasemediainfo-filepage-license-agree": "Kabul ediyorum",
 	"wikibasemediainfo-statements-item-add-qualifier": "Niteleyici еkle",
-	"wikibasemediainfo-statements-item-remove": "Kaldır"
+	"wikibasemediainfo-statements-item-remove": "Kaldır",
+	"wikibasemediainfo-string-input-button-text": "Ekle",
+	"wikibasemediainfo-quantity-input-button-text": "Ekle"
 }

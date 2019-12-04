@@ -75,6 +75,8 @@
 	"wikibasemediainfo-tenth-of-arcsecond-label": "til 1/10 av et buesekund",
 	"wikibasemediainfo-hundreth-of-arcsecond-label": "til 1/100 av et buesekund",
 	"wikibasemediainfo-thousanth-of-arcsecond-label": "til 1/1000 av et buesekund",
+	"wikibasemediainfo-string-input-button-text": "Legg til",
+	"wikibasemediainfo-quantity-input-button-text": "Legg til",
 	"wikibasemediainfo-search-suggestions-title-depicts": "filer som viser …",
 	"wikibasemediainfo-search-suggestions-preference-label": "Autofullføring for søk basert på strukturerte data",
 	"wikibasemediainfo-search-suggestions-preference-disable-confirm": "Er du sikker på at du vil fjerne autofullføring av søk basert på strukturerte data? (Denne innstillingen kan endres i [[Special:Preferences#mw-prefsection-searchoptions|innstillingene]].)"

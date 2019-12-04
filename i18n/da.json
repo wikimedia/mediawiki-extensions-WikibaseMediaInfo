@@ -19,5 +19,7 @@
 	"wikibasemediainfo-statements-item-remove": "Fjern",
 	"wikibasemediainfo-statements-learn-more": "Lær mere",
 	"wikibasemediainfo-statements-remove": "Fjern alle",
-	"wikibasemediainfo-statements-unsupported-property-title": "Ikke understøttet egenskab"
+	"wikibasemediainfo-statements-unsupported-property-title": "Ikke understøttet egenskab",
+	"wikibasemediainfo-string-input-button-text": "Tilføj",
+	"wikibasemediainfo-quantity-input-button-text": "Tilføj"
 }

@@ -50,5 +50,7 @@
 	"wikibasemediainfo-remove-all-statements-confirm-accept": "제거",
 	"wikibasemediainfo-unsupported-datatype-text": "미지원 자료형",
 	"wikibasemediainfo-latitude-input-label": "위도",
-	"wikibasemediainfo-longitude-input-label": "경도"
+	"wikibasemediainfo-longitude-input-label": "경도",
+	"wikibasemediainfo-string-input-button-text": "추가",
+	"wikibasemediainfo-quantity-input-button-text": "추가"
 }

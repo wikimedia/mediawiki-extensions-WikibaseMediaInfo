@@ -75,6 +75,8 @@
 	"wikibasemediainfo-tenth-of-arcsecond-label": "a 1/10 de segundo de arco",
 	"wikibasemediainfo-hundreth-of-arcsecond-label": "a 1/100 de um segundo de arco",
 	"wikibasemediainfo-thousanth-of-arcsecond-label": "a 1/1000 de um segundo de arco",
+	"wikibasemediainfo-string-input-button-text": "Adicionar",
+	"wikibasemediainfo-quantity-input-button-text": "Adicionar",
 	"wikibasemediainfo-search-suggestions-title-depicts": "arquivos representando…",
 	"wikibasemediainfo-search-suggestions-preference-label": "Pesquise sugestões de preenchimento automático com base em dados estruturados",
 	"wikibasemediainfo-search-suggestions-preference-disable-confirm": "Tem certeza de que deseja remover sugestões de preenchimento automático com base em dados estruturados? (Esta configuração pode ser alterada na [[Special:Preferences#mw-prefsection-searchoptions|Preferências]].)"

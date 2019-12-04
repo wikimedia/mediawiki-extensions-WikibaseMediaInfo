@@ -78,6 +78,8 @@
 	"wikibasemediainfo-tenth-of-arcsecond-label": "ل1/10 من الثانية قالوسية",
 	"wikibasemediainfo-hundreth-of-arcsecond-label": "ل1/100 من الثانية قالوسية",
 	"wikibasemediainfo-thousanth-of-arcsecond-label": "ل1/1000 من الثانية قالوسية",
+	"wikibasemediainfo-string-input-button-text": "إضافة",
+	"wikibasemediainfo-quantity-input-button-text": "إضافة",
 	"wikibasemediainfo-search-suggestions-title-depicts": "ملفات تصور...",
 	"wikibasemediainfo-search-suggestions-preference-label": "ابحث في اقتراحات الإكمال التلقائي بناءً على البيانات المنظمة",
 	"wikibasemediainfo-search-suggestions-preference-disable-confirm": "هل تريد بالتأكيد إزالة اقتراحات الإكمال التلقائي استنادا إلى بيانات منظمة؟ (يمكن تغيير هذا الإعداد في [[Special:Preferences#mw-prefsection-searchoptions|التفضيلات]].)"

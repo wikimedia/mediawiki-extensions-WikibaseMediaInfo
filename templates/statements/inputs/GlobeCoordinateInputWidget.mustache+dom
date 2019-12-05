@@ -1,0 +1,18 @@
+<div class="wbmi-input-widget wbmi-input-widget--globe-coordinate {{^isQualifier}}wbmi-with-button{{/isQualifier}}">
+	<label>
+		<span class="wbmi-input-widget__label">{{latitude.label}}</span>
+		{{{latitude.input}}}
+	</label>
+
+	<label>
+		<span class="wbmi-input-widget__label">{{longitude.label}}</span>
+		{{{longitude.input}}}
+	</label>
+
+	<label>
+		<span class="wbmi-input-widget__label">{{precision.label}}</span>
+		{{{precision.input}}}
+	</label>
+
+	{{^isQualifier}}{{{button}}}{{/isQualifier}}
+</div>

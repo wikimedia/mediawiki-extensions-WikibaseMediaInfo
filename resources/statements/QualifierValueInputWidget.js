@@ -3,7 +3,6 @@
 var ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
 	FormatValueElement = require( 'wikibase.mediainfo.base' ).FormatValueElement,
 	EntityInputWidget = require( './EntityInputWidget.js' ),
-	GlobeCoordinateInputWidget = require( './GlobeCoordinateInputWidget.js' ),
 	inputs = require( './inputs/index.js' ),
 	QualifierValueInputWidget;
 
@@ -116,8 +115,7 @@ QualifierValueInputWidget.prototype.createStringInput = function () {
  * @return {GlobeCoordinateInputWidget} Globe coordinate input
  */
 QualifierValueInputWidget.prototype.createGlobeCoordinateInput = function () {
-	var input = new GlobeCoordinateInputWidget( $.extend( {}, this.config, { classes: [] } ) );
-	input.setDisabled( this.disabled );
+	var input = new inputs.GlobeCoordinateInputWidget( $.extend( {}, this.config, { classes: [], isQualifier: true } ) );
 	input.connect( this, { change: 'onChange' } );
 	input.connect( this, { enter: [ 'emit', 'enter' ] } );
 	return input;
@@ -145,7 +143,7 @@ QualifierValueInputWidget.prototype.getInputValue = function () {
 		case 'string':
 			return this.state.input.getData().toJSON();
 		case 'globecoordinate':
-			return this.state.input.getData();
+			return this.state.input.getData().toJSON();
 		default:
 			return this.state.input.getData().toJSON();
 	}
@@ -229,7 +227,7 @@ QualifierValueInputWidget.prototype.createInputFromData = function ( type, data 
 				return input;
 			} );
 		case 'globecoordinate':
-			return input.setData( data.toJSON() ).then( function () {
+			return input.setData( data ).then( function () {
 				return input;
 			} );
 		default:

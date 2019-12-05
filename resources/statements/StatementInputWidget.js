@@ -40,6 +40,12 @@ StatementInputWidget.prototype.setInputType = function ( type ) {
 				isQualifier: false
 			} );
 			break;
+		case 'globecoordinate':
+			this.input = new inputs.GlobeCoordinateInputWidget( {
+				classes: this.config.classes,
+				isQualifier: false
+			} );
+			break;
 		default:
 			this.input = new inputs.UnsupportedInputWidget( {
 				classes: this.config.classes,

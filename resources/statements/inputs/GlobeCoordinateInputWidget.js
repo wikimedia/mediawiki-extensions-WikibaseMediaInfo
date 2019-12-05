@@ -1,52 +1,79 @@
 'use strict';
 
 var ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
+	AbstractInputWidget = require( './AbstractInputWidget.js' ),
 	GlobeCoordinateInputWidget;
 
 /**
  * Widget that wraps globe-coordinate fields.
+ *
+ * @param {Object} config Configuration options
+ * @param {boolean} [config.isQualifier]
  */
-GlobeCoordinateInputWidget = function MediaInfoStatementsGlobeCoordinateInputWidget() {
-	GlobeCoordinateInputWidget.parent.call( this );
+GlobeCoordinateInputWidget = function MediaInfoStatementsGlobeCoordinateInputWidget( config ) {
+	config = config || {};
+
+	this.state = {
+		latitude: '',
+		longitude: '',
+		precision: '',
+		isQualifier: !!config.isQualifier
+	};
 
 	this.latitudeInput = new OO.ui.TextInputWidget( $.extend( {
-		classes: [],
+		classes: [ 'wbmi-input-widget__input' ],
 		isRequired: true,
 		type: 'number',
-		validate: this.validateInput.bind( this ),
+		validate: this.validateInput.bind( this, 'latitude' ),
 		placeholder: mw.message( 'wikibasemediainfo-latitude-input-placeholder' ).text()
 	} ) );
 
 	this.longitudeInput = new OO.ui.TextInputWidget( $.extend( {
-		classes: [],
+		classes: [ 'wbmi-input-widget__input' ],
 		isRequired: true,
 		type: 'number',
-		validate: this.validateInput.bind( this ),
+		validate: this.validateInput.bind( this, 'longitude' ),
 		placeholder: mw.message( 'wikibasemediainfo-longitude-input-placeholder' ).text()
 	} ) );
 
 	this.precisionInput = new OO.ui.DropdownInputWidget( $.extend( {
-		options: this.getPrecisionOptions()
+		options: this.getPrecisionOptions(),
+		$overlay: true
 	} ) );
 
-	this.latitudeInput.connect( this, { change: [ 'emit', 'change' ] } );
-	this.longitudeInput.connect( this, { change: [ 'emit', 'change' ] } );
-	this.precisionInput.connect( this, { change: [ 'emit', 'change' ] } );
+	this.latitudeInput.connect( this, { change: 'onChange' } );
+	this.longitudeInput.connect( this, { change: 'onChange' } );
+	this.precisionInput.connect( this, { change: 'onChange' } );
 
+	GlobeCoordinateInputWidget.parent.call( this );
 	ComponentWidget.call(
 		this,
 		'wikibase.mediainfo.statements',
-		'templates/statements/GlobeCoordinateInputWidget.mustache+dom'
+		'templates/statements/inputs/GlobeCoordinateInputWidget.mustache+dom'
 	);
 };
 OO.inheritClass( GlobeCoordinateInputWidget, OO.ui.Widget );
+OO.mixinClass( GlobeCoordinateInputWidget, AbstractInputWidget );
 OO.mixinClass( GlobeCoordinateInputWidget, ComponentWidget );
 
 /**
  * @inheritDoc
  */
 GlobeCoordinateInputWidget.prototype.getTemplateData = function () {
+	var button = new OO.ui.ButtonWidget( {
+		classes: [ 'wbmi-input-widget__button' ],
+		label: mw.message( 'wikibasemediainfo-string-input-button-text' ).text(),
+		flags: [ 'primary', 'progressive' ],
+		disabled: (
+			this.latitudeInput.getValue() === '' ||
+			this.longitudeInput.getValue() === '' ||
+			this.precisionInput.getValue() === ''
+		)
+	} );
+	button.connect( this, { click: [ 'emit', 'add', this ] } );
+
 	return {
+		isQualifier: this.state.isQualifier,
 		latitude: {
 			label: mw.message( 'wikibasemediainfo-latitude-input-label' ).text(),
 			input: this.latitudeInput
@@ -58,7 +85,8 @@ GlobeCoordinateInputWidget.prototype.getTemplateData = function () {
 		precision: {
 			label: mw.message( 'wikibasemediainfo-precision-input-label' ).text(),
 			input: this.precisionInput
-		}
+		},
+		button: button
 	};
 };
 
@@ -69,11 +97,11 @@ GlobeCoordinateInputWidget.prototype.getTemplateData = function () {
  * specific (e.g. max longitude on Mars is 360). If we ever support multiple
  * globes we will need to update this function to handle them.
  *
- * @param {string} value
  * @param {string} inputType Latitude or longitude
+ * @param {string} value
  * @return {boolean}
  */
-GlobeCoordinateInputWidget.prototype.validateInput = function ( value, inputType ) {
+GlobeCoordinateInputWidget.prototype.validateInput = function ( inputType, value ) {
 	var numberValue = Number( value ),
 		maxValue = ( inputType === 'latitude' ) ? 90 : 180;
 
@@ -82,38 +110,67 @@ GlobeCoordinateInputWidget.prototype.validateInput = function ( value, inputType
 		Math.abs( numberValue ) <= maxValue;
 };
 
+GlobeCoordinateInputWidget.prototype.onChange = function () {
+	// update state to make sure template rerenders
+	this.setState( {
+		latitude: this.latitudeInput.getValue(),
+		longitude: this.longitudeInput.getValue(),
+		precision: this.precisionInput.getValue()
+	} ).then( this.emit.bind( this, 'change', this ) );
+};
+
 /**
- * Get globe coordinate data.
- *
- * @return {Object}
+ * @inheritDoc
+ */
+GlobeCoordinateInputWidget.prototype.getRawValue = function () {
+	var latitude = this.latitudeInput.getValue(),
+		longitude = this.longitudeInput.getValue();
+
+	return latitude + ' ' + longitude;
+};
+
+/**
+ * @inheritDoc
+ */
+GlobeCoordinateInputWidget.prototype.getRawValueOptions = function () {
+	var precision = Number( this.precisionInput.getValue() );
+
+	return { precision: precision };
+};
+
+/**
+ * @inheritDoc
  */
 GlobeCoordinateInputWidget.prototype.getData = function () {
 	var latitude = this.latitudeInput.getValue(),
 		longitude = this.longitudeInput.getValue();
 
-	if ( !this.validateInput( latitude, 'latitude' ) || !this.validateInput( longitude, 'longitude' ) ) {
+	if ( !this.validateInput( 'latitude', latitude ) || !this.validateInput( 'longitude', longitude ) ) {
 		throw new Error( 'Invalid coordinate input' );
 	}
 
-	return {
+	return dataValues.newDataValue( 'globecoordinate', {
 		latitude: Number( latitude ),
 		longitude: Number( longitude ),
 		precision: Number( this.precisionInput.getValue() )
-	};
+	} );
 };
 
 /**
- * Set field values based on GlobeCoordinate object passed down by parent.
- *
- * @param {Object} data
- * @return {jQuery.Promise}
+ * @inheritDoc
  */
 GlobeCoordinateInputWidget.prototype.setData = function ( data ) {
-	this.latitudeInput.setValue( String( data.latitude ) );
-	this.longitudeInput.setValue( String( data.longitude ) );
-	this.precisionInput.setValue( String( data.precision ) );
+	var json = data.toJSON();
 
-	return $.Deferred().resolve( this.$element ).promise();
+	this.latitudeInput.setValue( String( json.latitude ) );
+	this.longitudeInput.setValue( String( json.longitude ) );
+	this.precisionInput.setValue( String( json.precision ) );
+
+	// we're not making any immediate state changes here, but the above
+	// `setValue` calls will trigger an onChange event which will update
+	// the setState, and this empty state change will make sure we won't
+	// resolve until that has happened
+	return this.setState( {} );
 };
 
 /**

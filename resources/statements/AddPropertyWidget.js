@@ -1,7 +1,7 @@
 'use strict';
 
 var ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
-	ItemInputWidget = require( './ItemInputWidget.js' ),
+	inputs = require( './inputs/index.js' ),
 	AddPropertyWidget;
 
 /**
@@ -34,7 +34,7 @@ AddPropertyWidget.prototype.getTemplateData = function () {
 		addPropertyButton,
 		removeButton;
 
-	propertyInputWidget = new ItemInputWidget( {
+	propertyInputWidget = new inputs.EntityInputWidget( {
 		classes: [ 'wbmi-entityview-add-statement-property' ],
 		entityType: 'property',
 		filter: this.getFilters(),
@@ -42,9 +42,9 @@ AddPropertyWidget.prototype.getTemplateData = function () {
 		placeholder: mw.message( 'wikibasemediainfo-add-property' ).text()
 	} );
 
-	propertyInputWidget.connect( this, { choose: 'onChoose' } );
-	propertyInputWidget.connect( this, { choose: [ 'setEditing', false ] } );
-	propertyInputWidget.connect( this, { choose: [ 'emit', 'choose' ] } );
+	propertyInputWidget.connect( this, { add: 'onChoose' } );
+	propertyInputWidget.connect( this, { add: [ 'setEditing', false ] } );
+	propertyInputWidget.connect( this, { add: [ 'emit', 'choose' ] } );
 
 	addPropertyButton = new OO.ui.ButtonWidget( {
 		classes: [ 'wbmi-entityview-add-statement-property-button' ],
@@ -110,11 +110,10 @@ AddPropertyWidget.prototype.setEditing = function ( editing ) {
 };
 
 /**
- * @param {ItemInputWidget} item
- * @param {Object} data
+ * @param {EntityInputWidget} input
  */
-AddPropertyWidget.prototype.onChoose = function ( item, data ) {
-	this.addPropertyId( data.id );
+AddPropertyWidget.prototype.onChoose = function ( input ) {
+	this.addPropertyId( input.getRawValue() );
 };
 
 /**

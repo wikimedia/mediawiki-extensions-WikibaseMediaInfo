@@ -79,7 +79,7 @@ QUnit.module( 'QualifierWidget', hooks.mediainfo, function () {
 			);
 
 		widget.setData( data ).then( function () {
-			assert.strictEqual( widget.propertyInput.getData().id, data.getPropertyId() );
+			assert.strictEqual( widget.propertyInput.getData().toJSON().id, data.getPropertyId() );
 			done();
 		} );
 	} );
@@ -110,7 +110,7 @@ QUnit.module( 'QualifierWidget', hooks.mediainfo, function () {
 			),
 			propertyLabel = 'some property',
 			valueLabel = 'some value',
-			formatPropertyStub = sinon.stub( widget, 'formatProperty' ),
+			formatPropertyStub = sinon.stub( widget.propertyInput, 'formatValue' ),
 			formatValueStub = sinon.stub( widget, 'formatValue' ),
 			done = assert.async();
 
@@ -120,7 +120,7 @@ QUnit.module( 'QualifierWidget', hooks.mediainfo, function () {
 
 		setTimeout( function () {
 			assert.strictEqual( formatPropertyStub.called, true );
-			assert.strictEqual( widget.propertyInput.getData().label, propertyLabel );
+			assert.strictEqual( widget.propertyInput.getValue(), propertyLabel );
 			done();
 		}, 200 );
 	} );

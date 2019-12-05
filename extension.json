@@ -272,19 +272,16 @@
 		"wikibase.mediainfo.statements": {
 			"packageFiles": [
 				"resources/statements/index.js",
-				"resources/statements/EntityLookupElement.js",
-				"resources/statements/EntityInputWidget.js",
 				"resources/statements/QualifierValueInputWidget.js",
 				"resources/statements/StatementWidget.js",
-				"resources/statements/ItemInputWidget.js",
 				"resources/statements/ItemWidget.js",
 				"resources/statements/QualifierWidget.js",
-				"resources/statements/QualifierAutocompleteWidget.js",
 				"resources/statements/AddPropertyWidget.js",
 				"resources/statements/LinkNoticeWidget.js",
 				"resources/statements/StatementInputWidget.js",
 				"resources/statements/inputs/index.js",
 				"resources/statements/inputs/AbstractInputWidget.js",
+				"resources/statements/inputs/EntityInputWidget.js",
 				"resources/statements/inputs/GlobeCoordinateInputWidget.js",
 				"resources/statements/inputs/QuantityInputWidget.js",
 				"resources/statements/inputs/StringInputWidget.js",
@@ -348,12 +345,12 @@
 			],
 			"templates": [
 				"templates/statements/AddPropertyWidget.mustache+dom",
-				"templates/statements/EntityLabel.mustache+dom",
 				"templates/statements/ItemWidget.mustache+dom",
 				"templates/statements/LinkNoticeWidget.mustache+dom",
 				"templates/statements/QualifierValueInputWidget.mustache+dom",
 				"templates/statements/QualifierWidget.mustache+dom",
 				"templates/statements/StatementWidget.mustache+dom",
+				"templates/statements/inputs/EntityInputWidgetLabel.mustache+dom",
 				"templates/statements/inputs/GlobeCoordinateInputWidget.mustache+dom",
 				"templates/statements/inputs/QuantityInputWidget.mustache+dom",
 				"templates/statements/inputs/StringInputWidget.mustache+dom",
@@ -367,12 +364,11 @@
 		"wikibase.mediainfo.statements.styles": {
 			"styles": [
 				"resources/statements/AddPropertyWidget.less",
-				"resources/statements/EntityLookupElement.less",
-				"resources/statements/EntityInputWidget.less",
 				"resources/statements/StatementWidget.less",
 				"resources/statements/ItemWidget.less",
 				"resources/statements/QualifierWidget.less",
 				"resources/statements/LinkNoticeWidget.less",
+				"resources/statements/inputs/EntityInputWidget.less",
 				"resources/statements/inputs/GlobeCoordinateInputWidget.less",
 				"resources/statements/inputs/InputWidget.less"
 			],

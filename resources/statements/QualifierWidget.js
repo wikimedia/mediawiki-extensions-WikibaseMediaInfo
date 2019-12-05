@@ -3,8 +3,8 @@
 var QualifierWidget,
 	ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
 	FormatValueElement = require( 'wikibase.mediainfo.base' ).FormatValueElement,
-	QualifierAutocomplete = require( './QualifierAutocompleteWidget.js' ),
 	QualifierValueInput = require( './QualifierValueInputWidget.js' ),
+	inputs = require( './inputs/index.js' ),
 	serialization = require( 'wikibase.serialization' ),
 	datamodel = require( 'wikibase.datamodel' );
 
@@ -32,9 +32,15 @@ QualifierWidget = function ( config ) {
 		editing: !!config.editing
 	};
 
+	this.dataTypeMap = mw.config.get( 'wbDataTypes', {} );
+
 	// sub-widgets
-	this.propertyInput = new QualifierAutocomplete( {
-		classes: [ 'wbmi-qualifier-property' ]
+	this.propertyInput = new inputs.EntityInputWidget( {
+		isQualifier: true,
+		classes: [ 'wbmi-qualifier-property' ],
+		entityType: 'property',
+		filter: this.getFilters(),
+		placeholder: mw.message( 'wikibasemediainfo-property-placeholder' ).text()
 	} );
 
 	this.valueInput = new QualifierValueInput( {
@@ -44,7 +50,7 @@ QualifierWidget = function ( config ) {
 	this.valueInput.setDisabled( true );
 
 	// event listeners
-	this.propertyInput.connect( this, { choose: 'onPropertyChoose' } );
+	this.propertyInput.connect( this, { add: 'onPropertyChoose' } );
 	this.valueInput.connect( this, { change: 'onValueChange' } );
 
 	QualifierWidget.parent.call( this, config );
@@ -121,23 +127,16 @@ QualifierWidget.prototype.setEditing = function ( editing ) {
  * @return {jQuery.Promise}
  */
 QualifierWidget.prototype.setData = function ( data ) {
-	var self = this,
-		propId,
-		dataValue,
-		dataValueType;
+	var self = this;
 
 	// Bail early and discard existing data if data argument is not a snak
 	if ( !( data instanceof datamodel.Snak ) ) {
 		throw new Error( 'Invalid snak' );
 	}
 
-	propId = data.getPropertyId();
-	dataValue = data.getValue();
-	dataValueType = dataValue.getType();
-
 	return $.when(
-		this.updatePropertyInput( { id: propId, dataValueType: dataValueType } ),
-		this.updateValueInput( dataValue.getType(), dataValue ),
+		this.updatePropertyInput( new datamodel.EntityId( data.getPropertyId() ) ),
+		this.updateValueInput( data.getValue().getType(), data.getValue() ),
 		this.setState( { data: this.cloneData( data ) } )
 	).then( function () {
 		return self.$element;
@@ -151,7 +150,7 @@ QualifierWidget.prototype.setData = function ( data ) {
 QualifierWidget.prototype.getData = function () {
 	var property = this.propertyInput.getData(),
 		snak = new datamodel.PropertyValueSnak(
-			property.id,
+			property.toJSON().id,
 			this.valueInput.getData()
 		);
 
@@ -162,10 +161,12 @@ QualifierWidget.prototype.getData = function () {
 
 /**
  * Handles property selection by the user
+ *
+ * @param {EntityInputWidget} input
+ * @param {Object} data
  */
-QualifierWidget.prototype.onPropertyChoose = function () {
-	var property = this.propertyInput.getData();
-	this.updateValueInput( property.dataValueType );
+QualifierWidget.prototype.onPropertyChoose = function ( input, data ) {
+	this.updateValueInput( this.dataTypeMap[ data.datatype ].dataValueType );
 
 	// abort in-flight API requests - there's no point in continuing
 	// to fetch the text-to-render when we've already changed it...
@@ -202,33 +203,16 @@ QualifierWidget.prototype.formatProperty = function ( propId, format, language )
 };
 
 /**
- * @param {Object} property
- * @param {string} property.id property ID
- * @param {string} property.dataValueType datavalue type
- * @param {string} [property.label] human-readable property label
+ * @param {datamodel.EntityId} property ID
  * @return {jQuery.Promise}
  * @internal
  */
 QualifierWidget.prototype.updatePropertyInput = function ( property ) {
 	var self = this;
 
-	if ( this.formatPropertyPromise ) {
-		this.formatPropertyPromise.abort();
-	}
-
-	if ( 'label' in property ) {
-		this.propertyInput.setData( property );
-	} else {
-		// if the label is not yet known, format it to feed to the input field
-		this.formatPropertyPromise = this.formatProperty( property.id, 'text/plain' );
-		return this.formatPropertyPromise.then( function ( formatted ) {
-			return self.updatePropertyInput( $.extend( {}, property, {
-				label: formatted
-			} ) );
-		} );
-	}
-
-	return $.Deferred().resolve( this.$element ).promise();
+	return this.propertyInput.setData( property ).then( function () {
+		return self.$element;
+	} );
 };
 
 /**
@@ -265,7 +249,7 @@ QualifierWidget.prototype.asyncFormatForDisplay = function () {
 
 	try {
 		dataValue = this.valueInput.getData();
-		propertyId = this.propertyInput.getData().id;
+		propertyId = this.propertyInput.getData().toJSON().id;
 
 		promises = [
 			this.formatProperty( propertyId, 'text/html' ),
@@ -297,6 +281,26 @@ QualifierWidget.prototype.cloneData = function ( data ) {
 		deserializer = new serialization.SnakDeserializer();
 
 	return deserializer.deserialize( serializer.serialize( data ) );
+};
+
+/**
+ * TODO: this method always returns an array with a single filter object
+ * consisting of the hard-coded supportedTypes. This could probably be improved.
+ * @return {Object[]} filters
+ */
+QualifierWidget.prototype.getFilters = function () {
+	var supportedTypes = [
+		'wikibase-item',
+		'quantity',
+		'string',
+		'globe-coordinate',
+		'external-id',
+		'url'
+	];
+
+	return [
+		{ field: 'datatype', value: supportedTypes.join( '|' ) }
+	];
 };
 
 module.exports = QualifierWidget;

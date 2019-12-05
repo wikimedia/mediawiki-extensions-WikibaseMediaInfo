@@ -1,0 +1,44 @@
+@import '../../mediainfo-variables.less';
+
+/* stylelint-disable-next-line selector-class-pattern */
+.wbmi-input-widget--entity.oo-ui-flaggedElement-destructive {
+	input {
+		color: #d33;
+		border-color: #d33;
+	}
+}
+
+.wbmi-input-widget__autocomplete {
+	&:hover,
+	&:focus {
+		text-decoration: none;
+	}
+}
+
+.wbmi-input-widget__autocomplete__label,
+.wbmi-input-widget__autocomplete__description,
+.wbmi-input-widget__autocomplete__aliases {
+	color: @base10;
+	overflow: hidden;
+	-o-text-overflow: ellipsis; /* Opera 9 to 10 */
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	padding: 2px 0;
+	font-size: 1em;
+	font-weight: normal;
+}
+
+.wbmi-input-widget__autocomplete__label,
+.wbmi-input-widget__autocomplete__aliases {
+	font-weight: bold;
+	display: inline;
+}
+
+.wbmi-input-widget__autocomplete__aliases {
+	font-style: italic;
+}
+
+.wbmi-input-widget__autocomplete__description {
+	font-size: 0.9em;
+	display: block;
+}

@@ -84,12 +84,30 @@ EntityLookupElement.prototype.getLookupCacheDataFromResponse =
 	};
 
 /**
+ * Lookup menu options are actually links to their respective items (see
+ * EntityLabel.mustache+dom). To mimic Wikidata behavior, when an option is
+ * middle-clicked, the link should be followed. Otherwise, it should be ignored
+ * so onLookupMenuItemChoose can run.
+ *
+ * This works by default on most devices, but on Android we must explicitly
+ * prevent default link behavior.
+ *
+ * @param {Object} e Event
+ */
+EntityLookupElement.prototype.onMousedown = function ( e ) {
+	if ( e.which !== OO.ui.MouseButtons.MIDDLE ) {
+		e.preventDefault();
+	}
+};
+
+/**
  * Construct menu options from transformed API data.
  *
  * @inheritdoc
  */
 EntityLookupElement.prototype.getLookupMenuOptionsFromData = function ( data ) {
-	var i, $label,
+	var i,
+		item,
 		items = [];
 
 	data = this.filterData( data );
@@ -110,12 +128,13 @@ EntityLookupElement.prototype.getLookupMenuOptionsFromData = function ( data ) {
 	}
 
 	for ( i = 0; i < data.length; i++ ) {
-		$label = this.createLabelFromSuggestion( data[ i ] );
-		items.push( new OO.ui.MenuOptionWidget( {
+		item = new OO.ui.MenuOptionWidget( {
 			// this data will be passed to onLookupMenuItemChoose when item is selected
 			data: data[ i ],
-			label: $label
-		} ) );
+			label: this.createLabelFromSuggestion( data[ i ] )
+		} );
+		item.$element.on( 'mousedown', this.onMousedown.bind( this ) );
+		items.push( item );
 	}
 
 	return items;

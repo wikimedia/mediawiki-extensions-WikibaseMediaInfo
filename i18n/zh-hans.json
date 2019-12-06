@@ -10,7 +10,8 @@
 			"神樂坂秀吉",
 			"Viztor",
 			"予弦",
-			"A Retired User"
+			"A Retired User",
+			"沈澄心"
 		]
 	},
 	"action-mediainfo-term": "更改多媒体信息项目（说明、摘要等）",
@@ -70,5 +71,7 @@
 	"wikibasemediainfo-unsupported-datatype-text": "不支持的数据类型",
 	"wikibasemediainfo-latitude-input-label": "纬度",
 	"wikibasemediainfo-longitude-input-label": "经度",
-	"wikibasemediainfo-precision-input-label": "精度"
+	"wikibasemediainfo-precision-input-label": "精度",
+	"wikibasemediainfo-string-input-button-text": "添加",
+	"wikibasemediainfo-quantity-input-button-text": "添加"
 }

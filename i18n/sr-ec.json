@@ -4,7 +4,8 @@
 			"Obsuser",
 			"BadDog",
 			"Zoranzoki21",
-			"Милан Јелисавчић"
+			"Милан Јелисавчић",
+			"Вукан Ц"
 		]
 	},
 	"right-mediainfo-term": "Промена услова за информације медија (натписи, резимеи)",
@@ -48,5 +49,6 @@
 	"wikibasemediainfo-statements-remove": "Уклони све",
 	"wikibasemediainfo-statements-title-depicts": "Ставке приказане у овој датотеци",
 	"wikibasemediainfo-remove-all-statements-confirm": "Ова радња ће обрисати све постојеће вредности за ово својство. Својства без вредности биће уклоњена када се измене објаве. Да ли сте сигурни?",
-	"wikibasemediainfo-remove-all-statements-confirm-accept": "Уклони"
+	"wikibasemediainfo-remove-all-statements-confirm-accept": "Уклони",
+	"wikibasemediainfo-quantity-input-button-text": "Додај"
 }

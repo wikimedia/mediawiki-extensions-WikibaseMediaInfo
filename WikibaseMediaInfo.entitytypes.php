@@ -238,12 +238,18 @@ return [
 				$tmpPropertyTermsMigrationStage = $settings->getSetting( 'tmpPropertyTermsMigrationStage' );
 			}
 
+			$tmpItemTermsMigrationStages = [ 'max' => MIGRATION_OLD ];
+			if ( $settings->hasSetting( 'tmpItemTermsMigrationStages' ) ) {
+				$tmpItemTermsMigrationStages = $settings->getSetting( 'tmpItemTermsMigrationStages' );
+			}
+
 			$dataAccessSettings = new DataAccessSettings(
 				$settings->getSetting( 'maxSerializedEntitySize' ),
 				$settings->getSetting( 'useTermsTableSearchFields' ),
 				$settings->getSetting( 'forceWriteTermsTableSearchFields' ),
 				DataAccessSettings::USE_REPOSITORY_PREFIX_BASED_FEDERATION,
-				$tmpPropertyTermsMigrationStage >= MIGRATION_WRITE_NEW
+				$tmpPropertyTermsMigrationStage >= MIGRATION_WRITE_NEW,
+				$tmpItemTermsMigrationStages
 			);
 
 			return new WikiPageEntityMetaDataLookup(

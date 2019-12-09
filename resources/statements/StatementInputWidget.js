@@ -1,8 +1,7 @@
 'use strict';
 
 var ItemInputWidget = require( './ItemInputWidget.js' ),
-	QuantityInputWidget = require( './QuantityInputWidget.js' ),
-	StringInputWidget = require( './StringInputWidget.js' ),
+	inputs = require( './inputs/index.js' ),
 	StatementInputWidget;
 
 /**
@@ -22,7 +21,6 @@ OO.inheritClass( StatementInputWidget, OO.ui.Widget );
 /**
  * @param {string} type value datatype
  */
-
 StatementInputWidget.prototype.setInputType = function ( type ) {
 	switch ( type ) {
 		case 'wikibase-entityid':
@@ -31,24 +29,25 @@ StatementInputWidget.prototype.setInputType = function ( type ) {
 			} );
 			break;
 		case 'quantity':
-			this.input = new QuantityInputWidget( {
+			this.input = new inputs.QuantityInputWidget( {
 				classes: this.config.classes,
 				isQualifier: false
 			} );
 			break;
 		case 'string':
-			this.input = new StringInputWidget( {
+			this.input = new inputs.StringInputWidget( {
 				classes: this.config.classes,
 				isQualifier: false
 			} );
 			break;
 		default:
-			this.input = new StringInputWidget( {
-				classes: this.config.classes
+			this.input = new inputs.UnsupportedInputWidget( {
+				classes: this.config.classes,
+				isQualifier: false
 			} );
 	}
 
-	this.input.connect( this, { addItem: 'onAddItem' } );
+	this.input.connect( this, { add: 'onAdd' } );
 	this.$element = this.input.$element;
 };
 
@@ -56,29 +55,48 @@ StatementInputWidget.prototype.setInputType = function ( type ) {
  * Handle the value from the appropriate input widget and send to Wikibase for
  * parsing; the datatype used for parsing is based on this instance's
  * propertyType
- * @param {string|number} item wikibase ID (Q1), string, or number value
+ *
+ * @param {AbstractInputWidget} input
  */
-
-StatementInputWidget.prototype.onAddItem = function ( item ) {
+StatementInputWidget.prototype.onAdd = function ( input ) {
 	var self = this;
-	new mw.Api().get( {
-		action: 'wbparsevalue',
-		format: 'json',
-		datatype: this.config.propertyType,
-		values: [ item ],
-		validate: true
-	} ).then( function ( response ) {
-		// TODO: is there a better way to do this?
-		var rawValue = response.results[ 0 ],
-			dv = dataValues.newDataValue( rawValue.type, rawValue.value );
-		self.clearInput();
-		self.emit( 'addItem', dv );
-	} ).catch( function ( error, response ) {
-		// TODO: replace alert() with real error message UI
-		/* eslint-disable-next-line no-alert */
-		alert( response.error.info );
-		self.clearInput();
-	} );
+
+	// @TODO this is temporary while input types are being refactored to extend
+	// from AbstractInputWidget
+	if ( typeof input.parseValue === 'function' ) {
+		input.parseValue( this.config.propertyType ).then(
+			function ( dataValue ) {
+				self.clearInput();
+				self.emit( 'add', dataValue );
+			},
+			function ( error ) {
+				// TODO: replace alert() with real error message UI
+				/* eslint-disable-next-line no-alert */
+				alert( error );
+				self.clearInput();
+			}
+		);
+	} else {
+		new mw.Api().get( {
+			action: 'wbparsevalue',
+			format: 'json',
+			datatype: this.config.propertyType,
+			values: [ input ],
+			validate: true
+		} ).then( function ( response ) {
+			// TODO: is there a better way to do this?
+			var rawValue = response.results[ 0 ],
+				dv = dataValues.newDataValue( rawValue.type, rawValue.value );
+			self.clearInput();
+			self.emit( 'add', dv );
+		} ).catch( function ( error, response ) {
+			// TODO: replace alert() with real error message UI
+			/* eslint-disable-next-line no-alert */
+			alert( response.error.info );
+			self.clearInput();
+		} );
+		return;
+	}
 };
 
 StatementInputWidget.prototype.clearInput = function () {

@@ -46,7 +46,7 @@ ItemInputWidget.prototype.onLookupMenuItemChoose = function ( item ) {
 	// accept "wikibase-item" values.
 	// Right now a different event is emitted in each context, since the
 	// payloads differ. This is not ideal.
-	this.emit( 'addItem', data.id );
+	this.emit( 'add', data.id );
 	this.emit( 'choose', this, data );
 };
 

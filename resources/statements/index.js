@@ -11,8 +11,7 @@ module.exports = {
 	QualifierAutocompleteWidget: require( './QualifierAutocompleteWidget.js' ),
 	QualifierValueInputWidget: require( './QualifierValueInputWidget.js' ),
 	QualifierWidget: require( './QualifierWidget.js' ),
-	QuantityInputWidget: require( './QuantityInputWidget.js' ),
 	StatementInputWidget: require( './StatementInputWidget.js' ),
 	StatementWidget: require( './StatementWidget.js' ),
-	StringInputWidget: require( './StringInputWidget.js' )
+	inputs: require( './inputs/index.js' )
 };

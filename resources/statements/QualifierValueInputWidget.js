@@ -4,8 +4,7 @@ var ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
 	FormatValueElement = require( 'wikibase.mediainfo.base' ).FormatValueElement,
 	EntityInputWidget = require( './EntityInputWidget.js' ),
 	GlobeCoordinateInputWidget = require( './GlobeCoordinateInputWidget.js' ),
-	StringInputWidget = require( './StringInputWidget.js' ),
-	QuantityInputWidget = require( './QuantityInputWidget.js' ),
+	inputs = require( './inputs/index.js' ),
 	QualifierValueInputWidget;
 
 QualifierValueInputWidget = function ( config ) {
@@ -95,9 +94,9 @@ QualifierValueInputWidget.prototype.createEntityInput = function () {
  * @return {QuantityInputWidget} Numerical input
  */
 QualifierValueInputWidget.prototype.createQuantityInput = function () {
-	var input = new QuantityInputWidget( $.extend( {}, this.config, { classes: [], isQualifier: true } ) );
+	var input = new inputs.QuantityInputWidget( $.extend( {}, this.config, { classes: [], isQualifier: true } ) );
 	input.connect( this, { change: 'onChange' } );
-	input.connect( this, { enter: [ 'emit', 'enter' ] } );
+	input.connect( this, { add: [ 'emit', 'enter' ] } );
 	return input;
 };
 
@@ -106,9 +105,9 @@ QualifierValueInputWidget.prototype.createQuantityInput = function () {
  * @return {StringInputWidget} String input
  */
 QualifierValueInputWidget.prototype.createStringInput = function () {
-	var input = new StringInputWidget( $.extend( {}, this.config, { classes: [], isQualifier: true } ) );
+	var input = new inputs.StringInputWidget( $.extend( {}, this.config, { classes: [], isQualifier: true } ) );
 	input.connect( this, { change: 'onChange' } );
-	input.connect( this, { enter: [ 'emit', 'enter' ] } );
+	input.connect( this, { add: [ 'emit', 'enter' ] } );
 	return input;
 };
 
@@ -129,9 +128,7 @@ QualifierValueInputWidget.prototype.createGlobeCoordinateInput = function () {
  * @return {OO.ui.TextInputWidget} Disabled text input
  */
 QualifierValueInputWidget.prototype.createDisabledInput = function () {
-	var input = new OO.ui.TextInputWidget( $.extend( {}, this.config, { classes: [] } ) );
-	input.setValue( mw.message( 'wikibasemediainfo-unsupported-datatype-text' ).text() );
-	return input;
+	return new inputs.UnsupportedInputWidget( $.extend( {}, this.config, { classes: [], isQualifier: true } ) );
 };
 
 /**
@@ -144,13 +141,13 @@ QualifierValueInputWidget.prototype.getInputValue = function () {
 				id: this.state.input.getData()
 			};
 		case 'quantity':
-			return this.state.input.getData();
+			return this.state.input.getData().toJSON();
 		case 'string':
-			return this.state.input.getData();
+			return this.state.input.getData().toJSON();
 		case 'globecoordinate':
 			return this.state.input.getData();
 		default:
-			return this.state.input.getData();
+			return this.state.input.getData().toJSON();
 	}
 };
 
@@ -224,19 +221,22 @@ QualifierValueInputWidget.prototype.createInputFromData = function ( type, data 
 				return input;
 			} );
 		case 'quantity':
-			input.setData( data.toJSON() );
-			return input;
+			return input.setData( data ).then( function () {
+				return input;
+			} );
 		case 'string':
-			input.setData( data.toJSON() );
-			return input;
+			return input.setData( data ).then( function () {
+				return input;
+			} );
 		case 'globecoordinate':
 			return input.setData( data.toJSON() ).then( function () {
 				return input;
 			} );
 		default:
 			// unsupported data types
-			input.setData( data.toJSON() );
-			return input;
+			return input.setData( data ).then( function () {
+				return input;
+			} );
 	}
 };
 

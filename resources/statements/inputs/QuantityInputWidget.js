@@ -1,24 +1,24 @@
 'use strict';
 
 var ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
+	AbstractInputWidget = require( './AbstractInputWidget.js' ),
 	QuantityInputWidget;
 
 /**
  * @param {Object} config Configuration options
- * @param {number} [config.value]
  * @param {boolean} [config.isQualifier]
  */
 QuantityInputWidget = function MediaInfoStatementsQuantityInputWidget( config ) {
 	config = config || {};
 
 	this.state = {
-		value: config.value || '',
+		value: '',
 		isQualifier: !!config.isQualifier
 	};
 
 	this.input = new OO.ui.NumberInputWidget( {
 		value: this.state.value,
-		classes: [ 'wbmi-quantity-input-input' ],
+		classes: [ 'wbmi-input-input' ],
 		isRequired: true
 	} );
 	this.input.connect( this, { enter: 'onEnter' } );
@@ -28,10 +28,11 @@ QuantityInputWidget = function MediaInfoStatementsQuantityInputWidget( config ) 
 	ComponentWidget.call(
 		this,
 		'wikibase.mediainfo.statements',
-		'templates/statements/QuantityInputWidget.mustache+dom'
+		'templates/statements/inputs/QuantityInputWidget.mustache+dom'
 	);
 };
 OO.inheritClass( QuantityInputWidget, OO.ui.Widget );
+OO.mixinClass( QuantityInputWidget, AbstractInputWidget );
 OO.mixinClass( QuantityInputWidget, ComponentWidget );
 
 /**
@@ -39,10 +40,10 @@ OO.mixinClass( QuantityInputWidget, ComponentWidget );
  */
 QuantityInputWidget.prototype.getTemplateData = function () {
 	var button = new OO.ui.ButtonWidget( {
-		classes: [ 'wbmi-quantity-input-button' ],
+		classes: [ 'wbmi-input-button' ],
 		label: mw.message( 'wikibasemediainfo-quantity-input-button-text' ).text(),
 		flags: [ 'primary', 'progressive' ],
-		disabled: this.input.getValue() === ''
+		disabled: this.getRawValue() === ''
 	} );
 	button.connect( this, { click: 'onEnter' } );
 
@@ -54,35 +55,43 @@ QuantityInputWidget.prototype.getTemplateData = function () {
 };
 
 QuantityInputWidget.prototype.onEnter = function () {
-	this.emit( 'addItem', this.input.getValue() );
+	this.emit( 'add', this );
 };
 
 QuantityInputWidget.prototype.onChange = function () {
 	// update state to make sure template rerenders
-	this.setState( { value: this.input.getValue() } )
-		.then( this.emit.bind( this, 'change', this.input.getValue() ) );
+	this.setState( { value: this.getRawValue() } )
+		.then( this.emit.bind( this, 'change', this ) );
 };
 
 /**
- * @return {Object}
+ * @inheritDoc
+ */
+QuantityInputWidget.prototype.getRawValue = function () {
+	return this.input.getValue();
+};
+
+/**
+ * @inheritDoc
  */
 QuantityInputWidget.prototype.getData = function () {
-	return {
+	return dataValues.newDataValue( 'quantity', {
 		// add leading '+' if no unit is present already
-		amount: this.input.getValue().replace( /^(?![+-])/, '+' ),
+		amount: this.getRawValue().replace( /^(?![+-])/, '+' ),
 		unit: '1'
-	};
+	} );
 };
 
 /**
- * @param {Object} data
- * @return {jQuery.Promise}
+ * @inheritDoc
  */
 QuantityInputWidget.prototype.setData = function ( data ) {
+	var value = data.toJSON().amount.replace( /^\+/, '' );
+
 	// replace leading '+' unit - that's only needed for internal storage,
 	// but obvious for human input
-	this.input.setValue( data.amount.replace( /^\+/, '' ) );
-	return this.setState( { value: this.input.getValue() } );
+	this.input.setValue( value );
+	return this.setState( { value: value } );
 };
 
 module.exports = QuantityInputWidget;

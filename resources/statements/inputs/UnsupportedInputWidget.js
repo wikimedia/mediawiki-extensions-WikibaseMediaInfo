@@ -17,7 +17,7 @@ UnsupportedInputWidget = function MediaInfoStatementsUnsupportedInputWidget( con
 
 	this.input = new OO.ui.TextInputWidget( {
 		value: mw.message( 'wikibasemediainfo-unsupported-datatype-text' ).text(),
-		classes: [ 'wbmi-unsupported-input-input' ],
+		classes: [ 'wbmi-input-widget__input' ],
 		isRequired: false,
 		disabled: true
 	} );

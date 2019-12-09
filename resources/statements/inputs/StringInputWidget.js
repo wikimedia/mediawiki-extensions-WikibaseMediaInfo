@@ -18,7 +18,7 @@ StringInputWidget = function MediaInfoStatementsStringInputWidget( config ) {
 
 	this.input = new OO.ui.TextInputWidget( {
 		value: this.state.value,
-		classes: [ 'wbmi-input-input' ],
+		classes: [ 'wbmi-input-widget__input' ],
 		isRequired: true
 	} );
 	this.input.connect( this, { enter: 'onEnter' } );
@@ -40,7 +40,7 @@ OO.mixinClass( StringInputWidget, ComponentWidget );
  */
 StringInputWidget.prototype.getTemplateData = function () {
 	var button = new OO.ui.ButtonWidget( {
-		classes: [ 'wbmi-input-button' ],
+		classes: [ 'wbmi-input-widget__button' ],
 		label: mw.message( 'wikibasemediainfo-string-input-button-text' ).text(),
 		flags: [ 'primary', 'progressive' ],
 		disabled: this.input.getValue() === ''

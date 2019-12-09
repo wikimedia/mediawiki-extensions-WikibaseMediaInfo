@@ -57,7 +57,7 @@ QUnit.module( 'QuantityInputWidget', hooks.mediainfo, function () {
 			data = dataValues.QuantityValue.newFromJSON( { amount: '+1', unit: '1' } );
 
 		widget.setData( data ).then( function ( $element ) {
-			assert.strictEqual( $element.find( '.wbmi-input-button' ).length, 0 );
+			assert.strictEqual( $element.find( '.wbmi-input-widget__button' ).length, 0 );
 			done();
 		} );
 	} );
@@ -69,7 +69,7 @@ QUnit.module( 'QuantityInputWidget', hooks.mediainfo, function () {
 			data = dataValues.QuantityValue.newFromJSON( { amount: '+1', unit: '1' } );
 
 		widget.setData( data ).then( function ( $element ) {
-			assert.strictEqual( $element.find( '.wbmi-input-button' ).length, 1 );
+			assert.strictEqual( $element.find( '.wbmi-input-widget__button' ).length, 1 );
 			done();
 		} );
 	} );

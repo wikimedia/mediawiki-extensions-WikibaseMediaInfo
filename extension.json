@@ -367,14 +367,12 @@
 				"resources/statements/AddPropertyWidget.less",
 				"resources/statements/EntityLookupElement.less",
 				"resources/statements/EntityInputWidget.less",
-				"resources/statements/QualifierValueInputWidget.less",
 				"resources/statements/StatementWidget.less",
-				"resources/statements/ItemInputWidget.less",
 				"resources/statements/ItemWidget.less",
 				"resources/statements/QualifierWidget.less",
 				"resources/statements/LinkNoticeWidget.less",
 				"resources/statements/GlobeCoordinateInputWidget.less",
-				"resources/statements/inputs/InputWidgetWithButton.less"
+				"resources/statements/inputs/InputWidget.less"
 			],
 			"targets": [
 				"desktop",

@@ -57,7 +57,7 @@ QUnit.module( 'StringInputWidget', hooks.mediainfo, function () {
 			data = new dataValues.StringValue( 'this is a string' );
 
 		widget.setData( data ).then( function ( $element ) {
-			assert.strictEqual( $element.find( '.wbmi-input-button' ).length, 0 );
+			assert.strictEqual( $element.find( '.wbmi-input-widget__button' ).length, 0 );
 			done();
 		} );
 	} );
@@ -69,7 +69,7 @@ QUnit.module( 'StringInputWidget', hooks.mediainfo, function () {
 			data = new dataValues.StringValue( 'this is a string' );
 
 		widget.setData( data ).then( function ( $element ) {
-			assert.strictEqual( $element.find( '.wbmi-input-button' ).length, 1 );
+			assert.strictEqual( $element.find( '.wbmi-input-widget__button' ).length, 1 );
 			done();
 		} );
 	} );

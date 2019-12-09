@@ -18,7 +18,7 @@ QuantityInputWidget = function MediaInfoStatementsQuantityInputWidget( config ) 
 
 	this.input = new OO.ui.NumberInputWidget( {
 		value: this.state.value,
-		classes: [ 'wbmi-input-input' ],
+		classes: [ 'wbmi-input-widget__input' ],
 		isRequired: true
 	} );
 	this.input.connect( this, { enter: 'onEnter' } );
@@ -40,7 +40,7 @@ OO.mixinClass( QuantityInputWidget, ComponentWidget );
  */
 QuantityInputWidget.prototype.getTemplateData = function () {
 	var button = new OO.ui.ButtonWidget( {
-		classes: [ 'wbmi-input-button' ],
+		classes: [ 'wbmi-input-widget__button' ],
 		label: mw.message( 'wikibasemediainfo-quantity-input-button-text' ).text(),
 		flags: [ 'primary', 'progressive' ],
 		disabled: this.getRawValue() === ''

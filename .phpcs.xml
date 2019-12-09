@@ -13,5 +13,9 @@
 	<rule ref="Generic.Metrics.CyclomaticComplexity" />
 	<rule ref="Generic.Metrics.NestingLevel" />
 
+	<rule ref="Squiz.Classes.ValidClassName.NotCamelCaps">
+		<exclude-pattern>Scribunto_LuaWikibaseMediaInfo*</exclude-pattern>
+	</rule>
+
 	<file>.</file>
 </ruleset>

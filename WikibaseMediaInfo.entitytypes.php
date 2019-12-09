@@ -305,5 +305,6 @@ return [
 		'prefetching-term-lookup-callback' => function ( SingleEntitySourceServices $services ) {
 			return new MediaInfoPrefetchingTermLookup( $services->getEntityRevisionLookup() );
 		},
+		'lua-entity-module' => 'mw.wikibase.mediainfo.entity',
 	]
 ];

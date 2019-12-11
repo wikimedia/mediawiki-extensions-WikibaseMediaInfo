@@ -7,7 +7,7 @@ var pathToWidget = '../../../../resources/statements/StatementInputWidget.js',
 	sinon = require( 'sinon' ),
 	hooks = require( '../../support/hooks.js' );
 
-QUnit.module( 'StatementInputWidget', hooks.mediainfo, function () {
+QUnit.module( 'StatementInputWidget', hooks.kartographer, function () {
 	QUnit.test( 'Widget creates the correct input type', function ( assert ) {
 		var StatementInputWidget = require( pathToWidget ),
 			EntityInputWidget = require( pathToEntityInputWidget ),

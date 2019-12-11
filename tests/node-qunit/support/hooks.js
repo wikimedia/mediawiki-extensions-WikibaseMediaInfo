@@ -127,3 +127,41 @@ module.exports.mediainfo = Object.assign( {}, module.exports.ooui, module.export
 		module.exports.ooui.afterEach();
 	}
 } );
+
+// eslint-disable-next-line no-restricted-properties
+module.exports.kartographer = Object.assign( {}, module.exports.mediainfo, {
+	beforeEach: function () {
+		var loaderStub = sinon.stub();
+
+		module.exports.mediainfo.beforeEach();
+		sandboxes.kartographer = sinon.createSandbox();
+
+		loaderStub.withArgs( 'ext.kartographer.box' ).returns( {
+			map: sinon.stub().returns( {
+				invalidateSize: sinon.stub(),
+				on: sinon.stub()
+			} )
+		} );
+
+		loaderStub.withArgs( 'ext.kartographer.editing' ).returns( {
+			getKartographerLayer: sinon.stub().returns( {
+				setGeoJSON: sinon.stub(),
+				clearLayers: sinon.stub()
+			} )
+		} );
+
+		global.mw.loader.using.resolves( loaderStub );
+
+		// Stub out the soft Kartographer dependencies
+
+		// Stub out mutation observers used in MapWidget
+		global.MutationObserver = function () {};
+		global.MutationObserver.prototype = {
+			observe: sinon.stub()
+		};
+	},
+	afterEach: function () {
+		sandboxes.kartographer.restore();
+		module.exports.mediawiki.afterEach();
+	}
+} );

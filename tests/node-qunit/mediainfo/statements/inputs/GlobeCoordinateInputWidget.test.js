@@ -2,12 +2,16 @@ var sinon = require( 'sinon' ),
 	pathToWidget = '../../../../../resources/statements/inputs/GlobeCoordinateInputWidget.js',
 	hooks = require( '../../../support/hooks.js' );
 
-QUnit.module( 'GlobeCoordinateInputWidget', hooks.mediainfo, function () {
+QUnit.module( 'GlobeCoordinateInputWidget', hooks.kartographer, function () {
 	QUnit.test( 'Valid data roundtrip', function ( assert ) {
 		var done = assert.async(),
 			GlobeCoordinateInputWidget = require( pathToWidget ),
 			widget = new GlobeCoordinateInputWidget(),
-			data = dataValues.GlobeCoordinateValue.newFromJSON( { latitude: 0, longitude: 0, precision: 1 } );
+			data = dataValues.GlobeCoordinateValue.newFromJSON( {
+				latitude: 0,
+				longitude: 0,
+				precision: 1
+			} );
 
 		widget.setData( data ).then( function () {
 			assert.ok( widget.getData() );
@@ -20,8 +24,16 @@ QUnit.module( 'GlobeCoordinateInputWidget', hooks.mediainfo, function () {
 		var done = assert.async(),
 			GlobeCoordinateInputWidget = require( pathToWidget ),
 			widget = new GlobeCoordinateInputWidget(),
-			data = dataValues.GlobeCoordinateValue.newFromJSON( { latitude: 0, longitude: 0, precision: 1 } ),
-			newData = dataValues.GlobeCoordinateValue.newFromJSON( { latitude: 1, longitude: 0, precision: 1 } ),
+			data = dataValues.GlobeCoordinateValue.newFromJSON( {
+				latitude: 0,
+				longitude: 0,
+				precision: 1
+			} ),
+			newData = dataValues.GlobeCoordinateValue.newFromJSON( {
+				latitude: 1,
+				longitude: 0,
+				precision: 1
+			} ),
 			onChange = sinon.stub();
 
 		widget.setData( data )
@@ -37,8 +49,16 @@ QUnit.module( 'GlobeCoordinateInputWidget', hooks.mediainfo, function () {
 		var done = assert.async(),
 			GlobeCoordinateInputWidget = require( pathToWidget ),
 			widget = new GlobeCoordinateInputWidget(),
-			data = dataValues.GlobeCoordinateValue.newFromJSON( { latitude: 0, longitude: 0, precision: 1 } ),
-			sameData = dataValues.GlobeCoordinateValue.newFromJSON( { latitude: 0, longitude: 0, precision: 1 } ),
+			data = dataValues.GlobeCoordinateValue.newFromJSON( {
+				latitude: 0,
+				longitude: 0,
+				precision: 1
+			} ),
+			sameData = dataValues.GlobeCoordinateValue.newFromJSON( {
+				latitude: 0,
+				longitude: 0,
+				precision: 1
+			} ),
 			onChange = sinon.stub();
 
 		widget.setData( data )

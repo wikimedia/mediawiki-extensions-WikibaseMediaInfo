@@ -1,4 +1,8 @@
 <div class="wbmi-input-widget wbmi-input-widget--globe-coordinate {{^isQualifier}}wbmi-with-button{{/isQualifier}}">
+	{{#kartographer}}
+		{{{map}}}
+	{{/kartographer}}
+
 	<label>
 		<span class="wbmi-input-widget__label">{{latitude.label}}</span>
 		{{{latitude.input}}}

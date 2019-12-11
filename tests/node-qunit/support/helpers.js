@@ -93,6 +93,10 @@ module.exports.createMediaWikiEnv = function () {
 			} )
 		},
 
+		loader: {
+			using: sinon.stub().resolves( sinon.stub() )
+		},
+
 		// eslint-disable-next-line no-undef
 		templates: new Map(),
 

@@ -2,7 +2,7 @@ var sinon = require( 'sinon' ),
 	pathToWidget = '../../../../resources/statements/QualifierValueInputWidget.js',
 	hooks = require( '../../support/hooks.js' );
 
-QUnit.module( 'QualifierValueInputWidget', hooks.mediainfo, function () {
+QUnit.module( 'QualifierValueInputWidget', hooks.kartographer, function () {
 	QUnit.test( 'Valid data roundtrip (wikibase-entityid)', function ( assert ) {
 		var done = assert.async(),
 			datamodel = require( 'wikibase.datamodel' ),
@@ -47,7 +47,13 @@ QUnit.module( 'QualifierValueInputWidget', hooks.mediainfo, function () {
 		var done = assert.async(),
 			QualifierValueInputWidget = require( pathToWidget ),
 			widget = new QualifierValueInputWidget(),
-			data = new dataValues.GlobeCoordinateValue( new globeCoordinate.GlobeCoordinate( { latitude: 0, longitude: 0, precision: 1 } ) );
+			data = new dataValues.GlobeCoordinateValue(
+				new globeCoordinate.GlobeCoordinate( {
+					latitude: 0,
+					longitude: 0,
+					precision: 1
+				} )
+			);
 
 		widget.setData( data ).then( function () {
 			assert.ok( widget.getData() );

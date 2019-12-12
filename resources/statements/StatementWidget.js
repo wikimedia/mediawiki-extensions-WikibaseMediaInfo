@@ -224,6 +224,7 @@ StatementWidget.prototype.createItem = function ( dataValue ) {
 	widget.connect( this, { delete: [ 'emit', 'change' ] } );
 	widget.connect( this, { change: [ 'setEditing', true ] } );
 	widget.connect( this, { change: [ 'emit', 'change' ] } );
+	widget.connect( widget, { change: [ 'setError', '' ] } );
 
 	return widget;
 };
@@ -413,8 +414,6 @@ StatementWidget.prototype.resetData = function ( data ) {
 
 	data = this.cloneData( data === undefined ? this.state.initialData : data );
 
-	this.$element.find( '.wbmi-statement-publish-error-msg' ).remove();
-
 	return this.setData( data )
 		.then( function () {
 			// use the `.getData()` result instead of `data` because that'll
@@ -444,8 +443,6 @@ StatementWidget.prototype.submit = function ( baseRevId ) {
 	this.setEditing( false );
 	this.setDisabled( true );
 
-	this.$element.find( '.wbmi-statement-publish-error-msg' ).remove();
-
 	changedStatements.forEach( function ( statement ) {
 		promise = promise.then( function ( statement, prevResponse ) {
 			return api.postWithEditToken( {
@@ -464,24 +461,24 @@ StatementWidget.prototype.submit = function ( baseRevId ) {
 						guid = statement.getClaim().getGuid(),
 						item = self.getItems().filter( function ( item ) {
 							return item.getData().getClaim().getGuid() === guid;
+						} )[ 0 ],
+						initialStatement = self.state.initialData.toArray().filter( function ( statement ) {
+							return statement.getClaim().getGuid() === guid;
 						} )[ 0 ];
 
-					item.$element.after( $( '<div>' )
-						.addClass( 'wbmi-statement-publish-error-msg' )
-						.html( apiError.detailedMessage )
-					);
+					hasFailures = true;
 
 					// replace statement with what we previously had, since we failed
 					// to submit the changes...
 					data.removeItem( statement );
-					data.addItem( self.state.initialData.toArray().filter( function ( statement ) {
-						return statement.getClaim().getGuid() === guid;
-					} )[ 0 ] );
+					if ( initialStatement ) {
+						data.addItem( initialStatement );
+					}
 
-					hasFailures = true;
-
-					// keep the update chain moving...
-					return $.Deferred().resolve( prevResponse ).promise();
+					return item.setError( apiError.detailedMessage ).then( function () {
+						// keep the update chain moving...
+						return prevResponse;
+					} );
 				}
 			);
 		}.bind( null, statement ) );
@@ -503,22 +500,26 @@ StatementWidget.prototype.submit = function ( baseRevId ) {
 				tags: self.config.tags || undefined,
 				assertuser: !mw.user.isAnon() ? mw.user.getName() : undefined
 			} ).catch( function ( errorCode, error ) {
-				var apiError = wikibase.api.RepoApiError.newFromApiResponse( error, 'save' );
-
-				self.$element.append( $( '<div>' )
-					.addClass( 'wbmi-statement-publish-error-msg' )
-					.html( apiError.detailedMessage )
-				);
-
-				// restore statements that failed to delete
-				removedStatements.forEach( function ( statement ) {
-					data.addItem( statement );
-				} );
+				var apiError = wikibase.api.RepoApiError.newFromApiResponse( error, 'save' ),
+					promises;
 
 				hasFailures = true;
 
-				// keep the update chain moving...
-				return $.Deferred().resolve( prevResponse ).promise();
+				// restore statements that failed to delete
+				promises = removedStatements.map( function ( statement ) {
+					var item = self.createItem( statement.getClaim().getMainSnak().getValue() );
+					self.addItems( [ item ] );
+
+					data.addItem( statement );
+
+					return item.setData( statement )
+						.then( item.setError.bind( item, apiError.detailedMessage ) );
+				} );
+
+				return $.when.apply( $, promises ).then( function () {
+					// keep the update chain moving...
+					return prevResponse;
+				} );
 			} );
 		} );
 	}
@@ -534,14 +535,14 @@ StatementWidget.prototype.submit = function ( baseRevId ) {
 		if ( hasFailures ) {
 			// if we've had failures, put the widget back in edit mode, and reject
 			// this promise, so callers will know something went wrong
-			$.when(
-				self.resetData( data ),
-				self.setEditing( true )
-			).then( deferred.reject );
+			self.setState( { initialData: data } )
+				.then( self.setEditing.bind( self, true ) )
+				.then( deferred.reject );
 		} else {
 			// reset data to what we've just submitted to the API (items that failed
 			// to submit have been reset to their previous state in `data`)
-			self.resetData( data ).then( deferred.resolve.bind( deferred, response ) );
+			self.resetData( data )
+				.then( deferred.resolve.bind( deferred, response ) );
 		}
 
 		return deferred.promise();

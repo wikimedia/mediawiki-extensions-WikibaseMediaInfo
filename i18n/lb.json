@@ -41,5 +41,7 @@
 	"wikibasemediainfo-remove-all-statements-confirm-accept": "Ewechhuelen",
 	"wikibasemediainfo-latitude-input-label": "Geografesch Breet",
 	"wikibasemediainfo-longitude-input-label": "Geografesch Längt",
-	"wikibasemediainfo-precision-input-label": "Prezisioun"
+	"wikibasemediainfo-precision-input-label": "Prezisioun",
+	"wikibasemediainfo-string-input-button-text": "Derbäisetzen",
+	"wikibasemediainfo-quantity-input-button-text": "Derbäisetzen"
 }

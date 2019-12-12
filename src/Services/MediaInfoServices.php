@@ -3,6 +3,7 @@
 namespace Wikibase\MediaInfo\Services;
 
 use MediaWiki\MediaWikiServices;
+use Wikibase\MediaInfo\Content\MediaInfoHandler;
 
 /**
  * @license GPL-2.0-or-later
@@ -22,6 +23,13 @@ class MediaInfoServices {
 	 */
 	public static function getFilePageLookup() {
 		return MediaWikiServices::getInstance()->getService( 'MediaInfoFilePageLookup' );
+	}
+
+	/**
+	 * @return MediaInfoHandler
+	 */
+	public static function getMediaInfoHandler() {
+		return MediaWikiServices::getInstance()->getService( 'MediaInfoHandler' );
 	}
 
 }

@@ -90,7 +90,10 @@ StatementPanel.prototype.populateFormatValueCache = function ( data ) {
 				Object.keys( properties ).forEach( function ( propertyId ) {
 					var json = JSON.parse( dataValue ),
 						key = FormatValueElement.getKey(
-							dataValues.newDataValue( json.type, json.value ), format, language, propertyId || undefined
+							dataValues.newDataValue( json.type, json.value ),
+							format,
+							language,
+							propertyId || undefined
 						),
 						result = properties[ propertyId ];
 					FormatValueElement.toCache( key, result );

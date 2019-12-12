@@ -15,5 +15,13 @@
 		"globeCoordinate": false,
 		"mw": false,
 		"OO": false
+	},
+	"rules": {
+		"max-len": [
+			"warn", {
+				"code": 110,
+				"ignoreComments": true
+			}
+		]
 	}
 }

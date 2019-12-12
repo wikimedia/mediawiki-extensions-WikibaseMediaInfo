@@ -500,6 +500,9 @@ ComponentWidget.prototype.getNumberOfEqualNodes = function ( one, two ) {
 	return two
 		.map( function ( twoNode ) {
 			return one.filter( function ( oneNode ) {
+				var nodeOneChildren,
+					nodeTwoChildren;
+
 				if ( oneNode.id ) {
 					// nodes that have an id must match
 					return oneNode.id === twoNode.id;
@@ -517,9 +520,10 @@ ComponentWidget.prototype.getNumberOfEqualNodes = function ( one, two ) {
 					return true;
 				}
 
-				// node is not a perfect match - let's run their children
-				// through the same set of criteria
-				return self.getNumberOfEqualNodes( $( oneNode ).children().get(), $( twoNode ).children().get() ) > 0;
+				// node is not a perfect match - let's run their children through the same set of criteria
+				nodeOneChildren = $( oneNode ).children().get();
+				nodeTwoChildren = $( twoNode ).children().get();
+				return self.getNumberOfEqualNodes( nodeOneChildren, nodeTwoChildren ) > 0;
 			} ).length;
 		} )
 		.reduce( function ( sum, count ) {

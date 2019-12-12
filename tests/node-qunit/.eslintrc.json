@@ -8,6 +8,7 @@
 		"require": true
 	},
 	"rules": {
-		"no-implicit-globals": "off"
+		"no-implicit-globals": "off",
+		"max-len": "off"
 	}
 }

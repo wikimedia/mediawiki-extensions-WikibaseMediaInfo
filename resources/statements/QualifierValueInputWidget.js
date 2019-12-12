@@ -82,9 +82,13 @@ QualifierValueInputWidget.prototype.setInputType = function ( type ) {
  * @return {EntityInputWidget} WB Entity input
  */
 QualifierValueInputWidget.prototype.createEntityInput = function () {
-	var input = new EntityInputWidget( $.extend( {}, this.config, { classes: [] } ) );
-	input.connect( this, { dataChange: 'onChange' } );
-	input.connect( this, { enter: [ 'emit', 'enter' ] } );
+	var input = new EntityInputWidget(
+		$.extend( {}, this.config, { classes: [] } )
+	).connect( this, {
+		dataChange: 'onChange',
+		enter: [ 'emit', 'enter' ]
+	} );
+
 	return input;
 };
 
@@ -93,9 +97,13 @@ QualifierValueInputWidget.prototype.createEntityInput = function () {
  * @return {QuantityInputWidget} Numerical input
  */
 QualifierValueInputWidget.prototype.createQuantityInput = function () {
-	var input = new inputs.QuantityInputWidget( $.extend( {}, this.config, { classes: [], isQualifier: true } ) );
-	input.connect( this, { change: 'onChange' } );
-	input.connect( this, { add: [ 'emit', 'enter' ] } );
+	var input = new inputs.QuantityInputWidget(
+		$.extend( {}, this.config, { classes: [], isQualifier: true } )
+	).connect( this, {
+		add: [ 'emit', 'enter' ],
+		change: 'onChange'
+	} );
+
 	return input;
 };
 
@@ -104,9 +112,13 @@ QualifierValueInputWidget.prototype.createQuantityInput = function () {
  * @return {StringInputWidget} String input
  */
 QualifierValueInputWidget.prototype.createStringInput = function () {
-	var input = new inputs.StringInputWidget( $.extend( {}, this.config, { classes: [], isQualifier: true } ) );
-	input.connect( this, { change: 'onChange' } );
-	input.connect( this, { add: [ 'emit', 'enter' ] } );
+	var input = new inputs.StringInputWidget(
+		$.extend( {}, this.config, { classes: [], isQualifier: true } )
+	).connect( this, {
+		add: [ 'emit', 'enter' ],
+		change: 'onChange'
+	} );
+
 	return input;
 };
 
@@ -115,9 +127,14 @@ QualifierValueInputWidget.prototype.createStringInput = function () {
  * @return {GlobeCoordinateInputWidget} Globe coordinate input
  */
 QualifierValueInputWidget.prototype.createGlobeCoordinateInput = function () {
-	var input = new inputs.GlobeCoordinateInputWidget( $.extend( {}, this.config, { classes: [], isQualifier: true } ) );
+	var input = new inputs.GlobeCoordinateInputWidget(
+		$.extend( {}, this.config, { classes: [], isQualifier: true } )
+	);
+
+	input.setDisabled( this.disabled );
 	input.connect( this, { change: 'onChange' } );
 	input.connect( this, { enter: [ 'emit', 'enter' ] } );
+
 	return input;
 };
 
@@ -126,7 +143,9 @@ QualifierValueInputWidget.prototype.createGlobeCoordinateInput = function () {
  * @return {OO.ui.TextInputWidget} Disabled text input
  */
 QualifierValueInputWidget.prototype.createDisabledInput = function () {
-	return new inputs.UnsupportedInputWidget( $.extend( {}, this.config, { classes: [], isQualifier: true } ) );
+	return new inputs.UnsupportedInputWidget(
+		$.extend( {}, this.config, { classes: [], isQualifier: true } )
+	);
 };
 
 /**

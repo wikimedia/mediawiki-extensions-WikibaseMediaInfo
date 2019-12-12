@@ -129,8 +129,15 @@
 		captionsPanel = createCaptionsPanel();
 		// eslint-disable-next-line no-jquery/no-global-selector
 		$( '.wbmi-entityview-captionsPanel' ).replaceWith( captionsPanel.$element );
-		$statements.first().before( linkNoticeWidget.$element );
-		$statements.last().after( addPropertyWidget.$element );
+
+		// Add link notice widget and add property button if they don't exist.
+		if ( $statements.first().hasClass( 'wbmi-entityview-statementsGroup' ) ) {
+			$statements.first().before( linkNoticeWidget.$element );
+		}
+
+		if ( $statements.last().hasClass( 'wbmi-entityview-statementsGroup' ) ) {
+			$statements.last().after( addPropertyWidget.$element );
+		}
 
 		// Set up existing statement panels
 		$statements.map( function () {

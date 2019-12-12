@@ -20,26 +20,27 @@ GlobeCoordinateInputWidget = function MediaInfoStatementsGlobeCoordinateInputWid
 		isQualifier: !!config.isQualifier
 	};
 
-	this.latitudeInput = new OO.ui.TextInputWidget( $.extend( {
+	this.latitudeInput = new OO.ui.TextInputWidget( {
 		classes: [ 'wbmi-input-widget__input' ],
 		isRequired: true,
 		type: 'number',
 		validate: this.validateInput.bind( this, 'latitude' ),
 		placeholder: mw.message( 'wikibasemediainfo-latitude-input-placeholder' ).text()
-	} ) );
+	} );
 
-	this.longitudeInput = new OO.ui.TextInputWidget( $.extend( {
+	this.longitudeInput = new OO.ui.TextInputWidget( {
 		classes: [ 'wbmi-input-widget__input' ],
 		isRequired: true,
 		type: 'number',
 		validate: this.validateInput.bind( this, 'longitude' ),
 		placeholder: mw.message( 'wikibasemediainfo-longitude-input-placeholder' ).text()
-	} ) );
+	} );
 
-	this.precisionInput = new OO.ui.DropdownInputWidget( $.extend( {
+	this.precisionInput = new OO.ui.DropdownInputWidget( {
+		classes: [ 'wbmi-input-widget__input' ],
 		options: this.getPrecisionOptions(),
 		$overlay: true
-	} ) );
+	} );
 
 	this.latitudeInput.connect( this, { change: 'onChange' } );
 	this.longitudeInput.connect( this, { change: 'onChange' } );

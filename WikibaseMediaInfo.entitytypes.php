@@ -36,8 +36,6 @@ use Wikibase\Lib\Store\WikiPagePropertyOrderProvider;
 use Wikibase\Lib\Store\Sql\WikiPageEntityMetaDataLookup;
 use Wikibase\MediaInfo\ChangeOp\Deserialization\MediaInfoChangeOpDeserializer;
 use Wikibase\MediaInfo\Content\MediaInfoContent;
-use Wikibase\MediaInfo\Content\MediaInfoHandler;
-use Wikibase\MediaInfo\Content\MissingMediaInfoHandler;
 use Wikibase\MediaInfo\DataAccess\Store\FilePageRedirectHandlingRevisionLookup;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\MediaInfo\DataModel\MediaInfoId;
@@ -156,24 +154,7 @@ return [
 			);
 		},
 		'content-handler-factory-callback' => function() {
-			$wikibaseRepo = WikibaseRepo::getDefaultInstance();
-
-			return new MediaInfoHandler(
-				$wikibaseRepo->getStore()->getTermIndex(),
-				$wikibaseRepo->getEntityContentDataCodec(),
-				$wikibaseRepo->getEntityConstraintProvider(),
-				$wikibaseRepo->getValidatorErrorLocalizer(),
-				$wikibaseRepo->getEntityIdParser(),
-				new MissingMediaInfoHandler(
-					MediaInfoServices::getMediaInfoIdLookup(),
-					MediaInfoServices::getFilePageLookup(),
-					$wikibaseRepo->getEntityParserOutputGeneratorFactory()
-				),
-				MediaInfoServices::getMediaInfoIdLookup(),
-				MediaInfoServices::getFilePageLookup(),
-				$wikibaseRepo->getFieldDefinitionsByType( MediaInfo::ENTITY_TYPE ),
-				null
-			);
+			return MediaInfoServices::getMediaInfoHandler();
 		},
 		'entity-id-pattern' => MediaInfoId::PATTERN,
 		'entity-id-builder' => function( $serialization ) {
@@ -271,7 +252,7 @@ return [
 			return new MediaInfoRdfBuilder(
 				$vocabulary,
 				$writer,
-				MediaInfoServices::getFilePageLookup(),
+				MediaInfoServices::getMediaInfoHandler(),
 				MediaWikiServices::getInstance()->getRepoGroup()
 			);
 		},

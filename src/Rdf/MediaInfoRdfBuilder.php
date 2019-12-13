@@ -5,9 +5,9 @@ namespace Wikibase\MediaInfo\Rdf;
 use File;
 use RepoGroup;
 use Wikibase\DataModel\Entity\EntityDocument;
+use Wikibase\MediaInfo\Content\MediaInfoHandler;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\MediaInfo\DataModel\MediaInfoId;
-use Wikibase\MediaInfo\Services\FilePageLookup;
 use Wikibase\Rdf\EntityRdfBuilder;
 use Wikibase\Rdf\RdfVocabulary;
 use Wikimedia\Purtle\RdfWriter;
@@ -28,9 +28,9 @@ class MediaInfoRdfBuilder implements EntityRdfBuilder {
 	private $writer;
 
 	/**
-	 * @var FilePageLookup
+	 * @var MediaInfoHandler
 	 */
-	private $filePageLookup;
+	private $mediaInfoHandler;
 
 	/**
 	 * @var RepoGroup
@@ -40,12 +40,12 @@ class MediaInfoRdfBuilder implements EntityRdfBuilder {
 	public function __construct(
 		RdfVocabulary $vocabulary,
 		RdfWriter $writer,
-		FilePageLookup $filePageLookup,
+		MediaInfoHandler $mediaInfoHandler,
 		RepoGroup $repoGroup
 	) {
 		$this->vocabulary = $vocabulary;
 		$this->writer = $writer;
-		$this->filePageLookup = $filePageLookup;
+		$this->mediaInfoHandler = $mediaInfoHandler;
 		$this->repoGroup = $repoGroup;
 	}
 
@@ -92,7 +92,7 @@ class MediaInfoRdfBuilder implements EntityRdfBuilder {
 	 * @param MediaInfoId $id
 	 */
 	private function addFileMetadataFromEntityId( MediaInfoId $id ) {
-		$fileTitle = $this->filePageLookup->getFilePage( $id );
+		$fileTitle = $this->mediaInfoHandler->getTitleForId( $id );
 		if ( $fileTitle === null ) {
 			return;
 		}

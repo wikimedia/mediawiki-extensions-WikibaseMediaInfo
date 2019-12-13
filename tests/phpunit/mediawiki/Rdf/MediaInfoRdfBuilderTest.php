@@ -7,6 +7,7 @@ use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use RepoGroup;
 use Wikibase\Lib\Store\EntityTitleLookup;
+use Wikibase\MediaInfo\Content\MediaInfoHandler;
 use Wikibase\MediaInfo\Rdf\MediaInfoRdfBuilder;
 use Wikibase\MediaInfo\Services\FilePageLookup;
 use Wikibase\Rdf\HashDedupeBag;
@@ -59,13 +60,13 @@ class MediaInfoRdfBuilderTest extends TestCase {
 
 	/**
 	 * @param RdfWriter $writer
-	 * @param FilePageLookup $filePageLookup
+	 * @param MediaInfoHandler $filePageLookup
 	 * @param RepoGroup $repoGroup
 	 * @return MediaInfoRdfBuilder
 	 */
-	private function newBuilderWithFile( RdfWriter $writer, FilePageLookup $filePageLookup, RepoGroup $repoGroup ) {
+	private function newBuilderWithFile( RdfWriter $writer, MediaInfoHandler $handler, RepoGroup $repoGroup ) {
 		$vocabulary = $this->getTestData()->getVocabulary();
-		$builder = new MediaInfoRdfBuilder( $vocabulary, $writer, $filePageLookup, $repoGroup );
+		$builder = new MediaInfoRdfBuilder( $vocabulary, $writer, $handler, $repoGroup );
 		$writer->start();
 		return $builder;
 	}
@@ -112,11 +113,11 @@ class MediaInfoRdfBuilderTest extends TestCase {
 	public function testMediaInfoPartialRDFWithFile( $entityName, $dataSetName, File $file = null ) {
 		$entity = $this->getTestData()->getEntity( $entityName );
 		$writer = $this->getTestData()->getNTriplesWriter( false );
-		$filePageLookup = $this->getMockBuilder( FilePageLookup::class )
+		$handler = $this->getMockBuilder( MediaInfoHandler::class )
 			->disableOriginalConstructor()
 			->getMock();
-		$filePageLookup->expects( $this->once() )
-			->method( 'getFilePage' )
+		$handler->expects( $this->once() )
+			->method( 'getTitleForId' )
 			->with( $entity->getId() )
 			->willReturn( ( $file === null ) ? null : $file->getTitle() );
 
@@ -133,7 +134,7 @@ class MediaInfoRdfBuilderTest extends TestCase {
 				->willReturn( $file );
 		}
 
-		$builder = $this->newBuilderWithFile( $writer, $filePageLookup, $repoGroup );
+		$builder = $this->newBuilderWithFile( $writer, $handler, $repoGroup );
 		$builder->addEntity( $entity );
 		$this->assertOrCreateNTriples( $dataSetName, $writer );
 	}

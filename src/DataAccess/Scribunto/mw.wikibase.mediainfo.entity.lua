@@ -2,7 +2,6 @@ local util = require 'libraryUtil'
 local wikibaseEntity = require 'mw.wikibase.entity'
 local wikibaseMediaInfoEntity = {}
 local methodtable = {}
-local metatable = {}
 
 -- copy all original mw.wikibase.entity methods to mw.wikibase.mediainfo.entity
 for key, func in pairs( wikibaseEntity ) do
@@ -15,20 +14,22 @@ wikibaseMediaInfoEntity.create = function( data )
 
 	local entity = wikibaseEntity.create( data )
 
-	-- preserve original methods
+	-- copy original methods
 	local originalmethods = getmetatable( entity ).__index
-	if type( originalmethods ) == 'nil' then
-		originalmethods = {}
+	local methods = {}
+	if type( originalmethods ) ~= 'nil' then
+		for key, func in pairs( originalmethods ) do
+			methods[key] = func
+		end
 	end
 
-	-- remove parent methods that don't make sense for mediainfo entities
-	originalmethods.getSitelink = nil
-
-	-- build metatable where own methods override parent methods
-	metatable.__index = function( table, key )
-		return methodtable[key] or originalmethods[key]
+	-- copy new methods
+	for key, func in pairs( methodtable ) do
+		methods[key] = func
 	end
 
+	local metatable = {}
+	metatable.__index = methods
 	setmetatable( entity, metatable )
 	return entity
 end
@@ -45,6 +46,17 @@ methodtable.getCaptionWithLang = function ( entity, langCode )
 	util.checkTypeMulti( 'getCaptionWithLang', 1, langCode, { 'string', 'number', 'nil' } )
 
 	return entity:getLabelWithLang( langCode )
+end
+
+-- Override getSitelink, effectively turning it into a noop
+-- sitelinks don't exist for MediaInfo, but we're not going to remove
+-- the method entirely for maximum compatibility with mw.wikibase.entity
+--
+-- @see https://phabricator.wikimedia.org/T240563
+--
+-- @param {string|number} [globalSiteId]
+methodtable.getSitelink = function ( entity, globalSiteId )
+	return nil
 end
 
 package.loaded['mw.wikibase.mediainfo.entity'] = wikibaseMediaInfoEntity

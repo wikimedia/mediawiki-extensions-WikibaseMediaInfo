@@ -614,4 +614,13 @@ ComponentWidget.prototype.clearItems = function () {
 	return result;
 };
 
+/**
+ * Set error text to be used by template.
+ * @param {string} errorText
+ * @return {jQuery.Deferred}
+ */
+ComponentWidget.prototype.setError = function ( errorText ) {
+	return this.setState( { error: errorText } );
+};
+
 module.exports = ComponentWidget;

@@ -349,6 +349,7 @@
 				"templates/statements/LinkNoticeWidget.mustache+dom",
 				"templates/statements/QualifierValueInputWidget.mustache+dom",
 				"templates/statements/QualifierWidget.mustache+dom",
+				"templates/statements/StatementInputWidget.mustache+dom",
 				"templates/statements/StatementWidget.mustache+dom",
 				"templates/statements/inputs/EntityInputWidgetLabel.mustache+dom",
 				"templates/statements/inputs/GlobeCoordinateInputWidget.mustache+dom",

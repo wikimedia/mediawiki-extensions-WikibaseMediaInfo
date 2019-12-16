@@ -105,10 +105,25 @@ AbstractInputWidget.prototype.parseValue = function ( datatype ) {
 			var rawValue = response.results[ 0 ];
 			return dataValues.newDataValue( rawValue.type, rawValue.value );
 		},
-		function ( error, response ) {
+		function ( errorCode, response ) {
 			return $.Deferred().reject( response.error.info );
 		}
 	);
+};
+
+/**
+ * Use OOUI widget setValidityFlag method to indicate that an input within
+ * this widget has caused an error.
+ *
+ * @abstract
+ */
+AbstractInputWidget.prototype.flagAsInvalid = function () {
+	// Not every input type will be able to use this method; input types with a
+	// single OOUI input widget (e.g. string, quantity) can use this method to
+	// call the setValidityFlag method of their OOUI input, but more complex
+	// input types may have input-level validation or more complex logic for
+	// determining which input(s) to highlight as invalid.
+	return;
 };
 
 module.exports = AbstractInputWidget;

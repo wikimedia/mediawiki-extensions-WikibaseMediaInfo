@@ -1,6 +1,7 @@
 'use strict';
 
 var inputs = require( './inputs/index.js' ),
+	ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
 	StatementInputWidget;
 
 /**
@@ -13,9 +14,32 @@ StatementInputWidget = function ( config ) {
 	this.config = $.extend( {}, config );
 	StatementInputWidget.parent.call( this, this.config );
 	this.setInputType( config.valueType );
+
+	ComponentWidget.call(
+		this,
+		'wikibase.mediainfo.statements',
+		'templates/statements/StatementInputWidget.mustache+dom'
+	);
 };
 
 OO.inheritClass( StatementInputWidget, OO.ui.Widget );
+OO.mixinClass( StatementInputWidget, ComponentWidget );
+
+/**
+ * @inheritdoc
+ */
+StatementInputWidget.prototype.getTemplateData = function () {
+	var errorMessage = this.state.error ?
+		new OO.ui.MessageWidget( {
+			type: 'error',
+			label: this.state.error
+		} ) : undefined;
+
+	return {
+		input: this.input,
+		error: errorMessage
+	};
+};
 
 /**
  * @param {string} type value datatype
@@ -53,7 +77,6 @@ StatementInputWidget.prototype.setInputType = function ( type ) {
 	}
 
 	this.input.connect( this, { add: 'onAdd' } );
-	this.$element = this.input.$element;
 };
 
 /**
@@ -69,15 +92,27 @@ StatementInputWidget.prototype.onAdd = function ( input ) {
 	input.parseValue( this.config.propertyType ).then(
 		function ( dataValue ) {
 			self.clearInput();
+			self.setState( { error: null } );
 			self.emit( 'add', dataValue );
 		},
 		function ( error ) {
-			// TODO: replace alert() with real error message UI
-			/* eslint-disable-next-line no-alert */
-			alert( error );
-			self.clearInput();
+			self.setError( error );
 		}
 	);
+};
+
+/**
+ * @inheritdoc
+ */
+StatementInputWidget.prototype.setError = function ( errorText ) {
+	var self = this;
+
+	return ComponentWidget.prototype.setError.call( this, errorText )
+		.then( function () {
+			if ( errorText ) {
+				self.input.flagAsInvalid();
+			}
+		} );
 };
 
 StatementInputWidget.prototype.clearInput = function () {

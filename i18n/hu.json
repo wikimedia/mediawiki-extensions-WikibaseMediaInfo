@@ -9,6 +9,7 @@
 	"wikibase-mediainfo-summary-wbsetlabel-add": "[$2] képaláírás hozzáadása",
 	"wikibase-mediainfo-summary-wbsetlabel-remove": "[$2] képaláírás eltávolítása",
 	"wikibase-mediainfo-summary-wbsetlabel-set": "[$2] képaláírás szerkesztése",
+	"wikibasemediainfo-add-property": "Keress tulajdonságok hozzáadásához (része ennek, médiatípus stb.)",
 	"wikibasemediainfo-add-statement": "Állítás hozzáadása",
 	"wikibasemediainfo-desc": "Wikibase-kiterjesztés médiafájlok strukturált metaadatainak kezeléséhez",
 	"wikibasemediainfo-diffview-label": "képaláírás",
@@ -27,6 +28,7 @@
 	"wikibasemediainfo-filepage-edit": "Szerkesztés",
 	"wikibasemediainfo-filepage-publish": "Változtatások közzététele",
 	"wikibasemediainfo-filepage-caption-empty": "Adj meg egy egysoros magyarázatot arról, hogy mit mutat be ez a fájl",
+	"wikibasemediainfo-filepage-caption-too-short": "$1 további karakter szükséges",
 	"wikibasemediainfo-filepage-caption-too-long": "A megengedettnél $1 karakterrel több",
 	"wikibasemediainfo-filepage-caption-approaching-limit": "$1 karakter maradt",
 	"wikibasemediainfo-filepage-statement-no-value": "Nem létezik érték ehhez a tulajdonsághoz",
@@ -52,5 +54,16 @@
 	"wikibasemediainfo-statements-unsupported-property-type-content": "Jelenleg nem az összes tulajdonságtípus támogatott teljes mértékben, de a jövőben azok lesznek. Pillanatnyilag a nem támogatott tulajdonságok nem biztos, hogy a várt módon működnek.",
 	"wikibasemediainfo-statements-link-notice-text": "A strukturált adatok címkéi a megfelelő Wikidata-lapokra mutatnak, és új ablakban fognak megnyílni.",
 	"wikibasemediainfo-statements-link-notice-dismiss": "Bezárás",
-	"wikibasemediainfo-unsupported-datatype-text": "Nem támogatott adattípus"
+	"wikibasemediainfo-unsupported-datatype-text": "Nem támogatott adattípus",
+	"wikibasemediainfo-latitude-input-label": "Szélesség",
+	"wikibasemediainfo-latitude-input-placeholder": "Decimális fok &minus;90 és 90 között",
+	"wikibasemediainfo-longitude-input-label": "Hosszúság",
+	"wikibasemediainfo-longitude-input-placeholder": "Decimális fok &minus;180 és 180 között",
+	"wikibasemediainfo-precision-input-label": "Pontosság",
+	"wikibasemediainfo-arcminute-label": "egy szögperc",
+	"wikibasemediainfo-arcsecond-label": "egy szögmásodperc",
+	"wikibasemediainfo-tenth-of-arcsecond-label": "1/10 szögmásodperc",
+	"wikibasemediainfo-hundreth-of-arcsecond-label": "1/100 szögmásodperc",
+	"wikibasemediainfo-thousanth-of-arcsecond-label": "1/1000 szögmásodperc",
+	"wikibasemediainfo-string-input-button-text": "Hozzáadás"
 }

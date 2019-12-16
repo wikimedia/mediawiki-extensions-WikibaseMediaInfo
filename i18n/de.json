@@ -77,5 +77,9 @@
 	"wikibasemediainfo-tenth-of-arcsecond-label": "auf 1/10 einer Bogensekunde",
 	"wikibasemediainfo-hundreth-of-arcsecond-label": "auf 1/100 einer Bogensekunde",
 	"wikibasemediainfo-thousanth-of-arcsecond-label": "auf 1/1000 einer Bogensekunde",
-	"wikibasemediainfo-search-suggestions-title-depicts": "Dateien stellen dar ..."
+	"wikibasemediainfo-string-input-button-text": "Hinzufügen",
+	"wikibasemediainfo-quantity-input-button-text": "Hinzufügen",
+	"wikibasemediainfo-search-suggestions-title-depicts": "Dateien stellen dar ...",
+	"wikibasemediainfo-search-suggestions-preference-label": "Suchvorschläge der automatischen Vervollständigung basierend auf den strukturierten Daten",
+	"wikibasemediainfo-search-suggestions-preference-disable-confirm": "Bist du sicher, dass du die Suchvorschläge der automatischen Vervollständigung basierend auf den strukturierten Daten entfernen möchtest? (Diese Einstellung kann in den [[Special:Preferences#mw-prefsection-searchoptions|Einstellungen]] geändert werden.)"
 }

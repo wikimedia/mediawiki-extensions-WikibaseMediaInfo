@@ -17,11 +17,4 @@ class Scribunto_LuaWikibaseMediaInfoEntityLibraryTest extends Scribunto_LuaWikib
 		];
 	}
 
-	protected function setUp() : void {
-		// @todo enable this once https://phabricator.wikimedia.org/T240839 is resolved
-		$this->markTestSkipped( 'Skipping test because it currently interferes with other tests' );
-
-		parent::setUp();
-	}
-
 }

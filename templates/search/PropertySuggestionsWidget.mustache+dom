@@ -16,7 +16,7 @@
 						 onmouseover="[].forEach.call( document.getElementsByClassName( 'suggestions-result-current' ), function( node ) { node.classList.remove( 'suggestions-result-current' ); } ); this.classList.add( 'suggestions-result-current' )"
 						 onmouseout="this.classList.remove( 'suggestions-result-current' )"
 					>
-						<span class="wbmi-search-suggestions-result-label">{{{label}}}</span>
+						<span class="wbmi-search-suggestions-result-label">{{label}}</span>
 						{{#aliases}}<span class="wbmi-search-suggestions-result-aliases">{{aliases}}</span>{{/aliases}}
 						<span class="wbmi-search-suggestions-result-description">{{description}}</span>
 					</div>

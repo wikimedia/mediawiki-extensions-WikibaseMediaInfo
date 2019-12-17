@@ -45,20 +45,6 @@
 				}
 			}
 		}
-
-		// backward compatibility: this selector (and everything inside it)
-		// targets only old-style nodes that may still live in parser cache
-		// this code can be removed 30+d this after merging the patch that
-		// introduces this...
-		> div:not( .wbmi-entity-header ) > .wbmi-entity-title { // PHP render
-			.flex-display();
-			.flex(1, 1, auto);
-
-			.wbmi-entity-label,
-			.wbmi-entity-label-extra {
-				padding: 0.5rem;
-			}
-		}
 	}
 
 	&.wbmi-item-read {

@@ -30,6 +30,7 @@ QUnit.module( 'StatementPanel', {}, function () {
 				config = {
 					$element: $( '.wbmi-entityview-statementsGroup' ),
 					propertyId: 'P1',
+					propertyType: 'wikibase-item',
 					entityId: 'M1',
 					properties: { P1: 'wikibase-item' }
 				};
@@ -45,6 +46,7 @@ QUnit.module( 'StatementPanel', {}, function () {
 				config = {
 					$element: $( '.wbmi-entityview-statementsGroup' ),
 					propertyId: 'P1',
+					propertyType: 'wikibase-item',
 					entityId: 'M1',
 					properties: { P1: 'wikibase-item' }
 				},
@@ -65,6 +67,7 @@ QUnit.module( 'StatementPanel', {}, function () {
 					config = {
 						$element: $( '.wbmi-entityview-statementsGroup' ),
 						propertyId: 'P1',
+						propertyType: 'wikibase-item',
 						entityId: 'M1',
 						properties: { P1: 'wikibase-item' }
 					},

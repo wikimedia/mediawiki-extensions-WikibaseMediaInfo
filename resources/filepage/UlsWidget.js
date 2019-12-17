@@ -5,7 +5,7 @@ var UlsWidget;
  *
  * @constructor
  * @param {Object} [config]
- * @cfg {Object} [languages] Keys are 2-letter language codes, values are language autonyms
+ * @param {Object} [config.languages] Keys are 2-letter language codes, values are language autonyms
  */
 UlsWidget = function ( config ) {
 	UlsWidget.parent.call( this );

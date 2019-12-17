@@ -299,13 +299,6 @@ class MediaInfoEntityStatementsView {
 		}
 
 		$mainSnakDiv = new Tag( 'div' );
-		$mainSnakValueEntityId = null;
-		if ( $mainSnak instanceof PropertyValueSnak ) {
-			$dataValue = $mainSnak->getDataValue();
-			if ( $dataValue instanceof EntityIdValue ) {
-				$mainSnakValueEntityId = $dataValue->getEntityId();
-			}
-		}
 		$mainSnakDiv->appendContent(
 			$this->createFormattedDataValue( $this->formatSnak( $mainSnak ) )
 		);

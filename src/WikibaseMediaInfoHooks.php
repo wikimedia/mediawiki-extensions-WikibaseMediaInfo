@@ -18,9 +18,7 @@ use OutputPage;
 use ParserOutput;
 use Title;
 use Wikibase\Client\WikibaseClient;
-use Wikibase\DataModel\Entity\EntityId;
 use Wikibase\DataModel\Entity\PropertyId;
-use Wikibase\DataModel\Services\EntityId\EntityIdComposer;
 use Wikibase\DataModel\Services\Lookup\PropertyDataTypeLookupException;
 use Wikibase\EntityContent;
 use Wikibase\LanguageFallbackChainFactory;
@@ -34,9 +32,6 @@ use Wikibase\MediaInfo\DataAccess\Scribunto\Scribunto_LuaWikibaseMediaInfoLibrar
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\MediaInfo\Services\MediaInfoByLinkedTitleLookup;
 use Wikibase\MediaInfo\Services\MediaInfoServices;
-use Wikibase\MediaInfo\View\MediaInfoEntityStatementsView;
-use Wikibase\MediaInfo\View\MediaInfoEntityTermsView;
-use Wikibase\MediaInfo\View\MediaInfoView;
 use Wikibase\Repo\BabelUserLanguageLookup;
 use Wikibase\Repo\MediaWikiLocalizedTextProvider;
 use Wikibase\Repo\ParserOutput\DispatchingEntityViewFactory;
@@ -52,15 +47,6 @@ use WikiPage;
 class WikibaseMediaInfoHooks {
 
 	const MEDIAINFO_SLOT_HEADER_PLACEHOLDER = '<mediainfoslotheader />';
-
-	/**
-	 * @var EntityIdComposer
-	 */
-	private $entityIdComposer;
-
-	private static function newFromGlobalState() {
-		return new self();
-	}
 
 	/**
 	 * Hook to register the MediaInfo slot role.
@@ -144,29 +130,6 @@ class WikibaseMediaInfoHooks {
 	}
 
 	/**
-	 * @param PropertyId $id
-	 * @return string
-	 * @throws \ConfigException
-	 */
-	public static function getPropertyType( PropertyId $id ) {
-		$wbRepo = WikibaseRepo::getDefaultInstance();
-		$propertyDataTypeLookup = $wbRepo->getPropertyDataTypeLookup();
-		return $propertyDataTypeLookup->getDataTypeIdForProperty( $id );
-	}
-
-	/**
-	 * @param PropertyId $id
-	 * @return string
-	 * @throws \ConfigException
-	 */
-	public static function getValueType( PropertyId $id ) {
-		$mwConfig = MediaWikiServices::getInstance()->getMainConfig();
-		$dataTypes = $mwConfig->get( 'WBRepoDataTypes' );
-		$propertyDatatype = static::getPropertyType( $id );
-		return $dataTypes['PT:' . $propertyDatatype]['value-type'];
-	}
-
-	/**
 	 * Replace mediainfo-specific placeholders (if any), move structured data, add data and modules
 	 *
 	 * @param \OutputPage $out
@@ -222,14 +185,15 @@ class WikibaseMediaInfoHooks {
 				}
 
 				// get data type for values associated with this property
-				$properties[$property] = static::getValueType( new PropertyId( $property ) );
-				$propertyTypes[$property] = static::getPropertyType( new PropertyId( $property ) );
+				$properties[$property] = WBMIHooksHelper::getValueType( new PropertyId( $property ) );
+				$propertyTypes[$property] = WBMIHooksHelper::getPropertyType( new PropertyId( $property ) );
 			} catch ( PropertyDataTypeLookupException $e ) {
 				// ignore invalid properties...
 			}
 		}
 
-		self::newFromGlobalState()->doBeforePageDisplay(
+		$hooksObject = new self();
+		$hooksObject->doBeforePageDisplay(
 			$out,
 			$isMediaInfoPage,
 			array_intersect_key(
@@ -297,7 +261,7 @@ class WikibaseMediaInfoHooks {
 			$existingPropertyTypes = [];
 			if ( $entity instanceof MediaInfo ) {
 				foreach ( $entity->getStatements()->getPropertyIds() as $propertyId ) {
-					$existingPropertyTypes[$propertyId->serialize()] = static::getPropertyType( $propertyId );
+					$existingPropertyTypes[$propertyId->serialize()] = WBMIHooksHelper::getPropertyType( $propertyId );
 				}
 			}
 
@@ -316,8 +280,7 @@ class WikibaseMediaInfoHooks {
 				'wbEntity' => $entityData,
 				'wbTermsLanguages' => $termsLanguages,
 				'wbmiMinCaptionLength' => 5,
-				'wbmiMaxCaptionLength' => self::getMaxCaptionLength(),
-				// FIXME: This is horrendous.
+				'wbmiMaxCaptionLength' => WBMIHooksHelper::getMaxCaptionLength(),
 				'wbmiParsedMessageAnonEditWarning' => $out->msg(
 					'anoneditwarning',
 					// Log-in link
@@ -353,12 +316,12 @@ class WikibaseMediaInfoHooks {
 		$textProvider = new MediaWikiLocalizedTextProvider( $out->getLanguage() );
 
 		// Remove the slot header, as it's made redundant by the tabs
-		$html = preg_replace( self::getStructuredDataHeaderRegex(), '', $html );
+		$html = preg_replace( WBMIHooksHelper::getStructuredDataHeaderRegex(), '', $html );
 
 		// Snip out out the structured data sections ($captions, $statements)
 		$extractedHtml = $this->extractStructuredDataHtml( $html, $out, $entityViewFactory );
 		if ( preg_match(
-			self::getMediaInfoCaptionsRegex(),
+			WBMIHooksHelper::getMediaInfoCaptionsRegex(),
 			$extractedHtml['structured'],
 			$matches
 		) ) {
@@ -366,7 +329,7 @@ class WikibaseMediaInfoHooks {
 		}
 
 		if ( preg_match(
-			self::getMediaInfoStatementsRegex(),
+			WBMIHooksHelper::getMediaInfoStatementsRegex(),
 			$extractedHtml['structured'],
 			$matches
 		) ) {
@@ -481,12 +444,16 @@ class WikibaseMediaInfoHooks {
 		DispatchingEntityViewFactory $entityViewFactory
 	) {
 		if ( preg_match(
-			self::getMediaInfoViewRegex(),
+			WBMIHooksHelper::getMediaInfoViewRegex(),
 			$html,
 			$matches
 		) ) {
 			$structured = $matches[1];
-			$unstructured = preg_replace( self::getMediaInfoViewRegex(), '', $html );
+			$unstructured = preg_replace(
+				WBMIHooksHelper::getMediaInfoViewRegex(),
+				'',
+				$html
+			);
 		} else {
 			$unstructured = $html;
 			$structured = $this->createEmptyStructuredData( $out, $entityViewFactory );
@@ -514,7 +481,7 @@ class WikibaseMediaInfoHooks {
 
 		// Strip out the surrounding <mediaInfoView> tag
 		$structured = preg_replace(
-			self::getMediaInfoViewRegex(),
+			WBMIHooksHelper::getMediaInfoViewRegex(),
 			'$1',
 			$structured
 		);
@@ -531,35 +498,10 @@ class WikibaseMediaInfoHooks {
 	private static function deleteMediaInfoData( $out ) {
 		$html = $out->getHTML();
 		$out->clearHTML();
-		$html = preg_replace( self::getMediaInfoViewRegex(), '', $html );
-		$html = preg_replace( self::getStructuredDataHeaderRegex(), '', $html );
+		$html = preg_replace( WBMIHooksHelper::getMediaInfoViewRegex(), '', $html );
+		$html = preg_replace( WBMIHooksHelper::getStructuredDataHeaderRegex(), '', $html );
 		$out->addHTML( $html );
 		return $out;
-	}
-
-	private static function getMediaInfoViewRegex() {
-		$tag = MediaInfoView::MEDIAINFOVIEW_CUSTOM_TAG;
-		return '/<' . $tag . '[^>]*>(.*)<\/' . $tag . '>/is';
-	}
-
-	private static function getMediaInfoCaptionsRegex() {
-		$tag = MediaInfoEntityTermsView::CAPTIONS_CUSTOM_TAG;
-		return '/<' . $tag . '>(.*)<\/' . $tag . '>/is';
-	}
-
-	private static function getMediaInfoStatementsRegex() {
-		$tag = MediaInfoEntityStatementsView::STATEMENTS_CUSTOM_TAG;
-		return '/<' . $tag . '>(.*)<\/' . $tag . '>/is';
-	}
-
-	private static function getStructuredDataHeaderRegex() {
-		return '#<h1\b[^>]*\bclass=(\'|")mw-slot-header\\1[^>]*>' .
-			self::MEDIAINFO_SLOT_HEADER_PLACEHOLDER . '</h1>#iU';
-	}
-
-	private static function getMaxCaptionLength() {
-		global $wgWBRepoSettings;
-		return $wgWBRepoSettings['string-limits']['multilang']['length'];
 	}
 
 	/**
@@ -650,7 +592,8 @@ class WikibaseMediaInfoHooks {
 		ParserOutput $parserOutput,
 		Connection $connection
 	) {
-		self::newFromGlobalState()->doCirrusSearchBuildDocumentParse(
+		$hooksObject = new self();
+		$hooksObject->doCirrusSearchBuildDocumentParse(
 			$document,
 			WikiPage::factory( $title ),
 			// @phan-suppress-next-line PhanTypeMismatchArgument It is a MediaInfoHandler

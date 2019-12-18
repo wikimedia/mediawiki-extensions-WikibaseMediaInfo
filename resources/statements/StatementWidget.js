@@ -46,7 +46,8 @@ StatementWidget = function ( config ) {
 		valueType: valueType,
 		initialData: new datamodel.StatementList(),
 		title: config.title || ( mw.config.get( 'wbmiPropertyTitles' ) || {} )[ config.propertyId ] || '',
-		editing: config.editing || false
+		editing: config.editing || false,
+		errors: []
 	};
 
 	this.input = new StatementInputWidget( {
@@ -91,7 +92,15 @@ OO.mixinClass( StatementWidget, FormatValueElement );
  */
 StatementWidget.prototype.getTemplateData = function () {
 	var self = this,
-		dataValue = new datamodel.EntityId( this.state.propertyId );
+		dataValue = new datamodel.EntityId( this.state.propertyId ),
+		errorMessages = ( this.state.errors.length > 0 ) ?
+			this.state.errors.map( function ( error ) {
+				return new OO.ui.MessageWidget( {
+					type: 'error',
+					label: error,
+					classes: [ 'wbmi-statement-error-msg' ]
+				} );
+			} ) : null;
 
 	// fetch property value & url
 	return this.formatValue( dataValue, 'text/html' ).then( function ( html ) {
@@ -158,7 +167,8 @@ StatementWidget.prototype.getTemplateData = function () {
 			cancelButton: cancelButton,
 			removeAll: removeButton,
 			learnMoreLink: learnMoreLink,
-			learnMoreButton: learnMoreButton
+			learnMoreButton: learnMoreButton,
+			errors: errorMessages
 		};
 	} );
 };
@@ -423,14 +433,12 @@ StatementWidget.prototype.submit = function ( baseRevId ) {
 		changedStatements = this.getChanges(),
 		removedStatements = this.getRemovals(),
 		hasFailures = false,
+		errors = [],
 		disabled = this.isDisabled();
 
-	this.setEditing( false );
+	this.setEditing( false )
+		.then( self.setErrors.bind( self, [] ) );
 	this.setDisabled( true );
-
-	self.getItems().forEach( function ( widget ) {
-		widget.setError( '' );
-	} );
 
 	changedStatements.forEach( function ( statement ) {
 		promise = promise.then( function ( statement, prevResponse ) {
@@ -448,14 +456,17 @@ StatementWidget.prototype.submit = function ( baseRevId ) {
 				function ( errorCode, error ) {
 					var apiError = wikibase.api.RepoApiError.newFromApiResponse( error, 'save' ),
 						guid = statement.getClaim().getGuid(),
-						item = self.getItems().filter( function ( item ) {
-							return item.getData().getClaim().getGuid() === guid;
-						} )[ 0 ],
 						initialStatement = self.state.initialData.toArray().filter( function ( statement ) {
 							return statement.getClaim().getGuid() === guid;
 						} )[ 0 ];
 
+					// TODO: show item-specific errors within item UI by using
+					// the item's setErrors method.
+					// TODO: flag the offending input so we can make it clear to
+					// the user which top-level statement or qualifier needs to
+					// be fixed.
 					hasFailures = true;
+					errors.push( apiError.detailedMessage );
 
 					// replace statement with what we previously had, since we failed
 					// to submit the changes...
@@ -464,10 +475,7 @@ StatementWidget.prototype.submit = function ( baseRevId ) {
 						data.addItem( initialStatement );
 					}
 
-					return item.setError( apiError.detailedMessage ).then( function () {
-						// keep the update chain moving...
-						return prevResponse;
-					} );
+					return prevResponse;
 				}
 			);
 		}.bind( null, statement ) );
@@ -493,6 +501,7 @@ StatementWidget.prototype.submit = function ( baseRevId ) {
 					promises;
 
 				hasFailures = true;
+				errors.push( apiError.detailedMessage );
 
 				// restore statements that failed to delete
 				promises = removedStatements.map( function ( statement ) {
@@ -500,9 +509,7 @@ StatementWidget.prototype.submit = function ( baseRevId ) {
 					self.addItems( [ item ] );
 
 					data.addItem( statement );
-
-					return item.setData( statement )
-						.then( item.setError.bind( item, apiError.detailedMessage ) );
+					return item.setData( statement );
 				} );
 
 				return $.when.apply( $, promises ).then( function () {
@@ -522,10 +529,12 @@ StatementWidget.prototype.submit = function ( baseRevId ) {
 		self.setDisabled( disabled );
 
 		if ( hasFailures ) {
-			// if we've had failures, put the widget back in edit mode, and reject
-			// this promise, so callers will know something went wrong
-			self.setState( { initialData: data } )
-				.then( self.setEditing.bind( self, true ) )
+			// if we've had failures, put the widget back in edit mode, show
+			// error(s), and reject this promise, so callers will know something
+			// went wrong.
+			self.setEditing( true )
+				.then( self.setState.bind( self, { initialData: data } ) )
+				.then( self.setErrors.bind( self, errors ) )
 				.then( deferred.reject );
 		} else {
 			// reset data to what we've just submitted to the API (items that failed
@@ -579,11 +588,13 @@ StatementWidget.prototype.showCancelConfirmationDialog = function () {
 			}
 		).then( function ( confirmed ) {
 			if ( confirmed ) {
-				self.emit( 'cancel' );
+				self.setErrors( [] )
+					.then( self.emit.bind( self, 'cancel' ) );
 			}
 		} );
 	} else {
-		this.emit( 'cancel' );
+		self.setErrors( [] )
+			.then( self.emit.bind( self, 'cancel' ) );
 	}
 };
 

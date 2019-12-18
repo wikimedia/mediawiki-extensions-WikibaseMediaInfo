@@ -1,6 +1,4 @@
-{{#error}}
-	<div class="wbmi-statement-error-msg">
-		{{{error}}}
-	</div>
-{{/error}}
+{{#errors}}
+	{{{.}}}
+{{/errors}}
 {{{input}}}

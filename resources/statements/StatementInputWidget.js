@@ -15,6 +15,10 @@ StatementInputWidget = function ( config ) {
 	StatementInputWidget.parent.call( this, this.config );
 	this.setInputType( config.valueType );
 
+	this.state = {
+		errors: []
+	};
+
 	ComponentWidget.call(
 		this,
 		'wikibase.mediainfo.statements',
@@ -28,15 +32,18 @@ OO.mixinClass( StatementInputWidget, ComponentWidget );
  * @inheritdoc
  */
 StatementInputWidget.prototype.getTemplateData = function () {
-	var errorMessage = this.state.error ?
-		new OO.ui.MessageWidget( {
-			type: 'error',
-			label: this.state.error
-		} ) : undefined;
+	var errorMessages = ( this.state.errors.length > 0 ) ?
+		this.state.errors.map( function ( error ) {
+			return new OO.ui.MessageWidget( {
+				type: 'error',
+				label: error,
+				classes: [ 'wbmi-statement-error-msg' ]
+			} );
+		} ) : null;
 
 	return {
 		input: this.input,
-		error: errorMessage
+		errors: errorMessages
 	};
 };
 
@@ -91,11 +98,11 @@ StatementInputWidget.prototype.onAdd = function ( input ) {
 	input.parseValue( this.config.propertyId ).then(
 		function ( dataValue ) {
 			self.clearInput();
-			self.setState( { error: null } );
+			self.setState( { errors: [] } );
 			self.emit( 'add', dataValue );
 		},
 		function ( error ) {
-			self.setError( error );
+			self.setErrors( [ error ] );
 		}
 	);
 };
@@ -103,12 +110,12 @@ StatementInputWidget.prototype.onAdd = function ( input ) {
 /**
  * @inheritdoc
  */
-StatementInputWidget.prototype.setError = function ( errorText ) {
+StatementInputWidget.prototype.setErrors = function ( errors ) {
 	var self = this;
 
-	return ComponentWidget.prototype.setError.call( this, errorText )
+	return ComponentWidget.prototype.setErrors.call( this, errors )
 		.then( function () {
-			if ( errorText ) {
+			if ( errors.length > 0 ) {
 				self.input.flagAsInvalid();
 			}
 		} );

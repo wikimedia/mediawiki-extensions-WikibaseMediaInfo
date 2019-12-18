@@ -20,6 +20,10 @@
 		{{/showControls}}
 	</div>
 
+	{{#errors}}
+		{{{.}}}
+	{{/errors}}
+
 	<!-- statement widget input -->
 	{{{input}}}
 

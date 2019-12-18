@@ -264,4 +264,22 @@ QUnit.module( 'StatementWidget', hooks.mediainfo, function () {
 				done();
 			} );
 	} );
+
+	QUnit.test( 'Widget can handle multiple errors', function ( assert ) {
+		var done = assert.async(),
+			StatementWidget = require( pathToWidget ),
+			widget = new StatementWidget( {
+				$element: $( '<div>' ),
+				propertyId: 'P1',
+				propertyType: 'wikibase-item',
+				entityId: 'M1',
+				showControls: true
+			} );
+
+		widget.setErrors( [ 'Error 1', 'Error 2' ] )
+			.then( function () {
+				assert.strictEqual( widget.$element.find( '.wbmi-statement-error-msg' ).length, 2 );
+				done();
+			} );
+	} );
 } );

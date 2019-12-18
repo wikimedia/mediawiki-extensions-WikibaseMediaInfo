@@ -25,7 +25,7 @@ var QualifierWidget = require( './QualifierWidget.js' ),
 		// (e.g. setDisabled) which may cause a re-render, and will need
 		// some of these...
 		this.state = {
-			error: '',
+			errors: [],
 			editing: !!config.editing,
 			propertyId: config.propertyId,
 			guid: config.guid || this.guidGenerator.newGuid(),
@@ -52,7 +52,15 @@ OO.mixinClass( ItemWidget, FormatValueElement );
  */
 ItemWidget.prototype.getTemplateData = function () {
 	var self = this,
-		labelPromise;
+		labelPromise,
+		errorMessages = ( this.state.errors.length > 0 ) ?
+			this.state.errors.map( function ( error ) {
+				return new OO.ui.MessageWidget( {
+					type: 'error',
+					label: error,
+					classes: [ 'wbmi-statement-error-msg--inline' ]
+				} );
+			} ) : null;
 
 	// Get the formatted label text for the value if necessary,
 	// or else use a dummy promise
@@ -101,7 +109,7 @@ ItemWidget.prototype.getTemplateData = function () {
 		addQualifierButton.connect( self, { click: [ 'addQualifier' ] } );
 
 		return {
-			error: self.state.error,
+			errors: errorMessages,
 			editing: self.state.editing,
 			qualifiers: self.getItems(),
 			label: formatResponse( label ),
@@ -261,7 +269,7 @@ ItemWidget.prototype.setData = function ( data ) {
 			data.getClaim().getMainSnak().getValue() :
 			null,
 		// if new data was passed in, error is no longer valid
-		error: data.equals( this.getData() ) ? this.state.error : ''
+		errors: data.equals( this.getData() ) ? this.state.errors : []
 	} ) );
 };
 

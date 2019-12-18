@@ -205,7 +205,13 @@ ComponentWidget.prototype.rebuildDOM = function ( $old, $new, preserve ) {
 
 		if ( oldIndex < 0 ) {
 			// if new node did not previously exist, insert it at this index
-			$old.contents().get( newIndex ).before( newNode );
+			// (or at the end, if that index exceeds the amount of nodes)
+			if ( $old.contents().length > newIndex ) {
+				$old.contents().get( newIndex ).before( newNode );
+			} else {
+				$old.contents().last().get( 0 ).before( newNode );
+			}
+
 			return;
 		}
 

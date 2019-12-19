@@ -149,7 +149,7 @@
 		} );
 
 		// Create panels statements added by user
-		addPropertyWidget.on( 'choose', function ( item, data ) {
+		addPropertyWidget.on( 'choose', function ( input, data ) {
 			var $el = $( '<div>' ).addClass( 'wbmi-entityview-statementsGroup' );
 
 			$el.insertBefore( addPropertyWidget.$element );

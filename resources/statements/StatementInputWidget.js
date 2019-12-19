@@ -1,7 +1,6 @@
 'use strict';
 
-var ItemInputWidget = require( './ItemInputWidget.js' ),
-	inputs = require( './inputs/index.js' ),
+var inputs = require( './inputs/index.js' ),
 	StatementInputWidget;
 
 /**
@@ -24,7 +23,7 @@ OO.inheritClass( StatementInputWidget, OO.ui.Widget );
 StatementInputWidget.prototype.setInputType = function ( type ) {
 	switch ( type ) {
 		case 'wikibase-entityid':
-			this.input = new ItemInputWidget( {
+			this.input = new inputs.EntityInputWidget( {
 				classes: this.config.classes
 			} );
 			break;
@@ -67,42 +66,18 @@ StatementInputWidget.prototype.setInputType = function ( type ) {
 StatementInputWidget.prototype.onAdd = function ( input ) {
 	var self = this;
 
-	// @TODO this is temporary while input types are being refactored to extend
-	// from AbstractInputWidget
-	if ( typeof input.parseValue === 'function' ) {
-		input.parseValue( this.config.propertyType ).then(
-			function ( dataValue ) {
-				self.clearInput();
-				self.emit( 'add', dataValue );
-			},
-			function ( error ) {
-				// TODO: replace alert() with real error message UI
-				/* eslint-disable-next-line no-alert */
-				alert( error );
-				self.clearInput();
-			}
-		);
-	} else {
-		new mw.Api().get( {
-			action: 'wbparsevalue',
-			format: 'json',
-			datatype: this.config.propertyType,
-			values: [ input ],
-			validate: true
-		} ).then( function ( response ) {
-			// TODO: is there a better way to do this?
-			var rawValue = response.results[ 0 ],
-				dv = dataValues.newDataValue( rawValue.type, rawValue.value );
+	input.parseValue( this.config.propertyType ).then(
+		function ( dataValue ) {
 			self.clearInput();
-			self.emit( 'add', dv );
-		} ).catch( function ( error, response ) {
+			self.emit( 'add', dataValue );
+		},
+		function ( error ) {
 			// TODO: replace alert() with real error message UI
 			/* eslint-disable-next-line no-alert */
-			alert( response.error.info );
+			alert( error );
 			self.clearInput();
-		} );
-		return;
-	}
+		}
+	);
 };
 
 StatementInputWidget.prototype.clearInput = function () {

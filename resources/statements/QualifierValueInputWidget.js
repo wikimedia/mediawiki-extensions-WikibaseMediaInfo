@@ -1,8 +1,6 @@
 'use strict';
 
 var ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
-	FormatValueElement = require( 'wikibase.mediainfo.base' ).FormatValueElement,
-	EntityInputWidget = require( './EntityInputWidget.js' ),
 	inputs = require( './inputs/index.js' ),
 	QualifierValueInputWidget;
 
@@ -27,11 +25,9 @@ QualifierValueInputWidget = function ( config ) {
 		'wikibase.mediainfo.statements',
 		'templates/statements/QualifierValueInputWidget.mustache+dom'
 	);
-	FormatValueElement.call( this, $.extend( {}, config ) );
 };
 OO.inheritClass( QualifierValueInputWidget, OO.ui.Widget );
 OO.mixinClass( QualifierValueInputWidget, ComponentWidget );
-OO.mixinClass( QualifierValueInputWidget, FormatValueElement );
 
 /**
  * @inheritDoc
@@ -82,11 +78,11 @@ QualifierValueInputWidget.prototype.setInputType = function ( type ) {
  * @return {EntityInputWidget} WB Entity input
  */
 QualifierValueInputWidget.prototype.createEntityInput = function () {
-	var input = new EntityInputWidget(
-		$.extend( {}, this.config, { classes: [] } )
+	var input = new inputs.EntityInputWidget(
+		$.extend( {}, this.config, { classes: [], isQualifier: true } )
 	).connect( this, {
-		dataChange: 'onChange',
-		enter: [ 'emit', 'enter' ]
+		add: [ 'emit', 'enter' ],
+		change: 'onChange'
 	} );
 
 	return input;
@@ -148,26 +144,6 @@ QualifierValueInputWidget.prototype.createDisabledInput = function () {
 	);
 };
 
-/**
- * @return {Object|string}
- */
-QualifierValueInputWidget.prototype.getInputValue = function () {
-	switch ( this.state.type ) {
-		case 'wikibase-entityid':
-			return {
-				id: this.state.input.getData()
-			};
-		case 'quantity':
-			return this.state.input.getData().toJSON();
-		case 'string':
-			return this.state.input.getData().toJSON();
-		case 'globecoordinate':
-			return this.state.input.getData().toJSON();
-		default:
-			return this.state.input.getData().toJSON();
-	}
-};
-
 QualifierValueInputWidget.prototype.onChange = function () {
 	if ( this.allowEmitChange ) {
 		this.emit( 'change' );
@@ -178,7 +154,7 @@ QualifierValueInputWidget.prototype.onChange = function () {
  * @return {dataValues.DataValue}
  */
 QualifierValueInputWidget.prototype.getData = function () {
-	return dataValues.newDataValue( this.state.type, this.getInputValue() );
+	return this.state.input.getData();
 };
 
 /**
@@ -186,7 +162,8 @@ QualifierValueInputWidget.prototype.getData = function () {
  * @return {jQuery.Deferred}
  */
 QualifierValueInputWidget.prototype.setData = function ( data ) {
-	var self = this;
+	var self = this,
+		type, input;
 
 	try {
 		if ( data.equals( this.getData() ) ) {
@@ -205,56 +182,19 @@ QualifierValueInputWidget.prototype.setData = function ( data ) {
 	// we'll make sure below events don't propagate, but then emit our
 	// own later on!
 	this.allowEmitChange = false;
-	return $.Deferred().resolve().promise()
-		.then( this.createInputFromData.bind( this, data.getType(), data ) )
-		.then( function ( input ) {
-			self.allowEmitChange = true;
-			return self.setState( {
-				type: data.getType(),
-				input: input
-			} );
-		} )
+	type = data.getType();
+	input = type in this.types ? this.types[ type ]() : this.createDisabledInput();
+
+	return input.setData( data )
+		.then( this.setState.bind( this, {
+			type: type,
+			input: input
+		} ) )
 		.then( function ( $element ) {
+			self.allowEmitChange = true;
 			self.emit( 'change' );
 			return $element;
 		} );
-};
-
-/**
- * @param {string} type
- * @param {dataValues.DataValue} data
- * @return {jQuery.Promise|*} Input object, or promise resolving with one
- */
-QualifierValueInputWidget.prototype.createInputFromData = function ( type, data ) {
-	var input = type in this.types ? this.types[ type ]() : this.createDisabledInput();
-
-	switch ( type ) {
-		case 'wikibase-entityid':
-			// entities widget will need to be aware of the id that is associated
-			// with the label
-			return this.formatValue( data, 'text/plain' ).then( function ( plain ) {
-				input.setValue( plain );
-				input.setData( data.toJSON().id );
-				return input;
-			} );
-		case 'quantity':
-			return input.setData( data ).then( function () {
-				return input;
-			} );
-		case 'string':
-			return input.setData( data ).then( function () {
-				return input;
-			} );
-		case 'globecoordinate':
-			return input.setData( data ).then( function () {
-				return input;
-			} );
-		default:
-			// unsupported data types
-			return input.setData( data ).then( function () {
-				return input;
-			} );
-	}
 };
 
 module.exports = QualifierValueInputWidget;

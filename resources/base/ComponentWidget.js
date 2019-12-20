@@ -197,7 +197,16 @@ ComponentWidget.prototype.rebuildDOM = function ( $old, $new, preserve ) {
 	$newNodes = $new.contents();
 	$oldNodes = $old.contents();
 
-	this.matchNodes( $newNodes, $oldNodes ).map( function ( $oldNode, newIndex ) {
+	// get rid of text nodes - we don't want to match them between rerenders,
+	// that might mess up the order of things (especially with whitespace text
+	// nodes, that are always very similar - there might be an exact copy
+	// further down the DOM) and there's nothing in these text nodes that we'd
+	// even want to preserve - we'll simply insert the new text nodes later on
+	$oldNodes.contents().filter( function ( i, node ) {
+		return node.nodeName === '#text';
+	} ).remove();
+
+	this.matchNodes( $newNodes, $oldNodes ).forEach( function ( $oldNode, newIndex ) {
 		var oldIndex = $oldNodes.index( $oldNode ),
 			oldNode = $oldNodes.get( oldIndex ),
 			newNode = $newNodes.get( newIndex ),
@@ -205,13 +214,7 @@ ComponentWidget.prototype.rebuildDOM = function ( $old, $new, preserve ) {
 
 		if ( oldIndex < 0 ) {
 			// if new node did not previously exist, insert it at this index
-			// (or at the end, if that index exceeds the amount of nodes)
-			if ( $old.contents().length > newIndex ) {
-				$old.contents().get( newIndex ).before( newNode );
-			} else {
-				$old.contents().last().get( 0 ).before( newNode );
-			}
-
+			$old.contents().get( newIndex ).before( newNode );
 			return;
 		}
 

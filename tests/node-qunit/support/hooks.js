@@ -152,14 +152,12 @@ module.exports.kartographer = Object.assign( {}, module.exports.mediainfo, {
 
 		global.mw.loader.using.resolves( loaderStub );
 
-		// Stub out the soft Kartographer dependencies
-
-		// Stub out mutation observers used in MapWidget
 		global.MutationObserver = function () {};
 		global.MutationObserver.prototype = {
 			observe: sinon.stub()
 		};
 	},
+
 	afterEach: function () {
 		sandboxes.kartographer.restore();
 		module.exports.mediawiki.afterEach();

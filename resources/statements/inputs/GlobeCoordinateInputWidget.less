@@ -2,29 +2,28 @@
 @import '../../mediainfo-variables.less';
 
 .wbmi-input-widget--globe-coordinate {
-	label {
-		.flex-display();
-		align-items: center;
-		margin: @xs-spacing 0;
+	// overrides for single-line mode, which still needs to be able to stack
+	&.wbmi-input-widget.wbmi-input-widget--single-line {
+		.flex-wrap( wrap );
 
-		> .wbmi-input-widget__label {
-			.flex( 1, 1, 2em );
-		}
-
-		> .wbmi-input-widget__input {
-			.flex( 2, 2, 10em );
+		.wbmi-input-widget__input {
+			flex: 1 0 10em;
 		}
 	}
+}
 
-	&.wbmi-with-button {
-		overflow: auto;
+// It's unfortunate that this level of specificity is required to override OOUI
+// default styles
+.wbmi-input-widget__button.wbmi-input-widget__button--map-expand {
+	display: block;
+	margin-right: 0;
 
-		.wbmi-input-widget__button {
-			float: right;
-		}
+	a {
+		display: block;
 	}
+}
 
-	.wbmi-input-widget__map {
-		height: 300px;
-	}
+.wbmi-input-widget__map {
+	height: 300px;
+	margin-bottom: @base-spacing;
 }

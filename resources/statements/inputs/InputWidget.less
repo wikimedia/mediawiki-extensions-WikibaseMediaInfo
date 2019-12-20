@@ -1,45 +1,49 @@
 @import 'mediawiki.mixins';
 
-.wbmi-input-widget {
-	// Styles for single inputs with an attached Add button.
-	&.wbmi-input-widget--single-line.wbmi-with-button {
-		.flex-display();
+// Styles for inputs meant to be displayed on a single line
+.wbmi-input-widget.wbmi-input-widget--single-line {
+	.flex-display();
+	.flex-wrap( nowrap );
 
-		.wbmi-input-widget__input {
-			.flex( 1 );
-			vertical-align: middle;
+	.wbmi-input-widget__input {
+		.flex( 1, 1, auto, 0);
+		vertical-align: middle;
+	}
 
-			// remove gap between input & button
-			margin-right: 0;
+	.wbmi-input-widget__button {
+		.flex( 0, 0, auto, 0);
+		vertical-align: middle;
+	}
 
-			// Input and button both have a border and we want to display the
-			// combination as 1 large element with only 1 dividing border, so we
-			// need to remove the input's border and radius where both elements meet.
-			// This covers the string text input and the quantity input's plus button.
-			/* stylelint-disable selector-class-pattern */
-			input[ type='text' ],
-			.oo-ui-numberInputWidget-plusButton > .oo-ui-buttonElement-button {
-				border-right: 0;
-				border-top-right-radius: 0;
-				border-bottom-right-radius: 0;
-			}
+	> *:not( :last-child ) {
+		// remove gap between input & button
+		margin-right: 0;
 
-			// Ensure number input takes up 100% width by removing mysterious right margin.
-			.oo-ui-numberInputWidget-field {
-				margin-left: auto;
-			}
-			/* stylelint-enable selector-class-pattern */
+		// Elements inside these rows will sometimes need to wrap (like in the
+		// case of the GlobeCoordinateWidget). For simplicity, the border on
+		// these elements is being left in since we'll want it in cases where
+		// the row has to wrap; border-radius can be removed, however.
+
+		/* stylelint-disable selector-class-pattern */
+		&:not( .oo-ui-numberInputWidget ) input, /* non-numeric input field */
+		.oo-ui-dropdownWidget-handle, /* dropdown */
+		.oo-ui-buttonElement-button { /* button & numeric input (+/- buttons) */
+			border-top-right-radius: 0;
+			border-bottom-right-radius: 0;
 		}
 
-		.wbmi-input-widget__button {
-			.flex( 0 );
-			vertical-align: middle;
+		// Ensure number input takes up 100% width by removing mysterious right margin.
+		.oo-ui-numberInputWidget-field {
+			margin-left: auto;
+		}
+		/* stylelint-enable selector-class-pattern */
+	}
 
-			// as with above input, get rid of the border radius where these elements meet
-			a {
-				border-top-left-radius: 0;
-				border-bottom-left-radius: 0;
-			}
+	> *:last-child {
+		// as with above input, get rid of the border radius where these elements meet
+		a {
+			border-top-left-radius: 0;
+			border-bottom-left-radius: 0;
 		}
 	}
 }

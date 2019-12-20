@@ -77,10 +77,10 @@ AbstractInputWidget.prototype.setData = function ( data ) {
  * Returns a promise that resolves with the relevant DataValue, or is
  * rejected when the input is invalid.
  *
- * @param {string} datatype The datatype of the relevant property to validate against
+ * @param {string} propertyId The id of the relevant property to validate against
  * @return {jQuery.Promise.<dataValues.DataValue>}
  */
-AbstractInputWidget.prototype.parseValue = function ( datatype ) {
+AbstractInputWidget.prototype.parseValue = function ( propertyId ) {
 	var api = wikibase.api.getLocationAgnosticMwApi(
 		mw.config.get( 'wbmiRepoApiUrl', mw.config.get( 'wbRepoApiUrl' ) )
 	);
@@ -96,7 +96,7 @@ AbstractInputWidget.prototype.parseValue = function ( datatype ) {
 	return api.get( {
 		action: 'wbparsevalue',
 		format: 'json',
-		datatype: datatype,
+		property: propertyId,
 		values: [ this.getRawValue() ],
 		options: this.getRawValueOptions(),
 		validate: true

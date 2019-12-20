@@ -5,6 +5,7 @@ var AnonWarning = require( './AnonWarning.js' ),
 	LicenseDialogWidget = require( './LicenseDialogWidget.js' ),
 	StatementWidget = require( 'wikibase.mediainfo.statements' ).StatementWidget,
 	StatementListDeserializer = require( 'wikibase.serialization' ).StatementListDeserializer,
+	dataTypesMap = mw.config.get( 'wbDataTypes' ),
 	StatementPanel;
 
 /**
@@ -43,7 +44,10 @@ StatementPanel = function StatementPanel( config ) {
 	this.licenseDialogWidget = new LicenseDialogWidget();
 
 	statementsJson = JSON.parse( this.$element.attr( 'data-statements' ) || '[]' );
-	this.statementWidget = new StatementWidget( $.extend( { showControls: true }, this.config ) );
+	this.statementWidget = new StatementWidget( $.extend( {
+		showControls: true,
+		valueType: dataTypesMap[ this.config.propertyType ].dataValueType
+	}, this.config ) );
 	// don't start subscribing to events until statementwidget has been
 	// pre-populated with storage data
 	this.statementWidget.resetData( deserializer.deserialize( statementsJson ) ).then( function () {

@@ -9,7 +9,7 @@ QUnit.module( 'StatementWidget', hooks.mediainfo, function () {
 			widget = new StatementWidget( {
 				$element: $( '<div>' ),
 				propertyId: 'P1',
-				propertyType: 'wikibase-item',
+				valueType: 'wikibase-entityid',
 				entityId: 'M1'
 			} ),
 			datamodel = require( 'wikibase.datamodel' ),
@@ -37,7 +37,7 @@ QUnit.module( 'StatementWidget', hooks.mediainfo, function () {
 			widget = new StatementWidget( {
 				$element: $( '<div>' ),
 				propertyId: 'P1',
-				propertyType: 'wikibase-item',
+				valueType: 'wikibase-entityid',
 				entityId: 'M1'
 			} ),
 			datamodel = require( 'wikibase.datamodel' ),
@@ -78,7 +78,7 @@ QUnit.module( 'StatementWidget', hooks.mediainfo, function () {
 			widget = new StatementWidget( {
 				$element: $( '<div>' ),
 				propertyId: 'P1',
-				propertyType: 'wikibase-item',
+				valueType: 'wikibase-entityid',
 				entityId: 'M1'
 			} ),
 			datamodel = require( 'wikibase.datamodel' ),
@@ -119,7 +119,7 @@ QUnit.module( 'StatementWidget', hooks.mediainfo, function () {
 			widget = new StatementWidget( {
 				$element: $( '<div>' ),
 				propertyId: 'P1',
-				propertyType: 'wikibase-item',
+				valueType: 'wikibase-entityid',
 				entityId: 'M1'
 			} ),
 			datamodel = require( 'wikibase.datamodel' ),
@@ -207,7 +207,7 @@ QUnit.module( 'StatementWidget', hooks.mediainfo, function () {
 			widget = new StatementWidget( {
 				$element: $( '<div>' ),
 				propertyId: 'P1',
-				propertyType: 'wikibase-item',
+				valueType: 'wikibase-entityid',
 				entityId: 'M1',
 				showControls: true
 			} ),
@@ -239,7 +239,7 @@ QUnit.module( 'StatementWidget', hooks.mediainfo, function () {
 			widget = new StatementWidget( {
 				$element: $( '<div>' ),
 				propertyId: 'P1',
-				propertyType: 'wikibase-item',
+				valueType: 'wikibase-entityid',
 				entityId: 'M1',
 				showControls: true
 			} ),

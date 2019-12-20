@@ -7,7 +7,7 @@ var inputs = require( './inputs/index.js' ),
 /**
  * @constructor
  * @param {Object} config
- * @param {string} config.propertyType property datatype (url, wikibase-item, etc)
+ * @param {string} config.propertyId property id
  * @param {string} config.valueType value datatype (string, wikibase-entityid, etc)
  */
 StatementInputWidget = function ( config ) {
@@ -21,7 +21,6 @@ StatementInputWidget = function ( config ) {
 		'templates/statements/StatementInputWidget.mustache+dom'
 	);
 };
-
 OO.inheritClass( StatementInputWidget, OO.ui.Widget );
 OO.mixinClass( StatementInputWidget, ComponentWidget );
 
@@ -82,14 +81,14 @@ StatementInputWidget.prototype.setInputType = function ( type ) {
 /**
  * Handle the value from the appropriate input widget and send to Wikibase for
  * parsing; the datatype used for parsing is based on this instance's
- * propertyType
+ * property
  *
  * @param {AbstractInputWidget} input
  */
 StatementInputWidget.prototype.onAdd = function ( input ) {
 	var self = this;
 
-	input.parseValue( this.config.propertyType ).then(
+	input.parseValue( this.config.propertyId ).then(
 		function ( dataValue ) {
 			self.clearInput();
 			self.setState( { error: null } );

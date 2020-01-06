@@ -86,4 +86,11 @@ StringInputWidget.prototype.setData = function ( data ) {
 	return this.setState( { value: this.input.getValue() } );
 };
 
+/**
+ * @inheritDoc
+ */
+StringInputWidget.prototype.flagAsInvalid = function () {
+	this.input.setValidityFlag( false );
+};
+
 module.exports = StringInputWidget;

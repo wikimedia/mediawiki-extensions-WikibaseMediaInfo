@@ -224,7 +224,6 @@ StatementWidget.prototype.createItem = function ( dataValue ) {
 	widget.connect( this, { delete: [ 'emit', 'change' ] } );
 	widget.connect( this, { change: [ 'setEditing', true ] } );
 	widget.connect( this, { change: [ 'emit', 'change' ] } );
-	widget.connect( widget, { change: [ 'setError', '' ] } );
 
 	return widget;
 };
@@ -442,6 +441,10 @@ StatementWidget.prototype.submit = function ( baseRevId ) {
 
 	this.setEditing( false );
 	this.setDisabled( true );
+
+	self.getItems().forEach( function ( widget ) {
+		widget.setError( '' );
+	} );
 
 	changedStatements.forEach( function ( statement ) {
 		promise = promise.then( function ( statement, prevResponse ) {

@@ -265,12 +265,4 @@ ItemWidget.prototype.setData = function ( data ) {
 	} ) );
 };
 
-/**
- * @param {string} text
- * @return {jQuery.Deferred}
- */
-ItemWidget.prototype.setError = function ( text ) {
-	return this.setState( { error: text } );
-};
-
 module.exports = ItemWidget;

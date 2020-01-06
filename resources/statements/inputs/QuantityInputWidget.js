@@ -94,4 +94,11 @@ QuantityInputWidget.prototype.setData = function ( data ) {
 	return this.setState( { value: value } );
 };
 
+/**
+ * @inheritDoc
+ */
+QuantityInputWidget.prototype.flagAsInvalid = function () {
+	this.input.setValidityFlag( false );
+};
+
 module.exports = QuantityInputWidget;

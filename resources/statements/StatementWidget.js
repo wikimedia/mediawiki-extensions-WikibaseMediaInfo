@@ -29,44 +29,24 @@ var dataTypesMap = mw.config.get( 'wbDataTypes' ),
  * @param {string[]} [config.tags] Change tags to apply to edits
  */
 StatementWidget = function ( config ) {
-	// fallback for backward compatibility from before this was required and
-	// only 'wikibase-item' was supported
-	var title,
-		propertyType,
-		valueType;
+	var valueType = dataTypesMap[ config.propertyType ].dataValueType;
 
-	config = config || {};
 	config.helpUrls = config.helpUrls || {};
 	config.isDefaultProperty = !!config.isDefaultProperty;
 	this.config = config;
-
-	if ( config.propertyType !== undefined ) {
-		propertyType = config.propertyType;
-		valueType = dataTypesMap[ propertyType ].dataValueType;
-	} else {
-		// fallback from before propertyType was required, just to make
-		// sure things still work the same for existing callers that have
-		// not been updated
-		valueType = (
-			config.properties || mw.config.get( 'wbmiProperties' ) || {}
-		)[ config.propertyId ] || 'string';
-	}
-
-	title = config.title ||
-		( mw.config.get( 'wbmiPropertyTitles' ) || {} )[ config.propertyId ] || '';
 
 	this.state = {
 		entityId: config.entityId,
 		propertyId: config.propertyId,
 		valueType: valueType,
 		initialData: new datamodel.StatementList(),
-		title: title,
+		title: config.title || ( mw.config.get( 'wbmiPropertyTitles' ) || {} )[ config.propertyId ] || '',
 		editing: config.editing || false
 	};
 
 	this.input = new StatementInputWidget( {
 		classes: [ 'wbmi-statement-input' ],
-		propertyType: propertyType,
+		propertyType: config.propertyType,
 		valueType: valueType,
 		disabled: this.disabled
 	} );

@@ -29,7 +29,7 @@
 		"sinon": "7.2.7",
 		"stylelint": "9.10.1",
 		"stylelint-config-wikimedia": "0.6.0",
-		"tap-mocha-reporter": "3.0.7",
+		"tap-mocha-reporter": "5.0.1",
 		"tmp": "0.1.0",
 		"wdio-mediawiki": "0.4.0",
 		"wdio-mocha-framework": "0.6.4",

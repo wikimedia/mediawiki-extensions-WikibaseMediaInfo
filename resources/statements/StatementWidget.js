@@ -58,6 +58,7 @@ StatementWidget = function ( config ) {
 	this.state = {
 		entityId: config.entityId,
 		propertyId: config.propertyId,
+		valueType: valueType,
 		initialData: new datamodel.StatementList(),
 		title: title,
 		editing: config.editing || false
@@ -278,8 +279,12 @@ StatementWidget.prototype.setData = function ( data ) {
 		var mainSnak = statement.getClaim().getMainSnak(),
 			widget = existing[ i ];
 
-		if ( statement.getClaim().getMainSnak().getPropertyId() !== self.state.propertyId ) {
-			throw new Error( 'Invalid statement' );
+		if ( mainSnak.getPropertyId() !== self.state.propertyId ) {
+			throw new Error( 'Invalid statement: property ID mismatch' );
+		}
+
+		if ( mainSnak.getValue().getType() !== self.state.valueType ) {
+			throw new Error( 'Invalid statement: value type mismatch' );
 		}
 
 		if ( !( mainSnak instanceof datamodel.PropertyValueSnak ) ) {
@@ -287,10 +292,6 @@ StatementWidget.prototype.setData = function ( data ) {
 			data.removeItem( statement );
 			return;
 		}
-
-		// TODO: is this necessary? Existing snak will only give us value
-		// datatype; if things have changed somehow (how?) then we need the property datatype
-		// self.input.setInputType( mainSnak.getValue().getType() );
 
 		if ( widget !== null ) {
 			self.moveItem( widget, i );

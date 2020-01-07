@@ -100,6 +100,13 @@
 	height: 1em;
 };
 
+@max-container-width: {
+  @media screen and ( min-width: @breakpoint-desktop ) {
+	box-sizing: border-box;
+	max-width: 800px;
+  }
+};
+
 // Once Federation feature is implemented, this ruleset
 // will probably need to be adjusted
 @wikidata-link: {

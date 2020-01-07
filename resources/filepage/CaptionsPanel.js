@@ -59,7 +59,6 @@ CaptionsPanel = function ( config ) {
 	this.warnWithinMaxCaptionLength = config.warnWithinMaxCaptionLength;
 	this.savedCaptionsData = this.captionsDataFromMediaInfoEntity( config.mediaInfo );
 
-	// TODO: can we make the dependency on WB object more explicit?
 	this.api = wikibase.api.getLocationAgnosticMwApi(
 		mw.config.get(
 			'wbmiRepoApiUrl',

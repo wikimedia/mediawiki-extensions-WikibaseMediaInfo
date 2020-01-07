@@ -286,6 +286,9 @@ return [
 		'prefetching-term-lookup-callback' => function ( SingleEntitySourceServices $services ) {
 			return new MediaInfoPrefetchingTermLookup( $services->getEntityRevisionLookup() );
 		},
+		'entity-id-lookup-callback' => function () {
+			return MediaInfoServices::getMediaInfoIdLookup();
+		},
 		'lua-entity-module' => 'mw.wikibase.mediainfo.entity',
 	]
 ];

@@ -18,7 +18,7 @@
 		"serialization/serialization": "~3.2|~4.0",
 		"wikibase/data-model": "^9.0.1",
 		"wikibase/data-model-serialization": "~2.0",
-		"wikibase/data-model-services": "~3.6"
+		"wikibase/data-model-services": "~4.0"
 	},
 	"require-dev": {
 		"jakub-onderka/php-console-highlighter": "0.4.0",

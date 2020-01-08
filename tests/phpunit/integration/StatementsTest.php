@@ -17,7 +17,7 @@ use Wikimedia\Assert\Assert;
 *
  * @group medium
  * @group upload
- * @group database
+ * @group Database
  * @coversNothing
  */
 class StatementsTest extends WBMIApiTestCase {

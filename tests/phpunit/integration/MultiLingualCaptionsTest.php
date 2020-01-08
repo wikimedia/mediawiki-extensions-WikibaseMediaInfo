@@ -18,7 +18,7 @@ use Wikibase\Repo\WikibaseRepo;
  *
  * @group medium
  * @group upload
- * @group database
+ * @group Database
  * @coversNothing
  */
 class MultiLingualCaptionsTest extends WBMIApiTestCase {

@@ -8,6 +8,7 @@ use Wikibase\Content\EntityHolder;
 use Wikibase\DataModel\Entity\EntityId;
 use Wikibase\DataModel\Entity\EntityIdParser;
 use Wikibase\Lib\Store\EntityContentDataCodec;
+use Wikibase\Lib\Store\NullEntityTermStoreWriter;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\MediaInfo\DataModel\MediaInfoId;
 use Wikibase\MediaInfo\Services\FilePageLookup;
@@ -20,7 +21,6 @@ use Wikibase\Search\Elastic\Fields\DescriptionsField;
 use Wikibase\Search\Elastic\Fields\LabelCountField;
 use Wikibase\Search\Elastic\Fields\LabelsField;
 use Wikibase\Store\EntityIdLookup;
-use Wikibase\TermIndex;
 use Wikimedia\Assert\Assert;
 
 /**
@@ -52,7 +52,6 @@ class MediaInfoHandler extends EntityHandler {
 	private $titleForIdCache;
 
 	/**
-	 * @param TermIndex $termIndex
 	 * @param EntityContentDataCodec $contentCodec
 	 * @param EntityConstraintProvider $constraintProvider
 	 * @param ValidatorErrorLocalizer $errorLocalizer
@@ -63,7 +62,6 @@ class MediaInfoHandler extends EntityHandler {
 	 * @param callable|null $legacyExportFormatDetector
 	 */
 	public function __construct(
-		TermIndex $termIndex,
 		EntityContentDataCodec $contentCodec,
 		EntityConstraintProvider $constraintProvider,
 		ValidatorErrorLocalizer $errorLocalizer,
@@ -76,7 +74,7 @@ class MediaInfoHandler extends EntityHandler {
 	) {
 		parent::__construct(
 			MediaInfoContent::CONTENT_MODEL_ID,
-			$termIndex,
+			new NullEntityTermStoreWriter(),
 			$contentCodec,
 			$constraintProvider,
 			$errorLocalizer,

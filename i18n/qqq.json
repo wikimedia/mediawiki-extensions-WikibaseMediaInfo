@@ -11,6 +11,10 @@
 	},
 	"action-mediainfo-term": "{{doc-action|mediainfo-term}}",
 	"right-mediainfo-term": "{{doc-right|mediainfo-term}}\nRight to alter the [[d:Special:MyLanguage/Wikidata:Glossary#Term|terms]] of [[d:Wikidata:Glossary#media info|media info]] entities.",
+	"action-mediasearch": "{{doc-action|mediasearch}}",
+	"right-mediasearch": "{{doc-right|mediasearch}}",
+	"group-mediasearch-tester": "{{doc-group|mediasearch-tester}}",
+	"group-mediasearch-tester-member": "{{doc-group|mediasearch-tester|member}}",
 	"slot-name-mediainfo": "Label for the part of the page on which structured media info is stored.",
 	"wikibase-entity-mediainfo": "How we refer to entities of type media info. See also the Wikidata glossary on [[d:Wikidata:Glossary#mediainfo|media info]].",
 	"wikibase-mediainfo-summary-wbsetlabel-add": "{{wikibase summary messages|mediainfo|Automatic edit summary generated when creating a file's caption, which appears in the ''captions'' block underneath the thumbnail on the image page. Example of a full edit summary is \"Added [en] caption: A cat relaxes in the sunshine.\".}}",
@@ -115,5 +119,13 @@
 	"wikibasemediainfo-globecoordinate-map-button-text": "Text for button to expand coordinate input to select on map",
 	"wikibasemediainfo-search-suggestions-title-depicts": "Title of 'depicts' search suggestions",
 	"wikibasemediainfo-search-suggestions-preference-label": "Title of preference setting to enable search autocomplete suggestions based on structured data",
-	"wikibasemediainfo-search-suggestions-preference-disable-confirm": "Text displayed when dismissing search autocomplete suggestions based on structured data, asking to confirm they want to remove such results"
+	"wikibasemediainfo-search-suggestions-preference-disable-confirm": "Text displayed when dismissing search autocomplete suggestions based on structured data, asking to confirm they want to remove such results",
+	"wikibasemediainfo-special-mediasearch-title": "Title text for the media search special page",
+	"wikibasemediainfo-special-mediasearch-continue": "Text for button to see next page of results",
+	"wikibasemediainfo-special-mediasearch-notice": "Text to inform the users that the media search feature is experimental",
+	"apihelp-query+mediasearch-summary": "{{doc-apihelp-summary|query+mediasearch}}",
+	"apihelp-query+mediasearch-example": "{{doc-apihelp-example|query+mediasearch}}.",
+	"apihelp-query+mediasearch-param-search": "{{doc-apihelp-param|query+mediasearch|search}}",
+	"apihelp-query+mediasearch-param-limit": "{{doc-apihelp-param|query+mediasearch|limit}}",
+	"apihelp-query+mediasearch-param-continue": "{{doc-apihelp-param|query+mediasearch|continue}}"
 }

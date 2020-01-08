@@ -279,6 +279,37 @@
 				"mobile"
 			]
 		},
+		"wikibase.mediainfo.mediasearch": {
+			"packageFiles": [
+				"resources/mediasearch/index.js",
+				"resources/mediasearch/AutocompleteSearchInputWidget.js",
+				"resources/mediasearch/SearchResultsWidget.js"
+			],
+			"dependencies": [
+				"wikibase.mediainfo.mediasearch.styles",
+				"jquery.spinner",
+				"oojs",
+				"oojs-ui-core",
+				"oojs-ui-widgets",
+				"wikibase.api.RepoApi"
+			],
+			"templates": [
+				"templates/mediasearch/SearchResultsWidget.mustache+dom"
+			],
+			"targets": [
+				"desktop",
+				"mobile"
+			]
+		},
+		"wikibase.mediainfo.mediasearch.styles": {
+			"styles": [
+				"resources/mediasearch/SearchResultsWidget.less"
+			],
+			"targets": [
+				"desktop",
+				"mobile"
+			]
+		},
 		"wikibase.mediainfo.statements": {
 			"packageFiles": [
 				"resources/statements/index.js",
@@ -443,9 +474,23 @@
 		"wbmi-wikidata-link-notice-dismissed": 0,
 		"wbmi-search-suggestions": 1
 	},
-	"SpecialPages": {},
+	"APIListModules": {
+		"mediasearch": {
+			"class": "Wikibase\\MediaInfo\\Api\\ApiQueryMediaSearch",
+			"factory": "Wikibase\\MediaInfo\\Api\\ApiQueryMediaSearch::factory"
+		}
+	},
+	"SpecialPages": {
+		"MediaSearch": "Wikibase\\MediaInfo\\Special\\SpecialMediaSearch"
+	},
+	"ExtensionMessagesFiles": {
+		"WikibaseMediaInfoAlias": "WikibaseMediaInfo.i18n.alias.php"
+	},
 	"manifest_version": 2,
 	"GroupPermissions": {
+		"mediasearch-tester": {
+			"mediasearch": true
+		},
 		"*": {
 			"mediainfo-term": true
 		}
@@ -456,6 +501,7 @@
 		}
 	},
 	"AvailableRights": [
-		"mediainfo-term"
+		"mediainfo-term",
+		"mediasearch"
 	]
 }

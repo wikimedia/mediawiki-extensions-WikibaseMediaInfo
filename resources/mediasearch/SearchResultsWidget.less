@@ -1,0 +1,157 @@
+@import 'mediawiki.mixins';
+@import '../mediainfo-variables.less';
+
+.wbmi-special-search {
+	.flex-display();
+	.flex-wrap( wrap );
+	justify-content: space-between;
+	align-items: center;
+	margin-top: 2em;
+}
+
+.wbmi-special-search--result {
+	margin: @sm-spacing;
+	text-align: center;
+	// make sure that portrait images with virtually no width left still
+	// have sufficient width for a description
+	min-width: 160px;
+	// and that landscape images don't take up too much width
+	max-width: 400px;
+	transition: transform 0.1s;
+	z-index: 0;
+}
+
+.wbmi-special-search--imagelink {
+	display: inline-block;
+	position: relative;
+}
+
+.wbmi-special-search--image {
+	// if landscape image exceeds acceptable width, don't distort the
+	// image, simply cover the available space
+	max-width: 100%;
+	object-fit: none;
+	// we specifically ask for 200px thumbs already, so this should not
+	// be necessary, but the audio placeholders seem to be 400px
+	// regardless of the requested thumbnail size
+	height: 200px;
+}
+
+.wbmi-special-search--result:hover {
+	.transform( scale( 1.1 ) );
+	z-index: 1;
+
+	.wbmi-special-search--image {
+		.box-shadow(4px 4px 5px -2px @base20);
+	}
+}
+
+.wbmi-special-search--notice {
+	display: inline-block;
+	padding: @base-spacing;
+	margin: @base-spacing 0;
+	border: @base-border;
+	border-color: @yellow50;
+	background: @yellow90;
+}
+
+.wbmi-special-search--extra {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	padding: @xs-spacing;
+	background: @color-background;
+	opacity: 0.8;
+	color: @base20;
+	font-size: @sm-font-size;
+}
+
+.wbmi-special-search--dimensions,
+.wbmi-special-search--license {
+	display: block;
+	text-align: right;
+}
+
+.wbmi-special-search--text {
+	display: block;
+	margin: @xs-spacing;
+	text-align: left;
+}
+
+.wbmi-special-search--title {
+	display: block;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	color: @color-primary;
+	font-size: @base-font-size;
+}
+
+.wbmi-special-search--label {
+	display: block;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	color: @base20;
+	font-size: @sm-font-size;
+
+	// other markup may end up nested inside here when no SDC label is
+	// available, falling back to wikitext descriptions - let's make sure
+	// no block elements break out of this, and any content is displayed
+	// as normal as possible
+	object {
+		&:empty {
+			// PHP template parser (LightnCandy) doesn't treat empty strings
+			// as false in {{#}} conditions, so empty content might show up
+			// here, in which case the <object> tag will have a fixed height,
+			// when in fact we don't even want it to show up at all
+			display: none;
+		}
+
+		* {
+			display: inline;
+			margin: 0;
+			padding: 0;
+			border: 0;
+			font-style: normal;
+			font-weight: normal;
+			vertical-align: inherit;
+			font-size: inherit;
+			font-family: inherit;
+			line-height: inherit;
+
+			&:not( a ) {
+				// except for other links - those are allowed color &
+				// decoration on hover
+				text-decoration: none;
+				color: inherit;
+			}
+		}
+
+		audio,
+		br,
+		button,
+		canvas,
+		embed,
+		figure,
+		iframe,
+		img,
+		input,
+		map,
+		object,
+		optgroup,
+		option,
+		picture,
+		select,
+		textarea,
+		video {
+			// and on the off-chance any of these exist in description, don't
+			// show them at all...
+			display: none;
+		}
+	}
+}
+
+.wbmi-special-search--continue {
+	text-align: center;
+}

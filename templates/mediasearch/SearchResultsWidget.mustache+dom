@@ -1,0 +1,73 @@
+<div class="wbmi-special-search">
+	{{#results}}
+		<div
+			class="wbmi-special-search--result"
+			{{!
+				Apply thumbnail width to container, so that we can overflow the
+				title & label properly, at the same width of the image
+				... except for audio files (which have a duration), whose
+				thumbnails are always 400px
+			}}
+			{{^imageinfo.0.duration}}{{#imageinfo.0.thumbwidth}}style="width: {{.}}px"{{/imageinfo.0.thumbwidth}}{{/imageinfo.0.duration}}
+		>
+			<a class="wbmi-special-search--imagelink" href="{{canonicalurl}}" title="{{title}}">
+				<img
+					{{#imageinfo.0.thumburl}}src="{{.}}"{{/imageinfo.0.thumburl}}
+					{{^imageinfo.0.duration}}
+						{{#imageinfo.0.thumbwidth}}width="{{.}}"{{/imageinfo.0.thumbwidth}}
+						{{#imageinfo.0.thumbheight}}height="{{.}}"{{/imageinfo.0.thumbheight}}
+					{{/imageinfo.0.duration}}
+					{{#terms.label}}alt="{{.}}"{{/terms.label}}
+					class="wbmi-special-search--image"
+					loading="lazy"
+				/>
+
+				<span class="wbmi-special-search--extra">
+					{{^imageinfo.0.duration}}
+						<span class="wbmi-special-search--dimensions">
+							{{imageinfo.0.width}} x {{imageinfo.0.height}}
+						</span>
+					{{/imageinfo.0.duration}}
+
+					{{#imageinfo.0.extmetadata.LicenseShortName}}
+						<abbr
+							class="wbmi-special-search--license"
+							{{#imageinfo.0.extmetadata.UsageTerms}}title="{{value}}"{{/imageinfo.0.extmetadata.UsageTerms}}
+						>
+							{{value}}
+						</abbr>
+					{{/imageinfo.0.extmetadata.LicenseShortName}}
+				</span>
+			</a>
+
+			<a href="{{canonicalurl}}" class="wbmi-special-search--text">
+				<span class="wbmi-special-search--title">
+					{{#imageinfo.0.extmetadata.ObjectName}}{{value}}{{/imageinfo.0.extmetadata.ObjectName}}
+					{{^imageinfo.0.extmetadata.ObjectName}}{{title}}{{/imageinfo.0.extmetadata.ObjectName}}
+				</span>
+
+				{{#terms.label}}
+				<span class="wbmi-special-search--label">
+					{{.}}
+				</span>
+				{{/terms.label}}
+
+				{{^terms.label}}
+				{{#imageinfo.0.extmetadata.ImageDescription}}
+				<span class="wbmi-special-search--label">
+					{{!
+						This is a bit of a hack: ImageDescription can contain simple HTML,
+						which in turn can contain another link, and nesting <a> tags is
+						forbidden (and browsers enforce it by implicitly terminating
+						previously open <a> tags, i.e. this link)
+						Wrapped inside <object>, however, this seems to work just fine and
+						as expected!
+					 }}
+					<object>{{{value}}}</object>
+				</span>
+				{{/imageinfo.0.extmetadata.ImageDescription}}
+				{{/terms.label}}
+			</a>
+		</div>
+	{{/results}}
+</div>

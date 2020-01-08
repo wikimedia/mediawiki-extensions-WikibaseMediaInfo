@@ -1,0 +1,22 @@
+<form method="get" action="{{page}}">
+	{{#querystring}}<input type="hidden" name="{{key}}" value="{{value}}" />{{/querystring}}
+	{{{inputWidget}}}
+</form>
+
+{{#notice}}
+	<span class="wbmi-special-search--notice">
+		{{notice}}
+	</span>
+{{/notice}}
+
+{{>SearchResultsWidget}}
+
+{{#continue}}
+<form method="get" action="{{page}}" class="wbmi-special-search--continue">
+	{{#querystring}}<input type="hidden" name="{{key}}" value="{{value}}" />{{/querystring}}
+	<input type="hidden" name="q" value="{{term}}" />
+	{{#limit}}<input type="hidden" name="limit" value="{{limit}}" />{{/limit}}
+	<input type="hidden" name="continue" value="{{continue}}" />
+	{{{nextButton}}}
+</form>
+{{/continue}}

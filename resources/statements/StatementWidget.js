@@ -268,14 +268,14 @@ StatementWidget.prototype.setData = function ( data ) {
 			throw new Error( 'Invalid statement: property ID mismatch' );
 		}
 
-		if ( mainSnak.getValue().getType() !== self.state.valueType ) {
-			throw new Error( 'Invalid statement: value type mismatch' );
-		}
-
 		if ( !( mainSnak instanceof datamodel.PropertyValueSnak ) ) {
 			// ignore value-less snak
 			data.removeItem( statement );
 			return;
+		}
+
+		if ( mainSnak.getValue().getType() !== self.state.valueType ) {
+			throw new Error( 'Invalid statement: value type mismatch' );
 		}
 
 		if ( widget !== null ) {

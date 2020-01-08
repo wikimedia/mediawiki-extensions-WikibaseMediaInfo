@@ -22,6 +22,7 @@ GlobeCoordinateInputWidget = function MediaInfoStatementsGlobeCoordinateInputWid
 		longitude: '',
 		precision: '',
 		isQualifier: !!config.isQualifier,
+		expanded: false,
 		kartographer: false
 	};
 
@@ -30,7 +31,7 @@ GlobeCoordinateInputWidget = function MediaInfoStatementsGlobeCoordinateInputWid
 		isRequired: true,
 		type: 'number',
 		validate: this.validateInput.bind( this, 'latitude' ),
-		placeholder: mw.message( 'wikibasemediainfo-latitude-input-placeholder' ).text()
+		placeholder: mw.message( 'wikibasemediainfo-latitude-input-label' ).text()
 	} );
 
 	this.longitudeInput = new OO.ui.TextInputWidget( {
@@ -38,7 +39,7 @@ GlobeCoordinateInputWidget = function MediaInfoStatementsGlobeCoordinateInputWid
 		isRequired: true,
 		type: 'number',
 		validate: this.validateInput.bind( this, 'longitude' ),
-		placeholder: mw.message( 'wikibasemediainfo-longitude-input-placeholder' ).text()
+		placeholder: mw.message( 'wikibasemediainfo-longitude-input-label' ).text()
 	} );
 
 	this.precisionInput = new OO.ui.DropdownInputWidget( {
@@ -82,16 +83,27 @@ OO.mixinClass( GlobeCoordinateInputWidget, ComponentWidget );
  * @inheritDoc
  */
 GlobeCoordinateInputWidget.prototype.getTemplateData = function () {
-	var button = new OO.ui.ButtonWidget( {
-		classes: [ 'wbmi-input-widget__button' ],
-		label: mw.message( 'wikibasemediainfo-string-input-button-text' ).text(),
-		flags: [ 'primary', 'progressive' ],
-		disabled:
-			this.latitudeInput.getValue() === '' ||
-			this.longitudeInput.getValue() === '' ||
-			this.precisionInput.getValue() === ''
-	} );
-	button.connect( this, { click: [ 'emit', 'add', this ] } );
+	var submitButton = new OO.ui.ButtonWidget( {
+			classes: [ 'wbmi-input-widget__button' ],
+			label: mw.message( 'wikibasemediainfo-globecoordinate-input-button-text' ).text(),
+			flags: [ 'primary', 'progressive' ],
+			disabled:
+				this.latitudeInput.getValue() === '' ||
+				this.longitudeInput.getValue() === '' ||
+				this.precisionInput.getValue() === ''
+		} ),
+		expandButton = new OO.ui.ButtonWidget( {
+			classes: [
+				'wbmi-input-widget__button',
+				'wbmi-input-widget__button--map-expand'
+			],
+			label: mw.message( 'wikibasemediainfo-globecoordinate-map-button-text' ).text(),
+			framed: true,
+			icon: 'mapPin'
+		} );
+
+	submitButton.connect( this, { click: [ 'emit', 'add', this ] } );
+	expandButton.connect( this, { click: 'onExpandClick' } );
 
 	return {
 		isQualifier: this.state.isQualifier,
@@ -107,7 +119,9 @@ GlobeCoordinateInputWidget.prototype.getTemplateData = function () {
 			label: mw.message( 'wikibasemediainfo-precision-input-label' ).text(),
 			input: this.precisionInput
 		},
-		button: button,
+		submitButton: submitButton,
+		expandButton: expandButton,
+		expanded: this.state.expanded,
 		kartographer: this.state.kartographer,
 		map: this.$map
 	};
@@ -154,18 +168,16 @@ GlobeCoordinateInputWidget.prototype.render = function () {
 
 GlobeCoordinateInputWidget.prototype.initializeMap = function ( $element ) {
 	var map = kartoBox.map( {
-			container: $element[ 0 ],
-			center: [ 20, 0 ],
-			zoom: 2,
-			allowFullScreen: false,
-			maxBounds: [
-				[ 90, -180 ],
-				[ -90, 180 ]
-			],
-			minZoom: 1
-		} ),
-		// eslint-disable-next-line no-jquery/no-global-selector
-		sdTab = $( '.wbmi-structured-data-header' ).closest( '.wbmi-tab' )[ 0 ];
+		container: $element[ 0 ],
+		center: [ 20, 0 ],
+		zoom: 2,
+		allowFullScreen: false,
+		maxBounds: [
+			[ 90, -180 ],
+			[ -90, 180 ]
+		],
+		minZoom: 1
+	} );
 
 	// because the map node we'll be attaching this map to has not yet been
 	// added to the DOM, it won't know what size it needs to initialize with...
@@ -180,19 +192,6 @@ GlobeCoordinateInputWidget.prototype.initializeMap = function ( $element ) {
 			// the map from DOM, causing the same thing over and over
 		}
 	} ).observe( document, { childList: true, subtree: true } );
-
-	// a second Observer is needed to watch for changes in the visibility state
-	// of the structured data tab; leaflet maps can't initialize properly in a
-	// hidden element even when it is properly embedded in the DOM, so
-	// re-calculate size when visibility state changes
-	new MutationObserver( function () {
-		if ( $element.parents( 'body ' ).length > 0 ) {
-			map.invalidateSize();
-		}
-	} ).observe( sdTab, {
-		attributes: true,
-		attributeFilter: [ 'aria-hidden' ]
-	} );
 
 	return map;
 };
@@ -256,7 +255,8 @@ GlobeCoordinateInputWidget.prototype.getData = function () {
 	var latitude = this.latitudeInput.getValue(),
 		longitude = this.longitudeInput.getValue();
 
-	if ( !this.validateInput( 'latitude', latitude ) || !this.validateInput( 'longitude', longitude ) ) {
+	if ( !this.validateInput( 'latitude', latitude ) ||
+		!this.validateInput( 'longitude', longitude ) ) {
 		throw new Error( 'Invalid coordinate input' );
 	}
 
@@ -377,6 +377,18 @@ GlobeCoordinateInputWidget.prototype.zoomToPrecision = function ( zoom, latitude
 	}, Math.max.apply( null, precisions ) );
 };
 
+GlobeCoordinateInputWidget.prototype.onExpandClick = function () {
+	this.latitudeInput.$input.attr(
+		'placeholder',
+		mw.message( 'wikibasemediainfo-latitude-input-placeholder' ).text()
+	);
+	this.longitudeInput.$input.attr(
+		'placeholder',
+		mw.message( 'wikibasemediainfo-longitude-input-placeholder' ).text()
+	);
+	this.setState( { expanded: true } );
+};
+
 /**
  * @param {Object} e
  */
@@ -385,7 +397,9 @@ GlobeCoordinateInputWidget.prototype.onMapClick = function ( e ) {
 
 	this.latitudeInput.setValue( String( coordinates.lat ) );
 	this.longitudeInput.setValue( String( coordinates.lng ) );
-	this.precisionInput.setValue( String( this.zoomToPrecision( this.map.getZoom(), coordinates.lat ) ) );
+	this.precisionInput.setValue( String(
+		this.zoomToPrecision( this.map.getZoom(), coordinates.lat )
+	) );
 };
 
 module.exports = GlobeCoordinateInputWidget;

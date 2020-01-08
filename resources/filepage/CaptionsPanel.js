@@ -36,12 +36,12 @@ var AnonWarning = require( './AnonWarning.js' ),
  *
  * @constructor
  * @param {Object} [config]
- * @cfg {int} warnWithinMaxCaptionLength Show a warning when the caption length is within X
+ * @param {datamodel.MediaInfo} config.mediaInfo
+ * @param {boolean} [config.canEdit] True if the captions should be editable on the page
+ * @param {string[]} [config.userLanguages] The language the user has indicated that they use (via babel)
+ * @param {string[]} [config.languageFallbackChain]
+ * @param {int} [config.warnWithinMaxCaptionLength] Show a warning when the caption length is within X
  *   characters of the max
- * @cfg {string[]} [userLanguages] The language the user has indicated that they use (via babel)
- * @cfg {string[]} [languageFallbackChain]
- * @cfg {wb.datamodel.MediaInfo} [mediaInfo]
- * @cfg {boolean} canEdit True if the captions should be editable on the page
  */
 CaptionsPanel = function ( config ) {
 	var self = this;
@@ -55,7 +55,7 @@ CaptionsPanel = function ( config ) {
 
 	this.userLanguages = config.userLanguages || [];
 	this.languageFallbackChain = config.languageFallbackChain || [ 'en' ];
-	this.canEdit = config.canEdit;
+	this.canEdit = config.canEdit || true;
 	this.warnWithinMaxCaptionLength = config.warnWithinMaxCaptionLength;
 	this.savedCaptionsData = this.captionsDataFromMediaInfoEntity( config.mediaInfo );
 
@@ -103,7 +103,7 @@ OO.mixinClass( CaptionsPanel, ComponentWidget );
 OO.mixinClass( CaptionsPanel, OO.ui.mixin.PendingElement );
 
 /**
- * @param {wb.datamodel.MediaInfo} mediaInfo
+ * @param {datamodel.MediaInfo} mediaInfo
  * @return {Object} An object with langCodes as keys and CaptionData objects as values
  * @private
  */
@@ -757,7 +757,7 @@ CaptionsPanel.prototype.sendData = function () {
  * @return {CaptionDataEditor}
  */
 CaptionsPanel.prototype.createCaptionDataEditor = function ( guid, captionData ) {
-	var captionDataEditor = new CaptionDataEditor( guid, captionData );
+	var captionDataEditor = new CaptionDataEditor( guid, captionData, { warnWithinMaxCaptionLength: this.warnWithinMaxCaptionLength } );
 	this.enableCaptionDataEditor( captionDataEditor );
 	return captionDataEditor;
 };

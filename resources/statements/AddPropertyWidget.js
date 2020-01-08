@@ -7,7 +7,7 @@ var ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
 /**
  * @constructor
  * @param {Object} [config]
- * @cfg {array} [propertyIds] An array of property ids of statements that exist on the page
+ * @param {Array} [config.propertyIds] An array of property ids of statements that exist on the page
  */
 AddPropertyWidget = function MediaInfoAddPropertyWidget( config ) {
 	config = config || {};

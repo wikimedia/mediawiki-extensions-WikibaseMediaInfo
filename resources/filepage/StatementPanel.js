@@ -14,15 +14,14 @@ var AnonWarning = require( './AnonWarning.js' ),
  * @mixins OO.ui.mixin.PendingElement
  *
  * @constructor
- * @param {Object} [config]
- * @cfg {jQuery} $element
- * @cfg {string} propertyId
- * @cfg {string} propertyType
- * @cfg {string} entityId
- * @cfg {Object} [panelRemovalListener] Object on which onStatementPanelRemoved() will be called if
- *  this panel is removed from the DOM
- * @cfg {Object} helpUrls An object with property id as members and help urls for the property
- *  as values e.g. { P1: "https://commons.wikimedia.org/wiki/Special:MyLanguage/Commons:Depicts" }
+ * @param {Object} config Configuration options
+ * @param {jQuery} config.$element Node to replace with statement panel
+ * @param {string} config.entityId Entity ID (e.g. M123 id of the file you just uploaded)
+ * @param {string} config.propertyId Property ID (e.g. P123 id of `depicts` property)
+ * @param {string} config.propertyType Property datatype (e.g. 'wikibase-item', 'url', 'string', ...)
+ * @param {Object} [config.helpUrls]  An object with property id as members and help urls for
+ *  the property as values
+ *  e.g. { P1: "https://commons.wikimedia.org/wiki/Special:MyLanguage/Commons:Depicts" }
  */
 StatementPanel = function StatementPanel( config ) {
 	var self = this,
@@ -54,8 +53,6 @@ StatementPanel = function StatementPanel( config ) {
 		self.statementWidget.connect( self, { change: 'makeEditable' } ); // changed otherwise (e.g. 'make prominent')
 		self.statementWidget.connect( self, { widgetRemoved: 'remove' } );
 	} );
-
-	this.panelRemovalListener = config.panelRemovalListener || undefined;
 
 	// attach the widget to DOM, replacing the server-side rendered equivalent
 	this.$element.empty().append( this.statementWidget.$element );

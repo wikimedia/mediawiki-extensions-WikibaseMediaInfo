@@ -15,7 +15,7 @@ var dataTypesMap = mw.config.get( 'wbDataTypes' ),
  * @param {Object} config Configuration options
  * @param {string} config.entityId Entity ID (e.g. M123 id of the file you just uploaded)
  * @param {string} config.propertyId Property ID (e.g. P123 id of `depicts` property)
- * @param {string} config.propertyType Property datatype (e.g. 'wikibase-item', 'url', 'string', ...)
+ * @param {string} config.valueType Datavalue type (e.g. 'wikibase-entityid', 'string', ...)
  * @param {Object} [config.data] Initial data
  * @param {string} [config.title]
  * @param {string} [config.editing] True for edit mode, False for read mode
@@ -29,7 +29,12 @@ var dataTypesMap = mw.config.get( 'wbDataTypes' ),
  * @param {string[]} [config.tags] Change tags to apply to edits
  */
 StatementWidget = function ( config ) {
-	var valueType = dataTypesMap[ config.propertyType ].dataValueType;
+	var valueType = config.valueType;
+
+	if ( !valueType && config.propertyType ) {
+		// backward compatibility from before we were using value type...
+		valueType = dataTypesMap[ config.propertyType ].dataValueType;
+	}
 
 	config.helpUrls = config.helpUrls || {};
 	config.isDefaultProperty = !!config.isDefaultProperty;
@@ -46,7 +51,7 @@ StatementWidget = function ( config ) {
 
 	this.input = new StatementInputWidget( {
 		classes: [ 'wbmi-statement-input' ],
-		propertyType: config.propertyType,
+		propertyId: config.propertyId,
 		valueType: valueType,
 		disabled: this.disabled
 	} );

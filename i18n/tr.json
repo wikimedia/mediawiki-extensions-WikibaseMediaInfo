@@ -78,6 +78,8 @@
 	"wikibasemediainfo-thousanth-of-arcsecond-label": "bir saniyenin 1/1000'ine kadar",
 	"wikibasemediainfo-string-input-button-text": "Ekle",
 	"wikibasemediainfo-quantity-input-button-text": "Ekle",
+	"wikibasemediainfo-globecoordinate-input-button-text": "Ekle",
+	"wikibasemediainfo-globecoordinate-map-button-text": "Haritadan seçin",
 	"wikibasemediainfo-search-suggestions-title-depicts": "dosya tasvir edilioyr…",
 	"wikibasemediainfo-search-suggestions-preference-label": "Otomatik tamamlama önerilerini yapılandırılmış verilere göre ara",
 	"wikibasemediainfo-search-suggestions-preference-disable-confirm": "Yapısal verilere dayalı otomatik tamamlama önerilerini kaldırmak istediğinizden emin misiniz? (Bu ayar [[Special:Preferences#mw-prefsection-searchoptions|Tercihler]]'de değiştirilebilir.)"

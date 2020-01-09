@@ -6,7 +6,7 @@ use Wikibase\DataModel\Entity\EntityId;
 use Wikibase\DataModel\Services\Lookup\TermLookupException;
 use Wikibase\Lib\Store\EntityRevisionLookup;
 use Wikibase\Lib\Store\EntityTermLookupBase;
-use Wikibase\Lib\Store\PrefetchingTermLookup;
+use Wikibase\DataAccess\PrefetchingTermLookup;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 
 /**

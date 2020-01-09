@@ -32,7 +32,6 @@ return [
 		$wikibaseRepo = WikibaseRepo::getDefaultInstance();
 
 		return new MediaInfoHandler(
-			$wikibaseRepo->getStore()->getTermIndex(),
 			$wikibaseRepo->getEntityContentDataCodec(),
 			$wikibaseRepo->getEntityConstraintProvider(),
 			$wikibaseRepo->getValidatorErrorLocalizer(),

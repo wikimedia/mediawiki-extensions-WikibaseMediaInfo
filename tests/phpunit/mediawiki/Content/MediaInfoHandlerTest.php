@@ -25,7 +25,6 @@ use Wikibase\Repo\Validators\ValidatorErrorLocalizer;
 use Wikibase\Search\Elastic\Fields\DescriptionsProviderFieldDefinitions;
 use Wikibase\Search\Elastic\Fields\LabelsProviderFieldDefinitions;
 use Wikibase\Search\Elastic\Fields\StatementProviderFieldDefinitions;
-use Wikibase\TermIndex;
 
 /**
  * @covers \Wikibase\MediaInfo\Content\MediaInfoHandler
@@ -86,7 +85,6 @@ class MediaInfoHandlerTest extends \PHPUnit\Framework\TestCase {
 			} );
 
 		return new MediaInfoHandler(
-			$this->createMock( TermIndex::class ),
 			$this->getMockWithoutConstructor( EntityContentDataCodec::class ),
 			$this->getMockWithoutConstructor( EntityConstraintProvider::class ),
 			$this->createMock( ValidatorErrorLocalizer::class ),

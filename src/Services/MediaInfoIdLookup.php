@@ -46,7 +46,7 @@ class MediaInfoIdLookup implements EntityIdLookup {
 		foreach ( $titles as $title ) {
 			$results[$title->getArticleID()] = $this->getEntityIdForTitle( $title );
 		}
-		return $results;
+		return array_filter( $results );
 	}
 
 	public function getEntityIdForTitle( Title $title ) {

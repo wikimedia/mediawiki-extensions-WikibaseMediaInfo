@@ -73,5 +73,7 @@
 	"wikibasemediainfo-longitude-input-label": "经度",
 	"wikibasemediainfo-precision-input-label": "精度",
 	"wikibasemediainfo-string-input-button-text": "添加",
-	"wikibasemediainfo-quantity-input-button-text": "添加"
+	"wikibasemediainfo-quantity-input-button-text": "添加",
+	"wikibasemediainfo-globecoordinate-input-button-text": "添加",
+	"wikibasemediainfo-globecoordinate-map-button-text": "在地图上选择"
 }

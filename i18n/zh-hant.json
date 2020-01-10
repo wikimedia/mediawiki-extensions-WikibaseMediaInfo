@@ -26,7 +26,7 @@
 	"wikibasemediainfo-filepage-captions-title": "說明",
 	"wikibasemediainfo-filepage-more-languages": "查看更多 $1 種{{PLURAL:$1|語言|語言}}",
 	"wikibasemediainfo-filepage-fewer-languages": "查看一些語言",
-	"wikibasemediainfo-filepage-add-caption": "新增說明",
+	"wikibasemediainfo-filepage-add-caption": "添加說明",
 	"wikibasemediainfo-filepage-edit-captions": "編輯說明",
 	"wikibasemediainfo-filepage-edit-depicts": "編輯描述",
 	"wikibasemediainfo-filepage-cancel": "取消",
@@ -80,6 +80,8 @@
 	"wikibasemediainfo-thousanth-of-arcsecond-label": "為 1/1000 弧秒",
 	"wikibasemediainfo-string-input-button-text": "添加",
 	"wikibasemediainfo-quantity-input-button-text": "添加",
+	"wikibasemediainfo-globecoordinate-input-button-text": "添加",
+	"wikibasemediainfo-globecoordinate-map-button-text": "在地圖上選擇",
 	"wikibasemediainfo-search-suggestions-title-depicts": "檔案描述中…",
 	"wikibasemediainfo-search-suggestions-preference-label": "基於結構化資料的自動完成搜尋建議",
 	"wikibasemediainfo-search-suggestions-preference-disable-confirm": "您確定您要移除基於結構化資料的自動完成建議嗎？（這能在[[Special:Preferences#mw-prefsection-searchoptions|偏好設定]]裡更改。）"

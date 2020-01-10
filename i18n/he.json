@@ -79,6 +79,8 @@
 	"wikibasemediainfo-thousanth-of-arcsecond-label": "1/1000 של שניית קשת",
 	"wikibasemediainfo-string-input-button-text": "הוספה",
 	"wikibasemediainfo-quantity-input-button-text": "הוספה",
+	"wikibasemediainfo-globecoordinate-input-button-text": "הוספה",
+	"wikibasemediainfo-globecoordinate-map-button-text": "בחירה על המפה",
 	"wikibasemediainfo-search-suggestions-title-depicts": "קבצים שמציגים...",
 	"wikibasemediainfo-search-suggestions-preference-label": "הצעות השלמה אוטומטית מבוססות על נתונים מבניים",
 	"wikibasemediainfo-search-suggestions-preference-disable-confirm": "האם ברצונך באמת להסיר את הצעות ההשלמה האוטומטית שמבוססות על נתונים מבניים? (אפשר לשנות את ההגדרה הזאת ב[[Special:Preferences#mw-prefsection-searchoptions|העדפות]].)"

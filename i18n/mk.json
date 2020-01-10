@@ -76,6 +76,8 @@
 	"wikibasemediainfo-thousanth-of-arcsecond-label": "до 1/1000 лачна секунда",
 	"wikibasemediainfo-string-input-button-text": "Додај",
 	"wikibasemediainfo-quantity-input-button-text": "Додај",
+	"wikibasemediainfo-globecoordinate-input-button-text": "Додај",
+	"wikibasemediainfo-globecoordinate-map-button-text": "Избери на карта",
 	"wikibasemediainfo-search-suggestions-title-depicts": "податотеки што прикажуваат…",
 	"wikibasemediainfo-search-suggestions-preference-label": "Предлози за автодополнување на пребарувањето според структурирани податоци",
 	"wikibasemediainfo-search-suggestions-preference-disable-confirm": "Дали сигурно сакате да го тргнете автодополнувањето според структурирани податоци? (Оваа поставка може да се измени во [[Special:Preferences#mw-prefsection-searchoptions|Нагодувањата]].)"

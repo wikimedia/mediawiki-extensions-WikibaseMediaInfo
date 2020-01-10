@@ -69,5 +69,20 @@
 	"wikibasemediainfo-remove-all-statements-confirm-accept": "Remover",
 	"wikibasemediainfo-unsupported-datatype-text": "Tipo de dados não suportado",
 	"wikibasemediainfo-latitude-input-label": "Latitude",
-	"wikibasemediainfo-longitude-input-label": "Longitude"
+	"wikibasemediainfo-latitude-input-placeholder": "Grau decimal entre -90 e 90",
+	"wikibasemediainfo-longitude-input-label": "Longitude",
+	"wikibasemediainfo-longitude-input-placeholder": "Grau decimal entre -180 e 180",
+	"wikibasemediainfo-precision-input-label": "Precisão",
+	"wikibasemediainfo-arcminute-label": "de um minuto de arco",
+	"wikibasemediainfo-arcsecond-label": "de um segundo de arco",
+	"wikibasemediainfo-tenth-of-arcsecond-label": "de 1/10 de segundo de arco",
+	"wikibasemediainfo-hundreth-of-arcsecond-label": "de 1/100 de um segundo de arco",
+	"wikibasemediainfo-thousanth-of-arcsecond-label": "de 1/1000 de um segundo de arco",
+	"wikibasemediainfo-string-input-button-text": "Adicionar",
+	"wikibasemediainfo-quantity-input-button-text": "Adicionar",
+	"wikibasemediainfo-globecoordinate-input-button-text": "Adicionar",
+	"wikibasemediainfo-globecoordinate-map-button-text": "Selecionar no mapa",
+	"wikibasemediainfo-search-suggestions-title-depicts": "ficheiros que retratam…",
+	"wikibasemediainfo-search-suggestions-preference-label": "Sugestões de preenchimento de pesquisa baseadas em dados estruturados",
+	"wikibasemediainfo-search-suggestions-preference-disable-confirm": "Tem a certeza de que pretende remover as sugestões de preenchimento de pesquisa baseadas em dados estruturados (esta configuração pode ser alterada nas [[Special:Preferences#mw-prefsection-searchoptions|preferências]])?"
 }

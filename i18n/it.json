@@ -59,5 +59,7 @@
 	"wikibasemediainfo-longitude-input-label": "Longitudine",
 	"wikibasemediainfo-precision-input-label": "Precisione",
 	"wikibasemediainfo-string-input-button-text": "Aggiungi",
-	"wikibasemediainfo-quantity-input-button-text": "Aggiungi"
+	"wikibasemediainfo-quantity-input-button-text": "Aggiungi",
+	"wikibasemediainfo-globecoordinate-input-button-text": "Aggiungi",
+	"wikibasemediainfo-globecoordinate-map-button-text": "Seleziona sulla mappa"
 }

@@ -5,7 +5,7 @@ use Wikibase\DataAccess\DataAccessSettings;
 use Wikibase\DataAccess\GenericServices;
 use Wikibase\DataAccess\PerRepositoryServiceContainer;
 use Wikibase\MediaInfo\Services\MediaInfoPrefetchingTermLookup;
-use Wikibase\Store\BufferingTermLookup;
+use Wikibase\Store\BufferingTermIndexTermLookup;
 
 return [
 
@@ -16,7 +16,7 @@ return [
 	) {
 		return new ByTypeDispatchingPrefetchingTermLookup(
 			[ 'mediainfo' => new MediaInfoPrefetchingTermLookup( $services->getEntityRevisionLookup() ) ],
-			new BufferingTermLookup( $services->getService( 'TermIndex' ), 1000 )
+			new BufferingTermIndexTermLookup( $services->getService( 'TermIndex' ), 1000 )
 		);
 	},
 

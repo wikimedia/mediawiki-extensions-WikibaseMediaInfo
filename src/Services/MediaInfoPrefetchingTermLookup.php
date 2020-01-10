@@ -153,4 +153,7 @@ class MediaInfoPrefetchingTermLookup extends EntityTermLookupBase implements Pre
 		return $terms;
 	}
 
+	public function getPrefetchedAliases( EntityId $entityId, $languageCode ) {
+		return [];
+	}
 }

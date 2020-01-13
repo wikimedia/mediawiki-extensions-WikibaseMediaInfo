@@ -2,7 +2,8 @@
 	"@metadata": {
 		"authors": [
 			"MaGa",
-			"Bugoslav"
+			"Bugoslav",
+			"Neptune, the Mystic"
 		]
 	},
 	"action-mediainfo-term": "promjena informacija o medijskoj datoteci (naslovi, sažetci)",
@@ -51,5 +52,6 @@
 	"wikibasemediainfo-statements-learn-more": "Vidi više",
 	"wikibasemediainfo-statements-remove": "Ukloni sve",
 	"wikibasemediainfo-statements-title-depicts": "Predmeti prikazani u ovoj datoteci",
-	"wikibasemediainfo-unsupported-datatype-text": "Nepodržana vrsta podataka"
+	"wikibasemediainfo-unsupported-datatype-text": "Nepodržana vrsta podataka",
+	"wikibasemediainfo-globecoordinate-input-button-text": "Dodaj"
 }

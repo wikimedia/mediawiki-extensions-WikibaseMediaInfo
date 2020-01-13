@@ -40,5 +40,6 @@
 	"wikibasemediainfo-longitude-input-label": "Longitud",
 	"wikibasemediainfo-precision-input-label": "Precision",
 	"wikibasemediainfo-string-input-button-text": "Lägg till",
-	"wikibasemediainfo-quantity-input-button-text": "Lägg till"
+	"wikibasemediainfo-quantity-input-button-text": "Lägg till",
+	"wikibasemediainfo-globecoordinate-input-button-text": "Lägg till"
 }

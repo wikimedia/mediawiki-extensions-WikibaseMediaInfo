@@ -3,7 +3,7 @@
 
 	{{#captions}}
 	<div class="wbmi-entityview-caption"{{^show}} style="display: none;"{{/show}}>
-		<div class="wbmi-language-label" dir="{{textDirection}}" lang="{{langCode}}">{{{language}}}</div>
+		<div class="wbmi-language-label">{{{language}}}</div>
 		<div class="wbmi-caption-value{{#empty}}  wbmi-entityview-emptyCaption{{/empty}}" dir="{{textDirection}}" lang="{{langCode}}">
 			{{{caption}}}
 			{{#inputError}}<div class="wbmi-caption-publishError">{{inputError}}</div>{{/inputError}}

@@ -204,15 +204,12 @@ class MediaInfoEntityTermsView {
 		$showCaption
 	) {
 		$languageName = $this->languageNameLookup->getName( $languageCode );
-		$dir = $this->languageDirectionalityLookup->getDirectionality( $languageCode );
 
+		// This label should be shown in the UI direction rather than the
+		// language's direction since it's not editable.
 		$languageElement = new LabelWidget( [
 			'label' => $languageName,
 			'classes' => [ 'wbmi-language-label' ]
-		] );
-		$languageElement->setAttributes( [
-			'lang' => $languageCode,
-			'dir' => $dir,
 		] );
 
 		$captionElement = $this->getCaptionElementForLanguage(

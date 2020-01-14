@@ -2,10 +2,10 @@
 
 var dataTypesMap = mw.config.get( 'wbDataTypes' ),
 	ItemWidget = require( './ItemWidget.js' ),
+	inputs = require( './inputs/index.js' ),
 	FormatValueElement = require( 'wikibase.mediainfo.base' ).FormatValueElement,
 	ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
 	DOMLessGroupWidget = require( 'wikibase.mediainfo.base' ).DOMLessGroupWidget,
-	StatementInputWidget = require( './StatementInputWidget.js' ),
 	datamodel = require( 'wikibase.datamodel' ),
 	serialization = require( 'wikibase.serialization' ),
 	StatementWidget;
@@ -50,10 +50,10 @@ StatementWidget = function ( config ) {
 		errors: []
 	};
 
-	this.input = new StatementInputWidget( {
+	this.input = new inputs.MultiTypeInputWrapperWidget( {
+		isQualifier: false,
+		type: valueType,
 		classes: [ 'wbmi-statement-input' ],
-		propertyId: config.propertyId,
-		valueType: valueType,
 		disabled: this.disabled
 	} );
 
@@ -184,22 +184,32 @@ StatementWidget.prototype.hasChanges = function () {
 };
 
 /**
- * Receives a DataValue from the StatementInputWidget and uses it to create a
+ * Receives a DataValue from the input widget and uses it to create a
  * new ItemWidget, add it to the list, and set the widget into edit mode.
- * @param {datavalues.DataValue} item
  * @fires change
 */
-StatementWidget.prototype.addItemFromInput = function ( item ) {
-	var widget = this.createItem( item );
-	this.addItems( [ widget ] );
+StatementWidget.prototype.addItemFromInput = function () {
+	var self = this;
 
-	// we just added a new item - let's switch all of them into editing mode
-	this.setEditing( true );
+	this.input.parseValue( this.state.propertyId ).then(
+		function ( dataValue ) {
+			var widget = self.createItem( dataValue );
+			self.addItems( [ widget ] );
 
-	// clear the autocomplete input field to select entities to add
-	this.input.setData( undefined );
-	this.emit( 'manual-add', widget );
-	this.emit( 'change', widget );
+			// we just added a new item - let's switch all of them into editing mode
+			self.setEditing( true );
+
+			// clear the autocomplete input field to select entities to add
+			self.emit( 'manual-add', widget );
+			self.emit( 'change', widget );
+
+			self.input.clear();
+			self.input.setErrors( [] );
+		},
+		function ( error ) {
+			self.input.setErrors( [ error ] );
+		}
+	);
 };
 
 /**
@@ -250,7 +260,7 @@ StatementWidget.prototype.setData = function ( data ) {
 	}
 
 	// clear out input field
-	this.input.setData( undefined );
+	this.input.clear();
 
 	sortedData = data.toArray().sort( function ( statement1, statement2 ) {
 		return statement2.getRank() - statement1.getRank();

@@ -1,3 +1,7 @@
+{{#errors}}
+	{{{.}}}
+{{/errors}}
+
 {{#type.wikibase-entityid}}
 	{{{input}}}
 {{/type.wikibase-entityid}}

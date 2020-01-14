@@ -95,6 +95,14 @@ QuantityInputWidget.prototype.setData = function ( data ) {
 };
 
 /**
+ * @inheritdoc
+ */
+QuantityInputWidget.prototype.clear = function () {
+	this.input.setValue( '' );
+	return this.setState( { value: '' } );
+};
+
+/**
  * @inheritDoc
  */
 QuantityInputWidget.prototype.flagAsInvalid = function () {

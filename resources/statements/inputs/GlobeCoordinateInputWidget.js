@@ -285,6 +285,24 @@ GlobeCoordinateInputWidget.prototype.setData = function ( data ) {
 };
 
 /**
+ * @inheritdoc
+ */
+GlobeCoordinateInputWidget.prototype.clear = function () {
+	this.latitudeInput.setValue( '' );
+	this.longitudeInput.setValue( '' );
+	this.precisionInput.setValue( '' );
+
+	this.latitudeInput.setValidityFlag( true );
+	this.longitudeInput.setValidityFlag( true );
+
+	// we're not making any immediate state changes here, but the above
+	// `setValue` calls will trigger an onChange event which will update
+	// the setState, and this empty state change will make sure we won't
+	// resolve until that has happened
+	return this.setState( {} );
+};
+
+/**
  * Return an array of all available precision values.
  *
  * @return {Array}

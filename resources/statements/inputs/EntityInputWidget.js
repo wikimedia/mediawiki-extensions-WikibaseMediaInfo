@@ -85,7 +85,7 @@ OO.mixinClass( EntityInputWidget, FormatValueElement );
 /**
  * @inheritdoc
  */
-EntityInputWidget.prototype.onLookupMenuItemChoose = function ( item ) {
+EntityInputWidget.prototype.onLookupMenuChoose = function ( item ) {
 	var data = item.getData();
 
 	this.mapLabelId[ data.label ] = data.id;
@@ -217,7 +217,7 @@ EntityInputWidget.prototype.getLookupCacheDataFromResponse = function ( response
  * Lookup menu options are actually links to their respective items (see
  * EntityInputWidgetLabel.mustache+dom). To mimic Wikidata behavior, when an option is
  * middle-clicked, the link should be followed. Otherwise, it should be ignored
- * so onLookupMenuItemChoose can run.
+ * so onLookupMenuChoose can run.
  *
  * This works by default on most devices, but on Android we must explicitly
  * prevent default link behavior.
@@ -259,7 +259,7 @@ EntityInputWidget.prototype.getLookupMenuOptionsFromData = function ( data ) {
 
 	for ( i = 0; i < data.length; i++ ) {
 		item = new OO.ui.MenuOptionWidget( {
-			// this data will be passed to onLookupMenuItemChoose when item is selected
+			// this data will be passed to onLookupMenuChoose when item is selected
 			data: data[ i ],
 			label: this.createLabelFromSuggestion( data[ i ] )
 		} );

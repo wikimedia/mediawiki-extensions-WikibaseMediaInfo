@@ -63,7 +63,7 @@ QUnit.module( 'StatementInputWidget', hooks.kartographer, function () {
 
 	} );
 
-	QUnit.test( 'setError adds MessageWidget to UI and flags string input as invalid', function ( assert ) {
+	QUnit.test( 'setErrors adds MessageWidget to UI and flags string input as invalid', function ( assert ) {
 		var StatementInputWidget = require( pathToWidget ),
 			widget = new StatementInputWidget( {
 				propertyType: 'url',
@@ -72,12 +72,27 @@ QUnit.module( 'StatementInputWidget', hooks.kartographer, function () {
 			done = assert.async();
 
 		widget.input.input.setValidityFlag = sinon.stub();
-		widget.setError( 'Invalid string input' )
+		widget.setErrors( [ 'Invalid string input' ] )
 			.then( function () {
 				assert.strictEqual( widget.$element.find( '.wbmi-statement-error-msg' ).length, 1 );
 				assert.strictEqual( widget.input.input.setValidityFlag.called, true );
 				done();
 			} );
 
+	} );
+
+	QUnit.test( 'Widget can handle multiple errors', function ( assert ) {
+		var StatementInputWidget = require( pathToWidget ),
+			widget = new StatementInputWidget( {
+				propertyType: 'url',
+				valueType: 'string'
+			} ),
+			done = assert.async();
+
+		widget.setErrors( [ 'Error 1', 'Error 2' ] )
+			.then( function () {
+				assert.strictEqual( widget.$element.find( '.wbmi-statement-error-msg' ).length, 2 );
+				done();
+			} );
 	} );
 } );

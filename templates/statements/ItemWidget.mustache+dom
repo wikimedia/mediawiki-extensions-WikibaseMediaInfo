@@ -2,6 +2,9 @@
 			{{#editing}}wbmi-item-edit{{/editing}}
 			{{^editing}}wbmi-item-read{{/editing}}">
 	<div class="wbmi-item-container">
+		{{#errors}}
+			{{{.}}}
+		{{/errors}}
 		<div class="wbmi-entity-header">
 			<div class="wbmi-entity-data">
 				<div class="wbmi-entity-title">
@@ -42,12 +45,6 @@
 
 			{{#editing}}{{{addQualifierButton}}}{{/editing}}
 		</div>
-
-		{{#error}}
-		<div class="wbmi-statement-publish-error-msg">
-			{{{error}}}
-		</div>
-		{{/error}}
 	</div>
 
 	{{#editing}}{{{removeButton}}}{{/editing}}

@@ -274,20 +274,19 @@
 		"wikibase.mediainfo.statements": {
 			"packageFiles": [
 				"resources/statements/index.js",
-				"resources/statements/QualifierValueInputWidget.js",
 				"resources/statements/StatementWidget.js",
 				"resources/statements/ItemWidget.js",
 				"resources/statements/QualifierWidget.js",
 				"resources/statements/AddPropertyWidget.js",
 				"resources/statements/LinkNoticeWidget.js",
-				"resources/statements/StatementInputWidget.js",
 				"resources/statements/inputs/index.js",
 				"resources/statements/inputs/AbstractInputWidget.js",
 				"resources/statements/inputs/EntityInputWidget.js",
 				"resources/statements/inputs/GlobeCoordinateInputWidget.js",
 				"resources/statements/inputs/QuantityInputWidget.js",
 				"resources/statements/inputs/StringInputWidget.js",
-				"resources/statements/inputs/UnsupportedInputWidget.js"
+				"resources/statements/inputs/UnsupportedInputWidget.js",
+				"resources/statements/inputs/MultiTypeInputWrapperWidget.js"
 			],
 			"dependencies": [
 				"wikibase.mediainfo.base",
@@ -352,15 +351,14 @@
 				"templates/statements/AddPropertyWidget.mustache+dom",
 				"templates/statements/ItemWidget.mustache+dom",
 				"templates/statements/LinkNoticeWidget.mustache+dom",
-				"templates/statements/QualifierValueInputWidget.mustache+dom",
 				"templates/statements/QualifierWidget.mustache+dom",
-				"templates/statements/StatementInputWidget.mustache+dom",
 				"templates/statements/StatementWidget.mustache+dom",
 				"templates/statements/inputs/EntityInputWidgetLabel.mustache+dom",
 				"templates/statements/inputs/GlobeCoordinateInputWidget.mustache+dom",
 				"templates/statements/inputs/QuantityInputWidget.mustache+dom",
 				"templates/statements/inputs/StringInputWidget.mustache+dom",
-				"templates/statements/inputs/UnsupportedInputWidget.mustache+dom"
+				"templates/statements/inputs/UnsupportedInputWidget.mustache+dom",
+				"templates/statements/inputs/MultiTypeInputWrapperWidget.mustache+dom"
 			],
 			"targets": [
 				"desktop",

@@ -68,6 +68,16 @@ AbstractInputWidget.prototype.setData = function ( data ) {
 };
 
 /**
+ * Clear existing input, essentially returning input to an empty, pristine state.
+ *
+ * @abstract
+ * @return {jQuery.Promise}
+ */
+AbstractInputWidget.prototype.clear = function () {
+	throw new Error( 'Not implemented' );
+};
+
+/**
  * More rigorous, server-side, validation (the kind of validation that
  * data will undergo when it'll actually be submitted to the server)
  * This includes validating the data for the datatype of the property

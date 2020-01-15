@@ -77,4 +77,11 @@ UnsupportedInputWidget.prototype.setData = function ( data ) {
 	} );
 };
 
+/**
+ * @inheritDoc
+ */
+UnsupportedInputWidget.prototype.clear = function () {
+	return this.setState( { data: undefined } );
+};
+
 module.exports = UnsupportedInputWidget;

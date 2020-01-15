@@ -135,6 +135,17 @@ EntityInputWidget.prototype.setData = function ( data ) {
 };
 
 /**
+ * @inheritdoc
+ */
+EntityInputWidget.prototype.clear = function () {
+	this.setValue( '' );
+	this.entityId = undefined;
+	this.setFlags( { destructive: false } );
+
+	return $.Deferred().resolve( this.$element ).promise();
+};
+
+/**
  * Manual textarea input.
  *
  * @inheritdoc

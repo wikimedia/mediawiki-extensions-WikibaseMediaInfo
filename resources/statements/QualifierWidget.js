@@ -3,7 +3,6 @@
 var QualifierWidget,
 	ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
 	FormatValueElement = require( 'wikibase.mediainfo.base' ).FormatValueElement,
-	QualifierValueInput = require( './QualifierValueInputWidget.js' ),
 	inputs = require( './inputs/index.js' ),
 	serialization = require( 'wikibase.serialization' ),
 	datamodel = require( 'wikibase.datamodel' );
@@ -43,8 +42,9 @@ QualifierWidget = function ( config ) {
 		placeholder: mw.message( 'wikibasemediainfo-property-placeholder' ).text()
 	} );
 
-	this.valueInput = new QualifierValueInput( {
-		classes: [ 'wbmi-qualifier-value-input' ]
+	this.valueInput = new inputs.MultiTypeInputWrapperWidget( {
+		classes: [ 'wbmi-qualifier-value-input' ],
+		isQualifier: true
 	} );
 
 	this.valueInput.setDisabled( true );

@@ -87,6 +87,15 @@ StringInputWidget.prototype.setData = function ( data ) {
 };
 
 /**
+ * @inheritdoc
+ */
+StringInputWidget.prototype.clear = function () {
+	this.input.setValue( '' );
+	this.input.setValidityFlag( true );
+	return this.setState( { value: '' } );
+};
+
+/**
  * @inheritDoc
  */
 StringInputWidget.prototype.flagAsInvalid = function () {

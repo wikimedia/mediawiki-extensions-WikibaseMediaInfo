@@ -88,9 +88,9 @@ OO.mixinClass( EntityInputWidget, FormatValueElement );
 EntityInputWidget.prototype.onLookupMenuChoose = function ( item ) {
 	var data = item.getData();
 
-	this.mapLabelId[ data.label ] = data.id;
+	this.mapLabelId[ data.label || data.id ] = data.id;
 	this.entityId = data.id;
-	this.setValue( data.label );
+	this.setValue( data.label || data.id );
 
 	this.emit( 'add', this, data );
 };

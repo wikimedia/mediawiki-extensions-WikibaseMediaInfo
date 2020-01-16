@@ -1,0 +1,15 @@
+<p>
+	This is an example template.<br />
+	Variables parsed into this template from 1.ExampleComponentWidget.js are:
+</p>
+<ul>
+	<li>editing</li>
+	<li>disabled</li>
+	<li>title</li>
+	<li>namespace</li>
+	<li>images</li>
+</ul>
+<p>
+	This is a mustache template, so these variables can be be output like so: {{title}}<br />
+	Or used conditionally, like: Edit mode <span class="status">{{#editing}}enabled{{/editing}}{{^editing}}disabled{{/editing}}</span>
+</p>

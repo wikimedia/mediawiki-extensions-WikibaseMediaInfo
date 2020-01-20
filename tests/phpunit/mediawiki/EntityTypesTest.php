@@ -99,7 +99,7 @@ class EntityTypesTest extends \PHPUnit\Framework\TestCase {
 		$this->assertArrayHasKey( 'deserializer-factory-callback', $registry['mediainfo'] );
 
 		$callback = $registry['mediainfo']['deserializer-factory-callback'];
-		$this->assertInternalType( 'callable', $callback );
+		$this->assertIsCallable( $callback );
 
 		$mediaInfoDeserializer = call_user_func( $callback, $this->getDeserializerFactory() );
 		$this->assertInstanceOf( MediaInfoDeserializer::class, $mediaInfoDeserializer );
@@ -112,7 +112,7 @@ class EntityTypesTest extends \PHPUnit\Framework\TestCase {
 		$this->assertArrayHasKey( 'view-factory-callback', $registry['mediainfo'] );
 
 		$callback = $registry['mediainfo']['view-factory-callback'];
-		$this->assertInternalType( 'callable', $callback );
+		$this->assertIsCallable( $callback );
 
 		$mediaInfoView = call_user_func(
 			$callback,
@@ -142,7 +142,7 @@ class EntityTypesTest extends \PHPUnit\Framework\TestCase {
 		$this->assertArrayHasKey( 'content-handler-factory-callback', $registry['mediainfo'] );
 
 		$callback = $registry['mediainfo']['content-handler-factory-callback'];
-		$this->assertInternalType( 'callable', $callback );
+		$this->assertIsCallable( $callback );
 
 		$mediaInfoHandler = call_user_func( $callback );
 		$this->assertInstanceOf( MediaInfoHandler::class, $mediaInfoHandler );

@@ -166,7 +166,7 @@ class MissingMediaInfoHandlerTest extends \PHPUnit\Framework\TestCase {
 		$output = $context->getOutput();
 		$html = $output->getHTML();
 
-		$this->assertContains( $dummyText, $html );
+		$this->assertStringContainsString( $dummyText, $html );
 	}
 
 }

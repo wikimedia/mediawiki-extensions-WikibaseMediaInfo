@@ -146,7 +146,7 @@ class MediaInfoHandlerTest extends \PHPUnit\Framework\TestCase {
 		$mediaInfoHandler->showMissingEntity( $title, $context );
 
 		$html = $context->getOutput()->getHTML();
-		$this->assertContains( 'MISSING!', $html );
+		$this->assertStringContainsString( 'MISSING!', $html );
 	}
 
 	public function testAllowAutomaticIds() {

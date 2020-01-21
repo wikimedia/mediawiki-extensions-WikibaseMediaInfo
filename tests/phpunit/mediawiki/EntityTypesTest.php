@@ -66,7 +66,7 @@ class EntityTypesTest extends \PHPUnit\Framework\TestCase {
 		$this->assertArrayHasKey( 'serializer-factory-callback', $registry['mediainfo'] );
 
 		$callback = $registry['mediainfo']['serializer-factory-callback'];
-		$this->assertInternalType( 'callable', $callback );
+		$this->assertIsCallable( $callback );
 
 		$mediaInfoSerializer = call_user_func( $callback, $this->getSerializerFactory() );
 		$this->assertInstanceOf( MediaInfoSerializer::class, $mediaInfoSerializer );

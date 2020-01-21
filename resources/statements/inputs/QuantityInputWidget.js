@@ -103,6 +103,13 @@ QuantityInputWidget.prototype.clear = function () {
 };
 
 /**
+ * @inheritdoc
+ */
+QuantityInputWidget.prototype.focus = function () {
+	this.input.focus();
+};
+
+/**
  * @inheritDoc
  */
 QuantityInputWidget.prototype.flagAsInvalid = function () {

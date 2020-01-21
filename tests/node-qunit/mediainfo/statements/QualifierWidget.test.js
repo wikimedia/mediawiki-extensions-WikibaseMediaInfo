@@ -110,7 +110,7 @@ QUnit.module( 'QualifierWidget', hooks.mediainfo, function () {
 			),
 			propertyLabel = 'some property',
 			valueLabel = 'some value',
-			formatPropertyStub = sinon.stub( widget.propertyInput, 'formatValue' ),
+			formatPropertyStub = sinon.stub( widget.propertyInput.input, 'formatValue' ),
 			formatValueStub = sinon.stub( widget, 'formatValue' ),
 			done = assert.async();
 
@@ -120,7 +120,7 @@ QUnit.module( 'QualifierWidget', hooks.mediainfo, function () {
 
 		setTimeout( function () {
 			assert.strictEqual( formatPropertyStub.called, true );
-			assert.strictEqual( widget.propertyInput.getValue(), propertyLabel );
+			assert.strictEqual( widget.propertyInput.input.getValue(), propertyLabel );
 			done();
 		}, 200 );
 	} );

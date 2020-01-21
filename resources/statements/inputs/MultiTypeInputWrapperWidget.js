@@ -193,6 +193,13 @@ MultiTypeInputWrapperWidget.prototype.clear = function () {
 };
 
 /**
+ * @inheritdoc
+ */
+MultiTypeInputWrapperWidget.prototype.focus = function () {
+	this.state.input.focus();
+};
+
+/**
  * @inheritDoc
  */
 MultiTypeInputWrapperWidget.prototype.parseValue = function ( propertyId ) {

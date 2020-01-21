@@ -303,6 +303,13 @@ GlobeCoordinateInputWidget.prototype.clear = function () {
 };
 
 /**
+ * @inheritdoc
+ */
+GlobeCoordinateInputWidget.prototype.focus = function () {
+	this.latitudeInput.focus();
+};
+
+/**
  * Return an array of all available precision values.
  *
  * @return {Array}

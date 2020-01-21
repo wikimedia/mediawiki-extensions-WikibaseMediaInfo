@@ -39,7 +39,7 @@ QUnit.module( 'AddPropertyWidget', hooks.mediainfo, function () {
 			.then( widget.setEditing.bind( widget, true ) )
 			.then( function ( $element ) {
 				// statement input & remove buttons have appeared
-				assert.strictEqual( $element.find( '.wbmi-entityview-add-statement-property' ).length, 1 );
+				assert.strictEqual( $element.find( '.wbmi-entityview-add-statement-property-input' ).length, 1 );
 				assert.strictEqual( $element.find( '.wbmi-item-remove' ).length, 1 );
 
 				// 'add property' button is still there

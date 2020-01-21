@@ -1,5 +1,18 @@
 @import '../mediainfo-variables.less';
 
+.wbmi-add-property {
+	@max-container-width();
+}
+
+.wbmi-entityview-add-statement-property-input {
+	width: 100%;
+
+	/* stylelint-disable-next-line selector-class-pattern */
+	.wbmi-input-widget__input.oo-ui-textInputWidget {
+		max-width: none;
+	}
+}
+
 .wbmi-entityview-add-statement-property-button {
 	margin-top: @base-spacing;
 }

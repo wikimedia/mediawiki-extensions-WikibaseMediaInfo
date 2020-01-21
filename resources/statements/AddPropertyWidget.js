@@ -35,7 +35,6 @@ AddPropertyWidget.prototype.getTemplateData = function () {
 		removeButton;
 
 	propertyInputWidget = new inputs.EntityInputWidget( {
-		classes: [ 'wbmi-entityview-add-statement-property' ],
 		entityType: 'property',
 		filter: this.getFilters(),
 		maxSuggestions: 7,

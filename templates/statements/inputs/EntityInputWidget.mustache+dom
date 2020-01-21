@@ -1,3 +1,3 @@
-<div class="wbmi-input-widget wbmi-input-widget--entity">
+<div class="wbmi-input-widget wbmi-input-widget--single-line wbmi-input-widget--entity">
 	{{{input}}}
 </div>

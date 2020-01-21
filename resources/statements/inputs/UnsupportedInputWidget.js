@@ -84,4 +84,11 @@ UnsupportedInputWidget.prototype.clear = function () {
 	return this.setState( { data: undefined } );
 };
 
+/**
+ * @inheritdoc
+ */
+UnsupportedInputWidget.prototype.focus = function () {
+	this.input.focus();
+};
+
 module.exports = UnsupportedInputWidget;

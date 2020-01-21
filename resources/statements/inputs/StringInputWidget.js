@@ -96,6 +96,13 @@ StringInputWidget.prototype.clear = function () {
 };
 
 /**
+ * @inheritdoc
+ */
+StringInputWidget.prototype.focus = function () {
+	this.input.focus();
+};
+
+/**
  * @inheritDoc
  */
 StringInputWidget.prototype.flagAsInvalid = function () {

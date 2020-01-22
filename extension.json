@@ -2,7 +2,12 @@
 	"name": "WikibaseMediaInfo",
 	"version": "0.1.0",
 	"author": [
-		"The Wikidata team"
+		"The Wikidata team",
+		"Anne Tomasevich",
+		"Cormac Parle",
+		"Eric Gardner",
+		"Mark Holmquist",
+		"Matthias Mullie"
 	],
 	"url": "https://www.mediawiki.org/wiki/Extension:WikibaseMediaInfo",
 	"descriptionmsg": "wikibasemediainfo-desc",

@@ -200,6 +200,14 @@ MultiTypeInputWrapperWidget.prototype.focus = function () {
 };
 
 /**
+ * @inheritdoc
+ */
+MultiTypeInputWrapperWidget.prototype.setDisabled = function ( disabled ) {
+	this.state.input.setDisabled( disabled );
+	MultiTypeInputWrapperWidget.parent.prototype.setDisabled.call( this, disabled );
+};
+
+/**
  * @inheritDoc
  */
 MultiTypeInputWrapperWidget.prototype.parseValue = function ( propertyId ) {

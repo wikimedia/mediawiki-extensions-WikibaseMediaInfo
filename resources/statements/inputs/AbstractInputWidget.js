@@ -87,6 +87,15 @@ AbstractInputWidget.prototype.focus = function () {
 };
 
 /**
+ * Enables/disabled the widget.
+ *
+ * @abstract
+ */
+AbstractInputWidget.prototype.setDisabled = function () {
+	throw new Error( 'Not implemented' );
+};
+
+/**
  * More rigorous, server-side, validation (the kind of validation that
  * data will undergo when it'll actually be submitted to the server)
  * This includes validating the data for the datatype of the property

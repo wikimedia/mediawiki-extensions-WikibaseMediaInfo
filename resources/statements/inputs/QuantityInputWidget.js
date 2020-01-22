@@ -110,6 +110,14 @@ QuantityInputWidget.prototype.focus = function () {
 };
 
 /**
+ * @inheritdoc
+ */
+QuantityInputWidget.prototype.setDisabled = function ( disabled ) {
+	this.input.setDisabled( disabled );
+	QuantityInputWidget.parent.prototype.setDisabled.call( this, disabled );
+};
+
+/**
  * @inheritDoc
  */
 QuantityInputWidget.prototype.flagAsInvalid = function () {

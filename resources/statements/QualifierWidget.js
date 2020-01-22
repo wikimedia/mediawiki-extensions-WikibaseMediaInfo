@@ -284,22 +284,16 @@ QualifierWidget.prototype.cloneData = function ( data ) {
 };
 
 /**
- * TODO: this method always returns an array with a single filter object
- * consisting of the hard-coded supportedTypes. This could probably be improved.
  * @return {Object[]} filters
  */
 QualifierWidget.prototype.getFilters = function () {
-	var supportedTypes = [
-		'wikibase-item',
-		'quantity',
-		'string',
-		'globe-coordinate',
-		'external-id',
-		'url'
-	];
+	var supportedTypes = mw.config.get( 'wbmiSupportedDataTypes' ) || [],
+		uniqueTypes = supportedTypes.filter( function ( item, index, self ) {
+			return self.indexOf( item ) === index;
+		} );
 
 	return [
-		{ field: 'datatype', value: supportedTypes.join( '|' ) }
+		{ field: 'datatype', value: uniqueTypes.join( '|' ) }
 	];
 };
 

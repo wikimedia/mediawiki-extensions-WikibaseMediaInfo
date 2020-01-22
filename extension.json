@@ -330,6 +330,7 @@
 				"oojs-ui-core",
 				"oojs-ui-widgets",
 				"oojs-ui-windows",
+				"oojs-ui.styles.icons-interactions",
 				"oojs-ui.styles.icons-location",
 				"wikibase.api.RepoApi",
 				"wikibase.mediainfo.statements.styles",
@@ -401,6 +402,9 @@
 				"wikibasemediainfo-time-calendar-label",
 				"wikibasemediainfo-time-calendar-gregorian",
 				"wikibasemediainfo-time-calendar-julian",
+				"wikibasemediainfo-quantity-unit-placeholder",
+				"wikibasemediainfo-quantity-unit-label",
+				"wikibasemediainfo-quantity-unit-button-text",
 				"wikibasemediainfo-globecoordinate-input-button-text",
 				"wikibasemediainfo-globecoordinate-map-button-text",
 				"wikibasemediainfo-filepage-statement-custom-value-option",
@@ -443,6 +447,7 @@
 				"resources/statements/inputs/EntityAutocompleteInputWidget.less",
 				"resources/statements/inputs/GlobeCoordinateInputWidget.less",
 				"resources/statements/inputs/TimeInputWidget.less",
+				"resources/statements/inputs/QuantityInputWidget.less",
 				"resources/statements/inputs/InputWidget.less"
 			],
 			"targets": [

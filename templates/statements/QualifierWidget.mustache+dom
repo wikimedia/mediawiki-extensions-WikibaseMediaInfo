@@ -15,7 +15,7 @@
 				{{/value}}
 			{{/property}}
 
-			{{{value}}}
+			<span class="wbmi-qualifier-value--value">{{{value}}}</span>
 		</div>
 	{{/editing}}
 </div>

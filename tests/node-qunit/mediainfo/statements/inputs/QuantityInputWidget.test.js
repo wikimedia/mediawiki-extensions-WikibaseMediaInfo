@@ -57,7 +57,7 @@ QUnit.module( 'QuantityInputWidget', hooks.mediainfo, function () {
 			data = dataValues.QuantityValue.newFromJSON( { amount: '+1', unit: '1' } );
 
 		widget.setData( data ).then( function ( $element ) {
-			assert.strictEqual( $element.find( '.wbmi-input-widget__button' ).length, 0 );
+			assert.strictEqual( $element.find( '.wbmi-input-widget--submit' ).length, 0 );
 			done();
 		} );
 	} );
@@ -69,8 +69,66 @@ QUnit.module( 'QuantityInputWidget', hooks.mediainfo, function () {
 			data = dataValues.QuantityValue.newFromJSON( { amount: '+1', unit: '1' } );
 
 		widget.setData( data ).then( function ( $element ) {
-			assert.strictEqual( $element.find( '.wbmi-input-widget__button' ).length, 1 );
+			assert.strictEqual( $element.find( '.wbmi-input-widget--submit' ).length, 1 );
 			done();
+		} );
+	} );
+
+	QUnit.test( 'Widget displays no options by default', function ( assert ) {
+		var done = assert.async(),
+			QuantityInputWidget = require( pathToWidget ),
+			widget = new QuantityInputWidget();
+
+		widget.render().then( function ( $element ) {
+			assert.strictEqual( $element.find( '.wbmi-input-widget--options.wbmi-input-widget__active' ).length, 0 );
+			done();
+		} );
+	} );
+
+	QUnit.test( 'Widget displays button to add unit when focused', function ( assert ) {
+		var done = assert.async(),
+			QuantityInputWidget = require( pathToWidget ),
+			widget = new QuantityInputWidget(),
+			data = dataValues.QuantityValue.newFromJSON( { amount: '+1', unit: '1' } );
+
+		widget.setData( data ).then( function () {
+			widget.input.$input.trigger( 'focus' );
+
+			// give handler for above event a change to run, and alter the state/rerender
+			setTimeout( function () {
+				widget.render().then( function ( $element ) {
+					assert.strictEqual( $element.find( '.wbmi-input-widget--options.wbmi-input-widget__active' ).length, 1 );
+					assert.strictEqual( $element.find( '.wbmi-input-widget--unit' ).length, 0 );
+					assert.strictEqual( $element.find( '.wbmi-input-widget--add-unit' ).length, 1 );
+					assert.strictEqual( $element.find( '.wbmi-input-widget--remove-unit' ).length, 0 );
+					done();
+				} );
+			} );
+		} );
+	} );
+
+	QUnit.test( 'Widget displays custom unit when it has one', function ( assert ) {
+		var done = assert.async(),
+			QuantityInputWidget = require( pathToWidget ),
+			widget = new QuantityInputWidget(),
+			data = dataValues.QuantityValue.newFromJSON( {
+				amount: '+1',
+				unit: 'http://wikidata.wiki.local.wmftest.net:8080/entity/Q1'
+			} );
+
+		widget.setData( data ).then( function () {
+			widget.input.$input.trigger( 'focus' );
+
+			// give handler for above event a change to run, and alter the state/rerender
+			setTimeout( function () {
+				widget.render().then( function ( $element ) {
+					assert.strictEqual( $element.find( '.wbmi-input-widget--options.wbmi-input-widget__active' ).length, 1 );
+					assert.strictEqual( $element.find( '.wbmi-input-widget--unit' ).length, 1 );
+					assert.strictEqual( $element.find( '.wbmi-input-widget--add-unit' ).length, 0 );
+					assert.strictEqual( $element.find( '.wbmi-input-widget--remove-unit' ).length, 1 );
+					done();
+				} );
+			} );
 		} );
 	} );
 } );

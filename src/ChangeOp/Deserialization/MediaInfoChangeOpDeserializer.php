@@ -3,8 +3,8 @@
 namespace Wikibase\MediaInfo\ChangeOp\Deserialization;
 
 use Wikibase\Repo\ChangeOp\ChangeOp;
-use Wikibase\Repo\ChangeOp\ChangeOps;
 use Wikibase\Repo\ChangeOp\ChangeOpDeserializer;
+use Wikibase\Repo\ChangeOp\ChangeOps;
 use Wikibase\Repo\ChangeOp\Deserialization\ChangeOpDeserializationException;
 use Wikibase\Repo\ChangeOp\Deserialization\ClaimsChangeOpDeserializer;
 use Wikibase\Repo\ChangeOp\Deserialization\DescriptionsChangeOpDeserializer;

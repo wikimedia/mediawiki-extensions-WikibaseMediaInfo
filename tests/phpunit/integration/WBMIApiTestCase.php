@@ -44,7 +44,7 @@ abstract class WBMIApiTestCase extends \ApiUploadTestCase {
 	 * @param string $tokenType
 	 *
 	 * @throws ApiUsageException
-	 * @return array( array|null $resultData, WebRequest $request, array $sessionArray )
+	 * @return array [ array|null $resultData, WebRequest $request, array $sessionArray ]
 	 */
 	protected function doApiRequestWithToken(
 		array $params,

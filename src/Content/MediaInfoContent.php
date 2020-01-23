@@ -80,14 +80,18 @@ class MediaInfoContent extends EntityContent {
 			// MediaInfo is not going to use descriptions but they currently appear in the
 			// serialization. These should not be checked for filter text.
 			'descriptions',
-			// Probably wont be used, could be added back if requested
+			// Probably won't be used, could be added back if requested
 			'rank',
-			'snaktype', // Options: value, somevalue, novalue
+			// Options: value, somevalue, novalue
+			'snaktype',
 			// Probably pointless in filter text
 			'hash',
-			'id', // Statement guid
-			'type', // Hits a few different things
-			'datatype', // Hits a few different things
+			// Statement guid
+			'id',
+			// Hits a few different things
+			'type',
+			// Hits a few different things
+			'datatype',
 		];
 	}
 

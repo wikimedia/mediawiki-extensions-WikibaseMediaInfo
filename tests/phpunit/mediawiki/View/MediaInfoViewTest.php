@@ -32,7 +32,7 @@ class MediaInfoViewTest extends \PHPUnit\Framework\TestCase {
 	private $statementsView;
 	/** @var  EntityDocument */
 	private $entity;
-	/** @var string  */
+	/** @var string */
 	private $languageCode = 'qqq';
 	/** @var  MediaInfoView */
 	private $sut;

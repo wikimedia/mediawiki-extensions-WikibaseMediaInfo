@@ -26,7 +26,7 @@ class FilePageLookupTest extends \PHPUnit\Framework\TestCase {
 
 		$titleFactory->expects( $this->any() )
 			->method( 'newFromId' )
-			->will( $this->returnCallback( function( $pageId ) {
+			->will( $this->returnCallback( function ( $pageId ) {
 				switch ( $pageId ) {
 					case 1:
 						$title = Title::makeTitle( NS_FILE, 'Test-' . $pageId . '.png' );

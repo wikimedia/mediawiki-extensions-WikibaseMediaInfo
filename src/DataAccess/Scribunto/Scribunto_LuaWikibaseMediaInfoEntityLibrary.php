@@ -11,6 +11,8 @@ class Scribunto_LuaWikibaseMediaInfoEntityLibrary extends Scribunto_LuaWikibaseE
 
 	/**
 	 * Register the mw.wikibase.mediainfo.entity.lua library.
+	 *
+	 * @return array
 	 */
 	public function register() {
 		// These functions will be exposed to the Lua module.

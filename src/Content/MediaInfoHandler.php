@@ -57,6 +57,7 @@ class MediaInfoHandler extends EntityHandler {
 	 * @param ValidatorErrorLocalizer $errorLocalizer
 	 * @param EntityIdParser $entityIdParser
 	 * @param MissingMediaInfoHandler $missingMediaInfoHandler
+	 * @param MediaInfoIdLookup $idLookup
 	 * @param FilePageLookup $filePageLookup
 	 * @param FieldDefinitions $mediaInfoFieldDefinitions
 	 * @param callable|null $legacyExportFormatDetector

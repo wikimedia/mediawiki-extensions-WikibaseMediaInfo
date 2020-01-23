@@ -25,14 +25,14 @@ class MediaInfoDeserializerTest extends \PHPUnit\Framework\TestCase {
 		$idDeserializer = $this->createMock( Deserializer::class );
 		$idDeserializer->expects( $this->any() )
 			->method( 'deserialize' )
-			->will( $this->returnCallback( function( $serialization ) {
+			->will( $this->returnCallback( function ( $serialization ) {
 				return new MediaInfoId( $serialization );
 			} ) );
 
 		$termListDeserializer = $this->createMock( Deserializer::class );
 		$termListDeserializer->expects( $this->any() )
 			->method( 'deserialize' )
-			->will( $this->returnCallback( function( array $serialization ) {
+			->will( $this->returnCallback( function ( array $serialization ) {
 				$termList = new TermList();
 
 				foreach ( $serialization as $lang => $value ) {
@@ -45,7 +45,7 @@ class MediaInfoDeserializerTest extends \PHPUnit\Framework\TestCase {
 		$statementListDeserializer = $this->createMock( Deserializer::class );
 		$statementListDeserializer->expects( $this->any() )
 			->method( 'deserialize' )
-			->will( $this->returnCallback( function( array $serialization ) {
+			->will( $this->returnCallback( function ( array $serialization ) {
 				$statementList = new StatementList();
 
 				foreach ( $serialization as $propertyId ) {

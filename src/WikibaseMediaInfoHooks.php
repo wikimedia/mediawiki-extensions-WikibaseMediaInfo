@@ -66,7 +66,7 @@ class WikibaseMediaInfoHooks {
 	/**
 	 * Hook to register the MediaInfo entity namespaces for EntityNamespaceLookup.
 	 *
-	 * @param array $entityNamespacesSetting
+	 * @param int[] &$entityNamespacesSetting
 	 */
 	public static function onWikibaseRepoEntityNamespaces( &$entityNamespacesSetting ) {
 		// Tell Wikibase where to put our entity content.
@@ -81,7 +81,7 @@ class WikibaseMediaInfoHooks {
 	 * @note This is bootstrap code, it is executed for EVERY request. Avoid instantiating
 	 * objects or loading classes here!
 	 *
-	 * @param array[] $entityTypeDefinitions
+	 * @param array[] &$entityTypeDefinitions
 	 */
 	public static function onWikibaseEntityTypes( array &$entityTypeDefinitions ) {
 		$entityTypeDefinitions = array_merge(
@@ -103,7 +103,7 @@ class WikibaseMediaInfoHooks {
 	 * @see onBeforePageDisplay()
 	 *
 	 * @param ParserOutput $parserOutput
-	 * @param string $text
+	 * @param string &$text
 	 * @param array $options
 	 */
 	public static function onParserOutputPostCacheTransform(
@@ -477,7 +477,11 @@ class WikibaseMediaInfoHooks {
 			new EntityInfo( [] )
 		);
 
-		$structured = $view->getContent( $emptyMediaInfo, 0 /* EntityRevision::UNSAVED_REVISION */ )->getHtml();
+		$structured = $view->getContent(
+			$emptyMediaInfo,
+			/* EntityRevision::UNSAVED_REVISION */
+			0
+			)->getHtml();
 
 		// Strip out the surrounding <mediaInfoView> tag
 		$structured = preg_replace(
@@ -584,6 +588,12 @@ class WikibaseMediaInfoHooks {
 	 * Note that this is a workaround until all slots are passed automatically to CirrusSearch
 	 *
 	 * @see https://phabricator.wikimedia.org/T190066
+	 *
+	 * @param Document $document The modifiable Elastica page
+	 * @param Title $title The Title for the page
+	 * @param AbstractContent $contentObject The Content object for the page
+	 * @param ParserOutput|null $parserOutput The ParserOutput for the page if it exists
+	 * @param Connection $connection
 	 */
 	public static function onCirrusSearchBuildDocumentParse(
 		Document $document,

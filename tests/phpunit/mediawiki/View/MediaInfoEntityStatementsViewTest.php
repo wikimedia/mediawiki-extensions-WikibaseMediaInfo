@@ -69,7 +69,7 @@ class MediaInfoEntityStatementsViewTest extends \PHPUnit\Framework\TestCase {
 			->getMock();
 		$snakFormatter->method( 'formatSnak' )
 			->will(
-				$this->returnCallback( function( Snak $snak ) {
+				$this->returnCallback( function ( Snak $snak ) {
 					if ( $snak instanceof PropertyNoValueSnak ) {
 						return $this->textProvider->get(
 							'wikibase-snakview-snaktypeselector-novalue'
@@ -107,7 +107,7 @@ class MediaInfoEntityStatementsViewTest extends \PHPUnit\Framework\TestCase {
 			->getMock();
 		$valueFormatter->method( 'formatValue' )
 			->will(
-				$this->returnCallback( function( DataValue $value ) {
+				$this->returnCallback( function ( DataValue $value ) {
 					$map = [
 						'P333' => 'PROPERTY P333 LABEL',
 						'P444' => 'PROPERTY P444 LABEL',
@@ -334,7 +334,6 @@ class MediaInfoEntityStatementsViewTest extends \PHPUnit\Framework\TestCase {
 	}
 
 	public function provideStatementList() {
-
 		$property999NoValue = new PropertyNoValueSnak( new PropertyId( 'P999' ) );
 		$property999SomeValue = new PropertySomeValueSnak( new PropertyId( 'P999' ) );
 		$property999Value_1 = new PropertyValueSnak(

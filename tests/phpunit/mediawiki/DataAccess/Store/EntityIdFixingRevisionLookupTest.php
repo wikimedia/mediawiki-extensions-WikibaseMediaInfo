@@ -12,8 +12,8 @@ use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\MediaInfo\DataModel\MediaInfoId;
 
 /**
-* @covers \Wikibase\MediaInfo\DataAccess\Store\EntityIdFixingRevisionLookup
-*/
+ * @covers \Wikibase\MediaInfo\DataAccess\Store\EntityIdFixingRevisionLookup
+ */
 class EntityIdFixingRevisionLookupTest extends TestCase {
 
 	private $defaultLookup;

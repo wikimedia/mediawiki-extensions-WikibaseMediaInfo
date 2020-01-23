@@ -3,18 +3,18 @@
 namespace Wikibase\MediaInfo\Tests\MediaWiki\ChangeOp\Deserialization;
 
 use PHPUnit\Framework\MockObject\MockObject;
-use Wikibase\Repo\ChangeOp\ChangeOpDescription;
-use Wikibase\Repo\ChangeOp\ChangeOpLabel;
-use Wikibase\Repo\ChangeOp\ChangeOpRemoveStatement;
-use Wikibase\Repo\ChangeOp\FingerprintChangeOpFactory;
 use Wikibase\Lib\StaticContentLanguages;
 use Wikibase\MediaInfo\ChangeOp\Deserialization\MediaInfoChangeOpDeserializer;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
+use Wikibase\Repo\ChangeOp\ChangeOpDescription;
+use Wikibase\Repo\ChangeOp\ChangeOpLabel;
+use Wikibase\Repo\ChangeOp\ChangeOpRemoveStatement;
 use Wikibase\Repo\ChangeOp\Deserialization\ChangeOpDeserializationException;
 use Wikibase\Repo\ChangeOp\Deserialization\ClaimsChangeOpDeserializer;
 use Wikibase\Repo\ChangeOp\Deserialization\DescriptionsChangeOpDeserializer;
 use Wikibase\Repo\ChangeOp\Deserialization\LabelsChangeOpDeserializer;
 use Wikibase\Repo\ChangeOp\Deserialization\TermChangeOpSerializationValidator;
+use Wikibase\Repo\ChangeOp\FingerprintChangeOpFactory;
 use Wikibase\Repo\Tests\ChangeOp\ChangeOpTestMockProvider;
 use Wikibase\Repo\Tests\ChangeOp\Deserialization\DescriptionsChangeOpDeserializationTester;
 use Wikibase\Repo\Tests\ChangeOp\Deserialization\LabelsChangeOpDeserializationTester;

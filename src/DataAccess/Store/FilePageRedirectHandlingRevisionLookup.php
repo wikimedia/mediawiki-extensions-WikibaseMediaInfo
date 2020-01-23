@@ -47,16 +47,10 @@ class FilePageRedirectHandlingRevisionLookup implements EntityRevisionLookup {
 		$this->entityDataLoader = $entityDataLoader;
 	}
 
-	/**
-	 * @see EntityRevisionLookup::getEntityRevision
-	 */
 	public function getEntityRevision( EntityId $entityId, $revisionId = 0, $mode = self::LATEST_FROM_REPLICA ) {
 		return $this->lookup->getEntityRevision( $entityId, $revisionId, $mode );
 	}
 
-	/**
-	 * @see EntityRevisionLookup::getLatestRevisionId
-	 */
 	public function getLatestRevisionId( EntityId $entityId, $mode = self::LATEST_FROM_REPLICA ) {
 		try {
 			return $this->lookup->getLatestRevisionId( $entityId, $mode );

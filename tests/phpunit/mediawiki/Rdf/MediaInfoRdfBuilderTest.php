@@ -9,7 +9,6 @@ use RepoGroup;
 use Wikibase\Lib\Store\EntityTitleLookup;
 use Wikibase\MediaInfo\Content\MediaInfoHandler;
 use Wikibase\MediaInfo\Rdf\MediaInfoRdfBuilder;
-use Wikibase\MediaInfo\Services\FilePageLookup;
 use Wikibase\Rdf\HashDedupeBag;
 use Wikibase\Rdf\RdfBuilder;
 use Wikibase\Rdf\RdfProducer;
@@ -60,7 +59,7 @@ class MediaInfoRdfBuilderTest extends TestCase {
 
 	/**
 	 * @param RdfWriter $writer
-	 * @param MediaInfoHandler $filePageLookup
+	 * @param MediaInfoHandler $handler
 	 * @param RepoGroup $repoGroup
 	 * @return MediaInfoRdfBuilder
 	 */

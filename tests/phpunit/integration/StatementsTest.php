@@ -14,7 +14,7 @@ use Wikimedia\Assert\Assert;
  * - get all existing claims for entity
  * - search/lookup statement (just that the search works without falling over, results not tested)
  * - clear entity, deleting all statements
-*
+ *
  * @group medium
  * @group upload
  * @group Database

@@ -416,7 +416,6 @@ class MediaInfoEntityStatementsView {
 	 * @return array[]
 	 */
 	private function statementsByPropertyId( StatementList $statementList ) {
-
 		$statementsByProperty = $this->getOrderedStatementsByProperty( $statementList );
 
 		$propertyOrder = $this->propertyOrderProvider->getPropertyOrder();

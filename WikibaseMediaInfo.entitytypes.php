@@ -25,17 +25,17 @@ use Wikibase\DataModel\SerializerFactory;
 use Wikibase\DataModel\Services\EntityId\EntityIdFormatter;
 use Wikibase\DataModel\Services\Lookup\InProcessCachingDataTypeLookup;
 use Wikibase\LanguageFallbackChain;
-use Wikibase\Lib\Store\EntityContentDataCodec;
-use Wikibase\Lib\Store\Sql\WikiPageEntityDataLoader;
-use Wikibase\MediaInfo\DataAccess\Store\EntityIdFixingRevisionLookup;
 use Wikibase\Lib\LanguageNameLookup;
 use Wikibase\Lib\Store\CachingPropertyOrderProvider;
+use Wikibase\Lib\Store\EntityContentDataCodec;
 use Wikibase\Lib\Store\EntityInfo;
 use Wikibase\Lib\Store\EntityRevisionLookup;
-use Wikibase\Lib\Store\WikiPagePropertyOrderProvider;
+use Wikibase\Lib\Store\Sql\WikiPageEntityDataLoader;
 use Wikibase\Lib\Store\Sql\WikiPageEntityMetaDataLookup;
+use Wikibase\Lib\Store\WikiPagePropertyOrderProvider;
 use Wikibase\MediaInfo\ChangeOp\Deserialization\MediaInfoChangeOpDeserializer;
 use Wikibase\MediaInfo\Content\MediaInfoContent;
+use Wikibase\MediaInfo\DataAccess\Store\EntityIdFixingRevisionLookup;
 use Wikibase\MediaInfo\DataAccess\Store\FilePageRedirectHandlingRevisionLookup;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\MediaInfo\DataModel\MediaInfoId;
@@ -46,11 +46,11 @@ use Wikibase\MediaInfo\DataModel\Services\Diff\MediaInfoPatcher;
 use Wikibase\MediaInfo\Diff\BasicMediaInfoDiffVisualizer;
 use Wikibase\MediaInfo\Rdf\MediaInfoRdfBuilder;
 use Wikibase\MediaInfo\Search\MediaInfoFieldDefinitions;
+use Wikibase\MediaInfo\Services\MediaInfoEntityQuery;
 use Wikibase\MediaInfo\Services\MediaInfoPrefetchingTermLookup;
 use Wikibase\MediaInfo\Services\MediaInfoServices;
-use Wikibase\MediaInfo\Services\MediaInfoEntityQuery;
-use Wikibase\MediaInfo\View\MediaInfoEntityTermsView;
 use Wikibase\MediaInfo\View\MediaInfoEntityStatementsView;
+use Wikibase\MediaInfo\View\MediaInfoEntityTermsView;
 use Wikibase\MediaInfo\View\MediaInfoView;
 use Wikibase\Rdf\DedupeBag;
 use Wikibase\Rdf\EntityMentionListener;
@@ -68,26 +68,26 @@ use Wikimedia\Purtle\RdfWriter;
 
 return [
 	MediaInfo::ENTITY_TYPE => [
-		'storage-serializer-factory-callback' => function( SerializerFactory $serializerFactory ) {
+		'storage-serializer-factory-callback' => function ( SerializerFactory $serializerFactory ) {
 			return new MediaInfoSerializer(
 				$serializerFactory->newTermListSerializer(),
 				$serializerFactory->newStatementListSerializer()
 			);
 		},
-		'serializer-factory-callback' => function( SerializerFactory $serializerFactory ) {
+		'serializer-factory-callback' => function ( SerializerFactory $serializerFactory ) {
 			return new MediaInfoSerializer(
 				$serializerFactory->newTermListSerializer(),
 				$serializerFactory->newStatementListSerializer()
 			);
 		},
-		'deserializer-factory-callback' => function( DeserializerFactory $deserializerFactory ) {
+		'deserializer-factory-callback' => function ( DeserializerFactory $deserializerFactory ) {
 			return new MediaInfoDeserializer(
 				$deserializerFactory->newEntityIdDeserializer(),
 				$deserializerFactory->newTermListDeserializer(),
 				$deserializerFactory->newStatementListDeserializer()
 			);
 		},
-		'view-factory-callback' => function(
+		'view-factory-callback' => function (
 			Language $language,
 			LanguageFallbackChain $fallbackChain,
 			EntityDocument $entity,
@@ -153,34 +153,34 @@ return [
 				)
 			);
 		},
-		'content-handler-factory-callback' => function() {
+		'content-handler-factory-callback' => function () {
 			return MediaInfoServices::getMediaInfoHandler();
 		},
 		'entity-id-pattern' => MediaInfoId::PATTERN,
-		'entity-id-builder' => function( $serialization ) {
+		'entity-id-builder' => function ( $serialization ) {
 			return new MediaInfoId( $serialization );
 		},
-		'entity-id-composer-callback' => function( $repositoryName, $uniquePart ) {
+		'entity-id-composer-callback' => function ( $repositoryName, $uniquePart ) {
 			return new MediaInfoId( EntityId::joinSerialization( [
 				$repositoryName,
 				'',
 				'M' . $uniquePart
 			] ) );
 		},
-		'entity-differ-strategy-builder' => function() {
+		'entity-differ-strategy-builder' => function () {
 			return new MediaInfoDiffer();
 		},
-		'entity-patcher-strategy-builder' => function() {
+		'entity-patcher-strategy-builder' => function () {
 			return new MediaInfoPatcher();
 		},
-		'entity-factory-callback' => function() {
+		'entity-factory-callback' => function () {
 			return new MediaInfo();
 		},
 
 		// Identifier of a resource loader module that, when `require`d, returns a function
 		// returning a deserializer
 		'js-deserializer-factory-function' => 'wikibase.mediainfo.getDeserializer',
-		'changeop-deserializer-callback' => function() {
+		'changeop-deserializer-callback' => function () {
 			$changeOpDeserializerFactory = WikibaseRepo::getDefaultInstance()
 				->getChangeOpDeserializerFactory();
 
@@ -205,7 +205,7 @@ return [
 				$entityIdFormatter
 			);
 		},
-		'entity-metadata-accessor-callback' => function( $dbName, $repoName ) {
+		'entity-metadata-accessor-callback' => function ( $dbName, $repoName ) {
 			$entityNamespaceLookup = WikibaseRepo::getDefaultInstance()->getEntityNamespaceLookup();
 			$entityQuery = new MediaInfoEntityQuery(
 				$entityNamespaceLookup,

@@ -50,7 +50,8 @@ class FilePageRedirectHandlingRevisionLookupTest extends TestCase {
 		$defaultLookup
 			->method( 'getLatestRevisionId' )
 			->with( $entityId, $mode )
-			->willReturn( $revisionId ); // TODO: this is not fully in-par with the interface
+			// TODO: this is not fully in-par with the interface
+			->willReturn( $revisionId );
 
 		$lookup = $this->newLookup( $defaultLookup );
 
@@ -92,7 +93,7 @@ class FilePageRedirectHandlingRevisionLookupTest extends TestCase {
 		$result = $lookup->getLatestRevisionId( $entityId, $mode );
 
 		$result
-			->onConcreteRevision( function( $id ) use ( $revisionId ) {
+			->onConcreteRevision( function ( $id ) use ( $revisionId ) {
 				$this->assertSame( $revisionId, $id );
 			} )
 			->onNonexistentEntity( $shouldFail )
@@ -165,7 +166,7 @@ class FilePageRedirectHandlingRevisionLookupTest extends TestCase {
 		$result
 			->onConcreteRevision( $shouldFail )
 			->onNonexistentEntity( $shouldFail )
-			->onRedirect( function( $revId, $targetId ) use ( $revisionId, $targetEntityId ) {
+			->onRedirect( function ( $revId, $targetId ) use ( $revisionId, $targetEntityId ) {
 				$this->assertSame( $revisionId, $revId );
 				$this->assertEquals( $targetEntityId, $targetId );
 			} )

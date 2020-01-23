@@ -2,7 +2,7 @@
 	"name": "wikibase/media-info",
 	"type": "mediawiki-extension",
 	"description": "Wikibase extension to manage structured metadata of media files",
-	"homepage": "http://wikiba.se",
+	"homepage": "https://www.mediawiki.org/wiki/Extension:WikibaseMediaInfo",
 	"license": "GPL-2.0-or-later",
 	"authors": [
 		{

@@ -202,7 +202,7 @@ ComponentWidget.prototype.rebuildDOM = function ( $old, $new, preserve ) {
 			// it's a new node; there's no merging left to be done with an old
 			// node, so let's bail early!
 			return;
-		} else if ( currentIndex > newIndex ) {
+		} else if ( currentIndex > newIndex && oldNode.nodeName !== '#text' ) {
 			// if node already exists, but further away in DOM, detach everything
 			// in between (could be old nodes that will end up removed;
 			// could be old nodes that we'll still need elsewhere later on)

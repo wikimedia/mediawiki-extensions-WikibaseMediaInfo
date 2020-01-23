@@ -50,8 +50,9 @@ QualifierWidget = function ( config ) {
 	this.valueInput.setDisabled( true );
 
 	// event listeners
-	this.propertyInput.connect( this, { add: 'onPropertyChoose' } );
-	this.valueInput.connect( this, { change: 'onValueChange' } );
+	this.propertyInput.connect( this, { add: 'onChooseProperty' } );
+	this.propertyInput.connect( this, { add: 'onChange' } );
+	this.valueInput.connect( this, { change: 'onChange' } );
 
 	QualifierWidget.parent.call( this, config );
 	ComponentWidget.call(
@@ -135,10 +136,15 @@ QualifierWidget.prototype.setData = function ( data ) {
 	}
 
 	return $.when(
-		this.updatePropertyInput( new datamodel.EntityId( data.getPropertyId() ) ),
-		this.updateValueInput( data.getValue().getType(), data.getValue() ),
-		this.setState( { data: this.cloneData( data ) } )
+		this.propertyInput.setData( new datamodel.EntityId( data.getPropertyId() ) ),
+		this.valueInput.setData( data.getValue() ),
+		// we want to keep a copy of the data to be able to check
+		// whether there have been changes to the input, but we'll
+		// serialize/deserialze in order to have a clone (in case
+		// this reference gets modified elsewhere)
+		this.setState( { data: this.cloneSnak( data ) } )
 	).then( function () {
+		self.valueInput.setDisabled( false );
 		return self.$element;
 	} );
 };
@@ -160,27 +166,15 @@ QualifierWidget.prototype.getData = function () {
 };
 
 /**
- * Handles property selection by the user
- *
  * @param {EntityInputWidget} input
  * @param {Object} data
  */
-QualifierWidget.prototype.onPropertyChoose = function ( input, data ) {
-	this.updateValueInput( this.dataTypeMap[ data.datatype ].dataValueType );
-
-	// abort in-flight API requests - there's no point in continuing
-	// to fetch the text-to-render when we've already changed it...
-	if ( this.formatDisplayPromise ) {
-		this.formatDisplayPromise.abort();
-	}
-
-	this.emit( 'change' );
+QualifierWidget.prototype.onChooseProperty = function ( input, data ) {
+	this.valueInput.setInputType( this.dataTypeMap[ data.datatype ].dataValueType );
+	this.valueInput.setDisabled( false );
 };
 
-/**
- * Handles change of valueInput text from the user
- */
-QualifierWidget.prototype.onValueChange = function () {
+QualifierWidget.prototype.onChange = function () {
 	// abort in-flight API requests - there's no point in continuing
 	// to fetch the text-to-render when we've already changed it...
 	if ( this.formatDisplayPromise ) {
@@ -200,42 +194,6 @@ QualifierWidget.prototype.onValueChange = function () {
  */
 QualifierWidget.prototype.formatProperty = function ( propId, format, language ) {
 	return this.formatValue( new datamodel.EntityId( propId ), format, language );
-};
-
-/**
- * @param {datamodel.EntityId} property ID
- * @return {jQuery.Promise}
- * @internal
- */
-QualifierWidget.prototype.updatePropertyInput = function ( property ) {
-	var self = this;
-
-	return this.propertyInput.setData( property ).then( function () {
-		return self.$element;
-	} );
-};
-
-/**
- * @param {string} datatype datavalue type
- * @param {dataValues.DataValue} [value]
- * @return {jQuery.Promise}
- * @internal
- */
-QualifierWidget.prototype.updateValueInput = function ( datatype, value ) {
-	var self = this,
-		promise;
-
-	this.valueInput.setDisabled( false );
-
-	if ( value !== undefined ) {
-		promise = this.valueInput.setData( value );
-	} else {
-		promise = this.valueInput.setInputType( datatype );
-	}
-
-	return promise.then( function () {
-		return self.$element;
-	} );
 };
 
 /**
@@ -276,7 +234,7 @@ QualifierWidget.prototype.asyncFormatForDisplay = function () {
  * @param {datamodel.Snak} data
  * @return {datamodel.Snak}
  */
-QualifierWidget.prototype.cloneData = function ( data ) {
+QualifierWidget.prototype.cloneSnak = function ( data ) {
 	var serializer = new serialization.SnakSerializer(),
 		deserializer = new serialization.SnakDeserializer();
 

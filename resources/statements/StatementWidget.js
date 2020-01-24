@@ -192,8 +192,9 @@ StatementWidget.prototype.addItemFromInput = function () {
 	var self = this;
 
 	this.input.parseValue( this.state.propertyId ).then(
-		function ( dataValue ) {
-			var widget = self.createItem( dataValue );
+		function () {
+			var dataValue = self.input.getData(),
+				widget = self.createItem( dataValue );
 			self.addItems( [ widget ] );
 
 			// we just added a new item - let's switch all of them into editing mode

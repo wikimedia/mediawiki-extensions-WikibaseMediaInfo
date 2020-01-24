@@ -5,6 +5,7 @@ var ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
 	EntityInputWidget = require( './EntityInputWidget.js' ),
 	QuantityInputWidget = require( './QuantityInputWidget.js' ),
 	StringInputWidget = require( './StringInputWidget.js' ),
+	TimeInputWidget = require( './TimeInputWidget.js' ),
 	GlobeCoordinateInputWidget = require( './GlobeCoordinateInputWidget.js' ),
 	UnsupportedInputWidget = require( './UnsupportedInputWidget.js' ),
 	MultiTypeInputWrapperWidget;
@@ -30,6 +31,7 @@ MultiTypeInputWrapperWidget = function ( config ) {
 		'wikibase-entityid': EntityInputWidget,
 		quantity: QuantityInputWidget,
 		string: StringInputWidget,
+		time: TimeInputWidget,
 		globecoordinate: GlobeCoordinateInputWidget
 	};
 
@@ -85,7 +87,7 @@ MultiTypeInputWrapperWidget.prototype.getTemplateData = function () {
  * MultiTypeInputWrapperWidget is basically a wrapper for multiple different
  * input types - this'll let you change the input type.
  *
- * @param {string} type One of 'wikibase-entityid', 'quantity', 'string' or
+ * @param {string} type One of 'wikibase-entityid', 'quantity', 'time', 'string' or
  *  'globecoordinate'
  * @return {jQuery.Promise}
  */
@@ -210,8 +212,8 @@ MultiTypeInputWrapperWidget.prototype.setDisabled = function ( disabled ) {
 /**
  * @inheritDoc
  */
-MultiTypeInputWrapperWidget.prototype.parseValue = function ( propertyId ) {
-	return this.state.input.parseValue( propertyId );
+MultiTypeInputWrapperWidget.prototype.parseValue = function ( propertyId, datatype ) {
+	return this.state.input.parseValue( propertyId, datatype );
 };
 
 /**

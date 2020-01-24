@@ -1,0 +1,27 @@
+<div class="wbmi-input-widget wbmi-input-widget--time {{^isQualifier}}wbmi-with-button{{/isQualifier}}">
+	<div class="wbmi-input-widget--single-line">
+		<div class="wbmi-input-widget--container">
+			<div class="wbmi-input-widget--single-line">
+				{{{input}}}
+			</div>
+
+			<div class="wbmi-input-widget--options {{#isActive}}wbmi-input-widget__active{{/isActive}}">
+				<div class="wbmi-input-widget--options-container">
+					<p>{{{formatted}}}</p>
+
+					<div class="wbmi-input-widget--single-line">
+						<label class="wbmi-input-widget__label">{{precisionLabel}}</label>
+						{{{precision}}}
+					</div>
+
+					<div class="wbmi-input-widget--single-line">
+						<label class="wbmi-input-widget__label">{{calendarLabel}}</label>
+						{{{calendar}}}
+					</div>
+				</div>
+			</div>
+		</div>
+
+		{{^isQualifier}}{{{button}}}{{/isQualifier}}
+	</div>
+</div>

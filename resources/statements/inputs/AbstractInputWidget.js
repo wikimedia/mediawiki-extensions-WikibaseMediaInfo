@@ -99,44 +99,58 @@ AbstractInputWidget.prototype.setDisabled = function () {
  * More rigorous, server-side, validation (the kind of validation that
  * data will undergo when it'll actually be submitted to the server)
  * This includes validating the data for the datatype of the property
- * it's related with (e.g. any string input might me fine for a 'string'
+ * it's related with (e.g. any string input might be fine for a 'string'
  * property, but will require a schema etc. for a 'url' property)
  *
  * Returns a promise that resolves with the relevant DataValue, or is
  * rejected when the input is invalid.
  *
- * @param {string} propertyId The id of the relevant property to validate against
+ * @param {string} [propertyId] The id of the relevant property to validate against
+ * @param {string} [datatype] The datatype to validate against
  * @return {jQuery.Promise.<dataValues.DataValue>}
  */
-AbstractInputWidget.prototype.parseValue = function ( propertyId ) {
+AbstractInputWidget.prototype.parseValue = function ( propertyId, datatype ) {
 	var api = wikibase.api.getLocationAgnosticMwApi(
-		mw.config.get( 'wbmiRepoApiUrl', mw.config.get( 'wbRepoApiUrl' ) )
-	);
+			mw.config.get( 'wbmiRepoApiUrl', mw.config.get( 'wbRepoApiUrl' ) )
+		),
+		promise;
 
-	// try client-side validation (if any) first
-	try {
-		this.getData();
-	} catch ( e ) {
-		return $.Deferred().reject( e.message );
+	if ( propertyId === undefined && datatype === undefined ) {
+		// parsevalue API only accepts one or the other
+		throw new Error( 'Either "datatype" or "propertyId" must be set' );
 	}
 
-	// parse on the server
-	return api.get( {
+	if ( propertyId !== undefined && datatype !== undefined ) {
+		// parsevalue API only accepts one or the other
+		throw new Error( 'The arguments "datatype" and "propertyId" can not be used together' );
+	}
+
+	promise = api.get( {
 		action: 'wbparsevalue',
 		format: 'json',
 		property: propertyId,
+		datatype: datatype,
 		values: [ this.getRawValue() ],
-		options: this.getRawValueOptions(),
+		options: JSON.stringify( this.getRawValueOptions() ),
 		validate: true
-	} ).then(
-		function ( response ) {
+	} );
+
+	// parse on the server
+	return promise
+		.then( function ( response ) {
 			var rawValue = response.results[ 0 ];
 			return dataValues.newDataValue( rawValue.type, rawValue.value );
-		},
-		function ( errorCode, response ) {
-			return $.Deferred().reject( response.error.info );
-		}
-	);
+		} )
+		.catch( function ( errorCode, response ) {
+			// reject with error message if there is one (there might not be,
+			// e.g. in case of abort)
+			if ( response.error ) {
+				return $.Deferred().reject( response.error.info );
+			} else {
+				return $.Deferred().reject( '' );
+			}
+		} )
+		.promise( { abort: promise.abort } );
 };
 
 /**

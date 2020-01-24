@@ -1,4 +1,5 @@
 @import 'mediawiki.mixins';
+@import '../../mediainfo-variables.less';
 
 .wbmi-input-widget {
 	// See: https://phabricator.wikimedia.org/T222283
@@ -11,18 +12,23 @@
 }
 
 // Styles for inputs meant to be displayed on a single line
-.wbmi-input-widget.wbmi-input-widget--single-line {
+.wbmi-input-widget--single-line {
 	.flex-display();
 	.flex-wrap( nowrap );
 
 	.wbmi-input-widget__input {
-		.flex( 1, 1, auto, 0);
+		.flex( 1, 1, auto, 0 );
 		vertical-align: middle;
 	}
 
 	.wbmi-input-widget__button {
-		.flex( 0, 0, auto, 0);
+		.flex( 0, 0, auto, 0 );
 		vertical-align: middle;
+	}
+
+	.wbmi-input-widget__label {
+		.flex( 1, 1, 12em, 0 );
+		align-self: center;
 	}
 
 	> *:not( :last-child ) {
@@ -56,4 +62,26 @@
 			border-bottom-left-radius: 0;
 		}
 	}
+}
+
+.wbmi-input-widget--container {
+	position: relative;
+	width: 100%;
+}
+
+.wbmi-input-widget--options {
+	// pull up 1 pixel - the above input field's button border shall act as separator
+	margin-top: -1px;
+	z-index: 1;
+
+	&:not( .wbmi-input-widget__active ) {
+		display: none;
+	}
+}
+
+.wbmi-input-widget--options-container {
+	.box-shadow( 2px 2px 5px -2px @base20 );
+	background: @color-background;
+	border: @base-border;
+	padding: @sm-spacing @base-spacing;
 }

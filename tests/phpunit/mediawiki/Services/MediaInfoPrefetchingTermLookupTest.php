@@ -94,7 +94,11 @@ class MediaInfoPrefetchingTermLookupTest extends \PHPUnit\Framework\TestCase {
 
 	public function testGetPrefetched() {
 		$termLookup = $this->getDefaultMediaInfoPrefetchingTermLookup();
-		$termLookup->prefetchTerms( [ static::$defaultRevisionId ] );
+		$termLookup->prefetchTerms(
+			[ static::$defaultRevisionId ],
+			[ 'label', 'description' ],
+			[ 'en', 'nl' ]
+		);
 
 		$this->assertSame(
 			'This is a label',
@@ -108,7 +112,11 @@ class MediaInfoPrefetchingTermLookupTest extends \PHPUnit\Framework\TestCase {
 
 	public function testGetPrefetchedNonExistingEntity() {
 		$termLookup = $this->getDefaultMediaInfoPrefetchingTermLookup();
-		$termLookup->prefetchTerms( [ static::$nonExistingRevisionId ] );
+		$termLookup->prefetchTerms(
+			[ static::$nonExistingRevisionId ],
+			[ 'label', 'description' ],
+			[ 'en', 'nl' ]
+		);
 
 		$this->assertFalse(
 			$termLookup->getPrefetchedTerm( static::$nonExistingRevisionId, 'label', 'en' )
@@ -138,7 +146,7 @@ class MediaInfoPrefetchingTermLookupTest extends \PHPUnit\Framework\TestCase {
 
 	public function testGetPrefetchedNonExistingLanguage() {
 		$termLookup = $this->getDefaultMediaInfoPrefetchingTermLookup();
-		$termLookup->prefetchTerms( [ static::$defaultRevisionId ], null, [ 'qqq' ] );
+		$termLookup->prefetchTerms( [ static::$defaultRevisionId ], [ 'label', 'description' ], [ 'qqq' ] );
 
 		$this->assertFalse(
 			$termLookup->getPrefetchedTerm( static::$defaultRevisionId, 'label', 'qqq' )
@@ -150,7 +158,11 @@ class MediaInfoPrefetchingTermLookupTest extends \PHPUnit\Framework\TestCase {
 
 	public function testGetPrefetchedUnfetchedLanguage() {
 		$termLookup = $this->getDefaultMediaInfoPrefetchingTermLookup();
-		$termLookup->prefetchTerms( [ static::$defaultRevisionId ], null, [ 'en' ] );
+		$termLookup->prefetchTerms(
+			[ static::$defaultRevisionId ],
+			[ 'label', 'description' ],
+			[ 'en' ]
+		);
 
 		// we didn't explicitly fetch this language, so it may or may not exist...
 		// all we know is that we don't want to get a `false` (does not exist)
@@ -175,7 +187,11 @@ class MediaInfoPrefetchingTermLookupTest extends \PHPUnit\Framework\TestCase {
 
 	public function testGetLabel() {
 		$termLookup = $this->getDefaultMediaInfoPrefetchingTermLookup();
-		$termLookup->prefetchTerms( [ static::$defaultRevisionId ] );
+		$termLookup->prefetchTerms(
+			[ static::$defaultRevisionId ],
+			[ 'label' ],
+			[ 'en' ]
+		);
 
 		$this->assertSame(
 			'This is a label',
@@ -185,7 +201,11 @@ class MediaInfoPrefetchingTermLookupTest extends \PHPUnit\Framework\TestCase {
 
 	public function testGetLabelNonExistingEntity() {
 		$termLookup = $this->getDefaultMediaInfoPrefetchingTermLookup();
-		$termLookup->prefetchTerms( [ static::$nonExistingRevisionId ] );
+		$termLookup->prefetchTerms(
+			[ static::$nonExistingRevisionId ],
+			[ 'label' ],
+			[ 'en' ]
+		);
 
 		$this->expectException( TermLookupException::class );
 		$termLookup->getLabel( static::$nonExistingRevisionId, 'en' );
@@ -193,7 +213,11 @@ class MediaInfoPrefetchingTermLookupTest extends \PHPUnit\Framework\TestCase {
 
 	public function testGetLabelNonExistingLanguage() {
 		$termLookup = $this->getDefaultMediaInfoPrefetchingTermLookup();
-		$termLookup->prefetchTerms( [ static::$defaultRevisionId ] );
+		$termLookup->prefetchTerms(
+			[ static::$defaultRevisionId ],
+			[ 'label' ],
+			[ 'qqq' ]
+		);
 
 		$this->assertNull(
 			$termLookup->getLabel( static::$defaultRevisionId, 'qqq' )
@@ -215,7 +239,11 @@ class MediaInfoPrefetchingTermLookupTest extends \PHPUnit\Framework\TestCase {
 
 	public function testGetLabels() {
 		$termLookup = $this->getDefaultMediaInfoPrefetchingTermLookup();
-		$termLookup->prefetchTerms( [ static::$defaultRevisionId ] );
+		$termLookup->prefetchTerms(
+			[ static::$defaultRevisionId ],
+			[ 'label' ],
+			[ 'en', 'nl' ]
+		);
 
 		$this->assertSame(
 			[
@@ -228,7 +256,11 @@ class MediaInfoPrefetchingTermLookupTest extends \PHPUnit\Framework\TestCase {
 
 	public function testGetLabelsNonExistingEntity() {
 		$termLookup = $this->getDefaultMediaInfoPrefetchingTermLookup();
-		$termLookup->prefetchTerms( [ static::$nonExistingRevisionId ] );
+		$termLookup->prefetchTerms(
+			[ static::$nonExistingRevisionId ],
+			[ 'label' ],
+			[ 'en', 'nl' ]
+		);
 
 		$this->expectException( TermLookupException::class );
 		$termLookup->getLabels( static::$nonExistingRevisionId, [ 'en', 'nl' ] );
@@ -236,7 +268,11 @@ class MediaInfoPrefetchingTermLookupTest extends \PHPUnit\Framework\TestCase {
 
 	public function testGetLabelsNonExistingLanguage() {
 		$termLookup = $this->getDefaultMediaInfoPrefetchingTermLookup();
-		$termLookup->prefetchTerms( [ static::$defaultRevisionId ] );
+		$termLookup->prefetchTerms(
+			[ static::$defaultRevisionId ],
+			[ 'label', 'description' ],
+			[ 'en', 'qqq' ]
+		);
 
 		$this->assertSame(
 			[
@@ -258,7 +294,7 @@ class MediaInfoPrefetchingTermLookupTest extends \PHPUnit\Framework\TestCase {
 
 	public function testGetDescription() {
 		$termLookup = $this->getDefaultMediaInfoPrefetchingTermLookup();
-		$termLookup->prefetchTerms( [ static::$defaultRevisionId ] );
+		$termLookup->prefetchTerms( [ static::$defaultRevisionId ], [ 'description' ], [ 'en' ] );
 
 		$this->assertSame(
 			'This is a description',
@@ -268,7 +304,11 @@ class MediaInfoPrefetchingTermLookupTest extends \PHPUnit\Framework\TestCase {
 
 	public function testGetDescriptionNonExistingEntity() {
 		$termLookup = $this->getDefaultMediaInfoPrefetchingTermLookup();
-		$termLookup->prefetchTerms( [ static::$nonExistingRevisionId ] );
+		$termLookup->prefetchTerms(
+			[ static::$nonExistingRevisionId ],
+			[ 'description' ],
+			[ 'en' ]
+		);
 
 		$this->expectException( TermLookupException::class );
 		$termLookup->getDescription( static::$nonExistingRevisionId, 'en' );
@@ -276,7 +316,11 @@ class MediaInfoPrefetchingTermLookupTest extends \PHPUnit\Framework\TestCase {
 
 	public function testGetDescriptionNonExistingLanguage() {
 		$termLookup = $this->getDefaultMediaInfoPrefetchingTermLookup();
-		$termLookup->prefetchTerms( [ static::$defaultRevisionId ] );
+		$termLookup->prefetchTerms(
+			[ static::$defaultRevisionId ],
+			[ 'description' ],
+			[ 'qqq' ]
+		);
 
 		$this->assertNull(
 			$termLookup->getDescription( static::$defaultRevisionId, 'qqq' )
@@ -298,7 +342,11 @@ class MediaInfoPrefetchingTermLookupTest extends \PHPUnit\Framework\TestCase {
 
 	public function testGetDescriptions() {
 		$termLookup = $this->getDefaultMediaInfoPrefetchingTermLookup();
-		$termLookup->prefetchTerms( [ static::$defaultRevisionId ] );
+		$termLookup->prefetchTerms(
+			[ static::$defaultRevisionId ],
+			[ 'description' ],
+			[ 'en', 'nl' ]
+		);
 
 		$this->assertSame(
 			[
@@ -311,7 +359,11 @@ class MediaInfoPrefetchingTermLookupTest extends \PHPUnit\Framework\TestCase {
 
 	public function testGetDescriptionsNonExistingEntity() {
 		$termLookup = $this->getDefaultMediaInfoPrefetchingTermLookup();
-		$termLookup->prefetchTerms( [ static::$nonExistingRevisionId ] );
+		$termLookup->prefetchTerms(
+			[ static::$nonExistingRevisionId ],
+			[ 'description' ],
+			[ 'en', 'nl' ]
+		);
 
 		$this->expectException( TermLookupException::class );
 		$termLookup->getDescriptions( static::$nonExistingRevisionId, [ 'en', 'nl' ] );
@@ -319,7 +371,11 @@ class MediaInfoPrefetchingTermLookupTest extends \PHPUnit\Framework\TestCase {
 
 	public function testGetDescriptionsNonExistingLanguage() {
 		$termLookup = $this->getDefaultMediaInfoPrefetchingTermLookup();
-		$termLookup->prefetchTerms( [ static::$defaultRevisionId ] );
+		$termLookup->prefetchTerms(
+			[ static::$defaultRevisionId ],
+			[ 'description' ],
+			[ 'en', 'qqq' ]
+		);
 
 		$this->assertSame(
 			[

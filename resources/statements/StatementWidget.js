@@ -465,6 +465,11 @@ StatementWidget.prototype.submit = function ( baseRevId ) {
 			} ).catch(
 				function ( errorCode, error ) {
 					var apiError = wikibase.api.RepoApiError.newFromApiResponse( error, 'save' ),
+						// prefer no-HTML error.error.info (if available) over RepoApiError
+						// (similar to AbstractInputWidget.parseValue) because not all API
+						// endpoints (e.g. wbparsevalue) return the HTML version, and this
+						// makes things more consistent
+						errorMessage = error.error && error.error.info || new OO.ui.HtmlSnippet( apiError.detailedMessage ),
 						guid = statement.getClaim().getGuid(),
 						initialStatement = self.state.initialData.toArray().filter( function ( statement ) {
 							return statement.getClaim().getGuid() === guid;
@@ -476,7 +481,7 @@ StatementWidget.prototype.submit = function ( baseRevId ) {
 					// the user which top-level statement or qualifier needs to
 					// be fixed.
 					hasFailures = true;
-					errors.push( apiError.detailedMessage );
+					errors.push( errorMessage );
 
 					// replace statement with what we previously had, since we failed
 					// to submit the changes...

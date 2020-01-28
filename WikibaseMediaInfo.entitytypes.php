@@ -14,7 +14,6 @@
  */
 
 use MediaWiki\MediaWikiServices;
-use Wikibase\DataAccess\DataAccessSettings;
 use Wikibase\DataAccess\SingleEntitySourceServices;
 use Wikibase\DataAccess\UnusableEntitySource;
 use Wikibase\DataModel\DeserializerFactory;
@@ -206,37 +205,26 @@ return [
 			);
 		},
 		'entity-metadata-accessor-callback' => function ( $dbName, $repoName ) {
-			$entityNamespaceLookup = WikibaseRepo::getDefaultInstance()->getEntityNamespaceLookup();
+			$wikibaseRepo = WikibaseRepo::getDefaultInstance();
+			$entityNamespaceLookup = $wikibaseRepo->getEntityNamespaceLookup();
 			$entityQuery = new MediaInfoEntityQuery(
 				$entityNamespaceLookup,
 				MediaWikiServices::getInstance()->getSlotRoleStore()
 			);
-			$settings = WikibaseRepo::getDefaultInstance()->getSettings();
 
-			// Temporary setting, for T225603
-			$tmpPropertyTermsMigrationStage = MIGRATION_OLD;
-			if ( $settings->hasSetting( 'tmpPropertyTermsMigrationStage' ) ) {
-				$tmpPropertyTermsMigrationStage = $settings->getSetting( 'tmpPropertyTermsMigrationStage' );
+			$dataAccessSettings = $wikibaseRepo->getDataAccessSettings();
+
+			if ( $dataAccessSettings->useEntitySourceBasedFederation() ) {
+				$entitySource = $wikibaseRepo->getEntitySourceDefinitions()
+					->getSourceForEntityType( MediaInfo::ENTITY_TYPE );
+			} else {
+				$entitySource = new UnusableEntitySource();
 			}
-
-			$tmpItemTermsMigrationStages = [ 'max' => MIGRATION_OLD ];
-			if ( $settings->hasSetting( 'tmpItemTermsMigrationStages' ) ) {
-				$tmpItemTermsMigrationStages = $settings->getSetting( 'tmpItemTermsMigrationStages' );
-			}
-
-			$dataAccessSettings = new DataAccessSettings(
-				$settings->getSetting( 'maxSerializedEntitySize' ),
-				$settings->getSetting( 'useTermsTableSearchFields' ),
-				$settings->getSetting( 'forceWriteTermsTableSearchFields' ),
-				DataAccessSettings::USE_REPOSITORY_PREFIX_BASED_FEDERATION,
-				$tmpPropertyTermsMigrationStage >= MIGRATION_WRITE_NEW,
-				$tmpItemTermsMigrationStages
-			);
 
 			return new WikiPageEntityMetaDataLookup(
 				$entityNamespaceLookup,
 				$entityQuery,
-				new UnusableEntitySource(),
+				$entitySource,
 				$dataAccessSettings,
 				$dbName,
 				$repoName

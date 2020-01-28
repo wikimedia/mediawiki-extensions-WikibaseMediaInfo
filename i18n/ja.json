@@ -2,7 +2,8 @@
 	"@metadata": {
 		"authors": [
 			"Omotecho",
-			"Afaz"
+			"Afaz",
+			"Marine-Blue"
 		]
 	},
 	"action-mediainfo-term": "メディアの情報項目を変更（キャプション、概要等）",
@@ -48,8 +49,8 @@
 	"wikibasemediainfo-statements-item-add-qualifier": "修飾子を追加",
 	"wikibasemediainfo-statements-item-input-label": "ウィキデータを検索",
 	"wikibasemediainfo-statements-item-input-placeholder": "追加する項目を検索（猫、山、タージ・マハルなど）",
-	"wikibasemediainfo-statements-item-is-prominent": "顕著",
-	"wikibasemediainfo-statements-item-mark-as-prominent": "顕著とマークする",
+	"wikibasemediainfo-statements-item-is-prominent": "重要",
+	"wikibasemediainfo-statements-item-mark-as-prominent": "重要としてマークする",
 	"wikibasemediainfo-statements-item-remove": "除去",
 	"wikibasemediainfo-statements-learn-more": "詳細",
 	"wikibasemediainfo-statements-remove": "すべて除去",

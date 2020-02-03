@@ -2,7 +2,8 @@
 	"@metadata": {
 		"authors": [
 			"Robert Važan",
-			"Luky001"
+			"Luky001",
+			"Vegetator"
 		]
 	},
 	"wikibasemediainfo-add-statement": "Pridať výrok",
@@ -13,5 +14,6 @@
 	"wikibasemediainfo-filepage-caption-empty": "Pridajte jednoriadkové vysvetlenie, čo tento súbor predstavuje",
 	"wikibasemediainfo-statements-item-input-label": "z Wikiúdajov",
 	"wikibasemediainfo-statements-item-input-placeholder": "Hľadaním pridajte položky (mačka domáca, hora, Taj Mahal, ...)",
-	"wikibasemediainfo-statements-title-depicts": "Položky prezentované týmto súborom"
+	"wikibasemediainfo-statements-title-depicts": "Položky prezentované týmto súborom",
+	"wikibasemediainfo-statements-link-notice-text": "Štítky štrukturovaných dát odkazujú na príslušné stránky Wikidát, ktoré sa otvoria v novom okne."
 }

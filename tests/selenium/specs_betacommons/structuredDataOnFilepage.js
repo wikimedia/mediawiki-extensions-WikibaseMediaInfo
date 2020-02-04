@@ -18,7 +18,7 @@ describe( 'File page', function () {
 	} );
 
 	it( 'logged-in user can edit captions', function () {
-		let captionText = 'Test caption ' + Math.random().toString().substring( 2 );
+		const captionText = 'Test caption ' + Math.random().toString().substring( 2 );
 
 		LoginPage.loginUser();
 		browser.pause( 4000 );

@@ -22,9 +22,9 @@
 	"require-dev": {
 		"jakub-onderka/php-console-highlighter": "0.4.0",
 		"jakub-onderka/php-parallel-lint": "1.0.0",
-		"mediawiki/minus-x": "0.3.2",
+		"mediawiki/minus-x": "1.0.0",
 		"mediawiki/mediawiki-codesniffer": "29.0.0",
-		"mediawiki/mediawiki-phan-config": "0.9.0"
+		"mediawiki/mediawiki-phan-config": "0.9.1"
 	},
 	"autoload": {
 		"psr-4": {
@@ -36,8 +36,8 @@
 	},
 	"scripts": {
 		"fix": [
-			"phpcbf",
-			"minus-x fix ."
+			"minus-x fix .",
+			"phpcbf"
 		],
 		"test": [
 			"parallel-lint . --exclude vendor --exclude node_modules",

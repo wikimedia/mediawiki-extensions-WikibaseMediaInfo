@@ -10,7 +10,7 @@ describe( 'Edit page', function () {
 	} );
 
 	it( 'Logged-in user can edit', function () {
-		let content = 'Foo bar baz quux';
+		const content = 'Foo bar baz quux';
 
 		LoginPage.loginUser();
 		browser.pause( 2000 );

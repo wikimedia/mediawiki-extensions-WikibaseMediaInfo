@@ -39,14 +39,14 @@ class FilePage extends Page {
 	 * subject to change.
 	 */
 	clickStatementsTab() {
-		browser.click( `${ this.tabsSelector }:nth-of-type(2)` );
+		browser.click( `${this.tabsSelector}:nth-of-type(2)` );
 	}
 
 	/**
 	 * TODO: same problem here as above
 	 */
 	clickCaptionsTab() {
-		browser.click( `${ this.tabsSelector }:nth-of-type(1)` );
+		browser.click( `${this.tabsSelector}:nth-of-type(1)` );
 	}
 
 	editCaption( captionText ) {

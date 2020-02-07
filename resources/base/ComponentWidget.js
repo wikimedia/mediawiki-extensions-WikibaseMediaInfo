@@ -670,4 +670,12 @@ ComponentWidget.prototype.setErrors = function ( errors ) {
 	return this.setState( { errors: errors } );
 };
 
+/**
+ * Get an array of current error messages.
+ * @return {Array}
+ */
+ComponentWidget.prototype.getErrors = function () {
+	return this.state.errors || [];
+};
+
 module.exports = ComponentWidget;

@@ -36,7 +36,6 @@ MultiTypeInputWrapperWidget = function ( config ) {
 	this.allowEmitChange = true;
 
 	this.state = {
-		errors: [],
 		type: 'string',
 		input: this.createInput( this.config.type )
 	};
@@ -57,8 +56,9 @@ OO.mixinClass( MultiTypeInputWrapperWidget, ComponentWidget );
  */
 MultiTypeInputWrapperWidget.prototype.getTemplateData = function () {
 	var self = this,
-		errorMessages = ( this.state.errors.length > 0 ) ?
-			this.state.errors.map( function ( error ) {
+		errors = this.getErrors(),
+		errorMessages = ( errors.length > 0 ) ?
+			errors.map( function ( error ) {
 				return new OO.ui.MessageWidget( {
 					type: 'error',
 					label: error,

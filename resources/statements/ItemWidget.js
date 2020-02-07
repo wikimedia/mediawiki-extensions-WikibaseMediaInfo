@@ -25,7 +25,6 @@ var QualifierWidget = require( './QualifierWidget.js' ),
 		// (e.g. setDisabled) which may cause a re-render, and will need
 		// some of these...
 		this.state = {
-			errors: [],
 			editing: !!config.editing,
 			propertyId: config.propertyId,
 			guid: config.guid || this.guidGenerator.newGuid(),
@@ -53,8 +52,9 @@ OO.mixinClass( ItemWidget, FormatValueElement );
 ItemWidget.prototype.getTemplateData = function () {
 	var self = this,
 		labelPromise,
-		errorMessages = ( this.state.errors.length > 0 ) ?
-			this.state.errors.map( function ( error ) {
+		errors = this.getErrors(),
+		errorMessages = ( errors.length > 0 ) ?
+			errors.map( function ( error ) {
 				return new OO.ui.MessageWidget( {
 					type: 'error',
 					label: error,
@@ -269,7 +269,7 @@ ItemWidget.prototype.setData = function ( data ) {
 			data.getClaim().getMainSnak().getValue() :
 			null,
 		// if new data was passed in, error is no longer valid
-		errors: data.equals( this.getData() ) ? this.state.errors : []
+		errors: data.equals( this.getData() ) ? this.getErrors() : []
 	} ) );
 };
 

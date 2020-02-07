@@ -46,8 +46,7 @@ StatementWidget = function ( config ) {
 		valueType: valueType,
 		initialData: new datamodel.StatementList(),
 		title: config.title || ( mw.config.get( 'wbmiPropertyTitles' ) || {} )[ config.propertyId ] || '',
-		editing: config.editing || false,
-		errors: []
+		editing: config.editing || false
 	};
 
 	this.input = new inputs.MultiTypeInputWrapperWidget( {
@@ -93,8 +92,9 @@ OO.mixinClass( StatementWidget, FormatValueElement );
 StatementWidget.prototype.getTemplateData = function () {
 	var self = this,
 		dataValue = new datamodel.EntityId( this.state.propertyId ),
-		errorMessages = ( this.state.errors.length > 0 ) ?
-			this.state.errors.map( function ( error ) {
+		errors = this.getErrors(),
+		errorMessages = ( errors.length > 0 ) ?
+			errors.map( function ( error ) {
 				return new OO.ui.MessageWidget( {
 					type: 'error',
 					label: error,

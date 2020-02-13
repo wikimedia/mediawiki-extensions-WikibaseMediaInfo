@@ -168,7 +168,7 @@ StatementPanel.prototype.sendData = function () {
 
 	this.statementWidget.disconnect( this, { change: 'makeEditable' } );
 
-	this.statementWidget.submit( mw.mediaInfo.structuredData.currentRevision )
+	this.statementWidget.submit( mw.mediaInfo.structuredData.currentRevision || undefined )
 		.then( function ( response ) {
 			mw.mediaInfo.structuredData.currentRevision = response.pageinfo.lastrevid;
 			self.makeReadOnly();

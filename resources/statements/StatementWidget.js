@@ -457,7 +457,7 @@ StatementWidget.prototype.submit = function ( baseRevId ) {
 				format: 'json',
 				claim: JSON.stringify( serializer.serialize( statement ) ),
 				// fetch the previous response's rev id and feed it to the next
-				baserevid: prevResponse.pageinfo ? prevResponse.pageinfo.lastrevid : undefined,
+				baserevid: prevResponse.pageinfo ? ( prevResponse.pageinfo.lastrevid || undefined ) : undefined,
 				bot: 1,
 				summary: self.config.summary || undefined,
 				tags: self.config.tags || undefined,
@@ -506,7 +506,7 @@ StatementWidget.prototype.submit = function ( baseRevId ) {
 					return statement.getClaim().getGuid();
 				} ).join( '|' ),
 				// fetch the previous response's rev id and feed it to the next
-				baserevid: prevResponse.pageinfo ? prevResponse.pageinfo.lastrevid : undefined,
+				baserevid: prevResponse.pageinfo ? ( prevResponse.pageinfo.lastrevid || undefined ) : undefined,
 				bot: 1,
 				summary: self.config.summary || undefined,
 				tags: self.config.tags || undefined,

@@ -240,7 +240,7 @@ Elasticsearch index (all examples use Wikidata Property and Item ids):
 Note that not all claims are stored. A claim will be indexed in ElasticSearch
 only if ALL of the following conditions are true:
 
-* The claim has a real value (i.e. its value is not ‘no value’ or ‘unknown value’) **AND**
+* The claim has a real value (i.e. its value is not ‘no value’ or ‘some value’) **AND**
 * We know how to process its value for indexing. More value processors may be
   added in future, but currently we require the claim’s value to be either a Q
   item ID, a string (alphanumeric), or a quantity (numeric) **AND**

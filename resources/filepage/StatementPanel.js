@@ -39,7 +39,9 @@ StatementPanel = function StatementPanel( config ) {
 	// Mixin constructors
 	OO.ui.mixin.PendingElement.call( this, this.config );
 
-	this.populateFormatValueCache( JSON.parse( this.$element.attr( 'data-formatvalue' ) || '{}' ) );
+	if ( this.$element.attr( 'data-formatvalue' ) ) {
+		this.populateFormatValueCache( JSON.parse( this.$element.attr( 'data-formatvalue' ) || '{}' ) );
+	}
 
 	this.licenseDialogWidget = new LicenseDialogWidget();
 
@@ -48,6 +50,7 @@ StatementPanel = function StatementPanel( config ) {
 		showControls: true,
 		valueType: dataTypesMap[ this.config.propertyType ].dataValueType
 	}, this.config ) );
+
 	// don't start subscribing to events until statementwidget has been
 	// pre-populated with storage data
 	this.statementWidget.resetData( deserializer.deserialize( statementsJson ) ).then( function () {

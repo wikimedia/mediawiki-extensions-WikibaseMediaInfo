@@ -327,4 +327,42 @@ QUnit.module( 'ItemWidget', hooks.mediainfo, function () {
 				done();
 			} );
 	} );
+
+	QUnit.test( 'Valid data roundtrip with somevalue snak', function ( assert ) {
+		var done = assert.async(),
+			ItemWidget = require( pathToWidget ),
+			widget = new ItemWidget( { propertyId: 'P1' } ),
+			datamodel = require( 'wikibase.datamodel' ),
+			data = new datamodel.Statement(
+				new datamodel.Claim(
+					new datamodel.PropertySomeValueSnak( 'P1' )
+				)
+			);
+
+		widget.setData( data )
+			.then( function () {
+				assert.strictEqual( data.equals( widget.getData() ), true );
+				assert.strictEqual( widget.state.snakType, data.getClaim().getMainSnak().getType() );
+				done();
+			} );
+	} );
+
+	QUnit.test( 'Valid data roundtrip with novalue snak', function ( assert ) {
+		var done = assert.async(),
+			ItemWidget = require( pathToWidget ),
+			widget = new ItemWidget( { propertyId: 'P1' } ),
+			datamodel = require( 'wikibase.datamodel' ),
+			data = new datamodel.Statement(
+				new datamodel.Claim(
+					new datamodel.PropertyNoValueSnak( 'P1' )
+				)
+			);
+
+		widget.setData( data )
+			.then( function () {
+				assert.strictEqual( data.equals( widget.getData() ), true );
+				assert.strictEqual( widget.state.snakType, data.getClaim().getMainSnak().getType() );
+				done();
+			} );
+	} );
 } );

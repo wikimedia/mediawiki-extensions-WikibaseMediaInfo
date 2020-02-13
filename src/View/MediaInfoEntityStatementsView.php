@@ -16,6 +16,7 @@ use Wikibase\DataModel\Entity\EntityIdValue;
 use Wikibase\DataModel\Entity\PropertyId;
 use Wikibase\DataModel\SerializerFactory;
 use Wikibase\DataModel\Snak\PropertyNoValueSnak;
+use Wikibase\DataModel\Snak\PropertySomeValueSnak;
 use Wikibase\DataModel\Snak\PropertyValueSnak;
 use Wikibase\DataModel\Snak\Snak;
 use Wikibase\DataModel\Snak\SnakList;
@@ -196,11 +197,13 @@ class MediaInfoEntityStatementsView {
 			$formatValueCache += $this->getStatementFormatValueCache( $statement );
 		}
 
-		// format main property (e.g. depicts)
-		$formatValueCache += $this->getValueFormatValueCache(
-			new EntityIdValue( $statement->getPropertyId() ),
-			[ SnakFormatter::FORMAT_HTML ]
-		);
+		// Format main property (e.g. depicts).
+		if ( !empty( $statements ) ) {
+			$formatValueCache += $this->getValueFormatValueCache(
+				new EntityIdValue( $statement->getPropertyId() ),
+				[ SnakFormatter::FORMAT_HTML ]
+			);
+		}
 
 		/*
 		 * Here's quite an odd way to render a title...
@@ -372,6 +375,14 @@ class MediaInfoEntityStatementsView {
 	 * @return string
 	 */
 	private function formatSnak( Snak $snak, $format = SnakFormatter::FORMAT_PLAIN ) {
+		if ( $snak instanceof PropertyNoValueSnak ) {
+			return wfMessage( 'wikibasemediainfo-filepage-statement-no-value' )->escaped();
+		}
+
+		if ( $snak instanceof PropertySomeValueSnak ) {
+			return wfMessage( 'wikibasemediainfo-filepage-statement-some-value' )->escaped();
+		}
+
 		$formatter = $this->snakFormatterFactory->getSnakFormatter(
 			$format,
 			new FormatterOptions( [ ValueFormatter::OPT_LANG => $this->languageCode ] )
@@ -431,9 +442,15 @@ class MediaInfoEntityStatementsView {
 
 		foreach ( $statementsByProperty as $propertyId => $statements ) {
 			if ( isset( $propertyOrder[$propertyId] ) ) {
-				$ordered[$propertyOrder[$propertyId]] = $statements;
+				$ordered[$propertyOrder[$propertyId]] = [
+					'propertyId' => $propertyId,
+					'statements' => $statements
+				];
 			} else {
-				$unordered[] = $statements;
+				$unordered[] = [
+					'propertyId' => $propertyId,
+					'statements' => $statements
+				];
 			}
 		}
 
@@ -441,8 +458,7 @@ class MediaInfoEntityStatementsView {
 		$orderedButNotIndexed = array_merge( $ordered, $unordered );
 		$orderedAndIndexed = [];
 		foreach ( $orderedButNotIndexed  as $statementArray ) {
-			$orderedAndIndexed[$statementArray[0]->getPropertyId()->getSerialization()] =
-				$statementArray;
+			$orderedAndIndexed[ $statementArray[ 'propertyId' ] ] = $statementArray[ 'statements' ];
 		}
 		return $orderedAndIndexed;
 	}
@@ -486,12 +502,7 @@ class MediaInfoEntityStatementsView {
 	private function addDefaultStatements( $statementsByProperty ) {
 		foreach ( $this->defaultPropertyIds as $propertyId ) {
 			if ( !isset( $statementsByProperty[ $propertyId->getSerialization() ] ) ) {
-				$statementsByProperty[ $propertyId->getSerialization() ] =
-					[
-						new Statement(
-							new PropertyNoValueSnak( $propertyId )
-						)
-					];
+				$statementsByProperty[ $propertyId->getSerialization() ] = [];
 			}
 		}
 		return $statementsByProperty;

@@ -194,7 +194,8 @@ StatementWidget.prototype.addItemFromInput = function () {
 	this.input.parseValue( this.state.propertyId ).then(
 		function () {
 			var dataValue = self.input.getData(),
-				widget = self.createItem( dataValue );
+				widget = self.createItem( 'value', dataValue );
+
 			self.addItems( [ widget ] );
 
 			// we just added a new item - let's switch all of them into editing mode
@@ -214,16 +215,18 @@ StatementWidget.prototype.addItemFromInput = function () {
 };
 
 /**
+ * @param {string} snakType value, somevalue, or novalue
  * @param {dataValues.DataValue} dataValue
  * @return {ItemWidget}
  */
-StatementWidget.prototype.createItem = function ( dataValue ) {
+StatementWidget.prototype.createItem = function ( snakType, dataValue ) {
 	var widget = new ItemWidget( {
 		disabled: this.isDisabled(),
 		editing: this.state.editing,
 		entityId: this.state.entityId,
 		propertyId: this.state.propertyId,
 		rank: datamodel.Statement.RANK.NORMAL,
+		snakType: snakType,
 		dataValue: dataValue
 	} );
 
@@ -283,26 +286,30 @@ StatementWidget.prototype.setData = function ( data ) {
 
 	sortedData.forEach( function ( statement, i ) {
 		var mainSnak = statement.getClaim().getMainSnak(),
-			widget = existing[ i ];
+			widget = existing[ i ],
+			type = mainSnak.getType(),
+			value;
 
 		if ( mainSnak.getPropertyId() !== self.state.propertyId ) {
 			throw new Error( 'Invalid statement: property ID mismatch' );
 		}
 
-		if ( !( mainSnak instanceof datamodel.PropertyValueSnak ) ) {
+		if ( !( mainSnak instanceof datamodel.Snak ) ) {
 			// ignore value-less snak
 			data.removeItem( statement );
 			return;
 		}
 
-		if ( mainSnak.getValue().getType() !== self.state.valueType ) {
+		value = type === 'value' ? mainSnak.getValue() : null;
+
+		if ( value && value.getType() !== self.state.valueType ) {
 			throw new Error( 'Invalid statement: value type mismatch' );
 		}
 
 		if ( widget !== null ) {
 			self.moveItem( widget, i );
 		} else {
-			widget = self.createItem( mainSnak.getValue() );
+			widget = self.createItem( type, value );
 			self.insertItem( widget, i );
 		}
 
@@ -521,7 +528,11 @@ StatementWidget.prototype.submit = function ( baseRevId ) {
 
 				// restore statements that failed to delete
 				promises = removedStatements.map( function ( statement ) {
-					var item = self.createItem( statement.getClaim().getMainSnak().getValue() );
+					var mainSnak = statement.getClaim().getMainSnak(),
+						snakType = mainSnak.getType(),
+						value = snakType === 'value' ? mainSnak.getValue() : null,
+						item = self.createItem( snakType, value );
+
 					self.addItems( [ item ] );
 
 					data.addItem( statement );

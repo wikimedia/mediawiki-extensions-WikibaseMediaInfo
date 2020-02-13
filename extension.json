@@ -404,6 +404,11 @@
 				"wikibasemediainfo-time-calendar-julian",
 				"wikibasemediainfo-globecoordinate-input-button-text",
 				"wikibasemediainfo-globecoordinate-map-button-text",
+				"wikibasemediainfo-filepage-statement-custom-value-option",
+				"wikibasemediainfo-filepage-statement-some-value-option",
+				"wikibasemediainfo-filepage-statement-no-value-option",
+				"wikibasemediainfo-filepage-statement-no-value",
+				"wikibasemediainfo-filepage-statement-some-value",
 				"colon-separator",
 				"word-separator",
 				"parentheses"

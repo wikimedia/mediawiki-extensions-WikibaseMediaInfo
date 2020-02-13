@@ -8,6 +8,7 @@
  * @param {string} config.propertyId Property ID (e.g. P123 id of `depicts` property)
  * @param {string} [config.guid] GUID of existing statement, or null for new
  * @param {number} [config.rank] One of datamodel.Statement.RANK.*
+ * @param {string} [config.snakType] value, somevalue, or novalue
  * @param {dataValues.DataValue} [config.dataValue] Relevant DataValue object, or null for valueless
  * @param {string} [config.editing] True for edit mode, False for read mode
  */
@@ -16,6 +17,11 @@ var QualifierWidget = require( './QualifierWidget.js' ),
 	DOMLessGroupWidget = require( 'wikibase.mediainfo.base' ).DOMLessGroupWidget,
 	FormatValueElement = require( 'wikibase.mediainfo.base' ).FormatValueElement,
 	datamodel = require( 'wikibase.datamodel' ),
+	valueTypes = {
+		VALUE: datamodel.PropertyValueSnak.TYPE,
+		SOMEVALUE: datamodel.PropertySomeValueSnak.TYPE,
+		NOVALUE: datamodel.PropertyNoValueSnak.TYPE
+	},
 	ItemWidget = function MediaInfoStatementsItemWidget( config ) {
 		config = config || {};
 
@@ -29,6 +35,7 @@ var QualifierWidget = require( './QualifierWidget.js' ),
 			propertyId: config.propertyId,
 			guid: config.guid || this.guidGenerator.newGuid(),
 			rank: config.rank || datamodel.Statement.RANK.NORMAL,
+			snakType: config.snakType || valueTypes.NOVALUE,
 			dataValue: config.dataValue || null
 		};
 
@@ -52,6 +59,7 @@ OO.mixinClass( ItemWidget, FormatValueElement );
 ItemWidget.prototype.getTemplateData = function () {
 	var self = this,
 		labelPromise,
+		labelMessage,
 		errors = this.getErrors(),
 		errorMessages = ( errors.length > 0 ) ?
 			errors.map( function ( error ) {
@@ -72,7 +80,10 @@ ItemWidget.prototype.getTemplateData = function () {
 			this.state.propertyId
 		);
 	} else {
-		labelPromise = $.Deferred().resolve( '' ).promise();
+		labelMessage = this.state.snakType === valueTypes.SOMEVALUE ?
+			'wikibasemediainfo-filepage-statement-some-value' :
+			'wikibasemediainfo-filepage-statement-no-value';
+		labelPromise = $.Deferred().resolve( mw.message( labelMessage ).parse() ).promise();
 	}
 
 	return labelPromise.then( function ( label ) {
@@ -187,11 +198,25 @@ ItemWidget.prototype.setEditing = function ( editing ) {
  * @return {datamodel.Statement}
  */
 ItemWidget.prototype.getData = function () {
+	var snak;
+
+	switch ( this.state.snakType ) {
+		case valueTypes.SOMEVALUE:
+			snak = new datamodel.PropertySomeValueSnak( this.state.propertyId );
+			break;
+		case valueTypes.NOVALUE:
+			snak = new datamodel.PropertyNoValueSnak( this.state.propertyId );
+			break;
+		default:
+			snak = this.state.dataValue ?
+				new datamodel.PropertyValueSnak( this.state.propertyId, this.state.dataValue, null ) :
+				new datamodel.PropertyNoValueSnak( this.state.propertyId );
+			break;
+	}
+
 	return new datamodel.Statement(
 		new datamodel.Claim(
-			this.state.dataValue ?
-				new datamodel.PropertyValueSnak( this.state.propertyId, this.state.dataValue, null ) :
-				new datamodel.PropertyNoValueSnak( this.state.propertyId ),
+			snak,
 			new datamodel.SnakList( this.getItems()
 				.map( function ( item ) {
 					// try to fetch data - if it fails (likely because of incomplete input),
@@ -219,6 +244,9 @@ ItemWidget.prototype.getData = function () {
  */
 ItemWidget.prototype.setData = function ( data ) {
 	var self = this,
+		qualifiers = data.getClaim().getQualifiers(),
+		mainSnak = data.getClaim().getMainSnak(),
+		type = mainSnak.getType(),
 		existing = {},
 		promises = [];
 
@@ -238,20 +266,28 @@ ItemWidget.prototype.setData = function ( data ) {
 			// so we should remove this qualifier...
 			return true;
 		}
-		return !data.getClaim().getQualifiers().hasItem( qualifier );
+		return !qualifiers.hasItem( qualifier );
 	} ) );
 
 	// figure out which items have an existing widget already
 	// we're doing this outside of the creation below, because
 	// setData is async, and new objects may not immediately
 	// have their data set
-	data.getClaim().getQualifiers().each( function ( i, qualifier ) {
+	qualifiers.each( function ( i, qualifier ) {
 		existing[ i ] = self.findItemFromData( qualifier );
 	} );
 
 	// add new qualifiers that don't already exist
-	data.getClaim().getQualifiers().each( function ( i, qualifier ) {
-		var widget = existing[ i ];
+	qualifiers.each( function ( i, qualifier ) {
+		var widget;
+
+		// TODO: Remove this to support somevalue and novalue qualifiers. For
+		// now, we'll ignore them.
+		if ( !( qualifier instanceof datamodel.PropertyValueSnak ) ) {
+			return false;
+		}
+
+		widget = existing[ i ];
 		if ( widget !== null ) {
 			self.moveItem( widget, i );
 		} else {
@@ -262,11 +298,12 @@ ItemWidget.prototype.setData = function ( data ) {
 	} );
 
 	return $.when.apply( $, promises ).then( this.setState.bind( this, {
-		propertyId: data.getClaim().getMainSnak().getPropertyId(),
+		propertyId: mainSnak.getPropertyId(),
 		guid: data.getClaim().getGuid() || this.guidGenerator.newGuid(),
 		rank: data.getRank(),
-		dataValue: data.getClaim().getMainSnak().getType() === 'value' ?
-			data.getClaim().getMainSnak().getValue() :
+		snakType: type,
+		dataValue: type === valueTypes.VALUE ?
+			mainSnak.getValue() :
 			null,
 		// if new data was passed in, error is no longer valid
 		errors: data.equals( this.getData() ) ? this.getErrors() : []

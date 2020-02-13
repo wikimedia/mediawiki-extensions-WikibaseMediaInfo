@@ -72,11 +72,11 @@ class MediaInfoEntityStatementsViewTest extends \PHPUnit\Framework\TestCase {
 				$this->returnCallback( function ( Snak $snak ) {
 					if ( $snak instanceof PropertyNoValueSnak ) {
 						return $this->textProvider->get(
-							'wikibase-snakview-snaktypeselector-novalue'
+							'wikibasemediainfo-filepage-statement-no-value'
 						);
 					} elseif ( $snak instanceof PropertySomeValueSnak ) {
 						return $this->textProvider->get(
-							'wikibase-snakview-variations-somevalue-label'
+							'wikibasemediainfo-filepage-statement-some-value'
 						);
 					} elseif ( $snak instanceof PropertyValueSnak ) {
 						$value = $snak->getDataValue();

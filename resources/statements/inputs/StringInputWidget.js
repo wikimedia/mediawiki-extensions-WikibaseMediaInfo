@@ -103,6 +103,14 @@ StringInputWidget.prototype.focus = function () {
 };
 
 /**
+ * @inheritdoc
+ */
+StringInputWidget.prototype.setDisabled = function ( disabled ) {
+	this.input.setDisabled( disabled );
+	StringInputWidget.parent.prototype.setDisabled.call( this, disabled );
+};
+
+/**
  * @inheritDoc
  */
 StringInputWidget.prototype.flagAsInvalid = function () {

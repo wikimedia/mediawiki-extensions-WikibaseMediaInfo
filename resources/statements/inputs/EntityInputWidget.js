@@ -102,4 +102,12 @@ EntityInputWidget.prototype.focus = function () {
 	this.input.focus();
 };
 
+/**
+ * @inheritdoc
+ */
+EntityInputWidget.prototype.setDisabled = function ( disabled ) {
+	this.input.setDisabled( disabled );
+	EntityInputWidget.parent.prototype.setDisabled.call( this, disabled );
+};
+
 module.exports = EntityInputWidget;

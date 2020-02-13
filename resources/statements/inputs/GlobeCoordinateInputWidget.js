@@ -310,6 +310,16 @@ GlobeCoordinateInputWidget.prototype.focus = function () {
 };
 
 /**
+ * @inheritdoc
+ */
+GlobeCoordinateInputWidget.prototype.setDisabled = function ( disabled ) {
+	this.latitudeInput.setDisabled( disabled );
+	this.longitudeInput.setDisabled( disabled );
+	this.precisionInput.setDisabled( disabled );
+	GlobeCoordinateInputWidget.parent.prototype.setDisabled.call( this, disabled );
+};
+
+/**
  * Return an array of all available precision values.
  *
  * @return {Array}

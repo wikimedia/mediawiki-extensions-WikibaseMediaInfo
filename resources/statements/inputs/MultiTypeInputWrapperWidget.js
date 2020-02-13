@@ -3,6 +3,7 @@
 var ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
 	AbstractInputWidget = require( './AbstractInputWidget.js' ),
 	EntityInputWidget = require( './EntityInputWidget.js' ),
+	MonolingualTextInputWidget = require( './MonolingualTextInputWidget.js' ),
 	QuantityInputWidget = require( './QuantityInputWidget.js' ),
 	StringInputWidget = require( './StringInputWidget.js' ),
 	TimeInputWidget = require( './TimeInputWidget.js' ),
@@ -29,6 +30,7 @@ MultiTypeInputWrapperWidget = function ( config ) {
 
 	this.types = {
 		'wikibase-entityid': EntityInputWidget,
+		monolingualtext: MonolingualTextInputWidget,
 		quantity: QuantityInputWidget,
 		string: StringInputWidget,
 		time: TimeInputWidget,
@@ -87,8 +89,8 @@ MultiTypeInputWrapperWidget.prototype.getTemplateData = function () {
  * MultiTypeInputWrapperWidget is basically a wrapper for multiple different
  * input types - this'll let you change the input type.
  *
- * @param {string} type One of 'wikibase-entityid', 'quantity', 'time', 'string' or
- *  'globecoordinate'
+ * @param {string} type One of 'wikibase-entityid', 'quantity', 'time', 'string',
+ *  'globecoordinate', or 'monolingualtext'
  * @return {jQuery.Promise}
  */
 MultiTypeInputWrapperWidget.prototype.setInputType = function ( type ) {

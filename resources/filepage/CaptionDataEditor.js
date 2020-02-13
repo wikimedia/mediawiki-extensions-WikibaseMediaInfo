@@ -1,7 +1,7 @@
 'use strict';
 
 var CaptionDataEditor,
-	UlsWidget = require( './UlsWidget.js' );
+	UlsWidget = require( 'wikibase.mediainfo.uls' );
 
 /**
  * A value object holding all relevant widgets for editing a single caption

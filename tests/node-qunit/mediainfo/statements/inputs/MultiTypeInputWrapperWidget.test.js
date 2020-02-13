@@ -2,6 +2,7 @@ var sinon = require( 'sinon' ),
 	pathToWidget = '../../../../../resources/statements/inputs/MultiTypeInputWrapperWidget.js',
 	pathToEntityInputWidget = '../../../../../resources/statements/inputs/EntityInputWidget.js',
 	pathToStringInputWidget = '../../../../../resources/statements/inputs/StringInputWidget',
+	pathToMonolingualTextInputWidget = '../../../../../resources/statements/inputs/MonolingualTextInputWidget.js',
 	pathToQuantityInputWidget = '../../../../../resources/statements/inputs/QuantityInputWidget.js',
 	pathToTimeInputWidget = '../../../../../resources/statements/inputs/TimeInputWidget.js',
 	pathToGlobeCoordinateInputWidget = '../../../../../resources/statements/inputs/GlobeCoordinateInputWidget.js',
@@ -28,6 +29,19 @@ QUnit.module( 'MultiTypeInputWrapperWidget', hooks.kartographer, function () {
 			MultiTypeInputWrapperWidget = require( pathToWidget ),
 			widget = new MultiTypeInputWrapperWidget(),
 			data = new dataValues.StringValue( 'this is a test' );
+
+		widget.setData( data ).then( function () {
+			assert.ok( widget.getData() );
+			assert.strictEqual( data.equals( widget.getData() ), true );
+			done();
+		} );
+	} );
+
+	QUnit.test( 'Valid data roundtrip (monolingualtext)', function ( assert ) {
+		var done = assert.async(),
+			MultiTypeInputWrapperWidget = require( pathToWidget ),
+			widget = new MultiTypeInputWrapperWidget(),
+			data = new dataValues.MonolingualTextValue( 'en', 'this is a test' );
 
 		widget.setData( data ).then( function () {
 			assert.ok( widget.getData() );
@@ -168,6 +182,7 @@ QUnit.module( 'MultiTypeInputWrapperWidget', hooks.kartographer, function () {
 			MultiTypeInputWrapperWidget = require( pathToWidget ),
 			EntityInputWidget = require( pathToEntityInputWidget ),
 			StringInputWidget = require( pathToStringInputWidget ),
+			MonolingualTextInputWidget = require( pathToMonolingualTextInputWidget ),
 			QuantityInputWidget = require( pathToQuantityInputWidget ),
 			TimeInputWidget = require( pathToTimeInputWidget ),
 			GlobeCoordinateInputWidget = require( pathToGlobeCoordinateInputWidget ),
@@ -177,6 +192,9 @@ QUnit.module( 'MultiTypeInputWrapperWidget', hooks.kartographer, function () {
 			} ),
 			stringWidget = new MultiTypeInputWrapperWidget( {
 				type: 'string'
+			} ),
+			monolingualTextWidget = new MultiTypeInputWrapperWidget( {
+				type: 'monolingualtext'
 			} ),
 			quantityWidget = new MultiTypeInputWrapperWidget( {
 				type: 'quantity'
@@ -194,6 +212,7 @@ QUnit.module( 'MultiTypeInputWrapperWidget', hooks.kartographer, function () {
 		$.when(
 			entityWidget.render(),
 			stringWidget.render(),
+			monolingualTextWidget.render(),
 			quantityWidget.render(),
 			timeWidget.render(),
 			globeCoordinateWidget.render(),
@@ -201,6 +220,7 @@ QUnit.module( 'MultiTypeInputWrapperWidget', hooks.kartographer, function () {
 		).then( function () {
 			assert.strictEqual( entityWidget.state.input instanceof EntityInputWidget, true );
 			assert.strictEqual( stringWidget.state.input instanceof StringInputWidget, true );
+			assert.strictEqual( monolingualTextWidget.state.input instanceof MonolingualTextInputWidget, true );
 			assert.strictEqual( quantityWidget.state.input instanceof QuantityInputWidget, true );
 			assert.strictEqual( timeWidget.state.input instanceof TimeInputWidget, true );
 			assert.strictEqual( globeCoordinateWidget.state.input instanceof GlobeCoordinateInputWidget, true );

@@ -190,6 +190,7 @@ module.exports.createDataValuesEnv = function () {
 	requireAgain( 'wikibase-data-values/src/DataValue.js' );
 	requireAgain( 'wikibase-data-values/src/values/StringValue.js' );
 	requireAgain( 'wikibase-data-values/src/values/DecimalValue.js' );
+	requireAgain( 'wikibase-data-values/src/values/MonolingualTextValue.js' );
 	requireAgain( 'wikibase-data-values/src/values/QuantityValue.js' );
 	requireAgain( 'wikibase-data-values/src/values/TimeValue.js' );
 	requireAgain( 'wikibase-data-values/src/values/GlobeCoordinateValue.js' );

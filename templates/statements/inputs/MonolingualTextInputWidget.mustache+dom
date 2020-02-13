@@ -1,0 +1,5 @@
+<div class="wbmi-input-widget wbmi-input-widget--monolingualtext wbmi-input-widget--single-line {{^isQualifier}}wbmi-with-button{{/isQualifier}}">
+	{{{language}}}
+	{{{input}}}
+	{{^isQualifier}}{{{button}}}{{/isQualifier}}
+</div>

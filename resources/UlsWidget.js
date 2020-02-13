@@ -1,21 +1,25 @@
+'use strict';
+
 var UlsWidget;
 
 /**
- * A ULS widget for the captions section of the structured data in a File page
- *
  * @constructor
  * @param {Object} [config]
  * @param {Object} [config.languages] Keys are 2-letter language codes, values are language autonyms
+ * @param {Object} [config.language] Language code for default language
+ * @param {Object} [config.label] Label for dropdown
  */
 UlsWidget = function ( config ) {
-	UlsWidget.parent.call( this );
+	this.languageValue = '';
+	this.label = config.label || '';
 
 	// create an empty dropdown to give this element the appearance of a dropdown,
 	// even though it'll show a ULS widget when opened
 	this.dropdown = new OO.ui.DropdownWidget( $.extend( {}, config, {
-		menu: {}
+		classes: [ 'wbmi-input-uls' ],
+		menu: {},
+		label: this.label
 	} ) );
-	this.$element.append( this.dropdown.$element );
 
 	// Show the ULS when a user tabs into the language selection field
 	this.dropdown.$handle.on( 'keyup', function ( e ) {
@@ -25,9 +29,15 @@ UlsWidget = function ( config ) {
 	} );
 
 	this.initialiseUls( config.languages );
+
+	if ( config.language ) {
+		this.setValue( config.language );
+	}
+
+	UlsWidget.parent.call( this );
+	this.$element = this.dropdown.$element;
 };
 OO.inheritClass( UlsWidget, OO.ui.Widget );
-OO.mixinClass( UlsWidget, OO.EventEmitter );
 
 /**
  * @param {Object} [languages] Keys are 2-letter language codes, values are language autonyms
@@ -70,8 +80,9 @@ UlsWidget.prototype.updateLanguages = function ( languages ) {
 UlsWidget.prototype.setValue = function ( value ) {
 	var current = this.languageValue;
 	this.languageValue = value;
+
 	// T209380: We want this to be the language autonym for the display value
-	this.dropdown.setLabel( $.uls.data.getAutonym( value ) );
+	this.dropdown.setLabel( $.uls.data.getAutonym( value ) || this.label );
 	if ( current !== value ) {
 		this.emit( 'select' );
 	}
@@ -82,6 +93,14 @@ UlsWidget.prototype.setValue = function ( value ) {
  */
 UlsWidget.prototype.getValue = function () {
 	return this.languageValue;
+};
+
+/**
+ * @param {boolean} disabled
+ */
+UlsWidget.prototype.setDisabled = function ( disabled ) {
+	this.dropdown.setDisabled( disabled );
+	UlsWidget.parent.prototype.setDisabled.call( this, disabled );
 };
 
 module.exports = UlsWidget;

@@ -53,6 +53,7 @@
 				"string",
 				"quantity",
 				"time",
+				"monolingualtext",
 				"external-id",
 				"globe-coordinate",
 				"url"
@@ -148,6 +149,21 @@
 				"wikibase.mediainfo.base"
 			]
 		},
+		"wikibase.mediainfo.uls": {
+			"packageFiles": [
+				"resources/UlsWidget.js"
+			],
+			"dependencies": [
+				"ext.uls.mediawiki",
+				"oojs",
+				"oojs-ui-core",
+				"oojs-ui-widgets"
+			],
+			"targets": [
+				"desktop",
+				"mobile"
+			]
+		},
 		"wikibase.mediainfo.getDeserializer": {
 			"scripts": "resources/getDeserializer.js",
 			"dependencies": [
@@ -178,7 +194,6 @@
 				"resources/filepage/init.js",
 				"resources/filepage/AnonWarning.js",
 				"resources/filepage/LicenseDialogWidget.js",
-				"resources/filepage/UlsWidget.js",
 				"resources/filepage/CancelPublishWidget.js",
 				"resources/filepage/CaptionsEditActionsWidget.js",
 				"resources/filepage/CaptionData.js",
@@ -188,6 +203,7 @@
 				"resources/filepage/ProtectionMsgWidget.js"
 			],
 			"dependencies": [
+				"wikibase.mediainfo.uls",
 				"mediawiki.action.edit.editWarning",
 				"mediawiki.template.mustache+dom",
 				"oojs",
@@ -200,7 +216,6 @@
 				"wikibase.mediainfo.statements",
 				"wikibase",
 				"wikibase.api.RepoApi",
-				"ext.uls.mediawiki",
 				"wikibase.serialization"
 			],
 			"messages": [
@@ -299,6 +314,7 @@
 				"resources/statements/inputs/AbstractInputWidget.js",
 				"resources/statements/inputs/EntityInputWidget.js",
 				"resources/statements/inputs/GlobeCoordinateInputWidget.js",
+				"resources/statements/inputs/MonolingualTextInputWidget.js",
 				"resources/statements/inputs/QuantityInputWidget.js",
 				"resources/statements/inputs/StringInputWidget.js",
 				"resources/statements/inputs/TimeInputWidget.js",
@@ -307,6 +323,7 @@
 			],
 			"dependencies": [
 				"wikibase.mediainfo.base",
+				"wikibase.mediainfo.uls",
 				"mediawiki.template.mustache+dom",
 				"mw.config.values.wbDataTypes",
 				"oojs",
@@ -357,6 +374,9 @@
 				"wikibasemediainfo-hundreth-of-arcsecond-label",
 				"wikibasemediainfo-thousanth-of-arcsecond-label",
 				"wikibasemediainfo-string-input-button-text",
+				"wikibasemediainfo-monolingualtext-input-button-text",
+				"wikibasemediainfo-monolingualtext-input-placeholder",
+				"wikibasemediainfo-monolingualtext-language-label",
 				"wikibasemediainfo-quantity-input-button-text",
 				"wikibasemediainfo-time-input-button-text",
 				"wikibasemediainfo-time-input-placeholder",
@@ -397,6 +417,7 @@
 				"templates/statements/inputs/EntityAutocompleteInputWidgetLabel.mustache+dom",
 				"templates/statements/inputs/EntityInputWidget.mustache+dom",
 				"templates/statements/inputs/GlobeCoordinateInputWidget.mustache+dom",
+				"templates/statements/inputs/MonolingualTextInputWidget.mustache+dom",
 				"templates/statements/inputs/QuantityInputWidget.mustache+dom",
 				"templates/statements/inputs/StringInputWidget.mustache+dom",
 				"templates/statements/inputs/TimeInputWidget.mustache+dom",

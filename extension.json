@@ -211,6 +211,7 @@
 				"oojs-ui-widgets",
 				"oojs-ui-windows",
 				"oojs-ui.styles.icons-editing-core",
+				"oojs-ui.styles.icons-interactions",
 				"oojs-ui.styles.icons-movement",
 				"wikibase.mediainfo.filepage.styles",
 				"wikibase.mediainfo.statements",
@@ -407,6 +408,7 @@
 				"wikibasemediainfo-quantity-unit-button-text",
 				"wikibasemediainfo-globecoordinate-input-button-text",
 				"wikibasemediainfo-globecoordinate-map-button-text",
+				"wikibasemediainfo-filepage-statement-value-type-dropdown-title",
 				"wikibasemediainfo-filepage-statement-custom-value-option",
 				"wikibasemediainfo-filepage-statement-some-value-option",
 				"wikibasemediainfo-filepage-statement-no-value-option",
@@ -448,7 +450,8 @@
 				"resources/statements/inputs/GlobeCoordinateInputWidget.less",
 				"resources/statements/inputs/TimeInputWidget.less",
 				"resources/statements/inputs/QuantityInputWidget.less",
-				"resources/statements/inputs/InputWidget.less"
+				"resources/statements/inputs/InputWidget.less",
+				"resources/statements/inputs/MultiTypeInputWrapperWidget.less"
 			],
 			"targets": [
 				"desktop",

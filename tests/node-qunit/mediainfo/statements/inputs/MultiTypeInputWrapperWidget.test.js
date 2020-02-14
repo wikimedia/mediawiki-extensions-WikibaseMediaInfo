@@ -284,4 +284,74 @@ QUnit.module( 'MultiTypeInputWrapperWidget', hooks.kartographer, function () {
 				done();
 			} );
 	} );
+
+	QUnit.test( 'Setting snak type to somevalue changes input to disabled string input', function ( assert ) {
+		var done = assert.async(),
+			MultiTypeInputWrapperWidget = require( pathToWidget ),
+			widget = new MultiTypeInputWrapperWidget(),
+			data = null,
+			StringInputWidget = require( pathToStringInputWidget );
+
+		widget.setDataType( 'wikibase-entityid' )
+			.then( widget.setData.bind( widget, data ) )
+			.then( widget.setSnakType.bind( widget, 'somevalue' ) )
+			// Since the above method isn't asynchronous but leads to an async
+			// process, let's run an empty setState call before checking
+			// the final result.
+			.then( widget.setState.bind( widget, {} ) )
+			.then( function () {
+				assert.strictEqual( widget.state.input instanceof StringInputWidget, true );
+				assert.strictEqual( widget.state.input.input.isDisabled(), true );
+				done();
+			} );
+	} );
+
+	QUnit.test( 'Setting snak type to novalue changes input to disabled string input', function ( assert ) {
+		var done = assert.async(),
+			MultiTypeInputWrapperWidget = require( pathToWidget ),
+			widget = new MultiTypeInputWrapperWidget(),
+			data = null,
+			StringInputWidget = require( pathToStringInputWidget );
+
+		widget.setDataType( 'wikibase-entityid' )
+			.then( widget.setData.bind( widget, data ) )
+			.then( widget.setSnakType.bind( widget, 'novalue' ) )
+			.then( widget.setState.bind( widget, {} ) )
+			.then( function () {
+				assert.strictEqual( widget.state.input instanceof StringInputWidget, true );
+				assert.strictEqual( widget.state.input.input.isDisabled(), true );
+				done();
+			} );
+	} );
+
+	QUnit.test( 'Setting snak type to value changes input to original type', function ( assert ) {
+		var done = assert.async(),
+			MultiTypeInputWrapperWidget = require( pathToWidget ),
+			widget = new MultiTypeInputWrapperWidget(),
+			data = null,
+			EntityInputWidget = require( pathToEntityInputWidget );
+
+		widget.setDataType( 'wikibase-entityid' )
+			.then( widget.setData.bind( widget, data ) )
+			.then( widget.setSnakType.bind( widget, 'novalue' ) )
+			.then( widget.setState.bind( widget, {} ) )
+			.then( widget.snakTypeWidget.setValue.bind( widget.snakTypeWidget, 'value' ) )
+			.then( widget.setState.bind( widget, {} ) )
+			.then( function () {
+				assert.strictEqual( widget.state.input instanceof EntityInputWidget, true );
+				done();
+			} );
+	} );
+
+	QUnit.test( 'Datatype can be set explicitly', function ( assert ) {
+		var done = assert.async(),
+			MultiTypeInputWrapperWidget = require( pathToWidget ),
+			widget = new MultiTypeInputWrapperWidget();
+
+		widget.setDataType( 'wikibase-entityid' )
+			.then( function () {
+				assert.strictEqual( widget.state.type, 'wikibase-entityid' );
+				done();
+			} );
+	} );
 } );

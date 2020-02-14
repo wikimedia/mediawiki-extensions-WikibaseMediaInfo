@@ -234,27 +234,35 @@ ItemWidget.prototype.toggleItemProminence = function ( event ) {
  * @return {QualifierWidget}
  */
 ItemWidget.prototype.createQualifier = function ( data ) {
-	var widget = new QualifierWidget( { editing: this.state.editing } );
+	var widget = new QualifierWidget( { editing: this.state.editing } ),
+		promise = $.Deferred().resolve().promise(),
+		self = this;
 
 	if ( data ) {
-		widget.setData( data );
+		promise = widget.setData( data );
 	}
 
-	widget.connect( this, { delete: [ 'removeItems', [ widget ] ] } );
-	widget.connect( this, { delete: [ 'emit', 'change' ] } );
-	widget.connect( this, { change: [ 'emit', 'change' ] } );
+	return promise.then(
+		function () {
+			widget.connect( self, { delete: [ 'removeItems', [ widget ] ] } );
+			widget.connect( self, { delete: [ 'emit', 'change' ] } );
+			widget.connect( self, { change: [ 'emit', 'change' ] } );
 
-	return widget;
+			return widget;
+		}
+	);
 };
 
 /**
  * @param {datamodel.Snak|undefined} data
  */
 ItemWidget.prototype.addQualifier = function ( data ) {
-	var widget = this.createQualifier( data );
-	this.addItems( [ widget ] );
-	this.emit( 'change' );
-	this.render().then( widget.focus.bind( widget ) );
+	var self = this;
+	this.createQualifier( data ).then( function ( widget ) {
+		self.addItems( [ widget ] );
+		self.emit( 'change' );
+		self.render().then( widget.focus.bind( widget ) );
+	} );
 };
 
 /**
@@ -361,22 +369,18 @@ ItemWidget.prototype.setData = function ( data ) {
 
 	// add new qualifiers that don't already exist
 	qualifiers.each( function ( i, qualifier ) {
-		var widget;
-
-		// TODO: Remove this to support somevalue and novalue qualifiers. For
-		// now, we'll ignore them.
-		if ( !( qualifier instanceof datamodel.PropertyValueSnak ) ) {
-			return false;
-		}
-
-		widget = existing[ i ];
+		var widget = existing[ i ], widgetPromise;
 		if ( widget !== null ) {
 			self.moveItem( widget, i );
+			promises.push( widget.setData( qualifier ) );
 		} else {
-			widget = self.createQualifier();
-			self.insertItem( widget, i );
+			widgetPromise = self.createQualifier()
+				.then( function ( widget ) {
+					self.insertItem( widget, i );
+					return widget.setData( qualifier );
+				} );
+			promises.push( widgetPromise );
 		}
-		promises.push( widget.setData( qualifier ) );
 	} );
 
 	return $.when.apply( $, promises )

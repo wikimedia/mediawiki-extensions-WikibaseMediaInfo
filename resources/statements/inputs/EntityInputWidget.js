@@ -75,14 +75,14 @@ EntityInputWidget.prototype.getData = function () {
 EntityInputWidget.prototype.setData = function ( data ) {
 	var self = this;
 
-	if ( data.toJSON().id === this.input.getData() ) {
-		return $.Deferred().resolve( this.$element ).promise();
+	if ( data && data.toJSON().id !== this.input.getData() ) {
+		return this.input.setData( data.toJSON().id ).then( function () {
+			self.emit( 'change' );
+			return self.$element;
+		} );
 	}
 
-	return this.input.setData( data.toJSON().id ).then( function () {
-		self.emit( 'change' );
-		return self.$element;
-	} );
+	return $.Deferred().resolve( this.$element ).promise();
 };
 
 /**

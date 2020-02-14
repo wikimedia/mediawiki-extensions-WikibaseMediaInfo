@@ -39,6 +39,7 @@
 	"wikibasemediainfo-filepage-caption-too-short": "Error text for when a caption is too short. Parameters:\n* $1 - Number of characters under minimum, for PLURAL support",
 	"wikibasemediainfo-filepage-caption-too-long": "Error text for when a caption is too long. Parameters:\n* $1 - Number of characters over maximum, for PLURAL support",
 	"wikibasemediainfo-filepage-caption-approaching-limit": "Warning text when a caption is approaching the length limit. Parameters:\n* $1 - Number of characters left before reaching max character count, for PLURAL support",
+	"wikibasemediainfo-filepage-statement-value-type-dropdown-title": "Title for the value type dropdown",
 	"wikibasemediainfo-filepage-statement-custom-value-option": "Dropdown menu text for 'CUSTOM VALUE' option",
 	"wikibasemediainfo-filepage-statement-no-value-option": "Dropdown menu text for 'NO VALUE' option",
 	"wikibasemediainfo-filepage-statement-no-value": "Text to display when a statement has an explicit 'NO VALUE' value.",

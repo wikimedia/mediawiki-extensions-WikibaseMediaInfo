@@ -9,6 +9,12 @@ var ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
 	TimeInputWidget = require( './TimeInputWidget.js' ),
 	GlobeCoordinateInputWidget = require( './GlobeCoordinateInputWidget.js' ),
 	UnsupportedInputWidget = require( './UnsupportedInputWidget.js' ),
+	datamodel = require( 'wikibase.datamodel' ),
+	valueTypes = {
+		VALUE: datamodel.PropertyValueSnak.TYPE,
+		SOMEVALUE: datamodel.PropertySomeValueSnak.TYPE,
+		NOVALUE: datamodel.PropertyNoValueSnak.TYPE
+	},
 	MultiTypeInputWrapperWidget;
 
 /**
@@ -41,8 +47,31 @@ MultiTypeInputWrapperWidget = function ( config ) {
 
 	this.state = {
 		type: this.config.type,
-		input: this.createInput( this.config.type )
+		input: this.createInput( this.config.type ),
+		snakType: valueTypes.VALUE
 	};
+
+	this.snakTypeWidget = new OO.ui.DropdownInputWidget( {
+		classes: [ 'wbmi-input-wrapper__snak-type' ],
+		options: [
+			{
+				data: valueTypes.VALUE,
+				label: mw.message( 'wikibasemediainfo-filepage-statement-custom-value-option' ).parse()
+			},
+			{
+				data: valueTypes.SOMEVALUE,
+				label: mw.message( 'wikibasemediainfo-filepage-statement-some-value-option' ).parse()
+			},
+			{
+				data: valueTypes.NOVALUE,
+				label: mw.message( 'wikibasemediainfo-filepage-statement-no-value-option' ).parse()
+			}
+		],
+		title: mw.message( 'wikibasemediainfo-filepage-statement-value-type-dropdown-title' ).parse()
+	} );
+	this.snakTypeWidget.dropdownWidget.setIcon( 'ellipsis' );
+	this.snakTypeWidget.dropdownWidget.setIndicator( null );
+	this.snakTypeWidget.connect( this, { change: 'onSnakTypeChange' } );
 
 	MultiTypeInputWrapperWidget.parent.call( this, config );
 	ComponentWidget.call(
@@ -68,7 +97,17 @@ MultiTypeInputWrapperWidget.prototype.getTemplateData = function () {
 					label: error,
 					classes: [ 'wbmi-statement-error-msg' ]
 				} );
-			} ) : null;
+			} ) : null,
+		// Currently somevalue/novalue are only intended to be used with
+		// Wikidata items. Somevalue/novalue snaks for other datatypes added via
+		// the API will be displayed and can be deleted but cannot be edited,
+		// and these snaks cannot be added for other datatypes via this UI.
+		//
+		// To allow these snaks for all datatypes, this variable and its
+		// associated template logic should be removed, and the getData method
+		// of all datatypes should account for the possibility of no data, which
+		// happens once on page load for existing items.
+		showSnakTypeWidget = this.state.type === 'wikibase-entityid';
 
 	// make sure input accurately reflects disabled state
 	this.state.input.setDisabled( this.isDisabled() || !( this.state.type in this.types ) );
@@ -76,6 +115,8 @@ MultiTypeInputWrapperWidget.prototype.getTemplateData = function () {
 	return {
 		errors: errorMessages,
 		isQualifier: this.config.isQualifier,
+		showSnakTypeWidget: showSnakTypeWidget,
+		snakTypeWidget: this.snakTypeWidget,
 		input: this.state.input,
 		type: Object.keys( this.types ).reduce( function ( result, type ) {
 			// `type` will be a map like: { quantity: true, string: false, ... }
@@ -95,11 +136,13 @@ MultiTypeInputWrapperWidget.prototype.getTemplateData = function () {
  */
 MultiTypeInputWrapperWidget.prototype.setInputType = function ( type ) {
 	var self = this,
-		changed = this.state.type !== type,
+		changed = this.state.type !== type || this.getSnakType() !== valueTypes.VALUE,
 		input = this.createInput( type );
 
 	return this.setState( {
 		type: type,
+		// Always reset snakType to value when property changes.
+		snakType: valueTypes.VALUE,
 		// re-use existing input if the type has not changed
 		input: changed ? input : this.state.input
 	} ).then( function ( $element ) {
@@ -130,6 +173,55 @@ MultiTypeInputWrapperWidget.prototype.onChange = function () {
 };
 
 /**
+ * Handle UI changes based on the selected snak type.
+ *
+ * @param {string} snakType
+ * @return {jQuery.Promise}
+ */
+MultiTypeInputWrapperWidget.prototype.onSnakTypeChange = function ( snakType ) {
+	var message,
+		input,
+		promise;
+
+	switch ( snakType ) {
+		case valueTypes.SOMEVALUE:
+		case valueTypes.NOVALUE:
+			message = ( snakType === valueTypes.SOMEVALUE ) ?
+				'wikibasemediainfo-filepage-statement-some-value' :
+				'wikibasemediainfo-filepage-statement-no-value';
+
+			// Create a disabled string input with the appropriate message.
+			input = this.createInput( 'string' );
+			input.input.setValue( mw.message( message ).parse() );
+			this.setDisabled( true );
+
+			promise = this.setState( {
+				snakType: snakType,
+				input: input
+			} );
+
+			// If this is a statement input, immediately add the new item.
+			if ( !this.config.isQualifier ) {
+				promise = promise.then( input.onEnter.bind( input ) );
+			}
+			break;
+
+		default:
+			// Create a new input with the type corresponding to the property.
+			this.setDisabled( false );
+			input = this.createInput( this.state.type );
+			promise = this.setState( {
+				snakType: snakType,
+				input: input
+			} );
+	}
+
+	// Create the new input, update state, and emit a change.
+	return promise
+		.then( this.emit.bind( this, 'change', this ) );
+};
+
+/**
  * @inheritDoc
  */
 MultiTypeInputWrapperWidget.prototype.getRawValue = function () {
@@ -147,7 +239,7 @@ MultiTypeInputWrapperWidget.prototype.getRawValueOptions = function () {
  * @inheritDoc
  */
 MultiTypeInputWrapperWidget.prototype.getData = function () {
-	return this.state.input.getData();
+	return this.getSnakType() === valueTypes.VALUE ? this.state.input.getData() : null;
 };
 
 /**
@@ -155,10 +247,11 @@ MultiTypeInputWrapperWidget.prototype.getData = function () {
  */
 MultiTypeInputWrapperWidget.prototype.setData = function ( data ) {
 	var self = this,
-		type, input;
+		type = data ? data.getType() : this.state.type,
+		input;
 
 	try {
-		if ( data.equals( this.getData() ) ) {
+		if ( this.state.snakType !== valueTypes.VALUE || data.equals( this.getData() ) ) {
 			return $.Deferred().resolve( this.$element ).promise();
 		}
 	} catch ( e ) {
@@ -174,7 +267,7 @@ MultiTypeInputWrapperWidget.prototype.setData = function ( data ) {
 	// we'll make sure below events don't propagate, but then emit our
 	// own later on!
 	this.allowEmitChange = false;
-	type = data.getType();
+
 	input = this.createInput( type );
 
 	return input.setData( data )
@@ -190,9 +283,21 @@ MultiTypeInputWrapperWidget.prototype.setData = function ( data ) {
 };
 
 /**
+ * Set the data type in state so we can use it to create an input for an
+ * existing value. This is only relevant for existing qualifiers.
+ *
+ * @param {string} dataType
+ * @return {jQuery.Promise}
+ */
+MultiTypeInputWrapperWidget.prototype.setDataType = function ( dataType ) {
+	return this.setState( { type: dataType } );
+};
+
+/**
  * @inheritDoc
  */
 MultiTypeInputWrapperWidget.prototype.clear = function () {
+	this.setSnakType( valueTypes.VALUE );
 	return this.state.input.clear();
 };
 
@@ -215,7 +320,28 @@ MultiTypeInputWrapperWidget.prototype.setDisabled = function ( disabled ) {
  * @inheritDoc
  */
 MultiTypeInputWrapperWidget.prototype.parseValue = function ( propertyId, datatype ) {
+	// For somevalue and novalue snaks, there is no value.
+	if ( this.getSnakType() !== valueTypes.VALUE ) {
+		return $.Deferred().resolve( null ).promise( { abort: function () {} } );
+	}
+
 	return this.state.input.parseValue( propertyId, datatype );
+};
+
+/**
+ * Get the snakType (value, somevalue, or novalue).
+ * @return {string}
+ */
+MultiTypeInputWrapperWidget.prototype.getSnakType = function () {
+	return this.state.snakType;
+};
+
+/**
+ * Set the snakType.
+ * @param {string} snakType
+ */
+MultiTypeInputWrapperWidget.prototype.setSnakType = function ( snakType ) {
+	this.snakTypeWidget.setValue( snakType );
 };
 
 /**

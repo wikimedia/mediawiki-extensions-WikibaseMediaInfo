@@ -194,7 +194,7 @@ StatementWidget.prototype.addItemFromInput = function () {
 	this.input.parseValue( this.state.propertyId ).then(
 		function () {
 			var dataValue = self.input.getData(),
-				widget = self.createItem( 'value', dataValue );
+				widget = self.createItem( self.input.getSnakType(), dataValue );
 
 			self.addItems( [ widget ] );
 

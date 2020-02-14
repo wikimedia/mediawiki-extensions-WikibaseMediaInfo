@@ -6,7 +6,12 @@ var QualifierWidget,
 	FormatValueElement = require( 'wikibase.mediainfo.base' ).FormatValueElement,
 	inputs = require( './inputs/index.js' ),
 	serialization = require( 'wikibase.serialization' ),
-	datamodel = require( 'wikibase.datamodel' );
+	datamodel = require( 'wikibase.datamodel' ),
+	valueTypes = {
+		VALUE: datamodel.PropertyValueSnak.TYPE,
+		SOMEVALUE: datamodel.PropertySomeValueSnak.TYPE,
+		NOVALUE: datamodel.PropertyNoValueSnak.TYPE
+	};
 
 /**
  * QualifierWidget (new version). This widget represents a single row of
@@ -34,6 +39,7 @@ QualifierWidget = function ( config ) {
 	};
 
 	this.dataTypeMap = mw.config.get( 'wbDataTypes', {} );
+	this.propertyTypes = mw.config.get( 'wbmiPropertyTypes' );
 
 	// sub-widgets
 	this.propertyInput = new inputs.EntityInputWidget( {
@@ -142,23 +148,44 @@ QualifierWidget.prototype.setEditing = function ( editing ) {
  * @return {jQuery.Promise}
  */
 QualifierWidget.prototype.setData = function ( data ) {
-	var self = this;
+	var self = this,
+		snakType = data.getType(),
+		propertyId = data.getPropertyId(),
+		dataValue,
+		dataType;
 
 	// Bail early and discard existing data if data argument is not a snak
 	if ( !( data instanceof datamodel.Snak ) ) {
 		throw new Error( 'Invalid snak' );
 	}
 
+	dataValue = snakType === valueTypes.VALUE ? data.getValue() : null;
+	dataType = dataValue ? dataValue.getType() : undefined;
+	if ( !dataType ) {
+		dataType = this.dataTypeMap[ this.propertyTypes[ propertyId ] ].dataValueType || undefined;
+	}
+
 	return $.when(
-		this.propertyInput.setData( new datamodel.EntityId( data.getPropertyId() ) ),
-		this.valueInput.setData( data.getValue() ),
+		this.propertyInput.setData( new datamodel.EntityId( propertyId ) ),
+		// 3 things need to happen to the input wrapper, in order:
+		//   1. Set the data type, which will inform which type of input is
+		//      created
+		//   2. Run the input wrapper's setData method, which creates the input
+		//      and sends it a value if it exists
+		//   3. Set the snak type so we can alter the input UI to show somevalue
+		//      or novalue if applicable
+		this.valueInput.setDataType( dataType )
+			.then( this.valueInput.setData.bind( this.valueInput, dataValue ) )
+			.then( this.valueInput.setSnakType.bind( this.valueInput, snakType ) ),
 		// we want to keep a copy of the data to be able to check
 		// whether there have been changes to the input, but we'll
 		// serialize/deserialze in order to have a clone (in case
 		// this reference gets modified elsewhere)
 		this.setState( { data: this.cloneSnak( data ) } )
 	).then( function () {
-		self.valueInput.setDisabled( false );
+		if ( snakType === valueTypes.VALUE ) {
+			self.valueInput.setDisabled( false );
+		}
 		return self.$element;
 	} );
 };
@@ -169,10 +196,23 @@ QualifierWidget.prototype.setData = function ( data ) {
  */
 QualifierWidget.prototype.getData = function () {
 	var property = this.propertyInput.getData(),
-		snak = new datamodel.PropertyValueSnak(
-			property.toJSON().id,
-			this.valueInput.getData()
-		);
+		propertyId = property.toJSON().id,
+		dataValue = this.valueInput.getData(),
+		snakType = this.valueInput.getSnakType(),
+		snak;
+
+	switch ( snakType ) {
+		case valueTypes.SOMEVALUE:
+			snak = new datamodel.PropertySomeValueSnak( propertyId );
+			break;
+		case valueTypes.NOVALUE:
+			snak = new datamodel.PropertyNoValueSnak( propertyId );
+			break;
+		default:
+			snak = dataValue ?
+				new datamodel.PropertyValueSnak( propertyId, dataValue, null ) :
+				new datamodel.PropertyNoValueSnak( propertyId );
+	}
 
 	// if snak hasn't changed since `this.setData`,
 	// return the original data (which includes `hash`)
@@ -184,6 +224,7 @@ QualifierWidget.prototype.getData = function () {
  * @param {Object} data
  */
 QualifierWidget.prototype.onChooseProperty = function ( input, data ) {
+	this.propertyTypes[ data.id ] = data.datatype;
 	this.valueInput.setInputType( this.dataTypeMap[ data.datatype ].dataValueType );
 	this.valueInput.setDisabled( false );
 };
@@ -217,15 +258,22 @@ QualifierWidget.prototype.formatProperty = function ( propId, format, language )
 QualifierWidget.prototype.asyncFormatForDisplay = function () {
 	var promises,
 		dataValue,
-		propertyId;
+		propertyId,
+		valuePromise,
+		message = this.valueInput.getSnakType() === valueTypes.SOMEVALUE ?
+			mw.message( 'wikibasemediainfo-filepage-statement-some-value' ).parse() :
+			mw.message( 'wikibasemediainfo-filepage-statement-no-value' ).parse();
 
 	try {
-		dataValue = this.valueInput.getData();
 		propertyId = this.propertyInput.getData().toJSON().id;
+		dataValue = this.valueInput.getData();
+		valuePromise = dataValue ?
+			this.formatValue( dataValue, 'text/html', null, propertyId ) :
+			$.Deferred().resolve( message ).promise( { abort: function () {} } );
 
 		promises = [
 			this.formatProperty( propertyId, 'text/html' ),
-			this.formatValue( dataValue, 'text/html', null, propertyId )
+			valuePromise
 		];
 
 		this.formatDisplayPromise = $.when.apply( $, promises ).promise( {

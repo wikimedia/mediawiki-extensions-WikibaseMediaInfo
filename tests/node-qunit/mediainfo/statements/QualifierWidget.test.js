@@ -178,4 +178,44 @@ QUnit.module( 'QualifierWidget', hooks.mediainfo, function () {
 			} );
 		} );
 	} );
+
+	QUnit.test( 'Valid data roundtrip with somevalue snak', function ( assert ) {
+		var done = assert.async(),
+			datamodel = require( 'wikibase.datamodel' ),
+			QualifierWidget = require( pathToWidget ),
+			widget = new QualifierWidget(),
+			data = new datamodel.PropertySomeValueSnak( 'P1' );
+
+		widget.setData( data )
+			// setData sets the snak type on the input wrapper widget. That
+			// should trigger the snak type widget's onChange method, but it
+			// doesn't seem to do that in this testing environment.
+			// Instead, let's run it directly.
+			.then( widget.valueInput.onSnakTypeChange.bind( widget.valueInput, data.getType() ) )
+			.then( function () {
+				assert.ok( widget.getData() );
+				assert.strictEqual( data.equals( widget.getData() ), true );
+				done();
+			} );
+	} );
+
+	QUnit.test( 'Valid data roundtrip with novalue snak', function ( assert ) {
+		var done = assert.async(),
+			datamodel = require( 'wikibase.datamodel' ),
+			QualifierWidget = require( pathToWidget ),
+			widget = new QualifierWidget(),
+			data = new datamodel.PropertyNoValueSnak( 'P1' );
+
+		widget.setData( data )
+			// setData sets the snak type on the input wrapper widget. That
+			// should trigger the snak type widget's onChange method, but it
+			// doesn't seem to do that in this testing environment.
+			// Instead, let's run it directly.
+			.then( widget.valueInput.onSnakTypeChange.bind( widget.valueInput, data.getType() ) )
+			.then( function () {
+				assert.ok( widget.getData() );
+				assert.strictEqual( data.equals( widget.getData() ), true );
+				done();
+			} );
+	} );
 } );

@@ -148,9 +148,11 @@ class MediaInfoEntityStatementsView {
 
 			$data = json_encode( $serialized );
 			$property = $snak->getPropertyId()->getSerialization();
-			$formatted = $this->formatSnak( $snak, SnakFormatter::FORMAT_HTML );
+			$html = $this->formatSnak( $snak, SnakFormatter::FORMAT_HTML );
+			$plain = $this->formatSnak( $snak, SnakFormatter::FORMAT_PLAIN );
 
-			$result[$data][SnakFormatter::FORMAT_HTML][$this->languageCode][$property] = $formatted;
+			$result[$data][SnakFormatter::FORMAT_HTML][$this->languageCode][$property] = $html;
+			$result[$data][SnakFormatter::FORMAT_PLAIN][$this->languageCode][$property] = $plain;
 		}
 
 		return $result;

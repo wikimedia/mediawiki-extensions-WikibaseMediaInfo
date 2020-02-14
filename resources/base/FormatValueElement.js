@@ -13,6 +13,12 @@ FormatValueElement.cache = {};
  * @return {string}
  */
 FormatValueElement.getKey = function ( dataValue, format, language, propertyId ) {
+	if ( dataValue.getType() === 'wikibase-entityid' ) {
+		// entities always render the same, regardless of the property they're
+		// associated with (if any) - so let's cache as generic as possible
+		propertyId = undefined;
+	}
+
 	return JSON.stringify( {
 		data: { type: dataValue.getType(), value: dataValue.toJSON() },
 		format: format,

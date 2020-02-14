@@ -14,14 +14,6 @@
 		display: flex;
 	}
 
-	// See: https://phabricator.wikimedia.org/T222283
-	// This overrides an override in mediawiki.legacy/shared.css which keeps
-	// this input element from flipping over to RTL orientation;
-	/* stylelint-disable-next-line selector-class-pattern */
-	body.rtl.sitedir-ltr & input {
-		direction: unset;
-	}
-
 	.wbmi-qualifier-property {
 		.flex(1, 1, 5em, 1);
 

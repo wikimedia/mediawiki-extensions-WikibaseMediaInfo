@@ -1,7 +1,7 @@
 'use strict';
 
 var PropertySuggestionsWidget = require( './PropertySuggestionsWidget.js' ),
-	defaultPropertyIds = Object.keys( mw.config.get( 'wbmiProperties' ) ),
+	defaultPropertyIds = mw.config.get( 'wbmiDefaultProperties', [] ),
 	widgets = defaultPropertyIds.map( function ( propertyId ) {
 		return new PropertySuggestionsWidget( { propertyId: propertyId } );
 	} );

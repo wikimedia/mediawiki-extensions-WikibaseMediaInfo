@@ -164,7 +164,6 @@ class WikibaseMediaInfoHooks {
 			// … the page view is a read
 			\Action::getActionName( $out->getContext() ) === 'view';
 
-		$properties = [];
 		$propertyTypes = [];
 		$propertyTitles = [];
 		$searchTitles = [];
@@ -185,7 +184,6 @@ class WikibaseMediaInfoHooks {
 				}
 
 				// get data type for values associated with this property
-				$properties[$property] = WBMIHooksHelper::getValueType( new PropertyId( $property ) );
 				$propertyTypes[$property] = WBMIHooksHelper::getPropertyType( new PropertyId( $property ) );
 			} catch ( PropertyDataTypeLookupException $e ) {
 				// ignore invalid properties...
@@ -203,11 +201,6 @@ class WikibaseMediaInfoHooks {
 			new BabelUserLanguageLookup(),
 			$wbRepo->getEntityViewFactory(),
 			[
-				// wbmiProperties (a property id => datavalue type map for default properties)
-				// has been replaced by wbmiDefaultProperties (an array of default property ids)
-				// and wbmiPropertyTypes (property id => property type map)
-				// wbmiProperties can be removed soon, once all code using it has been updated
-				'wbmiProperties' => $properties,
 				'wbmiDefaultProperties' => array_values( $wgMediaInfoProperties ),
 				'wbmiPropertyTitles' => $propertyTitles,
 				'wbmiPropertyTypes' => $propertyTypes,

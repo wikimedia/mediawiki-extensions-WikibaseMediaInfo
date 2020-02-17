@@ -65,5 +65,8 @@
 	"wikibasemediainfo-tenth-of-arcsecond-label": "1/10 szögmásodperc",
 	"wikibasemediainfo-hundreth-of-arcsecond-label": "1/100 szögmásodperc",
 	"wikibasemediainfo-thousanth-of-arcsecond-label": "1/1000 szögmásodperc",
-	"wikibasemediainfo-string-input-button-text": "Hozzáadás"
+	"wikibasemediainfo-string-input-button-text": "Hozzáadás",
+	"wikibasemediainfo-globecoordinate-map-button-text": "Kiválasztás térképen",
+	"wikibasemediainfo-search-suggestions-preference-label": "Automatikus kiegészítés kereséskor a strukturált adatok segítségével",
+	"wikibasemediainfo-search-suggestions-preference-disable-confirm": "Biztosan kikapcsolod a strukturált adatok segítségével való automatikus kiegészítést? (Ezt a beállítást később a [[Special:Preferences#mw-prefsection-searchoptions|beállításaidban]] kapcsolhatod vissza.)"
 }

@@ -2,7 +2,8 @@
 
 	'use strict';
 
-	var AddPropertyWidget = require( 'wikibase.mediainfo.statements' ).AddPropertyWidget,
+	var StatementListDeserializer = require( 'wikibase.serialization' ).StatementListDeserializer,
+		AddPropertyWidget = require( 'wikibase.mediainfo.statements' ).AddPropertyWidget,
 		CaptionsPanel = require( './CaptionsPanel.js' ),
 		LinkNoticeWidget = require( 'wikibase.mediainfo.statements' ).LinkNoticeWidget,
 		ProtectionMsgWidget = require( './ProtectionMsgWidget.js' ),
@@ -75,6 +76,28 @@
 		addPropertyWidget.onStatementPanelRemoved( propId );
 	}
 
+	function checkConstraints() {
+		var api = new mw.Api(),
+			lang = mw.config.get( 'wgUserLanguage' );
+		if (
+			!mw.user.isAnon() &&
+			mw.config.get( 'wbmiDoConstraintCheck' )
+		) {
+			api.get( {
+				action: 'wbcheckconstraints',
+				format: 'json',
+				formatversion: 2,
+				uselang: lang,
+				id: mw.config.get( 'wbEntityId' ),
+				status: 'violation|warning|suggestion|bad-parameters'
+			} ).then( function ( result ) {
+				Object.keys( statementPanels ).map( function ( key ) {
+					statementPanels[ key ].handleConstraintsResponse( result );
+				} );
+			} );
+		}
+	}
+
 	/**
 	 * Initialize a live StatementPanel widget on a given element.
 	 * Also updates the statementPanels objects and adds an event listener
@@ -97,7 +120,10 @@
 		} );
 
 		sp.on( 'widgetRemoved', onStatementPanelRemoved );
+		sp.on( 'readOnly', checkConstraints );
+
 		statementPanels[ propId ] = sp;
+
 		return sp;
 	}
 
@@ -118,7 +144,9 @@
 		var linkNoticeWidget = new LinkNoticeWidget(),
 			protectionMsgWidget = new ProtectionMsgWidget(),
 			$statements = $content.find( '.wbmi-entityview-statementsGroup' ),
-			existingProperties = defaultProperties.concat( Object.keys( mediaInfoEntity.statements || {} ) );
+			existingProperties = defaultProperties.concat( Object.keys( mediaInfoEntity.statements || {} ) ),
+			deserializer = new StatementListDeserializer(),
+			existingStatementPanels;
 
 		// Create AddPropertyWidget and provide it with all the IDs we know about
 		addPropertyWidget = new AddPropertyWidget( { propertyIds: existingProperties } );
@@ -140,12 +168,20 @@
 		}
 
 		// Set up existing statement panels
-		$statements.map( function () {
-			var $statement = $( this ),
-				propId = $statement.data( 'property' );
+		existingStatementPanels = $statements.get().map( function ( element ) {
+			var $statement = $( element ),
+				propId = $statement.data( 'property' ),
+				statementsJson = JSON.parse( $statement.attr( 'data-statements' ) || '[]' ),
+				data = deserializer.deserialize( statementsJson ),
+				statementPanel = createStatementsPanel(
+					$statement,
+					propId,
+					propertyTypes[ propId ] || 'string'
+				);
 
-			createStatementsPanel( $statement, propId, propertyTypes[ propId ] || 'string' );
 			addPropertyWidget.addPropertyId( propId );
+
+			return statementPanel.setData( data );
 		} );
 
 		// Create panels statements added by user
@@ -156,6 +192,8 @@
 			createStatementsPanel( $el, data.id, data.datatype );
 			addPropertyWidget.addPropertyId( data.id );
 		} );
+
+		$.when.apply( $, existingStatementPanels ).then( checkConstraints );
 	} );
 
 	/**

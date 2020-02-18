@@ -14,6 +14,7 @@
  */
 var DATA_TYPES,
 	QualifierWidget = require( './QualifierWidget.js' ),
+	ConstraintsReportHandlerElement = require( './ConstraintsReportHandlerElement.js' ),
 	ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
 	DOMLessGroupWidget = require( 'wikibase.mediainfo.base' ).DOMLessGroupWidget,
 	FormatValueElement = require( 'wikibase.mediainfo.base' ).FormatValueElement,
@@ -53,7 +54,8 @@ ItemWidget = function MediaInfoStatementsItemWidget( config ) {
 		rank: config.rank || datamodel.Statement.RANK.NORMAL,
 		snakType: config.snakType || valueTypes.NOVALUE,
 		dataValue: config.dataValue || null,
-		kartographer: false
+		kartographer: false,
+		constraintsReport: null
 	};
 
 	// Coordinate values are displayed with an additional element, an interactive map;
@@ -71,12 +73,14 @@ ItemWidget = function MediaInfoStatementsItemWidget( config ) {
 		'templates/statements/ItemWidget.mustache+dom'
 	);
 	FormatValueElement.call( this, $.extend( {}, config ) );
+	ConstraintsReportHandlerElement.call( this, $.extend( {}, config ) );
 };
 
 OO.inheritClass( ItemWidget, OO.ui.Widget );
 OO.mixinClass( ItemWidget, DOMLessGroupWidget );
 OO.mixinClass( ItemWidget, ComponentWidget );
 OO.mixinClass( ItemWidget, FormatValueElement );
+OO.mixinClass( ItemWidget, ConstraintsReportHandlerElement );
 
 /**
  * @inheritDoc
@@ -157,7 +161,9 @@ ItemWidget.prototype.getTemplateData = function () {
 			addQualifierButton: addQualifierButton,
 			isGlobecoordinate: dataValueType === DATA_TYPES.GLOBECOORDINATE,
 			kartographer: self.state.kartographer,
-			map: self.$map
+			map: self.$map,
+			constraintsReport: self.state.constraintsReport &&
+				self.popupFromResults( self.state.constraintsReport )
 		};
 	} );
 };
@@ -442,6 +448,44 @@ ItemWidget.prototype.initializeMap = function () {
 
 			return self.setState( { kartographer: true } );
 		} );
+};
+
+/**
+ * Handle the part of the response from a wbcheckconstraints api call that is relevant to this
+ * ItemWidget's property id & extract the constraint check results from the part of API
+ * response that is relevant to this StatementWidget's propertyId
+ *
+ * @see WikibaseQualityConstraints/modules/gadget.js::_extractResultsForStatement()
+ * @param {Object|null} results
+ * @return {jQuery.Promise}
+ */
+ItemWidget.prototype.setConstraintsReport = function ( results ) {
+	var promises = [];
+
+	// extract qualifier constraint reports, pass them along to qualifier widget,
+	// and gather promises
+	promises = this.getItems().map( function ( qualifierWidget ) {
+		var data, propertyId, hash, result;
+
+		try {
+			data = qualifierWidget.getData();
+			propertyId = data.getPropertyId();
+			hash = data.getHash();
+
+			result = results.qualifiers[ propertyId ].filter( function ( responseForQualifier ) {
+				return responseForQualifier.hash === hash;
+			} )[ 0 ] || null;
+			return qualifierWidget.setConstraintsReport( result );
+		} catch ( e ) {
+			return qualifierWidget.setConstraintsReport( null );
+		}
+	} );
+
+	// update own constraint report & add to list of promises
+	promises = promises.concat( this.setState( { constraintsReport: results && results.mainsnak.results } ) );
+
+	// return promise that doesn't resolve until all constraints reports have been rendered
+	return $.when.apply( $, promises );
 };
 
 module.exports = ItemWidget;

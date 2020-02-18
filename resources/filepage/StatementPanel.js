@@ -4,7 +4,6 @@ var AnonWarning = require( './AnonWarning.js' ),
 	FormatValueElement = require( 'wikibase.mediainfo.base' ).FormatValueElement,
 	LicenseDialogWidget = require( './LicenseDialogWidget.js' ),
 	StatementWidget = require( 'wikibase.mediainfo.statements' ).StatementWidget,
-	StatementListDeserializer = require( 'wikibase.serialization' ).StatementListDeserializer,
 	dataTypesMap = mw.config.get( 'wbDataTypes' ),
 	StatementPanel;
 
@@ -23,12 +22,9 @@ var AnonWarning = require( './AnonWarning.js' ),
  * @param {Object} [config.helpUrls]  An object with property id as members and help urls for
  *  the property as values
  *  e.g. { P1: "https://commons.wikimedia.org/wiki/Special:MyLanguage/Commons:Depicts" }
+ * @fires dataLoadedReadOnly
  */
 StatementPanel = function StatementPanel( config ) {
-	var self = this,
-		deserializer = new StatementListDeserializer(),
-		statementsJson;
-
 	// Parent constructor
 	StatementPanel.super.apply( this, arguments );
 
@@ -45,21 +41,12 @@ StatementPanel = function StatementPanel( config ) {
 
 	this.licenseDialogWidget = new LicenseDialogWidget();
 
-	statementsJson = JSON.parse( this.$element.attr( 'data-statements' ) || '[]' );
 	this.statementWidget = new StatementWidget( $.extend( {
 		showControls: true,
 		valueType: dataTypesMap[ this.config.propertyType ].dataValueType
 	}, this.config ) );
 
-	// don't start subscribing to events until statementwidget has been
-	// pre-populated with storage data
-	this.statementWidget.resetData( deserializer.deserialize( statementsJson ) ).then( function () {
-		self.statementWidget.connect( self, { cancel: [ 'makeReadOnly' ] } );
-		self.statementWidget.connect( self, { publish: [ 'sendData' ] } );
-		self.statementWidget.connect( self, { edit: 'makeEditable' } ); // clicked 'edit'
-		self.statementWidget.connect( self, { change: 'makeEditable' } ); // changed otherwise (e.g. 'make prominent')
-		self.statementWidget.connect( self, { widgetRemoved: 'remove' } );
-	} );
+	this.bindEventHandlers();
 
 	// attach the widget to DOM, replacing the server-side rendered equivalent
 	this.$element.empty().append( this.statementWidget.$element );
@@ -72,6 +59,33 @@ StatementPanel = function StatementPanel( config ) {
 /* Inheritance */
 OO.inheritClass( StatementPanel, OO.ui.Widget );
 OO.mixinClass( StatementPanel, OO.ui.mixin.PendingElement );
+
+StatementPanel.prototype.bindEventHandlers = function () {
+	this.statementWidget.connect( this, { cancel: 'makeReadOnly' } );
+	this.statementWidget.connect( this, { publish: 'sendData' } );
+	this.statementWidget.connect( this, { edit: 'makeEditable' } ); // clicked 'edit'
+	this.statementWidget.connect( this, { change: 'makeEditable' } ); // changed otherwise (e.g. 'make prominent')
+	this.statementWidget.connect( this, { widgetRemoved: 'remove' } );
+};
+
+/**
+ * @param {datamodel.StatementList} data
+ * @return {jQuery.promise}
+ */
+StatementPanel.prototype.setData = function ( data ) {
+	this.unbindEventHandlers();
+
+	// don't subscribe to events until statementwidget has been populated with data
+	return this.statementWidget.resetData( data ).then( this.bindEventHandlers.bind( this ) );
+};
+
+StatementPanel.prototype.unbindEventHandlers = function () {
+	this.statementWidget.disconnect( this, { cancel: 'makeReadOnly' } );
+	this.statementWidget.disconnect( this, { publish: 'sendData' } );
+	this.statementWidget.disconnect( this, { edit: 'makeEditable' } );
+	this.statementWidget.disconnect( this, { change: 'makeEditable' } );
+	this.statementWidget.disconnect( this, { widgetRemoved: 'remove' } );
+};
 
 /**
  * Pre-populate the formatValue cache, which will save some
@@ -163,6 +177,7 @@ StatementPanel.prototype.makeReadOnly = function () {
 	this.statementWidget.disconnect( this, { change: 'makeEditable' } );
 	this.statementWidget.resetData().then( function () {
 		self.statementWidget.connect( self, { change: 'makeEditable' } );
+		self.emit( 'readOnly' );
 	} );
 };
 
@@ -221,6 +236,36 @@ StatementPanel.prototype.showUnsupportedPopup = function () {
  */
 StatementPanel.prototype.remove = function () {
 	this.emit( 'widgetRemoved', this.config.propertyId );
+};
+
+/**
+ * Handle the response from a wbcheckconstraints api call
+ * @param {Object} response
+ */
+StatementPanel.prototype.handleConstraintsResponse = function ( response ) {
+	this.statementWidget.handleConstraintsResponse(
+		this.extractResultsForPropertyId( response )
+	);
+};
+
+/**
+ * Extract the constraint check results for a certain statement from the full API response.
+ *
+ * @param {Object} response The constraint check results
+ * @return {Object|null} An object containing lists of constraint check results,
+ * or null if the results could not be extracted.
+ * @see WikibaseQualityConstraints/modules/gadget.js::_extractResultsForStatement()
+ */
+StatementPanel.prototype.extractResultsForPropertyId = function ( response ) {
+	var propertyId = this.config.propertyId,
+		entityId = mw.config.get( 'wbEntityId' ),
+		entityData = response.wbcheckconstraints[ entityId ];
+	if ( 'claims' in entityData ) {
+		// API v2 format
+		return entityData.claims[ propertyId ];
+	} else {
+		return null;
+	}
 };
 
 module.exports = StatementPanel;

@@ -75,7 +75,9 @@
 		"CirrusSearchBuildDocumentParse": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onCirrusSearchBuildDocumentParse",
 		"ParserOutputPostCacheTransform": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onParserOutputPostCacheTransform",
 		"GetPreferences": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onGetPreferences",
-		"ScribuntoExternalLibraries": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onScribuntoExternalLibraries"
+		"ScribuntoExternalLibraries": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onScribuntoExternalLibraries",
+		"RevisionUndeleted": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onRevisionUndeleted",
+		"ArticleUndelete": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onArticleUndelete"
 	},
 	"MessagesDirs": {
 		"WikibaseMediaInfo": [

@@ -4,8 +4,8 @@ use Wikibase\DataAccess\ByTypeDispatchingPrefetchingTermLookup;
 use Wikibase\DataAccess\DataAccessSettings;
 use Wikibase\DataAccess\GenericServices;
 use Wikibase\DataAccess\PerRepositoryServiceContainer;
+use Wikibase\Lib\Store\BufferingTermIndexTermLookup;
 use Wikibase\MediaInfo\Services\MediaInfoPrefetchingTermLookup;
-use Wikibase\Store\BufferingTermIndexTermLookup;
 
 return [
 

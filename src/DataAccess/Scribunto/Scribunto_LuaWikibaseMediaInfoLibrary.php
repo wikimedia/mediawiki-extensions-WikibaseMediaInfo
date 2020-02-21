@@ -4,9 +4,9 @@ namespace Wikibase\MediaInfo\DataAccess\Scribunto;
 
 use Title;
 use Wikibase\Client\DataAccess\Scribunto\Scribunto_LuaWikibaseLibrary;
+use Wikibase\Lib\Store\EntityIdLookup;
 use Wikibase\MediaInfo\DataModel\MediaInfoId;
 use Wikibase\MediaInfo\Services\MediaInfoServices;
-use Wikibase\Store\EntityIdLookup;
 
 /**
  * Registers and defines functions to access WikibaseMediaInfo through the Scribunto extension

@@ -8,6 +8,7 @@ use Wikibase\Content\EntityHolder;
 use Wikibase\DataModel\Entity\EntityId;
 use Wikibase\DataModel\Entity\EntityIdParser;
 use Wikibase\Lib\Store\EntityContentDataCodec;
+use Wikibase\Lib\Store\EntityIdLookup;
 use Wikibase\Lib\Store\NullEntityTermStoreWriter;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\MediaInfo\DataModel\MediaInfoId;
@@ -20,7 +21,6 @@ use Wikibase\Repo\Validators\ValidatorErrorLocalizer;
 use Wikibase\Search\Elastic\Fields\DescriptionsField;
 use Wikibase\Search\Elastic\Fields\LabelCountField;
 use Wikibase\Search\Elastic\Fields\LabelsField;
-use Wikibase\Store\EntityIdLookup;
 use Wikimedia\Assert\Assert;
 
 /**

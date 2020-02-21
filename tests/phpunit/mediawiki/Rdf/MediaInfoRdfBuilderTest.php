@@ -6,12 +6,16 @@ use File;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use RepoGroup;
+use Wikibase\DataAccess\EntitySource;
+use Wikibase\DataAccess\EntitySourceDefinitions;
+use Wikibase\Lib\EntityTypeDefinitions;
 use Wikibase\Lib\Store\EntityTitleLookup;
 use Wikibase\MediaInfo\Content\MediaInfoHandler;
 use Wikibase\MediaInfo\Rdf\MediaInfoRdfBuilder;
 use Wikibase\Rdf\HashDedupeBag;
 use Wikibase\Rdf\RdfBuilder;
 use Wikibase\Rdf\RdfProducer;
+use Wikibase\Rdf\RdfVocabulary;
 use Wikibase\Repo\Tests\Rdf\NTriplesRdfTestHelper;
 use Wikibase\Repo\Tests\Rdf\RdfBuilderTestData;
 use Wikibase\Repo\WikibaseRepo;
@@ -57,6 +61,38 @@ class MediaInfoRdfBuilderTest extends TestCase {
 		return $this->testData;
 	}
 
+	private function getVocabulary() : RdfVocabulary {
+		return new RdfVocabulary(
+			[ 'test' => 'http://acme.test/' ],
+			[ 'test' => '' ],
+			new EntitySourceDefinitions(
+				[
+					new EntitySource(
+						'test',
+						'testdb',
+						[
+							'item' => [ 'namespaceId' => 100, 'slot' => 'main' ],
+							'property' => [ 'namespaceId' => 200, 'slot' => 'main' ],
+							'mediainfo' => [ 'namespaceId' => 700, 'slot' => 'mediainfo' ],
+						],
+						'http://acme.test/',
+						'',
+						'',
+						''
+					),
+				],
+				new EntityTypeDefinitions( [] )
+			),
+			'test',
+			[ 'test' => '' ],
+			[ 'test' => '' ],
+			[],
+			[],
+			[],
+			'http://creativecommons.org/publicdomain/zero/1.0/'
+		);
+	}
+
 	/**
 	 * @param RdfWriter $writer
 	 * @param MediaInfoHandler $handler
@@ -64,7 +100,7 @@ class MediaInfoRdfBuilderTest extends TestCase {
 	 * @return MediaInfoRdfBuilder
 	 */
 	private function newBuilderWithFile( RdfWriter $writer, MediaInfoHandler $handler, RepoGroup $repoGroup ) {
-		$vocabulary = $this->getTestData()->getVocabulary();
+		$vocabulary = $this->getVocabulary();
 		$builder = new MediaInfoRdfBuilder( $vocabulary, $writer, $handler, $repoGroup );
 		$writer->start();
 		return $builder;
@@ -110,8 +146,6 @@ class MediaInfoRdfBuilderTest extends TestCase {
 	 * @dataProvider provideMediaInfoPartialRDFWithFile
 	 */
 	public function testMediaInfoPartialRDFWithFile( $entityName, $dataSetName, File $file = null ) {
-		$this->markTestSkipped( 'Temporarily skipping due to ongoing changes in Wikibase: T245830' );
-
 		$entity = $this->getTestData()->getEntity( $entityName );
 		$writer = $this->getTestData()->getNTriplesWriter( false );
 		$handler = $this->getMockBuilder( MediaInfoHandler::class )
@@ -153,7 +187,7 @@ class MediaInfoRdfBuilderTest extends TestCase {
 		$wikibaseRepo = WikibaseRepo::getDefaultInstance();
 		$builder = new RdfBuilder(
 			$this->getTestData()->getSiteLookup()->getSites(),
-			$this->getTestData()->getVocabulary(),
+			$this->getVocabulary(),
 			$wikibaseRepo->getValueSnakRdfBuilderFactory(),
 			$this->getTestData()->getMockRepository(),
 			$wikibaseRepo->getEntityRdfBuilderFactory(),
@@ -176,8 +210,6 @@ class MediaInfoRdfBuilderTest extends TestCase {
 	 * @dataProvider provideMediaInfoFullRDF
 	 */
 	public function testMediaInfoFullRDF( $entityName, $dataSetName ) {
-		$this->markTestSkipped( 'Temporarily skipping due to ongoing changes in Wikibase: T245830' );
-
 		$entity = $this->getTestData()->getEntity( $entityName );
 		$writer = $this->getTestData()->getNTriplesWriter( false );
 		$entityTitleLookup = $this->createMock( EntityTitleLookup::class );

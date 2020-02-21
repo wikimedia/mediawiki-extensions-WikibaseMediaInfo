@@ -4,14 +4,15 @@
 			"Hedda",
 			"Arbormedi",
 			"Mirzali",
-			"BaRaN6161 TURK"
+			"BaRaN6161 TURK",
+			"LuCKY"
 		]
 	},
 	"action-mediainfo-term": "medya bilgisi terimlerini değiştir (altyazılar, özetler)",
 	"right-mediainfo-term": "Medya bilgisi terimlerini değiştir (altyazılar, özetler)",
 	"slot-name-mediainfo": "Yapısal medya bilgisi",
 	"wikibase-entity-mediainfo": "medya bilgisi",
-	"wikibase-mediainfo-summary-wbsetlabel-add": "[$2] altyaı eklendi",
+	"wikibase-mediainfo-summary-wbsetlabel-add": "[$2] altyazı eklendi",
 	"wikibase-mediainfo-summary-wbsetlabel-remove": "[$2] altyazı kaldırıldı",
 	"wikibase-mediainfo-summary-wbsetlabel-set": "[$2] altyazı düzenlendi",
 	"wikibasemediainfo-add-property": "Özellik eklemek için arama yapın (parçası, medya türü, vb.)",

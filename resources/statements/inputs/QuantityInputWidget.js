@@ -42,7 +42,7 @@ QuantityInputWidget.prototype.getTemplateData = function () {
 	var button = new OO.ui.ButtonWidget( {
 		classes: [ 'wbmi-input-widget__button' ],
 		label: mw.message( 'wikibasemediainfo-quantity-input-button-text' ).text(),
-		flags: [ 'primary', 'progressive' ],
+		flags: [ 'progressive' ],
 		disabled: this.getRawValue() === ''
 	} );
 	button.connect( this, { click: 'onEnter' } );

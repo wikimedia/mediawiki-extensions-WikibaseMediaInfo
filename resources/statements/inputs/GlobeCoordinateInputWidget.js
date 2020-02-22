@@ -86,7 +86,7 @@ GlobeCoordinateInputWidget.prototype.getTemplateData = function () {
 	var submitButton = new OO.ui.ButtonWidget( {
 			classes: [ 'wbmi-input-widget__button' ],
 			label: mw.message( 'wikibasemediainfo-globecoordinate-input-button-text' ).text(),
-			flags: [ 'primary', 'progressive' ],
+			flags: [ 'progressive' ],
 			disabled:
 				this.latitudeInput.getValue() === '' ||
 				this.longitudeInput.getValue() === '' ||

@@ -15,7 +15,6 @@
 
 use MediaWiki\MediaWikiServices;
 use Wikibase\DataAccess\SingleEntitySourceServices;
-use Wikibase\DataAccess\UnusableEntitySource;
 use Wikibase\DataModel\DeserializerFactory;
 use Wikibase\DataModel\Entity\EntityDocument;
 use Wikibase\DataModel\Entity\EntityId;
@@ -212,22 +211,13 @@ return [
 				MediaWikiServices::getInstance()->getSlotRoleStore()
 			);
 
-			$dataAccessSettings = $wikibaseRepo->getDataAccessSettings();
-
-			if ( $dataAccessSettings->useEntitySourceBasedFederation() ) {
-				$entitySource = $wikibaseRepo->getEntitySourceDefinitions()
-					->getSourceForEntityType( MediaInfo::ENTITY_TYPE );
-			} else {
-				$entitySource = new UnusableEntitySource();
-			}
+			$entitySource = $wikibaseRepo->getEntitySourceDefinitions()
+				->getSourceForEntityType( MediaInfo::ENTITY_TYPE );
 
 			return new WikiPageEntityMetaDataLookup(
 				$entityNamespaceLookup,
 				$entityQuery,
-				$entitySource,
-				$dataAccessSettings,
-				$dbName,
-				$repoName
+				$entitySource
 			);
 		},
 		'rdf-builder-factory-callback' => function (

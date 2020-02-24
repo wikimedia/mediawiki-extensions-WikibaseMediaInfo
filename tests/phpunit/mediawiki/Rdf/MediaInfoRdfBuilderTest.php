@@ -110,6 +110,8 @@ class MediaInfoRdfBuilderTest extends TestCase {
 	 * @dataProvider provideMediaInfoPartialRDFWithFile
 	 */
 	public function testMediaInfoPartialRDFWithFile( $entityName, $dataSetName, File $file = null ) {
+		$this->markTestSkipped( 'Temporarily skipping due to ongoing changes in Wikibase: T245830' );
+
 		$entity = $this->getTestData()->getEntity( $entityName );
 		$writer = $this->getTestData()->getNTriplesWriter( false );
 		$handler = $this->getMockBuilder( MediaInfoHandler::class )
@@ -174,6 +176,8 @@ class MediaInfoRdfBuilderTest extends TestCase {
 	 * @dataProvider provideMediaInfoFullRDF
 	 */
 	public function testMediaInfoFullRDF( $entityName, $dataSetName ) {
+		$this->markTestSkipped( 'Temporarily skipping due to ongoing changes in Wikibase: T245830' );
+
 		$entity = $this->getTestData()->getEntity( $entityName );
 		$writer = $this->getTestData()->getNTriplesWriter( false );
 		$entityTitleLookup = $this->createMock( EntityTitleLookup::class );

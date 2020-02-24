@@ -1,24 +1,22 @@
 {{!-- top-level version --}}
 {{^isQualifier}}
 
+<div class="wbmi-input-widget
+			wbmi-input-widget--globe-coordinate
+			wbmi-input-widget--single-line
+			wbmi-with-button">
+	{{#kartographer}}{{{expandButton}}}{{/kartographer}}
+	{{{coordinates.input}}}
+	{{{precision.input}}}
+	{{{submitButton}}}
+</div>
+
 {{#expanded}}
 	{{#kartographer}}
 		{{{map}}}
 	{{/kartographer}}
 {{/expanded}}
-{{^expanded}}
-	{{{expandButton}}}
-{{/expanded}}
 
-<div class="wbmi-input-widget
-			wbmi-input-widget--globe-coordinate
-			wbmi-input-widget--single-line
-			wbmi-with-button">
-	{{{latitude.input}}}
-	{{{longitude.input}}}
-	{{{precision.input}}}
-	{{{submitButton}}}
-</div>
 {{/isQualifier}}
 
 {{!-- qualifier version --}}
@@ -36,13 +34,8 @@
 	{{/expanded}}
 
 	<label>
-		<span class="wbmi-input-widget__label">{{latitude.label}}</span>
-		{{{latitude.input}}}
-	</label>
-
-	<label>
-		<span class="wbmi-input-widget__label">{{longitude.label}}</span>
-		{{{longitude.input}}}
+		<span class="wbmi-input-widget__label">{{coordinates.label}}</span>
+		{{{coordinates.input}}}
 	</label>
 
 	<label>

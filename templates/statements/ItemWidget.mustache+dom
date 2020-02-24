@@ -5,6 +5,7 @@
 		{{#errors}}
 			{{{.}}}
 		{{/errors}}
+
 		<div class="wbmi-entity-header">
 			<div class="wbmi-entity-data">
 				<div class="wbmi-entity-title">
@@ -34,6 +35,12 @@
 			</a>
 		</div>
 
+		{{#isGlobecoordinate}}
+			{{#kartographer}}
+				{{{map}}}
+			{{/kartographer}}
+		{{/isGlobecoordinate}}
+
 		<div class="wbmi-item-content">
 			{{#qualifiers.length}}
 			<div class="wbmi-item-content-group">
@@ -45,6 +52,7 @@
 
 			{{#editing}}{{{addQualifierButton}}}{{/editing}}
 		</div>
+
 	</div>
 
 	{{#editing}}{{{removeButton}}}{{/editing}}

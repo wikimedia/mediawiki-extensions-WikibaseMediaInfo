@@ -139,7 +139,8 @@ module.exports.kartographer = Object.assign( {}, module.exports.mediainfo, {
 		loaderStub.withArgs( 'ext.kartographer.box' ).returns( {
 			map: sinon.stub().returns( {
 				invalidateSize: sinon.stub(),
-				on: sinon.stub()
+				on: sinon.stub(),
+				off: sinon.stub()
 			} )
 		} );
 
@@ -150,7 +151,9 @@ module.exports.kartographer = Object.assign( {}, module.exports.mediainfo, {
 			} )
 		} );
 
-		global.mw.loader.using.resolves( loaderStub );
+		global.mw.loader.using.returns(
+			$.Deferred().resolve( loaderStub ).promise()
+		);
 
 		global.MutationObserver = function () {};
 		global.MutationObserver.prototype = {

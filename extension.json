@@ -32,13 +32,6 @@
 		"WikibaseMediaInfo": "GlobalVarConfig::newInstance"
 	},
 	"config": {
-		"WikibasePerRepositoryServiceWiringFiles": {
-			"value": [
-				"src/Services/MediaInfoPerRepositoryServiceWiring.php"
-			],
-			"path": true,
-			"merge_strategy": "array_merge_recursive"
-		},
 		"MediaInfoEnableSearch": {
 			"value": false
 		},

@@ -36,7 +36,7 @@ MultiTypeInputWrapperWidget = function ( config ) {
 	this.allowEmitChange = true;
 
 	this.state = {
-		type: 'string',
+		type: this.config.type,
 		input: this.createInput( this.config.type )
 	};
 

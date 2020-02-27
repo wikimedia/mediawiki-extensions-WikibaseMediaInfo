@@ -43,7 +43,7 @@ StringInputWidget.prototype.getTemplateData = function () {
 		classes: [ 'wbmi-input-widget__button' ],
 		label: mw.message( 'wikibasemediainfo-string-input-button-text' ).text(),
 		flags: [ 'progressive' ],
-		disabled: this.input.getValue() === ''
+		disabled: !this.hasValidInput()
 	} );
 	button.connect( this, { click: 'onEnter' } );
 
@@ -55,7 +55,9 @@ StringInputWidget.prototype.getTemplateData = function () {
 };
 
 StringInputWidget.prototype.onEnter = function () {
-	this.emit( 'add', this );
+	if ( this.hasValidInput() ) {
+		this.emit( 'add', this );
+	}
 };
 
 StringInputWidget.prototype.onChange = function () {
@@ -69,6 +71,13 @@ StringInputWidget.prototype.onChange = function () {
  */
 StringInputWidget.prototype.getRawValue = function () {
 	return this.input.getValue();
+};
+
+/**
+ * @return {boolean}
+ */
+StringInputWidget.prototype.hasValidInput = function () {
+	return this.input.getValue() !== '';
 };
 
 /**

@@ -1,11 +1,23 @@
 @import 'mediawiki.mixins';
 @import '../../mediainfo-variables.less';
 
+/* stylelint-disable selector-class-pattern */
 .wbmi-input-widget {
+	// For adjascent widgets, remove the border and border radius on the left.
+	.oo-ui-widget + .oo-ui-widget {
+		input,
+		select,
+		.oo-ui-dropdownWidget-handle,
+		.oo-ui-buttonElement-button {
+			border-bottom-left-radius: 0;
+			border-left: 0;
+			border-top-left-radius: 0;
+		}
+	}
+
 	// See: https://phabricator.wikimedia.org/T222283
 	// This overrides an override in mediawiki.legacy/shared.css which keeps
 	// this input element from flipping over to RTL orientation;
-	/* stylelint-disable-next-line selector-class-pattern */
 	body.rtl.sitedir-ltr & input {
 		direction: unset;
 	}
@@ -40,7 +52,6 @@
 		// these elements is being left in since we'll want it in cases where
 		// the row has to wrap; border-radius can be removed, however.
 
-		/* stylelint-disable selector-class-pattern */
 		&:not( .oo-ui-numberInputWidget ) input, /* non-numeric input field */
 		.oo-ui-dropdownWidget-handle, /* dropdown */
 		.oo-ui-buttonElement-button { /* button & numeric input (+/- buttons) */
@@ -52,7 +63,6 @@
 		.oo-ui-numberInputWidget-field {
 			margin-left: auto;
 		}
-		/* stylelint-enable selector-class-pattern */
 	}
 
 	> *:last-child {

@@ -202,33 +202,6 @@ class MediaInfoEntityStatementsView {
 			[ SnakFormatter::FORMAT_HTML ]
 		);
 
-		/*
-		 * Here's quite an odd way to render a title...
-		 * We want to keep this place mostly generic, so that it doesn't
-		 * really matter what property we're dealing with. `Depicts` (or
-		 * any other) is not different from the next.
-		 * However, it looks like we (may) want to have specific titles
-		 * (https://phabricator.wikimedia.org/T216757 asks for one for
-		 * depicts on commons)
-		 * Instead of hardcoding this, let's just see if a message exist
-		 * that uses the descriptive name that was used for the property
-		 * ID in extension.json: for a property { depicts: P1 }, we'll
-		 * see if we can find an image with i18n key
-		 * wikibasemediainfo-statements-title-depicts, and if so, display
-		 * a title. If not, no title... This allows any wiki to set up
-		 * any property/statement group with any title, or none at all.
-		 */
-		$title = '';
-		$name = array_search( $propertyIdString, $this->properties );
-		// possible messages include:
-		// wikibasemediainfo-statements-title-depicts
-		$message = wfMessage( 'wikibasemediainfo-statements-title-' . ( $name ?: '' ) );
-		if ( $name !== false && $message->exists() ) {
-			$title = new Tag( 'h3' );
-			$title->addClasses( [ 'wbmi-statements-title' ] );
-			$title->appendContent( $message->text() );
-		}
-
 		$panelClasses = [
 			'wbmi-entityview-statementsGroup',
 			self::getHtmlContainerClass( $propertyIdString ),
@@ -244,7 +217,6 @@ class MediaInfoEntityStatementsView {
 				( new Tag( 'div' ) )
 					->addClasses( [ 'wbmi-statements-widget' ] )
 					->appendContent(
-						$title,
 						$this->createPropertyHeader( $propertyIdString ),
 						$itemsGroupDiv
 					),
@@ -262,8 +234,47 @@ class MediaInfoEntityStatementsView {
 
 	private function createPropertyHeader( $propertyIdString ) {
 		$propertyId = new PropertyId( $propertyIdString );
-		$header = $this->createFormattedDataValue( $this->formatEntityId( $propertyId ) );
-		$header->addClasses( [ 'wbmi-statements-header' ] );
+
+		$propertyTitle = $this->createFormattedDataValue(
+			new HtmlSnippet( $this->formatEntityId( $propertyId, SnakFormatter::FORMAT_HTML ) )
+		);
+
+		/*
+		 * Here's quite an odd way to render a title...
+		 * We want to keep this place mostly generic, so that it doesn't
+		 * really matter what property we're dealing with. `Depicts` (or
+		 * any other) is not different from the next.
+		 * However, it looks like we (may) want to have specific titles
+		 * (https://phabricator.wikimedia.org/T216757 asks for one for
+		 * depicts on commons)
+		 * Instead of hardcoding this, let's just see if a message exist
+		 * that uses the descriptive name that was used for the property
+		 * ID in extension.json: for a property { depicts: P1 }, we'll
+		 * see if we can find an image with i18n key
+		 * wikibasemediainfo-statements-title-depicts, and if so, display
+		 * a title. If not, no title... This allows any wiki to set up
+		 * any property/statement group with any title, or none at all.
+		 */
+		$name = array_search( $propertyIdString, $this->properties );
+		// possible messages include:
+		// wikibasemediainfo-statements-title-depicts
+		$message = wfMessage( 'wikibasemediainfo-statements-title-' . ( $name ?: '' ) );
+		if ( $name !== false && $message->exists() ) {
+			$title = new Tag( 'h3' );
+			$title->addClasses( [ 'wbmi-statements-title' ] );
+			$title->appendContent( $message->text() );
+
+			$propertyTitle->prependContent( $title );
+		}
+
+		$header = new Tag( 'div' );
+		$header->addClasses( [ 'wbmi-statement-header' ] );
+		$header->appendContent(
+			( new Tag( 'div' ) )
+				->addClasses( [ 'wbmi-entity-data' ] )
+				->appendContent( $propertyTitle )
+		);
+
 		return $header;
 	}
 
@@ -279,6 +290,7 @@ class MediaInfoEntityStatementsView {
 		$tag = new Tag( 'div' );
 		$tag->addClasses( [ 'wbmi-entity-title' ] );
 		$tag->appendContent( $label );
+
 		return $tag;
 	}
 
@@ -301,8 +313,15 @@ class MediaInfoEntityStatementsView {
 		}
 
 		$mainSnakDiv = new Tag( 'div' );
+		$mainSnakDiv->addClasses( [ 'wbmi-entity-header' ] );
 		$mainSnakDiv->appendContent(
-			$this->createFormattedDataValue( $this->formatSnak( $mainSnak ) )
+			( new Tag( 'div' ) )
+				->addClasses( [ 'wbmi-entity-data' ] )
+				->appendContent(
+					$this->createFormattedDataValue(
+						new HtmlSnippet( $this->formatSnak( $mainSnak, SnakFormatter::FORMAT_HTML ) )
+					)
+				)
 		);
 
 		$statementDiv->appendContent( $mainSnakDiv );
@@ -339,14 +358,19 @@ class MediaInfoEntityStatementsView {
 
 			$formattedValue = $this->formatSnak( $snak, SnakFormatter::FORMAT_HTML );
 
-			$separator = Html::element( 'span', [], $this->textProvider->get( 'colon-separator' ) );
+			$separator = new Tag( 'span' );
+			$separator->addClasses( [ 'wbmi-qualifier-value-separator' ] );
+			$separator->appendContent(
+				$this->textProvider->get( 'colon-separator' ),
+				new HtmlSnippet( '&#8232;' )
+			);
 
 			$qualifierValueDiv = new Tag( 'div' );
 			$qualifierValueDiv->addClasses( [ 'wbmi-qualifier-value' ] );
 			$qualifierValueDiv->appendContent(
 				new HtmlSnippet( $formattedProperty ),
 				// if we have both a property & a value, add a separator
-				$formattedProperty && $formattedValue ? new HtmlSnippet( $separator ) : '',
+				$formattedProperty && $formattedValue ? $separator : '',
 				new HtmlSnippet( $formattedValue )
 			);
 

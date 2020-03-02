@@ -10,7 +10,8 @@
 			"Movses",
 			"Чаховіч Уладзіслаў",
 			"Saimongoltinio",
-			"Katunchik"
+			"Katunchik",
+			"Alexander Yukal"
 		]
 	},
 	"action-mediainfo-term": "изменение значений метаданных медиафайлов (краткие подписи, опсиания)",
@@ -74,5 +75,17 @@
 	"wikibasemediainfo-arcsecond-label": "в угловых секундах",
 	"wikibasemediainfo-tenth-of-arcsecond-label": "в 1/10 угловых секунд",
 	"wikibasemediainfo-hundreth-of-arcsecond-label": "в 1/100 угловых секунд",
-	"wikibasemediainfo-thousanth-of-arcsecond-label": "в 1/1000 угловых секунд"
+	"wikibasemediainfo-thousanth-of-arcsecond-label": "в 1/1000 угловых секунд",
+	"wikibasemediainfo-monolingualtext-input-placeholder": "Введите текст",
+	"wikibasemediainfo-time-input-placeholder": "Введите время",
+	"wikibasemediainfo-time-timestamp-empty": "Пожалуйста, введите значение времени.",
+	"wikibasemediainfo-time-timestamp-formatted": "Будет отображаться как: $1",
+	"wikibasemediainfo-time-precision-year1g": "миллиард лет",
+	"wikibasemediainfo-time-precision-year100m": "сто миллионов лет",
+	"wikibasemediainfo-time-precision-year10m": "десять миллионов лет",
+	"wikibasemediainfo-time-precision-year1m": "миллион лет",
+	"wikibasemediainfo-time-precision-year100k": "100,000 лет",
+	"wikibasemediainfo-time-precision-year1k": "тысячелетие",
+	"wikibasemediainfo-time-precision-year100": "столетие",
+	"wikibasemediainfo-time-precision-year10": "десятилетие"
 }

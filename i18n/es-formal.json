@@ -4,5 +4,7 @@
 			"Fitoschido"
 		]
 	},
-	"wikibasemediainfo-remove-all-statements-confirm": "Esto eliminará todos los valores existentes de esta propiedad. Aquellas propiedades que carezcan de valores se borrarán al publicar los cambios. ¿Quiere continuar?"
+	"wikibasemediainfo-remove-all-statements-confirm": "Esto eliminará todos los valores existentes de esta propiedad. Aquellas propiedades que carezcan de valores se borrarán al publicar los cambios. ¿Quiere continuar?",
+	"wikibasemediainfo-monolingualtext-language-label": "Seleccione un idioma",
+	"wikibasemediainfo-time-timestamp-empty": "Introduzca un valor de tiempo."
 }

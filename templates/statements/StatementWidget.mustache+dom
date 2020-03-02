@@ -37,22 +37,22 @@
 	<!-- statement widget footer -->
 	{{#editing}}
 	<div class="wbmi-statement-footer">
+		{{#showControls}}
+		<div class="wbmi-entityview-cancelAndPublishButtons">
+			{{{publishButton}}}
+			{{{cancelButton}}}
+		</div>
+		{{/showControls}}
+
 		<div class="wbmi-statement-footer-buttons">
 			{{#learnMoreLink}}
-			{{{learnMoreButton}}}
+				{{{learnMoreButton}}}
 			{{/learnMoreLink}}
 
 			{{^isDefaultProperty}}
-			{{{removeAll}}}
+				{{{removeAll}}}
 			{{/isDefaultProperty}}
 		</div>
-
-		{{#showControls}}
-		<div class="wbmi-entityview-cancelAndPublishButtons">
-			{{{cancelButton}}}
-			{{{publishButton}}}
-		</div>
-		{{/showControls}}
 	</div>
 	{{/editing}}
 </div>

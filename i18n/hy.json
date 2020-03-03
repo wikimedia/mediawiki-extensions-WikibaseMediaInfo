@@ -5,5 +5,14 @@
 		]
 	},
 	"wikibasemediainfo-filepage-license-agree": "Ես համաձայն եմ",
-	"wikibasemediainfo-statements-learn-more": "Իմանալ ավելին"
+	"wikibasemediainfo-statements-learn-more": "Իմանալ ավելին",
+	"wikibasemediainfo-monolingualtext-input-button-text": "Ավելացնել",
+	"wikibasemediainfo-time-input-button-text": "Ավելացնել",
+	"wikibasemediainfo-time-precision-year": "տարի",
+	"wikibasemediainfo-time-precision-month": "ամիս",
+	"wikibasemediainfo-time-precision-day": "օր",
+	"wikibasemediainfo-time-precision-hour": "ժամ",
+	"wikibasemediainfo-time-calendar-label": "Օրացույց",
+	"wikibasemediainfo-time-calendar-gregorian": "Գրիգորյան",
+	"wikibasemediainfo-time-calendar-julian": "Հուլյան"
 }

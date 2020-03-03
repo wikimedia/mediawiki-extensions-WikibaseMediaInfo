@@ -78,6 +78,7 @@
 	"wikibasemediainfo-monolingualtext-input-button-text": "Afegeix",
 	"wikibasemediainfo-quantity-input-button-text": "Afegeix",
 	"wikibasemediainfo-time-input-button-text": "Afegeix",
+	"wikibasemediainfo-time-input-placeholder": "Introduïu l’hora",
 	"wikibasemediainfo-time-precision-label": "Precisió",
 	"wikibasemediainfo-time-precision-year1g": "milers de milions d’anys",
 	"wikibasemediainfo-time-precision-year10m": "desenes de milions d’anys",

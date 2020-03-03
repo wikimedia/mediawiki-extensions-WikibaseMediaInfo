@@ -2,7 +2,8 @@
 	"@metadata": {
 		"authors": [
 			"WikiPhoenix",
-			"Sturban"
+			"Sturban",
+			"Josefine Hellroth Larsson (WMSE)"
 		]
 	},
 	"right-mediainfo-term": "Ändra termer i mediainfo (undertexter, sammanfattningar)",
@@ -25,6 +26,7 @@
 	"wikibasemediainfo-filepage-caption-empty": "Ingen bildtext har definierats",
 	"wikibasemediainfo-filepage-caption-too-long": "$1 {{PLURAL:$1|tecken}} över gränsen",
 	"wikibasemediainfo-filepage-caption-approaching-limit": "$1 {{PLURAL:$1|tecken|0=tecken}} kvar",
+	"wikibasemediainfo-filepage-statement-no-value-option": "Inget värde",
 	"wikibasemediainfo-filepage-statement-no-value": "Inget värde finns för denna egenskap",
 	"wikibasemediainfo-filepage-statement-no-data": "Ingen tillgänglig data",
 	"wikibasemediainfo-filepage-statement-no-results": "Hittade inga resultat",
@@ -40,6 +42,31 @@
 	"wikibasemediainfo-longitude-input-label": "Longitud",
 	"wikibasemediainfo-precision-input-label": "Precision",
 	"wikibasemediainfo-string-input-button-text": "Lägg till",
+	"wikibasemediainfo-monolingualtext-input-button-text": "Lägg till",
+	"wikibasemediainfo-monolingualtext-input-placeholder": "Ange text",
+	"wikibasemediainfo-monolingualtext-language-label": "Välj språk",
 	"wikibasemediainfo-quantity-input-button-text": "Lägg till",
+	"wikibasemediainfo-time-input-button-text": "Lägg till",
+	"wikibasemediainfo-time-input-placeholder": "Ange tid",
+	"wikibasemediainfo-time-timestamp-empty": "Ange ett tidsvärde.",
+	"wikibasemediainfo-time-timestamp-formatted": "Kommer att visas som: $1",
+	"wikibasemediainfo-time-precision-label": "Precision",
+	"wikibasemediainfo-time-precision-year1g": "miljarder år",
+	"wikibasemediainfo-time-precision-year10m": "tio miljoner år",
+	"wikibasemediainfo-time-precision-year1m": "miljoner år",
+	"wikibasemediainfo-time-precision-year100k": "100 000 år",
+	"wikibasemediainfo-time-precision-year10k": "10 000 år",
+	"wikibasemediainfo-time-precision-year1k": "millennium",
+	"wikibasemediainfo-time-precision-year100": "århundrade",
+	"wikibasemediainfo-time-precision-year10": "årtionde",
+	"wikibasemediainfo-time-precision-year": "år",
+	"wikibasemediainfo-time-precision-month": "månad",
+	"wikibasemediainfo-time-precision-day": "dag",
+	"wikibasemediainfo-time-precision-hour": "timme",
+	"wikibasemediainfo-time-precision-minute": "minut",
+	"wikibasemediainfo-time-precision-second": "sekund",
+	"wikibasemediainfo-time-calendar-label": "Kalender",
+	"wikibasemediainfo-time-calendar-gregorian": "Gregoriansk",
+	"wikibasemediainfo-time-calendar-julian": "Juliansk",
 	"wikibasemediainfo-globecoordinate-input-button-text": "Lägg till"
 }

@@ -59,7 +59,7 @@
 	"wikibasemediainfo-monolingualtext-language-label": "Selecciona un idioma",
 	"wikibasemediainfo-quantity-input-button-text": "Añadir",
 	"wikibasemediainfo-time-input-button-text": "Añadir",
-	"wikibasemediainfo-time-input-placeholder": "Ingresar tiempo",
+	"wikibasemediainfo-time-input-placeholder": "Introduce la hora",
 	"wikibasemediainfo-time-timestamp-empty": "Introduce un valor de tiempo.",
 	"wikibasemediainfo-time-timestamp-invalid": "El valor del tiempo es incorrecto.",
 	"wikibasemediainfo-time-timestamp-formatted": "Se mostrará como: $1",

@@ -4,6 +4,7 @@ namespace Wikibase\MediaInfo\Tests\MediaWiki\ChangeOp\Deserialization;
 
 use PHPUnit\Framework\MockObject\MockObject;
 use Wikibase\Lib\StaticContentLanguages;
+use Wikibase\Lib\StringNormalizer;
 use Wikibase\MediaInfo\ChangeOp\Deserialization\MediaInfoChangeOpDeserializer;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\Repo\ChangeOp\ChangeOpDescription;
@@ -19,7 +20,6 @@ use Wikibase\Repo\Tests\ChangeOp\ChangeOpTestMockProvider;
 use Wikibase\Repo\Tests\ChangeOp\Deserialization\DescriptionsChangeOpDeserializationTester;
 use Wikibase\Repo\Tests\ChangeOp\Deserialization\LabelsChangeOpDeserializationTester;
 use Wikibase\Repo\Validators\TermValidatorFactory;
-use Wikibase\StringNormalizer;
 
 /**
  * @covers Wikibase\MediaInfo\ChangeOp\Deserialization\MediaInfoChangeOpDeserializer

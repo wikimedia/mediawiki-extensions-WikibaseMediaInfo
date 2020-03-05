@@ -10,7 +10,7 @@ use OOUI\PanelLayout;
 use OOUI\Tag;
 use OutputPage;
 use Wikibase\DataModel\Term\TermList;
-use Wikibase\LanguageFallbackChain;
+use Wikibase\Lib\LanguageFallbackChain;
 use Wikibase\Lib\LanguageNameLookup;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\View\LanguageDirectionalityLookup;

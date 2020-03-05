@@ -24,8 +24,8 @@
 				"ignoreComments": true
 			}
 		],
-		"no-jquery/no-class-state": "warn",
-		"no-jquery/no-sizzle": "warn",
-		"no-jquery/variable-pattern": "warn"
+		"no-jquery/no-class-state": "off",
+		"no-jquery/no-sizzle": "off",
+		"no-jquery/variable-pattern": "off"
 	}
 }

@@ -18,55 +18,46 @@ GlobeCoordinateInputWidget = function MediaInfoStatementsGlobeCoordinateInputWid
 	config = config || {};
 
 	this.state = {
-		latitude: '',
-		longitude: '',
-		precision: '',
+		latitude: null,
+		longitude: null,
+		// precision will be inferred from input, but can be manually overridden;
+		// as soon as it changes manually, the custom precision will be used
+		inferredPrecision: null,
+		customPrecision: null,
 		isQualifier: !!config.isQualifier,
-		expanded: false,
-		kartographer: false
+		kartographer: false,
+		expanded: false
 	};
 
-	this.latitudeInput = new OO.ui.TextInputWidget( {
-		classes: [ 'wbmi-input-widget__input' ],
-		isRequired: true,
-		type: 'number',
-		validate: this.validateInput.bind( this, 'latitude' ),
-		placeholder: mw.message( 'wikibasemediainfo-latitude-input-label' ).text()
-	} );
+	this.parseValuePromise = undefined;
+	this.debouncedOnChange = OO.ui.debounce( this.onChange.bind( this ), 200 );
+	this.onMapClickHandler = this.onMapClick.bind( this );
 
-	this.longitudeInput = new OO.ui.TextInputWidget( {
+	this.coordinateInput = new OO.ui.TextInputWidget( {
 		classes: [ 'wbmi-input-widget__input' ],
+		placeholder: mw.message( 'wikibasemediainfo-coordinate-input-placeholder' ).text(),
 		isRequired: true,
-		type: 'number',
-		validate: this.validateInput.bind( this, 'longitude' ),
-		placeholder: mw.message( 'wikibasemediainfo-longitude-input-label' ).text()
+		type: 'string',
+		validate: function ( value ) {
+			// mark input field as invalid except
+			return value === '' || self.hasValidInput();
+		}
 	} );
 
 	this.precisionInput = new OO.ui.DropdownInputWidget( {
 		classes: [ 'wbmi-input-widget__input' ],
+		label: mw.message( 'wikibasemediainfo-select-precision-label' ).text(),
 		options: this.getPrecisionOptions(),
+		isRequired: true,
 		$overlay: true
 	} );
 
-	this.latitudeInput.connect( this, { change: 'onChange' } );
-	this.longitudeInput.connect( this, { change: 'onChange' } );
-	this.precisionInput.connect( this, { change: 'onChange' } );
-
-	// we can create the map node already, but until we've successfully loaded
-	// kartographer, we can't wire up the mapping functionality
+	// Set up map element for Kartographer
 	this.$map = $( '<div>' ).addClass( 'wbmi-input-widget__map' );
 	this.map = undefined;
-	mw.loader.using( [ 'ext.kartographer.box', 'ext.kartographer.editing' ] )
-		.then( function ( require ) {
-			kartoBox = require( 'ext.kartographer.box' );
-			kartoEditing = require( 'ext.kartographer.editing' );
+	this.initializeMap();
 
-			// soft dependency loaded! now wire up mapping functionality
-			self.map = self.initializeMap( self.$map );
-			self.map.on( 'click', self.onMapClick.bind( self ) );
-
-			self.setState( { kartographer: true } );
-		} );
+	this.bindEventListeners();
 
 	GlobeCoordinateInputWidget.parent.call( this );
 	ComponentWidget.call(
@@ -75,9 +66,240 @@ GlobeCoordinateInputWidget = function MediaInfoStatementsGlobeCoordinateInputWid
 		'templates/statements/inputs/GlobeCoordinateInputWidget.mustache+dom'
 	);
 };
+
 OO.inheritClass( GlobeCoordinateInputWidget, OO.ui.Widget );
 OO.mixinClass( GlobeCoordinateInputWidget, AbstractInputWidget );
 OO.mixinClass( GlobeCoordinateInputWidget, ComponentWidget );
+
+/**
+ * Bind event listeners, including one on the map if using Kartographer
+ */
+GlobeCoordinateInputWidget.prototype.bindEventListeners = function () {
+	var self = this;
+
+	this.coordinateInput.connect( this, { change: this.debouncedOnChange } );
+	this.coordinateInput.connect( this, { enter: 'onEnter' } );
+	this.precisionInput.connect( this, { change: 'onPrecisionChange' } );
+	mw.loader.using( [ 'ext.kartographer.box', 'ext.kartographer.editing' ] )
+		.then( function () {
+			self.map.on( 'click', self.onMapClickHandler );
+		} );
+};
+
+/**
+ * Unbind event listeners, including one on the map if using Kartographer
+ */
+GlobeCoordinateInputWidget.prototype.unbindEventListeners = function () {
+	var self = this;
+
+	this.coordinateInput.disconnect( this, { change: this.debouncedOnChange } );
+	this.coordinateInput.disconnect( this, { enter: 'onEnter' } );
+	this.precisionInput.disconnect( this, { change: 'onPrecisionChange' } );
+
+	mw.loader.using( [ 'ext.kartographer.box', 'ext.kartographer.editing' ] )
+		.then( function () {
+			self.map.off( 'click', self.onMapClickHandler );
+		} );
+};
+
+/**
+ * Set the data of this widget programatically. This method is used to populate
+ * qualifier-mode coordinate inputs with pre-existing data.
+ *
+ * @param {dataValues.DataValue} newData
+ * @return {$.Promise}
+ */
+GlobeCoordinateInputWidget.prototype.setData = function ( newData ) {
+	var json = newData.toJSON(),
+		self = this,
+		existingData;
+
+	try {
+		existingData = this.getData();
+	} catch ( e ) {
+		// no existing data, proceed
+	}
+
+	this.unbindEventListeners();
+	this.coordinateInput.setValue( json.latitude + ', ' + json.longitude );
+	this.precisionInput.setValue( json.precision );
+	this.bindEventListeners();
+
+	return this.setState( {
+		latitude: json.latitude,
+		longitude: json.longitude,
+		inferredPrecision: json.precision,
+		customPrecision: null,
+		expanded: false
+	} ).then( function ( $element ) {
+		if ( !newData.equals( existingData ) ) {
+			self.emit( 'change', self );
+		}
+		return $element;
+	} );
+};
+
+/**
+ * @inheritDoc
+ */
+GlobeCoordinateInputWidget.prototype.getData = function () {
+	if ( this.state.latitude === null || this.state.longitude === null ) {
+		throw new Error( 'No valid coordinate' );
+	}
+
+	return dataValues.newDataValue( 'globecoordinate', {
+		latitude: this.state.latitude,
+		longitude: this.state.longitude,
+		precision: this.state.customPrecision || this.state.inferredPrecision
+	} );
+};
+
+/**
+ * @inheritDoc
+ */
+GlobeCoordinateInputWidget.prototype.getRawValue = function () {
+	return this.coordinateInput.getValue();
+};
+
+/**
+ * @inheritDoc
+ */
+GlobeCoordinateInputWidget.prototype.getRawValueOptions = function () {
+	return {
+		precision: this.state.customPrecision || undefined
+	};
+};
+
+/**
+ * @inheritdoc
+ */
+GlobeCoordinateInputWidget.prototype.clear = function () {
+	var layer;
+
+	this.coordinateInput.setValue( '' );
+	this.precisionInput.setValue( '' );
+	this.coordinateInput.setValidityFlag( true );
+
+	if ( kartoEditing && this.map ) {
+		layer = kartoEditing.getKartographerLayer( this.map );
+		layer.clearLayers();
+	}
+
+	return this.setState( {
+		latitude: null,
+		longitude: null,
+		inferredPrecision: null,
+		customPrecision: null,
+		expanded: false
+	} );
+};
+
+/**
+ * @param {string} newValue new input value
+ */
+GlobeCoordinateInputWidget.prototype.onChange = function ( newValue ) {
+	var self = this;
+
+	if ( this.parseValuePromise && this.parseValuePromise.abort ) {
+		this.parseValuePromise.abort();
+	}
+
+	if ( newValue === '' ) {
+		this.setState( {
+			latitude: null,
+			longitude: null,
+			inferredPrecision: null
+		} ).then( this.emit.bind( this, 'change', this ) );
+
+		return;
+	}
+
+	this.parseValuePromise = this.parseValue( undefined, 'globe-coordinate' );
+	this.parseValuePromise
+		.then( function ( response ) {
+			var json = response.toJSON();
+
+			// set the value of the precision dropdown to the inferred precision if
+			// no custom precision has been set
+			if ( !self.state.customPrecision ) {
+				self.unbindEventListeners();
+				self.precisionInput.setValue( json.precision );
+				self.bindEventListeners();
+			}
+
+			self.coordinateInput.setValidityFlag( true );
+
+			return self.setState( {
+				latitude: json.latitude,
+				longitude: json.longitude,
+				inferredPrecision: json.precision
+			} );
+		} )
+		.catch( function () {
+			self.coordinateInput.setValidityFlag( false );
+
+			return self.setState( {
+				latitude: null,
+				longitude: null,
+				inferredPrecision: null
+			} );
+		} )
+		.always( this.emit.bind( this, 'change', this ) );
+};
+
+GlobeCoordinateInputWidget.prototype.onPrecisionChange = function () {
+	this.setState( {
+		customPrecision: Number( this.precisionInput.getValue() )
+	} ).then( this.emit.bind( this, 'change', this ) );
+};
+
+GlobeCoordinateInputWidget.prototype.onEnter = function () {
+	if ( this.hasValidInput() ) {
+		this.emit( 'add', this );
+	}
+};
+
+GlobeCoordinateInputWidget.prototype.onExpandClick = function () {
+	// Toggle the map visibility
+	this.setState( { expanded: !( this.state.expanded ) } );
+};
+
+/**
+ * @param {Object} e event
+ */
+GlobeCoordinateInputWidget.prototype.onMapClick = function ( e ) {
+	var coordinates = this.map.mouseEventToLatLng( e.originalEvent ),
+		precision = this.constructor.zoomToPrecision( this.map.getZoom(), coordinates.lat ),
+		meaningfulDigits = this.constructor.precisionToDigits( precision ),
+		lat = coordinates.lat.toFixed( meaningfulDigits ),
+		lng = coordinates.lng.toFixed( meaningfulDigits ),
+		latLngStr = lat + ', ' + lng;
+
+	this.unbindEventListeners();
+	this.coordinateInput.setValue( latLngStr );
+	this.precisionInput.setValue( String( precision ) );
+	this.bindEventListeners();
+
+	this.coordinateInput.setValidityFlag( true );
+
+	this.setState( {
+		latitude: parseFloat( lat ),
+		longitude: parseFloat( lng ),
+		inferredPrecision: precision
+	} ).then( this.emit.bind( this, 'change', this ) );
+};
+
+/**
+ * @return {boolean}
+ */
+GlobeCoordinateInputWidget.prototype.hasValidInput = function () {
+	try {
+		this.getData();
+		return true;
+	} catch ( e ) {
+		return false;
+	}
+};
 
 /**
  * @inheritDoc
@@ -87,19 +309,17 @@ GlobeCoordinateInputWidget.prototype.getTemplateData = function () {
 			classes: [ 'wbmi-input-widget__button' ],
 			label: mw.message( 'wikibasemediainfo-globecoordinate-input-button-text' ).text(),
 			flags: [ 'progressive' ],
-			disabled:
-				this.latitudeInput.getValue() === '' ||
-				this.longitudeInput.getValue() === '' ||
-				this.precisionInput.getValue() === ''
+			disabled: !this.hasValidInput()
 		} ),
-		expandButton = new OO.ui.ButtonWidget( {
+		expandButton = new OO.ui.ToggleButtonWidget( {
 			classes: [
 				'wbmi-input-widget__button',
 				'wbmi-input-widget__button--map-expand'
 			],
 			label: mw.message( 'wikibasemediainfo-globecoordinate-map-button-text' ).text(),
 			framed: true,
-			icon: 'mapPin'
+			icon: 'mapPin',
+			value: this.state.expanded
 		} );
 
 	submitButton.connect( this, { click: [ 'emit', 'add', this ] } );
@@ -107,13 +327,9 @@ GlobeCoordinateInputWidget.prototype.getTemplateData = function () {
 
 	return {
 		isQualifier: this.state.isQualifier,
-		latitude: {
-			label: mw.message( 'wikibasemediainfo-latitude-input-label' ).text(),
-			input: this.latitudeInput
-		},
-		longitude: {
-			label: mw.message( 'wikibasemediainfo-longitude-input-label' ).text(),
-			input: this.longitudeInput
+		coordinates: {
+			label: mw.message( 'wikibasemediainfo-coordinate-input-label' ).text(),
+			input: this.coordinateInput
 		},
 		precision: {
 			label: mw.message( 'wikibasemediainfo-precision-input-label' ).text(),
@@ -136,7 +352,7 @@ GlobeCoordinateInputWidget.prototype.render = function () {
 	return ComponentWidget.prototype.render.call( this ).then( function ( $element ) {
 		var layer, data;
 
-		if ( self.map === undefined ) {
+		if ( self.map === undefined || kartoEditing === undefined ) {
 			return $element;
 		}
 
@@ -145,18 +361,26 @@ GlobeCoordinateInputWidget.prototype.render = function () {
 		layer = kartoEditing.getKartographerLayer( self.map );
 
 		try {
-			data = self.getData();
+			data = self.getData().getValue();
+
 			layer.setGeoJSON( {
 				type: 'Feature',
 				properties: {},
 				geometry: {
 					type: 'Point',
 					coordinates: [
-						data.getValue().getLongitude(),
-						data.getValue().getLatitude()
+						data.getLongitude(),
+						data.getLatitude()
 					]
 				}
 			} );
+
+			/* eslint-disable no-undef */
+			self.map.setView(
+				L.latLng( data.getLatitude(), data.getLongitude() ),
+				self.constructor.precisionToZoom( data.getPrecision(), data.getLatitude() )
+			);
+			/* eslint-enable no-undef */
 		} catch ( e ) {
 			// no valid location at this point...
 			layer.clearLayers();
@@ -166,180 +390,71 @@ GlobeCoordinateInputWidget.prototype.render = function () {
 	} );
 };
 
-GlobeCoordinateInputWidget.prototype.initializeMap = function ( $element ) {
-	var map = kartoBox.map( {
-		container: $element[ 0 ],
-		center: [ 20, 0 ],
-		zoom: 2,
-		allowFullScreen: false,
-		maxBounds: [
-			[ 90, -180 ],
-			[ -90, 180 ]
-		],
-		minZoom: 1
-	} );
-
-	// because the map node we'll be attaching this map to has not yet been
-	// added to the DOM, it won't know what size it needs to initialize with...
-	// we'll listen for DOM changes and when we discover this node getting
-	// added, we'll invalidate its existing (incorrect) size
-	new MutationObserver( function () {
-		if ( $element.parents( 'body' ).length > 0 ) {
-			map.invalidateSize();
-
-			// note: we're not going to disconnect the observer, because
-			// toggling read & edit mode is going to repeatedly attach/detach
-			// the map from DOM, causing the same thing over and over
-		}
-	} ).observe( document, { childList: true, subtree: true } );
-
-	return map;
-};
-
 /**
- * Validate latitude and longitude values.
- *
- * TODO: The max values hardcoded here for latitude and longitude are Earth-
- * specific (e.g. max longitude on Mars is 360). If we ever support multiple
- * globes we will need to update this function to handle them.
- *
- * @param {string} inputType Latitude or longitude
- * @param {string} value
- * @return {boolean}
+ * @return {jQuery.Promise}
  */
-GlobeCoordinateInputWidget.prototype.validateInput = function ( inputType, value ) {
-	var numberValue = Number( value ),
-		maxValue = ( inputType === 'latitude' ) ? 90 : 180;
-
-	return value !== '' &&
-		!isNaN( numberValue ) &&
-		Math.abs( numberValue ) <= maxValue;
-};
-
-GlobeCoordinateInputWidget.prototype.onChange = function () {
+GlobeCoordinateInputWidget.prototype.initializeMap = function () {
 	var self = this;
 
-	// update state to make sure template rerenders
-	this.setState( {
-		latitude: this.latitudeInput.getValue(),
-		longitude: this.longitudeInput.getValue(),
-		precision: this.precisionInput.getValue()
-	} ).then( function () {
-		self.emit( 'change', self );
-	} );
-};
-
-/**
- * @inheritDoc
- */
-GlobeCoordinateInputWidget.prototype.getRawValue = function () {
-	var latitude = this.latitudeInput.getValue(),
-		longitude = this.longitudeInput.getValue();
-
-	return latitude + ' ' + longitude;
-};
-
-/**
- * @inheritDoc
- */
-GlobeCoordinateInputWidget.prototype.getRawValueOptions = function () {
-	var precision = Number( this.precisionInput.getValue() );
-
-	return { precision: precision };
-};
-
-/**
- * @inheritDoc
- */
-GlobeCoordinateInputWidget.prototype.getData = function () {
-	var latitude = this.latitudeInput.getValue(),
-		longitude = this.longitudeInput.getValue();
-
-	if ( !this.validateInput( 'latitude', latitude ) ||
-		!this.validateInput( 'longitude', longitude ) ) {
-		throw new Error( 'Invalid coordinate input' );
+	if ( this.map ) {
+		// map already initialized previously
+		return this.setState( {} );
 	}
 
-	return dataValues.newDataValue( 'globecoordinate', {
-		latitude: Number( latitude ),
-		longitude: Number( longitude ),
-		precision: Number( this.precisionInput.getValue() )
-	} );
-};
+	return mw.loader.using( [ 'ext.kartographer.box', 'ext.kartographer.editing' ] )
+		.then( function ( require ) {
+			kartoBox = require( 'ext.kartographer.box' );
+			kartoEditing = require( 'ext.kartographer.editing' );
 
-/**
- * @inheritDoc
- */
-GlobeCoordinateInputWidget.prototype.setData = function ( data ) {
-	var json = data.toJSON();
+			self.map = kartoBox.map( {
+				container: self.$map[ 0 ],
+				center: [ 20, 0 ],
+				zoom: 2,
+				allowFullScreen: false,
+				// Prevent users from entering weird values like 40 N, 250 E by picking
+				// on the map. If users manually enter such values we will allow it
+				// (wikidata considers it valid) and ItemWidget's map will do its best
+				// to display such values; enforcing bounds on the map used for input
+				// should make it harder for such values to be entered accidentally.
+				maxBounds: [
+					[ 90, -180 ],
+					[ -90, 180 ]
+				],
+				minZoom: 1
+			} );
 
-	this.latitudeInput.setValue( String( json.latitude ) );
-	this.longitudeInput.setValue( String( json.longitude ) );
-	this.precisionInput.setValue( String( json.precision ) );
+			// because the map node we'll be attaching this map to has not yet been
+			// added to the DOM, it won't know what size it needs to initialize with...
+			// we'll listen for DOM changes and when we discover this node getting
+			// added, we'll invalidate its existing (incorrect) size
+			new MutationObserver( function () {
+				if ( self.$map.parents( 'body' ).length > 0 ) {
+					self.map.invalidateSize();
 
-	// we're not making any immediate state changes here, but the above
-	// `setValue` calls will trigger an onChange event which will update
-	// the setState, and this empty state change will make sure we won't
-	// resolve until that has happened
-	return this.setState( {} );
-};
+					// note: we're not going to disconnect the observer, because
+					// toggling read & edit mode is going to repeatedly attach/detach
+					// the map from DOM, causing the same thing over and over
+				}
+			} ).observe( document, { childList: true, subtree: true } );
 
-/**
- * @inheritdoc
- */
-GlobeCoordinateInputWidget.prototype.clear = function () {
-	this.latitudeInput.setValue( '' );
-	this.longitudeInput.setValue( '' );
-	this.precisionInput.setValue( '' );
-
-	this.latitudeInput.setValidityFlag( true );
-	this.longitudeInput.setValidityFlag( true );
-
-	// we're not making any immediate state changes here, but the above
-	// `setValue` calls will trigger an onChange event which will update
-	// the setState, and this empty state change will make sure we won't
-	// resolve until that has happened
-	return this.setState( {} );
+			self.setState( { kartographer: true } );
+		} );
 };
 
 /**
  * @inheritdoc
  */
 GlobeCoordinateInputWidget.prototype.focus = function () {
-	this.latitudeInput.focus();
+	this.coordinateInput.focus();
 };
 
 /**
  * @inheritdoc
  */
 GlobeCoordinateInputWidget.prototype.setDisabled = function ( disabled ) {
-	this.latitudeInput.setDisabled( disabled );
-	this.longitudeInput.setDisabled( disabled );
+	this.coordinateInput.setDisabled( disabled );
 	this.precisionInput.setDisabled( disabled );
 	GlobeCoordinateInputWidget.parent.prototype.setDisabled.call( this, disabled );
-};
-
-/**
- * Return an array of all available precision values.
- *
- * @return {Array}
- */
-GlobeCoordinateInputWidget.prototype.getPrecisions = function () {
-	return [
-		10,
-		1,
-		0.1,
-		0.01,
-		0.001,
-		0.0001,
-		0.00001,
-		0.000001,
-		1 / 60,
-		1 / 3600,
-		1 / 36000,
-		1 / 360000,
-		1 / 3600000
-	];
 };
 
 /**
@@ -373,7 +488,7 @@ GlobeCoordinateInputWidget.prototype.getPrecisionLabel = function ( precision ) 
  * @return {Object[]}
  */
 GlobeCoordinateInputWidget.prototype.getPrecisionOptions = function () {
-	var precisions = this.getPrecisions(),
+	var precisions = this.constructor.getPrecisions(),
 		precisionValues = [],
 		self = this;
 
@@ -384,6 +499,29 @@ GlobeCoordinateInputWidget.prototype.getPrecisionOptions = function () {
 		} );
 	} );
 	return precisionValues;
+};
+
+/**
+ * Return an array of all available precision values.
+ *
+ * @return {Array}
+ */
+GlobeCoordinateInputWidget.getPrecisions = function () {
+	return [
+		10,
+		1,
+		0.1,
+		0.01,
+		0.001,
+		0.0001,
+		0.00001,
+		0.000001,
+		1 / 60,
+		1 / 3600,
+		1 / 36000,
+		1 / 360000,
+		1 / 3600000
+	];
 };
 
 /**
@@ -400,7 +538,7 @@ GlobeCoordinateInputWidget.prototype.getPrecisionOptions = function () {
  * @param {number} latitude
  * @return {number}
  */
-GlobeCoordinateInputWidget.prototype.zoomToPrecision = function ( zoom, latitude ) {
+GlobeCoordinateInputWidget.zoomToPrecision = function ( zoom, latitude ) {
 	var precisions = this.getPrecisions(),
 		metersPerPx = ( 156543.03392 * Math.cos( ( latitude * Math.PI ) / 180 ) ) / Math.pow( 2, zoom ),
 		// 111.32m = 1 degree at equator, then corrected for latitude
@@ -412,29 +550,44 @@ GlobeCoordinateInputWidget.prototype.zoomToPrecision = function ( zoom, latitude
 	}, Math.max.apply( null, precisions ) );
 };
 
-GlobeCoordinateInputWidget.prototype.onExpandClick = function () {
-	this.latitudeInput.$input.attr(
-		'placeholder',
-		mw.message( 'wikibasemediainfo-latitude-input-placeholder' ).text()
-	);
-	this.longitudeInput.$input.attr(
-		'placeholder',
-		mw.message( 'wikibasemediainfo-longitude-input-placeholder' ).text()
-	);
-	this.setState( { expanded: true } );
+/**
+ * Given a precision (e.g. 0.001), this will return the amount of digits
+ * that are still meaningful (e.g. 3 digits) for that precision.
+ *
+ * E.g. 50.131224596772 makes no sense with a precision of 0.1 - there just
+ * isn't enough precision and we might as well round to 50.1 immediately.
+ *
+ * @param {number} precision
+ * @return {number}
+ */
+GlobeCoordinateInputWidget.precisionToDigits = function ( precision ) {
+	var digits = -1,
+		previous;
+
+	do {
+		previous = precision;
+		digits++;
+		precision %= Math.pow( 1 / 10, digits );
+	} while ( previous === precision );
+
+	return digits;
 };
 
 /**
- * @param {Object} e
+ * Given a latitude & precision, this will figure out the zoom level.
+ *
+ * @see https://groups.google.com/d/msg/google-maps-js-api-v3/hDRO4oHVSeM/osOYQYXg2oUJ
+ *
+ * @param {number} precision
+ * @param {number} latitude
+ * @return {number}
  */
-GlobeCoordinateInputWidget.prototype.onMapClick = function ( e ) {
-	var coordinates = this.map.mouseEventToLatLng( e.originalEvent );
+GlobeCoordinateInputWidget.precisionToZoom = function ( precision, latitude ) {
+	// 111.32m = 1 degree at equator, then corrected for latitude
+	var metersPerPx = precision * ( 111.32 * 1000 * Math.cos( latitude * ( Math.PI / 180 ) ) ),
+		zoom = Math.log( ( 156543.03392 * Math.cos( ( latitude * Math.PI ) / 180 ) ) / metersPerPx ) / Math.log( 2 );
 
-	this.latitudeInput.setValue( String( coordinates.lat ) );
-	this.longitudeInput.setValue( String( coordinates.lng ) );
-	this.precisionInput.setValue( String(
-		this.zoomToPrecision( this.map.getZoom(), coordinates.lat )
-	) );
+	return Math.round( zoom );
 };
 
 module.exports = GlobeCoordinateInputWidget;

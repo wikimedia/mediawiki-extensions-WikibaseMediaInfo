@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"Tacsipacsi"
+			"Tacsipacsi",
+			"Worrida"
 		]
 	},
 	"slot-name-mediainfo": "Strukturált médiainformációk",
@@ -31,6 +32,8 @@
 	"wikibasemediainfo-filepage-caption-too-short": "$1 további karakter szükséges",
 	"wikibasemediainfo-filepage-caption-too-long": "A megengedettnél $1 karakterrel több",
 	"wikibasemediainfo-filepage-caption-approaching-limit": "$1 karakter maradt",
+	"wikibasemediainfo-filepage-statement-custom-value-option": "Egyedi érték",
+	"wikibasemediainfo-filepage-statement-no-value-option": "Nincs érték",
 	"wikibasemediainfo-filepage-statement-no-value": "Nem létezik érték ehhez a tulajdonsághoz",
 	"wikibasemediainfo-filepage-statement-no-data": "Nincs elérhető adat",
 	"wikibasemediainfo-filepage-statement-no-results": "Nincs találat",
@@ -66,6 +69,18 @@
 	"wikibasemediainfo-hundreth-of-arcsecond-label": "1/100 szögmásodperc",
 	"wikibasemediainfo-thousanth-of-arcsecond-label": "1/1000 szögmásodperc",
 	"wikibasemediainfo-string-input-button-text": "Hozzáadás",
+	"wikibasemediainfo-monolingualtext-input-button-text": "Hozzáadás",
+	"wikibasemediainfo-time-precision-year10m": "tízmillió év",
+	"wikibasemediainfo-time-precision-year1m": "millió év",
+	"wikibasemediainfo-time-precision-year100k": "100 000 év",
+	"wikibasemediainfo-time-precision-year10k": "10 000 év",
+	"wikibasemediainfo-time-precision-year100": "évszázad",
+	"wikibasemediainfo-time-precision-year10": "évtized",
+	"wikibasemediainfo-time-precision-year": "év",
+	"wikibasemediainfo-time-precision-month": "hónap",
+	"wikibasemediainfo-time-precision-day": "nap",
+	"wikibasemediainfo-time-precision-second": "másodperc",
+	"wikibasemediainfo-time-calendar-label": "Naptár",
 	"wikibasemediainfo-globecoordinate-map-button-text": "Kiválasztás térképen",
 	"wikibasemediainfo-search-suggestions-preference-label": "Automatikus kiegészítés kereséskor a strukturált adatok segítségével",
 	"wikibasemediainfo-search-suggestions-preference-disable-confirm": "Biztosan kikapcsolod a strukturált adatok segítségével való automatikus kiegészítést? (Ezt a beállítást később a [[Special:Preferences#mw-prefsection-searchoptions|beállításaidban]] kapcsolhatod vissza.)"

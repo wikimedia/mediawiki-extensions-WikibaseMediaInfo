@@ -86,17 +86,20 @@ EntityAutocompleteInputWidget.prototype.setData = function ( entityId ) {
 	}
 
 	if ( entityId === undefined ) {
-		this.entityId = undefined;
 		this.setValue( '' );
 		this.setFlags( { destructive: false } );
+		this.entityId = undefined;
 		return $.Deferred().resolve( this.$element ).promise();
 	}
 
 	if ( entityId && entityId in this.dataCache ) {
 		// input (label) is one we've already selected, we still know the id
-		this.entityId = entityId;
 		this.setValue( this.dataCache[ entityId ].label || this.dataCache[ entityId ].id );
 		this.setFlags( { destructive: false } );
+		// `self.setValue` might have set an invalid entity id if there are
+		// multiple entities with the exact same label, so let's make sure
+		// to overrule it with the correct entity id
+		this.entityId = entityId;
 		return $.Deferred().resolve( this.$element ).promise();
 	}
 

@@ -198,19 +198,18 @@ EntityAutocompleteInputWidget.prototype.getLookupCacheDataFromResponse = functio
 };
 
 /**
- * Lookup menu options are actually links to their respective items (see
- * EntityAutocompleteInputWidgetLabel.mustache+dom). To mimic Wikidata behavior, when an option is
- * middle-clicked, the link should be followed. Otherwise, it should be ignored
- * so onLookupMenuChoose can run.
- *
- * This works by default on most devices, but on Android we must explicitly
- * prevent default link behavior.
+ * If a user middle-clicks a menu option, go to that Wikidata item. This
+ * replicates behavior from the Wikidata UI.
  *
  * @param {Object} e Event
  */
 EntityAutocompleteInputWidget.prototype.onMousedown = function ( e ) {
-	if ( e.which !== OO.ui.MouseButtons.MIDDLE ) {
-		e.preventDefault();
+	if ( e.which === OO.ui.MouseButtons.MIDDLE ) {
+		// This is less than ideal, but is probably a decent use case for
+		// window.open. This is a response to a mousedown event so it shouldn't
+		// trigger any popup blockers in modern browsers. For browsers set to
+		// prefer new tabs over new windows, this will open in a new tab.
+		window.open( e.currentTarget.dataset.url, '_blank' );
 	}
 };
 
@@ -250,7 +249,7 @@ EntityAutocompleteInputWidget.prototype.getLookupMenuOptionsFromData = function 
 			data: data[ i ],
 			label: this.createLabelFromSuggestion( data[ i ] )
 		} );
-		item.$element.on( 'mousedown', this.onMousedown.bind( this ) );
+		item.$element.find( '.wbmi-autocomplete-option' ).on( 'mousedown', this.onMousedown.bind( this ) );
 		items.push( item );
 	}
 

@@ -1,17 +1,17 @@
-<a class="wbmi-input-widget__autocomplete" href={{url}}>
-	<span class="wbmi-input-widget__autocomplete__label">
+<span class="wbmi-autocomplete-option" data-url={{url}}>
+	<span class="wbmi-autocomplete-option__label">
 		{{label}}
 	</span>
 
 	{{#aliases}}
-	<span class="wbmi-input-widget__autocomplete__aliases">
+	<span class="wbmi-autocomplete-option__aliases">
 		{{aliases}}
 	</span>
 	{{/aliases}}
 
 	{{#description}}
-	<span class="wbmi-input-widget__autocomplete__description">
+	<span class="wbmi-autocomplete-option__description">
 		{{description}}
 	</span>
 	{{/description}}
-</a>
+</span>

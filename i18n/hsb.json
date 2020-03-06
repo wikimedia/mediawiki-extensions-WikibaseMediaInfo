@@ -52,10 +52,6 @@
 	"wikibasemediainfo-remove-all-statements-confirm-title": "Wšě wotstronić?",
 	"wikibasemediainfo-remove-all-statements-confirm-accept": "wotstronić",
 	"wikibasemediainfo-unsupported-datatype-text": "Njepodpěrowany typ datow",
-	"wikibasemediainfo-latitude-input-label": "šěrina",
-	"wikibasemediainfo-latitude-input-placeholder": "decimalny stopjeń mjez -90 a 90",
-	"wikibasemediainfo-longitude-input-label": "dołhota",
-	"wikibasemediainfo-longitude-input-placeholder": "decimalny stopjeń mjez -180 a 180",
 	"wikibasemediainfo-precision-input-label": "dokładnosć",
 	"wikibasemediainfo-search-suggestions-title-depicts": "Dataje pokazuja..."
 }

@@ -63,8 +63,6 @@
 	"wikibasemediainfo-remove-all-statements-confirm-title": "すべて除去しますか？",
 	"wikibasemediainfo-remove-all-statements-confirm-accept": "除去",
 	"wikibasemediainfo-unsupported-datatype-text": "サポートされていないデータ型です",
-	"wikibasemediainfo-latitude-input-label": "緯度",
-	"wikibasemediainfo-longitude-input-label": "経度",
 	"wikibasemediainfo-precision-input-label": "精度",
 	"wikibasemediainfo-string-input-button-text": "追加",
 	"wikibasemediainfo-quantity-input-button-text": "追加",

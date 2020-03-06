@@ -65,7 +65,5 @@
 	"wikibasemediainfo-remove-all-statements-confirm-title": "Usunąć wszystko?",
 	"wikibasemediainfo-remove-all-statements-confirm-accept": "Usuń",
 	"wikibasemediainfo-unsupported-datatype-text": "Nieobsługiwany typ danych",
-	"wikibasemediainfo-latitude-input-label": "Szerokość geograficzna",
-	"wikibasemediainfo-longitude-input-label": "Długość geograficzna",
 	"wikibasemediainfo-precision-input-label": "Precyzja"
 }

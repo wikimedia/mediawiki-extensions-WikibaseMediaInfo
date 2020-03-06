@@ -58,8 +58,6 @@
 	"wikibasemediainfo-remove-all-statements-confirm-title": "Rimuovi tutto?",
 	"wikibasemediainfo-remove-all-statements-confirm-accept": "Rimuovi",
 	"wikibasemediainfo-unsupported-datatype-text": "Tipo di dati non supportato",
-	"wikibasemediainfo-latitude-input-label": "Latitudine",
-	"wikibasemediainfo-longitude-input-label": "Longitudine",
 	"wikibasemediainfo-precision-input-label": "Precisione",
 	"wikibasemediainfo-string-input-button-text": "Aggiungi",
 	"wikibasemediainfo-monolingualtext-input-button-text": "Aggiungi",

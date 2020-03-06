@@ -15,12 +15,15 @@
 	"wikibasemediainfo-filepage-statement-some-value": "Denne egenskab har en værdi, men den er ukendt",
 	"wikibasemediainfo-property-placeholder": "Egenskab",
 	"wikibasemediainfo-filepage-license-agree": "Jeg er enig",
-	"wikibasemediainfo-statements-item-input-label": "fra Wikidata",
+	"wikibasemediainfo-statements-item-input-label": "fra {{WBREPONAME}}",
 	"wikibasemediainfo-statements-item-remove": "Fjern",
 	"wikibasemediainfo-statements-learn-more": "Lær mere",
 	"wikibasemediainfo-statements-remove": "Fjern alle",
 	"wikibasemediainfo-statements-unsupported-property-title": "Ikke understøttet egenskab",
 	"wikibasemediainfo-string-input-button-text": "Tilføj",
+	"wikibasemediainfo-monolingualtext-input-button-text": "Tilføj",
+	"wikibasemediainfo-monolingualtext-language-label": "Vælg sprog",
 	"wikibasemediainfo-quantity-input-button-text": "Tilføj",
+	"wikibasemediainfo-time-input-button-text": "Tilføj",
 	"wikibasemediainfo-globecoordinate-input-button-text": "Tilføj"
 }

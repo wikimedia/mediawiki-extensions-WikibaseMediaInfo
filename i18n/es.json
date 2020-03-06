@@ -50,8 +50,6 @@
 	"wikibasemediainfo-remove-all-statements-confirm": "Esto eliminará todos los valores existentes de esta propiedad. Aquellas propiedades que carezcan de valores se borrarán al publicar los cambios. ¿Quieres continuar?",
 	"wikibasemediainfo-remove-all-statements-confirm-accept": "Quitar",
 	"wikibasemediainfo-unsupported-datatype-text": "No se admite el tipo de datos",
-	"wikibasemediainfo-latitude-input-label": "Latitud",
-	"wikibasemediainfo-longitude-input-label": "Longitud",
 	"wikibasemediainfo-precision-input-label": "Precisión",
 	"wikibasemediainfo-string-input-button-text": "Añadir",
 	"wikibasemediainfo-monolingualtext-input-button-text": "Añadir",

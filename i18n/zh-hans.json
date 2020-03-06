@@ -69,8 +69,6 @@
 	"wikibasemediainfo-remove-all-statements-confirm-title": "全部删除？",
 	"wikibasemediainfo-remove-all-statements-confirm-accept": "删除",
 	"wikibasemediainfo-unsupported-datatype-text": "不支持的数据类型",
-	"wikibasemediainfo-latitude-input-label": "纬度",
-	"wikibasemediainfo-longitude-input-label": "经度",
 	"wikibasemediainfo-precision-input-label": "精度",
 	"wikibasemediainfo-string-input-button-text": "添加",
 	"wikibasemediainfo-quantity-input-button-text": "添加",

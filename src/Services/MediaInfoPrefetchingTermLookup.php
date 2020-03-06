@@ -5,6 +5,7 @@ namespace Wikibase\MediaInfo\Services;
 use Wikibase\DataAccess\PrefetchingTermLookup;
 use Wikibase\DataModel\Entity\EntityId;
 use Wikibase\DataModel\Services\Lookup\TermLookupException;
+use Wikibase\DataModel\Term\TermList;
 use Wikibase\Lib\Store\EntityRevisionLookup;
 use Wikibase\Lib\Store\EntityTermLookupBase;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
@@ -77,7 +78,9 @@ class MediaInfoPrefetchingTermLookup extends EntityTermLookupBase implements Pre
 					$termList = $entity->getDescriptions();
 					break;
 				default:
-					throw new TermLookupException( $entityId, $languageCodes, "Term type '$termType' is not supported" );
+					// term type not supported, there is no data here
+					$termList = new TermList( [] );
+					break;
 			}
 
 			$terms = $termList->toTextArray();

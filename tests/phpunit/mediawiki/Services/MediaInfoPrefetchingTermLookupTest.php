@@ -126,10 +126,23 @@ class MediaInfoPrefetchingTermLookupTest extends \PHPUnit\Framework\TestCase {
 		);
 	}
 
-	public function testGetPrefetchedNonExistingTerm() {
+	public function testGetPrefetchedNonSupportedTermType() {
 		$termLookup = $this->getDefaultMediaInfoPrefetchingTermLookup();
-		$this->expectException( TermLookupException::class );
-		$termLookup->prefetchTerms( [ static::$defaultRevisionId ], [ 'blahblah' ], [ 'qqq' ] );
+		$termLookup->prefetchTerms(
+			[ static::$defaultRevisionId ],
+			// alias is not supported
+			[ 'label', 'description', 'alias' ],
+			[ 'en', 'nl' ]
+		);
+
+		$this->assertSame(
+			'This is a label',
+			$termLookup->getPrefetchedTerm( static::$defaultRevisionId, 'label', 'en' )
+		);
+		$this->assertSame(
+			'Dit is een beschrijving',
+			$termLookup->getPrefetchedTerm( static::$defaultRevisionId, 'description', 'nl' )
+		);
 	}
 
 	public function testGetPrefetchedUnfetchedTerm() {

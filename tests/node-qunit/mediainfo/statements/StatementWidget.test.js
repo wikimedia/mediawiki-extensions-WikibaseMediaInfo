@@ -88,7 +88,9 @@ QUnit.module( 'StatementWidget', hooks.mediainfo, function () {
 						new datamodel.PropertyValueSnak(
 							'P1',
 							new datamodel.EntityId( 'Q1' )
-						)
+						),
+						null,
+						'guid'
 					)
 				)
 			] ),
@@ -98,7 +100,9 @@ QUnit.module( 'StatementWidget', hooks.mediainfo, function () {
 						new datamodel.PropertyValueSnak(
 							'P1',
 							new datamodel.EntityId( 'Q1' )
-						)
+						),
+						null,
+						'guid'
 					)
 				)
 			] ),

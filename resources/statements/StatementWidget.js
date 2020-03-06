@@ -273,7 +273,13 @@ StatementWidget.prototype.setData = function ( data ) {
 	// get rid of existing widgets that are no longer present in the
 	// new set of data we've been fed
 	this.removeItems( this.getItems().filter( function ( item ) {
-		return !data.hasItem( item.getData() );
+		// we could pretty much just do `!data.hasItem( item.getData() )`,
+		// but that one does not compare GUIDs, so if there are multiple
+		// similar claims, but with a similar GUID, it'll consider them
+		// all the same
+		return !data.toArray().some( function ( statement ) {
+			return statement.equals( item.getData() ) && statement.getClaim().getGuid() === item.getData().getClaim().getGuid();
+		} );
 	} ) );
 
 	// figure out which items have an existing widget already

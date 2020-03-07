@@ -70,7 +70,6 @@
 	"wikibasemediainfo-remove-all-statements-confirm": "Confirmation msg for removing all statements for a property",
 	"wikibasemediainfo-remove-all-statements-confirm-title": "Title for message to confirm user will remove all statements for a property",
 	"wikibasemediainfo-remove-all-statements-confirm-accept": "Text for button to remove all statements for a property",
-	"wikibasemediainfo-unsupported-datatype-text": "Message to display for unsupported data types.",
 	"wikibasemediainfo-coordinate-input-label": "Label for globe coordinate input.",
 	"wikibasemediainfo-coordinate-input-placeholder": "Placeholder for globe coordinate input",
 	"wikibasemediainfo-precision-input-label": "Label for globe coordinate precision input.",

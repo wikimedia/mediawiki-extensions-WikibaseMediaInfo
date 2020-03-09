@@ -2,7 +2,8 @@
 	"@metadata": {
 		"authors": [
 			"Tacsipacsi",
-			"Worrida"
+			"Worrida",
+			"Csega"
 		]
 	},
 	"slot-name-mediainfo": "Strukturált médiainformációk",
@@ -58,6 +59,8 @@
 	"wikibasemediainfo-statements-link-notice-text": "A strukturált adatok címkéi a megfelelő Wikidata-lapokra mutatnak, és új ablakban fognak megnyílni.",
 	"wikibasemediainfo-statements-link-notice-dismiss": "Bezárás",
 	"wikibasemediainfo-unsupported-datatype-text": "Nem támogatott adattípus",
+	"wikibasemediainfo-coordinate-input-label": "Koordináták",
+	"wikibasemediainfo-coordinate-input-placeholder": "Szélesség, hosszúség",
 	"wikibasemediainfo-precision-input-label": "Pontosság",
 	"wikibasemediainfo-arcminute-label": "egy szögperc",
 	"wikibasemediainfo-arcsecond-label": "egy szögmásodperc",

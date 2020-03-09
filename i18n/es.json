@@ -7,7 +7,8 @@
 			"La Mantis",
 			"Marcelo9987",
 			"MarcoAurelio",
-			"Ihojose"
+			"Ihojose",
+			"Joanmp17"
 		]
 	},
 	"right-mediainfo-term": "Cambiar términos de información de medio (leyendas, resúmenes…)",
@@ -42,7 +43,7 @@
 	"wikibasemediainfo-filepage-license-agree": "Estoy de acuerdo",
 	"wikibasemediainfo-statements-depicts-title": "Elementos que aparecen en esta imagen",
 	"wikibasemediainfo-statements-item-add-qualifier": "Añadir un calificativo",
-	"wikibasemediainfo-statements-item-input-label": "de Wikidata",
+	"wikibasemediainfo-statements-item-input-label": "de {{WBREPONAME}}",
 	"wikibasemediainfo-statements-item-input-placeholder": "Busca para añadir elementos (gato doméstico, montaña, Taj Mahal, etc.)",
 	"wikibasemediainfo-statements-item-remove": "Quitar",
 	"wikibasemediainfo-statements-learn-more": "Más información",

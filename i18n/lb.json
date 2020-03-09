@@ -44,6 +44,7 @@
 	"wikibasemediainfo-remove-all-statements-confirm-title": "All ewechhuelen?",
 	"wikibasemediainfo-remove-all-statements-confirm-accept": "Ewechhuelen",
 	"wikibasemediainfo-coordinate-input-label": "Koordinaten",
+	"wikibasemediainfo-coordinate-input-placeholder": "Breedegrad, Längegrad",
 	"wikibasemediainfo-precision-input-label": "Prezisioun",
 	"wikibasemediainfo-select-precision-label": "Prezisioun eraussichen",
 	"wikibasemediainfo-string-input-button-text": "Derbäisetzen",

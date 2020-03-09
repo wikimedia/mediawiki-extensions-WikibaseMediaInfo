@@ -47,7 +47,7 @@
 	"wikibasemediainfo-filepage-license-agree": "Hi estic d’acord",
 	"wikibasemediainfo-statements-depicts-title": "Elements representats en la imatge",
 	"wikibasemediainfo-statements-item-add-qualifier": "Afegeix qualificador",
-	"wikibasemediainfo-statements-item-input-label": "des de Wikidata",
+	"wikibasemediainfo-statements-item-input-label": "des de {{WBREPONAME}}",
 	"wikibasemediainfo-statements-item-input-placeholder": "Cerca per afegir elements (gat domèstic, montanya, Taj Mahal, etc.)",
 	"wikibasemediainfo-statements-item-is-prominent": "Prominent",
 	"wikibasemediainfo-statements-item-mark-as-prominent": "Marca com a prominent",

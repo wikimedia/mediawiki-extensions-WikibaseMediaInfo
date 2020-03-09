@@ -1,0 +1,21 @@
+{
+	"@metadata": {
+		"authors": [
+			"Quentí"
+		]
+	},
+	"wikibasemediainfo-filepage-statement-custom-value-option": "Valor personalizada",
+	"wikibasemediainfo-filepage-statement-no-value-option": "Pas cap de valor",
+	"wikibasemediainfo-statements-item-input-label": "de {{WBREPONAME}}",
+	"wikibasemediainfo-select-precision-label": "Seleccionatz la precision",
+	"wikibasemediainfo-monolingualtext-input-button-text": "Apondre",
+	"wikibasemediainfo-monolingualtext-input-placeholder": "Dintrar lo tèxte",
+	"wikibasemediainfo-monolingualtext-language-label": "Seleccionar la lenga",
+	"wikibasemediainfo-time-precision-label": "Precision",
+	"wikibasemediainfo-time-precision-year": "an",
+	"wikibasemediainfo-time-precision-day": "jorn",
+	"wikibasemediainfo-time-precision-hour": "ora",
+	"wikibasemediainfo-time-precision-minute": "minuta",
+	"wikibasemediainfo-time-precision-second": "segonda",
+	"wikibasemediainfo-time-calendar-label": "Calendièr"
+}

@@ -1,4 +1,27 @@
-<div class="wbmi-input-widget wbmi-input-widget--quantity wbmi-input-widget--single-line {{^isQualifier}}wbmi-with-button{{/isQualifier}}">
-	{{{input}}}
-	{{^isQualifier}}{{{button}}}{{/isQualifier}}
+<div class="wbmi-input-widget wbmi-input-widget--quantity {{^isQualifier}}wbmi-with-button{{/isQualifier}}">
+	<div class="wbmi-input-widget--single-line">
+		<div class="wbmi-input-widget--container">
+			<div class="wbmi-input-widget--single-line">
+				{{{input}}}
+			</div>
+
+			<div class="wbmi-input-widget--options {{#isActive}}wbmi-input-widget__active{{/isActive}}">
+				<div class="wbmi-input-widget--single-line">
+					{{^showUnitInput}}
+						{{{addUnitButton}}}
+					{{/showUnitInput}}
+
+					{{#showUnitInput}}
+						{{{unitInput}}}
+
+						{{#hasUnit}}
+							{{{removeUnitButton}}}
+						{{/hasUnit}}
+					{{/showUnitInput}}
+				</div>
+			</div>
+		</div>
+
+		{{^isQualifier}}{{{submitButton}}}{{/isQualifier}}
+	</div>
 </div>

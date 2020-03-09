@@ -360,6 +360,9 @@ class MediaInfoEntityStatementsView {
 			}
 
 			$formattedValue = $this->formatSnak( $snak, SnakFormatter::FORMAT_HTML );
+			$formattedValueTag = new Tag( 'span' );
+			$formattedValueTag->addClasses( [ 'wbmi-qualifier-value--value' ] );
+			$formattedValueTag->appendContent( new HtmlSnippet( $formattedValue ) );
 
 			$separator = new Tag( 'span' );
 			$separator->addClasses( [ 'wbmi-qualifier-value-separator' ] );
@@ -374,7 +377,7 @@ class MediaInfoEntityStatementsView {
 				new HtmlSnippet( $formattedProperty ),
 				// if we have both a property & a value, add a separator
 				$formattedProperty && $formattedValue ? $separator : '',
-				new HtmlSnippet( $formattedValue )
+				$formattedValueTag
 			);
 
 			$qualifierDiv = new Tag( 'div' );

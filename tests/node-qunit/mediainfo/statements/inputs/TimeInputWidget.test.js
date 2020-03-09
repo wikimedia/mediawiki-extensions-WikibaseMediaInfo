@@ -19,8 +19,6 @@ QUnit.module( 'TimeInputWidget', hooks.mediainfo, function () {
 			formatValueStub = sinon.stub( widget, 'formatValue' );
 
 		parseValueStub.onFirstCall().returns( $.Deferred().resolve( data ).promise( { abort: function () {} } ) );
-		parseValueStub.onSecondCall().returns( $.Deferred().resolve( data ).promise( { abort: function () {} } ) );
-		formatValueStub.withArgs( data ).returns( $.Deferred().resolve( '24 January 2019' ).promise( { abort: function () {} } ) );
 		formatValueStub.withArgs( data ).returns( $.Deferred().resolve( '24 January 2019' ).promise( { abort: function () {} } ) );
 
 		widget.setData( data ).then( function () {

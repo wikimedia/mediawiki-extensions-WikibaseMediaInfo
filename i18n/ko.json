@@ -56,7 +56,6 @@
 	"wikibasemediainfo-monolingualtext-input-button-text": "추가",
 	"wikibasemediainfo-monolingualtext-input-placeholder": "텍스트 입력",
 	"wikibasemediainfo-monolingualtext-language-label": "언어 선택",
-	"wikibasemediainfo-quantity-input-button-text": "추가",
 	"wikibasemediainfo-time-input-button-text": "추가",
 	"wikibasemediainfo-time-input-placeholder": "시간 입력",
 	"wikibasemediainfo-time-timestamp-empty": "시간 값을 입력해 주십시오.",
@@ -71,5 +70,6 @@
 	"wikibasemediainfo-time-precision-minute": "분",
 	"wikibasemediainfo-time-precision-second": "초",
 	"wikibasemediainfo-time-calendar-gregorian": "그레고리력",
-	"wikibasemediainfo-time-calendar-julian": "율리우스력"
+	"wikibasemediainfo-time-calendar-julian": "율리우스력",
+	"wikibasemediainfo-quantity-input-button-text": "추가"
 }

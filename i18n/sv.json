@@ -43,7 +43,6 @@
 	"wikibasemediainfo-monolingualtext-input-button-text": "Lägg till",
 	"wikibasemediainfo-monolingualtext-input-placeholder": "Ange text",
 	"wikibasemediainfo-monolingualtext-language-label": "Välj språk",
-	"wikibasemediainfo-quantity-input-button-text": "Lägg till",
 	"wikibasemediainfo-time-input-button-text": "Lägg till",
 	"wikibasemediainfo-time-input-placeholder": "Ange tid",
 	"wikibasemediainfo-time-timestamp-empty": "Ange ett tidsvärde.",
@@ -66,5 +65,6 @@
 	"wikibasemediainfo-time-calendar-label": "Kalender",
 	"wikibasemediainfo-time-calendar-gregorian": "Gregoriansk",
 	"wikibasemediainfo-time-calendar-julian": "Juliansk",
+	"wikibasemediainfo-quantity-input-button-text": "Lägg till",
 	"wikibasemediainfo-globecoordinate-input-button-text": "Lägg till"
 }

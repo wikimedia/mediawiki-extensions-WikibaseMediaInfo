@@ -51,12 +51,13 @@
 	"wikibasemediainfo-remove-all-statements-confirm": "Esto eliminará todos los valores existentes de esta propiedad. Aquellas propiedades que carezcan de valores se borrarán al publicar los cambios. ¿Quieres continuar?",
 	"wikibasemediainfo-remove-all-statements-confirm-accept": "Quitar",
 	"wikibasemediainfo-unsupported-datatype-text": "No se admite el tipo de datos",
+	"wikibasemediainfo-coordinate-input-label": "Coordenadas",
+	"wikibasemediainfo-coordinate-input-placeholder": "Latitud, longitud",
 	"wikibasemediainfo-precision-input-label": "Precisión",
 	"wikibasemediainfo-string-input-button-text": "Añadir",
 	"wikibasemediainfo-monolingualtext-input-button-text": "Añadir",
 	"wikibasemediainfo-monolingualtext-input-placeholder": "Ingresar texto",
 	"wikibasemediainfo-monolingualtext-language-label": "Selecciona un idioma",
-	"wikibasemediainfo-quantity-input-button-text": "Añadir",
 	"wikibasemediainfo-time-input-button-text": "Añadir",
 	"wikibasemediainfo-time-input-placeholder": "Introduce la hora",
 	"wikibasemediainfo-time-timestamp-empty": "Introduce un valor de tiempo.",
@@ -81,6 +82,7 @@
 	"wikibasemediainfo-time-calendar-label": "Calendario",
 	"wikibasemediainfo-time-calendar-gregorian": "Gregoriano",
 	"wikibasemediainfo-time-calendar-julian": "Juliano",
+	"wikibasemediainfo-quantity-input-button-text": "Añadir",
 	"wikibasemediainfo-globecoordinate-input-button-text": "Añadir",
 	"wikibasemediainfo-globecoordinate-map-button-text": "Seleccionar en el mapa"
 }

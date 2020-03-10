@@ -51,7 +51,6 @@
 	"wikibasemediainfo-monolingualtext-input-button-text": "Derbäisetzen",
 	"wikibasemediainfo-monolingualtext-input-placeholder": "Text aginn",
 	"wikibasemediainfo-monolingualtext-language-label": "Sprooch eraussichen",
-	"wikibasemediainfo-quantity-input-button-text": "Derbäisetzen",
 	"wikibasemediainfo-time-input-button-text": "Derbäisetzen",
 	"wikibasemediainfo-time-input-placeholder": "Gitt d'Zäit an",
 	"wikibasemediainfo-time-timestamp-empty": "Gitt wgl. eng Zäit un.",
@@ -75,5 +74,8 @@
 	"wikibasemediainfo-time-precision-second": "Sekonn",
 	"wikibasemediainfo-time-calendar-label": "Kalenner",
 	"wikibasemediainfo-time-calendar-gregorian": "Gregorianesch",
-	"wikibasemediainfo-time-calendar-julian": "Julianesch"
+	"wikibasemediainfo-time-calendar-julian": "Julianesch",
+	"wikibasemediainfo-quantity-input-button-text": "Derbäisetzen",
+	"wikibasemediainfo-quantity-unit-label": "Eenheet",
+	"wikibasemediainfo-quantity-unit-button-text": "Eenheet definéieren"
 }

@@ -65,7 +65,6 @@
 	"wikibasemediainfo-monolingualtext-input-button-text": "Aggiungi",
 	"wikibasemediainfo-monolingualtext-input-placeholder": "Inserisci testo",
 	"wikibasemediainfo-monolingualtext-language-label": "Seleziona lingua",
-	"wikibasemediainfo-quantity-input-button-text": "Aggiungi",
 	"wikibasemediainfo-time-input-button-text": "Aggiungi",
 	"wikibasemediainfo-time-timestamp-invalid": "Il valore temporale non è corretto.",
 	"wikibasemediainfo-time-precision-label": "Precisione",
@@ -86,6 +85,7 @@
 	"wikibasemediainfo-time-calendar-label": "Calendario",
 	"wikibasemediainfo-time-calendar-gregorian": "Gregoriano",
 	"wikibasemediainfo-time-calendar-julian": "Giuliano",
+	"wikibasemediainfo-quantity-input-button-text": "Aggiungi",
 	"wikibasemediainfo-globecoordinate-input-button-text": "Aggiungi",
 	"wikibasemediainfo-globecoordinate-map-button-text": "Seleziona sulla mappa"
 }

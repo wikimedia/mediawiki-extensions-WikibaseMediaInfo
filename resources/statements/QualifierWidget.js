@@ -1,6 +1,7 @@
 'use strict';
 
 var QualifierWidget,
+	ConstraintsReportHandlerElement = require( './ConstraintsReportHandlerElement.js' ),
 	ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
 	FormatValueElement = require( 'wikibase.mediainfo.base' ).FormatValueElement,
 	inputs = require( './inputs/index.js' ),
@@ -28,7 +29,8 @@ QualifierWidget = function ( config ) {
 	config = config || {};
 	this.state = {
 		data: config.data,
-		editing: !!config.editing
+		editing: !!config.editing,
+		constraintsReport: null
 	};
 
 	this.dataTypeMap = mw.config.get( 'wbDataTypes', {} );
@@ -61,10 +63,12 @@ QualifierWidget = function ( config ) {
 		'templates/statements/QualifierWidget.mustache+dom'
 	);
 	FormatValueElement.call( this, $.extend( {}, config ) );
+	ConstraintsReportHandlerElement.call( this, $.extend( {}, config ) );
 };
 OO.inheritClass( QualifierWidget, OO.ui.Widget );
 OO.mixinClass( QualifierWidget, ComponentWidget );
 OO.mixinClass( QualifierWidget, FormatValueElement );
+OO.mixinClass( QualifierWidget, ConstraintsReportHandlerElement );
 
 /**
  * @inheritDoc
@@ -98,9 +102,19 @@ QualifierWidget.prototype.getTemplateData = function () {
 			removeIcon: removeIcon,
 			property: formatResponse( propertyHtml ),
 			value: formatResponse( valueHtml ),
-			separator: mw.message( 'colon-separator' ).text()
+			separator: mw.message( 'colon-separator' ).text(),
+			constraintsReport: self.state.constraintsReport &&
+				self.popupFromResults( self.state.constraintsReport )
 		};
 	} );
+};
+
+/**
+ * @param {Object|null} results
+ * @return {jQuery.Promise}
+ */
+QualifierWidget.prototype.setConstraintsReport = function ( results ) {
+	return this.setState( { constraintsReport: results && results.results } );
 };
 
 /**

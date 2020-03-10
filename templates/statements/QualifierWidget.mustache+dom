@@ -16,6 +16,8 @@
 			{{/property}}
 
 			<span class="wbmi-qualifier-value--value">{{{value}}}</span>
+
+			{{{constraintsReport}}}
 		</div>
 	{{/editing}}
 </div>

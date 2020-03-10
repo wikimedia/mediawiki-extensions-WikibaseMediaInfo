@@ -11,6 +11,7 @@
 				<div class="wbmi-entity-title">
 					<h4 class="wbmi-entity-label">
 						{{{label}}}
+						{{{constraintsReport}}}
 					</h4>
 				</div>
 			</div>

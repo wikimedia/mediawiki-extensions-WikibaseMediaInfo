@@ -285,8 +285,15 @@ class WikibaseMediaInfoHooks {
 				'wbmiUserCanEdit' => $this->userCanEdit( $out ),
 				// extend/override wbmiPropertyTypes (which already contains a property type map
 				// for all default properties) with property types for existing statements
-				'wbmiPropertyTypes' => $jsConfigVars['wbmiPropertyTypes'] + $existingPropertyTypes
+				'wbmiPropertyTypes' => $jsConfigVars['wbmiPropertyTypes'] + $existingPropertyTypes,
 			] );
+
+			if ( \ExtensionRegistry::getInstance()->isLoaded( 'WikibaseQualityConstraints' ) ) {
+				// MediaInfo File page is only edited via js, so it's always an edit view
+				// (this is necessary so that WikibaseQualityConstraints injects its js)
+				$jsConfigVars[ 'wbIsEditView' ] = true;
+				$jsConfigVars[ 'wbmiDoConstraintCheck' ] = true;
+			}
 		}
 
 		$out->addJsConfigVars( $jsConfigVars );

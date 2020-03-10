@@ -309,6 +309,7 @@
 				"resources/statements/QualifierWidget.js",
 				"resources/statements/AddPropertyWidget.js",
 				"resources/statements/LinkNoticeWidget.js",
+				"resources/statements/ConstraintsReportHandlerElement.js",
 				"resources/statements/inputs/index.js",
 				"resources/statements/inputs/EntityAutocompleteInputWidget.js",
 				"resources/statements/inputs/AbstractInputWidget.js",

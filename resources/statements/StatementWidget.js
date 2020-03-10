@@ -452,6 +452,7 @@ StatementWidget.prototype.submit = function ( baseRevId ) {
 			mw.config.get( 'wbmiRepoApiUrl', mw.config.get( 'wbRepoApiUrl' ) )
 		),
 		data = this.getData(),
+		statementsByGuid = {},
 		serializer = new serialization.StatementSerializer(),
 		promise = $.Deferred().resolve( { pageinfo: { lastrevid: baseRevId } } ).promise(),
 		changedStatements = this.getChanges(),
@@ -463,6 +464,10 @@ StatementWidget.prototype.submit = function ( baseRevId ) {
 	this.setEditing( false )
 		.then( self.setErrors.bind( self, [] ) );
 	this.setDisabled( true );
+
+	data.toArray().map( function ( statement ) {
+		statementsByGuid[ statement.getClaim().getGuid() ] = statement;
+	} );
 
 	changedStatements.forEach( function ( statement ) {
 		promise = promise.then( function ( statement, prevResponse ) {
@@ -476,7 +481,27 @@ StatementWidget.prototype.submit = function ( baseRevId ) {
 				summary: self.config.summary || undefined,
 				tags: self.config.tags || undefined,
 				assertuser: !mw.user.isAnon() ? mw.user.getName() : undefined
-			} ).catch(
+			} ).then(
+				function ( response ) {
+					var guid = response.claim.id,
+						originalStatement = statementsByGuid[ guid ],
+						deserializer = new serialization.StatementDeserializer(),
+						statement;
+					if ( response.claim.qualifiers !== undefined ) {
+						// Capture hashes for new qualifiers by replacing the original
+						// statement with a new statement created from the response
+						statement = deserializer.deserialize( response.claim );
+						if ( data.hasItem( originalStatement ) ) {
+							data.removeItem( originalStatement );
+							// also remove the item from the StatementWidget itself,
+							// or the data will be recreated in this.resetData()
+							self.removeItems( [ self.findItemFromData( originalStatement ) ] );
+						}
+						data.addItem( statement );
+					}
+					return response;
+				}
+			).catch(
 				function ( errorCode, error ) {
 					var apiError = wikibase.api.RepoApiError.newFromApiResponse( error, 'save' ),
 						// prefer no-HTML error.error.info (if available) over RepoApiError
@@ -658,6 +683,31 @@ StatementWidget.prototype.showRemoveConfirmationDialog = function () {
 			self.submit().then( function () {
 				self.emit( 'widgetRemoved', self.state.propertyId );
 			} );
+		}
+	} );
+};
+
+/**
+ * Handle the part of the response from a wbcheckconstraints api call that is relevant to this
+ * StatementWidget's property id
+ * @param {Object} responseForPropertyId
+ */
+StatementWidget.prototype.handleConstraintsResponse = function ( responseForPropertyId ) {
+	if ( responseForPropertyId === null ) {
+		return;
+	}
+	this.getItems().map( function ( itemWidget ) {
+		var guid, result;
+
+		try {
+			// find the constraint report for this GUID
+			guid = itemWidget.getData().getClaim().getGuid();
+			result = responseForPropertyId.filter( function ( responseForStatement ) {
+				return responseForStatement.id === guid;
+			} )[ 0 ] || null;
+			itemWidget.setConstraintsReport( result );
+		} catch ( e ) {
+			itemWidget.setConstraintsReport( null );
 		}
 	} );
 };

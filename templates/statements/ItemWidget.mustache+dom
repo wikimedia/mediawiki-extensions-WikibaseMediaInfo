@@ -10,7 +10,9 @@
 			<div class="wbmi-entity-data">
 				<div class="wbmi-entity-title">
 					<h4 class="wbmi-entity-label">
-						{{{label}}}
+						<bdi>
+							{{{label}}}
+						</bdi>
 						{{{constraintsReport}}}
 					</h4>
 				</div>

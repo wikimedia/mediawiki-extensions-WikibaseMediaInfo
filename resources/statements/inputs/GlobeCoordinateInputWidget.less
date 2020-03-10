@@ -2,6 +2,16 @@
 @import '../../mediainfo-variables.less';
 
 .wbmi-input-widget--globe-coordinate {
+
+	// Since coordinate strings contain both numerical digits and
+	// non-numerical symbols (+/-, N, W, degree symbol, etc), we
+	// need prevent things from being rearranged when direction
+	// is flipped to RTL; see T246797
+	.wbmi-input-widget__input {
+		/* @noflip */
+		direction: ltr;
+	}
+
 	// overrides for single-line mode, which still needs to be able to stack
 	&.wbmi-input-widget.wbmi-input-widget--single-line {
 		.flex-wrap( wrap );

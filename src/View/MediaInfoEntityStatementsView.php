@@ -286,9 +286,15 @@ class MediaInfoEntityStatementsView {
 	 * @return Tag
 	 */
 	private function createFormattedDataValue( $formattedValue ) {
+		// Wrap value in a <bdi> tag (bi-directional isolate) so that things
+		// like coordinate strings (with both numerical and non-numerical
+		// symbols) do not get mangled when flipped to RTL
+		$bdi = new Tag( 'bdi' );
+		$bdi->appendContent( $formattedValue );
+
 		$label = new Tag( 'h4' );
 		$label->addClasses( [ 'wbmi-entity-label' ] );
-		$label->appendContent( $formattedValue );
+		$label->appendContent( $bdi );
 
 		$tag = new Tag( 'div' );
 		$tag->addClasses( [ 'wbmi-entity-title' ] );

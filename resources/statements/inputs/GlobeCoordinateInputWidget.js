@@ -204,6 +204,8 @@ GlobeCoordinateInputWidget.prototype.onChange = function ( newValue ) {
 		this.parseValuePromise.abort();
 	}
 
+	// If user is simply deleting the previous value, no need to parse;
+	// Reset values to null and return
 	if ( newValue === '' ) {
 		this.setState( {
 			latitude: null,
@@ -228,6 +230,7 @@ GlobeCoordinateInputWidget.prototype.onChange = function ( newValue ) {
 			}
 
 			self.coordinateInput.setValidityFlag( true );
+			self.emit( 'change', self );
 
 			return self.setState( {
 				latitude: json.latitude,
@@ -237,14 +240,7 @@ GlobeCoordinateInputWidget.prototype.onChange = function ( newValue ) {
 		} )
 		.catch( function () {
 			self.coordinateInput.setValidityFlag( false );
-
-			return self.setState( {
-				latitude: null,
-				longitude: null,
-				inferredPrecision: null
-			} );
-		} )
-		.always( this.emit.bind( this, 'change', this ) );
+		} );
 };
 
 GlobeCoordinateInputWidget.prototype.onPrecisionChange = function () {
@@ -585,6 +581,7 @@ GlobeCoordinateInputWidget.precisionToDigits = function ( precision ) {
 GlobeCoordinateInputWidget.precisionToZoom = function ( precision, latitude ) {
 	// 111.32m = 1 degree at equator, then corrected for latitude
 	var metersPerPx = precision * ( 111.32 * 1000 * Math.cos( latitude * ( Math.PI / 180 ) ) ),
+		// eslint-disable-next-line
 		zoom = Math.log( ( 156543.03392 * Math.cos( ( latitude * Math.PI ) / 180 ) ) / metersPerPx ) / Math.log( 2 );
 
 	return Math.round( zoom );

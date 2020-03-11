@@ -65,7 +65,6 @@
 	"wikibasemediainfo-remove-all-statements-confirm": "This action will delete all existing values for this property. Properties with no values will be removed when changes are published. Are you sure?",
 	"wikibasemediainfo-remove-all-statements-confirm-title": "Remove all?",
 	"wikibasemediainfo-remove-all-statements-confirm-accept": "Remove",
-	"wikibasemediainfo-unsupported-datatype-text": "Unsupported data type",
 	"wikibasemediainfo-coordinate-input-label": "Coordinates",
 	"wikibasemediainfo-coordinate-input-placeholder": "Latitude, longitude",
 	"wikibasemediainfo-precision-input-label": "Precision",

@@ -86,6 +86,8 @@
 	"wikibasemediainfo-time-calendar-gregorian": "Gregoriano",
 	"wikibasemediainfo-time-calendar-julian": "Giuliano",
 	"wikibasemediainfo-quantity-input-button-text": "Aggiungi",
+	"wikibasemediainfo-quantity-unit-label": "unità",
+	"wikibasemediainfo-quantity-unit-button-text": "Imposta unità",
 	"wikibasemediainfo-globecoordinate-input-button-text": "Aggiungi",
 	"wikibasemediainfo-globecoordinate-map-button-text": "Seleziona sulla mappa"
 }

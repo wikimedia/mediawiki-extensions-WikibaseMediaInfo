@@ -50,5 +50,6 @@
 	"wikibasemediainfo-statements-title-depicts": "Ставке приказане у овој датотеци",
 	"wikibasemediainfo-remove-all-statements-confirm": "Ова радња ће обрисати све постојеће вредности за ово својство. Својства без вредности биће уклоњена када се измене објаве. Да ли сте сигурни?",
 	"wikibasemediainfo-remove-all-statements-confirm-accept": "Уклони",
-	"wikibasemediainfo-quantity-input-button-text": "Додај"
+	"wikibasemediainfo-quantity-input-button-text": "Додај",
+	"wikibasemediainfo-quantity-unit-label": "јединица"
 }

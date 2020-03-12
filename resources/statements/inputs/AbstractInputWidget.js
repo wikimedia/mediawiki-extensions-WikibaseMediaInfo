@@ -141,15 +141,6 @@ AbstractInputWidget.prototype.parseValue = function ( propertyId, datatype ) {
 			var rawValue = response.results[ 0 ];
 			return dataValues.newDataValue( rawValue.type, rawValue.value );
 		} )
-		.catch( function ( errorCode, response ) {
-			// reject with error message if there is one (there might not be,
-			// e.g. in case of abort)
-			if ( response.error ) {
-				return $.Deferred().reject( response.error.info );
-			} else {
-				return $.Deferred().reject( '' );
-			}
-		} )
 		.promise( { abort: promise.abort } );
 };
 

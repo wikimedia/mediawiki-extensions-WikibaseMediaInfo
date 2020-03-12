@@ -65,7 +65,6 @@
 	"wikibasemediainfo-statements-unsupported-property-content": "Свойства, отличные от $1, пока что поддерживаются не полностью, но будут поддерживаться в будущем. На данный момент функционал для неподдерживаемых свойств может не срабатывать ожидаемым образом.",
 	"wikibasemediainfo-statements-unsupported-property-type-content": "Некоторые типы свойств поддерживаются не полностью, но будут поддерживаться в будущем. На данный момент функционал для неподдерживаемых свойств может не срабатывать ожидаемым образом.",
 	"wikibasemediainfo-remove-all-statements-confirm": "Это действие удалит все существующие значения для этого свойства. Свойства без значений будут удалены при публикации изменений. Всё равно удалять?",
-	"wikibasemediainfo-unsupported-datatype-text": "Неподдерживаемый тип данных",
 	"wikibasemediainfo-precision-input-label": "Точность",
 	"wikibasemediainfo-arcminute-label": "в угловых минутах",
 	"wikibasemediainfo-arcsecond-label": "в угловых секундах",

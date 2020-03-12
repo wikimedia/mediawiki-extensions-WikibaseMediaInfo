@@ -50,7 +50,6 @@
 	"wikibasemediainfo-statements-remove": "Eliminar todos",
 	"wikibasemediainfo-remove-all-statements-confirm": "Esto eliminará todos los valores existentes de esta propiedad. Aquellas propiedades que carezcan de valores se borrarán al publicar los cambios. ¿Quieres continuar?",
 	"wikibasemediainfo-remove-all-statements-confirm-accept": "Quitar",
-	"wikibasemediainfo-unsupported-datatype-text": "No se admite el tipo de datos",
 	"wikibasemediainfo-coordinate-input-label": "Coordenadas",
 	"wikibasemediainfo-coordinate-input-placeholder": "Latitud, longitud",
 	"wikibasemediainfo-precision-input-label": "Precisión",

@@ -68,7 +68,6 @@
 	"wikibasemediainfo-statements-unsupported-property-type-content": "可能不支持部分属性（将来可能会完善对其他属性的支持），与这些属性相关联的功能可能无法正常工作。",
 	"wikibasemediainfo-remove-all-statements-confirm-title": "全部删除？",
 	"wikibasemediainfo-remove-all-statements-confirm-accept": "删除",
-	"wikibasemediainfo-unsupported-datatype-text": "不支持的数据类型",
 	"wikibasemediainfo-precision-input-label": "精度",
 	"wikibasemediainfo-string-input-button-text": "添加",
 	"wikibasemediainfo-quantity-input-button-text": "添加",

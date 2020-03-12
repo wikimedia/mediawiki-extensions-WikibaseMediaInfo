@@ -70,7 +70,6 @@
 	"wikibasemediainfo-remove-all-statements-confirm": "هذا الإجراء سوف يؤدي إلى حذف كل القيم الموجودة مسبقاً في هذا المجال. المجالات الفارغة سوف يتم إزالتها عندما يتم نشر التعديلات. هل انت متأكد؟",
 	"wikibasemediainfo-remove-all-statements-confirm-title": "إزالة الكل؟",
 	"wikibasemediainfo-remove-all-statements-confirm-accept": "إزالة",
-	"wikibasemediainfo-unsupported-datatype-text": "نوع البيانات غير مدعوم",
 	"wikibasemediainfo-coordinate-input-label": "الإحداثيات",
 	"wikibasemediainfo-precision-input-label": "الدقة",
 	"wikibasemediainfo-arcminute-label": "لدقيقة قوسية",

@@ -62,7 +62,6 @@
 	"wikibasemediainfo-remove-all-statements-confirm": "このプロパティの既存の値をすべて削除します。変更が公開されたときに、値のないプロパティは削除されます。実行しますか？",
 	"wikibasemediainfo-remove-all-statements-confirm-title": "すべて除去しますか？",
 	"wikibasemediainfo-remove-all-statements-confirm-accept": "除去",
-	"wikibasemediainfo-unsupported-datatype-text": "サポートされていないデータ型です",
 	"wikibasemediainfo-precision-input-label": "精度",
 	"wikibasemediainfo-string-input-button-text": "追加",
 	"wikibasemediainfo-quantity-input-button-text": "追加",

@@ -67,7 +67,6 @@
 	"wikibasemediainfo-remove-all-statements-confirm": "Esta operação irá eliminar todos os valores existentes para esta propriedade. As propriedades sem valores serão removidas quando as alterações forem publicadas. Tem a certeza?",
 	"wikibasemediainfo-remove-all-statements-confirm-title": "Remover todas?",
 	"wikibasemediainfo-remove-all-statements-confirm-accept": "Remover",
-	"wikibasemediainfo-unsupported-datatype-text": "Tipo de dados não suportado",
 	"wikibasemediainfo-precision-input-label": "Precisão",
 	"wikibasemediainfo-arcminute-label": "de um minuto de arco",
 	"wikibasemediainfo-arcsecond-label": "de um segundo de arco",

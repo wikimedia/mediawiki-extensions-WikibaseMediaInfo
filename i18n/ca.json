@@ -63,7 +63,6 @@
 	"wikibasemediainfo-remove-all-statements-confirm": "L'acció eliminarà els valors existents de la propietat. Les propietats sense valors se suprimiran quan es publiquin els canvis. N'esteu segur?",
 	"wikibasemediainfo-remove-all-statements-confirm-title": "Voleu suprimir-les totes?",
 	"wikibasemediainfo-remove-all-statements-confirm-accept": "Suprimeix",
-	"wikibasemediainfo-unsupported-datatype-text": "Tipus de dades no admès",
 	"wikibasemediainfo-coordinate-input-label": "Coordenades",
 	"wikibasemediainfo-precision-input-label": "Precisió",
 	"wikibasemediainfo-select-precision-label": "Seleccioneu la precisió",

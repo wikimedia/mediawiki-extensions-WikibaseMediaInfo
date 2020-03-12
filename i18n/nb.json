@@ -64,7 +64,6 @@
 	"wikibasemediainfo-remove-all-statements-confirm": "Denne handlingen vil slette alle eksisterende verdier for denne egenskapen. Egenskaper uten verdier blir fjernet når endringen publiseres. Er du sikker?",
 	"wikibasemediainfo-remove-all-statements-confirm-title": "Fjern alle?",
 	"wikibasemediainfo-remove-all-statements-confirm-accept": "Fjern",
-	"wikibasemediainfo-unsupported-datatype-text": "Ikke understøttet datatype",
 	"wikibasemediainfo-coordinate-input-placeholder": "Breddegrad, lengdegrad",
 	"wikibasemediainfo-precision-input-label": "Presisjon",
 	"wikibasemediainfo-select-precision-label": "Velg presisjon",

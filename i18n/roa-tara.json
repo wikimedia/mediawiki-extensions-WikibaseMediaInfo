@@ -62,7 +62,6 @@
 	"wikibasemediainfo-remove-all-statements-confirm": "Sta azione scangelle tutte le valore ca esistene pe sta probbietà. Le probbietà senza valore avènene luate quanne le cangiaminde sò pubblecate. Sì secure?",
 	"wikibasemediainfo-remove-all-statements-confirm-title": "Live tutte?",
 	"wikibasemediainfo-remove-all-statements-confirm-accept": "Live",
-	"wikibasemediainfo-unsupported-datatype-text": "Tipe de date non supportate",
 	"wikibasemediainfo-precision-input-label": "Precisione",
 	"wikibasemediainfo-arcminute-label": "a 'n'archeminute",
 	"wikibasemediainfo-arcsecond-label": "a 'n'archeseconde",

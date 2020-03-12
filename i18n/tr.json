@@ -69,7 +69,6 @@
 	"wikibasemediainfo-remove-all-statements-confirm": "Bu eylem, bu mülk için mevcut tüm değerleri silecektir. Değeri olmayan mülkler, değişiklikler yayınlandığında kaldırılacaktır. Emin misiniz?",
 	"wikibasemediainfo-remove-all-statements-confirm-title": "Hepsini kaldırılsın mı?",
 	"wikibasemediainfo-remove-all-statements-confirm-accept": "Kaldır",
-	"wikibasemediainfo-unsupported-datatype-text": "Desteklenmeyen veri türü",
 	"wikibasemediainfo-coordinate-input-label": "Koordinatlar",
 	"wikibasemediainfo-coordinate-input-placeholder": "Enlem, boylam",
 	"wikibasemediainfo-precision-input-label": "Kesinlik",

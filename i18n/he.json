@@ -69,7 +69,6 @@
 	"wikibasemediainfo-remove-all-statements-confirm": "הפעולה הזאת תמחק את כל הערכים הקיימים של המאפיין הזה. מאפיינים בלי ערכים יוסרו כשהשינויים יתפרסמו. האם ברצונך באמת לעשות את זה?",
 	"wikibasemediainfo-remove-all-statements-confirm-title": "להסיר הכול?",
 	"wikibasemediainfo-remove-all-statements-confirm-accept": "להסיר",
-	"wikibasemediainfo-unsupported-datatype-text": "סוג נתונים בלתי־נתמך",
 	"wikibasemediainfo-coordinate-input-label": "נקודות ציון",
 	"wikibasemediainfo-coordinate-input-placeholder": "קו רוחב, קו אורך",
 	"wikibasemediainfo-precision-input-label": "דיוק",

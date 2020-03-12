@@ -64,6 +64,5 @@
 	"wikibasemediainfo-remove-all-statements-confirm": "Ta czynność spowoduje usunięcie wszystkich wartości tej właściwości. Właściwości bez wartości zostaną usunięte dopiero po opublikowaniu zmian. Czy na pewno chcesz to zrobić?",
 	"wikibasemediainfo-remove-all-statements-confirm-title": "Usunąć wszystko?",
 	"wikibasemediainfo-remove-all-statements-confirm-accept": "Usuń",
-	"wikibasemediainfo-unsupported-datatype-text": "Nieobsługiwany typ danych",
 	"wikibasemediainfo-precision-input-label": "Precyzja"
 }

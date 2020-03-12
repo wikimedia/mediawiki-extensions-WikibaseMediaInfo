@@ -70,7 +70,6 @@
 	"wikibasemediainfo-remove-all-statements-confirm": "此操作會刪除所有用於此屬性的現有值，沒帶值的屬性會在更改發佈時移除掉，您確定嗎？",
 	"wikibasemediainfo-remove-all-statements-confirm-title": "全部移除？",
 	"wikibasemediainfo-remove-all-statements-confirm-accept": "移除",
-	"wikibasemediainfo-unsupported-datatype-text": "未支援的資料類型",
 	"wikibasemediainfo-coordinate-input-label": "座標",
 	"wikibasemediainfo-coordinate-input-placeholder": "緯度、經度",
 	"wikibasemediainfo-precision-input-label": "精確度",

@@ -65,6 +65,5 @@
 	"wikibasemediainfo-statements-link-notice-text": "Labels van gestructureerde data linken naar de respectievelijke Wikidata-pagina's en openen in een nieuw venster.",
 	"wikibasemediainfo-remove-all-statements-confirm": "Met deze actie worden alle bestaande waarden voor deze eigenschap verwijderd. Eigenschappen zonder waarden worden verwijderd wanneer wijzigingen worden gepubliceerd. Weet je het zeker?",
 	"wikibasemediainfo-remove-all-statements-confirm-title": "Alles verwijderen?",
-	"wikibasemediainfo-remove-all-statements-confirm-accept": "verwijder",
-	"wikibasemediainfo-unsupported-datatype-text": "Niet ondersteund datatype"
+	"wikibasemediainfo-remove-all-statements-confirm-accept": "verwijder"
 }

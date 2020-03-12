@@ -69,7 +69,6 @@
 	"wikibasemediainfo-remove-all-statements-confirm": "Diese Aktion wird alle vorhandenen Werte für diese Eigenschaft löschen. Eigenschaften ohne Werte werden bei der Veröffentlichung entfernt. Bist du sicher?",
 	"wikibasemediainfo-remove-all-statements-confirm-title": "Alle entfernen?",
 	"wikibasemediainfo-remove-all-statements-confirm-accept": "Entfernen",
-	"wikibasemediainfo-unsupported-datatype-text": "Nicht unterstützter Datentyp",
 	"wikibasemediainfo-coordinate-input-label": "Koordinaten",
 	"wikibasemediainfo-coordinate-input-placeholder": "Breitengrad, Längengrad",
 	"wikibasemediainfo-precision-input-label": "Genauigkeit",

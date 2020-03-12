@@ -57,7 +57,6 @@
 	"wikibasemediainfo-statements-link-notice-text": "Le etichette dei dati strutturati collegano alle rispettive pagine su {{WBREPONAME}} e le aprono in una nuova finestra.",
 	"wikibasemediainfo-remove-all-statements-confirm-title": "Rimuovi tutto?",
 	"wikibasemediainfo-remove-all-statements-confirm-accept": "Rimuovi",
-	"wikibasemediainfo-unsupported-datatype-text": "Tipo di dati non supportato",
 	"wikibasemediainfo-coordinate-input-label": "Coordinate",
 	"wikibasemediainfo-coordinate-input-placeholder": "Latitudine, longitudine",
 	"wikibasemediainfo-precision-input-label": "Precisione",

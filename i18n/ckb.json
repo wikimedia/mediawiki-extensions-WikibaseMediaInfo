@@ -1,0 +1,19 @@
+{
+	"@metadata": {
+		"authors": [
+			"Arya sarhan"
+		]
+	},
+	"wikibasemediainfo-monolingualtext-input-button-text": "زیاد بکە",
+	"wikibasemediainfo-monolingualtext-language-label": "زمان ھەڵبژێرە",
+	"wikibasemediainfo-time-input-button-text": "زیاد بکە",
+	"wikibasemediainfo-time-precision-year10m": "دە ملیۆن ساڵ",
+	"wikibasemediainfo-time-precision-year100k": "١٠٠،٠٠٠ ساڵ",
+	"wikibasemediainfo-time-precision-year10k": "١٠،٠٠٠ ساڵ",
+	"wikibasemediainfo-time-precision-year1k": "ھەزار ساڵ",
+	"wikibasemediainfo-time-precision-year": "ساڵ",
+	"wikibasemediainfo-time-precision-month": "مانگ",
+	"wikibasemediainfo-time-precision-day": "ڕۆژ",
+	"wikibasemediainfo-time-precision-hour": "کاتژمێر",
+	"wikibasemediainfo-time-precision-second": "دووەم"
+}

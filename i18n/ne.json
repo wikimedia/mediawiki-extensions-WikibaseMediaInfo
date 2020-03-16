@@ -4,6 +4,23 @@
 			"पर्वत सुबेदी"
 		]
 	},
+	"wikibasemediainfo-statements-item-input-label": "{{WBREPONAME}}बाट",
+	"wikibasemediainfo-coordinate-input-label": "निर्देशाङ्कहरू",
 	"wikibasemediainfo-monolingualtext-input-button-text": "थप्नुहोस्",
-	"wikibasemediainfo-monolingualtext-language-label": "भाषा छान्नुहाेस्"
+	"wikibasemediainfo-monolingualtext-language-label": "भाषा छान्नुहाेस्",
+	"wikibasemediainfo-time-input-button-text": "थप्नुहोस्",
+	"wikibasemediainfo-time-precision-year1g": "अरब वर्ष",
+	"wikibasemediainfo-time-precision-year100m": "दश करोड वर्ष",
+	"wikibasemediainfo-time-precision-year10m": "एक करोड वर्ष",
+	"wikibasemediainfo-time-precision-year100k": "१००,००० वर्ष",
+	"wikibasemediainfo-time-precision-year100": "शताब्दी",
+	"wikibasemediainfo-time-precision-year10": "दशक",
+	"wikibasemediainfo-time-precision-year": "वर्ष",
+	"wikibasemediainfo-time-precision-month": "महिना",
+	"wikibasemediainfo-time-precision-day": "दिन",
+	"wikibasemediainfo-time-precision-hour": "घण्टा",
+	"wikibasemediainfo-time-precision-minute": "मिनेट",
+	"wikibasemediainfo-time-precision-second": "सेकेन्ड",
+	"wikibasemediainfo-time-calendar-label": "पात्रो",
+	"wikibasemediainfo-quantity-unit-label": "इकाइ"
 }

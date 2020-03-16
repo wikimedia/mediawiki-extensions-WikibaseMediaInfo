@@ -9,6 +9,7 @@
 	"wikibase-mediainfo-summary-wbsetlabel-set": "Redigerede billedeteksten [$2]",
 	"wikibasemediainfo-filepage-fewer-languages": "Se færre sprog",
 	"wikibasemediainfo-filepage-cancel": "Annullér",
+	"wikibasemediainfo-filepage-statement-no-value-option": "Ingen værdi",
 	"wikibasemediainfo-filepage-statement-no-value": "Der findes ingen værdi for denne egenskab",
 	"wikibasemediainfo-filepage-statement-no-data": "Ingen tilgængelige data",
 	"wikibasemediainfo-filepage-statement-no-results": "Ingen resultater fundet",

@@ -6,7 +6,8 @@
 			"ديفيد",
 			"Meno25",
 			"Kaganer",
-			"Habib-d"
+			"Habib-d",
+			"NEHAOUA"
 		]
 	},
 	"action-mediainfo-term": "تغيير مصطلحات معلومات الوسائط (التسميات التوضيحية والملخصات)",
@@ -54,7 +55,7 @@
 	"wikibasemediainfo-filepage-license-agree": "أوافق",
 	"wikibasemediainfo-statements-depicts-title": "العناصر المبينة في هذه الصورة",
 	"wikibasemediainfo-statements-item-add-qualifier": "إضافة تصفية",
-	"wikibasemediainfo-statements-item-input-label": "من ويكي بيانات",
+	"wikibasemediainfo-statements-item-input-label": "من {{WBREPONAME}}",
 	"wikibasemediainfo-statements-item-input-placeholder": "بحث لإضافة عناصر (قطة منزلية، جبل، تاج محل، إلخ)",
 	"wikibasemediainfo-statements-item-is-prominent": "بارز",
 	"wikibasemediainfo-statements-item-mark-as-prominent": "التعليم كبارز",
@@ -88,7 +89,12 @@
 	"wikibasemediainfo-time-precision-year": "السنة",
 	"wikibasemediainfo-time-precision-month": "الشهر",
 	"wikibasemediainfo-time-precision-day": "اليوم",
+	"wikibasemediainfo-time-precision-minute": "دقيقة",
+	"wikibasemediainfo-time-calendar-julian": "يولياني",
 	"wikibasemediainfo-quantity-input-button-text": "إضافة",
+	"wikibasemediainfo-quantity-unit-placeholder": "اكتب الوحدة (اختياري)",
+	"wikibasemediainfo-quantity-unit-label": "وحدة",
+	"wikibasemediainfo-quantity-unit-button-text": "حدد الوحدة",
 	"wikibasemediainfo-globecoordinate-input-button-text": "إضافة",
 	"wikibasemediainfo-globecoordinate-map-button-text": "اختر على الخريطة",
 	"wikibasemediainfo-search-suggestions-title-depicts": "ملفات تصور...",

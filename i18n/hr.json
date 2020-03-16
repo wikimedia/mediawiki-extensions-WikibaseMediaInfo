@@ -59,6 +59,7 @@
 	"wikibasemediainfo-statements-remove": "Ukloni sve",
 	"wikibasemediainfo-statements-title-depicts": "Predmeti prikazani u ovoj datoteci",
 	"wikibasemediainfo-statements-unsupported-property-title": "Nepodržano svojstvo",
+	"wikibasemediainfo-statements-link-notice-text": "Poveznice na strukturirane podatke vode na njihove stranice na projektu {{WBREPONAME}} i otvoriti će se u novom prozoru.",
 	"wikibasemediainfo-statements-link-notice-dismiss": "Zanemari",
 	"wikibasemediainfo-remove-all-statements-confirm-title": "Ukloni sve?",
 	"wikibasemediainfo-remove-all-statements-confirm-accept": "Ukloni",
@@ -72,6 +73,7 @@
 	"wikibasemediainfo-monolingualtext-language-label": "Odaberi jezik",
 	"wikibasemediainfo-time-input-button-text": "Dodaj",
 	"wikibasemediainfo-time-input-placeholder": "Unesi vrijeme",
+	"wikibasemediainfo-time-timestamp-formatted": "Prikazat će se kao: $1",
 	"wikibasemediainfo-time-precision-label": "Preciznost",
 	"wikibasemediainfo-time-precision-year1g": "milijardi godina",
 	"wikibasemediainfo-time-precision-year100m": "sto milijuna godina",
@@ -89,6 +91,11 @@
 	"wikibasemediainfo-time-precision-minute": "minuta",
 	"wikibasemediainfo-time-precision-second": "sekunda",
 	"wikibasemediainfo-time-calendar-label": "Kalendar",
+	"wikibasemediainfo-time-calendar-gregorian": "gregorijanski",
+	"wikibasemediainfo-time-calendar-julian": "julijanski",
 	"wikibasemediainfo-quantity-input-button-text": "Dodaj",
+	"wikibasemediainfo-quantity-unit-placeholder": "Unesite jedinicu (neobavezno)",
+	"wikibasemediainfo-quantity-unit-label": "jedinica",
+	"wikibasemediainfo-quantity-unit-button-text": "Postavi jedinicu",
 	"wikibasemediainfo-globecoordinate-input-button-text": "Dodaj"
 }

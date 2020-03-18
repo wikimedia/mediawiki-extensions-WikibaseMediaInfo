@@ -372,10 +372,7 @@ class MediaInfoEntityStatementsView {
 
 			$separator = new Tag( 'span' );
 			$separator->addClasses( [ 'wbmi-qualifier-value-separator' ] );
-			$separator->appendContent(
-				$this->textProvider->get( 'colon-separator' ),
-				new HtmlSnippet( '&#8232;' )
-			);
+			$separator->appendContent( $this->textProvider->get( 'colon-separator' ) );
 
 			$qualifierValueDiv = new Tag( 'div' );
 			$qualifierValueDiv->addClasses( [ 'wbmi-qualifier-value' ] );

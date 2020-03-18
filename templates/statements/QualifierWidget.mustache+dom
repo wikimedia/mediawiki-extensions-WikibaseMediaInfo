@@ -11,7 +11,7 @@
 
 			{{#property}}
 				{{#value}}
-				<span class="wbmi-qualifier-value-separator">{{separator}}&#8232;</span>
+				<span class="wbmi-qualifier-value-separator">{{separator}}</span>
 				{{/value}}
 			{{/property}}
 

@@ -65,39 +65,17 @@
 	],
 	"callback": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onRegistration",
 	"Hooks": {
-		"MediaWikiServices": [
-			"Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onMediaWikiServices"
-		],
-		"WikibaseRepoEntityNamespaces": [
-			"Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onWikibaseRepoEntityNamespaces"
-		],
-		"WikibaseRepoEntityTypes": [
-			"Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onWikibaseEntityTypes"
-		],
-		"WikibaseClientEntityTypes": [
-			"Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onWikibaseEntityTypes"
-		],
-		"GetEntityByLinkedTitleLookup": [
-			"Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onGetEntityByLinkedTitleLookup"
-		],
-		"GetEntityContentModelForTitle": [
-			"Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onGetEntityContentModelForTitle"
-		],
-		"BeforePageDisplay": [
-			"Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onBeforePageDisplay"
-		],
-		"CirrusSearchBuildDocumentParse": [
-			"Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onCirrusSearchBuildDocumentParse"
-		],
-		"ParserOutputPostCacheTransform": [
-			"Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onParserOutputPostCacheTransform"
-		],
-		"GetPreferences": [
-			"Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onGetPreferences"
-		],
-		"ScribuntoExternalLibraries": [
-			"Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onScribuntoExternalLibraries"
-		]
+		"MediaWikiServices": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onMediaWikiServices",
+		"WikibaseRepoEntityNamespaces": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onWikibaseRepoEntityNamespaces",
+		"WikibaseRepoEntityTypes": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onWikibaseEntityTypes",
+		"WikibaseClientEntityTypes": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onWikibaseEntityTypes",
+		"GetEntityByLinkedTitleLookup": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onGetEntityByLinkedTitleLookup",
+		"GetEntityContentModelForTitle": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onGetEntityContentModelForTitle",
+		"BeforePageDisplay": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onBeforePageDisplay",
+		"CirrusSearchBuildDocumentParse": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onCirrusSearchBuildDocumentParse",
+		"ParserOutputPostCacheTransform": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onParserOutputPostCacheTransform",
+		"GetPreferences": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onGetPreferences",
+		"ScribuntoExternalLibraries": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onScribuntoExternalLibraries"
 	},
 	"MessagesDirs": {
 		"WikibaseMediaInfo": [

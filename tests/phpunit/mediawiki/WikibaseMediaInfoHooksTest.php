@@ -16,7 +16,6 @@ use Wikibase\Lib\Store\EntityByLinkedTitleLookup;
 use Wikibase\MediaInfo\Content\MediaInfoContent;
 use Wikibase\MediaInfo\Content\MediaInfoHandler;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
-use Wikibase\MediaInfo\DataModel\MediaInfoId;
 use Wikibase\MediaInfo\Services\MediaInfoByLinkedTitleLookup;
 use Wikibase\MediaInfo\WikibaseMediaInfoHooks;
 use Wikibase\Search\Elastic\Fields\TermIndexField;
@@ -189,17 +188,6 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 		);
 	}
 
-	/**
-	 * @return MediaInfoId
-	 */
-	private function getTestEntityId() {
-		static $testEntityId;
-		if ( !isset( $testEntityId ) ) {
-			$testEntityId = new MediaInfoId( 'M999' );
-		}
-		return $testEntityId;
-	}
-
 	private function mockSlot( MediaInfoContent $content = null ) {
 		$slot = $this->getMockBuilder( SlotRecord::class )
 			->disableOriginalConstructor()
@@ -225,10 +213,6 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 				->willReturn( $slot );
 		}
 		return $revisionRecord;
-	}
-
-	private function mockTermIndexField( array $engineHints ) {
-		return $mockField;
 	}
 
 	/**

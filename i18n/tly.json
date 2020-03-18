@@ -1,0 +1,14 @@
+{
+	"@metadata": {
+		"authors": [
+			"Patriot Kur"
+		]
+	},
+	"wikibasemediainfo-time-precision-year": "sor",
+	"wikibasemediainfo-time-precision-day": "rüj",
+	"wikibasemediainfo-time-precision-hour": "saat",
+	"wikibasemediainfo-time-precision-minute": "dəğiğə",
+	"wikibasemediainfo-time-precision-second": "saniyə",
+	"wikibasemediainfo-time-calendar-label": "Təğvim",
+	"wikibasemediainfo-time-calendar-gregorian": "Qriqoriyan"
+}

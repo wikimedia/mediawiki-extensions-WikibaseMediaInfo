@@ -2,7 +2,6 @@
 
 namespace Wikibase\MediaInfo\Tests\MediaWiki\Content;
 
-use FauxRequest;
 use IContextSource;
 use RequestContext;
 use Title;
@@ -140,7 +139,7 @@ class MediaInfoHandlerTest extends \PHPUnit\Framework\TestCase {
 		$mediaInfoHandler = $this->newMediaInfoHandler();
 
 		$title = Title::makeTitle( 112, 'M11' );
-		$context = new RequestContext( new FauxRequest() );
+		$context = new RequestContext();
 		$context->setTitle( $title );
 
 		$mediaInfoHandler->showMissingEntity( $title, $context );

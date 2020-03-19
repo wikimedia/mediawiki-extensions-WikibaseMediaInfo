@@ -8,8 +8,8 @@
 			"Ата"
 		]
 	},
-	"action-mediainfo-term": "зміну інформації медіафайлів (підписи, описи)",
-	"right-mediainfo-term": "зміна термінів медіа-інформації (підписів, описів)",
+	"action-mediainfo-term": "зміну інформації медіафайлів (підписів, описів)",
+	"right-mediainfo-term": "Зміна термінів медіа-інформації (підписів, описів)",
 	"slot-name-mediainfo": "Структурована медіа-інформація",
 	"wikibase-entity-mediainfo": "медіа-інформація",
 	"wikibase-mediainfo-summary-wbsetlabel-add": "Додано підпис мовою [$2]",

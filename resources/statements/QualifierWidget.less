@@ -11,7 +11,11 @@
 	// but that whitespace should not be displayed (it's only to keep our
 	// html/template clean)
 	.wbmi-qualifier-value {
-		display: inline-table;
+		.flex-display();
+	}
+
+	.wbmi-qualifier-value-separator {
+		white-space: pre;
 	}
 
 	.wbmi-qualifier-property {

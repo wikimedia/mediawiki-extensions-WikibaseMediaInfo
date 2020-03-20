@@ -65,7 +65,9 @@
 	"wikibasemediainfo-statements-unsupported-property-content": "Свойства, отличные от $1, пока что поддерживаются не полностью, но будут поддерживаться в будущем. На данный момент функционал для неподдерживаемых свойств может не срабатывать ожидаемым образом.",
 	"wikibasemediainfo-statements-unsupported-property-type-content": "Некоторые типы свойств поддерживаются не полностью, но будут поддерживаться в будущем. На данный момент функционал для неподдерживаемых свойств может не срабатывать ожидаемым образом.",
 	"wikibasemediainfo-remove-all-statements-confirm": "Это действие удалит все существующие значения для этого свойства. Свойства без значений будут удалены при публикации изменений. Всё равно удалять?",
+	"wikibasemediainfo-coordinate-input-placeholder": "Широта, долгота",
 	"wikibasemediainfo-precision-input-label": "Точность",
+	"wikibasemediainfo-select-precision-label": "Выберите точность",
 	"wikibasemediainfo-arcminute-label": "в угловых минутах",
 	"wikibasemediainfo-arcsecond-label": "в угловых секундах",
 	"wikibasemediainfo-tenth-of-arcsecond-label": "в 1/10 угловых секунд",
@@ -82,5 +84,8 @@
 	"wikibasemediainfo-time-precision-year100k": "100,000 лет",
 	"wikibasemediainfo-time-precision-year1k": "тысячелетие",
 	"wikibasemediainfo-time-precision-year100": "столетие",
-	"wikibasemediainfo-time-precision-year10": "десятилетие"
+	"wikibasemediainfo-time-precision-year10": "десятилетие",
+	"wikibasemediainfo-quantity-unit-placeholder": "Введите единицу измерения (необязательно)",
+	"wikibasemediainfo-quantity-unit-label": "единица измерения",
+	"wikibasemediainfo-quantity-unit-button-text": "Установить единицу измерения"
 }

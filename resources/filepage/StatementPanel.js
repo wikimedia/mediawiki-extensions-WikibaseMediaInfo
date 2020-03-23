@@ -54,6 +54,8 @@ StatementPanel = function StatementPanel( config ) {
 	if ( !this.isSupportedType() ) {
 		this.$element.addClass( 'wbmi-entityview-statementsGroup-unsupported' );
 	}
+
+	this.$pending = this.$element;
 };
 
 /* Inheritance */
@@ -185,6 +187,7 @@ StatementPanel.prototype.sendData = function () {
 	var self = this;
 
 	this.statementWidget.disconnect( this, { change: 'makeEditable' } );
+	this.pushPending();
 
 	this.statementWidget.submit( mw.mediaInfo.structuredData.currentRevision || undefined )
 		.then( function ( response ) {
@@ -200,6 +203,7 @@ StatementPanel.prototype.sendData = function () {
 			self.statementWidget.setDisabled( false );
 		} ).always( function () {
 			self.statementWidget.connect( self, { change: 'makeEditable' } );
+			self.popPending();
 		} );
 };
 

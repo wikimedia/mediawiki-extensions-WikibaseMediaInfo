@@ -16,5 +16,20 @@
 	"wikibasemediainfo-statements-remove": "سب ہٹاؤ",
 	"wikibasemediainfo-statements-link-notice-dismiss": "مکاؤ",
 	"wikibasemediainfo-remove-all-statements-confirm-title": "سب ہٹاؤں؟",
-	"wikibasemediainfo-remove-all-statements-confirm-accept": "ہٹاؤ"
+	"wikibasemediainfo-remove-all-statements-confirm-accept": "ہٹاؤ",
+	"wikibasemediainfo-coordinate-input-label": "کوآرڈینیٹ",
+	"wikibasemediainfo-monolingualtext-input-button-text": "شامل کرو",
+	"wikibasemediainfo-monolingualtext-language-label": "زبان چݨو",
+	"wikibasemediainfo-time-input-button-text": "شامل کرو",
+	"wikibasemediainfo-time-precision-year100": "صدی",
+	"wikibasemediainfo-time-precision-year10": "ݙاہاکا",
+	"wikibasemediainfo-time-precision-year": "سال",
+	"wikibasemediainfo-time-precision-month": "مہیناں",
+	"wikibasemediainfo-time-precision-day": "ݙینہ",
+	"wikibasemediainfo-time-precision-hour": "گھنٹہ",
+	"wikibasemediainfo-time-precision-minute": "منٹ",
+	"wikibasemediainfo-time-precision-second": "سیکنڈ",
+	"wikibasemediainfo-time-calendar-label": "کیلنڈر",
+	"wikibasemediainfo-time-calendar-julian": "جولیئن",
+	"wikibasemediainfo-quantity-unit-label": "یِکائی"
 }

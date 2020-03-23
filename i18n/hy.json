@@ -20,5 +20,7 @@
 	"wikibasemediainfo-time-precision-minute": "րոպե",
 	"wikibasemediainfo-time-calendar-label": "Օրացույց",
 	"wikibasemediainfo-time-calendar-gregorian": "Գրիգորյան",
-	"wikibasemediainfo-time-calendar-julian": "Հուլյան"
+	"wikibasemediainfo-time-calendar-julian": "Հուլյան",
+	"wikibasemediainfo-quantity-unit-label": "չափման միավոր",
+	"wikibasemediainfo-quantity-unit-button-text": "Սահմանել միավորը"
 }

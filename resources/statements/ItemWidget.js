@@ -34,6 +34,8 @@ var DATA_TYPES,
  */
 DATA_TYPES = {
 	GLOBECOORDINATE: 'globecoordinate'
+	// NOTE: when the need arises to put more datatype-specific logic
+	// in here, consider refactoring this similar to the input fields
 };
 
 /**

@@ -212,6 +212,7 @@ class MediaInfoEntityStatementsView {
 
 		$panel = new PanelLayout( [
 			'classes' => $panelClasses,
+			'id' => $propertyIdString,
 			'scrollable' => false,
 			'padded' => false,
 			'expanded' => false,

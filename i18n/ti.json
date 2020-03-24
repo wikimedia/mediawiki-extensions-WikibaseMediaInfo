@@ -5,6 +5,7 @@
 		]
 	},
 	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "ካፕሸኒንግ",
+	"wikibasemediainfo-filepage-fileinfo-heading": "ናይ ፋይል ሓበሬታ",
 	"wikibasemediainfo-filepage-captions-title": "ካፕሸኒንግ",
 	"wikibasemediainfo-filepage-cancel": "ኣትርፍ",
 	"wikibasemediainfo-filepage-edit": "የዐርይ",
@@ -13,6 +14,12 @@
 	"wikibasemediainfo-statements-learn-more": "ተወሳኺ ፍለጥ",
 	"wikibasemediainfo-remove-all-statements-confirm-accept": "ኣልግስ",
 	"wikibasemediainfo-string-input-button-text": "ወስኽ",
+	"wikibasemediainfo-monolingualtext-input-button-text": "ወስኽ",
+	"wikibasemediainfo-monolingualtext-language-label": "ቋንቋ ምረጹ",
+	"wikibasemediainfo-time-input-button-text": "ወስኽ",
+	"wikibasemediainfo-time-precision-year": "ዓመት",
+	"wikibasemediainfo-time-precision-month": "ወርሒ",
+	"wikibasemediainfo-time-precision-day": "መዓልቲ",
 	"wikibasemediainfo-quantity-input-button-text": "ወስኽ",
 	"wikibasemediainfo-globecoordinate-input-button-text": "ወስኽ"
 }

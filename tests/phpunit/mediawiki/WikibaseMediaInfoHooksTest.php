@@ -343,6 +343,10 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 	}
 
 	public function provideTestCSBDP() {
+		if ( !\ExtensionRegistry::getInstance()->isLoaded( 'CirrusSearch' ) ) {
+			$this->markTestSkipped( 'CirrusSearch not loaded' );
+		}
+
 		return [
 			'no revision' => [
 				'mode' => 'no-revision-record',

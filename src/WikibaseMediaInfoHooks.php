@@ -289,10 +289,11 @@ class WikibaseMediaInfoHooks {
 			] );
 
 			if ( \ExtensionRegistry::getInstance()->isLoaded( 'WikibaseQualityConstraints' ) ) {
-				// MediaInfo File page is only edited via js, so it's always an edit view
-				// (this is necessary so that WikibaseQualityConstraints injects its js)
-				$jsConfigVars[ 'wbIsEditView' ] = true;
-				$jsConfigVars[ 'wbmiDoConstraintCheck' ] = true;
+				if ( !$out->getUser()->isAnon() && $this->userCanEdit( $out ) ) {
+					$modules[] = 'wikibase.quality.constraints.ui';
+					$modules[] = 'wikibase.quality.constraints.icon';
+					$jsConfigVars['wbmiDoConstraintCheck'] = true;
+				}
 			}
 		}
 

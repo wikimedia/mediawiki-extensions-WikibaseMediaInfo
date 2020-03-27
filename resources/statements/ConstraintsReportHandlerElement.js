@@ -131,7 +131,8 @@ ConstraintsReportHandlerElement.prototype.createPopupWidget = function ( $conten
 			padded: true,
 			head: true,
 			label: $content.find( '.wbqc-reports:first-child > .oo-ui-labelElement-label *' ).detach()
-		}
+		},
+		$overlay: true
 	} );
 	widget.popup.$element.css( 'z-index', 2 );
 

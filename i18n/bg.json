@@ -30,7 +30,7 @@
 	"wikibasemediainfo-filepage-statement-no-value": "Не съществува стойност за това свойство",
 	"wikibasemediainfo-filepage-statement-no-data": "Няма данни",
 	"wikibasemediainfo-filepage-statement-no-results": "Не бяха открити резултати",
-	"wikibasemediainfo-filepage-statement-some-value": "Някаква стойност без обект в Уикиданни",
+	"wikibasemediainfo-filepage-statement-some-value": "Някаква стойност без обект в {{WBREPONAME}}",
 	"wikibasemediainfo-filepage-statement-error": "Възникна грешка при получаването на стойността за това свойство",
 	"wikibasemediainfo-filepage-license-title": "Описания и други приноси в структурираните данни",
 	"wikibasemediainfo-filepage-license-content": "С натискането на „Публикуване на промените“, се съгласявате с [[wmf:Terms_of_Use|Условията за ползване]] и се съгласявате безвъзвратно да отдадете своя принос под лиценза [https://creativecommons.org/publicdomain/zero/1.0/deed.mk Криейтив Комънс CC0].",
@@ -38,7 +38,7 @@
 	"wikibasemediainfo-property-placeholder": "Свойство",
 	"wikibasemediainfo-statements-depicts-title": "Обекти, показани на изображението",
 	"wikibasemediainfo-statements-item-add-qualifier": "Добавяне на квалификатор",
-	"wikibasemediainfo-statements-item-input-label": "от Уикиданни",
+	"wikibasemediainfo-statements-item-input-label": "от {{WBREPONAME}}",
 	"wikibasemediainfo-statements-item-input-placeholder": "Търсете за да добавите обекти (котка, планина, Тадж Махал и т.н.)",
 	"wikibasemediainfo-statements-item-remove": "Премахване",
 	"wikibasemediainfo-statements-learn-more": "Научете повече"

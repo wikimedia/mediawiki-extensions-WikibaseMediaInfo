@@ -10,6 +10,10 @@
 	},
 	"action-mediainfo-term": "medya bilgisi terimlerini değiştir (altyazılar, özetler)",
 	"right-mediainfo-term": "Medya bilgisi terimlerini değiştir (altyazılar, özetler)",
+	"action-mediasearch": "medya aramasını test et",
+	"right-mediasearch": "Medya aramasını test et",
+	"group-mediasearch-tester": "Medya arama test kullanıcıları",
+	"group-mediasearch-tester-member": "{{GENDER:$1|medya arama testci}}",
 	"slot-name-mediainfo": "Yapısal medya bilgisi",
 	"wikibase-entity-mediainfo": "medya bilgisi",
 	"wikibase-mediainfo-summary-wbsetlabel-add": "[$2] altyazı eklendi",
@@ -114,5 +118,13 @@
 	"wikibasemediainfo-globecoordinate-map-button-text": "Haritadan seçin",
 	"wikibasemediainfo-search-suggestions-title-depicts": "dosya tasvir edilioyr…",
 	"wikibasemediainfo-search-suggestions-preference-label": "Otomatik tamamlama önerilerini yapılandırılmış verilere göre ara",
-	"wikibasemediainfo-search-suggestions-preference-disable-confirm": "Yapısal verilere dayalı otomatik tamamlama önerilerini kaldırmak istediğinizden emin misiniz? (Bu ayar [[Special:Preferences#mw-prefsection-searchoptions|Tercihler]]'de değiştirilebilir.)"
+	"wikibasemediainfo-search-suggestions-preference-disable-confirm": "Yapısal verilere dayalı otomatik tamamlama önerilerini kaldırmak istediğinizden emin misiniz? (Bu ayar [[Special:Preferences#mw-prefsection-searchoptions|Tercihler]]'de değiştirilebilir.)",
+	"wikibasemediainfo-special-mediasearch-title": "Medya ara",
+	"wikibasemediainfo-special-mediasearch-continue": "Sonraki",
+	"wikibasemediainfo-special-mediasearch-notice": "Lütfen bunun deneysel bir özellik olduğunu unutmayın. Her şey beklendiği gibi çalışmayabilir veya uzun vadede var olmaya devam edebilir.",
+	"apihelp-query+mediasearch-summary": "Medya dosyalarında ara",
+	"apihelp-query+mediasearch-example": "<kbd>test</kbd> için medya arayın.",
+	"apihelp-query+mediasearch-param-search": "Arama terimi",
+	"apihelp-query+mediasearch-param-limit": "Maksimum sonuç sayısı",
+	"apihelp-query+mediasearch-param-continue": "Bir aramaya nerede devam edileceğini ofset"
 }

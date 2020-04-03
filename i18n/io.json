@@ -4,5 +4,7 @@
 			"Joao Xavier"
 		]
 	},
-	"wikibasemediainfo-filepage-more-languages": "Videz $1 plusa {{PLURAL:$1|linguo|lingui}}"
+	"wikibasemediainfo-filepage-more-languages": "Videz $1 plusa {{PLURAL:$1|linguo|lingui}}",
+	"wikibasemediainfo-special-mediasearch-title": "Serchar 'media'",
+	"wikibasemediainfo-special-mediasearch-continue": "Sequanta"
 }

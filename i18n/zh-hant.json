@@ -11,6 +11,10 @@
 	},
 	"action-mediainfo-term": "更改多媒體資訊項目（說明、摘要等）",
 	"right-mediainfo-term": "更改多媒體資訊項目（說明、摘要等）",
+	"action-mediasearch": "測試媒體搜尋",
+	"right-mediasearch": "測試媒體搜尋",
+	"group-mediasearch-tester": "媒體搜尋測試者",
+	"group-mediasearch-tester-member": "{{GENDER:$1|媒體搜尋測試者}}",
 	"slot-name-mediainfo": "結構化媒體資訊",
 	"wikibase-entity-mediainfo": "多媒體資訊",
 	"wikibase-mediainfo-summary-wbsetlabel-add": "已添加說明[$2]",
@@ -115,5 +119,13 @@
 	"wikibasemediainfo-globecoordinate-map-button-text": "在地圖上選擇",
 	"wikibasemediainfo-search-suggestions-title-depicts": "檔案描述中…",
 	"wikibasemediainfo-search-suggestions-preference-label": "基於結構化資料的自動完成搜尋建議",
-	"wikibasemediainfo-search-suggestions-preference-disable-confirm": "您確定您要移除基於結構化資料的自動完成建議嗎？（這能在[[Special:Preferences#mw-prefsection-searchoptions|偏好設定]]裡更改。）"
+	"wikibasemediainfo-search-suggestions-preference-disable-confirm": "您確定您要移除基於結構化資料的自動完成建議嗎？（這能在[[Special:Preferences#mw-prefsection-searchoptions|偏好設定]]裡更改。）",
+	"wikibasemediainfo-special-mediasearch-title": "搜尋媒體",
+	"wikibasemediainfo-special-mediasearch-continue": "下一頁",
+	"wikibasemediainfo-special-mediasearch-notice": "請留意此為實驗性質功能，也許會不如預期般地運作，情況可能往後會持續存在。",
+	"apihelp-query+mediasearch-summary": "搜尋媒體檔案",
+	"apihelp-query+mediasearch-example": "搜尋用於 <kbd>test</kbd> 的媒體。",
+	"apihelp-query+mediasearch-param-search": "搜尋項目",
+	"apihelp-query+mediasearch-param-limit": "結果數量上限",
+	"apihelp-query+mediasearch-param-continue": "持續搜尋的偏移"
 }

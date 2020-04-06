@@ -85,5 +85,7 @@
 	"wikibasemediainfo-quantity-unit-label": "unidad",
 	"wikibasemediainfo-quantity-unit-button-text": "Establecer unidad",
 	"wikibasemediainfo-globecoordinate-input-button-text": "Añadir",
-	"wikibasemediainfo-globecoordinate-map-button-text": "Seleccionar en el mapa"
+	"wikibasemediainfo-globecoordinate-map-button-text": "Seleccionar en el mapa",
+	"wikibasemediainfo-special-mediasearch-continue": "Siguiente",
+	"apihelp-query+mediasearch-param-search": "Término de búsqueda"
 }

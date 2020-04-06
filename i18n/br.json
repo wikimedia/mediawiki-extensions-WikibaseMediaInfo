@@ -6,6 +6,8 @@
 	},
 	"wikibase-entity-mediainfo": "Keleier media",
 	"wikibasemediainfo-desc": "Astenn eus Wikibase evit merañ metaroadennoù frammet eus restroù media",
+	"wikibasemediainfo-special-mediasearch-title": "Klask ur media",
 	"wikibasemediainfo-special-mediasearch-continue": "War-lerc'h",
+	"apihelp-query+mediasearch-param-search": "Klask an termen",
 	"apihelp-query+mediasearch-param-limit": "Niver brasañ a zisoc'hoù"
 }

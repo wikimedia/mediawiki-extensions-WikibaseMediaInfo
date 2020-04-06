@@ -76,5 +76,9 @@
 	"wikibasemediainfo-time-precision-second": "초",
 	"wikibasemediainfo-time-calendar-gregorian": "그레고리력",
 	"wikibasemediainfo-time-calendar-julian": "율리우스력",
-	"wikibasemediainfo-quantity-input-button-text": "추가"
+	"wikibasemediainfo-quantity-input-button-text": "추가",
+	"wikibasemediainfo-special-mediasearch-title": "미디어 검색",
+	"wikibasemediainfo-special-mediasearch-continue": "다음",
+	"apihelp-query+mediasearch-summary": "미디어 파일 검색",
+	"apihelp-query+mediasearch-param-limit": "최대 결과 수"
 }

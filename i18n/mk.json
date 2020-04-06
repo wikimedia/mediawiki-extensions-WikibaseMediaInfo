@@ -7,6 +7,10 @@
 	},
 	"action-mediainfo-term": "промена на информации за податотеките (натписи, описи)",
 	"right-mediainfo-term": "Менување на инфорамциски поими за слики и снимки (описи, кратки прегледи во текст)",
+	"action-mediasearch": "испробување на пребарувањето на слики и снимки",
+	"right-mediasearch": "Испробување на пребарувањето на слики и снимки",
+	"group-mediasearch-tester": "Испробувачи на пребарување на слики и снимки",
+	"group-mediasearch-tester-member": "{{GENDER:$1|испробувач на пребарувања на слики и снимки}}",
 	"slot-name-mediainfo": "Структурирани информации за сликата/снимката",
 	"wikibase-entity-mediainfo": "инфо за снимка",
 	"wikibase-mediainfo-summary-wbsetlabel-add": "Додаден [$2] титл",
@@ -111,5 +115,13 @@
 	"wikibasemediainfo-globecoordinate-map-button-text": "Избери на карта",
 	"wikibasemediainfo-search-suggestions-title-depicts": "податотеки што прикажуваат…",
 	"wikibasemediainfo-search-suggestions-preference-label": "Предлози за автодополнување на пребарувањето според структурирани податоци",
-	"wikibasemediainfo-search-suggestions-preference-disable-confirm": "Дали сигурно сакате да го тргнете автодополнувањето според структурирани податоци? (Оваа поставка може да се измени во [[Special:Preferences#mw-prefsection-searchoptions|Нагодувањата]].)"
+	"wikibasemediainfo-search-suggestions-preference-disable-confirm": "Дали сигурно сакате да го тргнете автодополнувањето според структурирани податоци? (Оваа поставка може да се измени во [[Special:Preferences#mw-prefsection-searchoptions|Нагодувањата]].)",
+	"wikibasemediainfo-special-mediasearch-title": "Пребарување на слики и снимки",
+	"wikibasemediainfo-special-mediasearch-continue": "Следно",
+	"wikibasemediainfo-special-mediasearch-notice": "Имајте предвид дека ова е експериментална можност. Може да не работи според очекувањата, или да продолжи да постои на долг рок.",
+	"apihelp-query+mediasearch-summary": "Пребарување на слики и снимки",
+	"apihelp-query+mediasearch-example": "Пребарај го <kbd>test</kbd> во сликите и снимките.",
+	"apihelp-query+mediasearch-param-search": "Пребаран поим",
+	"apihelp-query+mediasearch-param-limit": "Највеќе ставки во исходот",
+	"apihelp-query+mediasearch-param-continue": "Од каде да се продолжи со пребарувањето"
 }

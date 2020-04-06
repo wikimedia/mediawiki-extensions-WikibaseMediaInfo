@@ -10,6 +10,10 @@
 	},
 	"action-mediainfo-term": "לשנות פרטים של מידע על מדיה (כיתובים, סיכומים)",
 	"right-mediainfo-term": "שינוי מושגים במידע על המדיה (כיתובים, סיכומים)",
+	"action-mediasearch": "לבדוק חיפוש מדיה",
+	"right-mediasearch": "בדיקת חיפוש מדיה",
+	"group-mediasearch-tester": "בודקי חיפוש מדיה",
+	"group-mediasearch-tester-member": "{{GENDER:$1|בודק חיפוש מדיה|בודקת חיפוש מדיה}}",
 	"slot-name-mediainfo": "מידע מובנה על מדיה",
 	"wikibase-entity-mediainfo": "מידע על המדיה",
 	"wikibase-mediainfo-summary-wbsetlabel-add": "נוסף כיתוב [$2]",
@@ -114,5 +118,9 @@
 	"wikibasemediainfo-globecoordinate-map-button-text": "בחירה על המפה",
 	"wikibasemediainfo-search-suggestions-title-depicts": "קבצים שמציגים...",
 	"wikibasemediainfo-search-suggestions-preference-label": "הצעות השלמה אוטומטית מבוססות על נתונים מבניים",
-	"wikibasemediainfo-search-suggestions-preference-disable-confirm": "האם ברצונך באמת להסיר את הצעות ההשלמה האוטומטית שמבוססות על נתונים מבניים? (אפשר לשנות את ההגדרה הזאת ב[[Special:Preferences#mw-prefsection-searchoptions|העדפות]].)"
+	"wikibasemediainfo-search-suggestions-preference-disable-confirm": "האם ברצונך באמת להסיר את הצעות ההשלמה האוטומטית שמבוססות על נתונים מבניים? (אפשר לשנות את ההגדרה הזאת ב[[Special:Preferences#mw-prefsection-searchoptions|העדפות]].)",
+	"wikibasemediainfo-special-mediasearch-title": "חיפוש מדיה",
+	"wikibasemediainfo-special-mediasearch-continue": "הבא",
+	"wikibasemediainfo-special-mediasearch-notice": "נא לשים לב לכך שזאת אפשרות ניסיונית. ייתכן שדברים לא יעבדו באופן צפוי, או ימשיכו להתקיים בטווח הארוך.",
+	"apihelp-query+mediasearch-summary": "חיפוש קובצי מדיה"
 }

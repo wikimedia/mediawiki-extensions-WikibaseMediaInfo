@@ -88,5 +88,6 @@
 	"wikibasemediainfo-quantity-unit-label": "unità",
 	"wikibasemediainfo-quantity-unit-button-text": "Imposta unità",
 	"wikibasemediainfo-globecoordinate-input-button-text": "Aggiungi",
-	"wikibasemediainfo-globecoordinate-map-button-text": "Seleziona sulla mappa"
+	"wikibasemediainfo-globecoordinate-map-button-text": "Seleziona sulla mappa",
+	"apihelp-query+mediasearch-param-limit": "Numero massimo di risultati"
 }

@@ -96,5 +96,7 @@
 	"wikibasemediainfo-globecoordinate-map-button-text": "Selecciona en el mapa",
 	"wikibasemediainfo-search-suggestions-title-depicts": "fitxers que representen…",
 	"wikibasemediainfo-search-suggestions-preference-label": "Cerca suggeriments d'autocompleció basats en dades estructurades",
-	"wikibasemediainfo-search-suggestions-preference-disable-confirm": "Segur que voleu suprimir els suggeriments de compleció automàtica basats en dades de predicció? (Aquest paràmetre es pot modificar en [[Special:Preferences#mw-prefsection-searchoptions|Preferències]].)"
+	"wikibasemediainfo-search-suggestions-preference-disable-confirm": "Segur que voleu suprimir els suggeriments de compleció automàtica basats en dades de predicció? (Aquest paràmetre es pot modificar en [[Special:Preferences#mw-prefsection-searchoptions|Preferències]].)",
+	"wikibasemediainfo-special-mediasearch-continue": "Següent",
+	"apihelp-query+mediasearch-param-search": "Terme de cerca"
 }

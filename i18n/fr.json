@@ -120,6 +120,9 @@
 	"wikibasemediainfo-search-suggestions-title-depicts": "fichiers qui représentent...",
 	"wikibasemediainfo-search-suggestions-preference-label": "Suggestions de complétion automatique de recherche basées sur les données structurées",
 	"wikibasemediainfo-search-suggestions-preference-disable-confirm": "Êtes-vous sûr{{GENDER:||e}} de vouloir supprimer les suggestions de complétion automatique basées sur les données structurées ? (Ce paramètre peut être changé dans [[Special:Preferences#mw-prefsection-searchoptions|vos préférences]].)",
+	"wikibasemediainfo-special-mediasearch-title": "Rechercher un média",
 	"wikibasemediainfo-special-mediasearch-continue": "Suivant",
+	"apihelp-query+mediasearch-summary": "Rechercher des fichiers de médias",
+	"apihelp-query+mediasearch-param-search": "Terme à rechercher",
 	"apihelp-query+mediasearch-param-limit": "Nombre maximal de résultats"
 }

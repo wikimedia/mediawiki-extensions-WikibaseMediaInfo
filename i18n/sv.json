@@ -72,5 +72,8 @@
 	"wikibasemediainfo-time-calendar-julian": "Juliansk",
 	"wikibasemediainfo-quantity-input-button-text": "Lägg till",
 	"wikibasemediainfo-quantity-unit-label": "enhet",
-	"wikibasemediainfo-globecoordinate-input-button-text": "Lägg till"
+	"wikibasemediainfo-globecoordinate-input-button-text": "Lägg till",
+	"wikibasemediainfo-special-mediasearch-title": "Sök media",
+	"wikibasemediainfo-special-mediasearch-continue": "Nästa",
+	"apihelp-query+mediasearch-param-search": "Sökord"
 }

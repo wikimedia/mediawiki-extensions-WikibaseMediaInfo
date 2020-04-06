@@ -2,7 +2,7 @@
 
 namespace Wikibase\MediaInfo\Tests\MediaWiki\DataAccess\Scribunto;
 
-use Wikibase\Client\Tests\DataAccess\Scribunto\Scribunto_LuaWikibaseLibraryTestCase;
+use Wikibase\Client\Tests\Integration\DataAccess\Scribunto\Scribunto_LuaWikibaseLibraryTestCase;
 
 /**
  * @covers \Wikibase\MediaInfo\DataAccess\Scribunto\Scribunto_LuaWikibaseMediaInfoEntityLibrary

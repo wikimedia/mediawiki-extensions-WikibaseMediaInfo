@@ -298,10 +298,10 @@ ComponentWidget.prototype.extractDOMNodes = function ( data ) {
 			key = keys[ i ];
 
 			if (
-				// check if array or string literal, in which case
+				// check if array or object literal, in which case
 				// we'll want to go recursive
 				d[ key ] instanceof Array ||
-				Object.getPrototypeOf( d[ key ] || '' ) === Object.prototype
+				( d[ key ] instanceof Object && Object.getPrototypeOf( d[ key ] ) === Object.prototype )
 			) {
 				recursive = transformNodes( d[ key ] );
 				result[ key ] = recursive.data;

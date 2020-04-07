@@ -52,10 +52,10 @@ mw.template.registerCompiler( 'mustache+dom', {
 							handlers[ random ] = d[ key ];
 							result[ key ] = 'return $( "#' + random + '" ).data( "handler" )( event )';
 						} else if (
-							// check if array or string literal, in which case
+							// check if array or object literal, in which case
 							// we'll want to go recursive
 							d[ key ] instanceof Array ||
-							Object.getPrototypeOf( d[ key ] || '' ) === Object.prototype
+							( d[ key ] instanceof Object && Object.getPrototypeOf( d[ key ] ) === Object.prototype )
 						) {
 							result[ key ] = transformNodes( d[ key ] );
 						} else {

@@ -241,12 +241,12 @@ class WikibaseMediaInfoHooks {
 			$out->preventClickjacking();
 			$imgTitle = $out->getTitle();
 
-			$revision = $out->getWikiPage()->getRevision();
+			$revRecord = $out->getWikiPage()->getRevisionRecord();
 			$entityId = MediaInfoServices::getMediaInfoIdLookup()->getEntityIdForTitle( $imgTitle );
 
 			$wbRepo = WikibaseRepo::getDefaultInstance();
 			$entityLookup = $wbRepo->getEntityLookup();
-			$entityRevisionId = $entityLookup->hasEntity( $entityId ) ? $revision->getId() : null;
+			$entityRevisionId = $entityLookup->hasEntity( $entityId ) ? $revRecord->getId() : null;
 			$entity = $entityLookup->getEntity( $entityId );
 			$serializer = $wbRepo->getAllTypesEntitySerializer();
 			$entityData = ( $entity ? $serializer->serialize( $entity ) : null );

@@ -1,10 +1,10 @@
 {
 	"@metadata": {
 		"authors": [
-			"StanProg",
-			"Vlad5250",
 			"Kaganer",
-			"Ted Masters"
+			"StanProg",
+			"Ted Masters",
+			"Vlad5250"
 		]
 	},
 	"right-mediainfo-term": "Променяне на информационни термини за медия (заглавия, резюмета)",

@@ -1,11 +1,11 @@
 {
 	"@metadata": {
 		"authors": [
-			"Hedda",
 			"Arbormedi",
-			"Mirzali",
 			"BaRaN6161 TURK",
-			"LuCKY"
+			"Hedda",
+			"LuCKY",
+			"Mirzali"
 		]
 	},
 	"action-mediainfo-term": "medya bilgisi terimlerini değiştir (altyazılar, özetler)",

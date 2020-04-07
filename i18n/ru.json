@@ -1,17 +1,17 @@
 {
 	"@metadata": {
 		"authors": [
+			"Alexander Yukal",
+			"Bloomaround",
+			"Kaganer",
+			"Kareyac",
+			"Katunchik",
+			"Movses",
 			"Okras",
 			"Putnik",
-			"Vlad5250",
-			"Kaganer",
-			"Bloomaround",
-			"Kareyac",
-			"Movses",
-			"Чаховіч Уладзіслаў",
 			"Saimongoltinio",
-			"Katunchik",
-			"Alexander Yukal"
+			"Vlad5250",
+			"Чаховіч Уладзіслаў"
 		]
 	},
 	"action-mediainfo-term": "изменение значений метаданных медиафайлов (краткие подписи, опсиания)",

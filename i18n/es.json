@@ -1,14 +1,14 @@
 {
 	"@metadata": {
 		"authors": [
-			"Macofe",
 			"Dgstranz",
 			"Fitoschido",
-			"La Mantis",
-			"Marcelo9987",
-			"MarcoAurelio",
 			"Ihojose",
-			"Joanmp17"
+			"Joanmp17",
+			"La Mantis",
+			"Macofe",
+			"Marcelo9987",
+			"MarcoAurelio"
 		]
 	},
 	"right-mediainfo-term": "Cambiar términos de información de medio (leyendas, resúmenes…)",

@@ -1,9 +1,9 @@
 {
 	"@metadata": {
 		"authors": [
-			"Omotecho",
 			"Afaz",
-			"Marine-Blue"
+			"Marine-Blue",
+			"Omotecho"
 		]
 	},
 	"action-mediainfo-term": "メディアの情報項目を変更（キャプション、概要等）",

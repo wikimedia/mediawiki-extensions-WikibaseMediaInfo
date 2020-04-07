@@ -1,18 +1,20 @@
 {
 	"@metadata": {
 		"authors": [
-			"Piramidion",
-			"Base",
-			"Vlad5250",
 			"Andrew J.Kurbiko",
-			"Ата",
-			"Movses"
+			"Base",
+			"Movses",
+			"Piramidion",
+			"Vlad5250",
+			"Ата"
 		]
 	},
 	"action-mediainfo-term": "зміну інформації медіафайлів (підписів, описів)",
 	"right-mediainfo-term": "Зміна термінів медіа-інформації (підписів, описів)",
 	"action-mediasearch": "тестування медіа-пошуку",
 	"right-mediasearch": "Тестування медіа-пошуком",
+	"group-mediasearch-tester": "Тестувальники медіа-пошуку",
+	"group-mediasearch-tester-member": "{{GENDER:$1|тестувальник медіа-пошуку|тестувальниця медіа-пошуку}}",
 	"slot-name-mediainfo": "Структурована медіа-інформація",
 	"wikibase-entity-mediainfo": "медіа-інформація",
 	"wikibase-mediainfo-summary-wbsetlabel-add": "Додано підпис мовою [$2]",
@@ -117,5 +119,13 @@
 	"wikibasemediainfo-globecoordinate-map-button-text": "Вибрати на мапі",
 	"wikibasemediainfo-search-suggestions-title-depicts": "файли зображують...",
 	"wikibasemediainfo-search-suggestions-preference-label": "Пропозиції автодоповнення пошуку на основі структурованих даних",
-	"wikibasemediainfo-search-suggestions-preference-disable-confirm": "Ви впевнені, що хочете вилучити пропозиції автодоповнення на основі структурованих даних? (Цю опцію можна змінити в [[Special:Preferences#mw-prefsection-searchoptions|налаштуваннях]].)"
+	"wikibasemediainfo-search-suggestions-preference-disable-confirm": "Ви впевнені, що хочете вилучити пропозиції автодоповнення на основі структурованих даних? (Цю опцію можна змінити в [[Special:Preferences#mw-prefsection-searchoptions|налаштуваннях]].)",
+	"wikibasemediainfo-special-mediasearch-title": "Пошук медіа",
+	"wikibasemediainfo-special-mediasearch-continue": "Далі",
+	"wikibasemediainfo-special-mediasearch-notice": "Будь ласка, зауважте, що це експериментальний функціонал. Він може працювати неочікувано або перерватись протягом довгого виконання.",
+	"apihelp-query+mediasearch-summary": "Пошук меда-файлів",
+	"apihelp-query+mediasearch-example": "Пошук медіа за <kbd>test</kbd>.",
+	"apihelp-query+mediasearch-param-search": "Пошук тексту",
+	"apihelp-query+mediasearch-param-limit": "Максимальна кількість результатів",
+	"apihelp-query+mediasearch-param-continue": "Зміщення, з якого продовжити пошук"
 }

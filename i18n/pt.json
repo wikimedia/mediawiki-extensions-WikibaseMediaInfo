@@ -1,12 +1,12 @@
 {
 	"@metadata": {
 		"authors": [
-			"Vitorvicentevalente",
-			"Hamilton Abreu",
-			"Ruila",
 			"CaiusSPQR",
 			"Fúlvio",
-			"Mansil alfalb"
+			"Hamilton Abreu",
+			"Mansil alfalb",
+			"Ruila",
+			"Vitorvicentevalente"
 		]
 	},
 	"action-mediainfo-term": "alterar os termos da informação de ficheiros multimédia (legendas, resumos)",

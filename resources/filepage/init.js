@@ -24,13 +24,14 @@
 	/**
 	 * Infuse server-rendered OOUI tab elements, if present
 	 * @param {jQuery} $content
+	 * @return {OO.ui.IndexLayout}
 	 */
 	function infuseTabs( $content ) {
 		var $tabs = $content.find( '.wbmi-tabs' );
-
-		if ( $tabs.length > 0 ) {
-			OO.ui.infuse( $tabs );
+		if ( $tabs.length === 0 ) {
+			throw new Error( 'Missing MediaInfo tabs' );
 		}
+		return OO.ui.infuse( $tabs );
 	}
 
 	/**
@@ -128,6 +129,29 @@
 	}
 
 	/**
+	 * @param {OO.ui.IndexLayout} tabs
+	 */
+	function scrollToCurrentAnchor( tabs ) {
+		var uri = mw.Uri();
+
+		if ( uri.fragment && uri.fragment in statementPanels ) {
+			Object.keys( tabs.tabPanels ).some( function ( name ) {
+				var panel = tabs.getTabPanel( name ),
+					$node = panel.$element.find( '#' + uri.fragment );
+
+				if ( $node.length === 0 ) {
+					return false;
+				}
+
+				tabs.setTabPanel( name );
+				$node.get( 0 ).scrollIntoView();
+
+				return true;
+			} );
+		}
+	}
+
+	/**
 	 * Add JS elements on the page when the "content" hook is fired in order to
 	 * play nicely with RevisionSlider
 	 *
@@ -146,13 +170,13 @@
 			$statements = $content.find( '.wbmi-entityview-statementsGroup' ),
 			existingProperties = defaultProperties.concat( Object.keys( mediaInfoEntity.statements || {} ) ),
 			deserializer = new StatementListDeserializer(),
+			tabs = infuseTabs( $content ),
 			existingStatementPanels;
 
 		// Create AddPropertyWidget and provide it with all the IDs we know about
 		addPropertyWidget = new AddPropertyWidget( { propertyIds: existingProperties } );
 
 		// Create non-statement JS elements
-		infuseTabs( $content );
 		$content.find( '.wbmi-tabs-container' ).first().before( protectionMsgWidget.$element );
 		captionsPanel = createCaptionsPanel();
 		// eslint-disable-next-line no-jquery/no-global-selector
@@ -186,7 +210,7 @@
 
 		// Create panels statements added by user
 		addPropertyWidget.on( 'choose', function ( input, data ) {
-			var $el = $( '<div>' ).addClass( 'wbmi-entityview-statementsGroup' );
+			var $el = $( '<div>' ).addClass( 'wbmi-entityview-statementsGroup' ).attr( 'id', data.id );
 
 			$el.insertBefore( addPropertyWidget.$element );
 			createStatementsPanel( $el, data.id, data.datatype );
@@ -194,6 +218,13 @@
 		} );
 
 		$.when.apply( $, existingStatementPanels ).then( checkConstraints );
+
+		// because of the tabs, we can't rely on default browser scrolling
+		// to anchor behavior (the node might be in a hidden tab)
+		// if there's a URI fragment, figure out which tab it belong to
+		// (if any), make that tab active, and scroll the element into view
+		window.addEventListener( 'hashchange', scrollToCurrentAnchor.bind( null, tabs ) );
+		scrollToCurrentAnchor( tabs );
 	} );
 
 	/**

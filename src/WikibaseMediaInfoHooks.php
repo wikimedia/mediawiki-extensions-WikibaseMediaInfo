@@ -253,8 +253,15 @@ class WikibaseMediaInfoHooks {
 
 			$existingPropertyTypes = [];
 			if ( $entity instanceof MediaInfo ) {
-				foreach ( $entity->getStatements()->getPropertyIds() as $propertyId ) {
-					$existingPropertyTypes[$propertyId->serialize()] = WBMIHooksHelper::getPropertyType( $propertyId );
+				foreach ( $entity->getStatements() as $statement ) {
+					$propertyId = $statement->getPropertyId();
+					$existingPropertyTypes[$propertyId->serialize()] =
+							WBMIHooksHelper::getPropertyType( $propertyId );
+					foreach ( $statement->getQualifiers() as $qualifierSnak ) {
+						$qualifierPropertyId = $qualifierSnak->getPropertyId();
+						$existingPropertyTypes[$qualifierPropertyId->serialize()] =
+							WBMIHooksHelper::getPropertyType( $qualifierPropertyId );
+					}
 				}
 			}
 

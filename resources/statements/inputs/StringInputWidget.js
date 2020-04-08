@@ -92,6 +92,7 @@ StringInputWidget.prototype.getData = function () {
  */
 StringInputWidget.prototype.setData = function ( data ) {
 	this.input.setValue( data.toJSON() );
+
 	return this.setState( { value: this.input.getValue() } );
 };
 

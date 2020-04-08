@@ -1,0 +1,36 @@
+@import 'mediawiki.mixins';
+@import '../../mediainfo-variables.less';
+
+/* stylelint-disable selector-class-pattern */
+.wbmi-input-wrapper {
+	.flex-display();
+	.flex-wrap( nowrap );
+
+	> div {
+		flex-grow: 1;
+	}
+
+	.wbmi-input-wrapper__snak-type {
+		flex-grow: 0;
+		margin: 0;
+		width: auto;
+
+		.oo-ui-dropdownWidget-handle {
+			border-bottom-left-radius: 0;
+			border-top-left-radius: 0;
+			padding-right: 6px;
+
+			.oo-ui-labelElement-label {
+				@visually-hidden();
+			}
+		}
+	}
+}
+
+.wbmi-input-wrapper--with-snak-type {
+	.oo-ui-textInputWidget .oo-ui-inputWidget-input {
+		border-bottom-right-radius: 0;
+		border-right: 0;
+		border-top-right-radius: 0;
+	}
+}

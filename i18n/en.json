@@ -38,6 +38,7 @@
 	"wikibasemediainfo-filepage-caption-too-short": "$1 more {{PLURAL:$1|character|characters}} required",
 	"wikibasemediainfo-filepage-caption-too-long": "$1 {{PLURAL:$1|character|characters}} over the limit",
 	"wikibasemediainfo-filepage-caption-approaching-limit": "$1 {{PLURAL:$1|character|characters|0=characters}} left",
+	"wikibasemediainfo-filepage-statement-value-type-dropdown-title": "Choose a value type.",
 	"wikibasemediainfo-filepage-statement-custom-value-option": "Custom value",
 	"wikibasemediainfo-filepage-statement-no-value-option": "No value",
 	"wikibasemediainfo-filepage-statement-no-value": "No value exists for this property",

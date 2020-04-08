@@ -182,13 +182,16 @@ QUnit.module( 'ItemWidget', hooks.mediainfo, function () {
 	} );
 
 	QUnit.test( 'createQualifier() returns a new QualifierWidget', function ( assert ) {
-		var ItemWidget = require( pathToWidget ),
+		var done = assert.async(),
+			ItemWidget = require( pathToWidget ),
 			QualifierWidget = require( '../../../../resources/statements/QualifierWidget.js' ),
-			widget = new ItemWidget( { propertyId: 'P1' } ),
-			qualifier;
+			widget = new ItemWidget( { propertyId: 'P1' } );
 
-		qualifier = widget.createQualifier();
-		assert.strictEqual( qualifier instanceof QualifierWidget, true );
+		widget.createQualifier()
+			.then( function ( qualifier ) {
+				assert.strictEqual( qualifier instanceof QualifierWidget, true );
+				done();
+			} );
 	} );
 
 	QUnit.test( 'createQualifier sets QualifierWidget data when snak is provided', function ( assert ) {
@@ -196,7 +199,6 @@ QUnit.module( 'ItemWidget', hooks.mediainfo, function () {
 			ItemWidget = require( pathToWidget ),
 			datamodel = require( 'wikibase.datamodel' ),
 			widget = new ItemWidget( { propertyId: 'P1' } ),
-			qualifier,
 			data;
 
 		data = new datamodel.PropertyValueSnak(
@@ -204,15 +206,11 @@ QUnit.module( 'ItemWidget', hooks.mediainfo, function () {
 			new datamodel.EntityId( 'Q1' )
 		);
 
-		qualifier = widget.createQualifier( data );
-
-		// qualifier's `setData` is async, so let's call `setState` (with no change)
-		// to make sure that we'll wait until the change has propagated and data
-		// has been set
-		qualifier.setState( {} ).then( function () {
-			assert.strictEqual( data.equals( qualifier.getData() ), true );
-			done();
-		} );
+		widget.createQualifier( data )
+			.then( function ( qualifier ) {
+				assert.strictEqual( data.equals( qualifier.getData() ), true );
+				done();
+			} );
 	} );
 
 	QUnit.test( 'addQualifier creates a new QualifierWidget every time it is called', function ( assert ) {

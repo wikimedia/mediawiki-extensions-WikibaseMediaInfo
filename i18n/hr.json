@@ -8,6 +8,8 @@
 	},
 	"action-mediainfo-term": "promjena informacija o medijskoj datoteci (naslovi, sažetci)",
 	"right-mediainfo-term": "Promjena podataka o mediju (opisi, sažetci)",
+	"group-mediasearch-tester": "Ispitivači pretrage medijskih datoteka",
+	"group-mediasearch-tester-member": "{{GENDER:$1|ispitivač pretrage medijskih datoteka|ispitivačica pretrage medijskih datoteka}}",
 	"slot-name-mediainfo": "Strukturirane informacije o mediju",
 	"wikibase-entity-mediainfo": "informacije o mediju",
 	"wikibase-mediainfo-summary-wbsetlabel-add": "Dodan [$2] opis",

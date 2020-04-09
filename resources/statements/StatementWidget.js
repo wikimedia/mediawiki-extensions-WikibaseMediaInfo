@@ -31,7 +31,7 @@ var dataTypesMap = mw.config.get( 'wbDataTypes' ),
 StatementWidget = function ( config ) {
 	var valueType = config.valueType;
 
-	if ( !valueType && config.propertyType ) {
+	if ( !valueType && config.propertyType && config.propertyType in dataTypesMap ) {
 		// backward compatibility from before we were using value type...
 		valueType = dataTypesMap[ config.propertyType ].dataValueType;
 	}
@@ -156,7 +156,6 @@ StatementWidget.prototype.getTemplateData = function () {
 			title: self.state.title,
 			id: self.state.propertyId,
 			label: formatResponse( html ),
-			url: $( html ).attr( 'href' ),
 			isDefaultProperty: self.config.isDefaultProperty,
 			showControls: self.config.showControls,
 			editing: self.isEditing(),
@@ -310,7 +309,7 @@ StatementWidget.prototype.setData = function ( data ) {
 
 		value = type === 'value' ? mainSnak.getValue() : null;
 
-		if ( value && value.getType() !== self.state.valueType ) {
+		if ( self.state.valueType && value && value.getType() !== self.state.valueType ) {
 			throw new Error( 'Invalid statement: value type mismatch' );
 		}
 

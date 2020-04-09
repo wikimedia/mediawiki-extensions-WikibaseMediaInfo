@@ -3,6 +3,7 @@
 namespace Wikibase\MediaInfo;
 
 use Wikibase\DataModel\Entity\PropertyId;
+use Wikibase\DataModel\Services\Lookup\PropertyDataTypeLookupException;
 use Wikibase\MediaInfo\View\MediaInfoEntityStatementsView;
 use Wikibase\MediaInfo\View\MediaInfoEntityTermsView;
 use Wikibase\MediaInfo\View\MediaInfoView;
@@ -19,6 +20,7 @@ class WBMIHooksHelper {
 	 * @param PropertyId $id
 	 * @return string
 	 * @throws \ConfigException
+	 * @throws PropertyDataTypeLookupException
 	 */
 	public static function getPropertyType( PropertyId $id ) {
 		$wbRepo = WikibaseRepo::getDefaultInstance();

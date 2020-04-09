@@ -200,7 +200,7 @@
 				statementPanel = createStatementsPanel(
 					$statement,
 					propId,
-					propertyTypes[ propId ] || 'string'
+					propertyTypes[ propId ]
 				);
 
 			addPropertyWidget.addPropertyId( propId );

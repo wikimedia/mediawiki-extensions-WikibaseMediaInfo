@@ -13,7 +13,9 @@
 						<bdi>
 							{{{label}}}
 						</bdi>
-						{{{constraintsReport}}}
+						<div class="wbmi-constraints-report">
+							{{{constraintsReport}}}
+						</div>
 					</h4>
 				</div>
 			</div>

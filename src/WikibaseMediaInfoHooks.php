@@ -255,12 +255,22 @@ class WikibaseMediaInfoHooks {
 			if ( $entity instanceof MediaInfo ) {
 				foreach ( $entity->getStatements() as $statement ) {
 					$propertyId = $statement->getPropertyId();
-					$existingPropertyTypes[$propertyId->serialize()] =
-							WBMIHooksHelper::getPropertyType( $propertyId );
+					try {
+						$existingPropertyTypes[$propertyId->serialize()] = WBMIHooksHelper::getPropertyType( $propertyId );
+					} catch ( PropertyDataTypeLookupException $e ) {
+						// ignore when property can't be found - it likely no longer exists;
+						// either way, we can't find what datatype is has, so there's no
+						// useful data to be gathered here
+					}
 					foreach ( $statement->getQualifiers() as $qualifierSnak ) {
 						$qualifierPropertyId = $qualifierSnak->getPropertyId();
-						$existingPropertyTypes[$qualifierPropertyId->serialize()] =
-							WBMIHooksHelper::getPropertyType( $qualifierPropertyId );
+						try {
+							$existingPropertyTypes[$qualifierPropertyId->serialize()] = WBMIHooksHelper::getPropertyType( $qualifierPropertyId );
+						} catch ( PropertyDataTypeLookupException $e ) {
+							// ignore when property can't be found - it likely no longer exists;
+							// either way, we can't find what datatype is has, so there's no
+							// useful data to be gathered here
+						}
 					}
 				}
 			}

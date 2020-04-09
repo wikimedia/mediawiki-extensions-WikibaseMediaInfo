@@ -43,7 +43,7 @@ StatementPanel = function StatementPanel( config ) {
 
 	this.statementWidget = new StatementWidget( $.extend( {
 		showControls: true,
-		valueType: dataTypesMap[ this.config.propertyType ].dataValueType
+		valueType: this.config.propertyType in dataTypesMap ? dataTypesMap[ this.config.propertyType ].dataValueType : undefined
 	}, this.config ) );
 
 	this.bindEventHandlers();
@@ -100,13 +100,6 @@ StatementPanel.prototype.populateFormatValueCache = function ( data ) {
 		Object.keys( data[ dataValue ] ).forEach( function ( format ) {
 			Object.keys( data[ dataValue ][ format ] ).forEach( function ( language ) {
 				var properties = data[ dataValue ][ format ][ language ];
-				// backward compatibility for output generated before property ids
-				// were included - this can be deleted after parser caches expire
-				// (30 days after this patch got deployed, so probably ~ february 2020)
-				if ( !( properties instanceof Object ) ) {
-					properties = { '': properties };
-				}
-
 				Object.keys( properties ).forEach( function ( propertyId ) {
 					var json = JSON.parse( dataValue ),
 						key = FormatValueElement.getKey(

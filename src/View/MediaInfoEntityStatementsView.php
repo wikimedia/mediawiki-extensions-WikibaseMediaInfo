@@ -114,10 +114,16 @@ class MediaInfoEntityStatementsView {
 	private function getStatementFormatValueCache( Statement $statement ) {
 		$results = [];
 
-		$results += $this->getSnakFormatValueCache( $statement->getMainSnak() );
+		$results = array_replace_recursive(
+			$results,
+			$this->getSnakFormatValueCache( $statement->getMainSnak() )
+		);
 
 		foreach ( $statement->getQualifiers() as $qualifier ) {
-			$results += $this->getSnakFormatValueCache( $qualifier );
+			$results = array_replace_recursive(
+				$results,
+				$this->getSnakFormatValueCache( $qualifier )
+			);
 		}
 
 		return $results;
@@ -133,12 +139,15 @@ class MediaInfoEntityStatementsView {
 		// format property
 		if ( $snak instanceof SnakObject ) {
 			$dataValue = new EntityIdValue( $snak->getPropertyId() );
-			$result += $this->getValueFormatValueCache(
-				$dataValue,
-				[
-					SnakFormatter::FORMAT_HTML,
-					SnakFormatter::FORMAT_PLAIN,
-				]
+			$result = array_replace_recursive(
+				$result,
+				$this->getValueFormatValueCache(
+					$dataValue,
+					[
+						SnakFormatter::FORMAT_HTML,
+						SnakFormatter::FORMAT_PLAIN,
+					]
+				)
 			);
 		}
 
@@ -194,14 +203,20 @@ class MediaInfoEntityStatementsView {
 		foreach ( $statements as $statement ) {
 			$itemsGroupDiv->appendContent( $this->createStatementDiv( $statement ) );
 			$serializedStatements[] = $statementSerializer->serialize( $statement );
-			$formatValueCache += $this->getStatementFormatValueCache( $statement );
+			$formatValueCache = array_replace_recursive(
+				$formatValueCache,
+				$this->getStatementFormatValueCache( $statement )
+			);
 		}
 
 		// Format main property (e.g. depicts).
 		if ( !empty( $statements ) ) {
-			$formatValueCache += $this->getValueFormatValueCache(
-				new EntityIdValue( $statement->getPropertyId() ),
-				[ SnakFormatter::FORMAT_HTML ]
+			$formatValueCache = array_replace_recursive(
+				$formatValueCache,
+				$this->getValueFormatValueCache(
+					new EntityIdValue( $statement->getPropertyId() ),
+					[ SnakFormatter::FORMAT_HTML ]
+				)
 			);
 		}
 

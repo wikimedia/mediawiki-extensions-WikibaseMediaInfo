@@ -161,7 +161,7 @@ QualifierWidget.prototype.setData = function ( data ) {
 
 	dataValue = snakType === valueTypes.VALUE ? data.getValue() : null;
 	dataType = dataValue ? dataValue.getType() : undefined;
-	if ( !dataType ) {
+	if ( !dataType && this.propertyTypes[ propertyId ] in this.dataTypeMap ) {
 		dataType = this.dataTypeMap[ this.propertyTypes[ propertyId ] ].dataValueType || undefined;
 	}
 

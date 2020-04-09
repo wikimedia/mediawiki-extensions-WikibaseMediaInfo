@@ -43,6 +43,7 @@
 	"wikibasemediainfo-filepage-caption-too-short": "Необхідно ще $1 {{PLURAL:$1|символ|символи|символів}}",
 	"wikibasemediainfo-filepage-caption-too-long": "Ліміт перевищено на $1 {{PLURAL:$1|символ|символи|символів}}",
 	"wikibasemediainfo-filepage-caption-approaching-limit": "{{PLURAL:$1|Залишився $1 символ|Залишилося $1 символи|Залишилось $1 символів}}",
+	"wikibasemediainfo-filepage-statement-value-type-dropdown-title": "Виберіть тип значення.",
 	"wikibasemediainfo-filepage-statement-custom-value-option": "Нестандартне значення",
 	"wikibasemediainfo-filepage-statement-no-value-option": "Без значення",
 	"wikibasemediainfo-filepage-statement-no-value": "Для цієї властивості значення відсутнє",

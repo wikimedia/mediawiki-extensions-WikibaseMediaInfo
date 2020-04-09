@@ -42,6 +42,7 @@
 	"wikibasemediainfo-filepage-caption-too-short": "$1 {{PLURAL:$1|karakterden|karakterden}} fazlası gerekli",
 	"wikibasemediainfo-filepage-caption-too-long": "$1 {{PLURAL:$1|karakter|karakter}} sınırı aşıyor",
 	"wikibasemediainfo-filepage-caption-approaching-limit": "$1 {{PLURAL:$1|karakter|karakter|0=karakter}} kaldı",
+	"wikibasemediainfo-filepage-statement-value-type-dropdown-title": "Bir değer türü seçin.",
 	"wikibasemediainfo-filepage-statement-custom-value-option": "Özel değer",
 	"wikibasemediainfo-filepage-statement-no-value-option": "Değer yok",
 	"wikibasemediainfo-filepage-statement-no-value": "Bu mülk için değer yok",

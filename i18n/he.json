@@ -42,6 +42,7 @@
 	"wikibasemediainfo-filepage-caption-too-short": "{{PLURAL:$1|נדרש עוד תו אחד|נדרשים עוד $1 תווים}}",
 	"wikibasemediainfo-filepage-caption-too-long": "{{PLURAL:$1|תו אחד|$1 תווים}} מעבר למגבלה",
 	"wikibasemediainfo-filepage-caption-approaching-limit": "{{PLURAL:$1|נותר תו אחד|נותרו $1 תווים}}",
+	"wikibasemediainfo-filepage-statement-value-type-dropdown-title": "נא לבחור את סוג הערך.",
 	"wikibasemediainfo-filepage-statement-custom-value-option": "ערך מותאם אישית",
 	"wikibasemediainfo-filepage-statement-no-value-option": "אין ערך",
 	"wikibasemediainfo-filepage-statement-no-value": "אין ערך למאפיין הזה",

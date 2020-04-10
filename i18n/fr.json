@@ -47,6 +47,7 @@
 	"wikibasemediainfo-filepage-caption-too-short": "$1 caractère{{PLURAL:$1||s}} de plus nécessaire{{PLURAL:$1||s}}",
 	"wikibasemediainfo-filepage-caption-too-long": "$1 {{PLURAL:$1|caractère|caractères}} après la limite",
 	"wikibasemediainfo-filepage-caption-approaching-limit": "{{PLURAL:$1|0=aucun caractère restant|$1 caractère restant|$1 caractères restants}}",
+	"wikibasemediainfo-filepage-statement-value-type-dropdown-title": "Choisir un type de valeur.",
 	"wikibasemediainfo-filepage-statement-custom-value-option": "Valeur personnalisée",
 	"wikibasemediainfo-filepage-statement-no-value-option": "Aucune valeur",
 	"wikibasemediainfo-filepage-statement-no-value": "Aucune valeur n’existe pour cette propriété",

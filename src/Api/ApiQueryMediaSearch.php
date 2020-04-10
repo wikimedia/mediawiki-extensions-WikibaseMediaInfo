@@ -132,12 +132,12 @@ class ApiQueryMediaSearch extends ApiQueryGeneratorBase {
 	 * @return Generator
 	 */
 	protected function getIndividualSearchQueries( $term, $langCode ): Generator {
-		// the limit (of 15) has no specific meaning - we just need to put
-		// some limit on it, and 15 Q-ids (of ~9 characters long) + separators
-		// are about half of the allowed search query length (of 300 chars),
+		// the limit (of 10) has no specific meaning - we just need to put
+		// some limit on it, and 10 Q-ids (of ~9 characters long) + separators
+		// are about a third of the allowed search query length (of 300 chars),
 		// leaving a reasonable enough amount of space still for the other
 		// search queries, even in the event of finding many matching items
-		$items = $this->findMatchingItems( $term, 15 );
+		$items = $this->findMatchingItems( $term, 10 );
 
 		// haswbstatement:P180=Q123
 		if ( count( $items ) > 0 ) {
@@ -165,7 +165,7 @@ class ApiQueryMediaSearch extends ApiQueryGeneratorBase {
 		}, $relevantTerms );
 		$derivedTerm = implode( ' OR ', $greyspacedTerms );
 
-		// incaption:"my term@lang" + other relevant terms
+		// incaption:my_term@lang + other relevant terms
 		foreach ( $greyspacedTerms as $greyspacedTerm ) {
 			yield 'incaption:' . $greyspacedTerm . '@' . $langCode;
 		}
@@ -176,7 +176,7 @@ class ApiQueryMediaSearch extends ApiQueryGeneratorBase {
 			yield 'deepcat:' . implode( '|', $categories );
 		}
 
-		// incaption:"my term@en" (default plaintext search searches all
+		// incaption:my_term@en (default plaintext search searches all
 		// content which could be any language, so let's try English captions
 		// as well (if we have not already)
 		// $derivedTerm doesn't make sense - the label(s) we received from
@@ -212,6 +212,11 @@ class ApiQueryMediaSearch extends ApiQueryGeneratorBase {
 			$search = $query;
 			if ( count( $previousQueries ) > 0 ) {
 				$search .= ' -' . implode( ' -', $previousQueries );
+			}
+			if ( strlen( $search ) > 300 ) {
+				// once we've exceeded the maximum search query length of 300 characters
+				// (which we've tried very hard not to reach), stop querying or we'll fatal
+				break;
 			}
 			yield $search;
 			$previousQueries[] = $query;
@@ -358,7 +363,7 @@ class ApiQueryMediaSearch extends ApiQueryGeneratorBase {
 			'srnamespace' => NS_CATEGORY,
 			'srprop' => 'titlesnippet',
 			// request more than needed - order will be done differently
-			'srlimit' => $limit + 10,
+			'srlimit' => $limit + 20,
 		];
 
 		$response = $this->internalApiRequest( $params );
@@ -370,7 +375,17 @@ class ApiQueryMediaSearch extends ApiQueryGeneratorBase {
 		usort( $results, function ( $a, $b ) {
 			$aTitleMatches = preg_match_all( '/<span class=\"searchmatch\">/', $a['titlesnippet'] );
 			$bTitleMatches = preg_match_all( '/<span class=\"searchmatch\">/', $b['titlesnippet'] );
-			return $bTitleMatches <=> $aTitleMatches;
+			// bit of a trick to prefer shorter titles (longer matches are likely
+			// more specific subcategories) when amount of matches is otherwise equal
+			$aScore = $aTitleMatches * 1000 - strlen( $a['title'] );
+			$bScore = $bTitleMatches * 1000 - strlen( $b['title'] );
+			return $bScore <=> $aScore;
+		} );
+
+		// exclude titles that are too long: they are likely too specific, and damaging to our
+		// overall search because we need to keep our search query length below 300
+		$results = array_filter( $results, function ( $result ) {
+			return strlen( $result['title'] ) < 50;
 		} );
 
 		$categories = [];

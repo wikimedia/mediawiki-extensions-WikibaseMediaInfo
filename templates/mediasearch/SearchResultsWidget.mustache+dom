@@ -42,31 +42,32 @@
 
 			<a href="{{canonicalurl}}" class="wbmi-special-search--text">
 				<span class="wbmi-special-search--title">
-					{{#imageinfo.0.extmetadata.ObjectName}}{{value}}{{/imageinfo.0.extmetadata.ObjectName}}
+					{{#imageinfo.0.extmetadata.ObjectName}}
+						{{!
+							This is a bit of a hack: ObjectName can contain simple HTML,
+							which in turn can contain another link, and nesting <a> tags is
+							forbidden (and browsers enforce it by implicitly terminating
+							previously open <a> tags, i.e. this link)
+							Wrapped inside <object>, however, this seems to work just fine and
+							as expected!
+						 }}
+						<object class="wbmi-special-search--html-object">{{{value}}}</object>
+					{{/imageinfo.0.extmetadata.ObjectName}}
 					{{^imageinfo.0.extmetadata.ObjectName}}{{title}}{{/imageinfo.0.extmetadata.ObjectName}}
 				</span>
 
-				{{#terms.label}}
 				<span class="wbmi-special-search--label">
-					{{.}}
-				</span>
-				{{/terms.label}}
+					{{#terms.label}}{{.}}{{/terms.label}}
 
-				{{^terms.label}}
-				{{#imageinfo.0.extmetadata.ImageDescription}}
-				<span class="wbmi-special-search--label">
-					{{!
-						This is a bit of a hack: ImageDescription can contain simple HTML,
-						which in turn can contain another link, and nesting <a> tags is
-						forbidden (and browsers enforce it by implicitly terminating
-						previously open <a> tags, i.e. this link)
-						Wrapped inside <object>, however, this seems to work just fine and
-						as expected!
-					 }}
-					<object>{{{value}}}</object>
+					{{^terms.label}}
+					{{#imageinfo.0.extmetadata.ImageDescription}}
+						{{!
+							Just like ObjectName, ImageDescription can contain HTML, so same hack.
+						 }}
+						<object class="wbmi-special-search--html-object">{{{value}}}</object>
+					{{/imageinfo.0.extmetadata.ImageDescription}}
+					{{/terms.label}}
 				</span>
-				{{/imageinfo.0.extmetadata.ImageDescription}}
-				{{/terms.label}}
 			</a>
 		</div>
 	{{/results}}

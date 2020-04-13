@@ -6,7 +6,7 @@
 		<div class="wbmi-language-label">{{{language}}}</div>
 		<div class="wbmi-caption-value{{#empty}}  wbmi-entityview-emptyCaption{{/empty}}" dir="{{textDirection}}" lang="{{langCode}}">
 			{{{caption}}}
-			{{#inputError}}<div class="wbmi-caption-publishError">{{inputError}}</div>{{/inputError}}
+			{{#inputError}}<div class="wbmi-caption-publishError">{{{inputError}}}</div>{{/inputError}}
 				{{#inputWarning}}<div class="wbmi-caption-publishWarning">{{inputWarning}}</div>{{/inputWarning}}
 		</div>
 		{{#deleter}}{{{deleter}}}{{/deleter}}

@@ -2,6 +2,7 @@
 	"@metadata": {
 		"authors": [
 			"Amirsara",
+			"FarsiNevis",
 			"Ladsgroup",
 			"Physicsch",
 			"Reza1615",
@@ -51,5 +52,10 @@
 	"wikibasemediainfo-statements-item-remove": "حذف",
 	"wikibasemediainfo-statements-learn-more": "اطلاعات بیشتر",
 	"wikibasemediainfo-statements-remove": "حذف همه",
-	"wikibasemediainfo-statements-title-depicts": "آیتم‌هایی که در این پرونده نمایش داده شده‌اند"
+	"wikibasemediainfo-statements-title-depicts": "آیتم‌هایی که در این پرونده نمایش داده شده‌اند",
+	"wikibasemediainfo-special-mediasearch-title": "جستجوی رسانه‌ها",
+	"wikibasemediainfo-special-mediasearch-continue": "بعدی",
+	"apihelp-query+mediasearch-summary": "جستجوی پرونده‌های رسانه‌ای",
+	"apihelp-query+mediasearch-example": "جستجوی رسانه‌ها برای <kbd>آزمایش</kbd>.",
+	"apihelp-query+mediasearch-param-search": "عبارت جستجو"
 }

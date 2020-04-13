@@ -96,7 +96,7 @@
 	"wikibasemediainfo-time-input-placeholder": "Saisir l’heure",
 	"wikibasemediainfo-time-timestamp-empty": "Veuillez entrer une valeur pour l’heure",
 	"wikibasemediainfo-time-timestamp-invalid": "La valeur de l’heure n’est pas au bon format.",
-	"wikibasemediainfo-time-timestamp-formatted": "Sera affiché comme : $1",
+	"wikibasemediainfo-time-timestamp-formatted": "Sera affiché comme : $1",
 	"wikibasemediainfo-time-precision-label": "Précision",
 	"wikibasemediainfo-time-precision-year1g": "milliard d’années",
 	"wikibasemediainfo-time-precision-year100m": "cent millions d’années",

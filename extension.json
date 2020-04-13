@@ -455,6 +455,7 @@
 				"resources/statements/ItemWidget.less",
 				"resources/statements/QualifierWidget.less",
 				"resources/statements/LinkNoticeWidget.less",
+				"resources/statements/ConstraintsReportHandlerElement.less",
 				"resources/statements/inputs/EntityAutocompleteInputWidget.less",
 				"resources/statements/inputs/GlobeCoordinateInputWidget.less",
 				"resources/statements/inputs/TimeInputWidget.less",

@@ -13,7 +13,7 @@
 	"action-mediasearch": "לבדוק חיפוש מדיה",
 	"right-mediasearch": "בדיקת חיפוש מדיה",
 	"group-mediasearch-tester": "בודקי חיפוש מדיה",
-	"group-mediasearch-tester-member": "{{GENDER:$1|בודק חיפוש מדיה|בודקת חיפוש מדיה}}",
+	"group-mediasearch-tester-member": "{{GENDER:$1|בודק|בודקת}} חיפוש מדיה",
 	"slot-name-mediainfo": "מידע מובנה על מדיה",
 	"wikibase-entity-mediainfo": "מידע על המדיה",
 	"wikibase-mediainfo-summary-wbsetlabel-add": "נוסף כיתוב [$2]",
@@ -122,10 +122,5 @@
 	"wikibasemediainfo-search-suggestions-preference-disable-confirm": "האם ברצונך באמת להסיר את הצעות ההשלמה האוטומטית שמבוססות על נתונים מבניים? (אפשר לשנות את ההגדרה הזאת ב[[Special:Preferences#mw-prefsection-searchoptions|העדפות]].)",
 	"wikibasemediainfo-special-mediasearch-title": "חיפוש מדיה",
 	"wikibasemediainfo-special-mediasearch-continue": "הבא",
-	"wikibasemediainfo-special-mediasearch-notice": "נא לשים לב לכך שזאת אפשרות ניסיונית. ייתכן שדברים לא יעבדו באופן צפוי, או ימשיכו להתקיים בטווח הארוך.",
-	"apihelp-query+mediasearch-summary": "חיפוש קובצי מדיה",
-	"apihelp-query+mediasearch-example": "חיפוש <kbd>test</kbd> במדיה.",
-	"apihelp-query+mediasearch-param-search": "הביטוי לחיפוש",
-	"apihelp-query+mediasearch-param-limit": "מספר מרבי של תוצאות",
-	"apihelp-query+mediasearch-param-continue": "היסט לתחילת החיפוש"
+	"wikibasemediainfo-special-mediasearch-notice": "נא לשים לב לכך שזאת אפשרות ניסיונית. ייתכן שדברים לא יעבדו באופן צפוי, או ימשיכו להתקיים בטווח הארוך."
 }

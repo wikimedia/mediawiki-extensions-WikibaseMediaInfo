@@ -1,0 +1,12 @@
+{
+	"@metadata": {
+		"authors": [
+			"Kly"
+		]
+	},
+	"apihelp-query+mediasearch-summary": "搜尋媒體檔案",
+	"apihelp-query+mediasearch-example": "搜尋用於 <kbd>test</kbd> 的媒體。",
+	"apihelp-query+mediasearch-param-search": "搜尋項目",
+	"apihelp-query+mediasearch-param-limit": "結果數量上限",
+	"apihelp-query+mediasearch-param-continue": "持續搜尋的偏移"
+}

@@ -5,6 +5,7 @@
 			"Jdforrester",
 			"Mainframe98",
 			"Optilete",
+			"PonkoSasuke",
 			"Romaine",
 			"Sjoerddebruin",
 			"Spinster",
@@ -12,6 +13,10 @@
 		]
 	},
 	"right-mediainfo-term": "Pas de media-informatietermen aan (onderschriften, samenvattingen)",
+	"action-mediasearch": "test media search",
+	"right-mediasearch": "Test media search",
+	"group-mediasearch-tester": "Media search testers",
+	"group-mediasearch-tester-member": "{{GENDER:$1|media search tester}}",
 	"slot-name-mediainfo": "Gestructureerde media-informatie",
 	"wikibase-entity-mediainfo": "media-informatie",
 	"wikibase-mediainfo-summary-wbsetlabel-add": "[$2] bijschrift toegevoegd",
@@ -39,6 +44,7 @@
 	"wikibasemediainfo-filepage-caption-empty": "Beschrijf in één regel wat dit bestand voorstelt",
 	"wikibasemediainfo-filepage-caption-too-long": "$1 {{PLURAL:$1|teken|tekens}} over de limiet",
 	"wikibasemediainfo-filepage-caption-approaching-limit": "$1 {{PLURAL:$1|teken|tekens|0=tekens}} over",
+	"wikibasemediainfo-filepage-statement-value-type-dropdown-title": "Kies een waardetype.",
 	"wikibasemediainfo-filepage-statement-no-value": "Er is geen waarde voor deze eigenschap",
 	"wikibasemediainfo-filepage-statement-no-data": "Geen gegevens beschikbaar",
 	"wikibasemediainfo-filepage-statement-no-results": "Geen resultaten gevonden",
@@ -65,5 +71,8 @@
 	"wikibasemediainfo-statements-link-notice-text": "Labels van gestructureerde data linken naar de respectievelijke Wikidata-pagina's en openen in een nieuw venster.",
 	"wikibasemediainfo-remove-all-statements-confirm": "Met deze actie worden alle bestaande waarden voor deze eigenschap verwijderd. Eigenschappen zonder waarden worden verwijderd wanneer wijzigingen worden gepubliceerd. Weet je het zeker?",
 	"wikibasemediainfo-remove-all-statements-confirm-title": "Alles verwijderen?",
-	"wikibasemediainfo-remove-all-statements-confirm-accept": "verwijder"
+	"wikibasemediainfo-remove-all-statements-confirm-accept": "verwijder",
+	"wikibasemediainfo-special-mediasearch-title": "Zoeken in media",
+	"wikibasemediainfo-special-mediasearch-continue": "Volgende",
+	"wikibasemediainfo-special-mediasearch-notice": "Dit is een experimentele service. Het is mogelijk dat dingen niet werken als verwacht, of niet eeuwig blijven bestaan."
 }

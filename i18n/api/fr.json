@@ -1,0 +1,14 @@
+{
+	"@metadata": {
+		"authors": [
+			"Gomoko",
+			"Noelie-b",
+			"Wladek92"
+		]
+	},
+	"apihelp-query+mediasearch-summary": "Rechercher des fichiers de médias",
+	"apihelp-query+mediasearch-example": "Rechercher des médias pour <kbd>test</kbd>.",
+	"apihelp-query+mediasearch-param-search": "Terme à rechercher",
+	"apihelp-query+mediasearch-param-limit": "Nombre maximal de résultats",
+	"apihelp-query+mediasearch-param-continue": "Décalage à partir duquel continuer à chercher"
+}

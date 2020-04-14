@@ -122,10 +122,5 @@
 	"wikibasemediainfo-search-suggestions-preference-disable-confirm": "Bist du sicher, dass du die Suchvorschläge der automatischen Vervollständigung basierend auf den strukturierten Daten entfernen möchtest? (Diese Einstellung kann in den [[Special:Preferences#mw-prefsection-searchoptions|Einstellungen]] geändert werden.)",
 	"wikibasemediainfo-special-mediasearch-title": "Nach Medien suchen",
 	"wikibasemediainfo-special-mediasearch-continue": "Weiter",
-	"wikibasemediainfo-special-mediasearch-notice": "Bitte beachte, dass dies eine experimentelle Funktion ist. Es kann sein, dass die Dinge nicht wie erwartet funktionieren oder dass sie auf lange Sicht nicht weiter bestehen.",
-	"apihelp-query+mediasearch-summary": "Suche Mediendateien",
-	"apihelp-query+mediasearch-example": "Suche Mediendateien für <kbd>test</kbd>.",
-	"apihelp-query+mediasearch-param-search": "Suchbegriff",
-	"apihelp-query+mediasearch-param-limit": "Maximale Anzahl der Ergebnisse",
-	"apihelp-query+mediasearch-param-continue": "Versatz, wo eine Suche weitergeführt werden soll"
+	"wikibasemediainfo-special-mediasearch-notice": "Bitte beachte, dass dies eine experimentelle Funktion ist. Es kann sein, dass die Dinge nicht wie erwartet funktionieren oder dass sie auf lange Sicht nicht weiter bestehen."
 }

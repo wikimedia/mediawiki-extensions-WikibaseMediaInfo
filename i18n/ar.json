@@ -6,12 +6,15 @@
 			"Meno25",
 			"Mr. Ibrahem",
 			"NEHAOUA",
+			"Tala Ali",
 			"ديفيد",
 			"محمد أحمد عبد الفتاح"
 		]
 	},
 	"action-mediainfo-term": "تغيير مصطلحات معلومات الوسائط (التسميات التوضيحية والملخصات)",
 	"right-mediainfo-term": "تغيير مصطلحات معلومات الوسائط (التسميات التوضيحية والملخصات)",
+	"action-mediasearch": "اختبار بحث الوسائط",
+	"group-mediasearch-tester": "مختبرين بحث الوسائط",
 	"slot-name-mediainfo": "معلومات الوسائط الهيكلية",
 	"wikibase-entity-mediainfo": "معلومات الوسائط",
 	"wikibase-mediainfo-summary-wbsetlabel-add": "تمت إضافة التسمية التوضيحية [$2]",
@@ -40,6 +43,7 @@
 	"wikibasemediainfo-filepage-caption-too-short": "$1 {{PLURAL:$1|حرف أكثر مطلوب|حروف أكثر مطلوبة}}",
 	"wikibasemediainfo-filepage-caption-too-long": "$1 {{PLURAL:$1|حرف|حروف}} فوق الحد",
 	"wikibasemediainfo-filepage-caption-approaching-limit": "$1 {{PLURAL:$1|حرف|حروف|0=حروف}} متبقي",
+	"wikibasemediainfo-filepage-statement-value-type-dropdown-title": ".اختر نوع القيمة",
 	"wikibasemediainfo-filepage-statement-custom-value-option": "قيمة مخصصة",
 	"wikibasemediainfo-filepage-statement-no-value-option": "لا قيمة",
 	"wikibasemediainfo-filepage-statement-no-value": "لا توجد قيمة لهذه الخاصية",
@@ -117,5 +121,6 @@
 	"wikibasemediainfo-search-suggestions-title-depicts": "ملفات تصور...",
 	"wikibasemediainfo-search-suggestions-preference-label": "ابحث في اقتراحات الإكمال التلقائي بناءً على البيانات المنظمة",
 	"wikibasemediainfo-search-suggestions-preference-disable-confirm": "هل تريد بالتأكيد إزالة اقتراحات الإكمال التلقائي استنادا إلى بيانات منظمة؟ (يمكن تغيير هذا الإعداد في [[Special:Preferences#mw-prefsection-searchoptions|التفضيلات]].)",
+	"wikibasemediainfo-special-mediasearch-title": "بحث في الملفات",
 	"wikibasemediainfo-special-mediasearch-continue": "التالية"
 }

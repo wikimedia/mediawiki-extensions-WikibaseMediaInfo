@@ -41,7 +41,11 @@ SearchResultsWidget.prototype.getTemplateData = function () {
 		term: this.state.term,
 		limit: this.state.limit,
 		continue: this.state.continue,
-		results: this.state.results
+		results: this.state.results.map( function ( result ) {
+			return $.extend( {}, result, {
+				name: new mw.Title( result.title ).getNameText()
+			} );
+		} )
 	};
 };
 
@@ -61,10 +65,8 @@ SearchResultsWidget.prototype.fetchMore = function () {
 		gmscontinue: this.state.continue,
 		prop: 'info|imageinfo|pageterms',
 		inprop: 'url',
-		iiprop: 'url|size|extmetadata',
+		iiprop: 'url|size',
 		iiurlheight: 200,
-		iiextmetadatalanguage: mw.config.get( 'wgUserLanguage' ),
-		iiextmetadatafilter: 'ObjectName|ImageDescription|LicenseShortName|UsageTerms',
 		wbptterms: 'label'
 	} ).then( function ( response ) {
 		var pages = response.query && response.query.pages || [],

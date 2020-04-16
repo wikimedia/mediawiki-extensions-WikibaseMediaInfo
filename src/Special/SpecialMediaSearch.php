@@ -12,6 +12,7 @@ use OOUI\ButtonInputWidget;
 use OutputPage;
 use RequestContext;
 use TemplateParser;
+use Title;
 use UnlistedSpecialPage;
 use Wikibase\MediaInfo\MustacheDomTemplateParser;
 use Wikimedia\Assert\Assert;
@@ -43,8 +44,7 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 
 		$this->api = $api ?: new ApiMain( new FauxRequest() );
 		$this->templateParser = $templateParser ?: new MustacheDomTemplateParser(
-			__DIR__ . '/../../templates/mediasearch',
-			/* $forceRecompile */ false
+			__DIR__ . '/../../templates/mediasearch'
 		);
 	}
 
@@ -107,7 +107,11 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 						return [ 'key' => $key, 'value' => $value ];
 					}, array_keys( $querystring ), array_values( $querystring ) ),
 					'term' => $term,
-					'results' => $results,
+					'results' => array_map( function ( $result ) {
+						$title = Title::newFromDBkey( $result['title'] );
+						$filename = $title ? $title->getText() : $result['title'];
+						return $result + [ 'name' => pathinfo( $filename, PATHINFO_FILENAME ) ];
+					}, $results ),
 					'limit' => $limit,
 					'continue' => $continue,
 					'inputWidget' => $inputWidget,
@@ -156,10 +160,8 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 			'gmscontinue' => $continue,
 			'prop' => 'info|imageinfo|pageterms',
 			'inprop' => 'url',
-			'iiprop' => 'url|size|extmetadata',
+			'iiprop' => 'url|size',
 			'iiurlheight' => 200,
-			'iiextmetadatalanguage' => $langCode,
-			'iiextmetadatafilter' => 'ObjectName|ImageDescription|LicenseShortName|UsageTerms',
 			'wbptterms' => 'label',
 		] );
 		$context = new DerivativeContext( RequestContext::getMain() );

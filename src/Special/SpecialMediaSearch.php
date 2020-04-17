@@ -161,7 +161,7 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 			'prop' => 'info|imageinfo|pageterms',
 			'inprop' => 'url',
 			'iiprop' => 'url|size',
-			'iiurlheight' => 200,
+			'iiurlheight' => 180,
 			'wbptterms' => 'label',
 		] );
 		$context = new DerivativeContext( RequestContext::getMain() );

@@ -10,7 +10,7 @@
 			}}
 			{{^imageinfo.0.duration}}{{#imageinfo.0.thumbwidth}}style="width: {{.}}px"{{/imageinfo.0.thumbwidth}}{{/imageinfo.0.duration}}
 		>
-			<a class="wbmi-special-search--imagelink" href="{{canonicalurl}}" title="{{title}}">
+			<a class="wbmi-special-search--imagelink" href="{{canonicalurl}}" title="{{#terms.label}}{{.}}{{/terms.label}}{{^terms.label}}{{title}}{{/terms.label}}">
 				<img
 					{{#imageinfo.0.thumburl}}src="{{.}}"{{/imageinfo.0.thumburl}}
 					{{^imageinfo.0.duration}}
@@ -21,53 +21,6 @@
 					class="wbmi-special-search--image"
 					loading="lazy"
 				/>
-
-				<span class="wbmi-special-search--extra">
-					{{^imageinfo.0.duration}}
-						<span class="wbmi-special-search--dimensions">
-							{{imageinfo.0.width}} x {{imageinfo.0.height}}
-						</span>
-					{{/imageinfo.0.duration}}
-
-					{{#imageinfo.0.extmetadata.LicenseShortName}}
-						<abbr
-							class="wbmi-special-search--license"
-							{{#imageinfo.0.extmetadata.UsageTerms}}title="{{value}}"{{/imageinfo.0.extmetadata.UsageTerms}}
-						>
-							{{value}}
-						</abbr>
-					{{/imageinfo.0.extmetadata.LicenseShortName}}
-				</span>
-			</a>
-
-			<a href="{{canonicalurl}}" class="wbmi-special-search--text">
-				<span class="wbmi-special-search--title">
-					{{#imageinfo.0.extmetadata.ObjectName}}
-						{{!
-							This is a bit of a hack: ObjectName can contain simple HTML,
-							which in turn can contain another link, and nesting <a> tags is
-							forbidden (and browsers enforce it by implicitly terminating
-							previously open <a> tags, i.e. this link)
-							Wrapped inside <object>, however, this seems to work just fine and
-							as expected!
-						 }}
-						<object class="wbmi-special-search--html-object">{{{value}}}</object>
-					{{/imageinfo.0.extmetadata.ObjectName}}
-					{{^imageinfo.0.extmetadata.ObjectName}}{{name}}{{/imageinfo.0.extmetadata.ObjectName}}
-				</span>
-
-				<span class="wbmi-special-search--label">
-					{{#terms.label}}{{.}}{{/terms.label}}
-
-					{{^terms.label}}
-					{{#imageinfo.0.extmetadata.ImageDescription}}
-						{{!
-							Just like ObjectName, ImageDescription can contain HTML, so same hack.
-						 }}
-						<object class="wbmi-special-search--html-object">{{{value}}}</object>
-					{{/imageinfo.0.extmetadata.ImageDescription}}
-					{{/terms.label}}
-				</span>
 			</a>
 		</div>
 	{{/results}}

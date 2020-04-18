@@ -2,6 +2,7 @@
 
 namespace Wikibase\MediaInfo\Tests\MediaWiki;
 
+use CirrusSearch\CirrusSearch;
 use CirrusSearch\Search\CirrusIndexField;
 use Elastica\Document;
 use Hooks;
@@ -254,7 +255,7 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 			->willReturn( $searchIndexData );
 		$mediaInfoHandler->expects( $this->once() )
 			->method( 'getFieldsForSearchIndex' )
-			->with( $this->isInstanceOf( \CirrusSearch::class ) )
+			->with( $this->isInstanceOf( CirrusSearch::class ) )
 			->willReturn( $fieldsForSearchIndex );
 		$page = $this->getMockBuilder( \WikiPage::class )
 			->disableOriginalConstructor()

@@ -3,6 +3,7 @@
 namespace Wikibase\MediaInfo;
 
 use AbstractContent;
+use CirrusSearch\CirrusSearch;
 use CirrusSearch\Connection;
 use CirrusSearch\Search\CirrusIndexField;
 use ContentHandler;
@@ -648,7 +649,7 @@ class WikibaseMediaInfoHooks {
 			$content = $mediaInfoSlot->getContent();
 		}
 
-		$engine = new \CirrusSearch();
+		$engine = new CirrusSearch();
 		$fieldDefinitions = $handler->getFieldsForSearchIndex( $engine );
 		$slotData = $handler->getSlotDataForSearchIndex( $content );
 

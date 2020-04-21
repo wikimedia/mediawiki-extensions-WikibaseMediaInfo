@@ -1,8 +1,10 @@
 {
 	"@metadata": {
 		"authors": [
-			"Abijeet Patro"
+			"Abijeet Patro",
+			"गोपाल"
 		]
 	},
+	"wikibasemediainfo-filepage-statement-value-type-dropdown-title": "मान प्रकार चुनें।",
 	"wikibasemediainfo-special-mediasearch-continue": "अगला"
 }

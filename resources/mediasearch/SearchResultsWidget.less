@@ -1,6 +1,20 @@
 @import 'mediawiki.mixins';
 @import '../mediainfo-variables.less';
 
+// OOUI's indexlayout is JS-only, so I'm inserting links as tabs
+// to make it work without JS; I don't want them styles as links,
+// though... just the parent's tab styles please!
+// stylelint-disable-next-line selector-class-pattern
+.wbmi-special-search--tabs .oo-ui-menuLayout-menu a {
+	color: inherit;
+	text-decoration: inherit;
+}
+
+// stylelint-disable-next-line selector-class-pattern
+.wbmi-special-search--tabs .oo-ui-indexLayout-stackLayout > .oo-ui-panelLayout {
+	padding: 0;
+}
+
 // to reach a visually pleasing grid, with consistent-ish margins,
 // images will need to (be cropped to) very similar dimensions
 // 1. most common aspect ratios are 4:3, 3:2 and 16:9, with 3:2
@@ -21,17 +35,24 @@
 @average-aspect-ratio: 3 / 2; // width / height
 @landscape-portrait-ratio: 2 / 1; // landscape / portrait
 @thumb-height: 180px;
-@thumb-width: ((@landscape-portrait-ratio * @thumb-height * @average-aspect-ratio) + (1 * @thumb-height / @average-aspect-ratio)) / (@landscape-portrait-ratio + 1);
+@thumb-width: ( ( @landscape-portrait-ratio * @thumb-height * @average-aspect-ratio ) + ( 1 * @thumb-height / @average-aspect-ratio ) ) / ( @landscape-portrait-ratio + 1 );
 
-.wbmi-special-search {
+.wbmi-special-search--bitmap,
+.wbmi-special-search--audio,
+.wbmi-special-search--video,
+.wbmi-special-search--category {
+	width: 100%;
+	padding: @base-spacing 0;
+}
+
+.wbmi-special-search--bitmap {
 	.flex-display();
 	.flex-wrap( wrap );
 	justify-content: space-between;
 	align-items: center;
-	margin-top: 2em;
 }
 
-.wbmi-special-search--result {
+.wbmi-special-search--result-bitmap {
 	margin: @sm-spacing @xs-spacing;
 	text-align: center;
 
@@ -91,7 +112,7 @@
 	}
 }
 
-.wbmi-special-search--image {
+.wbmi-special-search--thumbnail {
 	// if images exceed acceptable width, don't distort the
 	// image, simply cover the available space
 	max-width: 100%;
@@ -104,10 +125,50 @@
 	width: 100%;
 }
 
-.wbmi-special-search--result:hover {
-	.wbmi-special-search--image {
-		.box-shadow(4px 4px 5px -2px @base50);
+.wbmi-special-search--result-bitmap:hover {
+	.wbmi-special-search--thumbnail {
+		.box-shadow( 4px 4px 5px -2px @base50 );
 	}
+}
+
+.wbmi-special-search--result-audio,
+.wbmi-special-search--result-video,
+.wbmi-special-search--result-category {
+	&:nth-child( odd ) {
+		background-color: @odd-color;
+	}
+
+	audio,
+	video {
+		display: block;
+		max-width: 200px;
+	}
+}
+
+.wbmi-special-search--result-audio td,
+.wbmi-special-search--result-category td {
+	padding: @base-spacing;
+}
+
+.wbmi-special-search--result-video td {
+	padding: @sm-spacing @base-spacing;
+}
+
+.wbmi-special-search--thumb {
+	text-align: center;
+}
+
+.wbmi-special-search--text {
+	width: 100%;
+
+	p {
+		margin: initial;
+	}
+}
+
+.wbmi-special-search--title {
+	font-size: @large-font-size;
+	font-weight: bold;
 }
 
 .wbmi-special-search--notice {

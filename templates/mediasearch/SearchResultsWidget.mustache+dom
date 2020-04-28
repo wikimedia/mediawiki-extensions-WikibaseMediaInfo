@@ -53,7 +53,7 @@
 						 }}
 						<object class="wbmi-special-search--html-object">{{{value}}}</object>
 					{{/imageinfo.0.extmetadata.ObjectName}}
-					{{^imageinfo.0.extmetadata.ObjectName}}{{title}}{{/imageinfo.0.extmetadata.ObjectName}}
+					{{^imageinfo.0.extmetadata.ObjectName}}{{name}}{{/imageinfo.0.extmetadata.ObjectName}}
 				</span>
 
 				<span class="wbmi-special-search--label">

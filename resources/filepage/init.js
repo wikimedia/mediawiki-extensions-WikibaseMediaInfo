@@ -92,7 +92,7 @@
 				id: mw.config.get( 'wbEntityId' ),
 				status: 'violation|warning|suggestion|bad-parameters'
 			} ).then( function ( result ) {
-				Object.keys( statementPanels ).map( function ( key ) {
+				Object.keys( statementPanels ).forEach( function ( key ) {
 					statementPanels[ key ].handleConstraintsResponse( result );
 				} );
 			} );

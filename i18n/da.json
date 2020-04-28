@@ -1,25 +1,35 @@
 {
 	"@metadata": {
 		"authors": [
-			"Saederup92"
+			"Saederup92",
+			"Weblars"
 		]
 	},
 	"wikibase-mediainfo-summary-wbsetlabel-add": "Tilføjede billedetekst [$2]",
 	"wikibase-mediainfo-summary-wbsetlabel-remove": "Fjernede billedteksten [$2]",
 	"wikibase-mediainfo-summary-wbsetlabel-set": "Redigerede billedeteksten [$2]",
+	"wikibasemediainfo-add-statement": "Tilføj udsagn",
 	"wikibasemediainfo-filepage-fewer-languages": "Se færre sprog",
+	"wikibasemediainfo-filepage-add-caption": "Tilføj en billedetekst",
+	"wikibasemediainfo-filepage-edit-captions": "Rediger billedetekster",
 	"wikibasemediainfo-filepage-cancel": "Annullér",
+	"wikibasemediainfo-filepage-edit": "Rediger",
+	"wikibasemediainfo-filepage-caption-empty": "Tilføj en kort forklaring på en enkelt linje om hvad filen viser",
 	"wikibasemediainfo-filepage-statement-no-value-option": "Ingen værdi",
 	"wikibasemediainfo-filepage-statement-no-value": "Der findes ingen værdi for denne egenskab",
 	"wikibasemediainfo-filepage-statement-no-data": "Ingen tilgængelige data",
 	"wikibasemediainfo-filepage-statement-no-results": "Ingen resultater fundet",
 	"wikibasemediainfo-filepage-statement-some-value": "Denne egenskab har en værdi, men den er ukendt",
+	"wikibasemediainfo-filepage-license-content-acceptance": "Jeg accepterer disse vilkår for mine fremtidige redigeringer. Vis ikke denne meddelelse igen.",
 	"wikibasemediainfo-property-placeholder": "Egenskab",
 	"wikibasemediainfo-filepage-license-agree": "Jeg er enig",
+	"wikibasemediainfo-statements-item-add-qualifier": "Tilføj kvalifikator",
 	"wikibasemediainfo-statements-item-input-label": "fra {{WBREPONAME}}",
+	"wikibasemediainfo-statements-item-input-placeholder": "Søg for at tilføje elementer (kat, bjerg, Taj Mahal, osv.)",
 	"wikibasemediainfo-statements-item-remove": "Fjern",
 	"wikibasemediainfo-statements-learn-more": "Lær mere",
 	"wikibasemediainfo-statements-remove": "Fjern alle",
+	"wikibasemediainfo-statements-title-depicts": "Elementer som er med i denne fil",
 	"wikibasemediainfo-statements-unsupported-property-title": "Ikke understøttet egenskab",
 	"wikibasemediainfo-string-input-button-text": "Tilføj",
 	"wikibasemediainfo-monolingualtext-input-button-text": "Tilføj",

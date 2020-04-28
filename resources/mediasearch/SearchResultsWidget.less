@@ -1,3 +1,5 @@
+/* stylelint-disable declaration-no-important */
+
 @import 'mediawiki.mixins';
 @import '../mediainfo-variables.less';
 
@@ -85,6 +87,8 @@
 	text-overflow: ellipsis;
 	color: @color-primary;
 	font-size: @base-font-size;
+	line-height: @base-font-size * 1.5;
+	height: @base-font-size * 1.5;
 }
 
 .wbmi-special-search--label {
@@ -94,64 +98,70 @@
 	text-overflow: ellipsis;
 	color: @base20;
 	font-size: @sm-font-size;
+	line-height: @sm-font-size * 1.5;
+	height: @sm-font-size * 1.5;
+}
 
-	// other markup may end up nested inside here when no SDC label is
-	// available, falling back to wikitext descriptions - let's make sure
-	// no block elements break out of this, and any content is displayed
-	// as normal as possible
-	object {
-		&:empty {
-			// PHP template parser (LightnCandy) doesn't treat empty strings
-			// as false in {{#}} conditions, so empty content might show up
-			// here, in which case the <object> tag will have a fixed height,
-			// when in fact we don't even want it to show up at all
-			display: none;
+// other markup may end up nested inside here when no SDC label is
+// available, falling back to wikitext descriptions - let's make sure
+// no block elements break out of this, and any content is displayed
+// as normal as possible
+.wbmi-special-search--html-object {
+	&:empty {
+		// PHP template parser (LightnCandy) doesn't treat empty strings
+		// as false in {{#}} conditions, so empty content might show up
+		// here, in which case the <object> tag will have a fixed height,
+		// when in fact we don't even want it to show up at all
+		display: none;
+	}
+
+	* {
+		// all of these !important are because some of the content even
+		// have inline styles, which we don't want any of in out SERP
+		// excerpts
+		margin: 0 !important;
+		padding: 0 !important;
+		border: 0 !important;
+		font-style: normal !important;
+		font-weight: normal !important;
+		vertical-align: inherit !important;
+		font-size: inherit !important;
+		font-family: inherit !important;
+		line-height: inherit !important;
+
+		&:not( a ) {
+			// except for other links - those are allowed color &
+			// decoration on hover
+			text-decoration: none !important;
+			color: inherit !important;
 		}
+	}
 
-		* {
-			display: inline;
-			margin: 0;
-			padding: 0;
-			border: 0;
-			font-style: normal;
-			font-weight: normal;
-			vertical-align: inherit;
-			font-size: inherit;
-			font-family: inherit;
-			line-height: inherit;
-
-			&:not( a ) {
-				// except for other links - those are allowed color &
-				// decoration on hover
-				text-decoration: none;
-				color: inherit;
-			}
-		}
-
-		audio,
-		br,
-		button,
-		canvas,
-		embed,
-		figure,
-		iframe,
-		img,
-		input,
-		map,
-		object,
-		optgroup,
-		option,
-		picture,
-		select,
-		textarea,
-		video {
-			// and on the off-chance any of these exist in description, don't
-			// show them at all...
-			display: none;
-		}
+	audio,
+	br,
+	button,
+	canvas,
+	embed,
+	figure,
+	iframe,
+	img,
+	input,
+	map,
+	object,
+	optgroup,
+	option,
+	picture,
+	select,
+	textarea,
+	video {
+		// and on the off-chance any of these exist in description, don't
+		// show them at all...
+		display: none;
 	}
 }
 
 .wbmi-special-search--continue {
 	text-align: center;
 }
+
+/* stylelint-enable declaration-no-important */

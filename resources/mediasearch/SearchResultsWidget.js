@@ -66,7 +66,7 @@ SearchResultsWidget.prototype.fetchMore = function () {
 		prop: 'info|imageinfo|pageterms',
 		inprop: 'url',
 		iiprop: 'url|size',
-		iiurlheight: 200,
+		iiurlheight: 180,
 		wbptterms: 'label'
 	} ).then( function ( response ) {
 		var pages = response.query && response.query.pages || [],

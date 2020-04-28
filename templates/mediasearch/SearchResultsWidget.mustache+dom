@@ -4,21 +4,11 @@
 			{{#results}}
 				<div
 					class="wbmi-special-search--result-bitmap"
-					{{!
-						Apply thumbnail width to container, so that we can overflow the
-						title & label properly, at the same width of the image
-						... except for audio files (which have a duration), whose
-						thumbnails are always 400px
-					}}
 					{{^imageinfo.0.duration}}{{#imageinfo.0.thumbwidth}}style="width: {{.}}px"{{/imageinfo.0.thumbwidth}}{{/imageinfo.0.duration}}
 				>
 					<a href="{{canonicalurl}}" title="{{#terms.label}}{{.}}{{/terms.label}}{{^terms.label}}{{title}}{{/terms.label}}">
 						<img
 							{{#imageinfo.0.thumburl}}src="{{.}}"{{/imageinfo.0.thumburl}}
-							{{^imageinfo.0.duration}}
-								{{#imageinfo.0.thumbwidth}}width="{{.}}"{{/imageinfo.0.thumbwidth}}
-								{{#imageinfo.0.thumbheight}}height="{{.}}"{{/imageinfo.0.thumbheight}}
-							{{/imageinfo.0.duration}}
 							{{#terms.label}}alt="{{.}}"{{/terms.label}}
 							class="wbmi-special-search--thumbnail"
 							loading="lazy"

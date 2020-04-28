@@ -48,81 +48,18 @@
 .wbmi-special-search--bitmap {
 	.flex-display();
 	.flex-wrap( wrap );
-	justify-content: space-between;
-	align-items: center;
 }
 
 .wbmi-special-search--result-bitmap {
-	margin: @sm-spacing @xs-spacing;
-	text-align: center;
-
-	// @thumb-width is the average width of a thumbnail, but we don't want
-	// to enforce that width: we'll allow the exact image width up to a
-	// certain minimum/maximum
-	// we'll use media queries to approximate the available space & adjust
-	// min/max sizes of our thumbnails accordingly - the minimum & maximum
-	// boundaries grow larger as we can display more images, because more
-	// images means they'll even out one another more
-	min-width: ~'calc( -2 * @{xs-spacing} + min( @{thumb-width}, 0.9 * 100% ) )';
-	max-width: ~'calc( -2 * @{xs-spacing} + max( @{thumb-width}, 1 * 100% ) )';
-
-	@media ( min-width: calc( 1.9 * @thumb-width + 200px ) ) {
-		min-width: ~'calc( -2 * @{xs-spacing} + min( @{thumb-width}, 0.875 * calc( 100% / 2 ) ) )';
-		max-width: ~'calc( -2 * @{xs-spacing} + max( @{thumb-width}, 1.025 * calc( 100% / 2 ) ) )';
-	}
-
-	@media ( min-width: calc( 2.85 * @thumb-width + 200px ) ) {
-		min-width: ~'calc( -2 * @{xs-spacing} + min( @{thumb-width}, 0.85 * calc( 100% / 3 ) ) )';
-		max-width: ~'calc( -2 * @{xs-spacing} + max( @{thumb-width}, 1.05 * calc( 100% / 3 ) ) )';
-	}
-
-	@media ( min-width: calc( 3.8 * @thumb-width + 200px ) ) {
-		min-width: ~'calc( -2 * @{xs-spacing} + min( @{thumb-width}, 0.825 * calc( 100% / 4 ) ) )';
-		max-width: ~'calc( -2 * @{xs-spacing} + max( @{thumb-width}, 1.075 * calc( 100% / 4 ) ) )';
-	}
-
-	@media ( min-width: calc( 4.75 * @thumb-width + 200px ) ) {
-		min-width: ~'calc( -2 * @{xs-spacing} + min( @{thumb-width}, 0.8 * calc( 100% / 5 ) ) )';
-		max-width: ~'calc( -2 * @{xs-spacing} + max( @{thumb-width}, 1.1 * calc( 100% / 5 ) ) )';
-	}
-
-	@media ( min-width: calc( 5.7 * @thumb-width + 200px ) ) {
-		min-width: ~'calc( -2 * @{xs-spacing} + min( @{thumb-width}, 0.775 * calc( 100% / 6 ) ) )';
-		max-width: ~'calc( -2 * @{xs-spacing} + max( @{thumb-width}, 1.125 * calc( 100% / 6 ) ) )';
-	}
-
-	@media ( min-width: calc( 6.65 * @thumb-width + 200px ) ) {
-		min-width: ~'calc( -2 * @{xs-spacing} + min( @{thumb-width}, 0.75 * calc( 100% / 7 ) ) )';
-		max-width: ~'calc( -2 * @{xs-spacing} + max( @{thumb-width}, 1.15 * calc( 100% / 7 ) ) )';
-	}
-
-	@media ( min-width: calc( 7.6 * @thumb-width + 200px ) ) {
-		min-width: ~'calc( -2 * @{xs-spacing} + min( @{thumb-width}, 0.725 * calc( 100% / 8 ) ) )';
-		max-width: ~'calc( -2 * @{xs-spacing} + max( @{thumb-width}, 1.175 * calc( 100% / 8 ) ) )';
-	}
-
-	@media ( min-width: calc( 8.55 * @thumb-width + 200px ) ) {
-		min-width: ~'calc( -2 * @{xs-spacing} + min( @{thumb-width}, 0.7 * calc( 100% / 9 ) ) )';
-		max-width: ~'calc( -2 * @{xs-spacing} + max( @{thumb-width}, 1.2 * calc( 100% / 9 ) ) )';
-	}
-
-	@media ( min-width: calc( 9.5 * @thumb-width + 200px ) ) {
-		min-width: ~'calc( -2 * @{xs-spacing} + min( @{thumb-width}, 0.625 * calc( 100% / 10 ) ) )';
-		max-width: ~'calc( -2 * @{xs-spacing} + max( @{thumb-width}, 1.225 * calc( 100% / 10 ) ) )';
-	}
+	.flex( 1 );
+	height: 180px;
+	padding: @sm-spacing;
 }
 
 .wbmi-special-search--thumbnail {
-	// if images exceed acceptable width, don't distort the
-	// image, simply cover the available space
-	max-width: 100%;
+	width: 100%;
 	max-height: 100%;
 	object-fit: cover;
-	// we specifically ask for 170px thumbs already, so this should not
-	// be necessary, but the audio placeholders seem to be 400px
-	// regardless of the requested thumbnail size
-	height: @thumb-height;
-	width: 100%;
 }
 
 .wbmi-special-search--result-bitmap:hover {

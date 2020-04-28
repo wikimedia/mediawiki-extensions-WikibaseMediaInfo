@@ -7,6 +7,7 @@ var ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
  * @constructor
  * @param {Object} config
  * @param {string} config.term
+ * @param {string} config.type
  * @param {number} config.limit
  * @param {string} config.continue
  * @param {Array} [config.results]
@@ -15,6 +16,7 @@ var ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
 SearchResultsWidget = function MediaInfoMediaSearchSearchResultsWidget( config ) {
 	this.state = {
 		term: config.term,
+		type: config.type,
 		limit: config.limit,
 		continue: config.continue,
 		results: ( config.results || [] ).sort( function ( a, b ) {
@@ -41,11 +43,16 @@ SearchResultsWidget.prototype.getTemplateData = function () {
 		term: this.state.term,
 		limit: this.state.limit,
 		continue: this.state.continue,
+		hasMore: this.state.hasMore,
 		results: this.state.results.map( function ( result ) {
 			return $.extend( {}, result, {
-				name: new mw.Title( result.title ).getNameText()
+				name: new mw.Title( result.title ).getMainText()
 			} );
-		} )
+		} ),
+		isBitmap: this.state.type === 'bitmap',
+		isAudio: this.state.type === 'audio',
+		isVideo: this.state.type === 'video',
+		isCategory: this.state.type === 'category'
 	};
 };
 
@@ -53,22 +60,50 @@ SearchResultsWidget.prototype.getTemplateData = function () {
  * @return {jQuery.Promise}
  */
 SearchResultsWidget.prototype.fetchMore = function () {
-	var self = this;
+	var self = this,
+		params;
 
-	return new mw.Api().get( {
-		format: 'json',
-		uselang: mw.config.get( 'wgUserLanguage' ),
-		action: 'query',
-		generator: 'mediasearch',
-		gmssearch: this.state.term,
-		gmslimit: this.state.limit,
-		gmscontinue: this.state.continue,
-		prop: 'info|imageinfo|pageterms',
-		inprop: 'url',
-		iiprop: 'url|size',
-		iiurlheight: 180,
-		wbptterms: 'label'
-	} ).then( function ( response ) {
+	if ( this.state.term.length === 0 ) {
+		return this.setState( {
+			results: [],
+			continue: '',
+			hasMore: false
+		} );
+	}
+
+	if ( this.state.type === 'category' ) {
+		params = {
+			format: 'json',
+			uselang: mw.config.get( 'wgUserLanguage' ),
+			action: 'query',
+			generator: 'search',
+			gsrsearch: this.state.term,
+			gsrnamespace: 14, // NS_CATEGORY
+			gsrlimit: this.state.limit,
+			gsroffset: this.state.continue || 0,
+			prop: 'info',
+			inprop: 'url'
+		};
+	} else {
+		params = {
+			format: 'json',
+			uselang: mw.config.get( 'wgUserLanguage' ),
+			action: 'query',
+			generator: 'mediasearch',
+			gmssearch: this.state.term,
+			gmsfiletype: this.state.type,
+			gmslimit: this.state.limit,
+			gmscontinue: this.state.continue,
+			prop: 'info|imageinfo|pageterms',
+			inprop: 'url',
+			iiprop: 'url|size|mime',
+			iiurlheight: this.state.type === 'bitmap' ? 180 : undefined,
+			iiurlwidth: this.state.type === 'video' ? 200 : undefined,
+			wbptterms: 'label'
+		};
+	}
+
+	return new mw.Api().get( params ).then( function ( response ) {
 		var pages = response.query && response.query.pages || [],
 			results = Object.keys( pages ).map( function ( key ) {
 				return pages[ key ];
@@ -80,8 +115,8 @@ SearchResultsWidget.prototype.fetchMore = function () {
 
 		return self.setState( {
 			results: self.state.results.concat( results ),
-			continue: response.continue && response.continue.gmscontinue || undefined,
-			hasMore: results.length === self.state.limit
+			continue: response.continue ? ( response.continue.gmscontinue || response.continue.gsroffset ) : '',
+			hasMore: results.length > self.state.limit && response.continue
 		} );
 	} );
 };

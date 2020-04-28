@@ -1,27 +1,100 @@
 <div class="wbmi-special-search">
-	{{#results}}
-		<div
-			class="wbmi-special-search--result"
-			{{!
-				Apply thumbnail width to container, so that we can overflow the
-				title & label properly, at the same width of the image
-				... except for audio files (which have a duration), whose
-				thumbnails are always 400px
-			}}
-			{{^imageinfo.0.duration}}{{#imageinfo.0.thumbwidth}}style="width: {{.}}px"{{/imageinfo.0.thumbwidth}}{{/imageinfo.0.duration}}
-		>
-			<a class="wbmi-special-search--imagelink" href="{{canonicalurl}}" title="{{#terms.label}}{{.}}{{/terms.label}}{{^terms.label}}{{title}}{{/terms.label}}">
-				<img
-					{{#imageinfo.0.thumburl}}src="{{.}}"{{/imageinfo.0.thumburl}}
-					{{^imageinfo.0.duration}}
-						{{#imageinfo.0.thumbwidth}}width="{{.}}"{{/imageinfo.0.thumbwidth}}
-						{{#imageinfo.0.thumbheight}}height="{{.}}"{{/imageinfo.0.thumbheight}}
-					{{/imageinfo.0.duration}}
-					{{#terms.label}}alt="{{.}}"{{/terms.label}}
-					class="wbmi-special-search--image"
-					loading="lazy"
-				/>
-			</a>
+	{{#isBitmap}}
+		<div class="wbmi-special-search--bitmap">
+			{{#results}}
+				<div
+					class="wbmi-special-search--result-bitmap"
+					{{^imageinfo.0.duration}}{{#imageinfo.0.thumbwidth}}style="width: {{.}}px"{{/imageinfo.0.thumbwidth}}{{/imageinfo.0.duration}}
+				>
+					<a href="{{canonicalurl}}" title="{{#terms.label}}{{.}}{{/terms.label}}{{^terms.label}}{{title}}{{/terms.label}}">
+						<img
+							{{#imageinfo.0.thumburl}}src="{{.}}"{{/imageinfo.0.thumburl}}
+							{{#terms.label}}alt="{{.}}"{{/terms.label}}
+							class="wbmi-special-search--thumbnail"
+							loading="lazy"
+						/>
+					</a>
+				</div>
+			{{/results}}
 		</div>
-	{{/results}}
+	{{/isBitmap}}
+
+	{{#isAudio}}
+		<table class="wbmi-special-search--audio">
+			{{#results}}
+				<tr class="wbmi-special-search--result-audio">
+					<td class="wbmi-special-search--thumb">
+						<audio
+							controls
+							preload="none"
+							{{#imageinfo.0.duration}}duration="{{.}}"{{/imageinfo.0.duration}}
+							style="{{#imageinfo.0.thumbwidth}}width: {{.}}px;{{/imageinfo.0.thumbwidth}}{{#imageinfo.0.thumbheight}}height: {{.}}px;{{/imageinfo.0.thumbheight}}"
+						>
+							<source src="{{#imageinfo.0.url}}{{.}}{{/imageinfo.0.url}}" type="{{#imageinfo.0.mime}}{{.}}{{/imageinfo.0.mime}}">
+						</audio>
+					</td>
+					<td class="wbmi-special-search--text">
+						<a class="wbmi-special-search--title" href="{{canonicalurl}}" title="{{name}}">
+							{{name}}
+						</a>
+						{{#terms.label}}<p>{{.}}</p>{{/terms.label}}
+						{{^terms.label}}{{#snippet}}<p>{{{snippet}}}</p>{{/snippet}}{{/terms.label}}
+					</td>
+				</tr>
+			{{/results}}
+		</table>
+	{{/isAudio}}
+
+	{{#isVideo}}
+		<table class="wbmi-special-search--video">
+			{{#results}}
+				<tr class="wbmi-special-search--result-video">
+					<td class="wbmi-special-search--thumb">
+						<video
+							controls
+							preload="none"
+							{{#imageinfo.0.thumburl}}poster="{{.}}"{{/imageinfo.0.thumburl}}
+							{{#imageinfo.0.duration}}duration="{{.}}"{{/imageinfo.0.duration}}
+							style="{{#imageinfo.0.thumbwidth}}width: {{.}}px;{{/imageinfo.0.thumbwidth}}{{#imageinfo.0.thumbheight}}height: {{.}}px;{{/imageinfo.0.thumbheight}}"
+						>
+							<source src="{{#imageinfo.0.url}}{{.}}{{/imageinfo.0.url}}" type="{{#imageinfo.0.mime}}{{.}}{{/imageinfo.0.mime}}">
+						</video>
+					</td>
+					<td class="wbmi-special-search--text">
+						<a class="wbmi-special-search--title" href="{{canonicalurl}}" title="{{name}}">
+							{{name}}
+						</a>
+						{{#terms.label}}<p>{{.}}</p>{{/terms.label}}
+						{{^terms.label}}{{#snippet}}<p>{{{snippet}}}</p>{{/snippet}}{{/terms.label}}
+					</td>
+				</tr>
+			{{/results}}
+		</table>
+	{{/isVideo}}
+
+	{{#isCategory}}
+		<table class="wbmi-special-search--category">
+			{{#results}}
+				<tr class="wbmi-special-search--result-category">
+					<td class="wbmi-special-search--text">
+						<a class="wbmi-special-search--title" href="{{canonicalurl}}" title="{{name}}">
+							{{name}}
+						</a>
+						{{#snippet}}<p>{{{snippet}}}</p>{{/snippet}}
+					</td>
+				</tr>
+			{{/results}}
+		</table>
+	{{/isCategory}}
 </div>
+
+{{#hasMore}}
+<form method="get" action="{{page}}" class="wbmi-special-search--continue">
+	{{#querystring}}<input type="hidden" name="{{key}}" value="{{value}}" />{{/querystring}}
+	<input type="hidden" name="q" value="{{term}}" />
+	{{#limit}}<input type="hidden" name="limit" value="{{limit}}" />{{/limit}}
+	{{#type}}<input type="hidden" name="type" value="{{type}}" />{{/type}}
+	<input type="hidden" name="continue" value="{{continue}}" />
+	{{{nextButton}}}
+</form>
+{{/hasMore}}

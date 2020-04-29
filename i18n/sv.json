@@ -92,5 +92,6 @@
 	"wikibasemediainfo-globecoordinate-map-button-text": "Välj på karta",
 	"wikibasemediainfo-search-suggestions-title-depicts": "filer som avbildar…",
 	"wikibasemediainfo-special-mediasearch-title": "Sök media",
-	"wikibasemediainfo-special-mediasearch-continue": "Nästa"
+	"wikibasemediainfo-special-mediasearch-continue": "Nästa",
+	"apihelp-query+mediasearch-param-search": "Sökord"
 }

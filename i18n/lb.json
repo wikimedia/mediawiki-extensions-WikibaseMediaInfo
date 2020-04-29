@@ -78,5 +78,6 @@
 	"wikibasemediainfo-quantity-input-button-text": "Derbäisetzen",
 	"wikibasemediainfo-quantity-unit-label": "Eenheet",
 	"wikibasemediainfo-quantity-unit-button-text": "Eenheet definéieren",
-	"wikibasemediainfo-special-mediasearch-continue": "Weider"
+	"wikibasemediainfo-special-mediasearch-continue": "Weider",
+	"apihelp-query+mediasearch-param-search": "Sichbegrëff"
 }

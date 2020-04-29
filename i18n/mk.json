@@ -119,5 +119,14 @@
 	"wikibasemediainfo-search-suggestions-preference-disable-confirm": "Дали сигурно сакате да го тргнете автодополнувањето според структурирани податоци? (Оваа поставка може да се измени во [[Special:Preferences#mw-prefsection-searchoptions|Нагодувањата]].)",
 	"wikibasemediainfo-special-mediasearch-title": "Пребарување на слики и снимки",
 	"wikibasemediainfo-special-mediasearch-continue": "Следно",
-	"wikibasemediainfo-special-mediasearch-notice": "Имајте предвид дека ова е експериментална можност. Може да не работи според очекувањата, или да продолжи да постои на долг рок."
+	"wikibasemediainfo-special-mediasearch-notice": "Имајте предвид дека ова е експериментална можност. Може да не работи според очекувањата, или да продолжи да постои на долг рок.",
+	"wikibasemediainfo-special-mediasearch-tab-bitmap": "Слики",
+	"wikibasemediainfo-special-mediasearch-tab-audio": "Звук",
+	"wikibasemediainfo-special-mediasearch-tab-video": "Видео",
+	"wikibasemediainfo-special-mediasearch-tab-category": "Категории",
+	"apihelp-query+mediasearch-summary": "Пребарување на слики и снимки",
+	"apihelp-query+mediasearch-example": "Пребарај го <kbd>test</kbd> во сликите и снимките.",
+	"apihelp-query+mediasearch-param-search": "Пребаран поим",
+	"apihelp-query+mediasearch-param-limit": "Највеќе ставки во исходот",
+	"apihelp-query+mediasearch-param-continue": "Од каде да се продолжи со пребарувањето"
 }

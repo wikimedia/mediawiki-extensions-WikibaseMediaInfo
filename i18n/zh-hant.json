@@ -123,5 +123,14 @@
 	"wikibasemediainfo-search-suggestions-preference-disable-confirm": "您確定您要移除基於結構化資料的自動完成建議嗎？（這能在[[Special:Preferences#mw-prefsection-searchoptions|偏好設定]]裡更改。）",
 	"wikibasemediainfo-special-mediasearch-title": "搜尋媒體",
 	"wikibasemediainfo-special-mediasearch-continue": "下一頁",
-	"wikibasemediainfo-special-mediasearch-notice": "請留意此為實驗性質功能，也許會不如預期般地運作，情況可能往後會持續存在。"
+	"wikibasemediainfo-special-mediasearch-notice": "請留意此為實驗性質功能，也許會不如預期般地運作，情況可能往後會持續存在。",
+	"wikibasemediainfo-special-mediasearch-tab-bitmap": "圖片",
+	"wikibasemediainfo-special-mediasearch-tab-audio": "音訊",
+	"wikibasemediainfo-special-mediasearch-tab-video": "影片",
+	"wikibasemediainfo-special-mediasearch-tab-category": "分類",
+	"apihelp-query+mediasearch-summary": "搜尋媒體檔案",
+	"apihelp-query+mediasearch-example": "搜尋用於 <kbd>test</kbd> 的媒體。",
+	"apihelp-query+mediasearch-param-search": "搜尋項目",
+	"apihelp-query+mediasearch-param-limit": "結果數量上限",
+	"apihelp-query+mediasearch-param-continue": "持續搜尋的偏移"
 }

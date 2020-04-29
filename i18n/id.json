@@ -2,10 +2,13 @@
 	"@metadata": {
 		"authors": [
 			"Beeyan",
+			"Naufal06",
 			"Rachmat.Wahidi",
 			"Rachmat04"
 		]
 	},
 	"wikibase-entity-mediainfo": "info media",
-	"wikibasemediainfo-desc": "Ekstensi Wikibase untuk mengatur metadata terstruktur dari berkas media"
+	"wikibasemediainfo-desc": "Ekstensi Wikibase untuk mengatur metadata terstruktur dari berkas media",
+	"wikibasemediainfo-special-mediasearch-tab-bitmap": "Gambar",
+	"wikibasemediainfo-special-mediasearch-tab-category": "Kategori"
 }

@@ -82,5 +82,6 @@
 	"wikibasemediainfo-globecoordinate-input-button-text": "Gehitu",
 	"wikibasemediainfo-globecoordinate-map-button-text": "Mapan hautatu",
 	"wikibasemediainfo-search-suggestions-title-depicts": "honako hau duten fitxategiak...",
-	"wikibasemediainfo-search-suggestions-preference-label": "Bilatu proposamen automatikoak datu egituratuetan oinarrituta"
+	"wikibasemediainfo-search-suggestions-preference-label": "Bilatu proposamen automatikoak datu egituratuetan oinarrituta",
+	"apihelp-query+mediasearch-param-limit": "Gehienezko emaitzak"
 }

@@ -4,5 +4,6 @@
 			"NuqneH"
 		]
 	},
-	"wikibasemediainfo-special-mediasearch-continue": "Nästa"
+	"wikibasemediainfo-special-mediasearch-continue": "Nästa",
+	"apihelp-query+mediasearch-param-search": "Sökterm"
 }

@@ -74,5 +74,10 @@
 	"wikibasemediainfo-remove-all-statements-confirm-accept": "verwijder",
 	"wikibasemediainfo-special-mediasearch-title": "Zoeken in media",
 	"wikibasemediainfo-special-mediasearch-continue": "Volgende",
-	"wikibasemediainfo-special-mediasearch-notice": "Dit is een experimentele service. Het is mogelijk dat dingen niet werken als verwacht, of niet eeuwig blijven bestaan."
+	"wikibasemediainfo-special-mediasearch-notice": "Dit is een experimentele service. Het is mogelijk dat dingen niet werken als verwacht, of niet eeuwig blijven bestaan.",
+	"apihelp-query+mediasearch-summary": "Zoek in mediabestanden",
+	"apihelp-query+mediasearch-example": "Zoek in media naar <kbd>test</kbd>.",
+	"apihelp-query+mediasearch-param-search": "Zoekterm",
+	"apihelp-query+mediasearch-param-limit": "Maximum aantal resultaten",
+	"apihelp-query+mediasearch-param-continue": "Compenseer waar een search verder uit te voeren"
 }

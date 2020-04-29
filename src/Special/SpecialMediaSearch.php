@@ -184,6 +184,7 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 						// @todo selected is not yet supported in OOUI/PHP
 						'selected' => $data['type'] === $name,
 						'expanded' => false,
+						'scrollable' => false,
 						'content' => new HtmlSnippet(
 							$this->templateParser->processTemplate(
 								'SearchResultsWidget',
@@ -248,7 +249,7 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 				'action' => 'query',
 				'generator' => 'mediasearch',
 				'gmssearch' => $term,
-				'gmsfiletype' => $type,
+				'gmsrawsearch' => $type ? "filetype:$type" : '',
 				'gmslimit' => $limit,
 				'gmscontinue' => $continue,
 				'prop' => 'info|imageinfo|pageterms',

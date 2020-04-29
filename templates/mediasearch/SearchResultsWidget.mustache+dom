@@ -86,15 +86,13 @@
 			{{/results}}
 		</table>
 	{{/isCategory}}
-</div>
 
-{{#hasMore}}
-<form method="get" action="{{page}}" class="wbmi-special-search--continue">
-	{{#querystring}}<input type="hidden" name="{{key}}" value="{{value}}" />{{/querystring}}
-	<input type="hidden" name="q" value="{{term}}" />
-	{{#limit}}<input type="hidden" name="limit" value="{{limit}}" />{{/limit}}
-	{{#type}}<input type="hidden" name="type" value="{{type}}" />{{/type}}
-	<input type="hidden" name="continue" value="{{continue}}" />
-	{{{nextButton}}}
-</form>
-{{/hasMore}}
+	<form method="get" action="{{page}}" class="wbmi-special-search--continue">
+		{{#querystring}}<input type="hidden" name="{{key}}" value="{{value}}" />{{/querystring}}
+		<input type="hidden" name="q" value="{{term}}" />
+		{{#limit}}<input type="hidden" name="limit" value="{{limit}}" />{{/limit}}
+		{{#type}}<input type="hidden" name="type" value="{{type}}" />{{/type}}
+		<input type="hidden" name="continue" value="{{continue}}" />
+		{{#hasMore}}{{{nextButton}}}{{/hasMore}}
+	</form>
+</div>

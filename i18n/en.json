@@ -122,5 +122,10 @@
 	"wikibasemediainfo-special-mediasearch-tab-bitmap": "Images",
 	"wikibasemediainfo-special-mediasearch-tab-audio": "Audio",
 	"wikibasemediainfo-special-mediasearch-tab-video": "Video",
-	"wikibasemediainfo-special-mediasearch-tab-category": "Categories"
+	"wikibasemediainfo-special-mediasearch-tab-category": "Categories",
+	"wikibasemediainfo-special-mediasearch-filter-size": "Media size",
+	"wikibasemediainfo-special-mediasearch-filter-size-any": "Any size",
+	"wikibasemediainfo-special-mediasearch-filter-size-small": "Small",
+	"wikibasemediainfo-special-mediasearch-filter-size-medium": "Medium",
+	"wikibasemediainfo-special-mediasearch-filter-size-large": "Large"
 }

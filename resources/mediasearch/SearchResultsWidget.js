@@ -22,8 +22,11 @@ SearchResultsWidget = function MediaInfoMediaSearchSearchResultsWidget( config )
 		results: ( config.results || [] ).sort( function ( a, b ) {
 			return a.index - b.index;
 		} ),
-		hasMore: true
+		hasMore: true,
+		resolution: ''
 	};
+
+	this.fetchingPromise = undefined;
 
 	SearchResultsWidget.parent.call( this, config );
 	ComponentWidget.call(
@@ -49,6 +52,7 @@ SearchResultsWidget.prototype.getTemplateData = function () {
 				name: new mw.Title( result.title ).getMainText()
 			} );
 		} ),
+		nextButton: $.createSpinner( { size: 'large' } ),
 		isBitmap: this.state.type === 'bitmap',
 		isAudio: this.state.type === 'audio',
 		isVideo: this.state.type === 'video',
@@ -61,6 +65,7 @@ SearchResultsWidget.prototype.getTemplateData = function () {
  */
 SearchResultsWidget.prototype.fetchMore = function () {
 	var self = this,
+		raw = [],
 		params;
 
 	if ( this.state.term.length === 0 ) {
@@ -69,6 +74,10 @@ SearchResultsWidget.prototype.fetchMore = function () {
 			continue: '',
 			hasMore: false
 		} );
+	}
+
+	if ( this.fetchingPromise !== undefined ) {
+		return this.fetchingPromise;
 	}
 
 	if ( this.state.type === 'category' ) {
@@ -85,13 +94,20 @@ SearchResultsWidget.prototype.fetchMore = function () {
 			inprop: 'url'
 		};
 	} else {
+		if ( this.state.type ) {
+			raw.push( 'filetype:' + this.state.type );
+		}
+		if ( this.state.resolution ) {
+			raw.push( 'fileres:' + this.state.resolution );
+		}
+
 		params = {
 			format: 'json',
 			uselang: mw.config.get( 'wgUserLanguage' ),
 			action: 'query',
 			generator: 'mediasearch',
 			gmssearch: this.state.term,
-			gmsfiletype: this.state.type,
+			gmsrawsearch: raw.join( ' ' ),
 			gmslimit: this.state.limit,
 			gmscontinue: this.state.continue,
 			prop: 'info|imageinfo|pageterms',
@@ -103,7 +119,7 @@ SearchResultsWidget.prototype.fetchMore = function () {
 		};
 	}
 
-	return new mw.Api().get( params ).then( function ( response ) {
+	this.fetchingPromise = new mw.Api().get( params ).then( function ( response ) {
 		var pages = response.query && response.query.pages || [],
 			results = Object.keys( pages ).map( function ( key ) {
 				return pages[ key ];
@@ -116,8 +132,13 @@ SearchResultsWidget.prototype.fetchMore = function () {
 		return self.setState( {
 			results: self.state.results.concat( results ),
 			continue: response.continue ? ( response.continue.gmscontinue || response.continue.gsroffset ) : '',
-			hasMore: results.length > self.state.limit && response.continue
+			hasMore: results.length > self.state.limit || !!response.continue
 		} );
+	} );
+
+	return this.fetchingPromise.then( function ( $element ) {
+		self.fetchingPromise = undefined;
+		return $element;
 	} );
 };
 
@@ -126,6 +147,39 @@ SearchResultsWidget.prototype.fetchMore = function () {
  */
 SearchResultsWidget.prototype.hasMore = function () {
 	return this.state.hasMore;
+};
+
+/**
+ * @return {string}
+ */
+SearchResultsWidget.prototype.getType = function () {
+	return this.state.type;
+};
+
+/**
+ * @param {string} type
+ * @return {$.Promise}
+ */
+SearchResultsWidget.prototype.setType = function ( type ) {
+	return this.setState( {
+		results: [],
+		continue: '',
+		hasMore: true,
+		type: type
+	} );
+};
+
+/**
+ * @param {string} resolution
+ * @return {$.Promise}
+ */
+SearchResultsWidget.prototype.setResolution = function ( resolution ) {
+	return this.setState( {
+		results: [],
+		continue: '',
+		hasMore: true,
+		resolution: resolution
+	} );
 };
 
 module.exports = SearchResultsWidget;

@@ -7,5 +7,9 @@
 	"wikibasemediainfo-filepage-more-languages": "Videz $1 plusa {{PLURAL:$1|linguo|lingui}}",
 	"wikibasemediainfo-special-mediasearch-title": "Serchar 'media'",
 	"wikibasemediainfo-special-mediasearch-continue": "Sequanta",
+	"wikibasemediainfo-special-mediasearch-tab-bitmap": "Imaji",
+	"wikibasemediainfo-special-mediasearch-tab-audio": "*Audio",
+	"wikibasemediainfo-special-mediasearch-tab-video": "*Video",
+	"wikibasemediainfo-special-mediasearch-tab-category": "Kategorii",
 	"apihelp-query+mediasearch-summary": "Serchar arkivi 'media'"
 }

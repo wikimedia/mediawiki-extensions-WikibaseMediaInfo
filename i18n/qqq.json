@@ -125,7 +125,7 @@
 	"wikibasemediainfo-special-mediasearch-continue": "Text for button to see next page of results\n{{identical|Next}}",
 	"wikibasemediainfo-special-mediasearch-notice": "Text to inform the users that the media search feature is experimental",
 	"wikibasemediainfo-special-mediasearch-tab-bitmap": "Label text for tab with images search results",
-	"wikibasemediainfo-special-mediasearch-tab-audio": "Label text for tab with audio search results",
+	"wikibasemediainfo-special-mediasearch-tab-audio": "Label text for tab with audio search results\n{{identical|Audio}}",
 	"wikibasemediainfo-special-mediasearch-tab-video": "Label text for tab with video search results",
 	"wikibasemediainfo-special-mediasearch-tab-category": "Label text for tab with categories search results",
 	"apihelp-query+mediasearch-summary": "{{doc-apihelp-summary|query+mediasearch}}",

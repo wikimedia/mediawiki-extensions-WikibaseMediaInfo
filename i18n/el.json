@@ -2,6 +2,7 @@
 	"@metadata": {
 		"authors": [
 			"Geraki",
+			"Giorgos456",
 			"Nikosgranturismogt",
 			"Protnet"
 		]
@@ -16,5 +17,9 @@
 	"wikibasemediainfo-filepage-cancel": "Ακύρωση",
 	"wikibasemediainfo-filepage-publish": "Δημοσίευση αλλαγών",
 	"wikibasemediainfo-filepage-caption-empty": "Δεν ορίστηκε λεζάντα",
-	"wikibasemediainfo-statements-unsupported-property-title": "Μη υποστηριζόμενη ιδιότητα"
+	"wikibasemediainfo-statements-unsupported-property-title": "Μη υποστηριζόμενη ιδιότητα",
+	"wikibasemediainfo-special-mediasearch-tab-bitmap": "Εικόνες",
+	"wikibasemediainfo-special-mediasearch-tab-audio": "Ήχος",
+	"wikibasemediainfo-special-mediasearch-tab-video": "Βίντεο",
+	"wikibasemediainfo-special-mediasearch-tab-category": "Κατηγορίες"
 }

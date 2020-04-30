@@ -64,5 +64,9 @@
 	"wikibasemediainfo-remove-all-statements-confirm": "Ta czynność spowoduje usunięcie wszystkich wartości tej właściwości. Właściwości bez wartości zostaną usunięte dopiero po opublikowaniu zmian. Czy na pewno chcesz to zrobić?",
 	"wikibasemediainfo-remove-all-statements-confirm-title": "Usunąć wszystko?",
 	"wikibasemediainfo-remove-all-statements-confirm-accept": "Usuń",
-	"wikibasemediainfo-precision-input-label": "Precyzja"
+	"wikibasemediainfo-precision-input-label": "Precyzja",
+	"wikibasemediainfo-special-mediasearch-tab-bitmap": "Obrazy",
+	"wikibasemediainfo-special-mediasearch-tab-audio": "Dźwięk",
+	"wikibasemediainfo-special-mediasearch-tab-video": "Wideo",
+	"wikibasemediainfo-special-mediasearch-tab-category": "Kategorie"
 }

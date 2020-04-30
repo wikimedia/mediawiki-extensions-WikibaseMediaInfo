@@ -73,5 +73,9 @@
 	"wikibasemediainfo-globecoordinate-input-button-text": "Aggiunge",
 	"wikibasemediainfo-search-suggestions-title-depicts": "file ca raffegurane...",
 	"wikibasemediainfo-search-suggestions-preference-label": "Cirche le suggereminde de l'autocombletamende basate sus a le date strutturate",
-	"wikibasemediainfo-search-suggestions-preference-disable-confirm": "Sì secure ca vuè luà le suggereminde de l'autocombletamende basate susa le date strutturate? (Sta 'mbostazione pò essere cangiate jndr'à le [[Special:Preferences#mw-prefsection-searchoptions|Preferenze]].)"
+	"wikibasemediainfo-search-suggestions-preference-disable-confirm": "Sì secure ca vuè luà le suggereminde de l'autocombletamende basate susa le date strutturate? (Sta 'mbostazione pò essere cangiate jndr'à le [[Special:Preferences#mw-prefsection-searchoptions|Preferenze]].)",
+	"wikibasemediainfo-special-mediasearch-tab-bitmap": "Immaggine",
+	"wikibasemediainfo-special-mediasearch-tab-audio": "Audio",
+	"wikibasemediainfo-special-mediasearch-tab-video": "Video",
+	"wikibasemediainfo-special-mediasearch-tab-category": "Categorije"
 }

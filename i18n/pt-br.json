@@ -3,6 +3,7 @@
 		"authors": [
 			"!Silent",
 			"Eduardo Addad de Oliveira",
+			"Jhonnatanricardo",
 			"TheEduGobi"
 		]
 	},
@@ -121,6 +122,10 @@
 	"wikibasemediainfo-special-mediasearch-title": "Pesquisar mídia",
 	"wikibasemediainfo-special-mediasearch-continue": "Próximo",
 	"wikibasemediainfo-special-mediasearch-notice": "Observe que esse é um recurso experimental. As coisas podem não funcionar como o esperado ou continuar a existir a longo prazo.",
+	"wikibasemediainfo-special-mediasearch-tab-bitmap": "Imagens",
+	"wikibasemediainfo-special-mediasearch-tab-audio": "Áudio",
+	"wikibasemediainfo-special-mediasearch-tab-video": "Vídeo",
+	"wikibasemediainfo-special-mediasearch-tab-category": "Categorias",
 	"apihelp-query+mediasearch-summary": "Pesquisar arquivos de mídia",
 	"apihelp-query+mediasearch-example": "Pesquisar mídia para <kbd>test</kbd>.",
 	"apihelp-query+mediasearch-param-search": "Termo de pesquisa",

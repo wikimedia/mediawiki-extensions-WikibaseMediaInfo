@@ -22,6 +22,7 @@ use Wikibase\DataModel\Entity\PropertyId;
 use Wikibase\DataModel\SerializerFactory;
 use Wikibase\DataModel\Services\EntityId\EntityIdFormatter;
 use Wikibase\DataModel\Services\Lookup\InProcessCachingDataTypeLookup;
+use Wikibase\Lib\EntityTypeDefinitions as Def;
 use Wikibase\Lib\LanguageFallbackChain;
 use Wikibase\Lib\LanguageNameLookup;
 use Wikibase\Lib\SettingsArray;
@@ -66,26 +67,26 @@ use Wikimedia\Purtle\RdfWriter;
 
 return [
 	MediaInfo::ENTITY_TYPE => [
-		'storage-serializer-factory-callback' => function ( SerializerFactory $serializerFactory ) {
+		Def::STORAGE_SERIALIZER_FACTORY_CALLBACK => function ( SerializerFactory $serializerFactory ) {
 			return new MediaInfoSerializer(
 				$serializerFactory->newTermListSerializer(),
 				$serializerFactory->newStatementListSerializer()
 			);
 		},
-		'serializer-factory-callback' => function ( SerializerFactory $serializerFactory ) {
+		Def::SERIALIZER_FACTORY_CALLBACK => function ( SerializerFactory $serializerFactory ) {
 			return new MediaInfoSerializer(
 				$serializerFactory->newTermListSerializer(),
 				$serializerFactory->newStatementListSerializer()
 			);
 		},
-		'deserializer-factory-callback' => function ( DeserializerFactory $deserializerFactory ) {
+		Def::DESERIALIZER_FACTORY_CALLBACK => function ( DeserializerFactory $deserializerFactory ) {
 			return new MediaInfoDeserializer(
 				$deserializerFactory->newEntityIdDeserializer(),
 				$deserializerFactory->newTermListDeserializer(),
 				$deserializerFactory->newStatementListDeserializer()
 			);
 		},
-		'view-factory-callback' => function (
+		Def::VIEW_FACTORY_CALLBACK => function (
 			Language $language,
 			LanguageFallbackChain $fallbackChain,
 			EntityDocument $entity,
@@ -136,8 +137,8 @@ return [
 				$statementsView
 			);
 		},
-		'content-model-id' => MediaInfoContent::CONTENT_MODEL_ID,
-		'search-field-definitions' => function ( array $languageCodes, SettingsArray $searchSettings ) {
+		Def::CONTENT_MODEL_ID => MediaInfoContent::CONTENT_MODEL_ID,
+		Def::SEARCH_FIELD_DEFINITIONS => function ( array $languageCodes, SettingsArray $searchSettings ) {
 			$repo = WikibaseRepo::getDefaultInstance();
 			$config = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'WikibaseCirrusSearch' );
 			return new MediaInfoFieldDefinitions(
@@ -151,34 +152,34 @@ return [
 				)
 			);
 		},
-		'content-handler-factory-callback' => function () {
+		Def::CONTENT_HANDLER_FACTORY_CALLBACK => function () {
 			return MediaInfoServices::getMediaInfoHandler();
 		},
-		'entity-id-pattern' => MediaInfoId::PATTERN,
-		'entity-id-builder' => function ( $serialization ) {
+		Def::ENTITY_ID_PATTERN => MediaInfoId::PATTERN,
+		Def::ENTITY_ID_BUILDER => function ( $serialization ) {
 			return new MediaInfoId( $serialization );
 		},
-		'entity-id-composer-callback' => function ( $repositoryName, $uniquePart ) {
+		Def::ENTITY_ID_COMPOSER_CALLBACK => function ( $repositoryName, $uniquePart ) {
 			return new MediaInfoId( EntityId::joinSerialization( [
 				$repositoryName,
 				'',
 				'M' . $uniquePart
 			] ) );
 		},
-		'entity-differ-strategy-builder' => function () {
+		Def::ENTITY_DIFFER_STRATEGY_BUILDER => function () {
 			return new MediaInfoDiffer();
 		},
-		'entity-patcher-strategy-builder' => function () {
+		Def::ENTITY_PATCHER_STRATEGY_BUILDER => function () {
 			return new MediaInfoPatcher();
 		},
-		'entity-factory-callback' => function () {
+		Def::ENTITY_FACTORY_CALLBACK => function () {
 			return new MediaInfo();
 		},
 
 		// Identifier of a resource loader module that, when `require`d, returns a function
 		// returning a deserializer
-		'js-deserializer-factory-function' => 'wikibase.mediainfo.getDeserializer',
-		'changeop-deserializer-callback' => function () {
+		Def::JS_DESERIALIZER_FACTORY_FUNCTION => 'wikibase.mediainfo.getDeserializer',
+		Def::CHANGEOP_DESERIALIZER_CALLBACK => function () {
 			$changeOpDeserializerFactory = WikibaseRepo::getDefaultInstance()
 				->getChangeOpDeserializerFactory();
 
@@ -188,7 +189,7 @@ return [
 				$changeOpDeserializerFactory->getClaimsChangeOpDeserializer()
 			);
 		},
-		'entity-diff-visualizer-callback' => function (
+		Def::ENTITY_DIFF_VISUALIZER_CALLBACK => function (
 			MessageLocalizer $messageLocalizer,
 			ClaimDiffer $claimDiffer,
 			ClaimDifferenceVisualizer $claimDiffView,
@@ -203,7 +204,7 @@ return [
 				$entityIdFormatter
 			);
 		},
-		'entity-metadata-accessor-callback' => function ( $dbName, $repoName ) {
+		Def::ENTITY_METADATA_ACCESSOR_CALLBACK => function ( $dbName, $repoName ) {
 			$wikibaseRepo = WikibaseRepo::getDefaultInstance();
 			$entityNamespaceLookup = $wikibaseRepo->getEntityNamespaceLookup();
 			$entityQuery = new MediaInfoEntityQuery(
@@ -220,7 +221,7 @@ return [
 				$entitySource
 			);
 		},
-		'rdf-builder-factory-callback' => function (
+		Def::RDF_BUILDER_FACTORY_CALLBACK => function (
 			$flavorFlags,
 			RdfVocabulary $vocabulary,
 			RdfWriter $writer,
@@ -234,11 +235,11 @@ return [
 				MediaWikiServices::getInstance()->getRepoGroup()
 			);
 		},
-		'rdf-builder-label-predicates' => [
+		Def::RDF_LABEL_PREDICATES => [
 			[ RdfVocabulary::NS_SCHEMA_ORG, 'caption' ],
 			[ 'rdfs', 'label' ],
 		],
-		'entity-revision-lookup-factory-callback' => function (
+		Def::ENTITY_REVISION_LOOKUP_FACTORY_CALLBACK => function (
 			EntityRevisionLookup $defaultLookup
 		) {
 			$revisionStoreFactory = MediaWikiServices::getInstance()->getRevisionStoreFactory();
@@ -261,12 +262,12 @@ return [
 				new WikiPageEntityDataLoader( $contentCodec, $blobStoreFactory->newBlobStore( $databaseName ) )
 			);
 		},
-		'prefetching-term-lookup-callback' => function ( SingleEntitySourceServices $services ) {
+		Def::PREFETCHING_TERM_LOOKUP_CALLBACK => function ( SingleEntitySourceServices $services ) {
 			return new MediaInfoPrefetchingTermLookup( $services->getEntityRevisionLookup() );
 		},
-		'entity-id-lookup-callback' => function () {
+		Def::ENTITY_ID_LOOKUP_CALLBACK => function () {
 			return MediaInfoServices::getMediaInfoIdLookup();
 		},
-		'lua-entity-module' => 'mw.wikibase.mediainfo.entity',
+		Def::LUA_ENTITY_MODULE => 'mw.wikibase.mediainfo.entity',
 	]
 ];

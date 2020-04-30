@@ -127,10 +127,6 @@
 	"wikibasemediainfo-special-mediasearch-tab-bitmap": "Label text for tab with images search results",
 	"wikibasemediainfo-special-mediasearch-tab-audio": "Label text for tab with audio search results\n{{identical|Audio}}",
 	"wikibasemediainfo-special-mediasearch-tab-video": "Label text for tab with video search results",
-	"wikibasemediainfo-special-mediasearch-tab-category": "Label text for tab with categories search results",
-	"apihelp-query+mediasearch-summary": "{{doc-apihelp-summary|query+mediasearch}}",
-	"apihelp-query+mediasearch-example": "{{doc-apihelp-example|query+mediasearch}}.",
-	"apihelp-query+mediasearch-param-search": "{{doc-apihelp-param|query+mediasearch|search}}",
-	"apihelp-query+mediasearch-param-limit": "{{doc-apihelp-param|query+mediasearch|limit}}",
-	"apihelp-query+mediasearch-param-continue": "{{doc-apihelp-param|query+mediasearch|continue}}"
+	"wikibasemediainfo-special-mediasearch-tab-category": "Label text for tab with categories search results"
+
 }

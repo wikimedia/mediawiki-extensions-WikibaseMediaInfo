@@ -90,6 +90,5 @@
 	"wikibasemediainfo-special-mediasearch-tab-bitmap": "Imágenes",
 	"wikibasemediainfo-special-mediasearch-tab-audio": "Audio",
 	"wikibasemediainfo-special-mediasearch-tab-video": "Vídeos",
-	"wikibasemediainfo-special-mediasearch-tab-category": "Categorías",
-	"apihelp-query+mediasearch-param-search": "Término de búsqueda"
+	"wikibasemediainfo-special-mediasearch-tab-category": "Categorías"
 }

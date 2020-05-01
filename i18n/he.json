@@ -123,9 +123,8 @@
 	"wikibasemediainfo-special-mediasearch-title": "חיפוש מדיה",
 	"wikibasemediainfo-special-mediasearch-continue": "הבא",
 	"wikibasemediainfo-special-mediasearch-notice": "נא לשים לב לכך שזאת אפשרות ניסיונית. ייתכן שדברים לא יעבדו באופן צפוי, או ימשיכו להתקיים בטווח הארוך.",
-	"apihelp-query+mediasearch-summary": "חיפוש קובצי מדיה",
-	"apihelp-query+mediasearch-example": "חיפוש <kbd>test</kbd> במדיה.",
-	"apihelp-query+mediasearch-param-search": "הביטוי לחיפוש",
-	"apihelp-query+mediasearch-param-limit": "מספר מרבי של תוצאות",
-	"apihelp-query+mediasearch-param-continue": "היסט לתחילת החיפוש"
+	"wikibasemediainfo-special-mediasearch-tab-bitmap": "תמונות",
+	"wikibasemediainfo-special-mediasearch-tab-audio": "שמע",
+	"wikibasemediainfo-special-mediasearch-tab-video": "וידאו",
+	"wikibasemediainfo-special-mediasearch-tab-category": "קטגוריות"
 }

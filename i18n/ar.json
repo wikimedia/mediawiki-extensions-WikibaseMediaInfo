@@ -125,9 +125,5 @@
 	"wikibasemediainfo-special-mediasearch-continue": "التالية",
 	"wikibasemediainfo-special-mediasearch-tab-bitmap": "صور",
 	"wikibasemediainfo-special-mediasearch-tab-audio": "صوت",
-	"wikibasemediainfo-special-mediasearch-tab-category": "تصنيفات",
-	"apihelp-query+mediasearch-summary": "البحث عن ملفات الوسائط",
-	"apihelp-query+mediasearch-param-search": "عبارة البحث",
-	"apihelp-query+mediasearch-param-limit": "أقصى عدد من النتائج",
-	"apihelp-query+mediasearch-param-continue": "تعويض مكان متابعة البحث"
+	"wikibasemediainfo-special-mediasearch-tab-category": "تصنيفات"
 }

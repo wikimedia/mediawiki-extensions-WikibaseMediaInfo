@@ -10,6 +10,5 @@
 	"wikibasemediainfo-special-mediasearch-tab-bitmap": "Imaji",
 	"wikibasemediainfo-special-mediasearch-tab-audio": "*Audio",
 	"wikibasemediainfo-special-mediasearch-tab-video": "*Video",
-	"wikibasemediainfo-special-mediasearch-tab-category": "Kategorii",
-	"apihelp-query+mediasearch-summary": "Serchar arkivi 'media'"
+	"wikibasemediainfo-special-mediasearch-tab-category": "Kategorii"
 }

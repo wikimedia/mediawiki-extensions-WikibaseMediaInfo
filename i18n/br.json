@@ -14,9 +14,8 @@
 	"wikibasemediainfo-special-mediasearch-title": "Klask ur media",
 	"wikibasemediainfo-special-mediasearch-continue": "War-lerc'h",
 	"wikibasemediainfo-special-mediasearch-notice": "Notit mat eo an dra-mañ un arc'hwel arnodel. Ken buan all ne'z aio ket an traoù en-dro evel gortozet pe ne badint ket pell en amzer.",
-	"apihelp-query+mediasearch-summary": "Klask restroù media",
-	"apihelp-query+mediasearch-example": "Klask mediaoù evit <kbd>test</kbd>.",
-	"apihelp-query+mediasearch-param-search": "Klask an termen",
-	"apihelp-query+mediasearch-param-limit": "Niver brasañ a zisoc'hoù",
-	"apihelp-query+mediasearch-param-continue": "Rikladur da genderc'hel da glask adalek dezhañ"
+	"wikibasemediainfo-special-mediasearch-tab-bitmap": "Skeudennoù",
+	"wikibasemediainfo-special-mediasearch-tab-audio": "Son",
+	"wikibasemediainfo-special-mediasearch-tab-video": "Video",
+	"wikibasemediainfo-special-mediasearch-tab-category": "Rummadoù"
 }

@@ -88,8 +88,5 @@
 	"wikibasemediainfo-quantity-unit-button-text": "تعیین واحد اندازه‌گیری",
 	"wikibasemediainfo-globecoordinate-input-button-text": "افزودن",
 	"wikibasemediainfo-special-mediasearch-title": "جستجوی رسانه‌ها",
-	"wikibasemediainfo-special-mediasearch-continue": "بعدی",
-	"apihelp-query+mediasearch-summary": "جستجوی پرونده‌های رسانه‌ای",
-	"apihelp-query+mediasearch-example": "جستجوی رسانه‌ها برای <kbd>آزمایش</kbd>.",
-	"apihelp-query+mediasearch-param-search": "عبارت جستجو"
+	"wikibasemediainfo-special-mediasearch-continue": "بعدی"
 }

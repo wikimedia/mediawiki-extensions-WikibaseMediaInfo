@@ -123,10 +123,5 @@
 	"wikibasemediainfo-special-mediasearch-tab-bitmap": "Слики",
 	"wikibasemediainfo-special-mediasearch-tab-audio": "Звук",
 	"wikibasemediainfo-special-mediasearch-tab-video": "Видео",
-	"wikibasemediainfo-special-mediasearch-tab-category": "Категории",
-	"apihelp-query+mediasearch-summary": "Пребарување на слики и снимки",
-	"apihelp-query+mediasearch-example": "Пребарај го <kbd>test</kbd> во сликите и снимките.",
-	"apihelp-query+mediasearch-param-search": "Пребаран поим",
-	"apihelp-query+mediasearch-param-limit": "Највеќе ставки во исходот",
-	"apihelp-query+mediasearch-param-continue": "Од каде да се продолжи со пребарувањето"
+	"wikibasemediainfo-special-mediasearch-tab-category": "Категории"
 }

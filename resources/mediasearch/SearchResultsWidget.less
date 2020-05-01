@@ -1,6 +1,10 @@
 @import 'mediawiki.mixins';
 @import '../mediainfo-variables.less';
 
+.wbmi-special-search--tabs {
+	margin-top: @base-spacing;
+}
+
 // OOUI's indexlayout is JS-only, so I'm inserting links as tabs
 // to make it work without JS; I don't want them styles as links,
 // though... just the parent's tab styles please!
@@ -106,15 +110,6 @@
 .wbmi-special-search--title {
 	font-size: @large-font-size;
 	font-weight: bold;
-}
-
-.wbmi-special-search--notice {
-	display: inline-block;
-	padding: @base-spacing;
-	margin: @base-spacing 0;
-	border: @base-border;
-	border-color: @yellow50;
-	background: @yellow90;
 }
 
 .wbmi-special-search--continue {

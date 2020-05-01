@@ -123,7 +123,6 @@
 	"wikibasemediainfo-search-suggestions-preference-disable-confirm": "Text displayed when dismissing search autocomplete suggestions based on structured data, asking to confirm they want to remove such results",
 	"wikibasemediainfo-special-mediasearch-title": "Title text for the media search special page",
 	"wikibasemediainfo-special-mediasearch-continue": "Text for button to see next page of results\n{{identical|Next}}",
-	"wikibasemediainfo-special-mediasearch-notice": "Text to inform the users that the media search feature is experimental",
 	"wikibasemediainfo-special-mediasearch-tab-bitmap": "Label text for tab with images search results",
 	"wikibasemediainfo-special-mediasearch-tab-audio": "Label text for tab with audio search results\n{{identical|Audio}}",
 	"wikibasemediainfo-special-mediasearch-tab-video": "Label text for tab with video search results",

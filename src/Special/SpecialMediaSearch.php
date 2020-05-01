@@ -136,7 +136,6 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 					return [ 'key' => $key, 'value' => $value ];
 				}, array_keys( $querystring ), array_values( $querystring ) ),
 				'inputWidget' => $inputWidget,
-				'notice' => $this->msg( 'wikibasemediainfo-special-mediasearch-notice' )->text(),
 				'tabs' => $this->renderTabs( $tabs ),
 			]
 		) );

@@ -9,8 +9,10 @@ use CirrusSearch\Search\CirrusIndexField;
 use ContentHandler;
 use Elastica\Document;
 use MediaWiki\MediaWikiServices;
+use MediaWiki\Revision\RevisionRecord;
 use MediaWiki\Revision\SlotRecord;
 use MediaWiki\Revision\SlotRoleRegistry;
+use MediaWiki\Storage\BlobStore;
 use OOUI\HtmlSnippet;
 use OOUI\IndexLayout;
 use OOUI\PanelLayout;
@@ -19,8 +21,10 @@ use OutputPage;
 use ParserOutput;
 use Title;
 use Wikibase\Client\WikibaseClient;
+use Wikibase\Content\EntityInstanceHolder;
 use Wikibase\DataModel\Entity\PropertyId;
 use Wikibase\DataModel\Services\Lookup\PropertyDataTypeLookupException;
+use Wikibase\DataModel\Statement\StatementGuid;
 use Wikibase\EntityContent;
 use Wikibase\Lib\LanguageFallbackChainFactory;
 use Wikibase\Lib\Store\EntityByLinkedTitleLookup;
@@ -700,6 +704,108 @@ class WikibaseMediaInfoHooks {
 				'deferLoad' => true,
 			];
 		}
+	}
+
+	/**
+	 * @param RevisionRecord $revision
+	 */
+	public static function onRevisionUndeleted( RevisionRecord $revision ) {
+		$title = Title::newFromLinkTarget( $revision->getPageAsLinkTarget() );
+		if ( !$title->inNamespace( NS_FILE ) ) {
+			// short-circuit if we're not even dealing with a file
+			return;
+		}
+
+		if ( !$revision->hasSlot( 'mediainfo' ) ) {
+			// no mediainfo content found
+			return;
+		}
+
+		$mwServices = MediaWikiServices::getInstance();
+		$wbRepo = WikibaseRepo::getDefaultInstance();
+		$dbw = wfGetDB( DB_MASTER );
+		$blobStore = $mwServices->getBlobStoreFactory()->newSqlBlobStore();
+		$statementGuidParser = $wbRepo->getStatementGuidParser();
+
+		// fetch existing entity data from old revision
+		$slot = $revision->getSlot( 'mediainfo', RevisionRecord::RAW );
+		$existingContentId = $slot->getContentId();
+		$existingContent = $slot->getContent();
+		if ( !( $existingContent instanceof MediaInfoContent ) ) {
+			return;
+		}
+		$existingEntity = $existingContent->getEntity();
+		$existingEntityId = $existingEntity->getId();
+
+		// generate actual correct entity id for this title
+		$entityIdLookup = MediaInfoServices::getMediaInfoIdLookup();
+		$newEntityId = $entityIdLookup->getEntityIdForTitle( $title );
+		if ( $existingEntityId === null || $newEntityId === null || $existingEntityId->equals( $newEntityId ) ) {
+			return;
+		}
+
+		// create new content object with the same content, but this id
+		$newEntity = $existingEntity->copy();
+		$newEntity->setId( $newEntityId );
+		foreach ( $newEntity->getStatements()->toArray() as $statement ) {
+			// statement GUIDs also contain the M-id, so let's go fix those too
+			$existingStatementGuid = $statementGuidParser->parse( $statement->getGuid() );
+			if ( !$newEntityId->equals( $existingStatementGuid->getEntityId() ) ) {
+				$newStatementGuid = new StatementGuid( $newEntityId, $existingStatementGuid->getGuidPart() );
+				$statement->setGuid( (string)$newStatementGuid );
+			}
+		}
+		$newContent = new MediaInfoContent( new EntityInstanceHolder( $newEntity ) );
+
+		// store updated content in blob store
+		$unsavedSlot = SlotRecord::newUnsaved( 'mediainfo', $newContent );
+		$blobAddress = $blobStore->storeBlob(
+			$newContent->serialize( $newContent->getDefaultFormat() ),
+			[
+				BlobStore::PAGE_HINT => $revision->getPageId(),
+				BlobStore::REVISION_HINT => $revision->getId(),
+				BlobStore::PARENT_HINT => $revision->getParentId(),
+				BlobStore::DESIGNATION_HINT => 'page-content',
+				BlobStore::ROLE_HINT => $unsavedSlot->getRole(),
+				BlobStore::SHA1_HINT => $unsavedSlot->getSha1(),
+				BlobStore::MODEL_HINT => $newContent->getModel(),
+				BlobStore::FORMAT_HINT => $newContent->getDefaultFormat(),
+			]
+		);
+
+		// update content record to point to new, corrected, content blob
+		$dbw->update(
+			'content',
+			[
+				'content_size' => $unsavedSlot->getSize(),
+				'content_sha1' => $unsavedSlot->getSha1(),
+				'content_address' => $blobAddress,
+			],
+			[
+				'content_id' => $existingContentId,
+			],
+			__METHOD__
+		);
+	}
+
+	/**
+	 * @param Title $title
+	 * @param bool $create
+	 * @param string $comment
+	 * @param int $oldPageId
+	 * @param array $restoredPages
+	 */
+	public static function onArticleUndelete( Title $title, $create, $comment, $oldPageId, array $restoredPages ) {
+		if ( !$title->inNamespace( NS_FILE ) || $oldPageId === $title->getArticleID() ) {
+			return;
+		}
+
+		// above onArticleRevisionUndeleted hook has been fixing MediaInfo ids
+		// for every undeleted revision, but now that that process is done, we
+		// need to clear the parser caches that (may have) been created during
+		// the undelete process as they were based on incorrect entities
+		$page = WikiPage::factory( $title );
+		$page->updateParserCache( [ 'causeAction' => 'mediainfo-id-splitting' ] );
 	}
 
 }

@@ -1,6 +1,21 @@
 <div class="wbmi-special-search">
 	{{#isBitmap}}
 		<div class="wbmi-special-search--bitmap">
+			<div class="wbmi-special-search--chips">
+				{{#chips}}
+					<form class="wbmi-special-search--chip" method="get" action="{{page}}">
+						{{#querystring}}<input type="hidden" name="{{key}}" value="{{value}}" />{{/querystring}}
+						<input type="hidden" name="q" value="{{term}} {{title}}" />
+						<input type="hidden" name="type" value="bitmap" />
+
+						<a class="wbmi-special-search--chip-link" href="#" onclick='this.parentNode.submit(); return false;'>
+							<span class="wbmi-special-search--chip-title">{{title}}</span>
+							<img class="wbmi-special-search--chip-thumb" src="{{thumbnail}}" alt="" />
+						</a>
+					</form>
+				{{/chips}}
+			</div>
+
 			{{#results}}
 				<div
 					class="wbmi-special-search--result-bitmap"

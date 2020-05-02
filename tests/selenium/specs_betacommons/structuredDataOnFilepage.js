@@ -30,6 +30,6 @@ describe( 'File page', function () {
 		FilePage.editCaption( captionText );
 
 		browser.pause( 4000 );
-		assert.strictEqual( FilePage.captionsPanel.getText().includes( captionText ), true );
+		assert.strictEqual( FilePage.captionsPanel.getText().indexOf( captionText ) !== -1, true );
 	} );
 } );

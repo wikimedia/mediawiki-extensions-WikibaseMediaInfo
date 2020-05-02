@@ -9,9 +9,5 @@
 	"globals": {
 		"browser": false,
 		"mw": false
-	},
-	"rules": {
-		"no-console": 0,
-		"no-restricted-syntax": 0
 	}
 }

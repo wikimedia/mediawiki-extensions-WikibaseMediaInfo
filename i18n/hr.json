@@ -99,5 +99,6 @@
 	"wikibasemediainfo-quantity-unit-placeholder": "Unesite jedinicu (neobavezno)",
 	"wikibasemediainfo-quantity-unit-label": "jedinica",
 	"wikibasemediainfo-quantity-unit-button-text": "Postavi jedinicu",
-	"wikibasemediainfo-globecoordinate-input-button-text": "Dodaj"
+	"wikibasemediainfo-globecoordinate-input-button-text": "Dodaj",
+	"wikibasemediainfo-special-mediasearch-tab-bitmap": "Slike"
 }

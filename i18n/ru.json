@@ -87,5 +87,8 @@
 	"wikibasemediainfo-time-precision-year10": "десятилетие",
 	"wikibasemediainfo-quantity-unit-placeholder": "Введите единицу измерения (необязательно)",
 	"wikibasemediainfo-quantity-unit-label": "единица измерения",
-	"wikibasemediainfo-quantity-unit-button-text": "Установить единицу измерения"
+	"wikibasemediainfo-quantity-unit-button-text": "Установить единицу измерения",
+	"wikibasemediainfo-special-mediasearch-tab-bitmap": "Изображения",
+	"wikibasemediainfo-special-mediasearch-tab-video": "Видео",
+	"wikibasemediainfo-special-mediasearch-tab-category": "Категории"
 }

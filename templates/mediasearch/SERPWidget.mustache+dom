@@ -4,10 +4,4 @@
 	{{{inputWidget}}}
 </form>
 
-{{#notice}}
-	<span class="wbmi-special-search--notice">
-		{{notice}}
-	</span>
-{{/notice}}
-
 {{{tabs}}}

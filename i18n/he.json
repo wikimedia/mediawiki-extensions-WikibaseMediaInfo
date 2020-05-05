@@ -122,7 +122,6 @@
 	"wikibasemediainfo-search-suggestions-preference-disable-confirm": "האם ברצונך באמת להסיר את הצעות ההשלמה האוטומטית שמבוססות על נתונים מבניים? (אפשר לשנות את ההגדרה הזאת ב[[Special:Preferences#mw-prefsection-searchoptions|העדפות]].)",
 	"wikibasemediainfo-special-mediasearch-title": "חיפוש מדיה",
 	"wikibasemediainfo-special-mediasearch-continue": "הבא",
-	"wikibasemediainfo-special-mediasearch-notice": "נא לשים לב לכך שזאת אפשרות ניסיונית. ייתכן שדברים לא יעבדו באופן צפוי, או ימשיכו להתקיים בטווח הארוך.",
 	"wikibasemediainfo-special-mediasearch-tab-bitmap": "תמונות",
 	"wikibasemediainfo-special-mediasearch-tab-audio": "שמע",
 	"wikibasemediainfo-special-mediasearch-tab-video": "וידאו",

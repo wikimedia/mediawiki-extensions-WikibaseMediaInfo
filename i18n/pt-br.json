@@ -121,7 +121,6 @@
 	"wikibasemediainfo-search-suggestions-preference-disable-confirm": "Tem certeza de que deseja remover sugestões de preenchimento automático com base em dados estruturados? (Esta configuração pode ser alterada na [[Special:Preferences#mw-prefsection-searchoptions|Preferências]].)",
 	"wikibasemediainfo-special-mediasearch-title": "Pesquisar mídia",
 	"wikibasemediainfo-special-mediasearch-continue": "Próximo",
-	"wikibasemediainfo-special-mediasearch-notice": "Observe que esse é um recurso experimental. As coisas podem não funcionar como o esperado ou continuar a existir a longo prazo.",
 	"wikibasemediainfo-special-mediasearch-tab-bitmap": "Imagens",
 	"wikibasemediainfo-special-mediasearch-tab-audio": "Áudio",
 	"wikibasemediainfo-special-mediasearch-tab-video": "Vídeo",

@@ -122,7 +122,6 @@
 	"wikibasemediainfo-search-suggestions-preference-disable-confirm": "Yapısal verilere dayalı otomatik tamamlama önerilerini kaldırmak istediğinizden emin misiniz? (Bu ayar [[Special:Preferences#mw-prefsection-searchoptions|Tercihler]]'de değiştirilebilir.)",
 	"wikibasemediainfo-special-mediasearch-title": "Medya ara",
 	"wikibasemediainfo-special-mediasearch-continue": "Sonraki",
-	"wikibasemediainfo-special-mediasearch-notice": "Lütfen bunun deneysel bir özellik olduğunu unutmayın. Her şey beklendiği gibi çalışmayabilir veya uzun vadede var olmaya devam edebilir.",
 	"wikibasemediainfo-special-mediasearch-tab-bitmap": "Resimler",
 	"wikibasemediainfo-special-mediasearch-tab-audio": "Ses",
 	"wikibasemediainfo-special-mediasearch-tab-video": "Video",

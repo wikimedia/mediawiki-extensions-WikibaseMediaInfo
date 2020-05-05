@@ -60,7 +60,7 @@ AutocompleteSearchInputWidget.prototype.getLookupRequest = function () {
 			uselang: mw.config.get( 'wgUserLanguage' ),
 			type: 'item',
 			// request more than `limit`, so we can omit duplicates
-			limit: this.limit + 25
+			limit: this.limit + 50
 		};
 
 	if ( value.length === 0 ) {

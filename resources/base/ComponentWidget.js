@@ -138,13 +138,18 @@ ComponentWidget.prototype.renderInternal = function () {
 		.then( this.extractDOMNodes.bind( this ) )
 		.then( function ( data, preserve ) {
 			var template = mw.template.get( self.moduleName, self.templateName ),
-				$rendered = template.render( data );
+				$rendered = template.render( data ),
+				scrollTop = $( window ).scrollTop();
 
 			self.rebuildDOM(
 				self.$element,
 				$( self.$element.get( 0 ).cloneNode( false ) ).append( $rendered ),
 				preserve
 			);
+
+			// after having rebuilt the DOM and things might have shifted up & down,
+			// let's make sure we're back at the scroll position we were before
+			$( window ).scrollTop( scrollTop );
 
 			return self.$element;
 		} )

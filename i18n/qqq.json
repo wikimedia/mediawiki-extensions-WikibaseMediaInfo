@@ -126,5 +126,10 @@
 	"wikibasemediainfo-special-mediasearch-tab-bitmap": "Label text for tab with images search results",
 	"wikibasemediainfo-special-mediasearch-tab-audio": "Label text for tab with audio search results\n{{identical|Audio}}",
 	"wikibasemediainfo-special-mediasearch-tab-video": "Label text for tab with video search results",
-	"wikibasemediainfo-special-mediasearch-tab-category": "Label text for tab with categories search results"
+	"wikibasemediainfo-special-mediasearch-tab-category": "Label text for tab with categories search results",
+	"wikibasemediainfo-special-mediasearch-filter-size": "Label text for dropdown to filter media search results by size",
+	"wikibasemediainfo-special-mediasearch-filter-size-any": "Label text for option to filter media search results by any size",
+	"wikibasemediainfo-special-mediasearch-filter-size-small": "Label text for option to filter media search results by small sizes",
+	"wikibasemediainfo-special-mediasearch-filter-size-medium": "Label text for option to filter media search results by medium sizes",
+	"wikibasemediainfo-special-mediasearch-filter-size-large": "Label text for option to filter media search results by large sizes"
 }

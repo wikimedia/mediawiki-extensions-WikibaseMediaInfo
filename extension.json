@@ -287,7 +287,15 @@
 			"packageFiles": [
 				"resources/mediasearch/index.js",
 				"resources/mediasearch/AutocompleteSearchInputWidget.js",
-				"resources/mediasearch/SearchResultsWidget.js"
+				"resources/mediasearch/SearchResultsWidget.js",
+				"resources/mediasearch/TabFilterWidget.js"
+			],
+			"messages": [
+				"wikibasemediainfo-special-mediasearch-filter-size",
+				"wikibasemediainfo-special-mediasearch-filter-size-any",
+				"wikibasemediainfo-special-mediasearch-filter-size-small",
+				"wikibasemediainfo-special-mediasearch-filter-size-medium",
+				"wikibasemediainfo-special-mediasearch-filter-size-large"
 			],
 			"dependencies": [
 				"wikibase.mediainfo.mediasearch.styles",
@@ -295,6 +303,7 @@
 				"oojs",
 				"oojs-ui-core",
 				"oojs-ui-widgets",
+				"oojs-ui.styles.indicators",
 				"wikibase.api.RepoApi"
 			],
 			"templates": [
@@ -307,7 +316,8 @@
 		},
 		"wikibase.mediainfo.mediasearch.styles": {
 			"styles": [
-				"resources/mediasearch/SearchResultsWidget.less"
+				"resources/mediasearch/SearchResultsWidget.less",
+				"resources/mediasearch/TabFilterWidget.less"
 			],
 			"targets": [
 				"desktop",

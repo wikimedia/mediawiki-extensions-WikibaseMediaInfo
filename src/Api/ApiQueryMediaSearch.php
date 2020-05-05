@@ -83,7 +83,7 @@ class ApiQueryMediaSearch extends ApiQueryGeneratorBase {
 		list( $results, $continue ) = $this->search(
 			'list',
 			$params['search'],
-			$params['filetype'],
+			$params['rawsearch'],
 			$this->getContext()->getLanguage()->getCode(),
 			$params['limit'],
 			$params['continue'] ?: ''
@@ -105,7 +105,7 @@ class ApiQueryMediaSearch extends ApiQueryGeneratorBase {
 		list( $results, $continue ) = $this->search(
 			'generator',
 			$params['search'],
-			$params['filetype'],
+			$params['rawsearch'],
 			$this->getContext()->getLanguage()->getCode(),
 			$params['limit'],
 			$params['continue'] ?: ''
@@ -204,17 +204,17 @@ class ApiQueryMediaSearch extends ApiQueryGeneratorBase {
 	 * ]
 	 *
 	 * @param string $term
-	 * @param string|null $filetype
+	 * @param string $raw
 	 * @param string $langCode
 	 * @return Generator
 	 */
-	protected function getSearchQueries( $term, $filetype, $langCode ): Generator {
+	protected function getSearchQueries( $term, $raw, $langCode ): Generator {
 		$individualQueries = $this->getIndividualSearchQueries( $term, $langCode );
 		$previousQueries = [];
 		foreach ( $individualQueries as $query ) {
 			$search = '';
-			if ( $filetype !== null ) {
-				$search .= 'filetype:' . $filetype . ' ';
+			if ( $raw ) {
+				$search .= $raw . ' ';
 			}
 
 			$search .= $query;
@@ -237,14 +237,14 @@ class ApiQueryMediaSearch extends ApiQueryGeneratorBase {
 	 *
 	 * @param string $mode 'list' or 'generator'
 	 * @param string $term
-	 * @param string|null $filetype
+	 * @param string $raw
 	 * @param string $langCode
 	 * @param int $limit
 	 * @param string $continue
 	 * @return array [ search results, continuation value ]
 	 * @throws \MWException
 	 */
-	protected function search( $mode, $term, $filetype, $langCode, $limit, $continue = '' ): array {
+	protected function search( $mode, $term, $raw, $langCode, $limit, $continue = '' ): array {
 		Assert::parameter( in_array( $mode, [ 'list', 'generator' ] ), $mode, '$mode' );
 		Assert::parameterType( 'string', $term, '$term' );
 		Assert::parameterType( 'integer', $limit, '$limit' );
@@ -257,7 +257,7 @@ class ApiQueryMediaSearch extends ApiQueryGeneratorBase {
 		$prefix = $mode === 'list' ? 'sr' : 'gsr';
 
 		$results = [];
-		$queries = $this->getSearchQueries( $term, $filetype, $langCode );
+		$queries = $this->getSearchQueries( $term, $raw, $langCode );
 		$offsets = explode( '|', $continue );
 		foreach ( $queries as $i => $query ) {
 			// offset is always numeric, except:
@@ -456,20 +456,10 @@ class ApiQueryMediaSearch extends ApiQueryGeneratorBase {
 				ApiBase::PARAM_TYPE => 'string',
 				ApiBase::PARAM_REQUIRED => true,
 			],
-			'filetype' => [
-				ApiBase::PARAM_TYPE => [
-					strtolower( MEDIATYPE_UNKNOWN ),
-					strtolower( MEDIATYPE_BITMAP ),
-					strtolower( MEDIATYPE_DRAWING ),
-					strtolower( MEDIATYPE_AUDIO ),
-					strtolower( MEDIATYPE_VIDEO ),
-					strtolower( MEDIATYPE_MULTIMEDIA ),
-					strtolower( MEDIATYPE_OFFICE ),
-					strtolower( MEDIATYPE_TEXT ),
-					strtolower( MEDIATYPE_EXECUTABLE ),
-					strtolower( MEDIATYPE_ARCHIVE ),
-					strtolower( MEDIATYPE_3D ),
-				],
+			'rawsearch' => [
+				ApiBase::PARAM_TYPE => 'string',
+				ApiBase::PARAM_REQUIRED => false,
+				ApiBase::PARAM_DFLT => '',
 			],
 			'limit' => [
 				ApiBase::PARAM_DFLT => 10,

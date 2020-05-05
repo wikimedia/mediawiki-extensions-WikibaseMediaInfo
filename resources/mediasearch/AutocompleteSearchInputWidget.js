@@ -99,7 +99,7 @@ AutocompleteSearchInputWidget.prototype.getLookupMenuOptionsFromData = function 
 		.slice( 0, this.limit )
 		.map( function ( term ) {
 			return new OO.ui.MenuOptionWidget( {
-				// this data will be passed to onLookupMenuItemChoose when item is selected
+				// this data will be passed to onLookupMenuChoose when item is selected
 				data: term,
 				label: term
 			} );

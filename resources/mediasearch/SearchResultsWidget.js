@@ -191,6 +191,41 @@ SearchResultsWidget.prototype.getTemplateData = function () {
 					title: 'Museum',
 					thumbnail: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Vincent_van_Gogh_-_Self-Portrait_-_Google_Art_Project_%28454045%29.jpg/40px-Vincent_van_Gogh_-_Self-Portrait_-_Google_Art_Project_%28454045%29.jpg'
 				}
+			],
+			baobab: [
+				{ title: 'Tree' },
+				{ title: 'Madagascar' },
+				{ title: 'Adansonia Digitata' },
+				{ title: 'Adansonia Grandidieri' },
+				{ title: 'Africa' }
+			],
+			'baobab tree': [
+				{ title: 'Madagascar' },
+				{ title: 'Adansonia Digitata' },
+				{ title: 'African' },
+				{ title: 'African Baobab fruit' },
+				{ title: 'Plant' }
+			],
+			'los angeles': [
+				{ title: 'Hollywood' },
+				{ title: 'California' },
+				{ title: 'Downtown' },
+				{ title: 'Angeles California' },
+				{ title: 'Beverly Hills' }
+			],
+			picasso: [
+				{ title: 'Pablo' },
+				{ title: 'Guernica' },
+				{ title: 'Portrait' },
+				{ title: 'Antibes' },
+				{ title: 'Arthur Brand' }
+			],
+			'pablo picasso': [
+				{ title: 'Weeping woman' },
+				{ title: 'Art' },
+				{ title: 'Paintings' },
+				{ title: 'Quotes' },
+				{ title: 'Dora Maar' }
 			]
 		}[ this.state.term.toLowerCase() ] || []
 	};

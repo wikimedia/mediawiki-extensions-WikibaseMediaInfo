@@ -8,9 +8,9 @@
 						<input type="hidden" name="q" value="{{term}} {{title}}" />
 						<input type="hidden" name="type" value="bitmap" />
 
-						<a class="wbmi-special-search--chip-link" href="#" onclick='this.parentNode.submit(); return false;'>
+						<a class="wbmi-special-search--chip-link" href="#" onclick="this.parentNode.submit(); return false;">
 							<span class="wbmi-special-search--chip-title">{{title}}</span>
-							<img class="wbmi-special-search--chip-thumb" src="{{thumbnail}}" alt="" />
+							{{#thumbnail}}<img class="wbmi-special-search--chip-thumb" src="{{thumbnail}}" alt="" />{{/thumbnail}}
 						</a>
 					</form>
 				{{/chips}}

@@ -3,7 +3,7 @@
 namespace Wikibase\MediaInfo\Tests\MediaWiki\Services;
 
 use Title;
-use Wikibase\Client\Store\TitleFactory;
+use TitleFactory;
 use Wikibase\Lib\Store\StorageException;
 use Wikibase\MediaInfo\DataModel\MediaInfoId;
 use Wikibase\MediaInfo\Services\FilePageLookup;

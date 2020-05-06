@@ -3,7 +3,7 @@
 namespace Wikibase\MediaInfo\Services;
 
 use Title;
-use Wikibase\Client\Store\TitleFactory;
+use TitleFactory;
 use Wikibase\Lib\Store\StorageException;
 use Wikibase\MediaInfo\DataModel\MediaInfoId;
 

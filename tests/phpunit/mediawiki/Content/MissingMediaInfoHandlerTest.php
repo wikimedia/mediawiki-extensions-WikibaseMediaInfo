@@ -7,7 +7,7 @@ use Language;
 use ParserOutput;
 use RequestContext;
 use Title;
-use Wikibase\Client\Store\TitleFactory;
+use TitleFactory;
 use Wikibase\DataModel\Entity\EntityId;
 use Wikibase\DataModel\Services\EntityId\EntityIdComposer;
 use Wikibase\Lib\Store\StorageException;

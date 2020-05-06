@@ -4,6 +4,17 @@
 			"Giromin Cangiaxo"
 		]
 	},
+	"action-mediainfo-term": "cangiâ i termi de informassioin do meddia (didascalie, sonti)",
+	"right-mediainfo-term": "Modiffica e informassioin do file murtimediâ (didascalie, sonti)",
+	"action-mediasearch": "provâ a serchia murtimediâ",
+	"right-mediasearch": "Atasta a serchia murtimediâ",
+	"group-mediasearch-tester": "Atastoei da serchia murtimediâ",
+	"group-mediasearch-tester-member": "{{GENDER:$1|atastou|atastœüa}} da serchia murtimediâ",
+	"slot-name-mediainfo": "Informassioin strutturæ do file murtimediâ",
+	"wikibase-entity-mediainfo": "informassioin murtimediæ",
+	"wikibase-mediainfo-summary-wbsetlabel-add": "Azonto didascalia [$2]",
+	"wikibase-mediainfo-summary-wbsetlabel-remove": "Levou didascalia [$2]",
+	"wikibase-mediainfo-summary-wbsetlabel-set": "Modificou didascalia [$2]",
 	"wikibasemediainfo-filepage-fewer-languages": "Veddi meno lengue",
 	"wikibasemediainfo-filepage-add-caption": "Azonzi 'na didascalia",
 	"wikibasemediainfo-filepage-edit-captions": "Modiffica didascalie",

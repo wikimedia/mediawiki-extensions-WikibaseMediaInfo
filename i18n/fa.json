@@ -88,5 +88,13 @@
 	"wikibasemediainfo-quantity-unit-button-text": "تعیین واحد اندازه‌گیری",
 	"wikibasemediainfo-globecoordinate-input-button-text": "افزودن",
 	"wikibasemediainfo-special-mediasearch-title": "جستجوی رسانه‌ها",
-	"wikibasemediainfo-special-mediasearch-continue": "بعدی"
+	"wikibasemediainfo-special-mediasearch-continue": "بعدی",
+	"wikibasemediainfo-special-mediasearch-tab-bitmap": "تصویرها",
+	"wikibasemediainfo-special-mediasearch-tab-video": "ویدئو",
+	"wikibasemediainfo-special-mediasearch-tab-category": "رده‌ها",
+	"wikibasemediainfo-special-mediasearch-filter-size": "اندازهٔ رسانه",
+	"wikibasemediainfo-special-mediasearch-filter-size-any": "هر اندازه‌ای",
+	"wikibasemediainfo-special-mediasearch-filter-size-small": "کوچک",
+	"wikibasemediainfo-special-mediasearch-filter-size-medium": "متوسط",
+	"wikibasemediainfo-special-mediasearch-filter-size-large": "بزرگ"
 }

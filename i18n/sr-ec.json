@@ -51,5 +51,14 @@
 	"wikibasemediainfo-remove-all-statements-confirm": "Ова радња ће обрисати све постојеће вредности за ово својство. Својства без вредности биће уклоњена када се измене објаве. Да ли сте сигурни?",
 	"wikibasemediainfo-remove-all-statements-confirm-accept": "Уклони",
 	"wikibasemediainfo-quantity-input-button-text": "Додај",
-	"wikibasemediainfo-quantity-unit-label": "јединица"
+	"wikibasemediainfo-quantity-unit-label": "јединица",
+	"wikibasemediainfo-special-mediasearch-tab-bitmap": "Слике",
+	"wikibasemediainfo-special-mediasearch-tab-audio": "Аудио",
+	"wikibasemediainfo-special-mediasearch-tab-video": "Видео",
+	"wikibasemediainfo-special-mediasearch-tab-category": "Категорије",
+	"wikibasemediainfo-special-mediasearch-filter-size": "Величина медија",
+	"wikibasemediainfo-special-mediasearch-filter-size-any": "Било које величине",
+	"wikibasemediainfo-special-mediasearch-filter-size-small": "Мала",
+	"wikibasemediainfo-special-mediasearch-filter-size-medium": "Средња",
+	"wikibasemediainfo-special-mediasearch-filter-size-large": "Велика"
 }

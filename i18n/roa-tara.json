@@ -77,5 +77,10 @@
 	"wikibasemediainfo-special-mediasearch-tab-bitmap": "Immaggine",
 	"wikibasemediainfo-special-mediasearch-tab-audio": "Audio",
 	"wikibasemediainfo-special-mediasearch-tab-video": "Video",
-	"wikibasemediainfo-special-mediasearch-tab-category": "Categorije"
+	"wikibasemediainfo-special-mediasearch-tab-category": "Categorije",
+	"wikibasemediainfo-special-mediasearch-filter-size": "Dimenzione d'u medie",
+	"wikibasemediainfo-special-mediasearch-filter-size-any": "Tutte le dimenziune",
+	"wikibasemediainfo-special-mediasearch-filter-size-small": "Piccenne",
+	"wikibasemediainfo-special-mediasearch-filter-size-medium": "Medie",
+	"wikibasemediainfo-special-mediasearch-filter-size-large": "Granne"
 }

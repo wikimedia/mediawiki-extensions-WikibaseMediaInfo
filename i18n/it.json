@@ -92,5 +92,10 @@
 	"wikibasemediainfo-special-mediasearch-tab-bitmap": "Immagini",
 	"wikibasemediainfo-special-mediasearch-tab-audio": "Audio",
 	"wikibasemediainfo-special-mediasearch-tab-video": "Video",
-	"wikibasemediainfo-special-mediasearch-tab-category": "Categorie"
+	"wikibasemediainfo-special-mediasearch-tab-category": "Categorie",
+	"wikibasemediainfo-special-mediasearch-filter-size": "Dimensione file multimediale",
+	"wikibasemediainfo-special-mediasearch-filter-size-any": "Qualsiasi dimensione",
+	"wikibasemediainfo-special-mediasearch-filter-size-small": "Piccolo",
+	"wikibasemediainfo-special-mediasearch-filter-size-medium": "Medio",
+	"wikibasemediainfo-special-mediasearch-filter-size-large": "Grande"
 }

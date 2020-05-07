@@ -122,5 +122,10 @@
 	"wikibasemediainfo-special-mediasearch-tab-bitmap": "Слики",
 	"wikibasemediainfo-special-mediasearch-tab-audio": "Звук",
 	"wikibasemediainfo-special-mediasearch-tab-video": "Видео",
-	"wikibasemediainfo-special-mediasearch-tab-category": "Категории"
+	"wikibasemediainfo-special-mediasearch-tab-category": "Категории",
+	"wikibasemediainfo-special-mediasearch-filter-size": "Големина на сликата/снимката",
+	"wikibasemediainfo-special-mediasearch-filter-size-any": "Било која",
+	"wikibasemediainfo-special-mediasearch-filter-size-small": "Мала",
+	"wikibasemediainfo-special-mediasearch-filter-size-medium": "Средна",
+	"wikibasemediainfo-special-mediasearch-filter-size-large": "Голема"
 }

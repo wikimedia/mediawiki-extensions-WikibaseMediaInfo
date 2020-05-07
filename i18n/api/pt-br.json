@@ -7,6 +7,7 @@
 	"apihelp-query+mediasearch-summary": "Pesquisar arquivos de mídia",
 	"apihelp-query+mediasearch-example": "Pesquisar mídia para <kbd>test</kbd>.",
 	"apihelp-query+mediasearch-param-search": "Termo de pesquisa",
+	"apihelp-query+mediasearch-param-rawsearch": "Consulta de pesquisa bruta, além do termo de pesquisa (não deve ser interpretado, útil para adicionar filtros específicos etc.)",
 	"apihelp-query+mediasearch-param-limit": "Número máximo de resultados",
 	"apihelp-query+mediasearch-param-continue": "Offset de onde continuar uma pesquisa"
 }

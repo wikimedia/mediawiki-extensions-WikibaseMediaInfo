@@ -7,6 +7,7 @@
 	"apihelp-query+mediasearch-summary": "Medya dosyalarında ara",
 	"apihelp-query+mediasearch-example": "<kbd>test</kbd> için medya arayın.",
 	"apihelp-query+mediasearch-param-search": "Arama terimi",
+	"apihelp-query+mediasearch-param-rawsearch": "Arama terimine ek olarak ham arama sorgusu (yorumlanmayacak, belirli filtreler eklemek için yararlı vb.)",
 	"apihelp-query+mediasearch-param-limit": "Maksimum sonuç sayısı",
 	"apihelp-query+mediasearch-param-continue": "Bir aramaya nerede devam edileceğini ofset"
 }

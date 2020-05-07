@@ -96,5 +96,9 @@
 	"wikibasemediainfo-special-mediasearch-tab-bitmap": "Bilder",
 	"wikibasemediainfo-special-mediasearch-tab-audio": "Ljud",
 	"wikibasemediainfo-special-mediasearch-tab-video": "Video",
-	"wikibasemediainfo-special-mediasearch-tab-category": "Kategorier"
+	"wikibasemediainfo-special-mediasearch-tab-category": "Kategorier",
+	"wikibasemediainfo-special-mediasearch-filter-size": "Mediastorlek",
+	"wikibasemediainfo-special-mediasearch-filter-size-small": "Liten",
+	"wikibasemediainfo-special-mediasearch-filter-size-medium": "Medel",
+	"wikibasemediainfo-special-mediasearch-filter-size-large": "Stor"
 }

@@ -131,5 +131,6 @@
 	"wikibasemediainfo-special-mediasearch-filter-size-any": "Label text for option to filter media search results by any size",
 	"wikibasemediainfo-special-mediasearch-filter-size-small": "Label text for option to filter media search results by small sizes",
 	"wikibasemediainfo-special-mediasearch-filter-size-medium": "Label text for option to filter media search results by medium sizes",
-	"wikibasemediainfo-special-mediasearch-filter-size-large": "Label text for option to filter media search results by large sizes"
+	"wikibasemediainfo-special-mediasearch-filter-size-large": "Label text for option to filter media search results by large sizes",
+	"wikibasemediainfo-special-mediasearch-no-results": "Message for when no results are found"
 }

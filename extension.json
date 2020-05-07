@@ -295,7 +295,8 @@
 				"wikibasemediainfo-special-mediasearch-filter-size-any",
 				"wikibasemediainfo-special-mediasearch-filter-size-small",
 				"wikibasemediainfo-special-mediasearch-filter-size-medium",
-				"wikibasemediainfo-special-mediasearch-filter-size-large"
+				"wikibasemediainfo-special-mediasearch-filter-size-large",
+				"wikibasemediainfo-special-mediasearch-no-results"
 			],
 			"dependencies": [
 				"wikibase.mediainfo.mediasearch.styles",

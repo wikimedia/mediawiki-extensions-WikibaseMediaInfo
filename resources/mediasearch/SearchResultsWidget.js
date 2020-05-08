@@ -57,6 +57,7 @@ SearchResultsWidget.prototype.getTemplateData = function () {
 		isAudio: this.state.type === 'audio',
 		isVideo: this.state.type === 'video',
 		isCategory: this.state.type === 'category',
+		emptyMessage: mw.msg( 'wikibasemediainfo-special-mediasearch-no-results' ),
 
 		// @todo below is for testing - this should be removed once the testing period is over!
 		chips: {

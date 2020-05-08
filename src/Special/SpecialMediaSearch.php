@@ -101,6 +101,7 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 			}, $results ),
 			'continue' => $continue,
 			'hasMore' => count( $results ) >= $limit,
+			'emptyMessage' => $this->msg( 'wikibasemediainfo-special-mediasearch-no-results' )->text(),
 		];
 		$tabs = [
 			'bitmap' => $type === 'bitmap' ? $activeTabData : $emptyTabData,

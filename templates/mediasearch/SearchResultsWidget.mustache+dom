@@ -1,4 +1,14 @@
 <div class="wbmi-special-search">
+	{{^results}}
+	{{^hasMore}}
+	{{#term}}
+	<span class="wbmi-special-search--empty">
+		{{emptyMessage}}
+	</span>
+	{{/term}}
+	{{/hasMore}}
+	{{/results}}
+
 	{{#isBitmap}}
 		<div class="wbmi-special-search--bitmap">
 			<div class="wbmi-special-search--chips">

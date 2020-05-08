@@ -126,5 +126,6 @@
 	"wikibasemediainfo-special-mediasearch-filter-size-any": "Any size",
 	"wikibasemediainfo-special-mediasearch-filter-size-small": "Small",
 	"wikibasemediainfo-special-mediasearch-filter-size-medium": "Medium",
-	"wikibasemediainfo-special-mediasearch-filter-size-large": "Large"
+	"wikibasemediainfo-special-mediasearch-filter-size-large": "Large",
+	"wikibasemediainfo-special-mediasearch-no-results": "No results found"
 }

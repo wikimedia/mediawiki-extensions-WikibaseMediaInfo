@@ -125,5 +125,10 @@
 	"wikibasemediainfo-special-mediasearch-tab-bitmap": "תמונות",
 	"wikibasemediainfo-special-mediasearch-tab-audio": "שמע",
 	"wikibasemediainfo-special-mediasearch-tab-video": "וידאו",
-	"wikibasemediainfo-special-mediasearch-tab-category": "קטגוריות"
+	"wikibasemediainfo-special-mediasearch-tab-category": "קטגוריות",
+	"wikibasemediainfo-special-mediasearch-filter-size": "גודל המדיה",
+	"wikibasemediainfo-special-mediasearch-filter-size-any": "כל גודל",
+	"wikibasemediainfo-special-mediasearch-filter-size-small": "קטן",
+	"wikibasemediainfo-special-mediasearch-filter-size-medium": "בינוני",
+	"wikibasemediainfo-special-mediasearch-filter-size-large": "גדול"
 }

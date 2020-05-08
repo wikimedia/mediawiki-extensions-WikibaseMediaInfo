@@ -82,5 +82,10 @@
 	"wikibasemediainfo-special-mediasearch-tab-bitmap": "Biller",
 	"wikibasemediainfo-special-mediasearch-tab-audio": "Audio",
 	"wikibasemediainfo-special-mediasearch-tab-video": "Video",
-	"wikibasemediainfo-special-mediasearch-tab-category": "Kategorien"
+	"wikibasemediainfo-special-mediasearch-tab-category": "Kategorien",
+	"wikibasemediainfo-special-mediasearch-filter-size": "Gréisst vun de Medien",
+	"wikibasemediainfo-special-mediasearch-filter-size-any": "All Gréisst",
+	"wikibasemediainfo-special-mediasearch-filter-size-small": "Kleng",
+	"wikibasemediainfo-special-mediasearch-filter-size-medium": "Mëttel",
+	"wikibasemediainfo-special-mediasearch-filter-size-large": "Grouss"
 }

@@ -101,5 +101,10 @@
 	"wikibasemediainfo-special-mediasearch-tab-bitmap": "이미지",
 	"wikibasemediainfo-special-mediasearch-tab-audio": "소리",
 	"wikibasemediainfo-special-mediasearch-tab-video": "동영상",
-	"wikibasemediainfo-special-mediasearch-tab-category": "분류"
+	"wikibasemediainfo-special-mediasearch-tab-category": "분류",
+	"wikibasemediainfo-special-mediasearch-filter-size": "미디어 크기",
+	"wikibasemediainfo-special-mediasearch-filter-size-any": "모든 크기",
+	"wikibasemediainfo-special-mediasearch-filter-size-small": "작음",
+	"wikibasemediainfo-special-mediasearch-filter-size-medium": "중간",
+	"wikibasemediainfo-special-mediasearch-filter-size-large": "큼"
 }

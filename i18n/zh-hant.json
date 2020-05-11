@@ -131,5 +131,6 @@
 	"wikibasemediainfo-special-mediasearch-filter-size-any": "任何大小",
 	"wikibasemediainfo-special-mediasearch-filter-size-small": "小",
 	"wikibasemediainfo-special-mediasearch-filter-size-medium": "中",
-	"wikibasemediainfo-special-mediasearch-filter-size-large": "大"
+	"wikibasemediainfo-special-mediasearch-filter-size-large": "大",
+	"wikibasemediainfo-special-mediasearch-no-results": "查無結果"
 }

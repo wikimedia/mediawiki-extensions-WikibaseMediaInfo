@@ -130,5 +130,6 @@
 	"wikibasemediainfo-special-mediasearch-filter-size-any": "כל גודל",
 	"wikibasemediainfo-special-mediasearch-filter-size-small": "קטן",
 	"wikibasemediainfo-special-mediasearch-filter-size-medium": "בינוני",
-	"wikibasemediainfo-special-mediasearch-filter-size-large": "גדול"
+	"wikibasemediainfo-special-mediasearch-filter-size-large": "גדול",
+	"wikibasemediainfo-special-mediasearch-no-results": "לא נמצאו תוצאות"
 }

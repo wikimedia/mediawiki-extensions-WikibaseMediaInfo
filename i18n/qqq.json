@@ -2,6 +2,7 @@
 	"@metadata": {
 		"authors": [
 			"Amire80",
+			"Joao Xavier",
 			"Liuxinyu970226",
 			"Pikne",
 			"Robby",
@@ -132,5 +133,5 @@
 	"wikibasemediainfo-special-mediasearch-filter-size-small": "Label text for option to filter media search results by small sizes",
 	"wikibasemediainfo-special-mediasearch-filter-size-medium": "Label text for option to filter media search results by medium sizes",
 	"wikibasemediainfo-special-mediasearch-filter-size-large": "Label text for option to filter media search results by large sizes",
-	"wikibasemediainfo-special-mediasearch-no-results": "Message for when no results are found"
+	"wikibasemediainfo-special-mediasearch-no-results": "Mesajo kande nula rezulto trovesis"
 }

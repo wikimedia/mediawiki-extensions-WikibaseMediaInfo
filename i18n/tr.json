@@ -130,5 +130,6 @@
 	"wikibasemediainfo-special-mediasearch-filter-size-any": "Herhangi beden",
 	"wikibasemediainfo-special-mediasearch-filter-size-small": "Küçük",
 	"wikibasemediainfo-special-mediasearch-filter-size-medium": "Orta",
-	"wikibasemediainfo-special-mediasearch-filter-size-large": "Büyük"
+	"wikibasemediainfo-special-mediasearch-filter-size-large": "Büyük",
+	"wikibasemediainfo-special-mediasearch-no-results": "Sonuç bulunamadı"
 }

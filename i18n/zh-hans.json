@@ -5,6 +5,7 @@
 			"A Retired User",
 			"Angrydog001",
 			"Liuxinyu970226",
+			"Nadine Siak",
 			"Phenolla",
 			"Viztor",
 			"Zazzzz",
@@ -72,5 +73,7 @@
 	"wikibasemediainfo-string-input-button-text": "添加",
 	"wikibasemediainfo-quantity-input-button-text": "添加",
 	"wikibasemediainfo-globecoordinate-input-button-text": "添加",
-	"wikibasemediainfo-globecoordinate-map-button-text": "在地图上选择"
+	"wikibasemediainfo-globecoordinate-map-button-text": "在地图上选择",
+	"wikibasemediainfo-special-mediasearch-tab-bitmap": "图像",
+	"wikibasemediainfo-special-mediasearch-tab-video": "视频"
 }

@@ -1,8 +1,10 @@
 {
 	"@metadata": {
 		"authors": [
-			"Fitoschido"
+			"Fitoschido",
+			"Geryescalier"
 		]
 	},
-	"apihelp-query+mediasearch-param-search": "Término de búsqueda"
+	"apihelp-query+mediasearch-param-search": "Término de búsqueda",
+	"apihelp-query+mediasearch-param-rawsearch": "Consulta de búsqueda sin formato, además del término de búsqueda (no debe interpretarse, útil para agregar filtros específicos, etc.)"
 }

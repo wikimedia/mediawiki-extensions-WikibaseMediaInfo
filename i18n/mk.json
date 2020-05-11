@@ -127,5 +127,6 @@
 	"wikibasemediainfo-special-mediasearch-filter-size-any": "Било која",
 	"wikibasemediainfo-special-mediasearch-filter-size-small": "Мала",
 	"wikibasemediainfo-special-mediasearch-filter-size-medium": "Средна",
-	"wikibasemediainfo-special-mediasearch-filter-size-large": "Голема"
+	"wikibasemediainfo-special-mediasearch-filter-size-large": "Голема",
+	"wikibasemediainfo-special-mediasearch-no-results": "Не пронајдов ништо"
 }

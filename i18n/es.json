@@ -90,5 +90,11 @@
 	"wikibasemediainfo-special-mediasearch-tab-bitmap": "Imágenes",
 	"wikibasemediainfo-special-mediasearch-tab-audio": "Audio",
 	"wikibasemediainfo-special-mediasearch-tab-video": "Vídeos",
-	"wikibasemediainfo-special-mediasearch-tab-category": "Categorías"
+	"wikibasemediainfo-special-mediasearch-tab-category": "Categorías",
+	"wikibasemediainfo-special-mediasearch-filter-size": "Tamaño de archivo multimedia",
+	"wikibasemediainfo-special-mediasearch-filter-size-any": "Cualquier tamaño",
+	"wikibasemediainfo-special-mediasearch-filter-size-small": "Pequeño",
+	"wikibasemediainfo-special-mediasearch-filter-size-medium": "Mediano",
+	"wikibasemediainfo-special-mediasearch-filter-size-large": "Grande",
+	"wikibasemediainfo-special-mediasearch-no-results": "No se encontró ningún resultado"
 }

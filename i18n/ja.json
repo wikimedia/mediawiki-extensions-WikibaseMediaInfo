@@ -70,6 +70,8 @@
 	"wikibasemediainfo-globecoordinate-map-button-text": "地図で選択",
 	"wikibasemediainfo-search-suggestions-preference-label": "構造化データに基づく自動補完候補を検索",
 	"wikibasemediainfo-search-suggestions-preference-disable-confirm": "構造化データに従って、自動補完の候補をほんとうに削除しますか？ (この設定は[[Special:Preferences#mw-prefsection-searchoptions|個人設定]]で変更が可能です。)",
+	"wikibasemediainfo-special-mediasearch-filter-size": "メディアサイズ",
+	"wikibasemediainfo-special-mediasearch-filter-size-small": "小さい",
 	"wikibasemediainfo-special-mediasearch-filter-size-large": "大きい",
 	"wikibasemediainfo-special-mediasearch-no-results": "見つかりません。"
 }

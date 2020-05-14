@@ -510,6 +510,7 @@
 			"mediasearch": true
 		},
 		"*": {
+			"mediasearch": true,
 			"mediainfo-term": true
 		}
 	},

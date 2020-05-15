@@ -125,5 +125,11 @@
 	"wikibasemediainfo-special-mediasearch-continue": "التالية",
 	"wikibasemediainfo-special-mediasearch-tab-bitmap": "صور",
 	"wikibasemediainfo-special-mediasearch-tab-audio": "صوت",
-	"wikibasemediainfo-special-mediasearch-tab-category": "تصنيفات"
+	"wikibasemediainfo-special-mediasearch-tab-category": "تصنيفات",
+	"wikibasemediainfo-special-mediasearch-filter-size": "حجم وسائل الإعلام",
+	"wikibasemediainfo-special-mediasearch-filter-size-any": "أي حجم",
+	"wikibasemediainfo-special-mediasearch-filter-size-small": "صغير",
+	"wikibasemediainfo-special-mediasearch-filter-size-medium": "متوسط",
+	"wikibasemediainfo-special-mediasearch-filter-size-large": "كبير",
+	"wikibasemediainfo-special-mediasearch-no-results": "لا توجد نتائج"
 }

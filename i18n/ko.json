@@ -106,5 +106,6 @@
 	"wikibasemediainfo-special-mediasearch-filter-size-any": "모든 크기",
 	"wikibasemediainfo-special-mediasearch-filter-size-small": "작음",
 	"wikibasemediainfo-special-mediasearch-filter-size-medium": "중간",
-	"wikibasemediainfo-special-mediasearch-filter-size-large": "큼"
+	"wikibasemediainfo-special-mediasearch-filter-size-large": "큼",
+	"wikibasemediainfo-special-mediasearch-no-results": "결과가 없습니다"
 }

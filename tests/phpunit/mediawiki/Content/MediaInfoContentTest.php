@@ -7,7 +7,6 @@ use DataValues\Geo\Values\LatLongValue;
 use DataValues\StringValue;
 use DataValues\TimeValue;
 use InvalidArgumentException;
-use Wikibase\Content\EntityInstanceHolder;
 use Wikibase\DataModel\Entity\Item;
 use Wikibase\DataModel\Entity\PropertyId;
 use Wikibase\DataModel\Reference;
@@ -23,6 +22,7 @@ use Wikibase\DataModel\Term\TermList;
 use Wikibase\MediaInfo\Content\MediaInfoContent;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\MediaInfo\DataModel\MediaInfoId;
+use Wikibase\Repo\Content\EntityInstanceHolder;
 
 /**
  * @covers Wikibase\MediaInfo\Content\MediaInfoContent

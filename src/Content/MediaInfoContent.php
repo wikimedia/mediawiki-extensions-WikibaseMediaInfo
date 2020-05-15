@@ -5,9 +5,9 @@ namespace Wikibase\MediaInfo\Content;
 use Hooks;
 use InvalidArgumentException;
 use LogicException;
-use Wikibase\Content\EntityHolder;
-use Wikibase\EntityContent;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
+use Wikibase\Repo\Content\EntityContent;
+use Wikibase\Repo\Content\EntityHolder;
 use Wikibase\Repo\FingerprintSearchTextGenerator;
 
 /**

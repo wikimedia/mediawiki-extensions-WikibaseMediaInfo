@@ -13,6 +13,7 @@
 	"wikibase-mediainfo-summary-wbsetlabel-add": "Aggiunta didascalia [$2]",
 	"wikibase-mediainfo-summary-wbsetlabel-remove": "Rimossa didascalia [$2]",
 	"wikibase-mediainfo-summary-wbsetlabel-set": "Modificata didascalia [$2]",
+	"wikibasemediainfo-add-property": "Cerca per aggiungere proprietà (parte di, tipo di file, ecc.)",
 	"wikibasemediainfo-add-statement": "Aggiungi dichiarazione",
 	"wikibasemediainfo-desc": "Estensione Wikibase per gestire i metadati strutturati di file multimediali",
 	"wikibasemediainfo-diffview-label": "didascalia",

@@ -430,6 +430,7 @@ class WikibaseMediaInfoHooks {
 			'autoFocus' => false,
 			'classes' => [ 'wbmi-tabs' ],
 			'expanded' => false,
+			'framed' => false,
 		] );
 		$tabs->addTabPanels( [ $tab1, $tab2 ] );
 		$tabs->setInfusable( true );

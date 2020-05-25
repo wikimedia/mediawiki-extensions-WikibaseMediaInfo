@@ -124,9 +124,14 @@ AutocompleteSearchInputWidget.prototype.getLookupCacheDataFromResponse = functio
  * @inheritdoc
  */
 AutocompleteSearchInputWidget.prototype.getLookupMenuOptionsFromData = function ( data ) {
+	var input = this.getValue(),
+		words = input.match( /[^\s]+/g ).length,
+		inputRegex = new RegExp( '^' + new Array( words + 1 ).join( '[^\\s]+\\s*' ), 'i' );
+
 	return data
 		.map( function ( result ) {
-			return result;
+			// only suggest completion for the word currently being typed
+			return result.match( inputRegex )[ 0 ];
 		} )
 		.filter( function ( value, i, array ) {
 			// filter for unique values

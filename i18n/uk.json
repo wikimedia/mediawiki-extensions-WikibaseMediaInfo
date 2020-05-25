@@ -58,11 +58,11 @@
 	"wikibasemediainfo-property-placeholder": "Властивість",
 	"wikibasemediainfo-filepage-license-agree": "Я згоден",
 	"wikibasemediainfo-statements-depicts-title": "Об'єкти, показані на цьому зображенні",
-	"wikibasemediainfo-statements-item-add-qualifier": "Додати визначник",
+	"wikibasemediainfo-statements-item-add-qualifier": "Додати кваліфікатор",
 	"wikibasemediainfo-statements-item-input-label": "із сайту {{WBREPONAME}}",
 	"wikibasemediainfo-statements-item-input-placeholder": "Розпочніть пошук, щоб додати об'єкти (домашній кіт, гора, Тадж-Махал тощо)",
-	"wikibasemediainfo-statements-item-is-prominent": "Означений",
-	"wikibasemediainfo-statements-item-mark-as-prominent": "Позначити як означений",
+	"wikibasemediainfo-statements-item-is-prominent": "Головний предмет",
+	"wikibasemediainfo-statements-item-mark-as-prominent": "Позначити як головний предмет",
 	"wikibasemediainfo-statements-item-remove": "Вилучити",
 	"wikibasemediainfo-statements-learn-more": "Дізнатися більше",
 	"wikibasemediainfo-statements-remove": "Видалити все",
@@ -126,5 +126,11 @@
 	"wikibasemediainfo-special-mediasearch-tab-bitmap": "Зображення",
 	"wikibasemediainfo-special-mediasearch-tab-audio": "Аудіо",
 	"wikibasemediainfo-special-mediasearch-tab-video": "Відео",
-	"wikibasemediainfo-special-mediasearch-tab-category": "Категорії"
+	"wikibasemediainfo-special-mediasearch-tab-category": "Категорії",
+	"wikibasemediainfo-special-mediasearch-filter-size": "Розмір медіа",
+	"wikibasemediainfo-special-mediasearch-filter-size-any": "Будь-який розмір",
+	"wikibasemediainfo-special-mediasearch-filter-size-small": "Малий",
+	"wikibasemediainfo-special-mediasearch-filter-size-medium": "Середній",
+	"wikibasemediainfo-special-mediasearch-filter-size-large": "Великий",
+	"wikibasemediainfo-special-mediasearch-no-results": "Не знайдено результатів"
 }

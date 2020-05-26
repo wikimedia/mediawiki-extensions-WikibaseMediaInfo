@@ -69,7 +69,7 @@ class MediaInfoRdfBuilder implements EntityRdfBuilder {
 	 * @param MediaInfoId $id
 	 * @return RDFWriter for chaining
 	 */
-	private function aboutId( MediaInfoId $id ): RDFWriter {
+	private function aboutId( MediaInfoId $id ): RdfWriter {
 		$mediaLName = $this->vocabulary->getEntityLName( $id );
 
 		$mediaRepository = $this->vocabulary->getEntityRepositoryName( $id );
@@ -153,7 +153,7 @@ class MediaInfoRdfBuilder implements EntityRdfBuilder {
 			->is( $file->getCanonicalUrl() );
 	}
 
-	private function addDuration( MediaInfoID $id, File $file ) {
+	private function addDuration( MediaInfoId $id, File $file ) {
 		$duration = $file->getLength();
 		if ( $duration > 0 ) {
 			$this->aboutId( $id )
@@ -162,7 +162,7 @@ class MediaInfoRdfBuilder implements EntityRdfBuilder {
 		}
 	}
 
-	private function addPositiveIntegerValue( MediaInfoID $id, $schemaProperty, $value ) {
+	private function addPositiveIntegerValue( MediaInfoId $id, $schemaProperty, $value ) {
 		if ( is_int( $value ) && $value > 0 ) {
 			$this->aboutId( $id )
 				->say( RdfVocabulary::NS_SCHEMA_ORG, $schemaProperty )

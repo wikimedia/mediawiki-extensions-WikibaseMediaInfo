@@ -211,7 +211,7 @@ ComponentWidget.prototype.rebuildDOM = function ( $old, $new, preserve ) {
 			if ( newIndex === 0 ) {
 				$old.prepend( newNode );
 			} else {
-				$old.contents().get( newIndex - 1 ).after( newNode );
+				$old.contents().eq( newIndex - 1 ).after( newNode );
 			}
 			// it's a new node; there's no merging left to be done with an old
 			// node, so let's bail early!

@@ -4,7 +4,6 @@ namespace Wikibase\MediaInfo\Services;
 
 use Title;
 use TitleFactory;
-use Wikibase\Lib\Store\StorageException;
 use Wikibase\MediaInfo\DataModel\MediaInfoId;
 
 /**
@@ -34,17 +33,16 @@ class FilePageLookup {
 	public function getFilePage( MediaInfoId $mediaInfoId ) {
 		$pageId = $mediaInfoId->getNumericId();
 
-		try {
-			$filePageTitle = $this->titleFactory->newFromID( $pageId );
+		$filePageTitle = $this->titleFactory->newFromID( $pageId );
 
-			if ( $filePageTitle->inNamespace( NS_FILE ) ) {
-				return $filePageTitle;
-			}
-		} catch ( StorageException $ex ) {
-			// no such page
+		if ( !$filePageTitle ) {
+			return null;
+		}
+
+		if ( $filePageTitle->inNamespace( NS_FILE ) ) {
+			return $filePageTitle;
 		}
 
 		return null;
 	}
-
 }

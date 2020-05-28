@@ -10,7 +10,6 @@ use Title;
 use TitleFactory;
 use Wikibase\DataModel\Entity\EntityId;
 use Wikibase\DataModel\Services\EntityId\EntityIdComposer;
-use Wikibase\Lib\Store\StorageException;
 use Wikibase\MediaInfo\Content\MissingMediaInfoHandler;
 use Wikibase\MediaInfo\DataModel\MediaInfoId;
 use Wikibase\MediaInfo\Services\FilePageLookup;
@@ -47,7 +46,7 @@ class MissingMediaInfoHandlerTest extends \PHPUnit\Framework\TestCase {
 						$title->resetArticleID( $pageId );
 						return $title;
 					default:
-						throw new StorageException( 'No such page id: ' . $pageId );
+						return null;
 				}
 			} ) );
 

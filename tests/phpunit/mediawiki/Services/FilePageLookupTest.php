@@ -4,7 +4,6 @@ namespace Wikibase\MediaInfo\Tests\MediaWiki\Services;
 
 use Title;
 use TitleFactory;
-use Wikibase\Lib\Store\StorageException;
 use Wikibase\MediaInfo\DataModel\MediaInfoId;
 use Wikibase\MediaInfo\Services\FilePageLookup;
 
@@ -37,7 +36,7 @@ class FilePageLookupTest extends \PHPUnit\Framework\TestCase {
 						$title->resetArticleID( $pageId );
 						return $title;
 					default:
-						throw new StorageException( 'No such page id: ' . $pageId );
+						return null;
 				}
 			} ) );
 

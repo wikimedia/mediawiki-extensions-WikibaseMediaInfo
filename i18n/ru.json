@@ -3,6 +3,7 @@
 		"authors": [
 			"Alexander Yukal",
 			"Bloomaround",
+			"Diman Russkov",
 			"Kaganer",
 			"Kareyac",
 			"Katunchik",
@@ -96,5 +97,6 @@
 	"wikibasemediainfo-special-mediasearch-filter-size-any": "Любой размер",
 	"wikibasemediainfo-special-mediasearch-filter-size-small": "Маленький",
 	"wikibasemediainfo-special-mediasearch-filter-size-medium": "Средний",
-	"wikibasemediainfo-special-mediasearch-filter-size-large": "Большой"
+	"wikibasemediainfo-special-mediasearch-filter-size-large": "Большой",
+	"wikibasemediainfo-special-mediasearch-no-results": "Результаты не найдены"
 }

@@ -42,6 +42,10 @@
 	.oo-ui-panelLayout-framed {
 		border: @base-border;
 		border-radius: 2px;
+
+		&:target {
+			border: @active-border;
+		}
 	}
 }
 /* stylelint-enable selector-class-pattern */

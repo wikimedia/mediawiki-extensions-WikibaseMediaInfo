@@ -6,6 +6,7 @@ var AnonWarning = require( './AnonWarning.js' ),
 	CaptionsEditActionsWidget = require( './CaptionsEditActionsWidget.js' ),
 	LicenseDialogWidget = require( './LicenseDialogWidget.js' ),
 	ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
+	wbTermsLanguages = require( 'wikibase.mediainfo.config' ).wbTermsLanguages,
 	CaptionsPanel;
 
 /**
@@ -449,7 +450,7 @@ CaptionsPanel.prototype.restoreToSaved = function () {
  */
 CaptionsPanel.prototype.getAvailableLanguages = function ( excludeLanguages ) {
 	var languages = {};
-	$.extend( languages, mw.config.get( 'wbTermsLanguages' ) );
+	$.extend( languages, wbTermsLanguages );
 	( excludeLanguages || [] ).forEach( function ( languageCode ) {
 		delete languages[ languageCode ];
 	} );

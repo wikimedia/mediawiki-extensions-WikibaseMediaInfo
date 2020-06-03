@@ -6,7 +6,7 @@ var AnonWarning = require( './AnonWarning.js' ),
 	CaptionsEditActionsWidget = require( './CaptionsEditActionsWidget.js' ),
 	LicenseDialogWidget = require( './LicenseDialogWidget.js' ),
 	ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
-	wbTermsLanguages = require( 'wikibase.mediainfo.config' ).wbTermsLanguages,
+	wbTermsLanguages = require( 'wikibase.mediainfo.statements' ).config.wbTermsLanguages,
 	CaptionsPanel;
 
 /**

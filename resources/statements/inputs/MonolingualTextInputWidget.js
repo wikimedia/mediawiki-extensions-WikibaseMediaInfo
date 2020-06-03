@@ -1,7 +1,7 @@
 'use strict';
 
 var ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
-	wbTermsLanguages = require( 'wikibase.mediainfo.config' ).wbTermsLanguages,
+	wbTermsLanguages = require( '../config/wbTermsLanguages.json' ),
 	UlsWidget = require( 'wikibase.mediainfo.uls' ),
 	AbstractInputWidget = require( './AbstractInputWidget.js' ),
 	MonolingualTextInputWidget;

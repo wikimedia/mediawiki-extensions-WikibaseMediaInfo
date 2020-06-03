@@ -1,6 +1,7 @@
 'use strict';
 
 var CaptionDataEditor,
+	wbTermsLanguages = require( 'wikibase.mediainfo.config' ).wbTermsLanguages,
 	UlsWidget = require( 'wikibase.mediainfo.uls' );
 
 /**
@@ -26,7 +27,7 @@ CaptionDataEditor = function ( guid, captionData, config ) {
 	this.warnWithinMaxCaptionLength = config.warnWithinMaxCaptionLength || 0;
 
 	this.languageSelector = new UlsWidget( {
-		languages: mw.config.get( 'wbTermsLanguages' )
+		languages: wbTermsLanguages
 	} );
 	if ( captionData.languageCode !== '' ) {
 		this.languageSelector.setValue( captionData.languageCode );

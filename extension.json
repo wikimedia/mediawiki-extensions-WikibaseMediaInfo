@@ -170,6 +170,19 @@
 				"mobile"
 			]
 		},
+		"wikibase.mediainfo.config": {
+			"packageFiles": [
+				"resources/config/index.js",
+				{
+					"name": "resources/config/wbTermsLanguages.json",
+					"callback": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::generateWbTermsLanguages"
+				}
+			],
+			"targets": [
+				"desktop",
+				"mobile"
+			]
+		},
 		"wikibase.mediainfo.filePageDisplay": {
 			"packageFiles": [
 				"resources/filepage/init.js",
@@ -184,6 +197,7 @@
 				"resources/filepage/ProtectionMsgWidget.js"
 			],
 			"dependencies": [
+				"wikibase.mediainfo.config",
 				"wikibase.mediainfo.uls",
 				"mediawiki.action.edit.editWarning",
 				"mediawiki.template.mustache+dom",
@@ -348,6 +362,7 @@
 			],
 			"dependencies": [
 				"wikibase.mediainfo.base",
+				"wikibase.mediainfo.config",
 				"wikibase.mediainfo.uls",
 				"mediawiki.template.mustache+dom",
 				"mw.config.values.wbDataTypes",

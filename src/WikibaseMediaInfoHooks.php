@@ -6,8 +6,10 @@ use AbstractContent;
 use CirrusSearch\CirrusSearch;
 use CirrusSearch\Connection;
 use CirrusSearch\Search\CirrusIndexField;
+use Config;
 use ContentHandler;
 use Elastica\Document;
+use Language;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\Revision\RevisionRecord;
 use MediaWiki\Revision\SlotRecord;
@@ -19,6 +21,7 @@ use OOUI\PanelLayout;
 use OOUI\TabPanelLayout;
 use OutputPage;
 use ParserOutput;
+use ResourceLoaderContext;
 use Title;
 use Wikibase\Client\WikibaseClient;
 use Wikibase\DataModel\Entity\PropertyId;
@@ -156,8 +159,6 @@ class WikibaseMediaInfoHooks {
 		}
 
 		$wbRepo = WikibaseRepo::getDefaultInstance();
-		$allLanguages = \Language::fetchLanguageNames();
-		$termsLanguages = $wbRepo->getTermsLanguages()->getLanguages();
 		$imgTitle = $out->getTitle();
 
 		$isMediaInfoPage =
@@ -199,10 +200,6 @@ class WikibaseMediaInfoHooks {
 		$hooksObject->doBeforePageDisplay(
 			$out,
 			$isMediaInfoPage,
-			array_intersect_key(
-				$allLanguages,
-				array_flip( $termsLanguages )
-			),
 			new BabelUserLanguageLookup(),
 			$wbRepo->getEntityViewFactory(),
 			[
@@ -222,7 +219,6 @@ class WikibaseMediaInfoHooks {
 	/**
 	 * @param \OutputPage $out
 	 * @param bool $isMediaInfoPage
-	 * @param string[] $termsLanguages Array with language codes as keys and autonyms as values
 	 * @param UserLanguageLookup $userLanguageLookup
 	 * @param DispatchingEntityViewFactory $entityViewFactory
 	 * @param array $jsConfigVars Variables to expose to JavaScript
@@ -231,7 +227,6 @@ class WikibaseMediaInfoHooks {
 	public function doBeforePageDisplay(
 		$out,
 		$isMediaInfoPage,
-		array $termsLanguages,
 		UserLanguageLookup $userLanguageLookup,
 		DispatchingEntityViewFactory $entityViewFactory,
 		array $jsConfigVars = []
@@ -293,7 +288,6 @@ class WikibaseMediaInfoHooks {
 				'wbCurrentRevision' => $entityRevisionId,
 				'wbEntityId' => $entityId->getSerialization(),
 				'wbEntity' => $entityData,
-				'wbTermsLanguages' => $termsLanguages,
 				'wbmiMinCaptionLength' => 5,
 				'wbmiMaxCaptionLength' => WBMIHooksHelper::getMaxCaptionLength(),
 				'wbmiParsedMessageAnonEditWarning' => $out->msg(
@@ -322,6 +316,24 @@ class WikibaseMediaInfoHooks {
 		$out->addJsConfigVars( $jsConfigVars );
 		$out->addModuleStyles( $moduleStyles );
 		$out->addModules( $modules );
+	}
+
+	/**
+	 * Generate the list of languages that can be used in terms.
+	 * This will be exposed as part of a ResourceLoader package module.
+	 *
+	 * @param ResourceLoaderContext $context
+	 * @param Config $config
+	 * @return array language codes as keys, autonyms as values
+	 */
+	public static function generateWbTermsLanguages( ResourceLoaderContext $context, Config $config ) {
+		$wbRepo = WikibaseRepo::getDefaultInstance();
+		$allLanguages = Language::fetchLanguageNames();
+		$termsLanguages = $wbRepo->getTermsLanguages()->getLanguages();
+		return array_intersect_key(
+			$allLanguages,
+			array_flip( $termsLanguages )
+		);
 	}
 
 	/**

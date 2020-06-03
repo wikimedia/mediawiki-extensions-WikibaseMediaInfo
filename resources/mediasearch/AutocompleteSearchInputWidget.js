@@ -49,32 +49,75 @@ AutocompleteSearchInputWidget.prototype.onLookupMenuChoose = function ( item ) {
  * @inheritdoc
  */
 AutocompleteSearchInputWidget.prototype.getLookupRequest = function () {
-	var value = this.getValue(),
-		deferred = $.Deferred(),
-		api = wikibase.api.getLocationAgnosticMwApi( this.apiUri ),
-		requestParams = {
-			action: 'wbsearchentities',
-			search: value,
-			format: 'json',
-			language: mw.config.get( 'wgUserLanguage' ),
-			uselang: mw.config.get( 'wgUserLanguage' ),
-			type: 'item',
-			// request more than `limit`, so we can omit duplicates
-			limit: this.limit + 50
-		};
+	var input = this.getValue(),
+		lastWordRegex = /[^\s]+$/,
+		lastWord = input.match( lastWordRegex ),
+		promises = [],
+		inputPromise,
+		lastWordPromise;
 
-	if ( value.length === 0 ) {
-		return deferred.resolve( [] ).promise( { abort: function () {} } );
+	if ( input.length === 0 ) {
+		return $.Deferred().resolve( [] ).promise( { abort: function () {} } );
 	}
 
-	return api.get( requestParams );
+	inputPromise = this.getLookupRequestForTerm( input );
+	promises.push(
+		inputPromise.then( function ( response ) {
+			return response.search.map( function ( result ) {
+				// get search term that matched (could be label or alias or...)
+				return result.match.text;
+			} );
+		} ).promise( { abort: inputPromise.abort } )
+	);
+
+	if ( lastWord && lastWord[ 0 ] && input !== lastWord[ 0 ] ) {
+		lastWordPromise = this.getLookupRequestForTerm( lastWord[ 0 ] );
+		promises.push(
+			lastWordPromise.then( function ( response ) {
+				return response.search.map( function ( result ) {
+					// add search term to rest of the input
+					return input.replace( lastWordRegex, result.match.text );
+				} );
+			} ).promise( { abort: lastWordPromise.abort } )
+		);
+	}
+
+	return $.when.apply( $, promises )
+		.then( function () {
+			// combine the results of multiple API calls
+			return [].slice.call( arguments ).reduce( function ( combined, results ) {
+				return combined.concat( results );
+			}, [] );
+		} ).promise( { abort: function () {
+			promises.forEach( function ( promise ) {
+				promise.abort();
+			} );
+		} } );
+};
+
+/**
+ * @inheritdoc
+ */
+AutocompleteSearchInputWidget.prototype.getLookupRequestForTerm = function ( term ) {
+	var api = wikibase.api.getLocationAgnosticMwApi( this.apiUri );
+
+	return api.get( {
+		action: 'wbsearchentities',
+		search: term,
+		format: 'json',
+		language: mw.config.get( 'wgUserLanguage' ),
+		uselang: mw.config.get( 'wgUserLanguage' ),
+		type: 'item',
+		// request more than `limit`, so we can omit duplicates
+		limit: this.limit + 50
+	} );
 };
 
 /**
  * @inheritdoc
  */
 AutocompleteSearchInputWidget.prototype.getLookupCacheDataFromResponse = function ( response ) {
-	return response.search;
+	return response;
 };
 
 /**
@@ -83,8 +126,7 @@ AutocompleteSearchInputWidget.prototype.getLookupCacheDataFromResponse = functio
 AutocompleteSearchInputWidget.prototype.getLookupMenuOptionsFromData = function ( data ) {
 	return data
 		.map( function ( result ) {
-			// get search term that matched (could be label or alias or...)
-			return result.match.text;
+			return result;
 		} )
 		.filter( function ( value, i, array ) {
 			// filter for unique values

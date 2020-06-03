@@ -420,20 +420,26 @@ class WikibaseMediaInfoHooks {
 		$tab1Html = $captions . $tab1Html;
 
 		// Prepare tab panels
+		// @phan-suppress-next-line SecurityCheck-XSS
 		$tab1 = new TabPanelLayout(
 			'wikiTextPlusCaptions',
 			[
+				// @phan-suppress-next-line SecurityCheck-XSS
 				'classes' => [ 'wbmi-tab' ],
 				'label' => $textProvider->get( 'wikibasemediainfo-filepage-fileinfo-heading' ),
+				// @phan-suppress-next-line SecurityCheck-XSS
 				'content' => new HtmlSnippet( $tab1Html ),
 				'expanded' => false,
 			]
 		);
+		// @phan-suppress-next-line SecurityCheck-XSS
 		$tab2 = new TabPanelLayout(
 			'statements',
 			[
+				// @phan-suppress-next-line SecurityCheck-XSS
 				'classes' => [ 'wbmi-tab' ],
 				'label' => $textProvider->get( 'wikibasemediainfo-filepage-structured-data-heading' ),
+				// @phan-suppress-next-line SecurityCheck-XSS
 				'content' => new HtmlSnippet( $statements ),
 				'expanded' => false,
 			]

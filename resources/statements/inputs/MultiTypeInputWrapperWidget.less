@@ -19,10 +19,11 @@
 			border-bottom-left-radius: 0;
 			border-top-left-radius: 0;
 			padding-right: 6px;
+		}
 
-			.oo-ui-labelElement-label {
-				@visually-hidden();
-			}
+		.oo-ui-inputWidget-input {
+			overflow: hidden;
+			text-overflow: ellipsis;
 		}
 	}
 }
@@ -32,5 +33,13 @@
 		border-bottom-right-radius: 0;
 		border-right: 0;
 		border-top-right-radius: 0;
+	}
+
+	.wbmi-input-widget .oo-ui-textInputWidget > .oo-ui-labelElement-label {
+		display: none;
+
+		@media screen and ( min-width: @breakpoint-tablet ) {
+			display: initial;
+		}
 	}
 }

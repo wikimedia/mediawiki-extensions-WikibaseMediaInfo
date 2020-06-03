@@ -53,6 +53,9 @@ MultiTypeInputWrapperWidget = function ( config ) {
 
 	this.snakTypeWidget = new OO.ui.DropdownInputWidget( {
 		classes: [ 'wbmi-input-wrapper__snak-type' ],
+		dropdown: {
+			invisibleLabel: true
+		},
 		options: [
 			{
 				data: valueTypes.VALUE,
@@ -69,6 +72,7 @@ MultiTypeInputWrapperWidget = function ( config ) {
 		],
 		title: mw.message( 'wikibasemediainfo-filepage-statement-value-type-dropdown-title' ).parse()
 	} );
+
 	this.snakTypeWidget.dropdownWidget.setIcon( 'ellipsis' );
 	this.snakTypeWidget.dropdownWidget.setIndicator( null );
 	this.snakTypeWidget.connect( this, { change: 'onSnakTypeChange' } );

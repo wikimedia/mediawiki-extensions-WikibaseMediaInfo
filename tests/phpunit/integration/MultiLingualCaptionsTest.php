@@ -39,8 +39,8 @@ class MultiLingualCaptionsTest extends WBMIApiTestCase {
 		// Add a caption (first caption has to be added without the revision id)
 		$this->doApiRequestWithToken(
 			[
-				'action' =>	'wbsetlabel',
-				'id' =>	$entityId,
+				'action' => 'wbsetlabel',
+				'id' => $entityId,
 				'language' => 'en',
 				'value' => 'TEST_ENGLISH_CAPTION',
 				'bot' => 1,
@@ -52,8 +52,8 @@ class MultiLingualCaptionsTest extends WBMIApiTestCase {
 		// Add a 2nd caption
 		list( $result, , ) = $this->doApiRequestWithToken(
 			[
-				'action' =>	'wbsetlabel',
-				'id' =>	$entityId,
+				'action' => 'wbsetlabel',
+				'id' => $entityId,
 				'language' => 'fr',
 				'value' => 'TEST_FRENCH_CAPTION',
 				'bot' => 1,
@@ -65,8 +65,8 @@ class MultiLingualCaptionsTest extends WBMIApiTestCase {
 		// Get the entity from the API
 		list( $result, , ) = $this->doApiRequestWithToken(
 			[
-				'action' =>	'wbgetentities',
-				'ids' =>	$entityId,
+				'action' => 'wbgetentities',
+				'ids' => $entityId,
 				'props' => 'info|labels'
 			],
 			null,
@@ -80,8 +80,8 @@ class MultiLingualCaptionsTest extends WBMIApiTestCase {
 		// Delete English caption
 		$this->doApiRequestWithToken(
 			[
-				'action' =>	'wbsetlabel',
-				'id' =>	$entityId,
+				'action' => 'wbsetlabel',
+				'id' => $entityId,
 				'language' => 'en',
 				'value' => '',
 				'bot' => 1,
@@ -93,8 +93,8 @@ class MultiLingualCaptionsTest extends WBMIApiTestCase {
 		// Edit French caption
 		list( $result, , ) = $this->doApiRequestWithToken(
 			[
-				'action' =>	'wbsetlabel',
-				'id' =>	$entityId,
+				'action' => 'wbsetlabel',
+				'id' => $entityId,
 				'language' => 'fr',
 				'value' => 'TEST_FRENCH_CAPTION_EDITED',
 				'bot' => 1,
@@ -106,8 +106,8 @@ class MultiLingualCaptionsTest extends WBMIApiTestCase {
 		// Get the entity from the API
 		list( $result, , ) = $this->doApiRequestWithToken(
 			[
-				'action' =>	'wbgetentities',
-				'ids' =>	$entityId,
+				'action' => 'wbgetentities',
+				'ids' => $entityId,
 				'props' => 'info|labels'
 			],
 			null,
@@ -123,7 +123,7 @@ class MultiLingualCaptionsTest extends WBMIApiTestCase {
 		// Just do an API call to make sure that there isn't a fatal
 		$this->doApiRequestWithToken(
 			[
-				'action' =>	'query',
+				'action' => 'query',
 				'list' => 'search',
 				'srsearch' => 'TEST_FRENCH_CAPTION_EDITED'
 			],

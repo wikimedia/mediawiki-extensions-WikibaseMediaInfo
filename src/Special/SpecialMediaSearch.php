@@ -177,7 +177,8 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 					[
 						'label' => new HtmlSnippet(
 							( new Tag( 'a' ) )
-								->setAttributes( [ 'href' => $data['path'] . '?' . http_build_query( [ 'type' => $name ] + $data['querystring'] ) ] )
+								->setAttributes( [ 'href' => $data['path'] . '?' .
+									http_build_query( [ 'type' => $name ] + $data['querystring'] ) ] )
 								->appendContent( $this->msg( "wikibasemediainfo-special-mediasearch-tab-$name" )->text() )
 								->toString()
 						),

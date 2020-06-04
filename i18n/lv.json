@@ -73,5 +73,7 @@
 	"wikibasemediainfo-quantity-input-button-text": "Pievienot",
 	"wikibasemediainfo-globecoordinate-input-button-text": "Pievienot",
 	"wikibasemediainfo-globecoordinate-map-button-text": "Izvēlēties uz kartes",
-	"wikibasemediainfo-search-suggestions-title-depicts": "faili, kas attēlo…"
+	"wikibasemediainfo-search-suggestions-title-depicts": "faili, kas attēlo…",
+	"wikibasemediainfo-special-mediasearch-continue": "Nākamie",
+	"wikibasemediainfo-special-mediasearch-no-results": "Nav atrasts neviens rezultāts"
 }

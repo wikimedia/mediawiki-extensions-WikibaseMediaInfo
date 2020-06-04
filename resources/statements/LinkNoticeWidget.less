@@ -1,14 +1,14 @@
 @import '../mediainfo-variables.less';
 
 .wbmi-link-notice {
-	@max-container-width();
-	margin-bottom: @base-spacing;
+	.wbmi-max-container-width();
+	margin-bottom: @wbmi-spacing-base;
 
 	& &__dismiss-icon {
 		display: flex;
 		height: 100%;
 		position: absolute;
-		right: @sm-spacing;
+		right: @wbmi-spacing-sm;
 		top: 0;
 	}
 }

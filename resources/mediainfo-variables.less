@@ -1,81 +1,52 @@
+@import '../lib/wikimedia-ui-base.less';
+
 // Global MediaInfo variables
 // ---------------------------------------------------------
+// Use semantic variable names from wikimedia-ui-base in the code when it makes
+// sense to do so. Otherwise, create a new extension-specific semantic
+// variable here.
 
 // Colors
 // ---------------------------------------------------------
 // https://design.wikimedia.org/style-guide/visual-style_colors.html
 
-// Base
-@base0: #000;
-@base10: #202122;
-@base20: #54595d;
-@base30: #72777d;
-@base50: #a2a9b1;
-@base70: #c8ccd1;
-@base80: #eaecf0;
-@base90: #f8f9fa;
-@base100: #fff;
-
-// Accent
-@accent10: #2a4b8d;
-@accent50: #36c;
-@accent90: #eaf3ff;
-
-// Utility
-@red30: #b32424;
-@red50: #d33;
-@red90: #fee7e6;
-@green30: #14866d;
-@green50: #00af80;
-@green90: #d5fdf4;
-@yellow30: #ac6600;
-@yellow50: #fc3;
-@yellow90: #fef6e7;
-
-// Semantic colors
-@color-primary: @accent50;
-@color-background: @base90;
-@color-border: @base50;
-@color-destructive: @red50;
+@wbmi-box-shadow-color: @wmui-color-base20;
 
 // Not from style guide, but for consistency with similar existing functionality
-@odd-color: #f6f8fc;
+@wbmi-background-color--odd: #f6f8fc;
 
-// Breakpoints
+// Border
 // ---------------------------------------------------------
-@breakpoint-tablet: 720px;
-@breakpoint-desktop: 1000px;
-
-// Spacing
-// ---------------------------------------------------------
-@base-spacing: 1rem;
-@sm-spacing: @base-spacing / 2;
-@xs-spacing: @base-spacing / 4;
-@hairline-spacing: 3px;
+@wbmi-border-panel--target: 2px solid @color-primary;
+@wbmi-border-color-panel--active: @color-primary--active;
+@wbmi-border-color-base--lighter: @border-color-heading;
 
 // Spacing
 // ---------------------------------------------------------
-@base-border: solid 1px @color-border;
-@active-border: solid 2px @color-primary;
+@wbmi-spacing-base: 1rem;
+@wbmi-spacing-sm: @wbmi-spacing-base / 2;
+@wbmi-spacing-xs: @wbmi-spacing-base / 4;
+@wbmi-spacing-hairline: 3px;
 
 // Typography
 // ---------------------------------------------------------
-@large-font-size: 1.2em;
-@base-font-size: 1em;
-@sm-font-size: 0.8em;
+@wbmi-font-size-large: 1.2em;
+@wbmi-font-size-base: 1em;
+@wbmi-font-size-sm: 0.8em;
 
 // State
 // ---------------------------------------------------------
 @edit-mode: wbmi-entityview-editable;
 
-// Global mixins
+// Line thingys
+//---------------------------------------------------------
+@wbmi-color-line: #979797;
+@wbmi-offset-line: 1rem;
+
+// Mixins
 // ---------------------------------------------------------
-
-/* stylelint-disable indentation */
-/* stylelint-disable no-extra-semicolons */
-
-@bullet-separator: {
-	color: @base0;
+.wbmi-bullet-separator() {
+	color: @color-base--emphasized;
 	content: '\2022'; // &bull;
 	cursor: initial;
 	display: inline-block;
@@ -83,44 +54,27 @@
 	text-decoration: none;
 };
 
-// Line thingys
-@line-color: #979797;
-@line-offset: 1rem;
-
-@vertical-line: {
-	border-left: 1px solid @line-color;
+.wbmi-vertical-line() {
+	border-left: 1px solid @wbmi-color-line;
 	content: '';
 	height: ~'calc(100% - 1.5rem)'; // ~ is required to disable LESS auto-calculation...
-	left: -( @line-offset );
+	left: -( @wbmi-offset-line );
 	position: absolute;
 	top: 0;
 };
 
-@horizontal-line: {
-	border-bottom: 1px solid @line-color;
+.wbmi-horizontal-line() {
+	border-bottom: 1px solid @wbmi-color-line;
 	content: '';
-	left: -( @line-offset );
-	position: absolute;
-	width: @base-spacing;
 	height: 1em;
+	left: -( @wbmi-offset-line );
+	position: absolute;
+	width: @wbmi-spacing-base;
 };
 
-@max-container-width: {
-  @media screen and ( min-width: @breakpoint-desktop ) {
-	box-sizing: border-box;
-	max-width: 800px;
-  }
+.wbmi-max-container-width() {
+	@media screen and ( min-width: @width-breakpoint-desktop ) {
+		box-sizing: border-box;
+		max-width: 800px;
+	}
 };
-
-@visually-hidden: {
-	clip: rect( 1px, 1px, 1px, 1px );
-	height: 1px;
-	overflow: hidden;
-	/* stylelint-disable-next-line declaration-no-important */
-	position: absolute !important;
-	width: 1px;
-	word-wrap: normal;
-};
-
-/* stylelint-enable indentation */
-/* stylelint-enable no-extra-semicolons */

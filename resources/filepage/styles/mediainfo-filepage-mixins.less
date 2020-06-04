@@ -1,22 +1,15 @@
 @import '../../mediainfo-variables.less';
 
-// Linting disable because LESS detached rulesets requires javascript semicolon;
-// after declaration - this doesn't play nice with our current rules
-/* stylelint-disable indentation */
-/* stylelint-disable no-extra-semicolons */
-
-@panel-active-border-color: @accent10;
-
-@panel: {
-	border: @base-border;
-	padding: @base-spacing @base-spacing @sm-spacing;
+.wbmi-filepage-panel() {
+	border: @border-base;
+	padding: @wbmi-spacing-base @wbmi-spacing-base @wbmi-spacing-sm;
 	position: relative;
 
-	@max-container-width();
+	.wbmi-max-container-width();
 
 	// Panel elements get a slight border-color change when active
 	.@{edit-mode}& {
-		border-color: @panel-active-border-color;
+		border-color: @wbmi-border-color-panel--active;
 	}
 
 	// stylelint-disable-next-line selector-class-pattern
@@ -26,24 +19,21 @@
 	}
 };
 
-@panel-header: {
-	font-size: @base-font-size;
-	margin: 0 0 @sm-spacing;
+.wbmi-filepage-panel-header() {
+	font-size: @wbmi-font-size-base;
+	margin: 0 0 @wbmi-spacing-sm;
 	padding: 0;
 };
 
-@panel-controls: {
-	font-size: @base-font-size;
+.wbmi-filepage-panel-controls() {
+	font-size: @wbmi-font-size-base;
 	font-weight: normal;
 	line-height: 1.6rem;
 	float: right;
 };
 
-@error-message: {
-	font-size: @sm-font-size;
-	color: @color-destructive;
+.wbmi-filepage-error-message() {
+	font-size: @wbmi-font-size-sm;
+	color: @color-error;
 	padding: 0;
 };
-
-/* stylelint-enable indentation */
-/* stylelint-enable no-extra-semicolons */

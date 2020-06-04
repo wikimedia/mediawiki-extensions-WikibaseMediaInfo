@@ -23,7 +23,8 @@ module.exports = function ( grunt ) {
 			all: [
 				'**/*.less',
 				'!node_modules/**',
-				'!vendor/**'
+				'!vendor/**',
+				'!lib/**'
 			]
 		}
 	} );

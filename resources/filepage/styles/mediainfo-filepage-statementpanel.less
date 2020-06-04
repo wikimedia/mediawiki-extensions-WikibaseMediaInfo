@@ -5,7 +5,7 @@
 // Statements panel
 // ---------------------------------------------------------
 .wbmi-entityview-statementsGroup {
-	@panel();
+	.wbmi-filepage-panel();
 
 	// Secondary buttons
 	.wbmi-statement-footer-buttons {
@@ -14,7 +14,7 @@
 
 	// separate multiple statement groups
 	+ .wbmi-entityview-statementsGroup {
-		margin-top: @base-spacing;
+		margin-top: @wbmi-spacing-base;
 	}
 
 	// indication that we don't support editing of the statement
@@ -29,7 +29,7 @@
 		/* stylelint-disable-next-line selector-class-pattern */
 		.wbqc-reports-button {
 			position: absolute;
-			top: -@xs-spacing;
+			top: -@wbmi-spacing-xs;
 		}
 	}
 }

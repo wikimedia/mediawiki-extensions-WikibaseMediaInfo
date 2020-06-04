@@ -6,7 +6,8 @@
 		"selenium-test-betacommons": "wdio tests/selenium/wdio.conf.js",
 		"test": "grunt test && npm run test:unit",
 		"test:unit": "nyc --include='resources/**/*.js' --reporter=lcov --reporter=lcovonly --reporter=text --reporter=text-summary qunit 'tests/node-qunit/**/*.test.js'",
-		"install": "rm -rf node_modules/mediawiki && git clone -q https://gerrit.wikimedia.org/r/mediawiki/core node_modules/mediawiki"
+		"install": "rm -rf node_modules/mediawiki && git clone -q https://gerrit.wikimedia.org/r/mediawiki/core node_modules/mediawiki",
+		"build-lib": ". ./bin/build.sh"
 	},
 	"devDependencies": {
 		"chromedriver": "2.46.0",
@@ -36,6 +37,7 @@
 		"webdriverio": "4.14.2",
 		"wikibase-data-model": "latest",
 		"wikibase-data-values": "latest",
-		"wikibase-serialization": "latest"
+		"wikibase-serialization": "latest",
+		"wikimedia-ui-base": "0.15.0"
 	}
 }

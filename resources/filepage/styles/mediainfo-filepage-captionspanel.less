@@ -5,19 +5,19 @@
 // Captions panel
 // ---------------------------------------------------------
 .wbmi-entityview-captionsPanel {
-	@panel();
+	.wbmi-filepage-panel();
 
-	@media screen and ( max-width: @breakpoint-tablet ) {
+	@media screen and ( max-width: @width-breakpoint-tablet ) {
 		font-size: 0.9em;
 	}
 
 	// Captions header
 	.wbmi-entityview-captions-header {
-		@panel-header();
+		.wbmi-filepage-panel-header();
 
 		// Header controls element
 		.wbmi-entityview-editButton {
-			@panel-controls();
+			.wbmi-filepage-panel-controls();
 		}
 	}
 
@@ -33,12 +33,12 @@
 		.flex-display();
 		.flex-wrap( nowrap );
 		justify-content: space-between;
-		padding: @sm-spacing 0;
+		padding: @wbmi-spacing-sm 0;
 
 		// set borders only between elements
 		// for some reason & + & syntax not working here...
 		+ .wbmi-entityview-caption {
-			border-top: 1px solid @base70;
+			border-top: 1px solid @wbmi-border-color-base--lighter;
 		}
 
 		.@{edit-mode}& {
@@ -47,37 +47,37 @@
 	}
 
 	.wbmi-language-label {
-		.flex(0, 0, 20%);
-		margin-right: @base-spacing;
+		.flex( 0, 0, 20% );
+		margin-right: @wbmi-spacing-base;
 		min-width: 8rem;
 
 		.@{edit-mode}& {
-			margin-bottom: @xs-spacing;
+			margin-bottom: @wbmi-spacing-xs;
 		}
 	}
 
 	.wbmi-caption-value {
 		.flex-display();
-		.flex-wrap(wrap);
-		.flex(1, 1, auto);
+		.flex-wrap( wrap );
+		.flex( 1, 1, auto );
 
 		&.wbmi-entityview-emptyCaption {
-			color: @base30;
+			color: @color-base--subtle;
 		}
 
 		.@{edit-mode}& {
-			@media screen and ( max-width: @breakpoint-tablet ) {
-				.flex(1, 1, 100%, 3);
+			@media screen and ( max-width: @width-breakpoint-tablet ) {
+				.flex( 1, 1, 100%, 3 );
 			}
 		}
 	}
 
 	.wbmi-caption-textInput {
-		.flex(1, 1, auto, 1);
+		.flex( 1, 1, auto, 1 );
 	}
 
 	.wbmi-caption-deleteButton {
-		.flex(0, 1, auto, 2);
+		.flex( 0, 1, auto, 2 );
 		margin-right: 0;
 	}
 
@@ -89,8 +89,8 @@
 
 	.wbmi-caption-publishError,
 	.wbmi-caption-publishWarning {
-		@error-message();
-		.flex(0, 0, 100%, 3);
+		.wbmi-filepage-error-message();
+		.flex( 0, 0, 100%, 3 );
 	}
 
 	.wbmi-entityview-hideable {

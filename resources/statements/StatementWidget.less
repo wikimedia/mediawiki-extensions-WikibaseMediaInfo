@@ -3,9 +3,9 @@
 @import '../filepage/styles/mediainfo-filepage-statementpanel';
 
 .wbmi-statements-widget {
-	margin-bottom: @sm-spacing;
+	margin-bottom: @wbmi-spacing-sm;
 
-	@media screen and ( max-width: @breakpoint-tablet ) {
+	@media screen and ( max-width: @width-breakpoint-tablet ) {
 		font-size: 0.9em;
 	}
 
@@ -23,7 +23,7 @@
 
 	// Statements header
 	h3.wbmi-statements-title {
-		@panel-header();
+		.wbmi-filepage-panel-header();
 		margin-bottom: 0;
 
 		// the adjacent selector will make sure that this styling is *not* applied if
@@ -38,12 +38,12 @@
 	.wbmi-statement-header {
 		.flex-display();
 		align-items: baseline;
-		margin-bottom: @base-spacing;
+		margin-bottom: @wbmi-spacing-base;
 
 		// Panel edit button; only gets included on filepage (CSS is not needed
 		// to hide it elsewhere).
 		.wbmi-entityview-editButton {
-			@panel-controls();
+			.wbmi-filepage-panel-controls();
 			margin-right: 0;
 		}
 	}
@@ -66,7 +66,7 @@
 		.wbmi-entityview-statementsGroup & > .oo-ui-labelElement-label {
 			display: none;
 
-			@media screen and ( min-width: @breakpoint-tablet ) {
+			@media screen and ( min-width: @width-breakpoint-tablet ) {
 				display: initial;
 			}
 		}
@@ -104,7 +104,7 @@
 			}
 		}
 
-		@media screen and ( max-width: @breakpoint-tablet ) {
+		@media screen and ( max-width: @width-breakpoint-tablet ) {
 			display: block;
 
 			.wbmi-entity-title {

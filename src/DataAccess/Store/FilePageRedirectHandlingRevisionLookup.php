@@ -10,6 +10,7 @@ use Wikibase\Lib\Store\InconsistentRedirectException;
 use Wikibase\Lib\Store\LatestRevisionIdResult;
 use Wikibase\Lib\Store\Sql\WikiPageEntityDataLoader;
 use Wikibase\Lib\Store\StorageException;
+use Wikibase\Store;
 
 /**
  * This service works around (intended behaviour does not seem fully defined as of 2019-10)
@@ -47,15 +48,15 @@ class FilePageRedirectHandlingRevisionLookup implements EntityRevisionLookup {
 		$this->entityDataLoader = $entityDataLoader;
 	}
 
-	public function getEntityRevision( EntityId $entityId, $revisionId = 0, $mode = self::LATEST_FROM_REPLICA ) {
+	public function getEntityRevision( EntityId $entityId, $revisionId = 0, $mode = Store::LATEST_FROM_REPLICA ) {
 		return $this->lookup->getEntityRevision( $entityId, $revisionId, $mode );
 	}
 
-	public function getLatestRevisionId( EntityId $entityId, $mode = self::LATEST_FROM_REPLICA ) {
+	public function getLatestRevisionId( EntityId $entityId, $mode = Store::LATEST_FROM_REPLICA ) {
 		try {
 			return $this->lookup->getLatestRevisionId( $entityId, $mode );
 		} catch ( InconsistentRedirectException $e ) {
-			$revStoreFlags = ( $mode == self::LATEST_FROM_MASTER || $mode == self::LATEST_FROM_REPLICA_WITH_FALLBACK )
+			$revStoreFlags = ( $mode == Store::LATEST_FROM_MASTER || $mode == Store::LATEST_FROM_REPLICA_WITH_FALLBACK )
 				? IDBAccessObject::READ_LATEST : 0;
 
 			// TODO: WikiPageEntityMetaDataLookup should use RevisionStore::getQueryInfo,

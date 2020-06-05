@@ -6,7 +6,7 @@ use Psr\Log\LoggerInterface;
 use Wikibase\DataModel\Entity\EntityId;
 use Wikibase\Lib\Store\DivergingEntityIdException;
 use Wikibase\Lib\Store\EntityRevisionLookup;
-use Wikibase\Store;
+use Wikibase\Lib\Store\LookupConstants;
 
 /**
  * This is an EntityRevisionLookup which works around that fact that assumptions
@@ -43,7 +43,7 @@ class EntityIdFixingRevisionLookup implements EntityRevisionLookup {
 	public function getEntityRevision(
 		EntityId $entityId,
 		$revisionId = 0,
-		$mode = Store::LATEST_FROM_REPLICA
+		$mode = LookupConstants::LATEST_FROM_REPLICA
 	) {
 		try {
 			$entityRevision = $this->lookup->getEntityRevision( $entityId, $revisionId, $mode );
@@ -60,7 +60,7 @@ class EntityIdFixingRevisionLookup implements EntityRevisionLookup {
 	/**
 	 * @inheritDoc
 	 */
-	public function getLatestRevisionId( EntityId $entityId, $mode = Store::LATEST_FROM_REPLICA ) {
+	public function getLatestRevisionId( EntityId $entityId, $mode = LookupConstants::LATEST_FROM_REPLICA ) {
 		return $this->lookup->getLatestRevisionId( $entityId, $mode );
 	}
 

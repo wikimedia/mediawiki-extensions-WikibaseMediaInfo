@@ -9,12 +9,12 @@ use Wikibase\DataModel\Entity\EntityRedirect;
 use Wikibase\Lib\Store\EntityRevision;
 use Wikibase\Lib\Store\EntityRevisionLookup;
 use Wikibase\Lib\Store\InconsistentRedirectException;
+use Wikibase\Lib\Store\LookupConstants;
 use Wikibase\Lib\Store\Sql\WikiPageEntityDataLoader;
 use Wikibase\Lib\Store\StorageException;
 use Wikibase\MediaInfo\DataAccess\Store\FilePageRedirectHandlingRevisionLookup;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\MediaInfo\DataModel\MediaInfoId;
-use Wikibase\Store;
 
 /**
  * @covers \Wikibase\MediaInfo\DataAccess\Store\FilePageRedirectHandlingRevisionLookup
@@ -26,7 +26,7 @@ class FilePageRedirectHandlingRevisionLookupTest extends TestCase {
 	public function testGetEntityRevisionReturnsTheEntityRevisionProvidedByDefaultLookup() {
 		$entityId = new MediaInfoId( 'M123' );
 		$revisionId = 4321;
-		$mode = Store::LATEST_FROM_REPLICA;
+		$mode = LookupConstants::LATEST_FROM_REPLICA;
 
 		$entityRevision = $this->createMock( EntityRevision::class );
 
@@ -43,7 +43,7 @@ class FilePageRedirectHandlingRevisionLookupTest extends TestCase {
 
 	public function testGivenConsistentRevisionData_getLatestRevisionIdReturnsTheResultProvidedByDefaultLookup() {
 		$entityId = new MediaInfoId( 'M123' );
-		$mode = Store::LATEST_FROM_REPLICA;
+		$mode = LookupConstants::LATEST_FROM_REPLICA;
 
 		$revisionId = 4321;
 
@@ -66,7 +66,7 @@ class FilePageRedirectHandlingRevisionLookupTest extends TestCase {
 		$revisionId = 4321;
 
 		$slotRole = 'mediainfo';
-		$mode = Store::LATEST_FROM_REPLICA;
+		$mode = LookupConstants::LATEST_FROM_REPLICA;
 
 		$entityRevision = new EntityRevision( $entity, $revisionId );
 
@@ -106,7 +106,7 @@ class FilePageRedirectHandlingRevisionLookupTest extends TestCase {
 		$entityId = new MediaInfoId( 'M123' );
 		$revisionId = 4321;
 		$slotRole = 'mediainfo';
-		$mode = Store::LATEST_FROM_REPLICA;
+		$mode = LookupConstants::LATEST_FROM_REPLICA;
 
 		$defaultLookup = $this->createMock( EntityRevisionLookup::class );
 		$defaultLookup
@@ -137,7 +137,7 @@ class FilePageRedirectHandlingRevisionLookupTest extends TestCase {
 		$revisionId = 4321;
 
 		$slotRole = 'mediainfo';
-		$mode = Store::LATEST_FROM_REPLICA;
+		$mode = LookupConstants::LATEST_FROM_REPLICA;
 
 		$entityRedirect = new EntityRedirect( $sourceEntityId, $targetEntityId );
 

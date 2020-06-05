@@ -10,6 +10,7 @@ use Wikibase\Lib\Store\EntityRevisionLookup;
 use Wikibase\MediaInfo\DataAccess\Store\EntityIdFixingRevisionLookup;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\MediaInfo\DataModel\MediaInfoId;
+use Wikibase\Store;
 
 /**
  * @covers \Wikibase\MediaInfo\DataAccess\Store\EntityIdFixingRevisionLookup
@@ -30,7 +31,7 @@ class EntityIdFixingRevisionLookupTest extends TestCase {
 	public function testGetEntityRevisionDelegatesCallToDefaultLookupAndReturnsEntityRevision() {
 		$entityId = new MediaInfoId( 'M123' );
 		$revisionId = 4711;
-		$mode = EntityRevisionLookup::LATEST_FROM_REPLICA;
+		$mode = Store::LATEST_FROM_REPLICA;
 
 		$entityRevision = $this->getMockBuilder( EntityRevision::class )
 			->disableOriginalConstructor()
@@ -53,7 +54,7 @@ class EntityIdFixingRevisionLookupTest extends TestCase {
 		$newEntityId = new MediaInfoId( 'M1235' );
 		$oldEntityId = new MediaInfoId( 'M1234' );
 		$revisionId = 4711;
-		$mode = EntityRevisionLookup::LATEST_FROM_REPLICA;
+		$mode = Store::LATEST_FROM_REPLICA;
 		$warningMessage = "Revision 4711 belongs to M1234 instead of expected 1235";
 
 		$entityRevision = new EntityRevision(
@@ -82,7 +83,7 @@ class EntityIdFixingRevisionLookupTest extends TestCase {
 
 	public function testGetLatestRevisionIdDelegatesCallToDefaultLookupAndReturnsRevisionId() {
 		$entityId = new MediaInfoId( 'M123' );
-		$mode = EntityRevisionLookup::LATEST_FROM_REPLICA;
+		$mode = Store::LATEST_FROM_REPLICA;
 		$revisionId = 4711;
 
 		$this->defaultLookup->expects( $this->once() )

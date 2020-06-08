@@ -2,7 +2,23 @@
 @import '../../mediainfo-variables.less';
 
 /* stylelint-disable selector-class-pattern */
-.wbmi-input-wrapper {
+.wbmi-input-wrapper--with-snak-type {
+	.oo-ui-textInputWidget .oo-ui-inputWidget-input {
+		border-bottom-right-radius: 0;
+		border-right: 0;
+		border-top-right-radius: 0;
+	}
+
+	.wbmi-input-widget .oo-ui-textInputWidget > .oo-ui-labelElement-label {
+		display: none;
+
+		@media screen and ( min-width: @breakpoint-tablet ) {
+			display: initial;
+		}
+	}
+}
+
+.wbmi-input-wrapper__content {
 	.flex-display();
 	.flex-wrap( nowrap );
 
@@ -24,22 +40,6 @@
 		.oo-ui-inputWidget-input {
 			overflow: hidden;
 			text-overflow: ellipsis;
-		}
-	}
-}
-
-.wbmi-input-wrapper--with-snak-type {
-	.oo-ui-textInputWidget .oo-ui-inputWidget-input {
-		border-bottom-right-radius: 0;
-		border-right: 0;
-		border-top-right-radius: 0;
-	}
-
-	.wbmi-input-widget .oo-ui-textInputWidget > .oo-ui-labelElement-label {
-		display: none;
-
-		@media screen and ( min-width: @breakpoint-tablet ) {
-			display: initial;
 		}
 	}
 }

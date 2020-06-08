@@ -6,35 +6,37 @@
 		{{{.}}}
 	{{/errors}}
 
-	{{#type.wikibase-entityid}}
-		{{{input}}}
-	{{/type.wikibase-entityid}}
+	<div class="wbmi-input-wrapper__content">
+		{{#type.wikibase-entityid}}
+			{{{input}}}
+		{{/type.wikibase-entityid}}
 
-	{{#type.monolingualtext}}
-		{{{input}}}
-	{{/type.monolingualtext}}
+		{{#type.monolingualtext}}
+			{{{input}}}
+		{{/type.monolingualtext}}
 
-	{{#type.quantity}}
-		{{{input}}}
-	{{/type.quantity}}
+		{{#type.quantity}}
+			{{{input}}}
+		{{/type.quantity}}
 
-	{{#type.string}}
-		{{{input}}}
-	{{/type.string}}
+		{{#type.string}}
+			{{{input}}}
+		{{/type.string}}
 
-	{{#type.time}}
-		{{{input}}}
-	{{/type.time}}
+		{{#type.time}}
+			{{{input}}}
+		{{/type.time}}
 
-	{{#type.globecoordinate}}
-		{{{input}}}
-	{{/type.globecoordinate}}
+		{{#type.globecoordinate}}
+			{{{input}}}
+		{{/type.globecoordinate}}
 
-	{{#type.unsupported}}
-		{{{input}}}
-	{{/type.unsupported}}
+		{{#type.unsupported}}
+			{{{input}}}
+		{{/type.unsupported}}
 
-	{{#showSnakTypeWidget}}
-		{{{snakTypeWidget}}}
-	{{/showSnakTypeWidget}}
+		{{#showSnakTypeWidget}}
+			{{{snakTypeWidget}}}
+		{{/showSnakTypeWidget}}
+	</div>
 </div>

@@ -30,8 +30,7 @@ QuantityInputWidget = function MediaInfoStatementsQuantityInputWidget( config ) 
 		classes: [ 'wbmi-input-widget__input', 'wbmi-input-widget--unit' ],
 		placeholder: mw.message( 'wikibasemediainfo-quantity-unit-placeholder' ).text(),
 		icon: 'search',
-		label: mw.message( 'wikibasemediainfo-quantity-unit-label' ).text(),
-		labelPosition: 'before'
+		label: mw.message( 'wikibasemediainfo-quantity-unit-label' ).text()
 	} );
 
 	this.bindEventHandlers();

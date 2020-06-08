@@ -2,6 +2,7 @@
 	"@metadata": {
 		"authors": [
 			"Chrumps",
+			"Matma Rex",
 			"Rail",
 			"Railfail536",
 			"Woytecr"
@@ -49,7 +50,7 @@
 	"wikibasemediainfo-statements-depicts-title": "Obiekty przedstawione na tym zdjęciu",
 	"wikibasemediainfo-statements-item-add-qualifier": "Dodaj kwalifikator",
 	"wikibasemediainfo-statements-item-input-label": "z Wikidanych",
-	"wikibasemediainfo-statements-item-input-placeholder": "Rozpocznij wyszukiwanie aby dodać elementy (kot domowy, góra, Taj Mahal itp.)",
+	"wikibasemediainfo-statements-item-input-placeholder": "Wyszukaj elementy, aby je dodać",
 	"wikibasemediainfo-statements-item-is-prominent": "Wyraźnie widoczny",
 	"wikibasemediainfo-statements-item-mark-as-prominent": "Oznacz jako rzucający się w oczy",
 	"wikibasemediainfo-statements-item-remove": "Usuń",

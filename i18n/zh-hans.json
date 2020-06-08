@@ -11,6 +11,7 @@
 			"Viztor",
 			"Zazzzz",
 			"予弦",
+			"列维劳德",
 			"沈澄心",
 			"神樂坂秀吉",
 			"科劳"
@@ -58,7 +59,7 @@
 	"wikibasemediainfo-statements-depicts-title": "此图片描述的内容",
 	"wikibasemediainfo-statements-item-add-qualifier": "添加限定符",
 	"wikibasemediainfo-statements-item-input-label": "来自维基数据",
-	"wikibasemediainfo-statements-item-input-placeholder": "搜索以添加项目（如家猫、山峰、泰姬陵等）",
+	"wikibasemediainfo-statements-item-input-placeholder": "搜索以添加项目",
 	"wikibasemediainfo-statements-item-is-prominent": "重点",
 	"wikibasemediainfo-statements-item-mark-as-prominent": "标记为重点",
 	"wikibasemediainfo-statements-item-remove": "移除",

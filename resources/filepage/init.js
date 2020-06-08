@@ -224,7 +224,7 @@
 		// if there's a URI fragment, figure out which tab it belong to
 		// (if any), make that tab active, and scroll the element into view
 		window.addEventListener( 'hashchange', scrollToCurrentAnchor.bind( null, tabs ) );
-		scrollToCurrentAnchor( tabs );
+		$.when.apply( $, existingStatementPanels ).then( scrollToCurrentAnchor.bind( null, tabs ) );
 	} );
 
 	/**

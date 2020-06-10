@@ -16,6 +16,7 @@ module.exports.jquery = {
 			dom = new jsdom.JSDOM( '<!doctype html><html lang="en"><body></body></html>' );
 			global.window = dom.window;
 		}
+		global.window.scrollTo = function () { /* noop */ };
 
 		global.document = global.window.document;
 		global.jQuery = global.$ = global.window.jQuery = global.window.$ = require( 'jquery' );

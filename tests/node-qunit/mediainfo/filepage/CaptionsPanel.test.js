@@ -22,6 +22,7 @@ QUnit.module( 'CaptionsPanel', {}, function () {
 			// pre-construct DOM for jQuery to initialize with
 			dom = helpers.generateTemplate( 'captionspanel.mst', 'mediaInfoEntity.json' );
 			global.window = dom.window;
+			global.window.scrollTo = function () { /* noop */ };
 		},
 		afterEach: function () {
 			hooks.mediainfo.afterEach();

@@ -28,7 +28,6 @@ use Wikibase\Lib\LanguageNameLookup;
 use Wikibase\Lib\SettingsArray;
 use Wikibase\Lib\Store\CachingPropertyOrderProvider;
 use Wikibase\Lib\Store\EntityContentDataCodec;
-use Wikibase\Lib\Store\EntityInfo;
 use Wikibase\Lib\Store\EntityRevisionLookup;
 use Wikibase\Lib\Store\Sql\WikiPageEntityDataLoader;
 use Wikibase\Lib\Store\Sql\WikiPageEntityMetaDataLookup;
@@ -90,7 +89,7 @@ return [
 			Language $language,
 			LanguageFallbackChain $fallbackChain,
 			EntityDocument $entity,
-			EntityInfo $entityInfo
+			$unused = null
 		) {
 			$mwConfig = MediaWikiServices::getInstance()->getMainConfig();
 			$languageCode = $language->getCode();

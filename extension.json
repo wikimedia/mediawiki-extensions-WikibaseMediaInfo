@@ -77,7 +77,8 @@
 		"GetPreferences": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onGetPreferences",
 		"ScribuntoExternalLibraries": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onScribuntoExternalLibraries",
 		"RevisionUndeleted": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onRevisionUndeleted",
-		"ArticleUndelete": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onArticleUndelete"
+		"ArticleUndelete": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onArticleUndelete",
+		"CirrusSearchProfileService": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onCirrusSearchProfileService"
 	},
 	"MessagesDirs": {
 		"WikibaseMediaInfo": [

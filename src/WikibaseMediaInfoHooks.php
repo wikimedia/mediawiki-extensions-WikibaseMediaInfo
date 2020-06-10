@@ -5,6 +5,8 @@ namespace Wikibase\MediaInfo;
 use AbstractContent;
 use CirrusSearch\CirrusSearch;
 use CirrusSearch\Connection;
+use CirrusSearch\Parser\BasicQueryClassifier;
+use CirrusSearch\Profile\SearchProfileService;
 use CirrusSearch\Search\CirrusIndexField;
 use Config;
 use ContentHandler;
@@ -21,6 +23,7 @@ use OOUI\PanelLayout;
 use OOUI\TabPanelLayout;
 use OutputPage;
 use ParserOutput;
+use RequestContext;
 use ResourceLoaderContext;
 use Title;
 use Wikibase\Client\WikibaseClient;
@@ -35,6 +38,7 @@ use Wikibase\MediaInfo\Content\MediaInfoHandler;
 use Wikibase\MediaInfo\DataAccess\Scribunto\Scribunto_LuaWikibaseMediaInfoEntityLibrary;
 use Wikibase\MediaInfo\DataAccess\Scribunto\Scribunto_LuaWikibaseMediaInfoLibrary;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
+use Wikibase\MediaInfo\Search\MediaQueryBuilder;
 use Wikibase\MediaInfo\Services\MediaInfoByLinkedTitleLookup;
 use Wikibase\MediaInfo\Services\MediaInfoServices;
 use Wikibase\Repo\BabelUserLanguageLookup;
@@ -681,6 +685,38 @@ class WikibaseMediaInfoHooks {
 				$hints = $fieldDefinitions[$field]->getEngineHints( $engine );
 				CirrusIndexField::addIndexingHints( $document, $field, $hints );
 			}
+		}
+	}
+
+	/**
+	 * Register a ProfileContext for cirrus that will mean that queries in NS_FILE will use
+	 * the MediaQueryBuilder class for searching
+	 *
+	 * @param SearchProfileService $service
+	 */
+	public static function onCirrusSearchProfileService( SearchProfileService $service ) {
+		$request = RequestContext::getMain()->getRequest();
+		if ( $request->getVal( 'mediasearch' ) ) {
+			$searchProfileContextName = MediaQueryBuilder::SEARCH_PROFILE_CONTEXT_NAME;
+			// array key in MediaSearchProfiles.php
+			$fulltextProfileName = MediaQueryBuilder::FULLTEXT_PROFILE_NAME;
+
+			$service->registerFileRepository( SearchProfileService::FT_QUERY_BUILDER,
+				// this string is to prevent overwriting, not used for retrieval
+				'mediainfo_base',
+				__DIR__ . '/search/MediaSearchProfiles.php' );
+
+			$service->registerDefaultProfile( SearchProfileService::FT_QUERY_BUILDER,
+				$searchProfileContextName, $fulltextProfileName );
+
+			// Need to register a rescore profile for the profile context
+			// Register an empty one for now to see how the main query performs
+			$service->registerDefaultProfile( SearchProfileService::RESCORE,
+				$searchProfileContextName, 'empty' );
+
+			$service->registerFTSearchQueryRoute( $searchProfileContextName, 1.0, [ NS_FILE ],
+				// only supports simple queries for now
+				[ BasicQueryClassifier::SIMPLE_BAG_OF_WORDS ] );
 		}
 	}
 

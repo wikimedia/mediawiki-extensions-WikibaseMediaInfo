@@ -21,7 +21,7 @@ QuantityInputWidget = function MediaInfoStatementsQuantityInputWidget( config ) 
 	};
 
 	this.input = new OO.ui.TextInputWidget( {
-		type: 'number',
+		type: 'text',
 		classes: [ 'wbmi-input-widget__input' ],
 		isRequired: true
 	} );

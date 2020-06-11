@@ -8,8 +8,8 @@ use Wikibase\DataModel\Entity\EntityDocument;
 use Wikibase\MediaInfo\Content\MediaInfoHandler;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\MediaInfo\DataModel\MediaInfoId;
-use Wikibase\Rdf\EntityRdfBuilder;
-use Wikibase\Rdf\RdfVocabulary;
+use Wikibase\Repo\Rdf\EntityRdfBuilder;
+use Wikibase\Repo\Rdf\RdfVocabulary;
 use Wikimedia\Purtle\RdfWriter;
 
 /**

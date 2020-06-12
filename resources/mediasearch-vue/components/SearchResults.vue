@@ -1,6 +1,10 @@
 <template>
 	<div>
-		{{ resultsData }}
+		<ul>
+			<li v-for="result in results" v-bind:key="result.pageid">
+				{{ result.title }}
+			</li>
+		</ul>
 	</div>
 </template>
 
@@ -9,7 +13,7 @@ module.exports = {
 	name: 'SearchResults',
 
 	props: [
-		'resultsData'
+		'results'
 	]
 };
 </script>

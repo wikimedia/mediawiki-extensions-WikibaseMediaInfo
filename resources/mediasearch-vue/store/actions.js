@@ -1,3 +1,6 @@
+var LIMIT = 40,
+	api = new mw.Api();
+
 module.exports = {
 
 	/**
@@ -17,6 +20,9 @@ module.exports = {
 	 *
 	 * @param {Object} context
 	 * @param {Object} options
+	 * @param {string} options.type bitmap / category / audio / video
+	 * @param {string} options.term search term
+	 * @param {string} options.resolution
 	 * @return {$.Deferred}
 	 */
 	search: function ( context, options ) {
@@ -25,7 +31,6 @@ module.exports = {
 			format: 'json',
 			uselang: mw.config.get( 'wgUserLanguage' ),
 			action: 'query',
-			gsrsearch: options.term,
 			generator: options.type === 'category' ? 'search' : 'mediasearch',
 			prop: options.type === 'category' ? 'info' : 'info|imageinfo|pageterms',
 			inprop: 'url'
@@ -33,19 +38,55 @@ module.exports = {
 
 		if ( options.type === 'category' ) {
 			// category-specific params
+			params.gsrsearch = options.term;
 			params.gsrnamespace = 14; // NS_CATEGORY
-			// TODO: gsrlimit, gsroffset
+			params.gsrlimit = LIMIT;
+			params.gsroffset = context.state.continue[ options.type ] || 0;
 		} else {
 			// params used in all non-category searches
+			params.gmssearch = options.term;
 			params.iiprop = 'url|size|mime';
 			params.iiurlheight = options.type === 'bitmap' ? 180 : undefined;
 			params.iiurlwidth = options.type === 'video' ? 200 : undefined;
 			params.wbptterms = 'label';
 			params.gmsrawsearch = 'filetype:' + options.type; // TODO: suppport resolution via fileres:
-			// TODO: gmslimit, gmscontinue
+			params.gmslimit = LIMIT;
+			params.gmscontinue = context.state.continue[ options.type ];
 		}
 
-		console.log( params );
-		return $.Deferred().resolve( params ).promise;
+		return api.get( params ).then( function ( response ) {
+			var results, pageIDs;
+
+			if ( response.query && response.query.pages ) {
+				results = response.query.pages;
+				pageIDs = Object.keys( results );
+
+				// Add each result object to the appropriate results queue
+				pageIDs.forEach( function ( id ) {
+					context.commit( 'addResult', {
+						type: options.type,
+						item: results[ id ]
+					} );
+				} );
+			}
+
+			// Set whether or not the query can be continued
+			if ( response.continue ) {
+				// Store the "continue" property of the request so we can pick up where we left off
+				context.commit( 'setContinue', {
+					type: options.type,
+					continue: options.type === 'category' ? response.continue.gsroffset : response.continue.gmscontinue
+				} );
+			} else {
+				context.commit( 'setContinue', {
+					type: options.type,
+					continue: null
+				} );
+			}
+		} );
+
+		// Use this for testing:
+		// return $.get( 'https://commons.wikimedia.org/w/api.php', params ).then( function ( response ) {
+		// } );
 	}
 };

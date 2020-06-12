@@ -2,25 +2,25 @@ const Page = require( 'wdio-mediawiki/Page' );
 
 class FilePage extends Page {
 	get captionsPanel() {
-		return browser.element( '.wbmi-entityview-captionsPanel' );
+		return $( '.wbmi-entityview-captionsPanel' );
 	}
 
 	get captionsEditButton() {
-		return browser.element( '.wbmi-entityview-editButton .oo-ui-buttonElement-button' );
+		return $( '.wbmi-entityview-editButton .oo-ui-buttonElement-button' );
 	}
 
 	get captionsInput() {
-		return browser.element( '.wbmi-caption-textInput input' );
+		return $( '.wbmi-caption-textInput input' );
 	}
 
 	get publishButton() {
-		return browser.element(
+		return $(
 			'.wbmi-entityview-cancelAndPublishButtons .oo-ui-flaggedElement-primary'
 		);
 	}
 
 	get statementsPanel() {
-		return browser.element( '.wbmi-entityview-statementsGroup' );
+		return $( '.wbmi-entityview-statementsGroup' );
 	}
 
 	get tabsSelector() {

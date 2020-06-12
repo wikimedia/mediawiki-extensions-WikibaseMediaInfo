@@ -12,7 +12,7 @@ describe( 'Upload tasks - logged in user', function () {
 
 	beforeEach( function () {
 		destinationName = 'RandomImage ' + Math.random().toString().substring( 2 ) + '.jpg';
-		browser.deleteCookie();
+		browser.deleteAllCookies();
 	} );
 
 	it( 'Logged-in user can upload a file', function () {
@@ -43,7 +43,7 @@ describe( 'Upload tasks - logged in user', function () {
 				return UploadPage.heading.getText() === 'File:' + destinationName;
 			}, 10000, 'Expected file to be saved.' );
 
-			assert( FilePage.captionsPanel.waitForVisible() );
+			assert( FilePage.captionsPanel.waitForDisplayed() );
 		} );
 	} );
 } );

@@ -8,6 +8,7 @@
 	},
 	"globals": {
 		"browser": false,
-		"mw": false
+		"mw": false,
+		"$": false
 	}
 }

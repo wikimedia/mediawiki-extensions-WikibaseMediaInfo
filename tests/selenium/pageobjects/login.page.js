@@ -1,10 +1,10 @@
 const Page = require( 'wdio-mediawiki/Page' );
 
 class LoginPage extends Page {
-	get username() { return browser.element( '#wpName1' ); }
-	get password() { return browser.element( '#wpPassword1' ); }
-	get loginButton() { return browser.element( '#wpLoginAttempt' ); }
-	get userPage() { return browser.element( '#pt-userpage' ); }
+	get username() { return $( '#wpName1' ); }
+	get password() { return $( '#wpPassword1' ); }
+	get loginButton() { return $( '#wpLoginAttempt' ); }
+	get userPage() { return $( '#pt-userpage' ); }
 
 	open() {
 		super.openTitle( 'Special:UserLogin' );

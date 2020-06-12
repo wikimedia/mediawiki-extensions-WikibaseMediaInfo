@@ -34,6 +34,7 @@
 	"wikibasemediainfo-filepage-caption-empty": "Aggiungi una brevissima spiegazione di ciò che questo file rappresenta",
 	"wikibasemediainfo-filepage-caption-too-long": "$1 {{PLURAL:$1|carattere|caratteri}} oltre il limite",
 	"wikibasemediainfo-filepage-caption-approaching-limit": "$1 {{PLURAL:$1|carattere rimasto|caratteri rimasti|0=caratteri rimasti}}",
+	"wikibasemediainfo-filepage-statement-value-type-dropdown-title": "Scegli un tipo di valore.",
 	"wikibasemediainfo-filepage-statement-custom-value-option": "Valore personalizzato",
 	"wikibasemediainfo-filepage-statement-no-value-option": "Nessun valore",
 	"wikibasemediainfo-filepage-statement-no-value": "Non esiste alcun valore per questa proprietà",

@@ -146,7 +146,7 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 			'oojs-ui-widgets.styles',
 			'wikibase.mediainfo.mediasearch.styles'
 		] );
-		$this->getOutput()->addModules( [ 'wikibase.mediainfo.mediasearch' ] );
+		$this->getOutput()->addModules( [ 'wikibase.mediainfo.mediasearch.vue' ] );
 		$this->getOutput()->addJsConfigVars( [ 'wbmiInitialSearchResults' => $tabs ] );
 
 		return parent::execute( $subPage );

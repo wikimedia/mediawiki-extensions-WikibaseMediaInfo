@@ -325,6 +325,47 @@
 				"mobile"
 			]
 		},
+		"wikibase.mediainfo.mediasearch.vue": {
+			"packageFiles": [
+				"resources/mediasearch-vue/init.js",
+				"resources/mediasearch-vue/components/base/Button.vue",
+				"resources/mediasearch-vue/components/base/Icon.vue",
+				"resources/mediasearch-vue/components/base/Message.vue",
+				"resources/mediasearch-vue/components/base/Tab.vue",
+				"resources/mediasearch-vue/components/base/Tabs.vue",
+				"resources/mediasearch-vue/components/App.vue",
+				"resources/mediasearch-vue/components/SearchInput.vue",
+				"resources/mediasearch-vue/components/SearchResults.vue",
+				"resources/mediasearch-vue/store/index.js",
+				"resources/mediasearch-vue/store/state.js",
+				"resources/mediasearch-vue/store/mutations.js",
+				"resources/mediasearch-vue/store/getters.js",
+				"resources/mediasearch-vue/store/actions.js"
+			],
+			"messages": [
+				"wikibasemediainfo-special-mediasearch-filter-size",
+				"wikibasemediainfo-special-mediasearch-filter-size-any",
+				"wikibasemediainfo-special-mediasearch-filter-size-small",
+				"wikibasemediainfo-special-mediasearch-filter-size-medium",
+				"wikibasemediainfo-special-mediasearch-filter-size-large",
+				"wikibasemediainfo-special-mediasearch-no-results",
+				"wikibasemediainfo-special-mediasearch-tab-bitmap",
+				"wikibasemediainfo-special-mediasearch-tab-audio",
+				"wikibasemediainfo-special-mediasearch-tab-video",
+				"wikibasemediainfo-special-mediasearch-tab-category",
+				"searchbutton"
+			],
+			"dependencies": [
+				"wikibase.mediainfo.mediasearch.styles",
+				"vue",
+				"vuex",
+				"wikibase.api.RepoApi"
+			],
+			"targets": [
+				"desktop",
+				"mobile"
+			]
+		},
 		"wikibase.mediainfo.statements": {
 			"packageFiles": [
 				"resources/statements/index.js",

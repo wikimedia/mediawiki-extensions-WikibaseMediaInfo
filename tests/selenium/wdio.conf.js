@@ -13,8 +13,8 @@ exports.config = {
 	// =========================
 	// MediaWiki-specific Config
 	// =========================
-	username: process.env.MEDIAWIKI_USER,
-	password: process.env.MEDIAWIKI_PASSWORD,
+	mwUser: process.env.MEDIAWIKI_USER || 'Admin',
+	mwPwd: process.env.MEDIAWIKI_PASSWORD || 'vagrant',
 	baseUrl: process.env.MW_SERVER + process.env.MW_SCRIPT_PATH,
 
 	// ============
@@ -32,7 +32,7 @@ exports.config = {
 		// https://sites.google.com/a/chromium.org/chromedriver/capabilities
 		browserName: 'chrome',
 		maxInstances: 1,
-		chromeOptions: {
+		'goog:chromeOptions': {
 			// If DISPLAY is set, assume developer asked non-headless or CI with Xvfb.
 			// Otherwise, use --headless (added in Chrome 59)
 			// https://chromium.googlesource.com/chromium/src/+/59.0.3030.0/headless/README.md

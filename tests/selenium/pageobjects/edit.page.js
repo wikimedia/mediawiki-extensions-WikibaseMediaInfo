@@ -3,27 +3,27 @@ const Page = require( 'wdio-mediawiki/Page' ),
 
 class EditPage extends Page {
 	get content() {
-		return browser.element( '#wpTextbox1' );
+		return $( '#wpTextbox1' );
 	}
 
 	get conflictingContent() {
-		return browser.element( '#wpTextbox2' );
+		return $( '#wpTextbox2' );
 	}
 
 	get displayedContent() {
-		return browser.element( '#mw-content-text .mw-parser-output' );
+		return $( '#mw-content-text .mw-parser-output' );
 	}
 
 	get heading() {
-		return browser.element( '#firstHeading' );
+		return $( '#firstHeading' );
 	}
 
 	get save() {
-		return browser.element( '#wpSave' );
+		return $( '#wpSave' );
 	}
 
 	get previewButton() {
-		return browser.element( '#wpPreview' );
+		return $( '#wpPreview' );
 	}
 
 	open( title ) {

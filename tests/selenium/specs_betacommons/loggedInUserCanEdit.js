@@ -6,7 +6,7 @@ var assert = require( 'assert' ),
 describe( 'Edit page', function () {
 	beforeEach( function () {
 		destinationName = 'TestPage ' + Math.random().toString().substring( 2 );
-		browser.deleteCookie();
+		browser.deleteAllCookies();
 	} );
 
 	it( 'Logged-in user can edit', function () {

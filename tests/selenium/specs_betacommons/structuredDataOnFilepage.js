@@ -5,16 +5,16 @@ var assert = require( 'assert' ),
 describe( 'File page', function () {
 	it( 'captions panel is visible by default', function () {
 		FilePage.open();
-		assert( FilePage.captionsPanel.waitForVisible() );
+		assert( FilePage.captionsPanel.waitForDisplayed() );
 	} );
 
 	it( 'statements panel is visible when tab is clicked', function () {
 		FilePage.open();
-		FilePage.captionsPanel.waitForVisible();
+		FilePage.captionsPanel.waitForDisplayed();
 		browser.pause( 3000 );
 
 		FilePage.clickStatementsTab();
-		assert( FilePage.statementsPanel.waitForVisible() );
+		assert( FilePage.statementsPanel.waitForDisplayed() );
 	} );
 
 	it( 'logged-in user can edit captions', function () {
@@ -24,7 +24,7 @@ describe( 'File page', function () {
 		browser.pause( 4000 );
 
 		FilePage.open();
-		FilePage.captionsPanel.waitForVisible();
+		FilePage.captionsPanel.waitForDisplayed();
 		browser.pause( 4000 );
 
 		FilePage.editCaption( captionText );

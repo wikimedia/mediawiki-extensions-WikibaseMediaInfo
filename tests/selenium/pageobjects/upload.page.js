@@ -2,23 +2,23 @@ const Page = require( 'wdio-mediawiki/Page' );
 
 class UploadPage extends Page {
 	get uploadButton() {
-		return browser.element( '#wpUploadFile' );
+		return $( '#wpUploadFile' );
 	}
 
 	get submitButton() {
-		return browser.element( 'input[name="wpUpload"]' );
+		return $( 'input[name="wpUpload"]' );
 	}
 
 	get filename() {
-		return browser.element( '#wpDestFile' );
+		return $( '#wpDestFile' );
 	}
 
 	get summary() {
-		return browser.element( '#wpUploadDescription' );
+		return $( '#wpUploadDescription' );
 	}
 
 	get heading() {
-		return browser.element( '#firstHeading' );
+		return $( '#firstHeading' );
 	}
 
 	open() {

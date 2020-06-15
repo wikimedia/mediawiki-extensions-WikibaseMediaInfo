@@ -40,9 +40,9 @@
 		"tmp": "0.1.0",
 		"wdio-mediawiki": "1.0.0",
 		"webdriverio": "6.1.16",
-		"wikibase-data-model": "latest",
-		"wikibase-data-values": "latest",
-		"wikibase-serialization": "latest",
+		"wikibase-data-model": "^6.1.0",
+		"wikibase-data-values": "^0.10.0",
+		"wikibase-serialization": "^5.0.0",
 		"wikimedia-ui-base": "0.15.0"
 	}
 }

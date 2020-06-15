@@ -1,28 +1,55 @@
 <template>
-	<div>
-		<ul>
-			<li v-for="(result, index) in results" v-bind:key="index">
-				{{ result.title }}
-			</li>
+	<div v-bind:class="'wbmi-mediasearch-results--' + mediaType"
+		class="wbmi-mediasearch-results">
 
-			<observer v-on:intersect="onIntersect" />
-		</ul>
+		<template v-for="(result, index) in sortedResults[ mediaType ]">
+			<component
+				v-bind:is="resultComponent"
+				v-bind:result="result"
+				v-bind:key="index"
+			/>
+		</template>
+
+		<observer v-on:intersect="onIntersect" />
 	</div>
 </template>
 
 <script>
-var Observer = require( './base/Observer.vue');
+var mapState = require( 'vuex' ).mapState,
+	mapGetters = require( 'vuex' ).mapGetters,
+	ImageResult = require( './ImageResult.vue' ),
+	GenericResult = require( './GenericResult.vue' ),
+	Observer = require( './base/Observer.vue');
 
 module.exports = {
 	name: 'SearchResults',
 
 	components: {
-		'observer': Observer
+		'observer': Observer,
+		'image-result': ImageResult,
+		'generic-result': GenericResult
 	},
 
-	props: [
+	props: {
+		mediaType: {
+			type: String,
+			required: true
+		}
+	},
+
+	computed: $.extend( {}, mapState( [
 		'results'
-	],
+	] ), mapGetters( [
+		'sortedResults'
+	] ), {
+		resultComponent: function () {
+			if ( this.mediaType === 'bitmap' ) {
+				return 'image-result'
+			} else {
+				return 'generic-result'
+			}
+		}
+	} ),
 
 	methods: {
 		onIntersect: function ( event ) {
@@ -31,3 +58,14 @@ module.exports = {
 	}
 };
 </script>
+
+<style lang="less">
+
+.wbmi-mediasearch-results {
+	&--bitmap {
+		display: flex;
+		flex-wrap: wrap;
+	}
+}
+
+</style>

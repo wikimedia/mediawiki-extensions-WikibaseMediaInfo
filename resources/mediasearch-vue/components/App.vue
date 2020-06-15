@@ -8,28 +8,28 @@
 		<tabs v-bind:active="currentTab" v-on:tab-change="onTabChange">
 			<tab name="bitmap" v-bind:title="bitmapTabTitle">
 				<search-results
-					v-bind:results="results.bitmap"
+					media-type="bitmap"
 					v-on:load-more="getMoreResultsForTabIfAvailable( 'bitmap' )"
 				/>
 			</tab>
 
 			<tab name="audio" v-bind:title="audioTabTitle">
 				<search-results
-					v-bind:results="results.audio"
+					media-type="audio"
 					v-on:load-more="getMoreResultsForTabIfAvailable( 'audio' )"
 				/>
 			</tab>
 
 			<tab name="video" v-bind:title="videoTabTitle">
 				<search-results
-					v-bind:results="results.video"
+					media-type="video"
 					v-on:load-more="getMoreResultsForTabIfAvailable( 'video' )"
 				/>
 			</tab>
 
 			<tab name="category" v-bind:title="categoryTabTitle">
 				<search-results
-					v-bind:results="results.category"
+					media-type="category"
 					v-on:load-more="getMoreResultsForTabIfAvailable( 'category' )"
 				/>
 			</tab>
@@ -66,12 +66,10 @@ module.exports = {
 	},
 
 	computed: $.extend( {}, mapState( [
-		'results',
 		'continue',
 		'pending'
 	] ), mapGetters( [
-		'hasMore',
-		'sortedResults'
+		'hasMore'
 	] ), {
 
 		bitmapTabTitle: function () {

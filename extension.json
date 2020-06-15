@@ -337,6 +337,8 @@
 				"resources/mediasearch-vue/components/App.vue",
 				"resources/mediasearch-vue/components/SearchInput.vue",
 				"resources/mediasearch-vue/components/SearchResults.vue",
+				"resources/mediasearch-vue/components/ImageResult.vue",
+				"resources/mediasearch-vue/components/GenericResult.vue",
 				"resources/mediasearch-vue/store/index.js",
 				"resources/mediasearch-vue/store/state.js",
 				"resources/mediasearch-vue/store/mutations.js",

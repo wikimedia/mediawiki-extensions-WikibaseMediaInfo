@@ -7,19 +7,31 @@
 
 		<tabs v-bind:active="currentTab" v-on:tab-change="onTabChange">
 			<tab name="bitmap" v-bind:title="bitmapTabTitle">
-				<search-results v-bind:results="sortedResults.bitmap" />
+				<search-results
+					v-bind:results="results.bitmap"
+					v-on:load-more="getMoreResultsForTabIfAvailable( 'bitmap' )"
+				/>
 			</tab>
 
 			<tab name="audio" v-bind:title="audioTabTitle">
-				<search-results v-bind:results="sortedResults.audio" />
+				<search-results
+					v-bind:results="results.audio"
+					v-on:load-more="getMoreResultsForTabIfAvailable( 'audio' )"
+				/>
 			</tab>
 
 			<tab name="video" v-bind:title="videoTabTitle">
-				<search-results v-bind:results="sortedResults.video" />
+				<search-results
+					v-bind:results="results.video"
+					v-on:load-more="getMoreResultsForTabIfAvailable( 'video' )"
+				/>
 			</tab>
 
 			<tab name="category" v-bind:title="categoryTabTitle">
-				<search-results v-bind:results="sortedResults.category" />
+				<search-results
+					v-bind:results="results.category"
+					v-on:load-more="getMoreResultsForTabIfAvailable( 'category' )"
+				/>
 			</tab>
 		</tabs>
 	</div>
@@ -54,7 +66,9 @@ module.exports = {
 	},
 
 	computed: $.extend( {}, mapState( [
-		'continue'
+		'results',
+		'continue',
+		'pending'
 	] ), mapGetters( [
 		'hasMore',
 		'sortedResults'
@@ -98,13 +112,21 @@ module.exports = {
 		 * results of the latest request.
 		 */
 		getMoreResultsForTabIfAvailable: function ( tab ) {
-			if ( this.hasMore[ tab ] ) {
+			if ( this.hasMore[ tab ] && !this.pending[ tab ] ) {
+				// If more results are available, and if another request is not
+				// already pending, then launch a search request
 				this.search( {
 					term: this.term,
 					type: this.currentTab
 				} );
-			} else {
-				// do nothing
+			} else if ( this.hasMore[ tab ] && this.pending[ tab ] ) {
+				// If more results are available but another request is
+				// currently in-flight, attempt to make the request again
+				// after some time has passed
+				window.setTimeout( 
+					this.getMoreResultsForTabIfAvailable.bind( this, tab ),
+					2000 
+				);
 			}
 		},
 

@@ -54,7 +54,17 @@ module.exports = {
 			params.gmscontinue = context.state.continue[ options.type ];
 		}
 
-		return api.get( params ).then( function ( response ) {
+		// Set the pending state for the given queue
+		context.commit( 'setPending', {
+			type: options.type,
+			pending: true
+		} );
+
+		// return api.get( params ).then( function ( response ) {
+		// } );
+
+		// Use this for testing:
+		return $.get( 'https://commons.wikimedia.org/w/api.php', params ).then( function ( response ) {
 			var results, pageIDs;
 
 			if ( response.query && response.query.pages ) {
@@ -83,10 +93,12 @@ module.exports = {
 					continue: null
 				} );
 			}
+		} ).done( function () {
+			// Set pending back to false when request is complete
+			context.commit( 'setPending', {
+				type: options.type,
+				pending: false
+			} );
 		} );
-
-		// Use this for testing:
-		// return $.get( 'https://commons.wikimedia.org/w/api.php', params ).then( function ( response ) {
-		// } );
 	}
 };

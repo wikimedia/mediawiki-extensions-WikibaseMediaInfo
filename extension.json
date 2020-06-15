@@ -333,6 +333,7 @@
 				"resources/mediasearch-vue/components/base/Message.vue",
 				"resources/mediasearch-vue/components/base/Tab.vue",
 				"resources/mediasearch-vue/components/base/Tabs.vue",
+				"resources/mediasearch-vue/components/base/Observer.vue",
 				"resources/mediasearch-vue/components/App.vue",
 				"resources/mediasearch-vue/components/SearchInput.vue",
 				"resources/mediasearch-vue/components/SearchResults.vue",

@@ -18,6 +18,12 @@ module.exports = {
 		audio: initialResults.audio.continue,
 		video: initialResults.video.continue,
 		category: initialResults.category.continue
-	}
+	},
 
+	pending: {
+		bitmap: false,
+		audio: false,
+		video: false,
+		category: false
+	}
 };

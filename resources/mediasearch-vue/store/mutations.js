@@ -36,5 +36,16 @@ module.exports = {
 	 */
 	setContinue: function ( state, payload ) {
 		state.continue[ payload.type ] = payload.continue;
+	},
+
+	/**
+	 * Set the pending state of a given queue to true or false
+	 * @param {Object} state
+	 * @param {Object} payload
+	 * @param {Object} payload.type
+	 * @param {boolean} payload.pending
+	 */
+	setPending: function ( state, payload ) {
+		state.pending[ payload.type ] = payload.pending;
 	}
 };

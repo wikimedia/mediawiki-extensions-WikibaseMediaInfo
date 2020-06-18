@@ -1,14 +1,19 @@
 <template>
-	<div class="wbmi-mediasearch-image-result">
-		<img v-bind:src="result.imageinfo[ 0 ].thumburl" 
+	<div class="wbmi-image-result">
+		<img v-bind:src="result.imageinfo[ 0 ].thumburl"
 			v-bind:alt="result.title"
-			class="wbmi-mediasearch-image-result__thumbnail"
+			class="wbmi-image-result__thumbnail"
 			loading="lazy"
 		>
 	</div>
 </template>
 
 <script>
+/**
+ * Image result component.
+ *
+ * TODO: consider using description for alt text if it's available.
+ */
 // @vue/component
 module.exports = {
 	name: 'ImageResult',
@@ -18,11 +23,12 @@ module.exports = {
 </script>
 
 <style lang="less">
+@import 'mediawiki.mixins';
 
-.wbmi-mediasearch-image-result {
+.wbmi-image-result {
+	.flex( 1, 1, auto );
 	height: 180px;
-	flex: 1 1 auto;
-	padding: 0.5rem;
+	padding: 8px;
 
 	&__thumbnail {
 		width: 100%;

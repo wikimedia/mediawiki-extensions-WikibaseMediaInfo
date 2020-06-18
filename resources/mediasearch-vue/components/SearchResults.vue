@@ -1,6 +1,6 @@
 <template>
-	<div v-bind:class="'wbmi-mediasearch-results--' + mediaType"
-		class="wbmi-mediasearch-results">
+	<div v-bind:class="'wbmi-media-search-results--' + mediaType"
+		class="wbmi-media-search-results">
 
 		<template v-for="(result, index) in sortedResults[ mediaType ]">
 			<component
@@ -60,11 +60,12 @@ module.exports = {
 </script>
 
 <style lang="less">
+@import 'mediawiki.mixins';
 
 .wbmi-mediasearch-results {
 	&--bitmap {
-		display: flex;
-		flex-wrap: wrap;
+		.flex-display();
+		.flex-wrap();
 	}
 }
 

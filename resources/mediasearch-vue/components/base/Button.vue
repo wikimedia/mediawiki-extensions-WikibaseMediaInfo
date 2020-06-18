@@ -89,7 +89,7 @@ module.exports = {
 
 <style lang="less">
 @import 'mediawiki.mixins';
-@import '../../wikimedia-ui-base.less';
+@import '../../../../lib/wikimedia-ui-base.less';
 
 .mw-button {
 	.transition( ~'background-color 100ms, color 100ms, border-color 100ms, box-shadow 100ms' );

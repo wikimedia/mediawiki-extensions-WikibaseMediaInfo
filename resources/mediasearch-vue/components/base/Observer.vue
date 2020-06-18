@@ -1,5 +1,5 @@
 <template>
-	<div class="observer"/>
+	<div class="mw-observer"/>
 </template>
 
 <script>

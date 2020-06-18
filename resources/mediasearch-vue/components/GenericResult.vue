@@ -1,5 +1,5 @@
 <template>
-	<div class="wbmi-mediasearch-generic-result">
+	<div class="wbmi-generic-result">
 		{{ result.title }}
 	</div>
 </template>

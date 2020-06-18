@@ -180,7 +180,7 @@ module.exports = {
 
 <style lang="less">
 @import 'mediawiki.mixins';
-@import '../../wikimedia-ui-base.less';
+@import '../../../../lib/wikimedia-ui-base.less';
 
 .mw-tabs {
 	&__header {

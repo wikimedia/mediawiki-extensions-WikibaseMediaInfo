@@ -29,7 +29,6 @@ use Wikibase\DataModel\Services\Lookup\PropertyDataTypeLookupException;
 use Wikibase\DataModel\Statement\StatementGuid;
 use Wikibase\Lib\LanguageFallbackChainFactory;
 use Wikibase\Lib\Store\EntityByLinkedTitleLookup;
-use Wikibase\Lib\Store\EntityInfo;
 use Wikibase\Lib\UserLanguageLookup;
 use Wikibase\MediaInfo\Content\MediaInfoContent;
 use Wikibase\MediaInfo\Content\MediaInfoHandler;
@@ -516,8 +515,7 @@ class WikibaseMediaInfoHooks {
 		$view = $entityViewFactory->newEntityView(
 			$out->getLanguage(),
 			$fallbackChainFactory->newFromLanguage( $out->getLanguage() ),
-			$emptyMediaInfo,
-			new EntityInfo( [] )
+			$emptyMediaInfo
 		);
 
 		$structured = $view->getContent(

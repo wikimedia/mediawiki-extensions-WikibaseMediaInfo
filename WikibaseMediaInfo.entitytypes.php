@@ -88,8 +88,7 @@ return [
 		Def::VIEW_FACTORY_CALLBACK => function (
 			Language $language,
 			LanguageFallbackChain $fallbackChain,
-			EntityDocument $entity,
-			$unused = null
+			EntityDocument $entity
 		) {
 			$mwConfig = MediaWikiServices::getInstance()->getMainConfig();
 			$languageCode = $language->getCode();

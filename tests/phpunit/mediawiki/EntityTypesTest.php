@@ -9,7 +9,6 @@ use Wikibase\DataModel\DeserializerFactory;
 use Wikibase\DataModel\SerializerFactory;
 use Wikibase\Lib\LanguageFallbackChain;
 use Wikibase\Lib\LanguageWithConversion;
-use Wikibase\Lib\Store\EntityInfo;
 use Wikibase\MediaInfo\Content\MediaInfoContent;
 use Wikibase\MediaInfo\Content\MediaInfoHandler;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
@@ -118,8 +117,7 @@ class EntityTypesTest extends \PHPUnit\Framework\TestCase {
 			$callback,
 			Language::factory( 'en' ),
 			new LanguageFallbackChain( [ LanguageWithConversion::factory( 'en' ) ] ),
-			new MediaInfo(),
-			new EntityInfo( [] )
+			new MediaInfo()
 		);
 
 		$this->assertInstanceOf( MediaInfoView::class, $mediaInfoView );

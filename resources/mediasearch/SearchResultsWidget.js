@@ -330,7 +330,7 @@ SearchResultsWidget.prototype.getType = function () {
 
 /**
  * @param {string} type
- * @return {$.Promise}
+ * @return {jQuery.Promise}
  */
 SearchResultsWidget.prototype.setType = function ( type ) {
 	return this.setState( {
@@ -343,7 +343,7 @@ SearchResultsWidget.prototype.setType = function ( type ) {
 
 /**
  * @param {string} resolution
- * @return {$.Promise}
+ * @return {jQuery.Promise}
  */
 SearchResultsWidget.prototype.setResolution = function ( resolution ) {
 	return this.setState( {

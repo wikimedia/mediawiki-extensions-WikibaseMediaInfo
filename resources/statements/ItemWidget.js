@@ -90,7 +90,6 @@ OO.mixinClass( ItemWidget, ConstraintsReportHandlerElement );
 ItemWidget.prototype.getTemplateData = function () {
 	var self = this,
 		labelPromise,
-		labelMessage,
 		errors = this.getErrors(),
 		errorMessages = ( errors.length > 0 ) ?
 			errors.map( function ( error ) {
@@ -108,10 +107,13 @@ ItemWidget.prototype.getTemplateData = function () {
 	if ( this.state.dataValue ) {
 		labelPromise = this.formatValue( this.state.dataValue, 'text/html', null, this.state.propertyId );
 	} else {
-		labelMessage = this.state.snakType === valueTypes.SOMEVALUE ?
-			'wikibasemediainfo-filepage-statement-some-value' :
-			'wikibasemediainfo-filepage-statement-no-value';
-		labelPromise = $.Deferred().resolve( mw.message( labelMessage ).parse() ).promise();
+		labelPromise = $.Deferred().resolve(
+			mw.message(
+				this.state.snakType === valueTypes.SOMEVALUE ?
+					'wikibasemediainfo-filepage-statement-some-value' :
+					'wikibasemediainfo-filepage-statement-no-value'
+			).parse()
+		).promise();
 	}
 
 	return labelPromise.then( function ( label ) {

@@ -1,11 +1,11 @@
 'use strict';
 
-var sinon = require( 'sinon' ),
+const sinon = require( 'sinon' ),
 	hooks = require( '../../support/hooks.js' );
 
 QUnit.module( 'TemplatingFeatures', hooks.mediainfo, function () {
 	QUnit.test( 'Toggle edit mode', function ( assert ) {
-		var done = assert.async(),
+		const done = assert.async(),
 			TemplatingFeatures = require( '../../../../resources/README/2.TemplatingFeatures.js' ),
 			widget = new TemplatingFeatures();
 

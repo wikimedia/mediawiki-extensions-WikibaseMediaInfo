@@ -1,5 +1,9 @@
 'use strict';
 
+/**
+ * @external datamodel
+ */
+
 var AnonWarning = require( './AnonWarning.js' ),
 	CaptionData = require( './CaptionData.js' ),
 	CaptionDataEditor = require( './CaptionDataEditor.js' ),
@@ -41,7 +45,7 @@ var AnonWarning = require( './AnonWarning.js' ),
  * @param {boolean} [config.canEdit] True if the captions should be editable on the page
  * @param {string[]} [config.userLanguages] The language the user has indicated that they use (via babel)
  * @param {string[]} [config.languageFallbackChain]
- * @param {int} [config.warnWithinMaxCaptionLength] Show a warning when the caption length is within X
+ * @param {number} [config.warnWithinMaxCaptionLength] Show a warning when the caption length is within X
  *   characters of the max
  */
 CaptionsPanel = function ( config ) {
@@ -398,6 +402,7 @@ CaptionsPanel.prototype.onCancel = function () {
 /**
  * Recreate this.state.captionsDataEditors with one element removed, and update
  * this.state.captionsData
+ *
  * @param {string} guidToRemove
  */
 CaptionsPanel.prototype.onCaptionDeleted = function ( guidToRemove ) {
@@ -514,13 +519,13 @@ CaptionsPanel.prototype.hasChanges = function () {
 };
 
 /**
-* Get a value object for sending data to the api
-*
-* @param {string} language Language code
-* @param {string} text Caption text
-* @return {{bot: number, action: string, id, value: *, language: *}} Value object
-* @private
-*/
+ * Get a value object for sending data to the api
+ *
+ * @param {string} language Language code
+ * @param {string} text Caption text
+ * @return {{bot: number, action: string, id, value: *, language: *}} Value object
+ * @private
+ */
 CaptionsPanel.prototype.getWbSetLabelParams = function ( language, text ) {
 	var apiParams = {
 		/*
@@ -587,7 +592,7 @@ CaptionsPanel.prototype.getShowCaptionFlagsByLangCode = function () {
  *
  * See class comments for rules on when to show/hide captions
  *
- * @return {int}
+ * @return {number}
  * @private
  */
 CaptionsPanel.prototype.getHideableLanguageCount = function () {

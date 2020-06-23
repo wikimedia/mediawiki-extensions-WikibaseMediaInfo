@@ -19,6 +19,7 @@ var TabFilterWidget = function MediaInfoMediaSearchTabFilterWidget( config ) {
 
 	TabFilterWidget.parent.call(
 		this,
+		// eslint-disable-next-line mediawiki/class-doc
 		$.extend( {}, config, { classes: [ 'wbmi-tab-filter-widget' ].concat( config.classes || [] ) } )
 	);
 	OO.ui.mixin.GroupWidget.call( this );

@@ -1,5 +1,9 @@
 'use strict';
 
+/**
+ * @external datamodel
+ */
+
 var AnonWarning = require( './AnonWarning.js' ),
 	FormatValueElement = require( 'wikibase.mediainfo.base' ).FormatValueElement,
 	LicenseDialogWidget = require( './LicenseDialogWidget.js' ),
@@ -118,21 +122,22 @@ StatementPanel.prototype.populateFormatValueCache = function ( data ) {
 
 /**
  * Check for changes to statement claims or number of statements
- * @return {bool}
+ *
+ * @return {boolean}
  */
 StatementPanel.prototype.hasChanges = function () {
 	return this.statementWidget.hasChanges();
 };
 
 /**
- * @return {bool}
+ * @return {boolean}
  */
 StatementPanel.prototype.isEditable = function () {
 	return this.statementWidget.isEditing();
 };
 
 /**
- * @return {bool}
+ * @return {boolean}
  */
 StatementPanel.prototype.isSupportedType = function () {
 	var supportedTypes = mw.config.get( 'wbmiSupportedDataTypes' ) || [];
@@ -229,6 +234,7 @@ StatementPanel.prototype.showUnsupportedPopup = function () {
 /**
  * Notifies the top-level Filepage/UploadWizard JS of removal so that it can be
  * handled properly.
+ *
  * @fires widgetRemoved
  */
 StatementPanel.prototype.remove = function () {
@@ -237,6 +243,7 @@ StatementPanel.prototype.remove = function () {
 
 /**
  * Handle the response from a wbcheckconstraints api call
+ *
  * @param {Object} response
  */
 StatementPanel.prototype.handleConstraintsResponse = function ( response ) {

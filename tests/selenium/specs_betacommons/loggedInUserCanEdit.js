@@ -1,7 +1,9 @@
-var assert = require( 'assert' ),
+'use strict';
+
+const assert = require( 'assert' ),
 	LoginPage = require( '../pageobjects/login.page' ),
-	EditPage = require( '../pageobjects/edit.page' ),
-	destinationName;
+	EditPage = require( '../pageobjects/edit.page' );
+let destinationName;
 
 describe( 'Edit page', function () {
 	beforeEach( function () {

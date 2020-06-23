@@ -1,9 +1,11 @@
-var pathToWidget = '../../../../resources/statements/AddPropertyWidget.js',
+'use strict';
+
+const pathToWidget = '../../../../resources/statements/AddPropertyWidget.js',
 	hooks = require( '../../support/hooks.js' );
 
 QUnit.module( 'AddPropertyWidget', hooks.mediainfo, function () {
 	QUnit.test( 'Adding property ids changes the filters', function ( assert ) {
-		var done = assert.async(),
+		const done = assert.async(),
 			AddPropertyWidget = require( pathToWidget ),
 			widget = new AddPropertyWidget();
 
@@ -23,7 +25,7 @@ QUnit.module( 'AddPropertyWidget', hooks.mediainfo, function () {
 	} );
 
 	QUnit.test( 'Property input widget & remove are only visible in edit mode', function ( assert ) {
-		var done = assert.async(),
+		const done = assert.async(),
 			AddPropertyWidget = require( pathToWidget ),
 			widget = new AddPropertyWidget();
 

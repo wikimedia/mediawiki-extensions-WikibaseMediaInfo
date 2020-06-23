@@ -6,6 +6,7 @@ var ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
 /**
  * Dismissable message box which appears above statements UI in both Filepage
  * and UploadWizard.
+ *
  * @param {Object} config
  */
 LinkNoticeWidget = function ( config ) {
@@ -60,6 +61,7 @@ LinkNoticeWidget.prototype.getTemplateData = function () {
 
 /**
  * Store the user's decision and rerender.
+ *
  * @return {jQuery.Promise}
  */
 LinkNoticeWidget.prototype.dismiss = function () {
@@ -77,6 +79,7 @@ LinkNoticeWidget.prototype.dismiss = function () {
  * Determines whether or not the widget should be shown to the user. Defaults
  * to true. Type coercion is necessary due to the limitations of browser
  * localstorage.
+ *
  * @return {boolean}
  */
 LinkNoticeWidget.prototype.isDismissed = function () {
@@ -94,6 +97,7 @@ LinkNoticeWidget.prototype.isDismissed = function () {
 /**
  * Returns whether or not the widget should be be displayed at all, as
  * determined by the presence of the i18n message to be displayed.
+ *
  * @return {boolean}
  */
 LinkNoticeWidget.prototype.canDisplay = function () {

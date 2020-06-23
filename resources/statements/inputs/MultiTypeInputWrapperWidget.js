@@ -183,20 +183,22 @@ MultiTypeInputWrapperWidget.prototype.onChange = function () {
  * @return {jQuery.Promise}
  */
 MultiTypeInputWrapperWidget.prototype.onSnakTypeChange = function ( snakType ) {
-	var message,
-		input,
+	var input,
 		promise;
 
 	switch ( snakType ) {
 		case valueTypes.SOMEVALUE:
 		case valueTypes.NOVALUE:
-			message = ( snakType === valueTypes.SOMEVALUE ) ?
-				'wikibasemediainfo-filepage-statement-some-value' :
-				'wikibasemediainfo-filepage-statement-no-value';
 
 			// Create a disabled string input with the appropriate message.
 			input = this.createInput( 'string' );
-			input.input.setValue( mw.message( message ).parse() );
+			input.input.setValue(
+				mw.message(
+					( snakType === valueTypes.SOMEVALUE ) ?
+						'wikibasemediainfo-filepage-statement-some-value' :
+						'wikibasemediainfo-filepage-statement-no-value'
+				).parse()
+			);
 			this.setDisabled( true );
 
 			promise = this.setState( {
@@ -334,6 +336,7 @@ MultiTypeInputWrapperWidget.prototype.parseValue = function ( propertyId, dataty
 
 /**
  * Get the snakType (value, somevalue, or novalue).
+ *
  * @return {string}
  */
 MultiTypeInputWrapperWidget.prototype.getSnakType = function () {
@@ -342,6 +345,7 @@ MultiTypeInputWrapperWidget.prototype.getSnakType = function () {
 
 /**
  * Set the snakType.
+ *
  * @param {string} snakType
  */
 MultiTypeInputWrapperWidget.prototype.setSnakType = function ( snakType ) {

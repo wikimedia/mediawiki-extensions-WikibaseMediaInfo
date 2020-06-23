@@ -63,6 +63,7 @@ mw.template.registerCompiler( 'mustache+dom', {
 								// try to fetch DOM node from this data, for which
 								// we'll want to parse a placeholder into the template
 								node = self.getNode( d[ key ] );
+								// eslint-disable-next-line mediawiki/class-doc
 								$stub = $( '<div>' ).addClass( 'tpl-dom-' + dom.length );
 								dom.push( node );
 								result[ key ] = $stub[ 0 ].outerHTML;

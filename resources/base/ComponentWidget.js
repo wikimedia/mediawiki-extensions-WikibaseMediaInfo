@@ -422,10 +422,10 @@ ComponentWidget.prototype.matchNodes = function ( $one, $two, preserve ) {
 		// one another (e.g. where $two finds that there is a better match
 		// in $one)
 		.map( function ( $nodesInTwo, i ) {
-			var nodeInOne = $one.eq( i );
+			var $nodeInOne = $one.eq( i );
 			return $nodesInTwo.filter( function ( i, nodeInTwo ) {
 				var $nodesInOne = mapTwo[ $two.index( nodeInTwo ) ];
-				return $nodesInOne.filter( nodeInOne ).length > 0;
+				return $nodesInOne.filter( $nodeInOne ).length > 0;
 			} );
 		} )
 		// next, we'll make sure to only keep 1 best match: the first
@@ -668,6 +668,7 @@ ComponentWidget.prototype.clearItems = function () {
 
 /**
  * Set error text(s) to be used by template.
+ *
  * @param {Array} errors An array of error texts
  * @return {jQuery.Deferred}
  */
@@ -677,6 +678,7 @@ ComponentWidget.prototype.setErrors = function ( errors ) {
 
 /**
  * Get an array of current error messages.
+ *
  * @return {Array}
  */
 ComponentWidget.prototype.getErrors = function () {

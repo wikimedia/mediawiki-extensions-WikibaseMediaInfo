@@ -1,3 +1,7 @@
+/**
+ * @external MediaInfo
+ */
+
 ( function ( wb, util ) {
 	'use strict';
 
@@ -17,9 +21,8 @@
 		/**
 		 * @inheritdoc
 		 *
-		 * @return {MediaInfo}
-		 *
 		 * @throws {Error} if serialization does not resolve to a serialized MediaInfo.
+		 * @return {MediaInfo}
 		 */
 		deserialize: function ( serialization ) {
 			var statementGroupSetDeserializer, termMapDeserializer;

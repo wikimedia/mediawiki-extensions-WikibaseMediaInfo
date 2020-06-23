@@ -1,14 +1,15 @@
 {
+	"root": true,
 	"extends": [
-		"wikimedia/qunit",
-		"../../.eslintrc.json"
+		"wikimedia/server",
+		"../../.eslintshared.json",
+		"wikimedia/qunit"
 	],
-	"globals": {
-		"global": true,
-		"require": true
+	"env": {
+		"browser": true
 	},
 	"rules": {
-		"no-implicit-globals": "off",
-		"max-len": "off"
+		"max-len": "off",
+		"node/no-missing-require": "off"
 	}
 }

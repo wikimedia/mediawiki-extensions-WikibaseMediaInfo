@@ -19,12 +19,12 @@ var dataTypesMap = mw.config.get( 'wbDataTypes' ),
  * @param {Object} [config.data] Initial data
  * @param {string} [config.title]
  * @param {string} [config.editing] True for edit mode, False for read mode
- * @param {bool} [config.isDefaultProperty] True if the widget is shown even if there are
+ * @param {boolean} [config.isDefaultProperty] True if the widget is shown even if there are
  *  no values for the property
  * @param {Object} [config.helpUrls]  An object with property id as members and help urls for
  *  the property as values
  *  e.g. { P1: "https://commons.wikimedia.org/wiki/Special:MyLanguage/Commons:Depicts" }
- * @param {bool} [config.showControls] Whether or not to display editing controls
+ * @param {boolean} [config.showControls] Whether or not to display editing controls
  * @param {string} [config.summary] Summary for edits
  * @param {string[]} [config.tags] Change tags to apply to edits
  */
@@ -185,8 +185,9 @@ StatementWidget.prototype.hasChanges = function () {
 /**
  * Receives a DataValue from the input widget and uses it to create a
  * new ItemWidget, add it to the list, and set the widget into edit mode.
+ *
  * @fires change
-*/
+ */
 StatementWidget.prototype.addItemFromInput = function () {
 	var self = this;
 
@@ -250,6 +251,7 @@ StatementWidget.prototype.getData = function () {
 
 /**
  * Update DOM with latest data, sorted by prominence
+ *
  * @param {datamodel.StatementList} data
  * @return {jQuery.Promise}
  */
@@ -466,7 +468,7 @@ StatementWidget.prototype.submit = function ( baseRevId ) {
 		.then( self.setErrors.bind( self, [] ) );
 	this.setDisabled( true );
 
-	data.toArray().map( function ( statement ) {
+	data.toArray().forEach( function ( statement ) {
 		statementsByGuid[ statement.getClaim().getGuid() ] = statement;
 	} );
 
@@ -605,7 +607,7 @@ StatementWidget.prototype.submit = function ( baseRevId ) {
 };
 
 /**
- * @internal
+ * @private
  * @param {datamodel.StatementList} data
  * @return {datamodel.StatementList}
  */
@@ -687,13 +689,14 @@ StatementWidget.prototype.showRemoveConfirmationDialog = function () {
 /**
  * Handle the part of the response from a wbcheckconstraints api call that is relevant to this
  * StatementWidget's property id
+ *
  * @param {Object} responseForPropertyId
  */
 StatementWidget.prototype.handleConstraintsResponse = function ( responseForPropertyId ) {
 	if ( responseForPropertyId === null ) {
 		return;
 	}
-	this.getItems().map( function ( itemWidget ) {
+	this.getItems().forEach( function ( itemWidget ) {
 		var guid, result;
 
 		try {

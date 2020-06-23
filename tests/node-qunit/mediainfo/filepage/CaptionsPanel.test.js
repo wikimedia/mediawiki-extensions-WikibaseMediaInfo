@@ -1,21 +1,21 @@
-var sinon = require( 'sinon' ),
+'use strict';
+
+const sinon = require( 'sinon' ),
 	pathToWidget = '../../../../resources/filepage/CaptionsPanel.js',
 	helpers = require( '../../support/helpers.js' ),
-	hooks = require( '../../support/hooks.js' ),
-	sandbox,
+	hooks = require( '../../support/hooks.js' );
+let sandbox,
 	dom,
 	mediaInfoEntity;
 
 QUnit.module( 'CaptionsPanel', {}, function () {
 	// CaptionsPanel on page where statements are already present
-	// eslint-disable-next-line no-restricted-properties
 	QUnit.module( 'When pre-existing statements are present on page', Object.assign( {}, hooks.mediainfo, {
 		beforeEach: function () {
 			sandbox = sinon.createSandbox();
 
 			hooks.mediainfo.beforeEach();
 			mediaInfoEntity = helpers.readJSON(
-				// eslint-disable-next-line no-undef
 				__dirname + '/../../support/fixtures/data/mediaInfoEntity.json'
 			);
 
@@ -30,7 +30,7 @@ QUnit.module( 'CaptionsPanel', {}, function () {
 		}
 	} ), function () {
 		QUnit.test( 'initialization works without errors', function ( assert ) {
-			var CaptionsPanel = require( pathToWidget ),
+			const CaptionsPanel = require( pathToWidget ),
 				config = {
 					warnWithinMaxCaptionLength: 20,
 					userLanguages: [ 'en' ],
@@ -45,9 +45,8 @@ QUnit.module( 'CaptionsPanel', {}, function () {
 		} );
 
 		QUnit.test( 'user languages are added to DOM', function ( assert ) {
-			var CaptionsPanel = require( pathToWidget ),
+			const CaptionsPanel = require( pathToWidget ),
 				userLanguages = [ 'en', 'ga', 'de' ],
-				captionLanguages,
 				config = {
 					warnWithinMaxCaptionLength: 20,
 					userLanguages: userLanguages,
@@ -60,7 +59,7 @@ QUnit.module( 'CaptionsPanel', {}, function () {
 
 			// There should be a new caption row for every user language that doesn't already
 			// exist in the caption data
-			captionLanguages = Object.keys( mediaInfoEntity.labels );
+			const captionLanguages = Object.keys( mediaInfoEntity.labels );
 			userLanguages.forEach( function ( langCode ) {
 				if ( captionLanguages.indexOf( langCode ) === -1 ) {
 					captionLanguages.push( langCode );

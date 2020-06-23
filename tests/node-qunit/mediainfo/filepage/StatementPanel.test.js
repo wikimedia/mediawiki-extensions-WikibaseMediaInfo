@@ -1,15 +1,16 @@
+'use strict';
+
 /* eslint-disable no-jquery/no-global-selector */
 
-var sinon = require( 'sinon' ),
+const sinon = require( 'sinon' ),
 	pathToWidget = '../../../../resources/filepage/StatementPanel.js',
 	helpers = require( '../../support/helpers.js' ),
-	hooks = require( '../../support/hooks.js' ),
-	sandbox,
+	hooks = require( '../../support/hooks.js' );
+let sandbox,
 	dom;
 
 QUnit.module( 'StatementPanel', {}, function () {
 	// Scenario 1. StatementsPanel on page where no statements are present
-	// eslint-disable-next-line no-restricted-properties
 	QUnit.module( 'When no pre-existing statements are present on page', Object.assign( {}, hooks.mediainfo, {
 		beforeEach: function () {
 			sandbox = sinon.createSandbox();
@@ -26,7 +27,7 @@ QUnit.module( 'StatementPanel', {}, function () {
 		}
 	} ), function () {
 		QUnit.test( 'constructor', function ( assert ) {
-			var StatementPanel = require( pathToWidget ),
+			const StatementPanel = require( pathToWidget ),
 				config = {
 					$element: $( '.wbmi-entityview-statementsGroup' ),
 					propertyId: 'P1',
@@ -42,7 +43,7 @@ QUnit.module( 'StatementPanel', {}, function () {
 		} );
 
 		QUnit.test( 'isEditable() is false by default', function ( assert ) {
-			var StatementPanel = require( pathToWidget ),
+			const StatementPanel = require( pathToWidget ),
 				config = {
 					$element: $( '.wbmi-entityview-statementsGroup' ),
 					propertyId: 'P1',
@@ -63,7 +64,7 @@ QUnit.module( 'StatementPanel', {}, function () {
 		}, function () {
 			// Async test
 			QUnit.test( 'LicenseDialogWidget is displayed when user attempts to edit', function ( assert ) {
-				var StatementPanel = require( pathToWidget ),
+				const StatementPanel = require( pathToWidget ),
 					config = {
 						$element: $( '.wbmi-entityview-statementsGroup' ),
 						propertyId: 'P1',
@@ -72,10 +73,9 @@ QUnit.module( 'StatementPanel', {}, function () {
 						properties: { P1: 'wikibase-item' }
 					},
 					sp = new StatementPanel( config ),
-					spy,
 					done = assert.async();
 
-				spy = sinon.spy( sp.licenseDialogWidget, 'openDialog' );
+				const spy = sinon.spy( sp.licenseDialogWidget, 'openDialog' );
 				sp.makeEditable();
 
 				setTimeout( function () {

@@ -1,11 +1,11 @@
 'use strict';
 
-var sinon = require( 'sinon' ),
+const sinon = require( 'sinon' ),
 	hooks = require( '../../support/hooks.js' );
 
 QUnit.module( 'BestPractices', hooks.mediainfo, function () {
 	QUnit.test( 'Valid data roundtrip', function ( assert ) {
-		var done = assert.async(),
+		const done = assert.async(),
 			BestPractices = require( '../../../../resources/README/3.BestPractices.js' ),
 			widget = new BestPractices(),
 			data = { some: 'some', relevant: 1, data: { test: 'example' } };
@@ -19,7 +19,7 @@ QUnit.module( 'BestPractices', hooks.mediainfo, function () {
 } );
 
 QUnit.test( 'Setting other data triggers a change event', function ( assert ) {
-	var done = assert.async(),
+	const done = assert.async(),
 		BestPractices = require( '../../../../resources/README/3.BestPractices.js' ),
 		widget = new BestPractices(),
 		data = { some: 'some', relevant: 1, data: { test: 'example' } },
@@ -36,7 +36,7 @@ QUnit.test( 'Setting other data triggers a change event', function ( assert ) {
 } );
 
 QUnit.test( 'Setting same data does not trigger a change event', function ( assert ) {
-	var done = assert.async(),
+	const done = assert.async(),
 		BestPractices = require( '../../../../resources/README/3.BestPractices.js' ),
 		widget = new BestPractices(),
 		data = { some: 'some', relevant: 1, data: { test: 'example' } },

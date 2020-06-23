@@ -1,3 +1,8 @@
+/**
+ * @external CaptionsPanel
+ * @external StatementPanel
+ */
+
 ( function () {
 
 	'use strict';
@@ -23,6 +28,7 @@
 
 	/**
 	 * Infuse server-rendered OOUI tab elements, if present
+	 *
 	 * @param {jQuery} $content
 	 * @return {OO.ui.IndexLayout}
 	 */
@@ -38,6 +44,7 @@
 	 * Determine if panels are editable. Only allow editing if we're NOT on a
 	 * version diff page or viewing an older revision, and there is no page
 	 * protection.
+	 *
 	 * @return {boolean}
 	 */
 	function isEditable() {
@@ -69,6 +76,7 @@
 
 	/**
 	 * Handle StatementPanel removal
+	 *
 	 * @param {string} propId
 	 */
 	function onStatementPanelRemoved( propId ) {
@@ -103,6 +111,7 @@
 	 * Initialize a live StatementPanel widget on a given element.
 	 * Also updates the statementPanels objects and adds an event listener
 	 * for panel removal.
+	 *
 	 * @param {jQuery} $el
 	 * @param {string} propId
 	 * @param {string} propertyType
@@ -230,6 +239,7 @@
 	/**
 	 * Ensure browser default 'Leave Site' popup triggers when leaving a page
 	 * with edits
+	 *
 	 * @return {string} message
 	 */
 	window.onbeforeunload = function () {

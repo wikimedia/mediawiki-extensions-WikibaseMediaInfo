@@ -1,10 +1,12 @@
-var sinon = require( 'sinon' ),
+'use strict';
+
+const sinon = require( 'sinon' ),
 	pathToWidget = '../../../../resources/statements/QualifierWidget.js',
 	hooks = require( '../../support/hooks.js' );
 
 QUnit.module( 'QualifierWidget', hooks.mediainfo, function () {
 	QUnit.test( 'Valid data roundtrip', function ( assert ) {
-		var done = assert.async(),
+		const done = assert.async(),
 			datamodel = require( 'wikibase.datamodel' ),
 			QualifierWidget = require( pathToWidget ),
 			widget = new QualifierWidget(),
@@ -21,7 +23,7 @@ QUnit.module( 'QualifierWidget', hooks.mediainfo, function () {
 	} );
 
 	QUnit.test( 'Setting other data triggers a change event', function ( assert ) {
-		var done = assert.async(),
+		const done = assert.async(),
 			QualifierWidget = require( pathToWidget ),
 			widget = new QualifierWidget(),
 			datamodel = require( 'wikibase.datamodel' ),
@@ -45,7 +47,7 @@ QUnit.module( 'QualifierWidget', hooks.mediainfo, function () {
 	} );
 
 	QUnit.test( 'Setting same data does not trigger a change event', function ( assert ) {
-		var done = assert.async(),
+		const done = assert.async(),
 			QualifierWidget = require( pathToWidget ),
 			widget = new QualifierWidget(),
 			datamodel = require( 'wikibase.datamodel' ),
@@ -69,7 +71,7 @@ QUnit.module( 'QualifierWidget', hooks.mediainfo, function () {
 	} );
 
 	QUnit.test( 'setData() sets property ID in the PropertyInput widget', function ( assert ) {
-		var done = assert.async(),
+		const done = assert.async(),
 			QualifierWidget = require( pathToWidget ),
 			widget = new QualifierWidget(),
 			datamodel = require( 'wikibase.datamodel' ),
@@ -85,7 +87,7 @@ QUnit.module( 'QualifierWidget', hooks.mediainfo, function () {
 	} );
 
 	QUnit.test( 'setData() sets value data in the valueInput widget', function ( assert ) {
-		var done = assert.async(),
+		const done = assert.async(),
 			QualifierWidget = require( pathToWidget ),
 			widget = new QualifierWidget(),
 			datamodel = require( 'wikibase.datamodel' ),
@@ -101,7 +103,7 @@ QUnit.module( 'QualifierWidget', hooks.mediainfo, function () {
 	} );
 
 	QUnit.test( 'Property labels are available after API calls complete', function ( assert ) {
-		var QualifierWidget = require( pathToWidget ),
+		const QualifierWidget = require( pathToWidget ),
 			widget = new QualifierWidget(),
 			datamodel = require( 'wikibase.datamodel' ),
 			data = new datamodel.PropertyValueSnak(
@@ -126,7 +128,7 @@ QUnit.module( 'QualifierWidget', hooks.mediainfo, function () {
 	} );
 
 	QUnit.test( 'Test enabling edit state', function ( assert ) {
-		var done = assert.async(),
+		const done = assert.async(),
 			QualifierWidget = require( pathToWidget ),
 			datamodel = require( 'wikibase.datamodel' ),
 			widget = new QualifierWidget( { editing: false } ),
@@ -153,7 +155,7 @@ QUnit.module( 'QualifierWidget', hooks.mediainfo, function () {
 	} );
 
 	QUnit.test( 'Test disabling edit state', function ( assert ) {
-		var done = assert.async(),
+		const done = assert.async(),
 			QualifierWidget = require( pathToWidget ),
 			widget = new QualifierWidget( { editing: true } ),
 			formatPropertyStub = sinon.stub( widget, 'formatProperty' ),
@@ -180,7 +182,7 @@ QUnit.module( 'QualifierWidget', hooks.mediainfo, function () {
 	} );
 
 	QUnit.test( 'Valid data roundtrip with somevalue snak', function ( assert ) {
-		var done = assert.async(),
+		const done = assert.async(),
 			datamodel = require( 'wikibase.datamodel' ),
 			QualifierWidget = require( pathToWidget ),
 			widget = new QualifierWidget(),
@@ -200,7 +202,7 @@ QUnit.module( 'QualifierWidget', hooks.mediainfo, function () {
 	} );
 
 	QUnit.test( 'Valid data roundtrip with novalue snak', function ( assert ) {
-		var done = assert.async(),
+		const done = assert.async(),
 			datamodel = require( 'wikibase.datamodel' ),
 			QualifierWidget = require( pathToWidget ),
 			widget = new QualifierWidget(),

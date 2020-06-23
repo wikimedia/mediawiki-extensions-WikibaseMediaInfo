@@ -1,11 +1,13 @@
-var sinon = require( 'sinon' ),
+'use strict';
+
+const sinon = require( 'sinon' ),
 	jsdom = require( 'jsdom' ),
 	helpers = require( './helpers.js' ),
 	mockery = require( 'mockery' ),
-	wbDataTypes = require( '../support/fixtures/data/wbDataTypes.json' ),
-	wbmiPropertyTypes = require( '../support/fixtures/data/wbmiPropertyTypes.json' ),
-	sandboxes = {},
-	dom;
+	wbDataTypes = require( './fixtures/data/wbDataTypes.json' ),
+	wbmiPropertyTypes = require( './fixtures/data/wbmiPropertyTypes.json' ),
+	sandboxes = {};
+let dom;
 
 module.exports.jquery = {
 	beforeEach: function () {
@@ -27,10 +29,6 @@ module.exports.jquery = {
 	}
 };
 
-// Object.assign is ES6, but using it in tests should be fine...
-// (we can't use $.extend, because that'd require jQuery, which
-// may not het have been loaded)
-// eslint-disable-next-line no-restricted-properties
 module.exports.ooui = Object.assign( {}, module.exports.jquery, {
 	beforeEach: function () {
 		// jQuery is a requirement for OOUI
@@ -40,7 +38,7 @@ module.exports.ooui = Object.assign( {}, module.exports.jquery, {
 
 		global.OO = require( 'oojs' );
 		require( 'oojs-ui' );
-		require( 'oojs-ui/dist/oojs-ui-wikimediaui.js' );
+		require( '../../../node_modules/oojs-ui/dist/oojs-ui-wikimediaui.js' );
 	},
 	afterEach: function () {
 		delete require.cache[ require.resolve( 'oojs-ui/dist/oojs-ui-wikimediaui.js' ) ];
@@ -51,7 +49,6 @@ module.exports.ooui = Object.assign( {}, module.exports.jquery, {
 	}
 } );
 
-// eslint-disable-next-line no-restricted-properties
 module.exports.mediawiki = Object.assign( {}, module.exports.jquery, {
 	beforeEach: function () {
 		// jQuery is a requirement for MediaWiki
@@ -77,7 +74,6 @@ module.exports.mediawiki = Object.assign( {}, module.exports.jquery, {
 	}
 } );
 
-// eslint-disable-next-line no-restricted-properties
 module.exports.wikibase = Object.assign( {}, module.exports.mediawiki, {
 	beforeEach: function () {
 		// MediaWiki is a requirement for Wikibase
@@ -106,7 +102,6 @@ module.exports.wikibase = Object.assign( {}, module.exports.mediawiki, {
 	}
 } );
 
-// eslint-disable-next-line no-restricted-properties
 module.exports.mediainfo = Object.assign( {}, module.exports.ooui, module.exports.wikibase, {
 	beforeEach: function () {
 		// jQuery, OOUI, MediaWiki Wikibase are requirements for MediaInfo
@@ -131,10 +126,9 @@ module.exports.mediainfo = Object.assign( {}, module.exports.ooui, module.export
 	}
 } );
 
-// eslint-disable-next-line no-restricted-properties
 module.exports.kartographer = Object.assign( {}, module.exports.mediainfo, {
 	beforeEach: function () {
-		var loaderStub = sinon.stub();
+		const loaderStub = sinon.stub();
 
 		module.exports.mediainfo.beforeEach();
 		sandboxes.kartographer = sinon.createSandbox();

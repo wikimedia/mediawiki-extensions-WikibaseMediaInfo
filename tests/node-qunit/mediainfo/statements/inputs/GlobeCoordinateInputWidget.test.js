@@ -1,11 +1,13 @@
-var sinon = require( 'sinon' ),
+'use strict';
+
+const sinon = require( 'sinon' ),
 	pathToWidget = '../../../../../resources/statements/inputs/GlobeCoordinateInputWidget.js',
 	hooks = require( '../../../support/hooks.js' ),
 	fakeCoordinates = require( '../../../support/fixtures/data/coordinateData.js' );
 
 QUnit.module( 'GlobeCoordinateInputWidget', hooks.kartographer, function () {
 	QUnit.test( 'Valid data roundtrip', function ( assert ) {
-		var done = assert.async(),
+		const done = assert.async(),
 			GlobeCoordinateInputWidget = require( pathToWidget ),
 			widget = new GlobeCoordinateInputWidget(),
 			apiStub = global.wikibase.api.getLocationAgnosticMwApi(),
@@ -28,7 +30,7 @@ QUnit.module( 'GlobeCoordinateInputWidget', hooks.kartographer, function () {
 	} );
 
 	QUnit.test( 'Setting other data triggers a change event', function ( assert ) {
-		var done = assert.async(),
+		const done = assert.async(),
 			GlobeCoordinateInputWidget = require( pathToWidget ),
 			widget = new GlobeCoordinateInputWidget(),
 			apiStub = global.wikibase.api.getLocationAgnosticMwApi(),
@@ -63,7 +65,7 @@ QUnit.module( 'GlobeCoordinateInputWidget', hooks.kartographer, function () {
 	} );
 
 	QUnit.test( 'Setting same data does not trigger a change event', function ( assert ) {
-		var done = assert.async(),
+		const done = assert.async(),
 			GlobeCoordinateInputWidget = require( pathToWidget ),
 			widget = new GlobeCoordinateInputWidget(),
 			apiStub = global.wikibase.api.getLocationAgnosticMwApi(),

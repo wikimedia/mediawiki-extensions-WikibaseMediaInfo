@@ -7,7 +7,7 @@ var FormatValueElement = require( 'wikibase.mediainfo.base' ).FormatValueElement
 /**
  * @param {Object} config Configuration options
  * @param {string} [config.entityType] 'property' or 'item' (defaults to 'item')
- * @param {int} [config.maxSuggestions] The maximum number of suggestions to display in the auto-suggest
+ * @param {number} [config.maxSuggestions] The maximum number of suggestions to display in the auto-suggest
  * @param {Array} [config.filter] Array of objects each containing fields 'field' and 'value'.
  *      Suggestions will only displayed if suggestion.{field} === {value} ... e.g. if config.filter
  *      contains { 'field': 'type', 'value: 'property' } then only suggestions with 'type'
@@ -34,6 +34,7 @@ EntityAutocompleteInputWidget = function MediaInfoStatementsEntityAutocompleteIn
 	// select it anew
 	this.dataCache = {};
 
+	// eslint-disable-next-line mediawiki/class-doc
 	EntityAutocompleteInputWidget.parent.call( this, $.extend( {}, config, {
 		// classes should *always* be added, because some essential functionality
 		// (e.g. CSS to turn red on invalid input) depends on these classes

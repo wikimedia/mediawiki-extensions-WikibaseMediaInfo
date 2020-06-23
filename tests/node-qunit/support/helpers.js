@@ -1,4 +1,6 @@
-var sinon = require( 'sinon' ),
+'use strict';
+
+const sinon = require( 'sinon' ),
 	jsdom = require( 'jsdom' ),
 	fs = require( 'fs' ),
 	path = require( 'path' ),
@@ -28,13 +30,13 @@ module.exports.requireAgain = requireAgain;
 /**
  * Builds a template for use in testing when given a Mustache template and JSON
  * data to populate it. Paths should be relative to the "support" directory.
+ *
  * @param {string} pathToTemplate
  * @param {string} pathToData
- * @return {JSDOM} JSDOM object
+ * @return {jsdom.JSDOM} JSDOM object
  */
 module.exports.generateTemplate = function ( pathToTemplate, pathToData ) {
-	// eslint-disable-next-line no-undef
-	var template = fs.readFileSync( path.join( __dirname, 'templates', pathToTemplate ), 'utf8' ),
+	const template = fs.readFileSync( path.join( __dirname, 'templates', pathToTemplate ), 'utf8' ),
 		data = require( './fixtures/data/' + pathToData ),
 		html = Mustache.render( template, data ),
 		dom = new jsdom.JSDOM( html );
@@ -44,6 +46,7 @@ module.exports.generateTemplate = function ( pathToTemplate, pathToData ) {
 
 /**
  * Returns the contents of a json file as a js object
+ *
  * @param {string} pathToFile
  * @return {Object}
  */
@@ -97,7 +100,6 @@ module.exports.createMediaWikiEnv = function () {
 			using: sinon.stub().resolves( sinon.stub() )
 		},
 
-		// eslint-disable-next-line no-undef
 		templates: new Map(),
 
 		Title: sinon.stub().returns( {
@@ -117,7 +119,7 @@ module.exports.createMediaWikiEnv = function () {
  * @return {Object}
  */
 module.exports.createGlobeCoordinateEnv = function () {
-	var oldglobeCoordinate = global.globeCoordinate,
+	const oldglobeCoordinate = global.globeCoordinate,
 		oldJQuery = global.jQuery,
 		old$ = global.$;
 
@@ -159,7 +161,7 @@ module.exports.createGlobeCoordinateEnv = function () {
  * @return {Object}
  */
 module.exports.createDataValuesEnv = function () {
-	var oldDataValues = global.dataValues,
+	const oldDataValues = global.dataValues,
 		oldUtil = global.util,
 		oldJQuery = global.jQuery,
 		old$ = global.$;
@@ -253,7 +255,7 @@ module.exports.registerWbSerialization = function () {
  * @return {Object} user
  */
 module.exports.createMediaWikiUser = function ( loggedIn ) {
-	var user = {
+	const user = {
 		isAnon: sinon.stub(),
 		options: {
 			get: sinon.stub(),
@@ -279,18 +281,16 @@ module.exports.requireULS = function () {
 };
 
 module.exports.registerModules = function () {
-	// eslint-disable-next-line no-undef
-	var extensionJson = this.readJSON( path.join( __dirname, '..', '..', '..', 'extension.json' ) ),
+	const extensionJson = this.readJSON( path.join( __dirname, '..', '..', '..', 'extension.json' ) ),
 		modules = extensionJson.ResourceModules;
 
 	Object.keys( modules ).forEach( function ( moduleName ) {
-		var packageFiles = modules[ moduleName ].packageFiles;
+		const packageFiles = modules[ moduleName ].packageFiles;
 		if ( !packageFiles ) {
 			return;
 		}
 
 		try {
-			// eslint-disable-next-line no-undef
 			mockery.registerMock( moduleName, require( path.join( __dirname, '..', '..', '..', packageFiles[ 0 ] ) ) );
 		} catch ( e ) {
 			// failed to include, but that could be ok, it might just expect immediate
@@ -301,27 +301,24 @@ module.exports.registerModules = function () {
 };
 
 module.exports.registerTemplates = function () {
-	// eslint-disable-next-line no-undef
-	var extensionJson = this.readJSON( path.join( __dirname, '..', '..', '..', 'extension.json' ) ),
+	const extensionJson = this.readJSON( path.join( __dirname, '..', '..', '..', 'extension.json' ) ),
 		modules = extensionJson.ResourceModules;
 
 	Object.keys( modules ).forEach( function ( moduleName ) {
-		var templates = modules[ moduleName ].templates;
+		const templates = modules[ moduleName ].templates;
 		if ( !templates ) {
 			return;
 		}
 
 		templates.forEach( function ( templateName ) {
-			// eslint-disable-next-line no-undef
-			var template = fs.readFileSync( path.join( __dirname, '..', '..', '..', templateName ), 'utf8' );
+			const template = fs.readFileSync( path.join( __dirname, '..', '..', '..', templateName ), 'utf8' );
 			global.mw.template.add( moduleName, templateName, template );
 		} );
 	} );
 };
 
 module.exports.deregisterModules = function () {
-	// eslint-disable-next-line no-undef
-	var extensionJson = this.readJSON( path.join( __dirname, '..', '..', '..', 'extension.json' ) ),
+	const extensionJson = this.readJSON( path.join( __dirname, '..', '..', '..', 'extension.json' ) ),
 		modules = extensionJson.ResourceModules;
 
 	Object.keys( modules ).forEach( function ( moduleName ) {

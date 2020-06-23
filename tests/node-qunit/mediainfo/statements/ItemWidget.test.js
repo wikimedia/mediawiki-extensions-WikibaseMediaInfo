@@ -1,10 +1,12 @@
-var sinon = require( 'sinon' ),
+'use strict';
+
+const sinon = require( 'sinon' ),
 	pathToWidget = '../../../../resources/statements/ItemWidget.js',
 	hooks = require( '../../support/hooks.js' );
 
 QUnit.module( 'ItemWidget', hooks.mediainfo, function () {
 	QUnit.test( 'Valid data roundtrip', function ( assert ) {
-		var done = assert.async(),
+		const done = assert.async(),
 			ItemWidget = require( pathToWidget ),
 			widget = new ItemWidget( { propertyId: 'P1' } ),
 			datamodel = require( 'wikibase.datamodel' ),
@@ -25,7 +27,7 @@ QUnit.module( 'ItemWidget', hooks.mediainfo, function () {
 	} );
 
 	QUnit.test( 'Setting other data triggers a change event', function ( assert ) {
-		var done = assert.async(),
+		const done = assert.async(),
 			ItemWidget = require( pathToWidget ),
 			widget = new ItemWidget( { propertyId: 'P1' } ),
 			datamodel = require( 'wikibase.datamodel' ),
@@ -69,7 +71,7 @@ QUnit.module( 'ItemWidget', hooks.mediainfo, function () {
 	} );
 
 	QUnit.test( 'Setting same data does not trigger a change event', function ( assert ) {
-		var done = assert.async(),
+		const done = assert.async(),
 			ItemWidget = require( pathToWidget ),
 			widget = new ItemWidget( { propertyId: 'P1' } ),
 			datamodel = require( 'wikibase.datamodel' ),
@@ -113,7 +115,7 @@ QUnit.module( 'ItemWidget', hooks.mediainfo, function () {
 	} );
 
 	QUnit.test( 'Widget updates qualifier widgets with new data', function ( assert ) {
-		var done = assert.async(),
+		const done = assert.async(),
 			ItemWidget = require( pathToWidget ),
 			widget = new ItemWidget( { propertyId: 'P1' } ),
 			datamodel = require( 'wikibase.datamodel' ),
@@ -182,7 +184,7 @@ QUnit.module( 'ItemWidget', hooks.mediainfo, function () {
 	} );
 
 	QUnit.test( 'createQualifier() returns a new QualifierWidget', function ( assert ) {
-		var done = assert.async(),
+		const done = assert.async(),
 			ItemWidget = require( pathToWidget ),
 			QualifierWidget = require( '../../../../resources/statements/QualifierWidget.js' ),
 			widget = new ItemWidget( { propertyId: 'P1' } );
@@ -195,13 +197,12 @@ QUnit.module( 'ItemWidget', hooks.mediainfo, function () {
 	} );
 
 	QUnit.test( 'createQualifier sets QualifierWidget data when snak is provided', function ( assert ) {
-		var done = assert.async(),
+		const done = assert.async(),
 			ItemWidget = require( pathToWidget ),
 			datamodel = require( 'wikibase.datamodel' ),
-			widget = new ItemWidget( { propertyId: 'P1' } ),
-			data;
+			widget = new ItemWidget( { propertyId: 'P1' } );
 
-		data = new datamodel.PropertyValueSnak(
+		const data = new datamodel.PropertyValueSnak(
 			'P1',
 			new datamodel.EntityId( 'Q1' )
 		);
@@ -214,7 +215,7 @@ QUnit.module( 'ItemWidget', hooks.mediainfo, function () {
 	} );
 
 	QUnit.test( 'addQualifier creates a new QualifierWidget every time it is called', function ( assert ) {
-		var done = assert.async(),
+		const done = assert.async(),
 			ItemWidget = require( pathToWidget ),
 			widget = new ItemWidget( { propertyId: 'P1' } ),
 			spy = sinon.spy( widget, 'createQualifier' ),
@@ -243,7 +244,7 @@ QUnit.module( 'ItemWidget', hooks.mediainfo, function () {
 	} );
 
 	QUnit.test( 'Test enabling edit state', function ( assert ) {
-		var done = assert.async(),
+		const done = assert.async(),
 			ItemWidget = require( pathToWidget ),
 			widget = new ItemWidget( { propertyId: 'P1' } ),
 			datamodel = require( 'wikibase.datamodel' ),
@@ -270,7 +271,7 @@ QUnit.module( 'ItemWidget', hooks.mediainfo, function () {
 	} );
 
 	QUnit.test( 'Test disabling edit state', function ( assert ) {
-		var done = assert.async(),
+		const done = assert.async(),
 			ItemWidget = require( pathToWidget ),
 			widget = new ItemWidget( { propertyId: 'P1' } ),
 			datamodel = require( 'wikibase.datamodel' ),
@@ -297,7 +298,7 @@ QUnit.module( 'ItemWidget', hooks.mediainfo, function () {
 	} );
 
 	QUnit.test( 'Toggling item prominence changes item rank', function ( assert ) {
-		var done = assert.async(),
+		const done = assert.async(),
 			ItemWidget = require( pathToWidget ),
 			widget = new ItemWidget( { propertyId: 'P1' } ),
 			datamodel = require( 'wikibase.datamodel' ),
@@ -327,7 +328,7 @@ QUnit.module( 'ItemWidget', hooks.mediainfo, function () {
 	} );
 
 	QUnit.test( 'Valid data roundtrip with somevalue snak', function ( assert ) {
-		var done = assert.async(),
+		const done = assert.async(),
 			ItemWidget = require( pathToWidget ),
 			widget = new ItemWidget( { propertyId: 'P1' } ),
 			datamodel = require( 'wikibase.datamodel' ),
@@ -346,7 +347,7 @@ QUnit.module( 'ItemWidget', hooks.mediainfo, function () {
 	} );
 
 	QUnit.test( 'Valid data roundtrip with novalue snak', function ( assert ) {
-		var done = assert.async(),
+		const done = assert.async(),
 			ItemWidget = require( pathToWidget ),
 			widget = new ItemWidget( { propertyId: 'P1' } ),
 			datamodel = require( 'wikibase.datamodel' ),

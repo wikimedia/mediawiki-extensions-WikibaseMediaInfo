@@ -2,7 +2,7 @@
 
 /**
  * @param {Object} [config]
- * @param {int} [config.limit] number of results to show (defaults to 7)
+ * @param {number} [config.limit] number of results to show (defaults to 7)
  */
 var AutocompleteSearchInputWidget = function MediaInfoMediaSearchAutocompleteSearchInputWidget( config ) {
 	config = config || {};
@@ -16,6 +16,7 @@ var AutocompleteSearchInputWidget = function MediaInfoMediaSearchAutocompleteSea
 
 	AutocompleteSearchInputWidget.parent.call(
 		this,
+		// eslint-disable-next-line mediawiki/class-doc
 		$.extend( {}, config, {
 			name: 'q',
 			// disable browser autocomplete (we'll have our own suggestions)

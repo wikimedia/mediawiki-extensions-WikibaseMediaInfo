@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports.first = {
 	results: [ {
 		raw: '0, 0',

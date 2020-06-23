@@ -1,10 +1,12 @@
-var sinon = require( 'sinon' ),
+'use strict';
+
+const sinon = require( 'sinon' ),
 	pathToWidget = '../../../../../resources/statements/inputs/MonolingualTextInputWidget.js',
 	hooks = require( '../../../support/hooks.js' );
 
 QUnit.module( 'MonolingualText', hooks.mediainfo, function () {
 	QUnit.test( 'Valid data roundtrip', function ( assert ) {
-		var done = assert.async(),
+		const done = assert.async(),
 			MonolingualTextInputWidget = require( pathToWidget ),
 			widget = new MonolingualTextInputWidget(),
 			data = dataValues.MonolingualTextValue.newFromJSON( { language: 'en', text: 'this is a test' } );
@@ -17,7 +19,7 @@ QUnit.module( 'MonolingualText', hooks.mediainfo, function () {
 	} );
 
 	QUnit.test( 'Setting other data triggers a change event', function ( assert ) {
-		var done = assert.async(),
+		const done = assert.async(),
 			MonolingualTextInputWidget = require( pathToWidget ),
 			widget = new MonolingualTextInputWidget(),
 			data = dataValues.MonolingualTextValue.newFromJSON( { language: 'en', text: 'this is a test' } ),
@@ -34,7 +36,7 @@ QUnit.module( 'MonolingualText', hooks.mediainfo, function () {
 	} );
 
 	QUnit.test( 'Setting same data does not trigger a change event', function ( assert ) {
-		var done = assert.async(),
+		const done = assert.async(),
 			MonolingualTextInputWidget = require( pathToWidget ),
 			widget = new MonolingualTextInputWidget(),
 			data = dataValues.MonolingualTextValue.newFromJSON( { language: 'en', text: 'this is a test' } ),
@@ -51,7 +53,7 @@ QUnit.module( 'MonolingualText', hooks.mediainfo, function () {
 	} );
 
 	QUnit.test( 'Widget has no button in qualifier mode', function ( assert ) {
-		var done = assert.async(),
+		const done = assert.async(),
 			MonolingualTextInputWidget = require( pathToWidget ),
 			widget = new MonolingualTextInputWidget( { isQualifier: true } ),
 			data = dataValues.MonolingualTextValue.newFromJSON( { language: 'en', text: 'this is a test' } );
@@ -63,7 +65,7 @@ QUnit.module( 'MonolingualText', hooks.mediainfo, function () {
 	} );
 
 	QUnit.test( 'Widget has button in statement mode', function ( assert ) {
-		var done = assert.async(),
+		const done = assert.async(),
 			MonolingualTextInputWidget = require( pathToWidget ),
 			widget = new MonolingualTextInputWidget( { isQualifier: false } ),
 			data = dataValues.MonolingualTextValue.newFromJSON( { language: 'en', text: 'this is a test' } );

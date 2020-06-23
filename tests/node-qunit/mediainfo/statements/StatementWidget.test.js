@@ -1,10 +1,12 @@
-var sinon = require( 'sinon' ),
+'use strict';
+
+const sinon = require( 'sinon' ),
 	pathToWidget = '../../../../resources/statements/StatementWidget.js',
 	hooks = require( '../../support/hooks.js' );
 
 QUnit.module( 'StatementWidget', hooks.mediainfo, function () {
 	QUnit.test( 'Valid data roundtrip', function ( assert ) {
-		var done = assert.async(),
+		const done = assert.async(),
 			StatementWidget = require( pathToWidget ),
 			widget = new StatementWidget( {
 				$element: $( '<div>' ),
@@ -32,7 +34,7 @@ QUnit.module( 'StatementWidget', hooks.mediainfo, function () {
 	} );
 
 	QUnit.test( 'Setting other data triggers a change event', function ( assert ) {
-		var done = assert.async(),
+		const done = assert.async(),
 			StatementWidget = require( pathToWidget ),
 			widget = new StatementWidget( {
 				$element: $( '<div>' ),
@@ -73,7 +75,7 @@ QUnit.module( 'StatementWidget', hooks.mediainfo, function () {
 	} );
 
 	QUnit.test( 'Setting same data does not trigger a change event', function ( assert ) {
-		var done = assert.async(),
+		const done = assert.async(),
 			StatementWidget = require( pathToWidget ),
 			widget = new StatementWidget( {
 				$element: $( '<div>' ),
@@ -118,7 +120,7 @@ QUnit.module( 'StatementWidget', hooks.mediainfo, function () {
 	} );
 
 	QUnit.test( 'Test detection of changes', function ( assert ) {
-		var done = assert.async(),
+		const done = assert.async(),
 			StatementWidget = require( pathToWidget ),
 			widget = new StatementWidget( {
 				$element: $( '<div>' ),
@@ -206,7 +208,7 @@ QUnit.module( 'StatementWidget', hooks.mediainfo, function () {
 	} );
 
 	QUnit.test( 'Test enabling edit state', function ( assert ) {
-		var done = assert.async(),
+		const done = assert.async(),
 			StatementWidget = require( pathToWidget ),
 			widget = new StatementWidget( {
 				$element: $( '<div>' ),
@@ -238,7 +240,7 @@ QUnit.module( 'StatementWidget', hooks.mediainfo, function () {
 	} );
 
 	QUnit.test( 'Test disabling edit state', function ( assert ) {
-		var done = assert.async(),
+		const done = assert.async(),
 			StatementWidget = require( pathToWidget ),
 			widget = new StatementWidget( {
 				$element: $( '<div>' ),
@@ -270,7 +272,7 @@ QUnit.module( 'StatementWidget', hooks.mediainfo, function () {
 	} );
 
 	QUnit.test( 'Widget can handle multiple errors', function ( assert ) {
-		var done = assert.async(),
+		const done = assert.async(),
 			StatementWidget = require( pathToWidget ),
 			widget = new StatementWidget( {
 				$element: $( '<div>' ),

@@ -1,40 +1,60 @@
 <template>
-	<div class="wbmi-image-result">
-		<img v-bind:src="result.imageinfo[ 0 ].thumburl"
-			v-bind:alt="result.title"
-			class="wbmi-image-result__thumbnail"
-			loading="lazy"
-		>
+	<div class="wbmi-image-result" @click="showDetails">
+		<img :src="thumbnail" :alt="title">
 	</div>
 </template>
 
 <script>
-/**
- * Image result component.
- *
- * TODO: consider using description for alt text if it's available.
- */
-// @vue/component
+var searchResult = require( '../mixins/searchResult.js' );
+
 module.exports = {
 	name: 'ImageResult',
 
-	props: [ 'result' ]
+	mixins: [ searchResult ],
+
+	computed: {
+		width: function () {
+			return this.imageinfo[ 0 ].width;
+		},
+
+		height: function () {
+			return this.imageinfo[ 0 ].height;
+		},
+
+		aspectRatio: function () {
+			return this.width / this.height;
+		}
+	}
+
 };
 </script>
 
 <style lang="less">
 @import 'mediawiki.mixins';
+@import '../../../lib/wikimedia-ui-base.less';
 
 .wbmi-image-result {
-	.flex( 1, 1, auto );
-	height: 180px;
-	padding: 8px;
+	box-sizing: border-box;
+	cursor: pointer;
+	margin: 8px;
 
-	&__thumbnail {
-		width: 100%;
-		max-height: 100%;
+	&:hover {
+		.box-shadow( 4px 4px 5px -2px @border-color-base );
+	}
+
+	img {
+		height: 180px;
+		min-width: 100px;
 		object-fit: cover;
+		object-position: center center;
+		width: 100%;
+	}
+
+	&__title {
+		height: 20px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
 	}
 }
-
 </style>

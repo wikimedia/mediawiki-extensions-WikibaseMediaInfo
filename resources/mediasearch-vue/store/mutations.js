@@ -1,7 +1,16 @@
 module.exports = {
 
+	setTerm: function ( state, newTerm ) {
+		state.term = newTerm;
+	},
+
+	clearTerm: function ( state ) {
+		state.term = '';
+	},
+
 	/**
 	 * Add a search result to the given queue
+	 *
 	 * @param {Object} state
 	 * @param {Object} payload
 	 * @param {Object} payload.queue
@@ -13,6 +22,7 @@ module.exports = {
 
 	/**
 	 * TODO: make this less dumb
+	 *
 	 * @param {Object} state
 	 */
 	resetResults: function ( state ) {
@@ -29,6 +39,7 @@ module.exports = {
 
 	/**
 	 * Set the continue status of a given queue (after a request has been made)
+	 *
 	 * @param {Object} state
 	 * @param {Object} payload
 	 * @param {string} payload.type
@@ -40,6 +51,7 @@ module.exports = {
 
 	/**
 	 * Set the pending state of a given queue to true or false
+	 *
 	 * @param {Object} state
 	 * @param {Object} payload
 	 * @param {Object} payload.type

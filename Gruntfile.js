@@ -10,11 +10,11 @@ module.exports = function ( grunt ) {
 	grunt.initConfig( {
 		eslint: {
 			options: {
-				extensions: [ '.js', '.json' ],
+				extensions: [ '.js', '.json', '.vue' ],
 				cache: true
 			},
 			all: [
-				'**/*.js{,on}',
+				'**/*.{js,json,vue}',
 				'!{vendor,node_modules}/**'
 			]
 		},

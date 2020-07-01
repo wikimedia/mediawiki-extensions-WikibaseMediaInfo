@@ -1,15 +1,16 @@
 <template>
 	<div>
-		<input 
-			v-model="term" 
-			v-on:keyup.enter="updateTerm"
+		<input
+			v-model="term"
 			type="text"
+			@keyup.enter="updateTerm"
 		>
 
-		<mw-button 
-			v-on:click="updateTerm"
-			v-bind:primary="true" 
-			v-bind:progressive="true">
+		<mw-button
+			:primary="true"
+			:progressive="true"
+			@click="updateTerm"
+		>
 			{{ $i18n( 'searchbutton' ) }}
 		</mw-button>
 	</div>
@@ -32,7 +33,7 @@ module.exports = {
 	data: function () {
 		return {
 			term: this.initialTerm
-		}
+		};
 	},
 
 	methods: {

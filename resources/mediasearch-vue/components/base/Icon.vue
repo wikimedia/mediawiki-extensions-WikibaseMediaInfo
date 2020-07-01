@@ -1,7 +1,7 @@
 <template>
 	<span
 		class="mw-icon"
-		v-bind:class="builtInClasses"
+		:class="builtInClasses"
 	>
 		{{ label }}
 	</span>
@@ -47,6 +47,8 @@ module.exports = {
 </script>
 
 <style lang="less">
+/* stylelint-disable selector-class-pattern */
+
 .mw-icon {
 	background-size: contain;
 	background-position: center center;

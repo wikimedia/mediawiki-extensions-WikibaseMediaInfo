@@ -1,16 +1,16 @@
 <template>
 	<div
 		class="mw-message"
-		v-bind:class="builtInClasses"
-		v-bind:aria-live="type !== 'error' ? 'polite' : false"
-		v-bind:role="type === 'error' ? 'alert' : false "
+		:class="builtInClasses"
+		:aria-live="type !== 'error' ? 'polite' : false"
+		:role="type === 'error' ? 'alert' : false "
 	>
 		<icon
-			v-bind:icon="icon"
-			v-bind:class="iconClass"
-		/>
+			:icon="icon"
+			:class="iconClass"
+		></icon>
 		<div class="mw-message__content">
-			<slot />
+			<slot></slot>
 		</div>
 	</div>
 </template>
@@ -43,6 +43,7 @@ module.exports = {
 			type: String,
 			default: 'notice'
 		},
+
 		inline: {
 			type: Boolean
 		}
@@ -52,14 +53,17 @@ module.exports = {
 		typeClass: function () {
 			return 'mw-message--' + this.type;
 		},
+
 		builtInClasses: function () {
 			var classes = { 'mw-message--block': !this.inline };
 			classes[ this.typeClass ] = true;
 			return classes;
 		},
+
 		icon: function () {
 			return ICON_MAP[ this.type ];
 		},
+
 		iconClass: function () {
 			return 'oo-ui-image-' + this.type;
 		}
@@ -71,6 +75,7 @@ module.exports = {
 @import 'mediawiki.mixins';
 @import '../../../../lib/wikimedia-ui-base.less';
 
+/* stylelint-disable selector-class-pattern */
 .mw-message {
 	color: @color-notice;
 	font-weight: bold;

@@ -1,43 +1,46 @@
 <template>
-	<div class="" id="app">
-		<search-input 
-			v-bind:initial-term="term"
-			v-on:update="onUpdateTerm"
-		/>
+	<div id="app">
+		<search-input
+			:initial-term="term"
+			@update="onUpdateTerm">
+		</search-input>
 
-		<tabs v-bind:active="currentTab" v-on:tab-change="onTabChange">
-			<tab name="bitmap" v-bind:title="bitmapTabTitle">
-				<search-results
-					media-type="bitmap"
-					v-on:load-more="getMoreResultsForTabIfAvailable( 'bitmap' )"
-				/>
-			</tab>
+		<!-- Generate a tab for each key in the "results" object. Data types,
+		messages, and loading behavior are bound to this key. -->
+		<tabs :active="currentTab" @tab-change="onTabChange">
+			<tab v-for="tab in tabs"
+				:key="tab"
+				:name="tab"
+				:title="tabNames[ tab ]">
+				<search-results :media-type="tab">
+				</search-results>
 
-			<tab name="audio" v-bind:title="audioTabTitle">
-				<search-results
-					media-type="audio"
-					v-on:load-more="getMoreResultsForTabIfAvailable( 'audio' )"
-				/>
-			</tab>
+				<observer @intersect="getMoreResultsForTabIfAvailable( tab )">
+				</observer>
 
-			<tab name="video" v-bind:title="videoTabTitle">
-				<search-results
-					media-type="video"
-					v-on:load-more="getMoreResultsForTabIfAvailable( 'video' )"
-				/>
-			</tab>
-
-			<tab name="category" v-bind:title="categoryTabTitle">
-				<search-results
-					media-type="category"
-					v-on:load-more="getMoreResultsForTabIfAvailable( 'category' )"
-				/>
+				<p v-if="pending[ tab ]">
+					Loading...
+				</p>
 			</tab>
 		</tabs>
 	</div>
 </template>
 
 <script>
+/**
+ * @file App.vue
+ *
+ * Top-level component for the Special:MediaSearch JS UI.
+ * Contains two major elements:
+ * - search input
+ * - tabs to display search results (one for each media type)
+ *
+ * Search query and search result data lives in Vuex, but this component
+ * responds to user interactions like changes in query or tab, dispatches
+ * Vuex actions to make API requests, and ensures that the URL parameters
+ * remain in sync with the current search term and active tab (this is done
+ * using history.replaceState)
+ */
 var mapState = require( 'vuex' ).mapState,
 	mapGetters = require( 'vuex' ).mapGetters,
 	mapMutations = require( 'vuex' ).mapMutations,
@@ -46,8 +49,10 @@ var mapState = require( 'vuex' ).mapState,
 	Tabs = require( './base/Tabs.vue' ),
 	SearchInput = require( './SearchInput.vue' ),
 	SearchResults = require( './SearchResults.vue' ),
+	Observer = require( './base/Observer.vue' ),
 	url = new mw.Uri();
 
+// @vue/component
 module.exports = {
 	name: 'MediaSearch',
 
@@ -55,59 +60,73 @@ module.exports = {
 		tabs: Tabs,
 		tab: Tab,
 		'search-input': SearchInput,
-		'search-results': SearchResults
+		'search-results': SearchResults,
+		observer: Observer
 	},
 
 	data: function () {
 		return {
-			currentTab: url.query.type || '',
-			term: url.query.q || ''
+			currentTab: url.query.type || ''
 		};
 	},
 
 	computed: $.extend( {}, mapState( [
+		'term',
+		'results',
 		'continue',
 		'pending'
 	] ), mapGetters( [
 		'hasMore'
 	] ), {
 
-		bitmapTabTitle: function () {
-			return this.$i18n( 'wikibasemediainfo-special-mediasearch-tab-bitmap' ).text();
+		/**
+		 * @return {string[]} [ 'bitmap', 'video', 'audio', 'category' ]
+		 */
+		tabs: function () {
+			return Object.keys( this.results );
 		},
 
-		audioTabTitle: function () {
-			return this.$i18n( 'wikibasemediainfo-special-mediasearch-tab-audio' ).text();
-		},
+		/**
+		 * @return {Object} { bitmap: 'Images', video: 'Video', category: 'Categories'... }
+		 */
+		tabNames: function () {
+			var names = {},
+				prefix = 'wikibasemediainfo-special-mediasearch-tab-';
 
-		videoTabTitle: function () {
-			return this.$i18n( 'wikibasemediainfo-special-mediasearch-tab-video' ).text();
-		},
+			// Get the i18n message for each tab title and assign to appropriate
+			// key in returned object
+			this.tabs.forEach( function ( tab ) {
+				names[ tab ] = this.$i18n( prefix + tab ).text();
+			}.bind( this ) );
 
-		categoryTabTitle: function () {
-			return this.$i18n( 'wikibasemediainfo-special-mediasearch-tab-category' ).text();
+			return names;
 		}
 	} ),
 
 	methods: $.extend( {}, mapMutations( [
-		'resetResults'
+		'resetResults',
+		'setTerm'
 	] ), mapActions( [
 		'search'
 	] ), {
+		/**
+		 * @param {Object} newTab
+		 * @param {string} newTab.name
+		 */
 		onTabChange: function ( newTab ) {
 			this.currentTab = newTab.name;
 			this.getMoreResultsForTabIfAvailable( newTab.name );
 		},
 
+		/**
+		 * @param {string} newTerm
+		 */
 		onUpdateTerm: function ( newTerm ) {
-			this.term = newTerm;
+			this.setTerm( newTerm );
 		},
 
 		/**
-		 * Determine if we have more data to load for the tab; If so, make an
-		 * API request to get them, and add them to the appropriate queue.
-		 * Finally, update "continue" and/or "hasmore" properties based on the
-		 * results of the latest request.
+		 * @param {string} tab bitmap, audio, etc.
 		 */
 		getMoreResultsForTabIfAvailable: function ( tab ) {
 			if ( this.hasMore[ tab ] && !this.pending[ tab ] ) {
@@ -121,30 +140,33 @@ module.exports = {
 				// If more results are available but another request is
 				// currently in-flight, attempt to make the request again
 				// after some time has passed
-				window.setTimeout( 
+				window.setTimeout(
 					this.getMoreResultsForTabIfAvailable.bind( this, tab ),
-					2000 
+					2000
 				);
 			}
 		},
 
 		/**
-		 * 
+		 * Dispatch Vuex actions to clear existing results and fetch new ones
 		 */
 		performNewSearch: function () {
 			this.resetResults();
 
-			this.search( { 
+			this.search( {
 				term: this.term,
-				type: this.currentTab 
+				type: this.currentTab
 			} );
 		}
 	} ),
 
 	watch: {
 		/**
-		 * Ensure that "type" query params stay in sync with current active tab
-		 * in the UI
+		 * @param {string} newTab bitmap, audio, etc.
+		 *
+		 * Whenever the user changes tabs, modify the mw.url object's query
+		 * type property and get a new query string. This is used to overwrite
+		 * the current history state and change the visible URL.
 		 */
 		currentTab: function ( newTab ) {
 			url.query.type = newTab;
@@ -152,30 +174,24 @@ module.exports = {
 		},
 
 		/**
-		 * Ensure that the "q" query params stay in sync with current query
-		 * input from user
+		 * @param {string} newTerm
+		 * @param {string} oldTerm
+		 *
+		 * Whenever the user enters a new search term, modify the mw.url object's
+		 * query property and get a new query string. This is used to overwrite
+		 * the current history state and change the visible URL.
+		 *
+		 * If the new term does not match what previously existed here, perform
+		 * a new search.
 		 */
 		term: function ( newTerm, oldTerm ) {
 			url.query.q = newTerm;
-			window.history.replaceState( null, null, '?' + url.getQueryString() )
+			window.history.replaceState( null, null, '?' + url.getQueryString() );
 
 			if ( newTerm && newTerm !== oldTerm ) {
 				this.performNewSearch();
 			}
 		}
-	},
-
-	/**
-	 * Watch the URL for changes to query params
-	 */
-	mounted: function () {
-	},
-
-	beforeDestroy: function () {
 	}
 };
 </script>
-
-<style lang="less">
-
-</style>

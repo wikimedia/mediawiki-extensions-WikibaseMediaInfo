@@ -1,8 +1,10 @@
+'use strict';
+
 var LIMIT = 40,
+	// eslint-disable-next-line no-unused-vars
 	api = new mw.Api();
 
 module.exports = {
-
 	/**
 	 * Perform a search via API request. Should return a promise.
 	 * There are a few different ways that searches should behave.
@@ -23,7 +25,7 @@ module.exports = {
 	 * @param {string} options.type bitmap / category / audio / video
 	 * @param {string} options.term search term
 	 * @param {string} options.resolution
-	 * @return {$.Deferred}
+	 * @return {jQuery.Deferred}
 	 */
 	search: function ( context, options ) {
 		// common request params for all requests
@@ -85,7 +87,9 @@ module.exports = {
 				// Store the "continue" property of the request so we can pick up where we left off
 				context.commit( 'setContinue', {
 					type: options.type,
-					continue: options.type === 'category' ? response.continue.gsroffset : response.continue.gmscontinue
+					continue: options.type === 'category' ?
+						response.continue.gsroffset :
+						response.continue.gmscontinue
 				} );
 			} else {
 				context.commit( 'setContinue', {

@@ -10,5 +10,9 @@
 		"browser": false,
 		"mw": false,
 		"$": false
+	},
+	"rules": {
+		"no-var": "warn",
+		"strict": "warn"
 	}
 }

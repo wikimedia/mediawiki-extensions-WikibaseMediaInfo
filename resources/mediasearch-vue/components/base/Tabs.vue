@@ -4,34 +4,36 @@
 			class="mw-tabs__header"
 			role="tablist"
 			tabindex="0"
-			v-bind:aria-activedescendant="currentTabId"
-			v-on:keydown.left="moveBack"
-			v-on:keydown.up.prevent="moveBack"
-			v-on:keydown.right="moveForward"
-			v-on:keydown.down.prevent="moveForward"
+			:aria-activedescendant="currentTabId"
+			@keydown.left="moveBack"
+			@keydown.up.prevent="moveBack"
+			@keydown.right="moveForward"
+			@keydown.down.prevent="moveForward"
 		>
 			<div v-for="tab in tabs"
-				v-bind:id="tab.id + '-label'"
-				v-bind:key="tab.title"
-				v-bind:class="determineTabLabelClasses( tab )"
-				v-bind:aria-selected="tab.name === currentTabName"
-				v-bind:aria-controls="tab.id"
+				:id="tab.id + '-label'"
+				:key="tab.title"
+				:class="determineTabLabelClasses( tab )"
+				:aria-selected="tab.name === currentTabName"
+				:aria-controls="tab.id"
 				class="mw-tabs__header__item"
 				role="tab"
-				v-on:click="selectTab( tab.name )"
-				v-on:keyup.enter="selectTab( tab.name )"
+				@click="selectTab( tab.name )"
+				@keyup.enter="selectTab( tab.name )"
 			>
 				{{ tab.title }}
 			</div>
 		</div>
 
 		<div class="mw-tabs__content">
-			<slot />
+			<slot></slot>
 		</div>
 	</div>
 </template>
 
 <script>
+var Vue = require( 'vue' ); // Vue is imported here for type definition
+
 /**
  * A group of tabs with a tab menu. See App for usage example.
  *
@@ -67,6 +69,7 @@ module.exports = {
 	methods: {
 		/**
 		 * Change the current tab.
+		 *
 		 * @param {string} tabName
 		 */
 		selectTab: function ( tabName ) {
@@ -79,6 +82,7 @@ module.exports = {
 
 		/**
 		 * Set active attribute on each tab.
+		 *
 		 * @param {string} currentTabName
 		 */
 		setTabState: function ( currentTabName ) {
@@ -90,7 +94,8 @@ module.exports = {
 
 		/**
 		 * Set tab label classes.
-		 * @param {VueComponent} tab
+		 *
+		 * @param {Vue.component} tab
 		 * @return {Object}
 		 */
 		determineTabLabelClasses: function ( tab ) {
@@ -151,6 +156,7 @@ module.exports = {
 	watch: {
 		/**
 		 * When the tab stored in state changes, select that tab.
+		 *
 		 * @param {string} newTabName
 		 */
 		active: function ( newTabName ) {
@@ -159,6 +165,7 @@ module.exports = {
 
 		/**
 		 * When the current tab changes, set active states and emit an event.
+		 *
 		 * @param {string} newTabName
 		 */
 		currentTabName: function () {
@@ -181,6 +188,9 @@ module.exports = {
 <style lang="less">
 @import 'mediawiki.mixins';
 @import '../../../../lib/wikimedia-ui-base.less';
+
+/* stylelint-disable selector-class-pattern */
+/* stylelint-disable no-descending-specificity */
 
 .mw-tabs {
 	&__header {
@@ -228,8 +238,7 @@ module.exports = {
 		}
 	}
 
-	&__content {
-		padding: 20px;
-	}
+	// &__content {
+	// }
 }
 </style>

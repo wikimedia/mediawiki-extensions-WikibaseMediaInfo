@@ -9,6 +9,7 @@
 	},
 	"rules": {
 		"no-implicit-globals": "off",
-		"max-len": "off"
+		"max-len": "off",
+		"es/no-object-assign": "off"
 	}
 }

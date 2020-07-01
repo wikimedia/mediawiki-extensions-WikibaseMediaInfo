@@ -1,17 +1,17 @@
 <template>
 	<button
 		class="mw-button"
-		v-bind:class="builtInClasses"
-		v-bind:disabled="disabled"
-		v-on:click="$emit( 'click' )"
+		:class="builtInClasses"
+		:disabled="disabled"
+		@click="$emit( 'click' )"
 	>
 		<icon
 			v-if="icon"
-			v-bind:icon="icon"
-			v-bind:invert="invert"
-		/>
+			:icon="icon"
+			:invert="invert"
+		></icon>
 		<div class="mw-button__content">
-			<slot />
+			<slot></slot>
 		</div>
 	</button>
 </template>
@@ -26,7 +26,7 @@ var Icon = require( './Icon.vue' );
  */
 // @vue/component
 module.exports = {
-	name: 'Button',
+	name: 'MWButton',
 
 	components: {
 		icon: Icon
@@ -91,6 +91,8 @@ module.exports = {
 @import 'mediawiki.mixins';
 @import '../../../../lib/wikimedia-ui-base.less';
 
+/* stylelint-disable selector-class-pattern */
+
 .mw-button {
 	.transition( ~'background-color 100ms, color 100ms, border-color 100ms, box-shadow 100ms' );
 	background-color: transparent;
@@ -121,7 +123,6 @@ module.exports = {
 		top: 0;
 		transition: opacity 100ms;
 
-		/* stylelint-disable-next-line selector-class-pattern */
 		&:not( .oo-ui-icon-invert ) {
 			opacity: @opacity-icon-base;
 		}

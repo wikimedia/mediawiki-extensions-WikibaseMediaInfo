@@ -2,13 +2,13 @@
 	<transition name="mw-tab-fade-in">
 		<div
 			v-show="isActive"
-			v-bind:id="id"
-			v-bind:aria-hidden="!isActive"
-			v-bind:aria-labeledby="id + '-label'"
+			:id="id"
+			:aria-hidden="!isActive"
+			:aria-labeledby="id + '-label'"
 			class="mw-tab"
 			role="tabpanel"
 		>
-			<slot />
+			<slot></slot>
 		</div>
 	</transition>
 </template>
@@ -51,6 +51,8 @@ module.exports = {
 </script>
 
 <style lang="less">
+/* stylelint-disable selector-class-pattern */
+
 // Transitions.
 .mw-tab-fade-in-enter {
 	opacity: 0;

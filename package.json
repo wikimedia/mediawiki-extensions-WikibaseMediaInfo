@@ -1,4 +1,6 @@
 {
+	"name": "wikibase-media-info",
+	"version": "0.1.0",
 	"private": true,
 	"scripts": {
 		"chromedriver": "npx chromedriver --url-base=/wd/hub --port=4444",

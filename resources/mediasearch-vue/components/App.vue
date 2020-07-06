@@ -140,6 +140,11 @@ module.exports = {
 		 * @param {string} tab bitmap, audio, etc.
 		 */
 		getMoreResultsForTabIfAvailable: function ( tab ) {
+			// Don't make API requests if the search term is empty
+			if ( this.term === '' ) {
+				return;
+			}
+
 			if ( this.hasMore[ tab ] && !this.pending[ tab ] ) {
 				// If more results are available, and if another request is not
 				// already pending, then launch a search request

@@ -1,8 +1,8 @@
 <template>
 	<div class="wbmi-generic-result">
 		<h6>
-			<a :href="result.canonicalurl">
-				{{ result.title }}
+			<a :href="canonicalurl">
+				{{ title }}
 			</a>
 		</h6>
 	</div>
@@ -14,8 +14,23 @@ module.exports = {
 	name: 'GenericResult',
 
 	props: {
-		result: {
-			type: Object,
+		title: {
+			type: String,
+			required: true
+		},
+
+		canonicalurl: {
+			type: String,
+			required: true
+		},
+
+		pageid: {
+			type: Number,
+			required: true
+		},
+
+		index: {
+			type: Number,
 			required: true
 		}
 	}

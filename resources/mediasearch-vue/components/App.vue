@@ -2,7 +2,8 @@
 	<div id="app">
 		<search-input
 			:initial-term="term"
-			@update="onUpdateTerm">
+			@update="onUpdateTerm"
+			@clear="onClear">
 		</search-input>
 
 		<!-- Generate a tab for each key in the "results" object. Data types,
@@ -104,6 +105,7 @@ module.exports = {
 	} ),
 
 	methods: $.extend( {}, mapMutations( [
+		'clearTerm',
 		'resetResults',
 		'setTerm'
 	] ), mapActions( [
@@ -123,6 +125,15 @@ module.exports = {
 		 */
 		onUpdateTerm: function ( newTerm ) {
 			this.setTerm( newTerm );
+		},
+
+		/**
+		 * Dispatch Vuex actions to clear existing term and results whenever a
+		 * "clear" event is detected
+		 */
+		onClear: function () {
+			this.clearTerm();
+			this.resetResults();
 		},
 
 		/**

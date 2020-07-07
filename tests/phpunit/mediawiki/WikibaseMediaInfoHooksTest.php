@@ -3,6 +3,7 @@
 namespace Wikibase\MediaInfo\Tests\MediaWiki;
 
 use CirrusSearch\CirrusSearch;
+use CirrusSearch\Profile\SearchProfileService;
 use CirrusSearch\Search\CirrusIndexField;
 use Elastica\Document;
 use Hooks;
@@ -10,6 +11,7 @@ use Language;
 use MediaWiki\Revision\RevisionRecord;
 use MediaWiki\Revision\SlotRecord;
 use ParserOutput;
+use RequestContext;
 use Title;
 use User;
 use Wikibase\DataModel\Services\EntityId\EntityIdComposer;
@@ -17,6 +19,7 @@ use Wikibase\Lib\Store\EntityByLinkedTitleLookup;
 use Wikibase\MediaInfo\Content\MediaInfoContent;
 use Wikibase\MediaInfo\Content\MediaInfoHandler;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
+use Wikibase\MediaInfo\Search\MediaQueryBuilder;
 use Wikibase\MediaInfo\Services\MediaInfoByLinkedTitleLookup;
 use Wikibase\MediaInfo\WikibaseMediaInfoHooks;
 use Wikibase\Search\Elastic\Fields\TermIndexField;
@@ -394,6 +397,31 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 				],
 			]
 		];
+	}
+
+	public function testOnCirrusSearchProfileServiceMediaSearch() {
+		$request = RequestContext::getMain()->getRequest();
+		$request->setVal( 'mediasearch', 1 );
+
+		$service = $this->createMock( SearchProfileService::class );
+		$service->expects( $this->once() )
+			->method( 'registerFTSearchQueryRoute' )
+			->with(
+				MediaQueryBuilder::SEARCH_PROFILE_CONTEXT_NAME,
+				$this->anything(),
+				$this->containsEqual( NS_FILE )
+			);
+
+		WikibaseMediaInfoHooks::onCirrusSearchProfileService( $service );
+	}
+
+	public function testOnCirrusSearchProfileServiceNoMediaSearch() {
+		$service = $this->createMock( SearchProfileService::class );
+		// The method will never be called, because 'mediasearch' isn't truthy in the request
+		$service->expects( $this->never() )
+			->method( 'registerFTSearchQueryRoute' );
+
+		WikibaseMediaInfoHooks::onCirrusSearchProfileService( $service );
 	}
 
 }

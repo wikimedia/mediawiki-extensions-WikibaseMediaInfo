@@ -1,0 +1,163 @@
+{
+	"bool": {
+		"filter": [{
+			"bool": {
+				"should": [
+					{
+						"multi_match": {
+							"fields": [
+								"descriptions.en.plain",
+								"all",
+								"all.plain",
+								"category"
+							],
+							"type": "cross_fields",
+							"query": "some search term",
+							"operator": "and"
+						}
+					},
+					{
+						"bool": {
+							"should": [
+								{
+									"match": {
+										"statement_keywords": {
+											"query": "P1=Q1"
+										}
+									}
+								},
+								{
+									"match": {
+										"statement_keywords": {
+											"query": "P2=Q1"
+										}
+									}
+								},
+								{
+									"match": {
+										"statement_keywords": {
+											"query": "P1=Q2"
+										}
+									}
+								},
+								{
+									"match": {
+										"statement_keywords": {
+											"query": "P2=Q2"
+										}
+									}
+								}
+							]
+						}
+					}
+				]
+			}
+		}],
+		"should": [[
+			{
+				"match": {
+					"statement_keywords": {
+						"query": "P1=Q1",
+						"boost": 20.0
+					}
+				}
+			},
+			{
+				"match": {
+					"statement_keywords": {
+						"query": "P2=Q1",
+						"boost": 20.0
+					}
+				}
+			},
+			{
+				"match": {
+					"statement_keywords": {
+						"query": "P1=Q2",
+						"boost": 2.0
+					}
+				}
+			},
+			{
+				"match": {
+					"statement_keywords": {
+						"query": "P2=Q2",
+						"boost": 2.0
+					}
+				}
+			},
+			{
+				"match": {
+					"descriptions.en.plain": {
+						"query": "some search term",
+						"boost": 10.0
+					}
+				}
+			},
+			{
+				"match": {
+					"all": {
+						"query": "some search term",
+						"boost": 0.9
+					}
+				}
+			},
+			{
+				"match": {
+					"all.plain": {
+						"query": "some search term",
+						"boost": 0.8
+					}
+				}
+			},
+			{
+				"match": {
+					"category": {
+						"query": "some search term",
+						"boost": 0.7
+					}
+				}
+			},
+			{
+				"match": {
+					"title": {
+						"query": "some search term",
+						"boost": 0.6
+					}
+				}
+			},
+			{
+				"match": {
+					"redirect.title": {
+						"query": "some search term",
+						"boost": 0.5
+					}
+				}
+			},
+			{
+				"match": {
+					"text": {
+						"query": "some search term",
+						"boost": 0.4
+					}
+				}
+			},
+			{
+				"match": {
+					"auxiliary_text": {
+						"query": "some search term",
+						"boost": 0.3
+					}
+				}
+			},
+			{
+				"match": {
+					"file_text": {
+						"query": "some search term",
+						"boost": 0.2
+					}
+				}
+			}
+		]]
+	}
+}

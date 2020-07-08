@@ -22,7 +22,7 @@ SearchResultsWidget = function MediaInfoMediaSearchSearchResultsWidget( config )
 		results: ( config.results || [] ).sort( function ( a, b ) {
 			return a.index - b.index;
 		} ),
-		hasMore: true,
+		hasMore: config.hasMore,
 		resolution: ''
 	};
 

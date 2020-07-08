@@ -37,7 +37,7 @@ searchResultsWidgets = tabs.getTabs().getItems().map( function ( tabOption ) {
 		panel = tabs.getTabPanel( type ),
 		$searchResults = panel.$element.find( '.wbmi-special-search' ),
 		$continue = panel.$element.find( '.wbmi-special-search--continue' ),
-		hasMore = $continue.length > 0,
+		hasMore = $continue.find( 'button' ).length > 0,
 		searchResultsWidget = new SearchResultsWidget( {
 			term: $continue.find( '[name=q]' ).val() || uri.query.q || '',
 			type: type,

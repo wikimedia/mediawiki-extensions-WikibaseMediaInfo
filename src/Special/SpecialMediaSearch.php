@@ -100,7 +100,7 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 				return $result + [ 'name' => $filename ];
 			}, $results ),
 			'continue' => $continue,
-			'hasMore' => count( $results ) >= $limit,
+			'hasMore' => $continue !== null,
 			'emptyMessage' => $this->msg( 'wikibasemediainfo-special-mediasearch-no-results' )->text(),
 		];
 		$tabs = [

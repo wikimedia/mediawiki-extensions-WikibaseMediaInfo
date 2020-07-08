@@ -364,6 +364,11 @@
 			],
 			"dependencies": [
 				"wikibase.mediainfo.mediasearch.styles",
+				"oojs-ui.styles.icons-user",
+				"oojs-ui.styles.icons-interactions",
+				"oojs-ui.styles.icons-moderation",
+				"oojs-ui.styles.icons-wikimedia",
+				"oojs-ui.styles.icons-media",
 				"vue",
 				"vuex",
 				"wikibase.api.RepoApi"

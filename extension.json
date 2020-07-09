@@ -343,6 +343,7 @@
 				"resources/mediasearch-vue/components/VideoResult.vue",
 				"resources/mediasearch-vue/components/AudioResult.vue",
 				"resources/mediasearch-vue/components/GenericResult.vue",
+				"resources/mediasearch-vue/components/QuickView.vue",
 				"resources/mediasearch-vue/components/Spinner.vue",
 				"resources/mediasearch-vue/store/index.js",
 				"resources/mediasearch-vue/store/state.js",

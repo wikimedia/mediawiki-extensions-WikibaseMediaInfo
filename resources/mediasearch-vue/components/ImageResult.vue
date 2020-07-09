@@ -1,12 +1,13 @@
 <template>
-	<div class="wbmi-image-result">
-		<a :href="canonicalurl"
-			target="_blank"
-			:title="title">
+	<a ref="link"
+		class="wbmi-image-result"
+		:href="canonicalurl"
+		target="_blank"
+		:title="title"
+		@click.prevent="showDetails">
 
-			<img :src="thumbnail" :alt="displayName">
-		</a>
-	</div>
+		<img :src="thumbnail" :alt="displayName">
+	</a>
 </template>
 
 <script>
@@ -55,12 +56,22 @@ module.exports = {
 @import 'mediawiki.mixins';
 @import '../../mediainfo-variables.less';
 
+// Base element is an anchor tag for the sake of keyboard navigation.
 .wbmi-image-result {
 	box-sizing: border-box;
+	display: block;
 	margin: @wbmi-spacing-sm;
+	transition: box-shadow @transition-base ease, outline @transition-base ease;
 
-	&:hover {
+	&:hover,
+	&:focus {
 		.wbmi-result-box-shadow();
+	}
+
+	// Extra prominence on focus using outline, for users navigating via keyboard
+	&:focus {
+		outline: solid 2px @color-primary;
+		outline-offset: -2px;
 	}
 
 	img {
@@ -68,6 +79,7 @@ module.exports = {
 		min-width: 100px;
 		object-fit: cover;
 		object-position: center center;
+		pointer-events: none;
 		width: 100%;
 	}
 }

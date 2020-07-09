@@ -81,5 +81,23 @@ module.exports = {
 		displayName: function () {
 			return new mw.Title( this.title ).getMainText();
 		}
+	},
+
+	methods: {
+		/**
+		 * @param {Event} e
+		 * @fires show-details
+		 */
+		showDetails: function ( e ) {
+			this.$emit( 'show-details', this.pageid, e.target.href );
+		},
+
+		/**
+		 * Programatically focus the result's link element (must be given a
+		 * "ref" in the component template)
+		 */
+		focus: function () {
+			this.$refs.link.focus();
+		}
 	}
 };

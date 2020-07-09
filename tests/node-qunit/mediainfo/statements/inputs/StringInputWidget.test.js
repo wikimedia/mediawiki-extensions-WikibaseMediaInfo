@@ -1,10 +1,12 @@
-var sinon = require( 'sinon' ),
+'use strict';
+
+const sinon = require( 'sinon' ),
 	pathToWidget = '../../../../../resources/statements/inputs/StringInputWidget.js',
 	hooks = require( '../../../support/hooks.js' );
 
 QUnit.module( 'StringInputWidget', hooks.mediainfo, function () {
 	QUnit.test( 'Valid data roundtrip', function ( assert ) {
-		var done = assert.async(),
+		const done = assert.async(),
 			StringInputWidget = require( pathToWidget ),
 			widget = new StringInputWidget(),
 			data = new dataValues.StringValue( 'this is a string' );
@@ -17,7 +19,7 @@ QUnit.module( 'StringInputWidget', hooks.mediainfo, function () {
 	} );
 
 	QUnit.test( 'Setting other data triggers a change event', function ( assert ) {
-		var done = assert.async(),
+		const done = assert.async(),
 			StringInputWidget = require( pathToWidget ),
 			widget = new StringInputWidget(),
 			data = new dataValues.StringValue( 'this is a string' ),
@@ -34,7 +36,7 @@ QUnit.module( 'StringInputWidget', hooks.mediainfo, function () {
 	} );
 
 	QUnit.test( 'Setting same data does not trigger a change event', function ( assert ) {
-		var done = assert.async(),
+		const done = assert.async(),
 			StringInputWidget = require( pathToWidget ),
 			widget = new StringInputWidget(),
 			data = new dataValues.StringValue( 'this is a string' ),
@@ -51,7 +53,7 @@ QUnit.module( 'StringInputWidget', hooks.mediainfo, function () {
 	} );
 
 	QUnit.test( 'Widget has no button in qualifier mode', function ( assert ) {
-		var done = assert.async(),
+		const done = assert.async(),
 			StringInputWidget = require( pathToWidget ),
 			widget = new StringInputWidget( { isQualifier: true } ),
 			data = new dataValues.StringValue( 'this is a string' );
@@ -63,7 +65,7 @@ QUnit.module( 'StringInputWidget', hooks.mediainfo, function () {
 	} );
 
 	QUnit.test( 'Widget has button in statement mode', function ( assert ) {
-		var done = assert.async(),
+		const done = assert.async(),
 			StringInputWidget = require( pathToWidget ),
 			widget = new StringInputWidget( { isQualifier: false } ),
 			data = new dataValues.StringValue( 'this is a string' );

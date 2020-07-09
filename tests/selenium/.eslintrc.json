@@ -1,18 +1,15 @@
 {
 	"root": true,
 	"extends": [
-		"wikimedia/server"
+		"wikimedia/selenium"
 	],
-	"env": {
-		"mocha": true
-	},
 	"globals": {
 		"browser": false,
-		"mw": false,
 		"$": false
 	},
 	"rules": {
 		"no-var": "warn",
-		"strict": "warn"
+		"strict": "warn",
+		"mw": "readonly"
 	}
 }

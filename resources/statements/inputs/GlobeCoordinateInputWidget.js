@@ -107,7 +107,7 @@ GlobeCoordinateInputWidget.prototype.unbindEventListeners = function () {
  * qualifier-mode coordinate inputs with pre-existing data.
  *
  * @param {dataValues.DataValue} newData
- * @return {$.Promise}
+ * @return {jQuery.Promise}
  */
 GlobeCoordinateInputWidget.prototype.setData = function ( newData ) {
 	var json = newData.toJSON(),
@@ -581,7 +581,6 @@ GlobeCoordinateInputWidget.precisionToDigits = function ( precision ) {
 GlobeCoordinateInputWidget.precisionToZoom = function ( precision, latitude ) {
 	// 111.32m = 1 degree at equator, then corrected for latitude
 	var metersPerPx = precision * ( 111.32 * 1000 * Math.cos( latitude * ( Math.PI / 180 ) ) ),
-		// eslint-disable-next-line
 		zoom = Math.log( ( 156543.03392 * Math.cos( ( latitude * Math.PI ) / 180 ) ) / metersPerPx ) / Math.log( 2 );
 
 	return Math.round( zoom );

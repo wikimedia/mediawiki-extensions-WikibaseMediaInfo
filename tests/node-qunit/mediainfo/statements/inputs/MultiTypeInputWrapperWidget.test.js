@@ -1,4 +1,6 @@
-var sinon = require( 'sinon' ),
+'use strict';
+
+const sinon = require( 'sinon' ),
 	pathToWidget = '../../../../../resources/statements/inputs/MultiTypeInputWrapperWidget.js',
 	pathToEntityInputWidget = '../../../../../resources/statements/inputs/EntityInputWidget.js',
 	pathToStringInputWidget = '../../../../../resources/statements/inputs/StringInputWidget',
@@ -11,7 +13,7 @@ var sinon = require( 'sinon' ),
 
 QUnit.module( 'MultiTypeInputWrapperWidget', hooks.kartographer, function () {
 	QUnit.test( 'Valid data roundtrip (wikibase-entityid)', function ( assert ) {
-		var done = assert.async(),
+		const done = assert.async(),
 			datamodel = require( 'wikibase.datamodel' ),
 			MultiTypeInputWrapperWidget = require( pathToWidget ),
 			widget = new MultiTypeInputWrapperWidget(),
@@ -25,7 +27,7 @@ QUnit.module( 'MultiTypeInputWrapperWidget', hooks.kartographer, function () {
 	} );
 
 	QUnit.test( 'Valid data roundtrip (string)', function ( assert ) {
-		var done = assert.async(),
+		const done = assert.async(),
 			MultiTypeInputWrapperWidget = require( pathToWidget ),
 			widget = new MultiTypeInputWrapperWidget(),
 			data = new dataValues.StringValue( 'this is a test' );
@@ -38,7 +40,7 @@ QUnit.module( 'MultiTypeInputWrapperWidget', hooks.kartographer, function () {
 	} );
 
 	QUnit.test( 'Valid data roundtrip (monolingualtext)', function ( assert ) {
-		var done = assert.async(),
+		const done = assert.async(),
 			MultiTypeInputWrapperWidget = require( pathToWidget ),
 			widget = new MultiTypeInputWrapperWidget(),
 			data = new dataValues.MonolingualTextValue( 'en', 'this is a test' );
@@ -51,7 +53,7 @@ QUnit.module( 'MultiTypeInputWrapperWidget', hooks.kartographer, function () {
 	} );
 
 	QUnit.test( 'Valid data roundtrip (quantity)', function ( assert ) {
-		var done = assert.async(),
+		const done = assert.async(),
 			MultiTypeInputWrapperWidget = require( pathToWidget ),
 			widget = new MultiTypeInputWrapperWidget(),
 			data = new dataValues.QuantityValue( new dataValues.DecimalValue( 5 ), '1' );
@@ -64,7 +66,7 @@ QUnit.module( 'MultiTypeInputWrapperWidget', hooks.kartographer, function () {
 	} );
 
 	QUnit.test( 'Valid data roundtrip (time)', function ( assert ) {
-		var done = assert.async(),
+		const done = assert.async(),
 			MultiTypeInputWrapperWidget = require( pathToWidget ),
 			widget = new MultiTypeInputWrapperWidget(),
 			data = new dataValues.TimeValue( '+2019-01-24T00:00:00Z', {
@@ -83,7 +85,7 @@ QUnit.module( 'MultiTypeInputWrapperWidget', hooks.kartographer, function () {
 	} );
 
 	QUnit.test( 'Valid data roundtrip (globecoordinate)', function ( assert ) {
-		var done = assert.async(),
+		const done = assert.async(),
 			MultiTypeInputWrapperWidget = require( pathToWidget ),
 			widget = new MultiTypeInputWrapperWidget(),
 			data = new dataValues.GlobeCoordinateValue(
@@ -102,7 +104,7 @@ QUnit.module( 'MultiTypeInputWrapperWidget', hooks.kartographer, function () {
 	} );
 
 	QUnit.test( 'Valid data roundtrip (unsupported)', function ( assert ) {
-		var done = assert.async(),
+		const done = assert.async(),
 			MultiTypeInputWrapperWidget = require( pathToWidget ),
 			widget = new MultiTypeInputWrapperWidget(),
 			data = new dataValues.UnknownValue( 'an unknown value' );
@@ -115,7 +117,7 @@ QUnit.module( 'MultiTypeInputWrapperWidget', hooks.kartographer, function () {
 	} );
 
 	QUnit.test( 'Setting other data triggers a change event', function ( assert ) {
-		var done = assert.async(),
+		const done = assert.async(),
 			MultiTypeInputWrapperWidget = require( pathToWidget ),
 			widget = new MultiTypeInputWrapperWidget(),
 			data = new dataValues.StringValue( 'this is a test' ),
@@ -132,7 +134,7 @@ QUnit.module( 'MultiTypeInputWrapperWidget', hooks.kartographer, function () {
 	} );
 
 	QUnit.test( 'Setting same data does not trigger a change event', function ( assert ) {
-		var done = assert.async(),
+		const done = assert.async(),
 			MultiTypeInputWrapperWidget = require( pathToWidget ),
 			widget = new MultiTypeInputWrapperWidget(),
 			data = new dataValues.StringValue( 'this is a test' ),
@@ -149,7 +151,7 @@ QUnit.module( 'MultiTypeInputWrapperWidget', hooks.kartographer, function () {
 	} );
 
 	QUnit.test( 'Changing to same input type leaves existing value unaltered', function ( assert ) {
-		var done = assert.async(),
+		const done = assert.async(),
 			MultiTypeInputWrapperWidget = require( pathToWidget ),
 			widget = new MultiTypeInputWrapperWidget(),
 			data = new dataValues.StringValue( 'this is a test' );
@@ -163,7 +165,7 @@ QUnit.module( 'MultiTypeInputWrapperWidget', hooks.kartographer, function () {
 	} );
 
 	QUnit.test( 'Changing to other input type (and back) wipes out existing data', function ( assert ) {
-		var done = assert.async(),
+		const done = assert.async(),
 			MultiTypeInputWrapperWidget = require( pathToWidget ),
 			widget = new MultiTypeInputWrapperWidget(),
 			data = new dataValues.StringValue( 'this is a test' );
@@ -178,7 +180,7 @@ QUnit.module( 'MultiTypeInputWrapperWidget', hooks.kartographer, function () {
 	} );
 
 	QUnit.test( 'Widget creates the correct input type', function ( assert ) {
-		var done = assert.async(),
+		const done = assert.async(),
 			MultiTypeInputWrapperWidget = require( pathToWidget ),
 			EntityInputWidget = require( pathToEntityInputWidget ),
 			StringInputWidget = require( pathToStringInputWidget ),
@@ -230,7 +232,7 @@ QUnit.module( 'MultiTypeInputWrapperWidget', hooks.kartographer, function () {
 	} );
 
 	QUnit.test( 'add event is fired when child input emits add', function ( assert ) {
-		var done = assert.async(),
+		const done = assert.async(),
 			MultiTypeInputWrapperWidget = require( pathToWidget ),
 			widget = new MultiTypeInputWrapperWidget( {
 				type: 'string'
@@ -253,7 +255,7 @@ QUnit.module( 'MultiTypeInputWrapperWidget', hooks.kartographer, function () {
 	} );
 
 	QUnit.test( 'setErrors adds MessageWidget to UI and flags string input as invalid', function ( assert ) {
-		var done = assert.async(),
+		const done = assert.async(),
 			MultiTypeInputWrapperWidget = require( pathToWidget ),
 			widget = new MultiTypeInputWrapperWidget( {
 				type: 'string'
@@ -270,7 +272,7 @@ QUnit.module( 'MultiTypeInputWrapperWidget', hooks.kartographer, function () {
 	} );
 
 	QUnit.test( 'Widget can handle multiple errors', function ( assert ) {
-		var done = assert.async(),
+		const done = assert.async(),
 			MultiTypeInputWrapperWidget = require( pathToWidget ),
 			widget = new MultiTypeInputWrapperWidget( {
 				type: 'string'
@@ -286,7 +288,7 @@ QUnit.module( 'MultiTypeInputWrapperWidget', hooks.kartographer, function () {
 	} );
 
 	QUnit.test( 'Setting snak type to somevalue changes input to disabled string input', function ( assert ) {
-		var done = assert.async(),
+		const done = assert.async(),
 			MultiTypeInputWrapperWidget = require( pathToWidget ),
 			widget = new MultiTypeInputWrapperWidget(),
 			data = null,
@@ -307,7 +309,7 @@ QUnit.module( 'MultiTypeInputWrapperWidget', hooks.kartographer, function () {
 	} );
 
 	QUnit.test( 'Setting snak type to novalue changes input to disabled string input', function ( assert ) {
-		var done = assert.async(),
+		const done = assert.async(),
 			MultiTypeInputWrapperWidget = require( pathToWidget ),
 			widget = new MultiTypeInputWrapperWidget(),
 			data = null,
@@ -325,7 +327,7 @@ QUnit.module( 'MultiTypeInputWrapperWidget', hooks.kartographer, function () {
 	} );
 
 	QUnit.test( 'Setting snak type to value changes input to original type', function ( assert ) {
-		var done = assert.async(),
+		const done = assert.async(),
 			MultiTypeInputWrapperWidget = require( pathToWidget ),
 			widget = new MultiTypeInputWrapperWidget(),
 			data = null,
@@ -344,7 +346,7 @@ QUnit.module( 'MultiTypeInputWrapperWidget', hooks.kartographer, function () {
 	} );
 
 	QUnit.test( 'Datatype can be set explicitly', function ( assert ) {
-		var done = assert.async(),
+		const done = assert.async(),
 			MultiTypeInputWrapperWidget = require( pathToWidget ),
 			widget = new MultiTypeInputWrapperWidget();
 

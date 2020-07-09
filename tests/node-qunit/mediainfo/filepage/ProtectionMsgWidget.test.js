@@ -1,9 +1,11 @@
+'use strict';
+
 /* eslint-disable no-new */
 
-var hooks = require( '../../support/hooks.js' ),
+const hooks = require( '../../support/hooks.js' ),
 	pathToWidget = '../../../../resources/filepage/ProtectionMsgWidget.js',
-	msg = '<p>This page is protected</p>',
-	ProtectionMsgWidget,
+	msg = '<p>This page is protected</p>';
+let ProtectionMsgWidget,
 	widget;
 
 QUnit.module( 'ProtectionMsgWidget', hooks.mediainfo, function () {

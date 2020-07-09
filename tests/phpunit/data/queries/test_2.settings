@@ -1,0 +1,27 @@
+{
+	"title": "Entities found, with lang fallbacks, no stemming",
+	"term": "another search term",
+	"entityIdsForTerm": [
+		"Q9",
+		"Q2"
+	],
+	"defaultProperties": [
+		"P999"
+	],
+	"userLanguage": "ga",
+	"fallbackLangs": [ "fr", "es" ],
+	"settings": {
+		"statement": 50.0,
+		"statement-discount": 0.5,
+		"caption": 100.0,
+		"caption-fallback-discount": 0.1,
+		"all": 0.09,
+		"all.plain": 0.08,
+		"category": 0.07,
+		"title": 0.06,
+		"redirect.title": 0.05,
+		"text": 0.04,
+		"auxiliary_text": 0.03,
+		"file_text": 0.02
+	}
+}

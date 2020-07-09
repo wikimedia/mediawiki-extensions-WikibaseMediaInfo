@@ -1,8 +1,10 @@
-var sinon = require( 'sinon' ),
+'use strict';
+
+const sinon = require( 'sinon' ),
 	helpers = require( '../../support/helpers.js' ),
 	hooks = require( '../../support/hooks.js' ),
-	pathToWidget = '../../../../resources/filepage/LicenseDialogWidget.js',
-	LicenseDialogWidget;
+	pathToWidget = '../../../../resources/filepage/LicenseDialogWidget.js';
+let LicenseDialogWidget;
 
 QUnit.module( 'LicenseDialogWidget', hooks.mediainfo, function () {
 	QUnit.test( 'constructor', function ( assert ) {
@@ -18,18 +20,14 @@ QUnit.module( 'LicenseDialogWidget', hooks.mediainfo, function () {
 		}
 	}, function () {
 		QUnit.test( 'getLicenseConfirmation returns zero', function ( assert ) {
-			var dialog;
-
 			LicenseDialogWidget = require( pathToWidget );
-			dialog = new LicenseDialogWidget();
+			const dialog = new LicenseDialogWidget();
 			assert.strictEqual( dialog.getLicenseConfirmation(), 0 );
 		} );
 
 		QUnit.test( 'storeLicenseConfirmation sets value of the appropriate key to 1', function ( assert ) {
-			var dialog;
-
 			LicenseDialogWidget = require( pathToWidget );
-			dialog = new LicenseDialogWidget();
+			const dialog = new LicenseDialogWidget();
 			dialog.storeLicenseConfirmation();
 			assert.strictEqual( global.mw.storage.set.calledWith( dialog.prefKey, 1 ), true );
 		} );
@@ -45,21 +43,17 @@ QUnit.module( 'LicenseDialogWidget', hooks.mediainfo, function () {
 		}
 	}, function () {
 		QUnit.test( 'getLicenseConfirmation returns zero', function ( assert ) {
-			var dialog;
-
 			// fake out user pref value: license not yet accepted
 			global.mw.user.options.get.returns( 0 );
 
 			LicenseDialogWidget = require( pathToWidget );
-			dialog = new LicenseDialogWidget();
+			const dialog = new LicenseDialogWidget();
 			assert.strictEqual( dialog.getLicenseConfirmation(), 0 );
 		} );
 
 		QUnit.test( 'storeLicenseConfirmation saves to user preferences', function ( assert ) {
-			var dialog;
-
 			LicenseDialogWidget = require( pathToWidget );
-			dialog = new LicenseDialogWidget();
+			const dialog = new LicenseDialogWidget();
 			dialog.storeLicenseConfirmation();
 			assert.strictEqual( mw.Api.prototype.saveOption.calledWith( dialog.prefKey, 1 ), true );
 		} );

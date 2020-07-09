@@ -1,4 +1,6 @@
-var assert = require( 'assert' ),
+'use strict';
+
+const assert = require( 'assert' ),
 	path = require( 'path' ),
 	fs = require( 'fs' ),
 	tmp = require( 'tmp' ),
@@ -8,7 +10,7 @@ var assert = require( 'assert' ),
 	LoginPage = require( '../pageobjects/login.page.js' );
 
 describe( 'Upload tasks - logged in user', function () {
-	var destinationName;
+	let destinationName;
 
 	beforeEach( function () {
 		destinationName = 'RandomImage ' + Math.random().toString().substring( 2 ) + '.jpg';
@@ -16,7 +18,7 @@ describe( 'Upload tasks - logged in user', function () {
 	} );
 
 	it( 'Logged-in user can upload a file', function () {
-		var filename = 'random.jpg',
+		const filename = 'random.jpg',
 			tmpDir = tmp.dirSync(),
 			filePath = path.join( tmpDir.name, filename ),
 			summaryText = 'This is a test image',

@@ -1,0 +1,25 @@
+{
+	"extends": [
+		"wikimedia/jquery",
+		"wikimedia/mediawiki"
+	],
+	"globals": {
+		"util": "readonly",
+		"wikibase": "readonly",
+		"dataValues": "readonly",
+		"globeCoordinate": "readonly"
+	},
+	"rules": {
+		"max-len": [
+			"warn",
+			{
+				"code": 110,
+				"ignoreComments": true
+			}
+		],
+		"mediawiki/msg-doc": "warn",
+		"mediawiki/class-doc": "warn",
+		"no-jquery/no-class-state": "off",
+		"no-jquery/no-sizzle": "off"
+	}
+}

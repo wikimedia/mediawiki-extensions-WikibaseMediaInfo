@@ -1,10 +1,11 @@
-var sinon = require( 'sinon' ),
-	hooks = require( '../../support/hooks.js' ),
-	ComponentWidget,
+'use strict';
+
+const sinon = require( 'sinon' ),
+	hooks = require( '../../support/hooks.js' );
+let ComponentWidget,
 	ExampleComponentWidget,
 	sandbox;
 
-// eslint-disable-next-line no-restricted-properties
 QUnit.module( 'ComponentWidget', Object.assign( {}, hooks.mediainfo, {
 	beforeEach: function () {
 		hooks.mediainfo.beforeEach();
@@ -38,7 +39,7 @@ QUnit.module( 'ComponentWidget', Object.assign( {}, hooks.mediainfo, {
 	}
 } ), function () {
 	QUnit.test( 'Widget renders with default state', function ( assert ) {
-		var done = assert.async(),
+		const done = assert.async(),
 			widget = new ExampleComponentWidget( { variable: 'foo' } );
 
 		widget.render().then( function ( $element ) {
@@ -48,7 +49,7 @@ QUnit.module( 'ComponentWidget', Object.assign( {}, hooks.mediainfo, {
 	} );
 
 	QUnit.test( 'Widget rerenders with new state', function ( assert ) {
-		var done = assert.async(),
+		const done = assert.async(),
 			widget = new ExampleComponentWidget( { variable: 'foo' } );
 
 		widget.setState( { variable: 'bar' } ).then( function ( $element ) {
@@ -58,7 +59,7 @@ QUnit.module( 'ComponentWidget', Object.assign( {}, hooks.mediainfo, {
 	} );
 
 	QUnit.test( 'Widget renders with changed template data', function ( assert ) {
-		var done = assert.async(),
+		const done = assert.async(),
 			widget = new ExampleComponentWidget( { variable: 'foo' } );
 
 		// override getTemplateData method to change the params that'll
@@ -74,14 +75,14 @@ QUnit.module( 'ComponentWidget', Object.assign( {}, hooks.mediainfo, {
 	} );
 
 	QUnit.test( 'Widget renders with async changed template data', function ( assert ) {
-		var done = assert.async(),
+		const done = assert.async(),
 			widget = new ExampleComponentWidget( { variable: 'foo' } );
 
 		// override getTemplateData method to change the params that'll
 		// be fed to the template - that will be a promise that
 		// doesn't resolve immediately, to simulate e.g. an API call
 		widget.getTemplateData = function () {
-			var deferred = $.Deferred();
+			const deferred = $.Deferred();
 			setTimeout( deferred.resolve.bind( deferred, { variable: 'changed async' } ), 10 );
 			return deferred.promise();
 		};
@@ -93,7 +94,7 @@ QUnit.module( 'ComponentWidget', Object.assign( {}, hooks.mediainfo, {
 	} );
 
 	QUnit.test( 'Widget will not rerender on state change if stopped', function ( assert ) {
-		var done = assert.async(),
+		const done = assert.async(),
 			widget = new ExampleComponentWidget( { variable: 'foo' } );
 
 		// override shouldRerender method to instruct component not to rerender
@@ -108,12 +109,12 @@ QUnit.module( 'ComponentWidget', Object.assign( {}, hooks.mediainfo, {
 	} );
 
 	QUnit.test( 'Widget will only rerender once when multiple state changes happen during previous render', function ( assert ) {
-		var done = assert.async(),
+		const done = assert.async(),
 			widget = new ExampleComponentWidget( { variable: 'foo' } );
 
 		// override getTemplateData method to delay the rendering
 		widget.getTemplateData = function () {
-			var deferred = $.Deferred();
+			const deferred = $.Deferred();
 			setTimeout( deferred.resolve.bind( deferred, this.state ), 100 );
 			return deferred.promise();
 		};

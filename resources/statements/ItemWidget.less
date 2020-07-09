@@ -22,6 +22,9 @@
 	.wbmi-item-container {
 		.flex(1, 0, auto);
 
+		// don't allow long content (e.g. strings, monolingual text) to increase width
+		max-width: 100%;
+
 		.wbmi-entity-header {
 			.flex-display();
 			padding: @wbmi-spacing-sm;

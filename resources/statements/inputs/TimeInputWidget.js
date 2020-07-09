@@ -395,22 +395,22 @@ TimeInputWidget.prototype.getPrecisionOptions = function () {
 	return Object.keys( map )
 		.map( function ( i ) {
 			var id = map[ i ].id,
-				// possible i18n messages:
-				// wikibasemediainfo-time-precision-year1h
-				// wikibasemediainfo-time-precision-year100m
-				// wikibasemediainfo-time-precision-year10m
-				// wikibasemediainfo-time-precision-year1m
-				// wikibasemediainfo-time-precision-year100k
-				// wikibasemediainfo-time-precision-year10k
-				// wikibasemediainfo-time-precision-year1k
-				// wikibasemediainfo-time-precision-year100
-				// wikibasemediainfo-time-precision-year10
-				// wikibasemediainfo-time-precision-year
-				// wikibasemediainfo-time-precision-month
-				// wikibasemediainfo-time-precision-day
-				// wikibasemediainfo-time-precision-hour
-				// wikibasemediainfo-time-precision-minute
-				// wikibasemediainfo-time-precision-second
+				// The following messages are used here:
+				// * wikibasemediainfo-time-precision-year1h
+				// * wikibasemediainfo-time-precision-year100m
+				// * wikibasemediainfo-time-precision-year10m
+				// * wikibasemediainfo-time-precision-year1m
+				// * wikibasemediainfo-time-precision-year100k
+				// * wikibasemediainfo-time-precision-year10k
+				// * wikibasemediainfo-time-precision-year1k
+				// * wikibasemediainfo-time-precision-year100
+				// * wikibasemediainfo-time-precision-year10
+				// * wikibasemediainfo-time-precision-year
+				// * wikibasemediainfo-time-precision-month
+				// * wikibasemediainfo-time-precision-day
+				// * wikibasemediainfo-time-precision-hour
+				// * wikibasemediainfo-time-precision-minute
+				// * wikibasemediainfo-time-precision-second
 				message = mw.message( 'wikibasemediainfo-time-precision-' + id.toLowerCase() );
 
 			return {
@@ -434,9 +434,9 @@ TimeInputWidget.prototype.getCalendarOptions = function () {
 	return Object.keys( map )
 		.map( function ( id ) {
 			var value = map[ id ],
-				// possible i18n messages:
-				// wikibasemediainfo-time-calendar-gregorian
-				// wikibasemediainfo-time-calendar-julian
+				// The following messages are used here:
+				// * wikibasemediainfo-time-calendar-gregorian
+				// * wikibasemediainfo-time-calendar-julian
 				message = mw.message( 'wikibasemediainfo-time-calendar-' + id.toLowerCase() );
 
 			return {

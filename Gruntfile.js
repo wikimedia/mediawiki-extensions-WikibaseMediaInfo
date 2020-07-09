@@ -11,7 +11,8 @@ module.exports = function ( grunt ) {
 		eslint: {
 			options: {
 				extensions: [ '.js', '.json', '.vue' ],
-				cache: true
+				cache: true,
+				fix: grunt.option( 'fix' )
 			},
 			all: [
 				'**/*.{js,json,vue}',

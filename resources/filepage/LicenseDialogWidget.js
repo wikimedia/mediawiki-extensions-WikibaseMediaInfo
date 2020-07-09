@@ -19,7 +19,7 @@ OO.inheritClass( LicenseDialogWidget, OO.ui.Widget );
 /**
  * Returns a promise that will resolve once the window has been closed.
  *
- * @return {$.Promise}
+ * @return {jQuery.Promise}
  */
 LicenseDialogWidget.prototype.getConfirmationIfNecessary = function () {
 	var self = this,
@@ -72,6 +72,7 @@ LicenseDialogWidget.prototype.openDialog = function () {
  * terms. For anon users, check if the appropriate value has been set in
  * localstorage; for logged-in users, check if the appropriate user pref has
  * been set.
+ *
  * @return {number} 0 or 1
  */
 LicenseDialogWidget.prototype.getLicenseConfirmation = function () {

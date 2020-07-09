@@ -33,6 +33,7 @@ ProtectionMsgWidget.prototype.render = function () {
 /**
  * Returns whether or not the widget should be displayed, based on the presence
  * of a page protection message.
+ *
  * @return {boolean}
  */
 ProtectionMsgWidget.prototype.shouldDisplay = function () {

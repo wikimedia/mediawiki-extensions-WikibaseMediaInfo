@@ -1,5 +1,9 @@
 'use strict';
 
+/**
+ * @external EntityInputWidget
+ */
+
 var ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
 	inputs = require( './inputs/index.js' ),
 	AddPropertyWidget;
@@ -120,7 +124,7 @@ AddPropertyWidget.prototype.onChoose = function ( input ) {
  * be updated (properties with existing panels are filtered out of the input widget, and the
  * property id of the removed panel shouldn't be filtered out anymore)
  *
- * @param {int} panelPropertyId
+ * @param {number} panelPropertyId
  */
 AddPropertyWidget.prototype.onStatementPanelRemoved = function ( panelPropertyId ) {
 	this.setState( {

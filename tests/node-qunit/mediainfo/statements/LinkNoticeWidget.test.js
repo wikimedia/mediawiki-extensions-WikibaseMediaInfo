@@ -1,10 +1,11 @@
-var sinon = require( 'sinon' ),
+'use strict';
+
+const sinon = require( 'sinon' ),
 	pathToWidget = '../../../../resources/statements/LinkNoticeWidget.js',
 	helpers = require( '../../support/helpers.js' ),
 	hooks = require( '../../support/hooks.js' ),
 	prefKey = 'wbmi-wikidata-link-notice-dismissed';
 
-// eslint-disable-next-line no-restricted-properties
 QUnit.module( 'LinkNoticeWidget', Object.assign( {}, hooks.mediainfo, {
 	beforeEach: function () {
 		hooks.mediainfo.beforeEach();
@@ -17,7 +18,7 @@ QUnit.module( 'LinkNoticeWidget', Object.assign( {}, hooks.mediainfo, {
 	}
 } ), function () {
 	QUnit.test( 'constructor', function ( assert ) {
-		var LinkNoticeWidget = require( pathToWidget );
+		const LinkNoticeWidget = require( pathToWidget );
 
 		global.mw.user = helpers.createMediaWikiUser( false );
 
@@ -34,25 +35,24 @@ QUnit.module( 'LinkNoticeWidget', Object.assign( {}, hooks.mediainfo, {
 		}
 	}, function () {
 		QUnit.test( 'Widget should be visible if not previously dismissed', function ( assert ) {
-			var LinkNoticeWidget = require( pathToWidget ),
+			const LinkNoticeWidget = require( pathToWidget ),
 				widget = new LinkNoticeWidget();
 			assert.strictEqual( widget.isDismissed(), false );
 		} );
 
 		QUnit.test( 'Widget should not be visible if previously dismissed', function ( assert ) {
-			var LinkNoticeWidget = require( pathToWidget ),
-				widget;
+			const LinkNoticeWidget = require( pathToWidget );
 
 			// Fake out previous dismissal in localstorage
 			global.mw.storage.get.returns( 1 );
 
-			widget = new LinkNoticeWidget();
+			const widget = new LinkNoticeWidget();
 
 			assert.strictEqual( widget.isDismissed(), true );
 		} );
 
 		QUnit.test( 'dismiss method should store data in local storage for anon users', function ( assert ) {
-			var done = assert.async(),
+			const done = assert.async(),
 				LinkNoticeWidget = require( pathToWidget ),
 				widget = new LinkNoticeWidget();
 
@@ -63,7 +63,7 @@ QUnit.module( 'LinkNoticeWidget', Object.assign( {}, hooks.mediainfo, {
 		} );
 
 		QUnit.test( 'dismiss method should dismiss the widget', function ( assert ) {
-			var done = assert.async(),
+			const done = assert.async(),
 				LinkNoticeWidget = require( pathToWidget ),
 				widget = new LinkNoticeWidget();
 
@@ -88,24 +88,23 @@ QUnit.module( 'LinkNoticeWidget', Object.assign( {}, hooks.mediainfo, {
 		}
 	}, function () {
 		QUnit.test( 'Widget should be visible if not previously dismissed', function ( assert ) {
-			var LinkNoticeWidget = require( pathToWidget ),
+			const LinkNoticeWidget = require( pathToWidget ),
 				widget = new LinkNoticeWidget();
 			assert.strictEqual( widget.isDismissed(), false );
 		} );
 
 		QUnit.test( 'Widget should not be visible if previously dismissed', function ( assert ) {
-			var LinkNoticeWidget = require( pathToWidget ),
-				widget;
+			const LinkNoticeWidget = require( pathToWidget );
 
 			// Fake out previous dismissal in user prefs
 			global.mw.user.options.get.returns( 1 );
 
-			widget = new LinkNoticeWidget();
+			const widget = new LinkNoticeWidget();
 			assert.strictEqual( widget.isDismissed(), true );
 		} );
 
 		QUnit.test( 'dismiss method should store data in user preferences for logged in users', function ( assert ) {
-			var done = assert.async(),
+			const done = assert.async(),
 				LinkNoticeWidget = require( pathToWidget ),
 				widget = new LinkNoticeWidget();
 

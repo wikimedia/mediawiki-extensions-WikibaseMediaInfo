@@ -1,10 +1,12 @@
-var sinon = require( 'sinon' ),
+'use strict';
+
+const sinon = require( 'sinon' ),
 	pathToWidget = '../../../../../resources/statements/inputs/QuantityInputWidget.js',
 	hooks = require( '../../../support/hooks.js' );
 
 QUnit.module( 'QuantityInputWidget', hooks.mediainfo, function () {
 	QUnit.test( 'Valid data roundtrip', function ( assert ) {
-		var done = assert.async(),
+		const done = assert.async(),
 			QuantityInputWidget = require( pathToWidget ),
 			widget = new QuantityInputWidget(),
 			data = dataValues.QuantityValue.newFromJSON( { amount: '+1', unit: '1' } );
@@ -17,7 +19,7 @@ QUnit.module( 'QuantityInputWidget', hooks.mediainfo, function () {
 	} );
 
 	QUnit.test( 'Setting other data triggers a change event', function ( assert ) {
-		var done = assert.async(),
+		const done = assert.async(),
 			QuantityInputWidget = require( pathToWidget ),
 			widget = new QuantityInputWidget(),
 			data = dataValues.QuantityValue.newFromJSON( { amount: '+1', unit: '1' } ),
@@ -34,7 +36,7 @@ QUnit.module( 'QuantityInputWidget', hooks.mediainfo, function () {
 	} );
 
 	QUnit.test( 'Setting same data does not trigger a change event', function ( assert ) {
-		var done = assert.async(),
+		const done = assert.async(),
 			QuantityInputWidget = require( pathToWidget ),
 			widget = new QuantityInputWidget(),
 			data = dataValues.QuantityValue.newFromJSON( { amount: '+1', unit: '1' } ),
@@ -51,7 +53,7 @@ QUnit.module( 'QuantityInputWidget', hooks.mediainfo, function () {
 	} );
 
 	QUnit.test( 'Widget has no button in qualifier mode', function ( assert ) {
-		var done = assert.async(),
+		const done = assert.async(),
 			QuantityInputWidget = require( pathToWidget ),
 			widget = new QuantityInputWidget( { isQualifier: true } ),
 			data = dataValues.QuantityValue.newFromJSON( { amount: '+1', unit: '1' } );
@@ -63,7 +65,7 @@ QUnit.module( 'QuantityInputWidget', hooks.mediainfo, function () {
 	} );
 
 	QUnit.test( 'Widget has button in statement mode', function ( assert ) {
-		var done = assert.async(),
+		const done = assert.async(),
 			QuantityInputWidget = require( pathToWidget ),
 			widget = new QuantityInputWidget( { isQualifier: false } ),
 			data = dataValues.QuantityValue.newFromJSON( { amount: '+1', unit: '1' } );
@@ -75,7 +77,7 @@ QUnit.module( 'QuantityInputWidget', hooks.mediainfo, function () {
 	} );
 
 	QUnit.test( 'Widget displays no options by default', function ( assert ) {
-		var done = assert.async(),
+		const done = assert.async(),
 			QuantityInputWidget = require( pathToWidget ),
 			widget = new QuantityInputWidget();
 
@@ -86,7 +88,7 @@ QUnit.module( 'QuantityInputWidget', hooks.mediainfo, function () {
 	} );
 
 	QUnit.test( 'Widget displays button to add unit when focused', function ( assert ) {
-		var done = assert.async(),
+		const done = assert.async(),
 			QuantityInputWidget = require( pathToWidget ),
 			widget = new QuantityInputWidget(),
 			data = dataValues.QuantityValue.newFromJSON( { amount: '+1', unit: '1' } );
@@ -108,7 +110,7 @@ QUnit.module( 'QuantityInputWidget', hooks.mediainfo, function () {
 	} );
 
 	QUnit.test( 'Widget displays custom unit when it has one', function ( assert ) {
-		var done = assert.async(),
+		const done = assert.async(),
 			QuantityInputWidget = require( pathToWidget ),
 			widget = new QuantityInputWidget(),
 			data = dataValues.QuantityValue.newFromJSON( {

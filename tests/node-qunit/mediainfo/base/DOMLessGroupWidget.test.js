@@ -1,11 +1,12 @@
-var sinon = require( 'sinon' ),
-	hooks = require( '../../support/hooks.js' ),
-	DOMLessGroupWidget,
+'use strict';
+
+const sinon = require( 'sinon' ),
+	hooks = require( '../../support/hooks.js' );
+let DOMLessGroupWidget,
 	GroupWidget,
 	ItemWidget,
 	sandbox;
 
-// eslint-disable-next-line no-restricted-properties
 QUnit.module( 'DOMLessGroupWidget', Object.assign( {}, hooks.mediainfo, {
 	beforeEach: function () {
 		hooks.mediainfo.beforeEach();
@@ -36,7 +37,7 @@ QUnit.module( 'DOMLessGroupWidget', Object.assign( {}, hooks.mediainfo, {
 } ), function () {
 
 	QUnit.test( 'Test item is added to group', function ( assert ) {
-		var widget = new GroupWidget(),
+		const widget = new GroupWidget(),
 			item = new ItemWidget();
 
 		assert.strictEqual( widget.getItems().length, 0 );
@@ -45,7 +46,7 @@ QUnit.module( 'DOMLessGroupWidget', Object.assign( {}, hooks.mediainfo, {
 	} );
 
 	QUnit.test( 'Test item DOM is not changed after inserting into group', function ( assert ) {
-		var widget = new GroupWidget(),
+		const widget = new GroupWidget(),
 			item = new ItemWidget(),
 			$other = $( '<div>' ).append( item.$element );
 

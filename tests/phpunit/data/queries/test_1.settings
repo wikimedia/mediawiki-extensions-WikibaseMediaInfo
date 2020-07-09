@@ -1,0 +1,27 @@
+{
+	"title": "Entities found, no lang fallbacks",
+	"term": "some search term",
+	"entityIdsForTerm": [
+		"Q1",
+		"Q2"
+	],
+	"defaultProperties": [
+		"P1",
+		"P2"
+	],
+	"userLanguage": "en",
+	"settings": {
+		"statement": 20.0,
+		"statement-discount": 0.1,
+		"caption": 10.0,
+		"caption-fallback-discount": 0.5,
+		"all": 0.9,
+		"all.plain": 0.8,
+		"category": 0.7,
+		"title": 0.6,
+		"redirect.title": 0.5,
+		"text": 0.4,
+		"auxiliary_text": 0.3,
+		"file_text": 0.2
+	}
+}

@@ -1,4 +1,6 @@
-var assert = require( 'assert' ),
+'use strict';
+
+const assert = require( 'assert' ),
 	LoginPage = require( '../pageobjects/login.page' ),
 	FilePage = require( '../pageobjects/file.page' );
 

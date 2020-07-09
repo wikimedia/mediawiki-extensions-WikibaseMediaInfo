@@ -1,6 +1,8 @@
 /**
-* See also: http://webdriver.io/guide/testrunner/configurationfile.html
-*/
+ * See also: http://webdriver.io/guide/testrunner/configurationfile.html
+ */
+
+'use strict';
 
 const fs = require( 'fs' ),
 	saveScreenshot = require( 'wdio-mediawiki' ).saveScreenshot;
@@ -77,10 +79,8 @@ exports.config = {
 	 */
 
 	afterTest: function ( test ) {
-
-		var filePath;
 		if ( !test.passed ) {
-			filePath = saveScreenshot( test.title );
+			const filePath = saveScreenshot( test.title );
 			console.log( '\n\tScreenshot: ' + filePath + '\n' );
 		}
 	}

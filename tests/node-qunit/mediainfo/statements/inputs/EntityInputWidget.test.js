@@ -1,10 +1,12 @@
-var sinon = require( 'sinon' ),
+'use strict';
+
+const sinon = require( 'sinon' ),
 	pathToWidget = '../../../../../resources/statements/inputs/EntityInputWidget.js',
 	hooks = require( '../../../support/hooks.js' );
 
 QUnit.module( 'EntityInputWidget', hooks.mediainfo, function () {
 	QUnit.test( 'Valid data roundtrip', function ( assert ) {
-		var done = assert.async(),
+		const done = assert.async(),
 			EntityInputWidget = require( pathToWidget ),
 			widget = new EntityInputWidget(),
 			datamodel = require( 'wikibase.datamodel' ),
@@ -18,7 +20,7 @@ QUnit.module( 'EntityInputWidget', hooks.mediainfo, function () {
 	} );
 
 	QUnit.test( 'Setting other data triggers a change event', function ( assert ) {
-		var done = assert.async(),
+		const done = assert.async(),
 			EntityInputWidget = require( pathToWidget ),
 			widget = new EntityInputWidget(),
 			datamodel = require( 'wikibase.datamodel' ),
@@ -36,7 +38,7 @@ QUnit.module( 'EntityInputWidget', hooks.mediainfo, function () {
 	} );
 
 	QUnit.test( 'Setting same data does not trigger a change event', function ( assert ) {
-		var done = assert.async(),
+		const done = assert.async(),
 			EntityInputWidget = require( pathToWidget ),
 			widget = new EntityInputWidget(),
 			datamodel = require( 'wikibase.datamodel' ),

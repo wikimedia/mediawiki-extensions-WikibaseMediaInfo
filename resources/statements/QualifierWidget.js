@@ -1,5 +1,9 @@
 'use strict';
 
+/**
+ * @external EntityInputWidget
+ */
+
 var QualifierWidget,
 	ConstraintsReportHandlerElement = require( './ConstraintsReportHandlerElement.js' ),
 	ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
@@ -135,6 +139,7 @@ QualifierWidget.prototype.focus = function () {
 /**
  * Set the read/edit state to the desired value and re-render the widget from
  * its template.
+ *
  * @param {boolean} editing
  * @return {jQuery.Promise} Resolves after rerender
  */
@@ -144,6 +149,7 @@ QualifierWidget.prototype.setEditing = function ( editing ) {
 
 /**
  * Sets the child widgets' data and updates label elements asynchronously.
+ *
  * @param {datamodel.Snak} data
  * @return {jQuery.Promise}
  */
@@ -192,6 +198,7 @@ QualifierWidget.prototype.setData = function ( data ) {
 
 /**
  * Extracts data from child widgets for use elsewhere.
+ *
  * @return {datamodel.Snak} data
  */
 QualifierWidget.prototype.getData = function () {
@@ -242,10 +249,11 @@ QualifierWidget.prototype.onChange = function () {
 /**
  * Ergonomic wrapper around formatValue() to make it easier to deal with
  * properties.
+ *
  * @param {string} propId
  * @param {string} [format] e.g. text/plain or text/html
  * @param {string} [language]
- * @return {$.Promise} promise
+ * @return {jQuery.Promise} promise
  */
 QualifierWidget.prototype.formatProperty = function ( propId, format, language ) {
 	return this.formatValue( new datamodel.EntityId( propId ), format, language );
@@ -253,6 +261,7 @@ QualifierWidget.prototype.formatProperty = function ( propId, format, language )
 
 /**
  * Asynchronously update the label elements with data from the API.
+ *
  * @return {jQuery.Promise}
  */
 QualifierWidget.prototype.asyncFormatForDisplay = function () {
@@ -292,7 +301,7 @@ QualifierWidget.prototype.asyncFormatForDisplay = function () {
 };
 
 /**
- * @internal
+ * @private
  * @param {datamodel.Snak} data
  * @return {datamodel.Snak}
  */

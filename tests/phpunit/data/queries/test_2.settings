@@ -12,7 +12,6 @@
 	"fallbackLangs": [ "fr", "es" ],
 	"settings": {
 		"statement": 50.0,
-		"statement-discount": 0.5,
 		"caption": 100.0,
 		"caption-fallback-discount": 0.1,
 		"all": 0.09,

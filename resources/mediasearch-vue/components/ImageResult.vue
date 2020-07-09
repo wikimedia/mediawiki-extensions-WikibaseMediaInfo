@@ -1,6 +1,9 @@
 <template>
-	<div class="wbmi-image-result" @click="showDetails">
-		<img :src="thumbnail" :alt="title">
+	<div class="wbmi-image-result">
+		<a :href="canonicalurl"
+			@click.prevent="showDetails">
+			<img :src="thumbnail" :alt="title">
+		</a>
 	</div>
 </template>
 
@@ -35,7 +38,6 @@ module.exports = {
 
 .wbmi-image-result {
 	box-sizing: border-box;
-	cursor: pointer;
 	margin: 8px;
 
 	&:hover {

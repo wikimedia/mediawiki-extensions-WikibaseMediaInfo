@@ -4,7 +4,7 @@
 			class="wbmi-media-search-results__list">
 			<component
 				:is="resultComponent"
-				v-for="(result, index) in sortedResults[ mediaType ]"
+				v-for="(result, index) in results[ mediaType ]"
 				:key="index"
 				v-bind="result"
 				@show-details="showDetails">
@@ -15,7 +15,9 @@
 			:class="{ 'wbmi-media-search-results__details--expanded': !!details }">
 			<quick-view
 				v-if="details"
+				:key="details.pageid"
 				v-bind="details"
+				:media-type="mediaType"
 				@close="hideDetails">
 			</quick-view>
 		</aside>
@@ -34,11 +36,12 @@
  * preview for a specific result if triggered by user actions.
  */
 var mapState = require( 'vuex' ).mapState,
-	mapGetters = require( 'vuex' ).mapGetters,
 	ImageResult = require( './ImageResult.vue' ),
+	AudioResult = require( './AudioResult.vue' ),
 	VideoResult = require( './VideoResult.vue' ),
 	GenericResult = require( './GenericResult.vue' ),
-	QuickView = require( './QuickView.vue' );
+	QuickView = require( './QuickView.vue' ),
+	api = new mw.Api();
 
 // @vue/component
 module.exports = {
@@ -47,6 +50,7 @@ module.exports = {
 	components: {
 		'image-result': ImageResult,
 		'video-result': VideoResult,
+		'audio-result': AudioResult,
 		'generic-result': GenericResult,
 		'quick-view': QuickView
 	},
@@ -68,8 +72,6 @@ module.exports = {
 		'term',
 		'results',
 		'pending'
-	] ), mapGetters( [
-		'sortedResults'
 	] ), {
 		/**
 		 * Which component should be used to display individual search results
@@ -81,6 +83,8 @@ module.exports = {
 				return 'image-result';
 			} else if ( this.mediaType === 'video' ) {
 				return 'video-result';
+			} else if ( this.mediaType === 'audio' ) {
+				return 'audio-result';
 			} else {
 				return 'generic-result';
 			}
@@ -130,11 +134,10 @@ module.exports = {
 			};
 
 			// Real version: use mw.api
-			// return api.get( params ).then( function ( response ) {
-			// } );
+			return api.get( params );
 
 			// Test version: use production commons API
-			return $.get( 'https://commons.wikimedia.org/w/api.php', params );
+			// return $.get( 'https://commons.wikimedia.org/w/api.php', params );
 		}
 	},
 
@@ -160,6 +163,13 @@ module.exports = {
 	&__list {
 		.flex( 1, 1, auto );
 
+		// Audio results are limited to half-width
+		&--audio {
+			> * {
+				max-width: 50em;
+			}
+		}
+
 		// Lists of type "bitmap" or "video" display their results in a grid
 		// and are allowed to wrap.
 		&--bitmap,
@@ -178,7 +188,7 @@ module.exports = {
 		&--video {
 			// stylelint-disable-next-line no-descending-specificity
 			> * {
-				.flex( 1, 0, 15% );
+				.flex( 1, 1, 200px );
 			}
 		}
 
@@ -199,7 +209,7 @@ module.exports = {
 	// is smaller
 	&__details {
 		.flex( 0, 0, auto );
-		max-width: 30rem;
+		max-width: 40em;
 		width: 0%;
 
 		&--expanded {

@@ -19,8 +19,13 @@
 				<observer @intersect="getMoreResultsForTabIfAvailable( tab )">
 				</observer>
 
-				<p v-if="pending[ tab ]">
-					Loading...
+				<mw-spinner v-if="pending[ tab ]">
+				</mw-spinner>
+
+				<p v-else-if="hasNoResults( tab )">
+					<message>
+						{{ $i18n( 'wikibasemediainfo-special-mediasearch-no-results' ) }}
+					</message>
 				</p>
 			</tab>
 		</tabs>
@@ -51,6 +56,8 @@ var mapState = require( 'vuex' ).mapState,
 	SearchInput = require( './SearchInput.vue' ),
 	SearchResults = require( './SearchResults.vue' ),
 	Observer = require( './base/Observer.vue' ),
+	Message = require( './base/Message.vue' ),
+	Spinner = require( './Spinner.vue' ),
 	url = new mw.Uri();
 
 // @vue/component
@@ -62,7 +69,9 @@ module.exports = {
 		tab: Tab,
 		'search-input': SearchInput,
 		'search-results': SearchResults,
-		observer: Observer
+		observer: Observer,
+		'mw-spinner': Spinner,
+		message: Message
 	},
 
 	data: function () {
@@ -173,6 +182,14 @@ module.exports = {
 				term: this.term,
 				type: this.currentTab
 			} );
+		},
+
+		hasNoResults: function ( tab ) {
+			if ( this.results[ tab ].length === 0 && this.continue[ tab ] === null ) {
+				return true;
+			} else {
+				return false;
+			}
 		}
 	} ),
 

@@ -340,14 +340,17 @@
 				"resources/mediasearch-vue/components/SearchResults.vue",
 				"resources/mediasearch-vue/components/ImageResult.vue",
 				"resources/mediasearch-vue/components/VideoResult.vue",
+				"resources/mediasearch-vue/components/AudioResult.vue",
 				"resources/mediasearch-vue/components/GenericResult.vue",
+				"resources/mediasearch-vue/components/Spinner.vue",
 				"resources/mediasearch-vue/components/QuickView.vue",
 				"resources/mediasearch-vue/store/index.js",
 				"resources/mediasearch-vue/store/state.js",
 				"resources/mediasearch-vue/store/mutations.js",
 				"resources/mediasearch-vue/store/getters.js",
 				"resources/mediasearch-vue/store/actions.js",
-				"resources/mediasearch-vue/mixins/searchResult.js"
+				"resources/mediasearch-vue/mixins/searchResult.js",
+				"resources/mediasearch-vue/mixins/searchResultTimeBased.js"
 			],
 			"messages": [
 				"wikibasemediainfo-special-mediasearch-filter-size",
@@ -360,6 +363,7 @@
 				"wikibasemediainfo-special-mediasearch-tab-audio",
 				"wikibasemediainfo-special-mediasearch-tab-video",
 				"wikibasemediainfo-special-mediasearch-tab-category",
+				"wikibasemediainfo-special-mediasearch-no-results",
 				"searchbutton"
 			],
 			"dependencies": [

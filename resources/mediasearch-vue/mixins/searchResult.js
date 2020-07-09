@@ -37,6 +37,16 @@ module.exports = {
 		index: {
 			type: Number,
 			required: true
+		},
+
+		name: {
+			type: String,
+			required: false
+		},
+
+		terms: {
+			type: Object,
+			required: false
 		}
 	},
 
@@ -53,6 +63,14 @@ module.exports = {
 		 */
 		src: function () {
 			return this.imageinfo[ 0 ].url;
+		},
+
+		label: function () {
+			if ( this.terms && this.terms.label ) {
+				return this.terms.label[ 0 ];
+			} else {
+				return null;
+			}
 		}
 	},
 

@@ -263,18 +263,18 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 		}
 
 		// Local results (real)
-		// $context = new DerivativeContext( RequestContext::getMain() );
-		// $context->setRequest( $request );
-		// $this->api->setContext( $context );
-		// $this->api->execute();
-		// $response = $this->api->getResult()->getResultData( [], [ 'Strip' => 'all' ] );
+		$context = new DerivativeContext( RequestContext::getMain() );
+		$context->setRequest( $request );
+		$this->api->setContext( $context );
+		$this->api->execute();
+		$response = $this->api->getResult()->getResultData( [], [ 'Strip' => 'all' ] );
 
-		// Pull data from commons
-		$url = 'https://commons.wikimedia.org/w/api.php?' . http_build_query( $request->getQueryValues() );
-		$request = \MediaWiki\MediaWikiServices::getInstance()->getHttpRequestFactory()->create( $url, [], __METHOD__ );
-		$request->execute();
-		$data = $request->getContent();
-		$response = json_decode( $data, true ) ?: [];
+		// Pull data from commons: for use in testing
+		// $url = 'https://commons.wikimedia.org/w/api.php?' . http_build_query( $request->getQueryValues() );
+		// $request = \MediaWiki\MediaWikiServices::getInstance()->getHttpRequestFactory()->create( $url, [], __METHOD__ );
+		// $request->execute();
+		// $data = $request->getContent();
+		// $response = json_decode( $data, true ) ?: [];
 
 		$results = array_values( $response['query']['pages'] ?? [] );
 		$continue = $response['continue']['gmscontinue'] ?? $response['continue']['gsroffset'] ?? null;

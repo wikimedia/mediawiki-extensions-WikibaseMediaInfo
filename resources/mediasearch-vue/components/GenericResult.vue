@@ -1,10 +1,10 @@
 <template>
 	<div class="wbmi-generic-result">
-		<h6>
-			<a :href="canonicalurl">
+		<h3>
+			<a :href="canonicalurl" target="blank">
 				{{ title }}
 			</a>
-		</h6>
+		</h3>
 	</div>
 </template>
 
@@ -46,6 +46,10 @@ module.exports = {
 
 	&:nth-of-type( odd ) {
 		background-color: #f6f8fc;
+	}
+
+	h3 {
+		padding-bottom: 0.5em;
 	}
 }
 </style>

@@ -140,5 +140,13 @@ module.exports = {
 		border-radius: 0 @border-radius-base @border-radius-base 0;
 		margin: 0;
 	}
+
+	// See: https://phabricator.wikimedia.org/T222283
+	// This overrides an override in mediawiki.legacy/shared.css which keeps
+	// this input element from flipping over to RTL orientation;
+	// stylelint-disable-next-line selector-class-pattern
+	body.rtl.sitedir-ltr & input {
+		direction: unset;
+	}
 }
 </style>

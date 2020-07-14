@@ -704,7 +704,7 @@ class WikibaseMediaInfoHooks {
 			$service->registerFileRepository( SearchProfileService::FT_QUERY_BUILDER,
 				// this string is to prevent overwriting, not used for retrieval
 				'mediainfo_base',
-				__DIR__ . '/search/MediaSearchProfiles.php' );
+				__DIR__ . '/Search/MediaSearchProfiles.php' );
 
 			$service->registerDefaultProfile( SearchProfileService::FT_QUERY_BUILDER,
 				$searchProfileContextName, $fulltextProfileName );

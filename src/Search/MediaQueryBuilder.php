@@ -8,6 +8,7 @@ use CirrusSearch\Query\KeywordFeature;
 use CirrusSearch\Search\SearchContext;
 use CirrusSearch\SearchConfig;
 use Elastica\Query\BoolQuery;
+use Elastica\Query\ConstantScore;
 use Elastica\Query\Match;
 use Elastica\Query\MultiMatch;
 use MediaWiki\Http\HttpRequestFactory;
@@ -130,9 +131,12 @@ class MediaQueryBuilder implements FullTextQueryBuilder {
 
 		$rankingMatches = [];
 		foreach ( $this->getStatementTerms( $term ) as $statementTerm ) {
-			$rankingMatches[] = ( new Match() )
-				->setFieldQuery( StatementsField::NAME, $statementTerm['term'] )
-				->setFieldBoost( StatementsField::NAME, $statementTerm['boost'] );
+			$rankingMatches[] = ( new ConstantScore() )
+				->setFilter(
+					( new Match() )
+						->setFieldQuery( StatementsField::NAME, $statementTerm['term'] )
+				)
+				->setBoost( $statementTerm['boost'] );
 		}
 		foreach ( $this->getFulltextFields() as $field ) {
 			$rankingMatches[] = ( new Match() )

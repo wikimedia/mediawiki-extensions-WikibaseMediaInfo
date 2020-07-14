@@ -43,19 +43,27 @@
 		}],
 		"should": [[
 			{
-				"match": {
-					"statement_keywords": {
-						"query": "P999=Q9",
-						"boost": 50.0
-					}
+				"constant_score": {
+					"filter": {
+						"match": {
+							"statement_keywords": {
+								"query": "P999=Q9"
+							}
+						}
+					},
+					"boost": 50.0
 				}
 			},
 			{
-				"match": {
-					"statement_keywords": {
-						"query": "P999=Q2",
-						"boost": 25.0
-					}
+				"constant_score": {
+					"filter": {
+						"match": {
+							"statement_keywords": {
+								"query": "P999=Q2"
+							}
+						}
+					},
+					"boost": 25.0
 				}
 			},
 			{

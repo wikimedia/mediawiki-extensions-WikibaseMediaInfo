@@ -716,7 +716,10 @@ class WikibaseMediaInfoHooks {
 
 			$service->registerFTSearchQueryRoute( $searchProfileContextName, 1.0, [ NS_FILE ],
 				// only supports simple queries for now
-				[ BasicQueryClassifier::SIMPLE_BAG_OF_WORDS ] );
+				[
+					BasicQueryClassifier::SIMPLE_BAG_OF_WORDS,
+					BasicQueryClassifier::COMPLEX_QUERY,
+				] );
 		}
 	}
 

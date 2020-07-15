@@ -2,9 +2,11 @@
 
 namespace Wikibase\MediaInfo\Tests\Unit\Search;
 
+use CirrusSearch\Parser\FullTextKeywordRegistry;
 use CirrusSearch\Search\SearchContext;
 use CirrusSearch\SearchConfig;
 use MediaWiki\Http\HttpRequestFactory;
+use MediaWiki\MediaWikiServices;
 use PHPUnit\Framework\TestCase;
 use Wikibase\Lib\LanguageFallbackChain;
 use Wikibase\Lib\LanguageFallbackChainFactory;
@@ -16,6 +18,8 @@ use Wikibase\MediaInfo\Search\MediaQueryBuilder;
 class MediaQueryBuilderTest extends TestCase {
 
 	private function createSUT( array $params = [] ) : MediaQueryBuilder {
+		$configFactory = MediaWikiServices::getInstance()->getConfigFactory();
+		$features = ( new FullTextKeywordRegistry( $configFactory->makeConfig( 'CirrusSearch' ) ) )->getKeywords();
 		$term = $params['term'] ?? 'test_search_term';
 		$settings = $params['settings'] ?? [];
 		$stemmingSettings = $params['stemmingSettings'] ?? [];
@@ -24,14 +28,19 @@ class MediaQueryBuilderTest extends TestCase {
 		$entityIds = $params['entityIdsForTerm'] ?? [];
 		$defaultProperties = $params['defaultProperties'] ?? [];
 		$externalEntitySearchBaseUri = 'http://example.com/';
-		$httpRequestFactory = $this->createMockHttpFactory( $term, $entityIds,
-			$externalEntitySearchBaseUri );
+		$httpRequestFactory = $this->createMockHttpFactory(
+			// strip filters from the search input
+			preg_replace( '/\s+[^\s]+:[^\s]+/i', '', $term ),
+			$entityIds,
+			$externalEntitySearchBaseUri
+		);
 		$fallbackChainFactory = $this->createMockFallbackChainFactory(
 			$userLanguage,
 			$fallbackLangs
 		);
 
 		return new MediaQueryBuilder(
+			$features,
 			$settings,
 			$stemmingSettings,
 			$userLanguage,

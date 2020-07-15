@@ -2,8 +2,11 @@
 
 namespace Wikibase\MediaInfo\Search;
 
+use CirrusSearch\Parser\FullTextKeywordRegistry;
 use CirrusSearch\Query\FullTextQueryBuilder;
+use CirrusSearch\Query\KeywordFeature;
 use CirrusSearch\Search\SearchContext;
+use CirrusSearch\SearchConfig;
 use Elastica\Query\BoolQuery;
 use Elastica\Query\Match;
 use Elastica\Query\MultiMatch;
@@ -18,6 +21,8 @@ class MediaQueryBuilder implements FullTextQueryBuilder {
 	public const SEARCH_PROFILE_CONTEXT_NAME = 'mediasearch';
 	public const FULLTEXT_PROFILE_NAME = 'mediainfo_fulltext';
 
+	/** @var KeywordFeature[] */
+	private $features;
 	/** @var array */
 	private $settings;
 	/** @var array */
@@ -36,6 +41,7 @@ class MediaQueryBuilder implements FullTextQueryBuilder {
 	private $idsForTerm = [];
 
 	public function __construct(
+		array $features,
 		array $settings,
 		array $stemmingSettings,
 		string $userLanguage,
@@ -44,6 +50,7 @@ class MediaQueryBuilder implements FullTextQueryBuilder {
 		string $externalEntitySearchBaseUri,
 		LanguageFallbackChainFactory $languageFallbackChainFactory
 	) {
+		$this->features = $features;
 		$this->settings = array_merge(
 			[
 				'statement' => 1.0,
@@ -80,12 +87,16 @@ class MediaQueryBuilder implements FullTextQueryBuilder {
 		global $wgMediaInfoProperties,
 			   $wgMediaInfoExternalEntitySearchBaseUri;
 		$repo = WikibaseRepo::getDefaultInstance();
-		$stemmingSettings = MediaWikiServices::getInstance()
-			->getConfigFactory()
-			->makeConfig( 'WikibaseCirrusSearch' )
-			->get( 'UseStemming' );
+		$configFactory = MediaWikiServices::getInstance()->getConfigFactory();
+		$stemmingSettings = $configFactory->makeConfig( 'WikibaseCirrusSearch' )->get( 'UseStemming' );
+		$searchConfig = $configFactory->makeConfig( 'CirrusSearch' );
+		if ( !$searchConfig instanceof SearchConfig ) {
+			throw new \MWException( 'CirrusSearch config must be instanceof SearchConfig' );
+		}
+		$features = ( new FullTextKeywordRegistry( $searchConfig ) )->getKeywords();
 
 		return new static(
+			$features,
 			$settings,
 			$stemmingSettings,
 			$repo->getUserLanguage()->getCode(),
@@ -103,6 +114,13 @@ class MediaQueryBuilder implements FullTextQueryBuilder {
 	 * @param string $term term to search
 	 */
 	public function build( SearchContext $searchContext, $term ) {
+		// Transform Mediawiki specific syntax to filters and extra
+		// (pre-escaped) query string
+		foreach ( $this->features as $feature ) {
+			$term = $feature->apply( $searchContext, $term );
+		}
+		$term = trim( $term );
+
 		$filter = new BoolQuery();
 		$filter->addShould( $this->createFulltextQuery( $term ) );
 		$statementsQuery = $this->createStatementsQueries( $term );

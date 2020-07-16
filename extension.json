@@ -326,6 +326,62 @@
 				"mobile"
 			]
 		},
+		"wikibase.mediainfo.mediasearch.vue": {
+			"packageFiles": [
+				"resources/mediasearch-vue/init.js",
+				"resources/mediasearch-vue/components/base/Button.vue",
+				"resources/mediasearch-vue/components/base/Icon.vue",
+				"resources/mediasearch-vue/components/base/Indicator.vue",
+				"resources/mediasearch-vue/components/base/Message.vue",
+				"resources/mediasearch-vue/components/base/Tab.vue",
+				"resources/mediasearch-vue/components/base/Tabs.vue",
+				"resources/mediasearch-vue/components/base/Observer.vue",
+				"resources/mediasearch-vue/components/App.vue",
+				"resources/mediasearch-vue/components/SearchInput.vue",
+				"resources/mediasearch-vue/components/SearchResults.vue",
+				"resources/mediasearch-vue/components/ImageResult.vue",
+				"resources/mediasearch-vue/components/VideoResult.vue",
+				"resources/mediasearch-vue/components/AudioResult.vue",
+				"resources/mediasearch-vue/components/GenericResult.vue",
+				"resources/mediasearch-vue/components/Spinner.vue",
+				"resources/mediasearch-vue/store/index.js",
+				"resources/mediasearch-vue/store/state.js",
+				"resources/mediasearch-vue/store/mutations.js",
+				"resources/mediasearch-vue/store/getters.js",
+				"resources/mediasearch-vue/store/actions.js",
+				"resources/mediasearch-vue/mixins/searchResult.js",
+				"resources/mediasearch-vue/mixins/searchResultTimeBased.js"
+			],
+			"messages": [
+				"wikibasemediainfo-special-mediasearch-filter-size",
+				"wikibasemediainfo-special-mediasearch-filter-size-any",
+				"wikibasemediainfo-special-mediasearch-filter-size-small",
+				"wikibasemediainfo-special-mediasearch-filter-size-medium",
+				"wikibasemediainfo-special-mediasearch-filter-size-large",
+				"wikibasemediainfo-special-mediasearch-no-results",
+				"wikibasemediainfo-special-mediasearch-tab-bitmap",
+				"wikibasemediainfo-special-mediasearch-tab-audio",
+				"wikibasemediainfo-special-mediasearch-tab-video",
+				"wikibasemediainfo-special-mediasearch-tab-category",
+				"wikibasemediainfo-special-mediasearch-no-results",
+				"searchbutton"
+			],
+			"dependencies": [
+				"wikibase.mediainfo.mediasearch.styles",
+				"oojs-ui.styles.icons-user",
+				"oojs-ui.styles.icons-interactions",
+				"oojs-ui.styles.icons-moderation",
+				"oojs-ui.styles.icons-wikimedia",
+				"oojs-ui.styles.icons-media",
+				"vue",
+				"vuex",
+				"wikibase.api.RepoApi"
+			],
+			"targets": [
+				"desktop",
+				"mobile"
+			]
+		},
 		"wikibase.mediainfo.statements": {
 			"packageFiles": [
 				"resources/statements/index.js",

@@ -11,6 +11,7 @@ use Elastica\Query\BoolQuery;
 use Elastica\Query\ConstantScore;
 use Elastica\Query\Match;
 use Elastica\Query\MultiMatch;
+use Elastica\Query\Terms;
 use MediaWiki\Http\HttpRequestFactory;
 use MediaWiki\MediaWikiServices;
 use Wikibase\Lib\LanguageFallbackChainFactory;
@@ -128,9 +129,9 @@ class MediaQueryBuilder implements FullTextQueryBuilder {
 			$filter->addShould( $statementsQuery );
 		}
 
-		$rankingMatches = [];
+		$rankingQueries = [];
 		foreach ( $this->getStatementTerms( $term ) as $statementTerm ) {
-			$rankingMatches[] = ( new ConstantScore() )
+			$rankingQueries[] = ( new ConstantScore() )
 				->setFilter(
 					( new Match() )
 						->setFieldQuery( StatementsField::NAME, $statementTerm['term'] )
@@ -138,19 +139,22 @@ class MediaQueryBuilder implements FullTextQueryBuilder {
 				->setBoost( $statementTerm['boost'] );
 		}
 		foreach ( $this->getFulltextFields() as $field ) {
-			$rankingMatches[] = ( new Match() )
+			$rankingQueries[] = ( new Match() )
 				->setFieldQuery( $field['field'], $term )
 				->setFieldBoost( $field['field'], $field['boost'] );
 		}
 		foreach ( $this->getOtherRankingFields() as $field ) {
-			$rankingMatches[] = ( new Match() )
+			$rankingQueries[] = ( new Match() )
 				->setFieldQuery( $field['field'], $term )
 				->setFieldBoost( $field['field'], $field['boost'] );
+		}
+		if ( isset( $this->settings['non-file_namespace_boost'] ) ) {
+			$rankingQueries[] = $this->getBoostingQueryForNonFileNamespace( $term );
 		}
 
 		$query = new BoolQuery();
 		$query->addFilter( $filter );
-		$query->addShould( $rankingMatches );
+		$query->addShould( $rankingQueries );
 
 		$searchContext->setMainQuery( $query );
 	}
@@ -331,5 +335,21 @@ class MediaQueryBuilder implements FullTextQueryBuilder {
 			[ 'field' => 'auxiliary_text', 'boost' => $this->settings['auxiliary_text'] ],
 			[ 'field' => 'file_text', 'boost' => $this->settings['file_text'] ],
 		];
+	}
+
+	private function getBoostingQueryForNonFileNamespace( string $term ) {
+		$titleMatch = ( new MultiMatch() )
+			->setFields( [ 'all_near_match^2', 'all_near_match.asciifolding^1.5' ] )
+			->setQuery( $term )
+			->setOperator( 'and' );
+		return ( new BoolQuery() )
+			->addMust( $titleMatch )
+			->addFilter(
+				new Terms(
+					'namespace',
+					[ NS_MAIN, NS_CATEGORY ]
+				)
+			)
+			->setBoost( $this->settings['non-file_namespace_boost'] );
 	}
 }

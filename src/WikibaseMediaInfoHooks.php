@@ -695,8 +695,15 @@ class WikibaseMediaInfoHooks {
 	 * @param SearchProfileService $service
 	 */
 	public static function onCirrusSearchProfileService( SearchProfileService $service ) {
+		// @todo: once T254388 is complete revert to using the MediaQueryBuilder only for NS_FILE
+		$namespaces = MediaWikiServices::getInstance()->getNamespaceInfo()->getValidNamespaces();
+
 		$request = RequestContext::getMain()->getRequest();
-		if ( $request->getVal( 'mediasearch' ) ) {
+		if (
+			$request->getVal( 'mediasearch' )
+			||
+			$request->getVal( 'cirrusUserTesting' ) == 'mediasearchbuilder'
+		) {
 			$searchProfileContextName = MediaQueryBuilder::SEARCH_PROFILE_CONTEXT_NAME;
 			// array key in MediaSearchProfiles.php
 			$fulltextProfileName = MediaQueryBuilder::FULLTEXT_PROFILE_NAME;
@@ -710,16 +717,17 @@ class WikibaseMediaInfoHooks {
 				$searchProfileContextName, $fulltextProfileName );
 
 			// Need to register a rescore profile for the profile context
-			// Register an empty one for now to see how the main query performs
+			// Register the same one as used by fulltext search for comparison purposes
 			$service->registerDefaultProfile( SearchProfileService::RESCORE,
-				$searchProfileContextName, 'empty' );
+				$searchProfileContextName, 'wsum_inclinks_pv' );
 
-			$service->registerFTSearchQueryRoute( $searchProfileContextName, 1.0, [ NS_FILE ],
-				// only supports simple queries for now
-				[
-					BasicQueryClassifier::SIMPLE_BAG_OF_WORDS,
-					BasicQueryClassifier::COMPLEX_QUERY,
-				] );
+			$queryTypes = [ BasicQueryClassifier::SIMPLE_BAG_OF_WORDS ];
+			if ( $request->getVal( 'mediasearch' ) ) {
+				$queryTypes[] = BasicQueryClassifier::COMPLEX_QUERY;
+			}
+
+			$service->registerFTSearchQueryRoute( $searchProfileContextName, 0.9, $namespaces,
+				$queryTypes );
 		}
 	}
 

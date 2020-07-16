@@ -1,0 +1,116 @@
+{
+	"bool": {
+		"filter": [{
+			"bool": {
+				"should": [{
+					"multi_match": {
+						"fields": [
+							"descriptions.de.plain",
+							"all",
+							"all.plain",
+							"category"
+						],
+						"type": "cross_fields",
+						"query": "on the 4th of July 1806",
+						"operator": "and"
+					}
+				}]
+			}
+		}],
+		"should": [
+			[{
+					"match": {
+						"descriptions.de.plain": {
+							"query": "on the 4th of July 1806",
+							"boost": 1.0
+						}
+					}
+				},
+				{
+					"match": {
+						"all": {
+							"query": "on the 4th of July 1806",
+							"boost": 0.01
+						}
+					}
+				},
+				{
+					"match": {
+						"all.plain": {
+							"query": "on the 4th of July 1806",
+							"boost": 0.02
+						}
+					}
+				},
+				{
+					"match": {
+						"category": {
+							"query": "on the 4th of July 1806",
+							"boost": 0.03
+						}
+					}
+				},
+				{
+					"match": {
+						"title": {
+							"query": "on the 4th of July 1806",
+							"boost": 0.04
+						}
+					}
+				},
+				{
+					"match": {
+						"redirect.title": {
+							"query": "on the 4th of July 1806",
+							"boost": 0.05
+						}
+					}
+				},
+				{
+					"match": {
+						"text": {
+							"query": "on the 4th of July 1806",
+							"boost": 0.06
+						}
+					}
+				},
+				{
+					"match": {
+						"auxiliary_text": {
+							"query": "on the 4th of July 1806",
+							"boost": 0.07
+						}
+					}
+				},
+				{
+					"match": {
+						"file_text": {
+							"query": "on the 4th of July 1806",
+							"boost": 0.08
+						}
+					}
+				},
+				{
+					"bool": {
+						"must": [{
+							"multi_match": {
+								"fields": [
+									"all_near_match^2",
+									"all_near_match.asciifolding^1.5"
+								],
+								"query": "on the 4th of July 1806",
+								"operator": "and"
+							}
+						}],
+						"filter": [{
+							"terms": {
+								"namespace": [0, 14]
+							}
+						}],
+						"boost": 20.0
+					}
+				}
+			]
+		]
+	}
+}

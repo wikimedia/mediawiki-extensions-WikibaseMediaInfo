@@ -51,7 +51,11 @@ class MediaQueryBuilderTest extends TestCase {
 		);
 	}
 
-	private function createMockHttpFactory( $term, $idsToReturn, $uriBase ) : HttpRequestFactory {
+	private function createMockHttpFactory(
+		$term,
+		$idsToReturn,
+		$uriBase
+	) : HttpRequestFactory {
 		$requestResponse = [];
 		foreach ( $idsToReturn as $revId => $entityId ) {
 			$requestResponse['query']['search'][] = [
@@ -60,12 +64,14 @@ class MediaQueryBuilderTest extends TestCase {
 				'snippet' => "$term",
 			];
 		}
-		// Add an extra match with a partially matching, less relevant term
-		$requestResponse['query']['search'][] = [
-			'title' => 'Q999999',
-			'titlesnippet' => 'XXX',
-			'snippet' => "<span class=\"searchmatch\">$term</span> XXX",
-		];
+		if ( count( $idsToReturn ) > 0 ) {
+			// Add an extra match with a partially matching, less relevant term
+			$requestResponse['query']['search'][] = [
+				'title' => 'Q999999',
+				'titlesnippet' => 'XXX',
+				'snippet' => "<span class=\"searchmatch\">$term</span> XXX",
+			];
+		}
 
 		$request = $this->createMock( \MWHttpRequest::class );
 		$request->method( 'getContent' )

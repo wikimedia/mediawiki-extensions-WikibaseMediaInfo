@@ -19,6 +19,7 @@ return [
 			'text' => 1.0,
 			'auxiliary_text' => 1.0,
 			'file_text' => 1.0,
+			'non-file_namespace_boost' => 5.0,
 		],
 	],
 ];

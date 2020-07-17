@@ -7,8 +7,8 @@ use Language;
 use Serializers\Serializer;
 use Wikibase\DataModel\DeserializerFactory;
 use Wikibase\DataModel\SerializerFactory;
-use Wikibase\Lib\LanguageFallbackChain;
 use Wikibase\Lib\LanguageWithConversion;
+use Wikibase\Lib\TermLanguageFallbackChain;
 use Wikibase\MediaInfo\Content\MediaInfoContent;
 use Wikibase\MediaInfo\Content\MediaInfoHandler;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
@@ -116,7 +116,7 @@ class EntityTypesTest extends \PHPUnit\Framework\TestCase {
 		$mediaInfoView = call_user_func(
 			$callback,
 			Language::factory( 'en' ),
-			new LanguageFallbackChain( [ LanguageWithConversion::factory( 'en' ) ] ),
+			new TermLanguageFallbackChain( [ LanguageWithConversion::factory( 'en' ) ] ),
 			new MediaInfo()
 		);
 

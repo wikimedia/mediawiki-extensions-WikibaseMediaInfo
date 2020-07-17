@@ -5,9 +5,9 @@ namespace Wikibase\MediaInfo\Tests\MediaWiki\View;
 use Language;
 use Wikibase\DataModel\Term\Term;
 use Wikibase\DataModel\Term\TermList;
-use Wikibase\Lib\LanguageFallbackChain;
 use Wikibase\Lib\LanguageNameLookup;
 use Wikibase\Lib\LanguageWithConversion;
+use Wikibase\Lib\TermLanguageFallbackChain;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\MediaInfo\View\MediaInfoEntityTermsView;
 use Wikibase\Repo\MediaWikiLocalizedTextProvider;
@@ -29,7 +29,7 @@ class MediaInfoEntityTermsViewTest extends \PHPUnit\Framework\TestCase {
 	private $langDirLookup;
 	/** @var  LocalizedTextProvider */
 	private $textProvider;
-	/** @var  LanguageFallbackChain */
+	/** @var  TermLanguageFallbackChain */
 	private $fallbackChain;
 
 	private function createDependencies( $fallbackLangCodes ) {
@@ -50,7 +50,7 @@ class MediaInfoEntityTermsViewTest extends \PHPUnit\Framework\TestCase {
 		foreach ( $fallbackLangCodes as $langCode ) {
 			$languages[] = LanguageWithConversion::factory( $langCode );
 		}
-		$this->fallbackChain = new LanguageFallbackChain( $languages );
+		$this->fallbackChain = new TermLanguageFallbackChain( $languages );
 	}
 
 	private function createTestEntityWithLabels( $labelsArray ) {

@@ -5,7 +5,8 @@
 			"BaRaN6161 TURK",
 			"Hedda",
 			"LuCKY",
-			"Mirzali"
+			"Mirzali",
+			"Rapsar"
 		]
 	},
 	"action-mediainfo-term": "medya bilgisi terimlerini değiştir (altyazılar, özetler)",
@@ -52,7 +53,7 @@
 	"wikibasemediainfo-filepage-statement-some-value": "{{WBREPONAME}} öğesi olmayan bir değer",
 	"wikibasemediainfo-filepage-statement-error": "Bu mülkün değeri getirilirken bir hata oluştu",
 	"wikibasemediainfo-filepage-license-title": "Altyazılar ve diğer yapılandırılmış veri katkıları",
-	"wikibasemediainfo-filepage-license-content": "\"Değişiklikleri yayınla\"'yı tıklayarak [[wmf:Terms_of_Use|kullanım şartlarını]] kabul etmiş olursunuz ve [https://creativecommons.org/publicdomain/zero/1.0/deed.tr Creative Commons CC0 Lisansı] kapsamındaki katkınızı geri dönülmez bir şekilde bırakmayı kabul edersiniz.",
+	"wikibasemediainfo-filepage-license-content": "\"Değişiklikleri yayımla\"ya tıklayarak [[wmf:Terms_of_Use|kullanım şartlarını]] ve katkılarınızı, [https://creativecommons.org/publicdomain/zero/1.0/deed.tr Creative Commons CC0 Lisansı] altında yayımlamayı, geri dönülmez bir şekilde kabul etmiş olursunuz.",
 	"wikibasemediainfo-filepage-license-content-acceptance": "Gelecek dönem düzenlemelerim için bu şartları kabul ediyorum. Bu mesajı tekrar gösterme.",
 	"wikibasemediainfo-property-placeholder": "Özellik",
 	"wikibasemediainfo-filepage-license-agree": "Kabul ediyorum",

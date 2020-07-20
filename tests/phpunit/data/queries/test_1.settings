@@ -12,7 +12,6 @@
 	"userLanguage": "en",
 	"settings": {
 		"statement": 20.0,
-		"statement-discount": 0.1,
 		"caption": 10.0,
 		"caption-fallback-discount": 0.5,
 		"all": 0.9,

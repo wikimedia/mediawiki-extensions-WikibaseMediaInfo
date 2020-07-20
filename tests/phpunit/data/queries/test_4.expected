@@ -46,6 +46,20 @@
 											"query": "P2=Q2"
 										}
 									}
+								},
+								{
+									"match": {
+										"statement_keywords": {
+											"query": "P1=Q999999"
+										}
+									}
+								},
+								{
+									"match": {
+										"statement_keywords": {
+											"query": "P2=Q999999"
+										}
+									}
 								}
 							]
 						}
@@ -94,7 +108,7 @@
 							}
 						}
 					},
-					"boost": 2
+					"boost": 16.666666666666668
 				}
 			},
 			{
@@ -106,7 +120,31 @@
 							}
 						}
 					},
-					"boost": 2
+					"boost": 16.666666666666668
+				}
+			},
+			{
+				"constant_score": {
+					"filter": {
+						"match": {
+							"statement_keywords": {
+								"query": "P1=Q999999"
+							}
+						}
+					},
+					"boost": 11.333333333333332
+				}
+			},
+			{
+				"constant_score": {
+					"filter": {
+						"match": {
+							"statement_keywords": {
+								"query": "P2=Q999999"
+							}
+						}
+					},
+					"boost": 11.333333333333332
 				}
 			},
 			{

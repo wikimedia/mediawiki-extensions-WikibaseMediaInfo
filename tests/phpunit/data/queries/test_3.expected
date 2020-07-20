@@ -19,11 +19,36 @@
 							"query": "yet another search term",
 							"operator": "and"
 						}
+					},
+					{
+						"bool": {
+							"should": [
+								{
+									"match": {
+										"statement_keywords": {
+											"query": "P999=Q999999"
+										}
+									}
+								}
+							]
+						}
 					}
 				]
 			}
 		}],
 		"should": [[
+			{
+				"constant_score": {
+					"filter": {
+						"match": {
+							"statement_keywords": {
+								"query": "P999=Q999999"
+							}
+						}
+					},
+					"boost": 0.92592592592592593
+				}
+			},
 			{
 				"match": {
 					"descriptions.de.plain": {

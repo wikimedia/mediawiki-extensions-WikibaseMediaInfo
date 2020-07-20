@@ -55,7 +55,6 @@ class MediaQueryBuilder implements FullTextQueryBuilder {
 		$this->settings = array_merge(
 			[
 				'statement' => 1.0,
-				'statement-discount' => 1.0,
 				'caption' => 1.0,
 				'caption-fallback-discount' => 1.0,
 				'all' => 1.0,
@@ -238,19 +237,18 @@ class MediaQueryBuilder implements FullTextQueryBuilder {
 	private function getStatementTerms( $term ) : array {
 		$statementTerms = [];
 		$matchingWikibaseItemIds = $this->findMatchingWikibaseItemIds( $term );
-		if ( count( $matchingWikibaseItemIds ) == 0 ) {
+		if ( count( $matchingWikibaseItemIds ) === 0 ) {
 			return $statementTerms;
 		}
 
 		$boost = $this->settings['statement'];
-		foreach ( $matchingWikibaseItemIds as $itemId ) {
+		foreach ( $matchingWikibaseItemIds as $itemId => $itemBoost ) {
 			foreach ( $this->defaultProperties as $propertyId ) {
 				$statementTerms[] = [
 					'term' => $propertyId . StatementsField::STATEMENT_SEPARATOR . $itemId,
-					'boost' => $boost,
+					'boost' => $boost * $itemBoost,
 				];
 			}
-			$boost *= $this->settings['statement-discount'];
 		}
 		return $statementTerms;
 	}
@@ -261,26 +259,55 @@ class MediaQueryBuilder implements FullTextQueryBuilder {
 		}
 		$params = [
 			'format' => 'json',
-			'action' => 'wbsearchentities',
-			'search' => $term,
-			'type' => 'item',
-			'language' => $this->userLanguage,
-			'strictlanguage' => false,
-			// Get the maximum number of results
-			'limit' => 50,
+			'action' => 'query',
+			'list' => 'search',
+			'srsearch' => $term,
+			'srnamespace' => 0,
+			'srlimit' => 50,
+			'srqiprofile' => 'wikibase',
+			'srprop' => 'snippet|titlesnippet|extensiondata',
+			'uselang' => $this->userLanguage,
 		];
-
 		$response = $this->apiRequest( $params );
 
-		// the match must not be partial
-		// i.e. 'cat' can match the 'house cat' or 'computerized axial tomography' items
-		// (who have a 'cat' and 'CAT' alias respectively), but must not match
-		// 'category' or 'Catalase'
+		// unfortunately, the search API doesn't return an actual score
+		// (for relevancy of the match), which means that we have no way
+		// of telling which results are awesome matches and which are only
+		// somewhat relevant
+		// since we can't rely on the order to tell us much about how
+		// relevant a result is (except for relative to one another), and
+		// we don't know the actual score of these results, we'll try to
+		// approximate a term frequency - it won't be great, but at least
+		// we'll be able to tell which of "cat" and "Pirates of Catalonia"
+		// most resemble "cat"
 		$itemIds = [];
-		foreach ( $response['search'] ?? [] as $match ) {
-			if ( strtolower( $match['match']['text'] ) === strtolower( $term ) ) {
-				$itemIds[] = $match['id'];
+		$matches = $response['query']['search'] ?? [];
+		foreach ( $matches as $i => $match ) {
+			// the highlight will either be in extensiondata (in the case
+			// of a matching alias), snippet (for descriptions), or
+			// titlesnippet (for labels)
+			$snippets = [
+				$match['snippet'],
+				$match['titlesnippet'],
+				$match['extensiondata']['wikibase']['extrasnippet'] ?? ''
+			];
+
+			$maxTermFrequency = 0;
+			foreach ( $snippets as $snippet ) {
+				// let's figure out how much of the snippet actually matched
+				// the search term based on the highlight
+				$source = preg_replace( '/<span class="searchmatch">(.*?)<\/span>/', '$1', $snippet );
+				$omitted = preg_replace( '/<span class="searchmatch">.*?<\/span>/', '', $snippet );
+				$termFrequency = $source === '' ? 0 : 1 - mb_strlen( $omitted ) / mb_strlen( $source );
+				$maxTermFrequency = max( $maxTermFrequency, $termFrequency );
 			}
+
+			// average the order in which results were returned (because that
+			// takes into account additional factors such as popularity of
+			// the page) and the naive term frequency to calculate how relevant
+			// the results are relative to one another
+			$relativeOrder = 1 - $i / count( $matches );
+			$itemIds[$match['title']] = ( $relativeOrder + $maxTermFrequency ) / 2;
 		}
 
 		$this->idsForTerm[$term] = $itemIds;

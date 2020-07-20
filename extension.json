@@ -318,8 +318,8 @@
 		},
 		"wikibase.mediainfo.mediasearch.styles": {
 			"styles": [
-				"resources/mediasearch/SearchResultsWidget.less",
-				"resources/mediasearch/TabFilterWidget.less"
+				"resources/mediasearch-styles/SearchResultsWidget.less",
+				"resources/mediasearch-styles/TabFilterWidget.less"
 			],
 			"targets": [
 				"desktop",
@@ -344,6 +344,8 @@
 				"resources/mediasearch-vue/components/AudioResult.vue",
 				"resources/mediasearch-vue/components/GenericResult.vue",
 				"resources/mediasearch-vue/components/Spinner.vue",
+				"resources/mediasearch-vue/components/EmptyState.vue",
+				"resources/mediasearch-vue/components/NoResults.vue",
 				"resources/mediasearch-vue/store/index.js",
 				"resources/mediasearch-vue/store/state.js",
 				"resources/mediasearch-vue/store/mutations.js",
@@ -359,11 +361,12 @@
 				"wikibasemediainfo-special-mediasearch-filter-size-medium",
 				"wikibasemediainfo-special-mediasearch-filter-size-large",
 				"wikibasemediainfo-special-mediasearch-no-results",
+				"wikibasemediainfo-special-mediasearch-no-results-tips",
 				"wikibasemediainfo-special-mediasearch-tab-bitmap",
 				"wikibasemediainfo-special-mediasearch-tab-audio",
 				"wikibasemediainfo-special-mediasearch-tab-video",
 				"wikibasemediainfo-special-mediasearch-tab-category",
-				"wikibasemediainfo-special-mediasearch-no-results",
+				"wikibasemediainfo-special-mediasearch-empty-state",
 				"searchbutton"
 			],
 			"dependencies": [

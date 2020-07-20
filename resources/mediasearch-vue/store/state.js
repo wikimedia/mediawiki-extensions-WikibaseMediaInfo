@@ -42,5 +42,10 @@ module.exports = {
 		audio: false,
 		video: false,
 		category: false
-	}
+	},
+
+	/**
+	 * Number of total files on commons (used in messages)
+	 */
+	fileCount: null
 };

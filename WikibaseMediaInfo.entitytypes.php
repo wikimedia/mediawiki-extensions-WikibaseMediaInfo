@@ -23,7 +23,6 @@ use Wikibase\DataModel\SerializerFactory;
 use Wikibase\DataModel\Services\EntityId\EntityIdFormatter;
 use Wikibase\DataModel\Services\Lookup\InProcessCachingDataTypeLookup;
 use Wikibase\Lib\EntityTypeDefinitions as Def;
-use Wikibase\Lib\LanguageFallbackChain;
 use Wikibase\Lib\LanguageNameLookup;
 use Wikibase\Lib\SettingsArray;
 use Wikibase\Lib\Store\CachingPropertyOrderProvider;
@@ -32,6 +31,7 @@ use Wikibase\Lib\Store\EntityRevisionLookup;
 use Wikibase\Lib\Store\Sql\WikiPageEntityDataLoader;
 use Wikibase\Lib\Store\Sql\WikiPageEntityMetaDataLookup;
 use Wikibase\Lib\Store\WikiPagePropertyOrderProvider;
+use Wikibase\Lib\TermLanguageFallbackChain;
 use Wikibase\MediaInfo\ChangeOp\Deserialization\MediaInfoChangeOpDeserializer;
 use Wikibase\MediaInfo\Content\MediaInfoContent;
 use Wikibase\MediaInfo\DataAccess\Store\EntityIdFixingRevisionLookup;
@@ -87,7 +87,7 @@ return [
 		},
 		Def::VIEW_FACTORY_CALLBACK => function (
 			Language $language,
-			LanguageFallbackChain $fallbackChain,
+			TermLanguageFallbackChain $termFallbackChain,
 			EntityDocument $entity
 		) {
 			$mwConfig = MediaWikiServices::getInstance()->getMainConfig();
@@ -100,7 +100,7 @@ return [
 				new LanguageNameLookup( $languageCode ),
 				$langDirLookup,
 				$textProvider,
-				$fallbackChain
+				$termFallbackChain
 			);
 
 			// Use a MediaInfo-specific EntityStatementView class

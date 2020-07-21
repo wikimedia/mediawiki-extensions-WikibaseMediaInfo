@@ -10,8 +10,8 @@ use OOUI\PanelLayout;
 use OOUI\Tag;
 use OutputPage;
 use Wikibase\DataModel\Term\TermList;
-use Wikibase\Lib\LanguageFallbackChain;
 use Wikibase\Lib\LanguageNameLookup;
+use Wikibase\Lib\TermLanguageFallbackChain;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\View\LanguageDirectionalityLookup;
 use Wikibase\View\LocalizedTextProvider;
@@ -39,9 +39,9 @@ class MediaInfoEntityTermsView {
 	private $textProvider;
 
 	/**
-	 * @var LanguageFallbackChain
+	 * @var TermLanguageFallbackChain
 	 */
-	private $fallbackChain;
+	private $termFallbackChain;
 
 	const CAPTIONS_CUSTOM_TAG = 'mediaInfoViewCaptions';
 	const CAPTION_EMPTY_CLASS = 'wbmi-entityview-emptyCaption';
@@ -52,21 +52,21 @@ class MediaInfoEntityTermsView {
 	 * @param LanguageNameLookup $languageNameLookup
 	 * @param LanguageDirectionalityLookup $languageDirectionalityLookup
 	 * @param LocalizedTextProvider $textProvider
-	 * @param LanguageFallbackChain $fallbackChain
+	 * @param TermLanguageFallbackChain $termFallbackChain
 	 * @codeCoverageIgnore
 	 */
 	public function __construct(
 		LanguageNameLookup $languageNameLookup,
 		LanguageDirectionalityLookup $languageDirectionalityLookup,
 		LocalizedTextProvider $textProvider,
-		LanguageFallbackChain $fallbackChain
+		TermLanguageFallbackChain $termFallbackChain
 	) {
 		OutputPage::setupOOUI();
 
 		$this->languageNameLookup = $languageNameLookup;
 		$this->languageDirectionalityLookup = $languageDirectionalityLookup;
 		$this->textProvider = $textProvider;
-		$this->fallbackChain = $fallbackChain;
+		$this->termFallbackChain = $termFallbackChain;
 	}
 
 	/**
@@ -126,14 +126,14 @@ class MediaInfoEntityTermsView {
 	 */
 	private function getLanguagesOrderedByFallbackChain( MediaInfo $entity ) {
 		$labelLanguages = array_keys( $entity->getLabels()->toTextArray() );
-		$fbChainLanguages = $this->fallbackChain->getFetchLanguageCodes();
+		$fbChainLanguages = $this->termFallbackChain->getFetchLanguageCodes();
 		$orderedLangCodes =
 			array_values(
 				array_flip(
 					array_merge(
 						array_flip(
 							array_intersect(
-								$this->fallbackChain->getFetchLanguageCodes(),
+								$this->termFallbackChain->getFetchLanguageCodes(),
 								$labelLanguages
 							)
 						),
@@ -175,7 +175,7 @@ class MediaInfoEntityTermsView {
 			} elseif (
 				$index == 1 &&
 				$firstCaptionHasNoValue &&
-				in_array( $languageCode, $this->fallbackChain->getFetchLanguageCodes() )
+				in_array( $languageCode, $this->termFallbackChain->getFetchLanguageCodes() )
 			) {
 				$showCaption = true;
 			} else {

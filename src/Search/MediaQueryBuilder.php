@@ -36,7 +36,7 @@ class MediaQueryBuilder implements FullTextQueryBuilder {
 	private $defaultProperties;
 	/** @var string */
 	private $externalEntitySearchBaseUri;
-	/** @var \Wikibase\Lib\LanguageFallbackChain */
+	/** @var \Wikibase\Lib\TermLanguageFallbackChain */
 	private $languageFallbackChain;
 	/** @var array */
 	private $idsForTerm = [];

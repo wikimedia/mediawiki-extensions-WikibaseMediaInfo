@@ -8,8 +8,8 @@ use CirrusSearch\SearchConfig;
 use MediaWiki\Http\HttpRequestFactory;
 use MediaWiki\MediaWikiServices;
 use PHPUnit\Framework\TestCase;
-use Wikibase\Lib\LanguageFallbackChain;
 use Wikibase\Lib\LanguageFallbackChainFactory;
+use Wikibase\Lib\TermLanguageFallbackChain;
 use Wikibase\MediaInfo\Search\MediaQueryBuilder;
 
 /**
@@ -89,7 +89,7 @@ class MediaQueryBuilderTest extends TestCase {
 		string $languageCode,
 		array $fallbackLangs
 	) : LanguageFallbackChainFactory {
-		$fallbackChain = $this->createMock( LanguageFallbackChain::class );
+		$fallbackChain = $this->createMock( TermLanguageFallbackChain::class );
 		$fallbackChain->method( 'getFetchLanguageCodes' )
 			->willReturn( $fallbackLangs );
 		$fallbackChainFactory = $this->createMock( LanguageFallbackChainFactory::class );

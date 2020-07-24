@@ -11,6 +11,8 @@ use Wikibase\Repo\Search\Elastic\Fields\FieldDefinitions;
  */
 class MediaInfoFieldDefinitionsTest extends \PHPUnit\Framework\TestCase {
 
+	use \PHPUnit4And6Compat;
+
 	public function testGetFields() {
 		$labelsProviderFieldDefinitions = $this->getMock( FieldDefinitions::class );
 		$labelsProviderFieldDefinitions->method( 'getFields' )

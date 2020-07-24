@@ -22,6 +22,8 @@ use Wikibase\MediaInfo\DataModel\Serialization\MediaInfoSerializer;
  */
 class MediaInfoSerializerTest extends \PHPUnit\Framework\TestCase {
 
+	use \PHPUnit4And6Compat;
+
 	private function newSerializer() {
 		$termListSerializer = $this->getMock( Serializer::class );
 		$termListSerializer->expects( $this->any() )

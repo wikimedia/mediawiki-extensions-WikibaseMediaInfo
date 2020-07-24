@@ -43,6 +43,8 @@ use Wikibase\TermIndex;
  */
 class MediaInfoHandlerTest extends \PHPUnit\Framework\TestCase {
 
+	use \PHPUnit4And6Compat;
+
 	private function getMockWithoutConstructor( $className ) {
 		return $this->getMockBuilder( $className )
 			->disableOriginalConstructor()

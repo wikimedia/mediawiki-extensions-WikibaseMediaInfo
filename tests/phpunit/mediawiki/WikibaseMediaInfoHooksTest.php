@@ -31,6 +31,8 @@ use Wikibase\Repo\WikibaseRepo;
  */
 class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 
+	use \PHPUnit4And6Compat;
+
 	/**
 	 * @var bool Set to true if a ContentHandler has been injected into $wgContentHandlers
 	 */

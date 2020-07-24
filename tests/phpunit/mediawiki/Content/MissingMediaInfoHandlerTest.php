@@ -26,6 +26,8 @@ use Wikibase\Repo\ParserOutput\EntityParserOutputGeneratorFactory;
  */
 class MissingMediaInfoHandlerTest extends \PHPUnit\Framework\TestCase {
 
+	use \PHPUnit4And6Compat;
+
 	/**
 	 * @return TitleFactory
 	 */

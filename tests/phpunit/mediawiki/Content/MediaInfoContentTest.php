@@ -20,6 +20,8 @@ use Wikibase\MediaInfo\DataModel\MediaInfoId;
  */
 class MediaInfoContentTest extends \PHPUnit\Framework\TestCase {
 
+	use \PHPUnit4And6Compat;
+
 	public function testInvalidEntityType() {
 		$this->setExpectedException( InvalidArgumentException::class );
 		new MediaInfoContent( new EntityInstanceHolder( new Item() ) );

@@ -33,6 +33,8 @@ use Wikibase\View\Template\TemplateFactory;
  */
 class MediaInfoViewTest extends \PHPUnit\Framework\TestCase {
 
+	use \PHPUnit4And6Compat;
+
 	/**
 	 * @return StatementSectionsView
 	 */

@@ -24,6 +24,8 @@ use Wikibase\View\EntityTermsView;
  */
 class EntityTypesTest extends \PHPUnit\Framework\TestCase {
 
+	use \PHPUnit4And6Compat;
+
 	private function getRegistry() {
 		return require __DIR__ . '/../../../WikibaseMediaInfo.entitytypes.php';
 	}

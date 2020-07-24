@@ -33,6 +33,7 @@ class MediaInfoChangeOpDeserializerTest extends \PHPUnit\Framework\TestCase {
 
 	use LabelsChangeOpDeserializationTester;
 	use DescriptionsChangeOpDeserializationTester;
+	use \PHPUnit4And6Compat;
 
 	public function testCreateEntityChangeOp() {
 		$changeRequest = [

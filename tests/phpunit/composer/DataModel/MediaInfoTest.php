@@ -22,6 +22,8 @@ use Wikibase\MediaInfo\DataModel\MediaInfoId;
  */
 class MediaInfoTest extends \PHPUnit\Framework\TestCase {
 
+	use \PHPUnit4And6Compat;
+
 	public function testConstructor() {
 		$id = new MediaInfoId( 'M1' );
 		$labels = new TermList();

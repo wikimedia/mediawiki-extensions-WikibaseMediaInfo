@@ -18,6 +18,8 @@ use Wikibase\MediaInfo\Services\FilePageLookup;
  */
 class FilePageLookupTest extends \PHPUnit\Framework\TestCase {
 
+	use \PHPUnit4And6Compat;
+
 	/**
 	 * @return TitleFactory
 	 */

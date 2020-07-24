@@ -21,6 +21,8 @@ use Wikibase\MediaInfo\DataModel\Serialization\MediaInfoDeserializer;
  */
 class MediaInfoDeserializerTest extends \PHPUnit\Framework\TestCase {
 
+	use \PHPUnit4And6Compat;
+
 	private function newDeserializer() {
 		$termListDeserializer = $this->getMock( Deserializer::class );
 		$termListDeserializer->expects( $this->any() )

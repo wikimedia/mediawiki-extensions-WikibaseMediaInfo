@@ -15,6 +15,8 @@ use Wikibase\MediaInfo\DataModel\MediaInfoId;
  */
 class MediaInfoIdTest extends \PHPUnit\Framework\TestCase {
 
+	use \PHPUnit4And6Compat;
+
 	public function provideValidIds() {
 		return [
 			[ 'm1' ],

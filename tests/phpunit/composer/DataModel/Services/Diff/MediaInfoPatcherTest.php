@@ -25,6 +25,8 @@ use Wikibase\MediaInfo\DataModel\Services\Diff\MediaInfoPatcher;
  */
 class MediaInfoPatcherTest extends \PHPUnit\Framework\TestCase {
 
+	use \PHPUnit4And6Compat;
+
 	public function testGivenEmptyDiff_mediaInfoIsReturnedAsIs() {
 		$mediaInfo = new MediaInfo();
 		$mediaInfo->getLabels()->setTextForLanguage( 'en', 'foo' );

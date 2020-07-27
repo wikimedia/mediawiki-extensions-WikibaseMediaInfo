@@ -2,11 +2,15 @@
 	<a ref="link"
 		class="wbmi-image-result"
 		:href="canonicalurl"
-		target="_blank"
 		:title="title"
+		:style="style"
+		target="_blank"
 		@click.prevent="showDetails">
 
-		<img :src="thumbnail" :alt="displayName">
+		<wbmi-image
+			:source="thumbnail"
+			:alt="displayName">
+		</wbmi-image>
 	</a>
 </template>
 
@@ -18,11 +22,16 @@
  * mixin and includes some custom computed properties. aspectRatio is not
  * currently used but may be relevant in the future for layout.
  */
-var searchResult = require( '../mixins/searchResult.js' );
+var searchResult = require( '../mixins/searchResult.js' ),
+	Image = require( './base/Image.vue' );
 
 // @vue/component
 module.exports = {
 	name: 'ImageResult',
+
+	components: {
+		'wbmi-image': Image
+	},
 
 	mixins: [ searchResult ],
 
@@ -44,8 +53,32 @@ module.exports = {
 		/**
 		 * @return {number}
 		 */
+		thumbheight: function () {
+			return this.imageinfo[ 0 ].thumbheight;
+		},
+
+		/**
+		 * @return {number}
+		 */
+		thumbwidth: function () {
+			return this.imageinfo[ 0 ].thumbwidth;
+		},
+
+		/**
+		 * @return {number}
+		 */
 		aspectRatio: function () {
 			return this.width / this.height;
+		},
+
+		/**
+		 * @return {Object} style object with width and height properties
+		 */
+		style: function () {
+			return {
+				width: this.thumbwidth + 'px',
+				height: this.thumbheight + 'px'
+			};
 		}
 	}
 
@@ -58,8 +91,10 @@ module.exports = {
 
 // Base element is an anchor tag for the sake of keyboard navigation.
 .wbmi-image-result {
+	background-color: @wmui-color-base80;
 	box-sizing: border-box;
 	display: block;
+	height: 180px;
 	margin: @wbmi-spacing-sm;
 	transition: box-shadow @transition-base ease, outline @transition-base ease;
 
@@ -75,8 +110,7 @@ module.exports = {
 	}
 
 	img {
-		height: 180px;
-		min-width: 100px;
+		height: 100%;
 		object-fit: cover;
 		object-position: center center;
 		pointer-events: none;

@@ -698,21 +698,19 @@ class WikibaseMediaInfoHooks {
 		// @todo: once T254388 is complete revert to using the MediaQueryBuilder only for NS_FILE
 		$namespaces = MediaWikiServices::getInstance()->getNamespaceInfo()->getValidNamespaces();
 
+		$searchProfileContextName = MediaQueryBuilder::SEARCH_PROFILE_CONTEXT_NAME;
+		// array key in MediaSearchProfiles.php
+		$fulltextProfileName = MediaQueryBuilder::FULLTEXT_PROFILE_NAME;
+
+		// Register the query builder profiles so that they are usable in interleaved A/B test
+		$service->registerFileRepository( SearchProfileService::FT_QUERY_BUILDER,
+			// this string is to prevent overwriting, not used for retrieval
+			'mediainfo_base',
+			__DIR__ . '/Search/MediaSearchProfiles.php' );
+
 		$request = RequestContext::getMain()->getRequest();
-		if (
-			$request->getVal( 'mediasearch' )
-			||
-			$request->getVal( 'cirrusUserTesting' ) == 'mediasearchbuilder'
-		) {
-			$searchProfileContextName = MediaQueryBuilder::SEARCH_PROFILE_CONTEXT_NAME;
-			// array key in MediaSearchProfiles.php
-			$fulltextProfileName = MediaQueryBuilder::FULLTEXT_PROFILE_NAME;
-
-			$service->registerFileRepository( SearchProfileService::FT_QUERY_BUILDER,
-				// this string is to prevent overwriting, not used for retrieval
-				'mediainfo_base',
-				__DIR__ . '/Search/MediaSearchProfiles.php' );
-
+		// Only activate a query route if mediasearch is explicitly requested
+		if ( $request->getVal( 'mediasearch' ) ) {
 			$service->registerDefaultProfile( SearchProfileService::FT_QUERY_BUILDER,
 				$searchProfileContextName, $fulltextProfileName );
 
@@ -721,13 +719,8 @@ class WikibaseMediaInfoHooks {
 			$service->registerDefaultProfile( SearchProfileService::RESCORE,
 				$searchProfileContextName, 'wsum_inclinks_pv' );
 
-			$queryTypes = [ BasicQueryClassifier::SIMPLE_BAG_OF_WORDS ];
-			if ( $request->getVal( 'mediasearch' ) ) {
-				$queryTypes[] = BasicQueryClassifier::COMPLEX_QUERY;
-			}
-
-			$service->registerFTSearchQueryRoute( $searchProfileContextName, 0.9, $namespaces,
-				$queryTypes );
+			$service->registerFTSearchQueryRoute( $searchProfileContextName, 1, [ NS_FILE ],
+				[ BasicQueryClassifier::SIMPLE_BAG_OF_WORDS, BasicQueryClassifier::COMPLEX_QUERY ] );
 		}
 	}
 

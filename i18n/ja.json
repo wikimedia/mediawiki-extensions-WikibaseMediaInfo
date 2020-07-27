@@ -5,7 +5,8 @@
 			"Linuxmetel",
 			"Marine-Blue",
 			"Object＊tofu",
-			"Omotecho"
+			"Omotecho",
+			"Tmv"
 		]
 	},
 	"action-mediainfo-term": "メディアの情報項目を変更（キャプション、概要等）",
@@ -41,7 +42,7 @@
 	"wikibasemediainfo-filepage-statement-no-value": "このプロパティは「値なし」が設定されています",
 	"wikibasemediainfo-filepage-statement-no-data": "データなし",
 	"wikibasemediainfo-filepage-statement-no-results": "該当するものはありません",
-	"wikibasemediainfo-filepage-statement-some-value": "このプロパティは「不明な値」が設定されています",
+	"wikibasemediainfo-filepage-statement-some-value": "{{WBREPONAME}} アイテムなしの値",
 	"wikibasemediainfo-filepage-statement-error": "このプロパティの値の取得中にエラーが発生しました",
 	"wikibasemediainfo-filepage-license-title": "キャプションと構造化データの投稿",
 	"wikibasemediainfo-filepage-license-content": "「変更を公開」をクリックすることで、あなたは[[wmf:Terms_of_Use|利用規約]]に同意し、自分の投稿内容を[https://creativecommons.org/publicdomain/zero/1.0/ CC0ライセンス]のもとで公開することに撤回不可能な形で同意することになります。",
@@ -50,7 +51,7 @@
 	"wikibasemediainfo-filepage-license-agree": "同意します",
 	"wikibasemediainfo-statements-depicts-title": "この画像に題材として描かれている項目",
 	"wikibasemediainfo-statements-item-add-qualifier": "修飾子を追加",
-	"wikibasemediainfo-statements-item-input-label": "ウィキデータを検索",
+	"wikibasemediainfo-statements-item-input-label": "{{WBREPONAME}} から",
 	"wikibasemediainfo-statements-item-input-placeholder": "追加する項目を検索（猫、山、タージ・マハルなど）",
 	"wikibasemediainfo-statements-item-is-prominent": "重要",
 	"wikibasemediainfo-statements-item-mark-as-prominent": "重要としてマークする",
@@ -59,7 +60,7 @@
 	"wikibasemediainfo-statements-remove": "すべて除去",
 	"wikibasemediainfo-statements-title-depicts": "このファイルに描写されている項目",
 	"wikibasemediainfo-statements-unsupported-property-title": "サポートされていないプロパティ",
-	"wikibasemediainfo-statements-link-notice-text": "構造化データラベルはウィキデータのページとリンクしています。それぞれ新しいウィンドウが開きます。",
+	"wikibasemediainfo-statements-link-notice-text": "構造化データラベルはそれぞれの {{WBREPONAME}} ページとリンクしており新しいウィンドウで開きます。",
 	"wikibasemediainfo-statements-link-notice-dismiss": "閉じる",
 	"wikibasemediainfo-remove-all-statements-confirm": "このプロパティの既存の値をすべて削除します。変更が公開されたときに、値のないプロパティは削除されます。実行しますか？",
 	"wikibasemediainfo-remove-all-statements-confirm-title": "すべて除去しますか？",

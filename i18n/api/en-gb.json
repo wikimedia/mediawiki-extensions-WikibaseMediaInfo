@@ -1,6 +1,8 @@
 {
 	"@metadata": {
-		"authors": []
+		"authors": [
+			"Bjh21"
+		]
 	},
-	"apihelp-query+mediasearch-param-search": "Sökterm"
+	"apihelp-query+mediasearch-param-search": "Search term"
 }

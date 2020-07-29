@@ -13,7 +13,9 @@
 				:key="tab"
 				:name="tab"
 				:title="tabNames[ tab ]">
-				<search-results :media-type="tab">
+				<search-results
+					:media-type="tab"
+					:enable-quick-view="enableQuickView">
 				</search-results>
 
 				<observer @intersect="getMoreResultsForTabIfAvailable( tab )">
@@ -76,7 +78,11 @@ module.exports = {
 
 	data: function () {
 		return {
-			currentTab: url.query.type || ''
+			currentTab: url.query.type || '',
+			// temporary feature flag for QuickView feature: ?quickview=true
+			// params must be present in URL; the actual value of the param
+			// doesn't matter, just provide something to enable
+			enableQuickView: !!url.query.quickview
 		};
 	},
 

@@ -1,5 +1,11 @@
 <template>
-	<div class="wbmi-video-result">
+	<a ref="link"
+		class="wbmi-video-result"
+		:href="canonicalUrl"
+		target="_blank"
+		:title="title"
+		@click.prevent="showDetails">
+
 		<img
 			:src="thumbnail"
 			:alt="displayName"
@@ -9,11 +15,7 @@
 
 		<div class="wbmi-video-result__body">
 			<h3 class="wbmi-video-result__title">
-				<a :href="canonicalurl"
-					target="_blank"
-					:title="title">
-					{{ displayName }}
-				</a>
+				{{ displayName }}
 			</h3>
 
 			<h4 v-if="formattedDuration || mime" class="wbmi-video-result__meta">
@@ -25,7 +27,7 @@
 				</span>
 			</h4>
 		</div>
-	</div>
+	</a>
 </template>
 
 <script>
@@ -66,18 +68,39 @@ module.exports = {
 @import 'mediawiki.mixins';
 @import '../../mediainfo-variables.less';
 
+// Base element is an anchor tag for the sake of keyboard navigation.
 .wbmi-video-result {
 	.flex-display();
 	.flex-wrap( nowrap );
-	box-sizing: border-box;
-	border: solid 1px @wmui-color-base70;
 	border-radius: @border-radius-base;
-	cursor: pointer;
+	border: solid 1px @wmui-color-base70;
+	box-sizing: border-box;
+	color: @color-primary;
 	flex-direction: column;
 	margin: @wbmi-spacing-sm;
+	transition: box-shadow @transition-base ease, outline @transition-base ease;
 
-	&:hover {
+	// Title is a heading element inside of a link, but we want this to look
+	// and behave like link text
+	&__title {
+		color: @color-primary;
+		transition: color @transition-base ease;
+	}
+
+	&:hover &__title {
+		color: @color-primary--active;
+	}
+
+	&:hover,
+	&:focus {
 		.wbmi-result-box-shadow();
+		text-decoration: none;
+	}
+
+	// Extra prominence on focus using outline, for users navigating via keyboard
+	&:focus {
+		outline: solid 2px @color-primary;
+		outline-offset: -2px;
 	}
 
 	&__thumbnail {
@@ -85,23 +108,6 @@ module.exports = {
 		object-fit: contain;
 		height: 150px;
 		width: 100%;
-	}
-
-	&__body {
-		.flex-display();
-		.flex( 1, 0, auto );
-		flex-direction: column;
-		padding: @wbmi-spacing-sm;
-
-		& .wbmi-video-result__title {
-			line-height: @line-height-heading;
-			margin-top: 0;
-			padding-top: 0;
-
-			& a:hover {
-				text-decoration: none;
-			}
-		}
 	}
 
 	&__duration {
@@ -117,6 +123,19 @@ module.exports = {
 	&__mime {
 		color: @color-base--subtle;
 		font-weight: normal;
+	}
+
+	&__body {
+		.flex-display();
+		.flex( 1, 0, auto );
+		flex-direction: column;
+		padding: @wbmi-spacing-sm;
+
+		& .wbmi-video-result__title {
+			line-height: @line-height-heading;
+			margin-top: 0;
+			padding-top: 0;
+		}
 	}
 }
 </style>

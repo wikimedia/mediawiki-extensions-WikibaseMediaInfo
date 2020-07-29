@@ -1,9 +1,11 @@
 <template>
 	<div class="wbmi-audio-result">
 		<h3 class="wbmi-audio-result__title">
-			<a :href="canonicalurl"
+			<a ref="link"
+				:href="canonicalurl"
 				target="_blank"
-				:title="title">
+				:title="title"
+				@click.prevent="showDetails">
 				{{ displayName }}
 			</a>
 		</h3>

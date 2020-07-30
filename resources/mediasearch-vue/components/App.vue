@@ -25,9 +25,11 @@
 				</mw-spinner>
 
 				<template v-else-if="hasNoResults( tab )">
-					<message>
-						{{ $i18n( 'wikibasemediainfo-special-mediasearch-no-results' ) }}
-					</message>
+					<no-results></no-results>
+				</template>
+
+				<template v-else-if="shouldShowEmptyState">
+					<empty-state></empty-state>
 				</template>
 			</tab>
 		</tabs>
@@ -57,9 +59,10 @@ var mapState = require( 'vuex' ).mapState,
 	Tabs = require( './base/Tabs.vue' ),
 	SearchInput = require( './SearchInput.vue' ),
 	SearchResults = require( './SearchResults.vue' ),
+	NoResults = require( './NoResults.vue' ),
 	Observer = require( './base/Observer.vue' ),
-	Message = require( './base/Message.vue' ),
 	Spinner = require( './Spinner.vue' ),
+	EmptyState = require( './EmptyState.vue' ),
 	url = new mw.Uri();
 
 // @vue/component
@@ -73,7 +76,8 @@ module.exports = {
 		'search-results': SearchResults,
 		observer: Observer,
 		'mw-spinner': Spinner,
-		message: Message
+		'empty-state': EmptyState,
+		'no-results': NoResults
 	},
 
 	data: function () {
@@ -116,6 +120,17 @@ module.exports = {
 			}.bind( this ) );
 
 			return names;
+		},
+
+		/**
+		 * Whether to show the pre-search empty state; show this whenever a
+		 * search term is not present and there are no results to display
+		 *
+		 * @return {boolean}
+		 */
+		shouldShowEmptyState: function () {
+			return this.term.length === 0 &&
+				this.results[ this.currentTab ].length === 0;
 		}
 	} ),
 
@@ -124,7 +139,8 @@ module.exports = {
 		'resetResults',
 		'setTerm'
 	] ), mapActions( [
-		'search'
+		'search',
+		'fetchFileCount'
 	] ), {
 		/**
 		 * @param {Object} newTab
@@ -237,6 +253,10 @@ module.exports = {
 				this.performNewSearch();
 			}
 		}
+	},
+
+	mounted: function () {
+		this.fetchFileCount();
 	}
 };
 </script>

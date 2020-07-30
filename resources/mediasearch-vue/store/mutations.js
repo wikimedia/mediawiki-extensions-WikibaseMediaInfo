@@ -59,5 +59,9 @@ module.exports = {
 	 */
 	setPending: function ( state, payload ) {
 		state.pending[ payload.type ] = payload.pending;
+	},
+
+	setFileCount: function ( state, fileCount ) {
+		state.fileCount = fileCount;
 	}
 };

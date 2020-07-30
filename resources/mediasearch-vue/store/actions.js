@@ -109,5 +109,28 @@ module.exports = {
 				pending: false
 			} );
 		} );
+	},
+
+	/**
+	 * Make an API request for site statistics and commit the current file count
+	 *
+	 * @param {Object} context
+	 * @return {jQuery.Deferred}
+	 */
+	fetchFileCount: function ( context ) {
+		var params = {
+			action: 'query',
+			format: 'json',
+			meta: 'siteinfo',
+			siprop: 'statistics'
+		};
+
+		// Use for testing:
+		// return $.get( 'https://commons.wikimedia.org/w/api.php', params ).then( function ( response ) {
+
+		return api.get( params ).then( function ( response ) {
+			var fileCount = response.query.statistics.images;
+			context.commit( 'setFileCount', fileCount );
+		} );
 	}
 };

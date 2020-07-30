@@ -1,217 +1,297 @@
 {
 	"bool": {
-		"filter": [{
-			"bool": {
-				"should": [
-					{
-						"multi_match": {
-							"fields": [
-								"descriptions.en.plain",
-								"all",
-								"all.plain",
-								"category"
-							],
-							"type": "cross_fields",
-							"query": "some search term",
-							"operator": "and"
+		"filter": [
+			{
+				"bool": {
+					"should": [
+						{
+							"multi_match": {
+								"fields": [
+									"all",
+									"all.plain"
+								],
+								"query": "some search term",
+								"operator": "and"
+							}
+						},
+						{
+							"bool": {
+								"should": [
+									{
+										"match": {
+											"statement_keywords": {
+												"query": "P1=Q1"
+											}
+										}
+									},
+									{
+										"match": {
+											"statement_keywords": {
+												"query": "P2=Q1"
+											}
+										}
+									},
+									{
+										"match": {
+											"statement_keywords": {
+												"query": "P1=Q2"
+											}
+										}
+									},
+									{
+										"match": {
+											"statement_keywords": {
+												"query": "P2=Q2"
+											}
+										}
+									},
+									{
+										"match": {
+											"statement_keywords": {
+												"query": "P1=Q999999"
+											}
+										}
+									},
+									{
+										"match": {
+											"statement_keywords": {
+												"query": "P2=Q999999"
+											}
+										}
+									}
+								]
+							}
 						}
-					},
-					{
-						"bool": {
-							"should": [
-								{
-									"match": {
-										"statement_keywords": {
-											"query": "P1=Q1"
-										}
-									}
-								},
-								{
-									"match": {
-										"statement_keywords": {
-											"query": "P2=Q1"
-										}
-									}
-								},
-								{
-									"match": {
-										"statement_keywords": {
-											"query": "P1=Q2"
-										}
-									}
-								},
-								{
-									"match": {
-										"statement_keywords": {
-											"query": "P2=Q2"
-										}
-									}
-								},
-								{
-									"match": {
-										"statement_keywords": {
-											"query": "P1=Q999999"
-										}
-									}
-								},
-								{
-									"match": {
-										"statement_keywords": {
-											"query": "P2=Q999999"
-										}
-									}
+					]
+				}
+			}
+		],
+		"should": [
+			[
+				{
+					"bool": {
+						"should": [
+							{
+								"multi_match": {
+									"query": "some search term",
+									"boost": 1,
+									"minimum_should_match": 1,
+									"type": "most_fields",
+									"fields": [
+										"descriptions.en.plain^1"
+									]
 								}
-							]
-						}
-					}
-				]
-			}
-		}],
-		"should": [[
-			{
-				"constant_score": {
-					"filter": {
-						"match": {
-							"statement_keywords": {
-								"query": "P1=Q1"
+							},
+							{
+								"multi_match": {
+									"query": "some search term",
+									"boost": 1,
+									"minimum_should_match": 1,
+									"type": "most_fields",
+									"fields": [
+										"title^3",
+										"title.plain^1"
+									]
+								}
+							},
+							{
+								"multi_match": {
+									"query": "some search term",
+									"boost": 1,
+									"minimum_should_match": 1,
+									"type": "most_fields",
+									"fields": [
+										"category^3",
+										"category.plain^1"
+									]
+								}
+							},
+							{
+								"multi_match": {
+									"query": "some search term",
+									"boost": 1,
+									"minimum_should_match": 1,
+									"type": "most_fields",
+									"fields": [
+										"heading^3",
+										"heading.plain^1"
+									]
+								}
+							},
+							{
+								"multi_match": {
+									"query": "some search term",
+									"boost": 1,
+									"minimum_should_match": 1,
+									"type": "most_fields",
+									"fields": [
+										"auxiliary_text^3",
+										"auxiliary_text.plain^1"
+									]
+								}
+							},
+							{
+								"dis_max": {
+									"queries": [
+										{
+											"multi_match": {
+												"query": "some search term",
+												"boost": 1,
+												"minimum_should_match": 1,
+												"type": "most_fields",
+												"fields": [
+													"redirect.title^3",
+													"redirect.title.plain^1"
+												]
+											}
+										},
+										{
+											"multi_match": {
+												"query": "some search term",
+												"boost": 1,
+												"minimum_should_match": 1,
+												"type": "most_fields",
+												"fields": [
+													"suggest"
+												]
+											}
+										}
+									]
+								}
+							},
+							{
+								"multi_match": {
+									"query": "some search term",
+									"boost": 1,
+									"minimum_should_match": 1,
+									"type": "most_fields",
+									"fields": [
+										"text^3",
+										"text.plain^1"
+									]
+								}
+							},
+							{
+								"multi_match": {
+									"query": "some search term",
+									"boost": 1,
+									"minimum_should_match": 1,
+									"type": "most_fields",
+									"fields": [
+										"file_text^3",
+										"file_text.plain^1"
+									]
+								}
 							}
-						}
-					},
-					"boost": 20.0
-				}
-			},
-			{
-				"constant_score": {
-					"filter": {
-						"match": {
-							"statement_keywords": {
-								"query": "P2=Q1"
+						]
+					}
+				},
+				{
+					"bool": {
+						"should": [
+							{
+								"constant_score": {
+									"filter": {
+										"match": {
+											"statement_keywords": {
+												"query": "P1=Q1"
+											}
+										}
+									},
+									"boost": 1
+								}
+							},
+							{
+								"constant_score": {
+									"filter": {
+										"match": {
+											"statement_keywords": {
+												"query": "P2=Q1"
+											}
+										}
+									},
+									"boost": 1
+								}
+							},
+							{
+								"constant_score": {
+									"filter": {
+										"match": {
+											"statement_keywords": {
+												"query": "P1=Q2"
+											}
+										}
+									},
+									"boost": 0.83333333333333333
+								}
+							},
+							{
+								"constant_score": {
+									"filter": {
+										"match": {
+											"statement_keywords": {
+												"query": "P2=Q2"
+											}
+										}
+									},
+									"boost": 0.83333333333333333
+								}
+							},
+							{
+								"constant_score": {
+									"filter": {
+										"match": {
+											"statement_keywords": {
+												"query": "P1=Q999999"
+											}
+										}
+									},
+									"boost": 0.56666666666666666
+								}
+							},
+							{
+								"constant_score": {
+									"filter": {
+										"match": {
+											"statement_keywords": {
+												"query": "P2=Q999999"
+											}
+										}
+									},
+									"boost": 0.56666666666666666
+								}
 							}
-						}
-					},
-					"boost": 20.0
-				}
-			},
-			{
-				"constant_score": {
-					"filter": {
-						"match": {
-							"statement_keywords": {
-								"query": "P1=Q2"
+						]
+					}
+				},
+				{
+					"bool": {
+						"must": [
+							{
+								"multi_match": {
+									"fields": [
+										"all_near_match^2",
+										"all_near_match.asciifolding^1.5"
+									],
+									"query": "some search term",
+									"operator": "and"
+								}
 							}
-						}
-					},
-					"boost": 16.666666666666666
-				}
-			},
-			{
-				"constant_score": {
-					"filter": {
-						"match": {
-							"statement_keywords": {
-								"query": "P2=Q2"
+						],
+						"filter": [
+							{
+								"terms": {
+									"namespace": [
+										0,
+										14
+									]
+								}
 							}
-						}
-					},
-					"boost": 16.666666666666666
-				}
-			},
-			{
-				"constant_score": {
-					"filter": {
-						"match": {
-							"statement_keywords": {
-								"query": "P1=Q999999"
-							}
-						}
-					},
-					"boost": 11.333333333333332
-				}
-			},
-			{
-				"constant_score": {
-					"filter": {
-						"match": {
-							"statement_keywords": {
-								"query": "P2=Q999999"
-							}
-						}
-					},
-					"boost": 11.333333333333332
-				}
-			},
-			{
-				"match": {
-					"descriptions.en.plain": {
-						"query": "some search term",
-						"boost": 10.0
+						],
+						"boost": 1
 					}
 				}
-			},
-			{
-				"match": {
-					"all": {
-						"query": "some search term",
-						"boost": 0.9
-					}
-				}
-			},
-			{
-				"match": {
-					"all.plain": {
-						"query": "some search term",
-						"boost": 0.8
-					}
-				}
-			},
-			{
-				"match": {
-					"category": {
-						"query": "some search term",
-						"boost": 0.7
-					}
-				}
-			},
-			{
-				"match": {
-					"title": {
-						"query": "some search term",
-						"boost": 0.6
-					}
-				}
-			},
-			{
-				"match": {
-					"redirect.title": {
-						"query": "some search term",
-						"boost": 0.5
-					}
-				}
-			},
-			{
-				"match": {
-					"text": {
-						"query": "some search term",
-						"boost": 0.4
-					}
-				}
-			},
-			{
-				"match": {
-					"auxiliary_text": {
-						"query": "some search term",
-						"boost": 0.3
-					}
-				}
-			},
-			{
-				"match": {
-					"file_text": {
-						"query": "some search term",
-						"boost": 0.2
-					}
-				}
-			}
-		]]
+			]
+		]
 	}
 }

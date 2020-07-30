@@ -1,133 +1,199 @@
 {
 	"bool": {
-		"filter": [{
-			"bool": {
-				"should": [
-					{
-						"multi_match": {
-							"fields": [
-								"descriptions.de.plain",
-								"descriptions.de",
-								"descriptions.fr.plain",
-								"descriptions.fr",
-								"descriptions.es.plain",
-								"all",
-								"all.plain",
-								"category"
-							],
-							"type": "cross_fields",
-							"query": "yet another search term",
-							"operator": "and"
+		"filter": [
+			{
+				"bool": {
+					"should": [
+						{
+							"multi_match": {
+								"fields": [
+									"all",
+									"all.plain",
+									"descriptions.de",
+									"descriptions.fr"
+								],
+								"query": "yet another search term",
+								"operator": "and"
+							}
 						}
-					}
-				]
-			}
-		}],
-		"should": [[
-			{
-				"match": {
-					"descriptions.de.plain": {
-						"query": "yet another search term",
-						"boost": 100.0
-					}
-				}
-			},
-			{
-				"match": {
-					"descriptions.de": {
-						"query": "yet another search term",
-						"boost": 100.0
-					}
-				}
-			},
-			{
-				"match": {
-					"descriptions.fr.plain": {
-						"query": "yet another search term",
-						"boost": 10.0
-					}
-				}
-			},
-			{
-				"match": {
-					"descriptions.fr": {
-						"query": "yet another search term",
-						"boost": 10.0
-					}
-				}
-			},
-			{
-				"match": {
-					"descriptions.es.plain": {
-						"query": "yet another search term",
-						"boost": 1.0
-					}
-				}
-			},
-			{
-				"match": {
-					"all": {
-						"query": "yet another search term",
-						"boost": 0.01
-					}
-				}
-			},
-			{
-				"match": {
-					"all.plain": {
-						"query": "yet another search term",
-						"boost": 0.02
-					}
-				}
-			},
-			{
-				"match": {
-					"category": {
-						"query": "yet another search term",
-						"boost": 0.03
-					}
-				}
-			},
-			{
-				"match": {
-					"title": {
-						"query": "yet another search term",
-						"boost": 0.04
-					}
-				}
-			},
-			{
-				"match": {
-					"redirect.title": {
-						"query": "yet another search term",
-						"boost": 0.05
-					}
-				}
-			},
-			{
-				"match": {
-					"text": {
-						"query": "yet another search term",
-						"boost": 0.06
-					}
-				}
-			},
-			{
-				"match": {
-					"auxiliary_text": {
-						"query": "yet another search term",
-						"boost": 0.07
-					}
-				}
-			},
-			{
-				"match": {
-					"file_text": {
-						"query": "yet another search term",
-						"boost": 0.08
-					}
+					]
 				}
 			}
-		]]
+		],
+		"should": [
+			[
+				{
+					"bool": {
+						"should": [
+							{
+								"multi_match": {
+									"query": "yet another search term",
+									"boost": 1,
+									"minimum_should_match": 1,
+									"type": "most_fields",
+									"fields": [
+										"descriptions.de^3",
+										"descriptions.de.plain^1"
+									]
+								}
+							},
+							{
+								"multi_match": {
+									"query": "yet another search term",
+									"boost": 1,
+									"minimum_should_match": 1,
+									"type": "most_fields",
+									"fields": [
+										"descriptions.fr^3",
+										"descriptions.fr.plain^1"
+									]
+								}
+							},
+							{
+								"multi_match": {
+									"query": "yet another search term",
+									"boost": 1,
+									"minimum_should_match": 1,
+									"type": "most_fields",
+									"fields": [
+										"descriptions.es.plain^1"
+									]
+								}
+							},
+							{
+								"multi_match": {
+									"query": "yet another search term",
+									"boost": 1,
+									"minimum_should_match": 1,
+									"type": "most_fields",
+									"fields": [
+										"title^3",
+										"title.plain^1"
+									]
+								}
+							},
+							{
+								"multi_match": {
+									"query": "yet another search term",
+									"boost": 1,
+									"minimum_should_match": 1,
+									"type": "most_fields",
+									"fields": [
+										"category^3",
+										"category.plain^1"
+									]
+								}
+							},
+							{
+								"multi_match": {
+									"query": "yet another search term",
+									"boost": 1,
+									"minimum_should_match": 1,
+									"type": "most_fields",
+									"fields": [
+										"heading^3",
+										"heading.plain^1"
+									]
+								}
+							},
+							{
+								"multi_match": {
+									"query": "yet another search term",
+									"boost": 1,
+									"minimum_should_match": 1,
+									"type": "most_fields",
+									"fields": [
+										"auxiliary_text^3",
+										"auxiliary_text.plain^1"
+									]
+								}
+							},
+							{
+								"dis_max": {
+									"queries": [
+										{
+											"multi_match": {
+												"query": "yet another search term",
+												"boost": 1,
+												"minimum_should_match": 1,
+												"type": "most_fields",
+												"fields": [
+													"redirect.title^3",
+													"redirect.title.plain^1"
+												]
+											}
+										},
+										{
+											"multi_match": {
+												"query": "yet another search term",
+												"boost": 1,
+												"minimum_should_match": 1,
+												"type": "most_fields",
+												"fields": [
+													"suggest"
+												]
+											}
+										}
+									]
+								}
+							},
+							{
+
+								"multi_match": {
+									"query": "yet another search term",
+									"boost": 1,
+									"minimum_should_match": 1,
+									"type": "most_fields",
+									"fields": [
+										"text^3",
+										"text.plain^1"
+									]
+								}
+							},
+							{
+
+								"multi_match": {
+									"query": "yet another search term",
+									"boost": 1,
+									"minimum_should_match": 1,
+									"type": "most_fields",
+									"fields": [
+										"file_text^3",
+										"file_text.plain^1"
+									]
+								}
+							}
+						]
+					}
+				},
+				{
+					"bool": {
+						"must": [
+							{
+								"multi_match": {
+									"fields": [
+										"all_near_match^2",
+										"all_near_match.asciifolding^1.5"
+									],
+									"query": "yet another search term",
+									"operator": "and"
+								}
+							}
+						],
+						"filter": [
+							{
+								"terms": {
+									"namespace": [
+										0,
+										14
+									]
+								}
+							}
+						],
+						"boost": 1
+					}
+				}
+			]
+		]
 	}
 }

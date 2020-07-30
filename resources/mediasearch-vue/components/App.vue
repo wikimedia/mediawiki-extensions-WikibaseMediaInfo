@@ -255,8 +255,24 @@ module.exports = {
 		}
 	},
 
+	/**
+	 * If user arrives on the page without URL params to specify initial search
+	 * type / active tab, default to bitmap. This is done in created hook
+	 * because some computed properties assume that a currentTab will always be
+	 * specified; the created hook runs before computed properties are evaluated.
+	 */
+	created: function () {
+		if ( this.currentTab === '' ) {
+			this.currentTab = 'bitmap';
+		}
+	},
+
+	/**
+	 * Fetch a total count of media files for use in the empty state
+	 */
 	mounted: function () {
 		this.fetchFileCount();
+
 	}
 };
 </script>

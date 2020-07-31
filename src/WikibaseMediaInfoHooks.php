@@ -25,6 +25,7 @@ use OutputPage;
 use ParserOutput;
 use RequestContext;
 use ResourceLoaderContext;
+use Skin;
 use Title;
 use Wikibase\Client\WikibaseClient;
 use Wikibase\DataModel\Entity\PropertyId;
@@ -141,6 +142,17 @@ class WikibaseMediaInfoHooks {
 	}
 
 	/**
+	 * @param Title|null $title
+	 * @return bool
+	 */
+	public static function isMediaInfoPage( Title $title = null ) {
+		// Check if the page exists and the page is a file
+		return $title !== null &&
+			$title->exists() &&
+			$title->inNamespace( NS_FILE );
+	}
+
+	/**
 	 * Replace mediainfo-specific placeholders (if any), move structured data, add data and modules
 	 *
 	 * @param \OutputPage $out
@@ -164,12 +176,7 @@ class WikibaseMediaInfoHooks {
 		$wbRepo = WikibaseRepo::getDefaultInstance();
 		$imgTitle = $out->getTitle();
 
-		$isMediaInfoPage =
-			// Check if the page exists,
-			$imgTitle !== null &&
-			$imgTitle->exists() &&
-			// … the page is a file and
-			$imgTitle->inNamespace( NS_FILE ) &&
+		$isMediaInfoPage = static::isMediaInfoPage( $imgTitle ) &&
 			// … the page view is a read
 			\Action::getActionName( $out->getContext() ) === 'view';
 
@@ -864,6 +871,35 @@ class WikibaseMediaInfoHooks {
 		// the undelete process as they were based on incorrect entities
 		$page = WikiPage::factory( $title );
 		$page->updateParserCache( [ 'causeAction' => 'mediainfo-id-splitting' ] );
+	}
+
+	/**
+	 * Add Concept URI link to the toolbox section of the sidebar.
+	 *
+	 * @param Skin $skin
+	 * @param string[] &$sidebar
+	 * @return void
+	 */
+	public static function onSidebarBeforeOutput( Skin $skin, array &$sidebar ): void {
+		$title = $skin->getTitle();
+		if ( !static::isMediaInfoPage( $title ) ) {
+			return;
+		}
+
+		$entityId = MediaInfoServices::getMediaInfoIdLookup()->getEntityIdForTitle( $title );
+		if ( $entityId === null ) {
+			return;
+		}
+
+		$repo = WikibaseRepo::getDefaultInstance();
+		$baseConceptUri = $repo->getSettings()->getSetting( 'conceptBaseUri' );
+
+		$sidebar['TOOLBOX']['wb-concept-uri'] = [
+			'id' => 't-wb-concept-uri',
+			'text' => $skin->msg( 'wikibase-concept-uri' )->text(),
+			'href' => $baseConceptUri . $entityId->getSerialization(),
+			'title' => $skin->msg( 'wikibase-concept-uri-tooltip' )->text()
+		];
 	}
 
 }

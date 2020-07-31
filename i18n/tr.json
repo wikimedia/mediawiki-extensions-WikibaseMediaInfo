@@ -6,6 +6,7 @@
 			"Hedda",
 			"LuCKY",
 			"Mirzali",
+			"MuratTheTurkish",
 			"Rapsar"
 		]
 	},
@@ -132,5 +133,7 @@
 	"wikibasemediainfo-special-mediasearch-filter-size-small": "Küçük",
 	"wikibasemediainfo-special-mediasearch-filter-size-medium": "Orta",
 	"wikibasemediainfo-special-mediasearch-filter-size-large": "Büyük",
-	"wikibasemediainfo-special-mediasearch-no-results": "Sonuç bulunamadı"
+	"wikibasemediainfo-special-mediasearch-no-results": "Herhangi bir sonuç bulamadık",
+	"wikibasemediainfo-special-mediasearch-no-results-tips": "Daha genel terimleri deneyin veya yazımınızı kontrol edin",
+	"wikibasemediainfo-special-mediasearch-empty-state": "Yeniden kullanımı ücretsiz olan $1 daha fazla medya dosyasını arayın"
 }

@@ -129,5 +129,7 @@
 	"wikibasemediainfo-special-mediasearch-filter-size-small": "Liten",
 	"wikibasemediainfo-special-mediasearch-filter-size-medium": "Medium",
 	"wikibasemediainfo-special-mediasearch-filter-size-large": "Stor",
-	"wikibasemediainfo-special-mediasearch-no-results": "Ingen resultater funnet"
+	"wikibasemediainfo-special-mediasearch-no-results": "Vi fant ingen resultater",
+	"wikibasemediainfo-special-mediasearch-no-results-tips": "Prøv med mer generelle begreper og sjekk stavemåten",
+	"wikibasemediainfo-special-mediasearch-empty-state": "Søk blant mer enn <span class=\"wbmi-media-search-empty-state__file-count\">$1</span> {{PLURAL:$1|mediefil|mediefiler}} som kan gjenbrukes fritt"
 }

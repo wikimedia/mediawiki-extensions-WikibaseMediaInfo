@@ -132,5 +132,7 @@
 	"wikibasemediainfo-special-mediasearch-filter-size-small": "小",
 	"wikibasemediainfo-special-mediasearch-filter-size-medium": "中",
 	"wikibasemediainfo-special-mediasearch-filter-size-large": "大",
-	"wikibasemediainfo-special-mediasearch-no-results": "查無結果"
+	"wikibasemediainfo-special-mediasearch-no-results": "我們找不到任何結果",
+	"wikibasemediainfo-special-mediasearch-no-results-tips": "嘗試更多一般項目或是檢查您的拼寫",
+	"wikibasemediainfo-special-mediasearch-empty-state": "搜尋超過 <span class=\"wbmi-media-search-empty-state__file-count\">$1</span> 個{{PLURAL:$1|為}}免費重複使用的{{PLURAL:$1|多媒體檔案}}"
 }

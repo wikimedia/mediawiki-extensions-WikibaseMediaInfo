@@ -9,7 +9,8 @@
 	},
 	"rules": {
 		"max-len": "off",
-		"no-jquery/variable-pattern": "off"
+		"no-jquery/variable-pattern": "off",
+		"no-jquery/no-event-shorthand": "off"
 	},
 	"overrides": [
 		{

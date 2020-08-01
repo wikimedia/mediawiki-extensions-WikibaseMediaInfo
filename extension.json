@@ -331,15 +331,16 @@
 			"packageFiles": [
 				"resources/mediasearch-vue/init.js",
 				"lib/icons.js",
+				"resources/mediasearch-vue/components/base/AutocompleteSearchInput.vue",
 				"resources/mediasearch-vue/components/base/Button.vue",
 				"resources/mediasearch-vue/components/base/Icon.vue",
+				"resources/mediasearch-vue/components/base/LookupResults.vue",
 				"resources/mediasearch-vue/components/base/Message.vue",
 				"resources/mediasearch-vue/components/base/Tab.vue",
 				"resources/mediasearch-vue/components/base/Tabs.vue",
 				"resources/mediasearch-vue/components/base/Observer.vue",
 				"resources/mediasearch-vue/components/base/Image.vue",
 				"resources/mediasearch-vue/components/App.vue",
-				"resources/mediasearch-vue/components/SearchInput.vue",
 				"resources/mediasearch-vue/components/SearchResults.vue",
 				"resources/mediasearch-vue/components/ImageResult.vue",
 				"resources/mediasearch-vue/components/VideoResult.vue",
@@ -354,6 +355,7 @@
 				"resources/mediasearch-vue/store/mutations.js",
 				"resources/mediasearch-vue/store/getters.js",
 				"resources/mediasearch-vue/store/actions.js",
+				"resources/mediasearch-vue/mixins/autocompleteLookupHandler.js",
 				"resources/mediasearch-vue/mixins/searchResult.js",
 				"resources/mediasearch-vue/mixins/searchResultTimeBased.js"
 			],
@@ -370,6 +372,9 @@
 				"wikibasemediainfo-special-mediasearch-tab-video",
 				"wikibasemediainfo-special-mediasearch-tab-category",
 				"wikibasemediainfo-special-mediasearch-empty-state",
+				"wikibasemediainfo-special-mediasearch-clear-title",
+				"wikibasemediainfo-special-mediasearch-input-label",
+				"wikibasemediainfo-special-mediasearch-input-placeholder",
 				"searchbutton"
 			],
 			"dependencies": [

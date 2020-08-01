@@ -1,15 +1,25 @@
 <template>
 	<div id="app">
-		<search-input
-			:initial-term="term"
-			@update="onUpdateTerm"
-			@clear="onClear">
-		</search-input>
+		<wbmi-autocomplete-search-input
+			class="wbmi-media-search-input"
+			name="wbmi-media-search-input"
+			:label="$i18n( 'wikibasemediainfo-special-mediasearch-input-label' )"
+			:initial-value="term"
+			:placeholder="$i18n( 'wikibasemediainfo-special-mediasearch-input-placeholder' )"
+			:clear-title="$i18n( 'wikibasemediainfo-special-mediasearch-clear-title' )"
+			:button-label="$i18n( 'searchbutton' )"
+			:lookup-results="lookupResults"
+			@input="getLookupResults"
+			@submit="onUpdateTerm"
+			@clear="onClear"
+			@clear-lookup-results="clearLookupResults"
+		>
+		</wbmi-autocomplete-search-input>
 
 		<!-- Generate a tab for each key in the "results" object. Data types,
 		messages, and loading behavior are bound to this key. -->
-		<tabs :active="currentTab" @tab-change="onTabChange">
-			<tab v-for="tab in tabs"
+		<wbmi-tabs :active="currentTab" @tab-change="onTabChange">
+			<wbmi-tab v-for="tab in tabs"
 				:key="tab"
 				:name="tab"
 				:title="tabNames[ tab ]">
@@ -31,8 +41,8 @@
 				<template v-else-if="shouldShowEmptyState">
 					<empty-state></empty-state>
 				</template>
-			</tab>
-		</tabs>
+			</wbmi-tab>
+		</wbmi-tabs>
 	</div>
 </template>
 
@@ -42,7 +52,7 @@
  *
  * Top-level component for the Special:MediaSearch JS UI.
  * Contains two major elements:
- * - search input
+ * - autocomplete search input
  * - tabs to display search results (one for each media type)
  *
  * Search query and search result data lives in Vuex, but this component
@@ -50,19 +60,25 @@
  * Vuex actions to make API requests, and ensures that the URL parameters
  * remain in sync with the current search term and active tab (this is done
  * using history.replaceState)
+ *
+ * Autocomplete lookups are handled by a mixin. When new search input is
+ * emitted from the AutocompleteSearchInput, the mixin handles the lookup
+ * request and this component passes an array of string lookup results to the
+ * AutocompleteSearchInput for display.
  */
 var mapState = require( 'vuex' ).mapState,
 	mapGetters = require( 'vuex' ).mapGetters,
 	mapMutations = require( 'vuex' ).mapMutations,
 	mapActions = require( 'vuex' ).mapActions,
+	AutocompleteSearchInput = require( './base/AutocompleteSearchInput.vue' ),
 	Tab = require( './base/Tab.vue' ),
 	Tabs = require( './base/Tabs.vue' ),
-	SearchInput = require( './SearchInput.vue' ),
 	SearchResults = require( './SearchResults.vue' ),
 	NoResults = require( './NoResults.vue' ),
 	Observer = require( './base/Observer.vue' ),
 	Spinner = require( './Spinner.vue' ),
 	EmptyState = require( './EmptyState.vue' ),
+	autocompleteLookupHandler = require( './../mixins/autocompleteLookupHandler.js' ),
 	url = new mw.Uri();
 
 // @vue/component
@@ -70,15 +86,17 @@ module.exports = {
 	name: 'MediaSearch',
 
 	components: {
-		tabs: Tabs,
-		tab: Tab,
-		'search-input': SearchInput,
+		'wbmi-tabs': Tabs,
+		'wbmi-tab': Tab,
+		'wbmi-autocomplete-search-input': AutocompleteSearchInput,
 		'search-results': SearchResults,
 		observer: Observer,
 		'mw-spinner': Spinner,
 		'empty-state': EmptyState,
 		'no-results': NoResults
 	},
+
+	mixins: [ autocompleteLookupHandler ],
 
 	data: function () {
 		return {
@@ -164,6 +182,7 @@ module.exports = {
 		 */
 		onClear: function () {
 			this.clearTerm();
+			this.clearLookupResults();
 			this.resetResults();
 		},
 
@@ -276,3 +295,19 @@ module.exports = {
 	}
 };
 </script>
+
+<style lang="less">
+@import '../../mediainfo-variables.less';
+
+.wbmi-media-search-input {
+	max-width: @max-width-base;
+
+	// See: https://phabricator.wikimedia.org/T222283
+	// This overrides an override in mediawiki.legacy/shared.css which keeps
+	// this input element from flipping over to RTL orientation;
+	// stylelint-disable-next-line selector-class-pattern
+	body.rtl.sitedir-ltr & input {
+		direction: unset;
+	}
+}
+</style>

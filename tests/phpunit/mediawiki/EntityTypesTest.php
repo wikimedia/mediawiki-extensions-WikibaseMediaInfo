@@ -7,6 +7,7 @@ use Language;
 use Serializers\Serializer;
 use Wikibase\DataModel\DeserializerFactory;
 use Wikibase\DataModel\SerializerFactory;
+use Wikibase\Lib\ContentLanguages;
 use Wikibase\Lib\LanguageWithConversion;
 use Wikibase\Lib\TermLanguageFallbackChain;
 use Wikibase\MediaInfo\Content\MediaInfoContent;
@@ -113,10 +114,13 @@ class EntityTypesTest extends \PHPUnit\Framework\TestCase {
 		$callback = $registry['mediainfo']['view-factory-callback'];
 		$this->assertIsCallable( $callback );
 
+		$stubContentLanguages = $this->createStub( ContentLanguages::class );
+		$stubContentLanguages->method( 'hasLanguage' )
+			->willReturn( true );
 		$mediaInfoView = call_user_func(
 			$callback,
 			Language::factory( 'en' ),
-			new TermLanguageFallbackChain( [ LanguageWithConversion::factory( 'en' ) ] ),
+			new TermLanguageFallbackChain( [ LanguageWithConversion::factory( 'en' ) ], $stubContentLanguages ),
 			new MediaInfo()
 		);
 

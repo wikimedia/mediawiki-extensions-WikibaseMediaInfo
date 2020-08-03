@@ -130,5 +130,6 @@
 	"wikibasemediainfo-special-mediasearch-filter-size-small": "Pequeno",
 	"wikibasemediainfo-special-mediasearch-filter-size-medium": "Médio",
 	"wikibasemediainfo-special-mediasearch-filter-size-large": "Grande",
-	"wikibasemediainfo-special-mediasearch-no-results": "Nenhum resultado encontrado"
+	"wikibasemediainfo-special-mediasearch-no-results": "Não encontramos nenhum resultado",
+	"wikibasemediainfo-special-mediasearch-no-results-tips": "Experimente termos mais gerais ou verifique a ortografia"
 }

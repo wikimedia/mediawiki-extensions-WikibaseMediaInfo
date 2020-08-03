@@ -77,5 +77,7 @@
 	"wikibasemediainfo-special-mediasearch-tab-audio": "Dźwięk",
 	"wikibasemediainfo-special-mediasearch-tab-video": "Wideo",
 	"wikibasemediainfo-special-mediasearch-tab-category": "Kategorie",
-	"wikibasemediainfo-special-mediasearch-no-results": "Nie znaleźliśmy żadnych wyników"
+	"wikibasemediainfo-special-mediasearch-no-results": "Nie znaleźliśmy żadnych wyników",
+	"wikibasemediainfo-special-mediasearch-no-results-tips": "Wypróbuj bardziej ogólne frazy lub sprawdź pisownię",
+	"wikibasemediainfo-special-mediasearch-empty-state": "Szukaj pośród ponad <span class=\"wbmi-media-search-empty-state__file-count\">$1</span> {{PLURAL:$1|pliku multimedialnego, którego|plików multimedialnych, które}} możesz swobodnie wykorzystać"
 }

@@ -11,5 +11,5 @@
 	"wikibasemediainfo-special-mediasearch-continue": "अगला",
 	"wikibasemediainfo-special-mediasearch-no-results": "हमें कोई परिणाम नहीं मिला",
 	"wikibasemediainfo-special-mediasearch-no-results-tips": "अधिक सामान्य शब्दों का \nप्रयत्न करे या अपनी वर्तनी की जाँच करें",
-	"wikibasemediainfo-special-mediasearch-empty-state": "<Span class = \"wbmi-media-search--empty-state__file-count\">$1</ span> {{PLURAL:$1|मीडिया फ़ाइल|मीडिया फ़ाइलें}} उस {{PLURAL:$ 1| ।है।हैं}} फिर से उपयोग करने के लिए स्वतंत्र"
+	"wikibasemediainfo-special-mediasearch-empty-state": "<span class=\"wbmi-media-search--empty-state__file-count\">$1</span> {{PLURAL:$1|मीडिया फ़ाइल|मीडिया फ़ाइलें}} उस {{PLURAL:$ 1| ।है।हैं}} फिर से उपयोग करने के लिए स्वतंत्र"
 }

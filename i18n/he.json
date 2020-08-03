@@ -131,5 +131,7 @@
 	"wikibasemediainfo-special-mediasearch-filter-size-small": "קטן",
 	"wikibasemediainfo-special-mediasearch-filter-size-medium": "בינוני",
 	"wikibasemediainfo-special-mediasearch-filter-size-large": "גדול",
-	"wikibasemediainfo-special-mediasearch-no-results": "לא נמצאו תוצאות"
+	"wikibasemediainfo-special-mediasearch-no-results": "לא מצאנו שום תוצאה",
+	"wikibasemediainfo-special-mediasearch-no-results-tips": "נא לנסות מונחים כליים יותר או לבדוק את האיות שלך",
+	"wikibasemediainfo-special-mediasearch-empty-state": "לחפש יותר {{PLURAL:$1|מקובץ מדיה <span class=\"wbmi-media-search-empty-state__file-count\">אחד</span> שאפשר לעשות בו|מ־<span class=\"wbmi-media-search-empty-state__file-count\">$1</span> קובצי מדיה שאפשר לעשות בהם}} שימוש חוזר חופשי"
 }

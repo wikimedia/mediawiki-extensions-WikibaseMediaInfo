@@ -6,11 +6,12 @@
 			"Marine-Blue",
 			"Object＊tofu",
 			"Omotecho",
+			"Shirayuki",
 			"Tmv"
 		]
 	},
-	"action-mediainfo-term": "メディアの情報項目を変更（キャプション、概要等）",
-	"right-mediainfo-term": "メディアの情報項目を変更（キャプション、概要等）",
+	"action-mediainfo-term": "メディアの情報用語の変更 (キャプション、概要等)",
+	"right-mediainfo-term": "メディアの情報用語を変更 (キャプション、概要等)",
 	"slot-name-mediainfo": "構造化したメディア情報",
 	"wikibase-entity-mediainfo": "メディア情報",
 	"wikibase-mediainfo-summary-wbsetlabel-add": "[$2]のキャプションを追加",
@@ -84,5 +85,5 @@
 	"wikibasemediainfo-special-mediasearch-filter-size": "メディアサイズ",
 	"wikibasemediainfo-special-mediasearch-filter-size-small": "小さい",
 	"wikibasemediainfo-special-mediasearch-filter-size-large": "大きい",
-	"wikibasemediainfo-special-mediasearch-no-results": "見つかりません。"
+	"wikibasemediainfo-special-mediasearch-no-results": "検索しましたが見つかりませんでした"
 }

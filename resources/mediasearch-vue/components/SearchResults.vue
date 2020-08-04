@@ -1,6 +1,6 @@
 <template>
 	<div class="wbmi-media-search-results">
-		<div :class="'wbmi-media-search-results__list--' + mediaType"
+		<div :class="listClasses"
 			class="wbmi-media-search-results__list">
 			<component
 				:is="resultComponent"
@@ -94,6 +94,22 @@ module.exports = {
 			} else {
 				return 'generic-result';
 			}
+		},
+
+		/**
+		 * @return {Object} Dynamic classes for the "list" element
+		 */
+		listClasses: function () {
+			var listTypeModifier = 'wbmi-media-search-results__list--' + this.mediaType,
+				classObject = {
+					'wbmi-media-search-results__list--collapsed': !!this.details
+				};
+
+			// Without ES6 string interpolation generating a dynamic classname
+			// as a key requires an extra step;
+			classObject[ listTypeModifier ] = true;
+
+			return classObject;
 		}
 	} ),
 
@@ -189,6 +205,7 @@ module.exports = {
 	&__list {
 		.flex( 1, 1, auto );
 		margin: @wbmi-spacing-sm;
+		max-width: 100%;
 
 		// Audio results are limited to half-width
 		&--audio {
@@ -216,6 +233,7 @@ module.exports = {
 		&--bitmap {
 			.flex-display();
 			.flex-wrap( wrap );
+
 			// stylelint-disable-next-line no-descending-specificity
 			> * {
 				.flex( 1, 1, auto );
@@ -224,6 +242,10 @@ module.exports = {
 					.flex( 0, 1, auto );
 				}
 			}
+		}
+
+		&--collapsed {
+			width: 50%;
 		}
 	}
 
@@ -236,15 +258,14 @@ module.exports = {
 		width: 0%;
 
 		&--expanded {
-			.flex( 1, 0, auto );
-			-webkit-overflow-scrolling: touch;
+			.flex( 0, 0, 50% );
 			background-color: @wmui-color-base80;
+			-webkit-overflow-scrolling: touch;
 			height: 100vh;
 			margin-right: -1rem; // needed for full-bleed of background color
 			overflow-y: scroll;
 			position: sticky;
 			top: 0;
-			width: 50%;
 
 			// Needed to override extra padding that gets applied at this screen
 			// size from these styles (we want this element to line up with the

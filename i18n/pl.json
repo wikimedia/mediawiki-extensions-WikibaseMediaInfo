@@ -3,6 +3,7 @@
 		"authors": [
 			"Chrumps",
 			"Matma Rex",
+			"Mkazberuk",
 			"Rail",
 			"Railfail536",
 			"Woytecr"
@@ -73,6 +74,7 @@
 	"wikibasemediainfo-monolingualtext-language-label": "Wybierz język",
 	"wikibasemediainfo-time-input-button-text": "Dodaj",
 	"wikibasemediainfo-time-precision-label": "Precyzja",
+	"wikibasemediainfo-time-precision-year1k": "tysiąclecie",
 	"wikibasemediainfo-special-mediasearch-tab-bitmap": "Obrazy",
 	"wikibasemediainfo-special-mediasearch-tab-audio": "Dźwięk",
 	"wikibasemediainfo-special-mediasearch-tab-video": "Wideo",

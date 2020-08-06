@@ -5,10 +5,7 @@
 		:aria-live="type !== 'error' ? 'polite' : false"
 		:role="type === 'error' ? 'alert' : false "
 	>
-		<icon
-			:icon="icon"
-			:class="iconClass"
-		></icon>
+		<mw-icon :icon="icon"></mw-icon>
 		<div class="mw-message__content">
 			<slot></slot>
 		</div>
@@ -17,11 +14,12 @@
 
 <script>
 var Icon = require( './Icon.vue' ),
+	icons = require( './../../../../lib/icons.js' ),
 	ICON_MAP = {
-		notice: 'infoFilled',
-		error: 'error',
-		warning: 'alert',
-		success: 'check'
+		notice: icons.wbmiIconInfoFilled,
+		error: icons.wbmiIconError,
+		warning: icons.wbmiIconAlert,
+		success: icons.wbmiIconCheck
 	};
 
 /**
@@ -34,7 +32,7 @@ module.exports = {
 	name: 'Message',
 
 	components: {
-		icon: Icon
+		'mw-icon': Icon
 	},
 
 	props: {
@@ -62,10 +60,6 @@ module.exports = {
 
 		icon: function () {
 			return ICON_MAP[ this.type ];
-		},
-
-		iconClass: function () {
-			return 'oo-ui-image-' + this.type;
 		}
 	}
 };

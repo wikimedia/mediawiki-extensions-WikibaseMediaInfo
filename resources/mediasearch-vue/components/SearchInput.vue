@@ -11,15 +11,16 @@
 			>
 
 			<span class="wbmi-media-search-input__input-icon">
-				<mw-icon icon="search"></mw-icon>
+				<mw-icon :icon="icons.wbmiIconSearch"></mw-icon>
 			</span>
 
-			<mw-indicator
+			<span
 				v-if="showIndicator"
 				class="wbmi-media-search-input__input-clear"
-				:icon="'close'"
 				@click="clearInput"
-			></mw-indicator>
+			>
+				<mw-icon :icon="icons.wbmiIconClear"></mw-icon>
+			</span>
 		</div>
 
 		<mw-button
@@ -33,17 +34,16 @@
 </template>
 
 <script>
-var Button = require( './base/Button.vue' ),
-	Icon = require( './base/Icon.vue' ),
-	Indicator = require( './base/Indicator.vue' );
+var icons = require( '../../../lib/icons.js' ),
+	Button = require( './base/Button.vue' ),
+	Icon = require( './base/Icon.vue' );
 
 module.exports = {
 	name: 'SearchInput',
 
 	components: {
 		'mw-button': Button,
-		'mw-icon': Icon,
-		'mw-indicator': Indicator
+		'mw-icon': Icon
 	},
 
 	props: {
@@ -52,7 +52,8 @@ module.exports = {
 
 	data: function () {
 		return {
-			term: this.initialTerm
+			term: this.initialTerm,
+			icons: icons
 		};
 	},
 
@@ -134,9 +135,23 @@ module.exports = {
 	}
 
 	&__input-clear {
+		color: @wbmi-indicator-color;
+		cursor: pointer;
+		padding-right: @wbmi-padding-horizontal-input-text;
 		position: absolute;
-		top: 0;
 		right: 0;
+		top: 50%;
+		transform: translateY( -50% );
+
+		.mw-icon {
+			// Icon size is based on font size, so we'll set it here to make the
+			// indicator smaller than the default font size.
+			// Equal to 12px in ems.
+			font-size: unit(
+				@min-size-indicator / @wbmi-font-size-browser / @wbmi-font-size-base,
+				em
+			);
+		}
 	}
 
 	&__button {

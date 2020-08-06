@@ -329,9 +329,9 @@
 		"wikibase.mediainfo.mediasearch.vue": {
 			"packageFiles": [
 				"resources/mediasearch-vue/init.js",
+				"lib/icons.js",
 				"resources/mediasearch-vue/components/base/Button.vue",
 				"resources/mediasearch-vue/components/base/Icon.vue",
-				"resources/mediasearch-vue/components/base/Indicator.vue",
 				"resources/mediasearch-vue/components/base/Message.vue",
 				"resources/mediasearch-vue/components/base/Tab.vue",
 				"resources/mediasearch-vue/components/base/Tabs.vue",

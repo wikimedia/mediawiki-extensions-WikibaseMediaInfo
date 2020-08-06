@@ -86,7 +86,7 @@ class MediaInfoEntityTermsView {
 		] );
 		$layout->appendContent( $this->getCaptionsHeader() );
 		$layout->appendContent(
-			...$this->getCaptionsContent(
+			$this->getCaptionsContent(
 				$entity->getLabels(),
 				$this->getLanguagesOrderedByFallbackChain( $entity )
 			)

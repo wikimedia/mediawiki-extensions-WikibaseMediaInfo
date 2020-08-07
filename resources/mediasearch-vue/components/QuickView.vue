@@ -5,7 +5,8 @@
 			<img v-if="isBitmap"
 				:src="thumbnail"
 				:alt="title"
-				class="wbmi-media-search-quick-view__thumbnail"
+				class="wbmi-media-search-quick-view__thumbnail
+					wbmi-media-search-quick-view__thumbnail--image">
 			>
 
 			<video v-else-if="isVideo"
@@ -352,12 +353,26 @@ module.exports = {
 	&__thumbnail {
 		background-color: @wmui-color-base30;
 		object-fit: contain;
-		height: auto;
 		max-height: 300px;
 		width: 100%;
 
+		&--image {
+			height: auto;
+		}
+
 		&--audio {
-			padding-top: 48px;
+			background-color: transparent;
+			padding: 48px 16px 0 16px;
+			// The ~ is required to prevent evaluation on compilation; we want
+			// what's inside calc to stay there.
+			width: calc( ~'100% - 32px' );
+
+			// This is just removing a general Mediawiki focus style, not a
+			// native browser focus style, because the rectangular focus outline
+			// looks around the rounded Chrome audio player.
+			&:focus {
+				outline-color: transparent;
+			}
 		}
 	}
 

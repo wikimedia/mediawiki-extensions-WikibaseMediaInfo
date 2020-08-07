@@ -1,7 +1,7 @@
 <template>
 	<a ref="link"
 		class="wbmi-video-result"
-		:href="canonicalUrl"
+		:href="canonicalurl"
 		target="_blank"
 		:title="title"
 		@click.prevent="showDetails">

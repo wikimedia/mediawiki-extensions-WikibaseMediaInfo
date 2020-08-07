@@ -9,6 +9,7 @@ use CirrusSearch\Search\SearchContext;
 use CirrusSearch\SearchConfig;
 use Elastica\Query\BoolQuery;
 use Elastica\Query\ConstantScore;
+use Elastica\Query\DisMax;
 use Elastica\Query\Match;
 use Elastica\Query\MultiMatch;
 use Elastica\Query\Terms;
@@ -53,19 +54,25 @@ class MediaQueryBuilder implements FullTextQueryBuilder {
 		LanguageFallbackChainFactory $languageFallbackChainFactory
 	) {
 		$this->features = $features;
-		$this->settings = array_merge(
+		$this->settings = array_replace_recursive(
 			[
-				'statement' => 1.0,
-				'caption' => 1.0,
-				'caption-fallback-discount' => 1.0,
-				'all' => 1.0,
-				'all.plain' => 1.0,
-				'title' => 1.0,
-				'redirect.title' => 1.0,
-				'category' => 1.0,
-				'text' => 1.0,
-				'auxiliary_text' => 1.0,
-				'file_text' => 1.0,
+				'boost' => [
+					'statement' => 1.0,
+					'caption' => 1.0,
+					'title' => 1.0,
+					'category' => 1.0,
+					'heading' => 1.0,
+					'auxiliary_text' => 1.0,
+					'file_text' => 1.0,
+					'redirect.title' => 1.0,
+					'suggest' => 1.0,
+					'text' => 1.0,
+					'opening_text' => 1.0,
+					'non-file_namespace_boost' => 1.0,
+				],
+				'decay' => [
+					'caption-fallback' => 1.0,
+				],
 			],
 			$settings
 		);
@@ -123,33 +130,20 @@ class MediaQueryBuilder implements FullTextQueryBuilder {
 		$term = trim( $term );
 
 		$filter = new BoolQuery();
-		$filter->addShould( $this->createFulltextQuery( $term ) );
-		$statementsQuery = $this->createStatementsQueries( $term );
-		if ( $statementsQuery ) {
-			$filter->addShould( $statementsQuery );
+		$filter->addShould( $this->createFulltextFilterQuery( $term ) );
+		$statementsFilterQuery = $this->createStatementsFilterQuery( $term );
+		if ( $statementsFilterQuery ) {
+			$filter->addShould( $statementsFilterQuery );
 		}
 
 		$rankingQueries = [];
-		foreach ( $this->getStatementTerms( $term ) as $statementTerm ) {
-			$rankingQueries[] = ( new ConstantScore() )
-				->setFilter(
-					( new Match() )
-						->setFieldQuery( StatementsField::NAME, $statementTerm['term'] )
-				)
-				->setBoost( $statementTerm['boost'] );
+		$rankingQueries[] = $this->createFulltextRankingQuery( $term );
+		$statementsRankingQuery = $this->createStatementsRankingQuery( $term );
+		if ( $statementsRankingQuery ) {
+			$rankingQueries[] = $statementsRankingQuery;
 		}
-		foreach ( $this->getFulltextFields() as $field ) {
-			$rankingQueries[] = ( new Match() )
-				->setFieldQuery( $field['field'], $term )
-				->setFieldBoost( $field['field'], $field['boost'] );
-		}
-		foreach ( $this->getOtherRankingFields() as $field ) {
-			$rankingQueries[] = ( new Match() )
-				->setFieldQuery( $field['field'], $term )
-				->setFieldBoost( $field['field'], $field['boost'] );
-		}
-		if ( isset( $this->settings['non-file_namespace_boost'] ) ) {
-			$rankingQueries[] = $this->getBoostingQueryForNonFileNamespace( $term );
+		if ( isset( $this->settings['boost']['non-file_namespace_boost'] ) ) {
+			$rankingQueries[] = $this->createNonFileNamespaceRankingQuery( $term );
 		}
 
 		$query = new BoolQuery();
@@ -159,70 +153,32 @@ class MediaQueryBuilder implements FullTextQueryBuilder {
 		$searchContext->setMainQuery( $query );
 	}
 
-	private function createFulltextQuery( string $term ) : MultiMatch {
-		return ( new MultiMatch() )
-			->setFields(
-				array_map(
-					function ( $value ) {
-						return $value['field'];
-					},
-					$this->getFulltextFields()
-				)
-			)
-			->setType( 'cross_fields' )
-			->setQuery( $term )
-			->setOperator( 'and' );
-	}
-
-	private function getFulltextFields() : array {
-		$fields = [
-			[
-				'field' => 'descriptions.' . $this->userLanguage . '.plain',
-				'boost' => $this->settings['caption'],
-			]
-		];
+	private function createFulltextFilterQuery( string $term ) : MultiMatch {
+		$fields = [ 'all', 'all.plain' ];
 		if ( !empty( $this->stemmingSettings[$this->userLanguage]['query'] ) ) {
-			$fields[] = [
-				'field' => 'descriptions.' . $this->userLanguage,
-				'boost' => $this->settings['caption'],
-			];
+			$fields[] = 'descriptions.' . $this->userLanguage;
 		}
-
 		$searchLanguageCodes = $this->languageFallbackChain->getFetchLanguageCodes();
-
-		$boost = $this->settings['caption'] * $this->settings['caption-fallback-discount'];
 		foreach ( $searchLanguageCodes as $fallbackCode ) {
 			if ( $fallbackCode === $this->userLanguage ) {
 				continue;
 			}
-
-			$fields[] = [
-				'field' => 'descriptions.' . $fallbackCode . '.plain',
-				'boost' => $boost,
-			];
 			if ( !empty( $this->stemmingSettings[$fallbackCode]['query'] ) ) {
-				$fields[] = [
-					'field' => 'descriptions.' . $fallbackCode,
-					'boost' => $boost,
-				];
+				$fields[] = 'descriptions.' . $fallbackCode;
 			}
-			$boost *= $this->settings['caption-fallback-discount'];
 		}
 
-		$fields[] = [ 'field' => 'all', 'boost' => $this->settings['all'] ];
-		$fields[] = [ 'field' => 'all.plain', 'boost' => $this->settings['all.plain'] ];
-		$fields[] = [ 'field' => 'category', 'boost' => $this->settings['category'] ];
-
-		return $fields;
+		// No need to add non-stemmed caption fields to the filter, as caption data is copied
+		// into opening_text and therefore will be found via the 'all' field
+		return ( new MultiMatch() )
+			->setFields( $fields )
+			->setQuery( $term )
+			->setOperator( MultiMatch::OPERATOR_AND );
 	}
 
-	public function buildDegraded( SearchContext $searchContext ) : bool {
-		return false;
-	}
-
-	private function createStatementsQueries( $term ) : ?BoolQuery {
+	private function createStatementsFilterQuery( $term ) : ?BoolQuery {
 		$statementTerms = $this->getStatementTerms( $term );
-		if ( count( $statementTerms ) == 0 ) {
+		if ( count( $statementTerms ) === 0 ) {
 			return null;
 		}
 
@@ -238,6 +194,167 @@ class MediaQueryBuilder implements FullTextQueryBuilder {
 		return $statementQuery;
 	}
 
+	private function createFulltextRankingQuery( string $term ) : BoolQuery {
+		$query = new BoolQuery();
+
+		// captions in user's own language
+		$query->addShould(
+			( new MultiMatch() )
+				->setQuery( $term )
+				->setParam( 'boost', $this->settings['boost']['caption'] )
+				->setParam( 'minimum_should_match', 1 )
+				->setType( 'most_fields' )
+				->setFields(
+					array_merge(
+						!empty( $this->stemmingSettings[$this->userLanguage]['query'] ) ?
+							[ 'descriptions.' . $this->userLanguage . '^3' ] :
+							[],
+						[ 'descriptions.' . $this->userLanguage . '.plain^1' ]
+					)
+				)
+		);
+
+		// captions in fallback language
+		$searchLanguageCodes = $this->languageFallbackChain->getFetchLanguageCodes();
+		$fallbackLanguageCodes = array_diff( $searchLanguageCodes, [ $this->userLanguage ] );
+		foreach ( $fallbackLanguageCodes as $i => $fallbackCode ) {
+			// decay x% for each fallback language
+			$decayedBoost = $this->settings['boost']['caption'] *
+				( $this->settings['decay']['caption-fallback'] ** ( $i + 1 ) );
+			$query->addShould(
+				( new MultiMatch() )
+					->setQuery( $term )
+					->setParam( 'boost', $decayedBoost )
+					->setParam( 'minimum_should_match', 1 )
+					->setType( 'most_fields' )
+					->setFields(
+						array_merge(
+							!empty( $this->stemmingSettings[$fallbackCode]['query'] ) ?
+								[ 'descriptions.' . $fallbackCode . '^3' ] : [],
+								[ 'descriptions.' . $fallbackCode . '.plain^1' ]
+						)
+					)
+			);
+		}
+
+		// other fulltext fields, similar to original Cirrus fulltext search
+		$query->addShould(
+			( new MultiMatch() )
+				->setQuery( $term )
+				->setParam( 'boost', $this->settings['boost']['title'] )
+				->setParam( 'minimum_should_match', 1 )
+				->setType( 'most_fields' )
+				->setFields( [ 'title^3', 'title.plain^1' ] )
+		);
+
+		$query->addShould(
+			( new MultiMatch() )
+				->setQuery( $term )
+				->setParam( 'boost', $this->settings['boost']['category'] )
+				->setParam( 'minimum_should_match', 1 )
+				->setType( 'most_fields' )
+				->setFields( [ 'category^3', 'category.plain^1' ] )
+		);
+
+		$query->addShould(
+			( new MultiMatch() )
+				->setQuery( $term )
+				->setParam( 'boost', $this->settings['boost']['heading'] )
+				->setParam( 'minimum_should_match', 1 )
+				->setType( 'most_fields' )
+				->setFields( [ 'heading^3', 'heading.plain^1' ] )
+		);
+
+		$query->addShould(
+			( new MultiMatch() )
+				->setQuery( $term )
+				->setParam( 'boost', $this->settings['boost']['auxiliary_text'] )
+				->setParam( 'minimum_should_match', 1 )
+				->setType( 'most_fields' )
+				->setFields( [ 'auxiliary_text^3', 'auxiliary_text.plain^1' ] )
+		);
+
+		$query->addShould(
+			( new DisMax() )
+				->addQuery(
+					( new MultiMatch() )
+						->setQuery( $term )
+						->setParam( 'boost', $this->settings['boost']['redirect.title'] )
+						->setParam( 'minimum_should_match', 1 )
+						->setType( 'most_fields' )
+						->setFields( [ 'redirect.title^3', 'redirect.title.plain^1' ] )
+				)
+				->addQuery(
+					( new MultiMatch() )
+						->setQuery( $term )
+						->setParam( 'boost', $this->settings['boost']['suggest'] )
+						->setParam( 'minimum_should_match', 1 )
+						->setType( 'most_fields' )
+						->setFields( [ 'suggest' ] )
+				)
+		);
+
+		$query->addShould(
+			( new MultiMatch() )
+				->setQuery( $term )
+				->setParam( 'boost', $this->settings['boost']['text'] )
+				->setParam( 'minimum_should_match', 1 )
+				->setType( 'most_fields' )
+				->setFields( [ 'text^3', 'text.plain^1' ] )
+		);
+
+		$query->addShould(
+			( new MultiMatch() )
+				->setQuery( $term )
+				->setParam( 'boost', $this->settings['boost']['file_text'] )
+				->setParam( 'minimum_should_match', 1 )
+				->setType( 'most_fields' )
+				->setFields( [ 'file_text^3', 'file_text.plain^1' ] )
+		);
+
+		return $query;
+	}
+
+	private function createStatementsRankingQuery( string $term ) : ?BoolQuery {
+		$statementTerms = $this->getStatementTerms( $term );
+		if ( count( $statementTerms ) === 0 ) {
+			return null;
+		}
+
+		$query = new BoolQuery();
+		foreach ( $statementTerms as $statementTerm ) {
+			$query->addShould(
+				( new ConstantScore() )
+					->setFilter(
+						( new Match() )->setFieldQuery( StatementsField::NAME, $statementTerm['term'] )
+					)
+					->setBoost( $statementTerm['boost'] )
+			);
+		}
+		return $query;
+	}
+
+	private function createNonFileNamespaceRankingQuery( string $term ) : BoolQuery {
+		$titleMatch = ( new MultiMatch() )
+			->setFields( [ 'all_near_match^2', 'all_near_match.asciifolding^1.5' ] )
+			->setQuery( $term )
+			->setOperator( MultiMatch::OPERATOR_AND );
+
+		return ( new BoolQuery() )
+			->addMust( $titleMatch )
+			->addFilter(
+				new Terms(
+					'namespace',
+					[ NS_MAIN, NS_CATEGORY ]
+				)
+			)
+			->setBoost( $this->settings['boost']['non-file_namespace_boost'] );
+	}
+
+	public function buildDegraded( SearchContext $searchContext ) : bool {
+		return false;
+	}
+
 	private function getStatementTerms( $term ) : array {
 		$statementTerms = [];
 		$matchingWikibaseItemIds = $this->findMatchingWikibaseItemIds( $term );
@@ -245,7 +362,7 @@ class MediaQueryBuilder implements FullTextQueryBuilder {
 			return $statementTerms;
 		}
 
-		$boost = $this->settings['statement'];
+		$boost = $this->settings['boost']['statement'];
 		foreach ( $matchingWikibaseItemIds as $itemId => $itemBoost ) {
 			foreach ( $this->defaultProperties as $propertyId ) {
 				$statementTerms[] = [
@@ -325,31 +442,5 @@ class MediaQueryBuilder implements FullTextQueryBuilder {
 		$data = $request->getContent();
 
 		return json_decode( $data, true ) ?: [];
-	}
-
-	private function getOtherRankingFields() : array {
-		return [
-			[ 'field' => 'title', 'boost' => $this->settings['title'] ],
-			[ 'field' => 'redirect.title', 'boost' => $this->settings['redirect.title'] ],
-			[ 'field' => 'text', 'boost' => $this->settings['text'] ],
-			[ 'field' => 'auxiliary_text', 'boost' => $this->settings['auxiliary_text'] ],
-			[ 'field' => 'file_text', 'boost' => $this->settings['file_text'] ],
-		];
-	}
-
-	private function getBoostingQueryForNonFileNamespace( string $term ) {
-		$titleMatch = ( new MultiMatch() )
-			->setFields( [ 'all_near_match^2', 'all_near_match.asciifolding^1.5' ] )
-			->setQuery( $term )
-			->setOperator( 'and' );
-		return ( new BoolQuery() )
-			->addMust( $titleMatch )
-			->addFilter(
-				new Terms(
-					'namespace',
-					[ NS_MAIN, NS_CATEGORY ]
-				)
-			)
-			->setBoost( $this->settings['non-file_namespace_boost'] );
 	}
 }

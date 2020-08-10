@@ -43,7 +43,7 @@
 	"wikibasemediainfo-filepage-statement-no-value": "このプロパティは「値なし」が設定されています",
 	"wikibasemediainfo-filepage-statement-no-data": "データなし",
 	"wikibasemediainfo-filepage-statement-no-results": "該当するものはありません",
-	"wikibasemediainfo-filepage-statement-some-value": "{{WBREPONAME}} アイテムなしの値",
+	"wikibasemediainfo-filepage-statement-some-value": "{{WBREPONAME}}項目のない値",
 	"wikibasemediainfo-filepage-statement-error": "このプロパティの値の取得中にエラーが発生しました",
 	"wikibasemediainfo-filepage-license-title": "キャプションと構造化データの投稿",
 	"wikibasemediainfo-filepage-license-content": "「変更を公開」をクリックすることで、あなたは[[wmf:Terms_of_Use|利用規約]]に同意し、自分の投稿内容を[https://creativecommons.org/publicdomain/zero/1.0/ CC0ライセンス]のもとで公開することに撤回不可能な形で同意することになります。",

@@ -3,6 +3,7 @@
 		"authors": [
 			"Ainali",
 			"Josefine Hellroth Larsson (WMSE)",
+			"Sabelöga",
 			"Sturban",
 			"WikiPhoenix"
 		]
@@ -101,5 +102,5 @@
 	"wikibasemediainfo-special-mediasearch-filter-size-small": "Liten",
 	"wikibasemediainfo-special-mediasearch-filter-size-medium": "Medel",
 	"wikibasemediainfo-special-mediasearch-filter-size-large": "Stor",
-	"wikibasemediainfo-special-mediasearch-no-results": "Inga resultat hittades"
+	"wikibasemediainfo-special-mediasearch-no-results": "Vi hittade inga resultat"
 }

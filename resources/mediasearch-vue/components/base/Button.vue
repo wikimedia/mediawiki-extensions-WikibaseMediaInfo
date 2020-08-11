@@ -5,14 +5,10 @@
 		:disabled="disabled"
 		@click="$emit( 'click' )"
 	>
-		<icon
-			v-if="icon"
-			:icon="icon"
-			:invert="invert"
-		></icon>
-		<div class="mw-button__content">
+		<icon v-if="icon" :icon="icon"></icon>
+		<span class="mw-button__content">
 			<slot></slot>
-		</div>
+		</span>
 	</button>
 </template>
 
@@ -21,8 +17,6 @@ var Icon = require( './Icon.vue' );
 
 /**
  * Button with optional icon.
- *
- * See ImageCard.vue for usage examples.
  */
 // @vue/component
 module.exports = {
@@ -41,8 +35,9 @@ module.exports = {
 			type: Boolean
 		},
 
+		// Icon path or object. See Icon.vue for valid icon formats.
 		icon: {
-			type: String,
+			type: [ String, Object ],
 			default: null
 		},
 
@@ -78,10 +73,6 @@ module.exports = {
 				'mw-button--destructive': this.destructive,
 				'mw-button--primary': this.primary
 			};
-		},
-
-		invert: function () {
-			return ( this.primary || this.disabled ) && !this.frameless;
 		}
 	}
 };
@@ -92,7 +83,6 @@ module.exports = {
 @import '../../../../lib/wikimedia-ui-base.less';
 
 /* stylelint-disable selector-class-pattern */
-
 .mw-button {
 	.transition( ~'background-color 100ms, color 100ms, border-color 100ms, box-shadow 100ms' );
 	background-color: transparent;
@@ -122,10 +112,6 @@ module.exports = {
 		position: absolute;
 		top: 0;
 		transition: opacity 100ms;
-
-		&:not( .oo-ui-icon-invert ) {
-			opacity: @opacity-icon-base;
-		}
 	}
 
 	// Variants.

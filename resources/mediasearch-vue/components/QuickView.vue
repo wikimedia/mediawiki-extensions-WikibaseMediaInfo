@@ -37,7 +37,7 @@
 				role="button"
 				@keyup.enter="closeAndRestoreFocus"
 				@click="close">
-				<mw-icon :icon="'close'">
+				<mw-icon :icon="icons.wbmiIconClose">
 				</mw-icon>
 			</a>
 		</header>
@@ -60,7 +60,7 @@
 			</p>
 
 			<p v-if="artist">
-				<mw-icon :icon="'userAvatar'"></mw-icon>
+				<mw-icon :icon="icons.wbmiIconUserAvatar"></mw-icon>
 				<span v-html="artist"></span>
 			</p>
 
@@ -79,17 +79,17 @@
 			<!-- Sometimes this is free text, sometimes it is formatted. Can
 			we make things semi-consistent? -->
 			<p v-if="creationDate">
-				<mw-icon :icon="'clock'"></mw-icon>
+				<mw-icon :icon="icons.wbmiIconClock"></mw-icon>
 				<span v-html="creationDate"></span>
 			</p>
 
 			<p v-if="resolution">
-				<mw-icon :icon="'camera'"></mw-icon>
+				<mw-icon :icon="icons.wbmiIconCamera"></mw-icon>
 				<span>{{ resolution }}</span>
 			</p>
 
 			<p v-if="mimeType">
-				<mw-icon :icon="'pageSettings'"></mw-icon>
+				<mw-icon :icon="icons.wbmiIconPageSettings"></mw-icon>
 				<span>{{ mimeType }}</span>
 			</p>
 
@@ -105,7 +105,8 @@
 
 <script>
 var Icon = require( './base/Icon.vue' ),
-	Button = require( './base/Button.vue' );
+	Button = require( './base/Button.vue' ),
+	icons = require( '../../../lib/icons.js' );
 
 // Helper function to check for date validity
 function isValidDate( d ) {
@@ -155,6 +156,12 @@ module.exports = {
 			required: false,
 			default: 'bitmap'
 		}
+	},
+
+	data: function () {
+		return {
+			icons: icons
+		};
 	},
 
 	computed: {
@@ -314,9 +321,9 @@ module.exports = {
 
 		getLicenseIcon: function ( valueString ) {
 			if ( /^cc/i.test( valueString ) ) {
-				return 'logoCC';
+				return icons.wbmiIconLogoCC;
 			} else if ( /^pd/i.test( valueString ) ) {
-				return 'unLock';
+				return icons.wbmiIconUnLock;
 			} else {
 				return null;
 			}
@@ -381,7 +388,7 @@ module.exports = {
 
 		// stylelint-disable-next-line selector-class-pattern
 		.mw-icon {
-			opacity: 0.33;
+			color: @wbmi-icon-color--subtle;
 			margin-right: 4px;
 		}
 	}
@@ -419,15 +426,15 @@ module.exports = {
 
 		// stylelint-disable-next-line selector-class-pattern
 		.mw-icon {
-			opacity: 0.5;
-			transition: opacity @transition-base;
+			color: @color-base--subtle;
+			transition: color @transition-base;
 		}
 
 		&:hover,
 		&:focus {
 			// stylelint-disable-next-line selector-class-pattern
 			.mw-icon {
-				opacity: 1;
+				color: @color-base;
 			}
 		}
 	}

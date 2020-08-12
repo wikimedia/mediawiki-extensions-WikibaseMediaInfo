@@ -161,29 +161,57 @@ module.exports = {
 		'fetchFileCount'
 	] ), {
 		/**
+		 * Keep UI state, URL, and history in sync as the user changes tabs
+		 *
 		 * @param {Object} newTab
 		 * @param {string} newTab.name
 		 */
 		onTabChange: function ( newTab ) {
 			this.currentTab = newTab.name;
-			this.getMoreResultsForTabIfAvailable( newTab.name );
+			url.query.type = newTab.name;
+			window.history.pushState( url.query, null, '?' + url.getQueryString() );
 		},
 
 		/**
+		 * Keep the UI state, URL, and history in sync as the user changes
+		 * search queries
+		 *
 		 * @param {string} newTerm
 		 */
 		onUpdateTerm: function ( newTerm ) {
 			this.setTerm( newTerm );
+			url.query.q = newTerm;
+			window.history.pushState( url.query, null, '?' + url.getQueryString() );
 		},
 
 		/**
 		 * Dispatch Vuex actions to clear existing term and results whenever a
-		 * "clear" event is detected
+		 * "clear" event is detected. Update the URL and history as well.
 		 */
 		onClear: function () {
 			this.clearTerm();
 			this.clearLookupResults();
 			this.resetResults();
+			url.query.q = '';
+			window.history.pushState( url.query, null, '?' + url.getQueryString() );
+		},
+
+		/**
+		 * @param {PopStateEvent} e
+		 * @param {Object} [e.state]
+		 */
+		onPopState: function ( e ) {
+			// If the newly-active history entry includes a state object, use it
+			// to reset the URL query params and the UI state
+			if ( e.state ) {
+				this.setTerm( e.state.q || '' );
+				this.currentTab = e.state.type;
+
+				// Also update the mw.Uri object since we use it to generate
+				// future states
+				url.query.q = this.term;
+				url.query.type = this.currentTab;
+			}
 		},
 
 		/**
@@ -242,56 +270,68 @@ module.exports = {
 
 	watch: {
 		/**
-		 * @param {string} newTab bitmap, audio, etc.
+		 * When the currentTab changes, fetch more results for the new tab if
+		 * available
 		 *
-		 * Whenever the user changes tabs, modify the mw.url object's query
-		 * type property and get a new query string. This is used to overwrite
-		 * the current history state and change the visible URL.
+		 * @param {string} newTab bitmap, audio, etc.
+		 * @param {string} oldTab bitmap, audio, etc.
 		 */
-		currentTab: function ( newTab ) {
-			url.query.type = newTab;
-			window.history.replaceState( null, null, '?' + url.getQueryString() );
+		currentTab: function ( newTab, oldTab ) {
+			if ( newTab && newTab !== oldTab ) {
+				this.getMoreResultsForTabIfAvailable( newTab );
+			}
+
 		},
 
 		/**
-		 * @param {string} newTerm
-		 * @param {string} oldTerm
-		 *
-		 * Whenever the user enters a new search term, modify the mw.url object's
-		 * query property and get a new query string. This is used to overwrite
-		 * the current history state and change the visible URL.
-		 *
 		 * If the new term does not match what previously existed here, perform
 		 * a new search.
+		 *
+		 * @param {string} newTerm
+		 * @param {string} oldTerm
 		 */
 		term: function ( newTerm, oldTerm ) {
-			url.query.q = newTerm;
-			window.history.replaceState( null, null, '?' + url.getQueryString() );
-
 			if ( newTerm && newTerm !== oldTerm ) {
 				this.performNewSearch();
 			}
 		}
 	},
 
-	/**
-	 * If user arrives on the page without URL params to specify initial search
-	 * type / active tab, default to bitmap. This is done in created hook
-	 * because some computed properties assume that a currentTab will always be
-	 * specified; the created hook runs before computed properties are evaluated.
-	 */
 	created: function () {
+		// If user arrives on the page without URL params to specify initial search
+		// type / active tab, default to bitmap. This is done in created hook
+		// because some computed properties assume that a currentTab will always be
+		// specified; the created hook runs before computed properties are evaluated.
 		if ( this.currentTab === '' ) {
 			this.currentTab = 'bitmap';
+			url.query.type = 'bitmap';
+
+			// history.pushState is used for changes the user makes, but this
+			// first change is more of an auto-correction; we don't want to record
+			// a new history entry for it
+			window.history.replaceState( url.query, null, '?' + url.getQueryString() );
 		}
+
+		// Set up a listener for popState events in case the user navigates
+		// through their history stack. Previous search queries should be
+		// re-created when this happens, and URL params and UI state should
+		// remain in sync
+
+		// First, create a bound handler function and reference it for later removal
+		this.boundOnPopState = this.onPopState.bind( this );
+
+		// Set up the event listener
+		window.addEventListener( 'popstate', this.boundOnPopState );
 	},
 
-	/**
-	 * Fetch a total count of media files for use in the empty state
-	 */
 	mounted: function () {
+		// Fetch a total count of media files for use in the empty state
 		this.fetchFileCount();
 
+	},
+
+	beforeDestroy: function () {
+		window.removeEventListener( 'popstate', this.boundOnPopState );
 	}
 };
 </script>

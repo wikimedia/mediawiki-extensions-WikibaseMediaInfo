@@ -378,6 +378,18 @@ module.exports = {
 			this.pending = false;
 			this.activeLookupItemIndex = -1;
 			this.toggleLookupResults( this.lookupResults.length > 0 );
+		},
+
+		/**
+		 * If the search term (passed down here as the "initial value" prop)
+		 * changes for a reason besides the user typing into the input here
+		 * (say, due to navigating forward/backward through history), make
+		 * sure to update the value here to reflect the new term
+		 *
+		 * @param {string} newValue
+		 */
+		initialValue: function ( newValue ) {
+			this.value = newValue;
 		}
 	}
 };

@@ -36,7 +36,7 @@
 	"wikibasemediainfo-property-placeholder": "Ominaisuus",
 	"wikibasemediainfo-filepage-license-agree": "Hyväksyn",
 	"wikibasemediainfo-statements-item-add-qualifier": "Lisää tarkenne",
-	"wikibasemediainfo-statements-item-input-label": "Wikidatasta",
+	"wikibasemediainfo-statements-item-input-label": "{{WBREPONAME}}sta",
 	"wikibasemediainfo-statements-item-is-prominent": "Huomattava",
 	"wikibasemediainfo-statements-item-mark-as-prominent": "Merkitse huomattavaksi",
 	"wikibasemediainfo-statements-item-remove": "Poista",

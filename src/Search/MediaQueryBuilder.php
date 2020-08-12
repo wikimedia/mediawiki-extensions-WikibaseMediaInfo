@@ -8,7 +8,6 @@ use CirrusSearch\Query\KeywordFeature;
 use CirrusSearch\Search\SearchContext;
 use CirrusSearch\SearchConfig;
 use Elastica\Query\BoolQuery;
-use Elastica\Query\ConstantScore;
 use Elastica\Query\DisMax;
 use Elastica\Query\Match;
 use Elastica\Query\MultiMatch;
@@ -136,8 +135,10 @@ class MediaQueryBuilder implements FullTextQueryBuilder {
 			$filter->addShould( $statementsFilterQuery );
 		}
 
-		$rankingQueries = [];
-		$rankingQueries[] = $this->createFulltextRankingQuery( $term );
+		$rankingQueries = [
+			$this->createTitleRankingQuery( $term ),
+			$this->createTextRankingQuery( $term )
+		];
 		$statementsRankingQuery = $this->createStatementsRankingQuery( $term );
 		if ( $statementsRankingQuery ) {
 			$rankingQueries[] = $statementsRankingQuery;
@@ -194,11 +195,65 @@ class MediaQueryBuilder implements FullTextQueryBuilder {
 		return $statementQuery;
 	}
 
-	private function createFulltextRankingQuery( string $term ) : BoolQuery {
-		$query = new BoolQuery();
+	/**
+	 * A ranking query for text-like fields
+	 *
+	 * @param string $term
+	 * @return DisMax
+	 */
+	private function createTextRankingQuery( string $term ) : DisMax {
+		$query = new DisMax();
+
+		$query->addQuery(
+			( new MultiMatch() )
+				->setQuery( $term )
+				->setParam( 'boost', $this->settings['boost']['heading'] )
+				->setParam( 'minimum_should_match', 1 )
+				->setType( 'most_fields' )
+				->setFields( [ 'heading^3', 'heading.plain^1' ] )
+		);
+
+		$query->addQuery(
+			( new MultiMatch() )
+				->setQuery( $term )
+				->setParam( 'boost', $this->settings['boost']['auxiliary_text'] )
+				->setParam( 'minimum_should_match', 1 )
+				->setType( 'most_fields' )
+				->setFields( [ 'auxiliary_text^3', 'auxiliary_text.plain^1' ] )
+		);
+
+		$query->addQuery(
+			( new MultiMatch() )
+				->setQuery( $term )
+				->setParam( 'boost', $this->settings['boost']['text'] )
+				->setParam( 'minimum_should_match', 1 )
+				->setType( 'most_fields' )
+				->setFields( [ 'text^3', 'text.plain^1' ] )
+		);
+
+		$query->addQuery(
+			( new MultiMatch() )
+				->setQuery( $term )
+				->setParam( 'boost', $this->settings['boost']['file_text'] )
+				->setParam( 'minimum_should_match', 1 )
+				->setType( 'most_fields' )
+				->setFields( [ 'file_text^3', 'file_text.plain^1' ] )
+		);
+
+		return $query;
+	}
+
+	/**
+	 * A ranking query for title-like fields
+	 *
+	 * @param string $term
+	 * @return DisMax
+	 */
+	private function createTitleRankingQuery( string $term ) : DisMax {
+		$query = new DisMax();
 
 		// captions in user's own language
-		$query->addShould(
+		$query->addQuery(
 			( new MultiMatch() )
 				->setQuery( $term )
 				->setParam( 'boost', $this->settings['boost']['caption'] )
@@ -220,8 +275,8 @@ class MediaQueryBuilder implements FullTextQueryBuilder {
 		foreach ( $fallbackLanguageCodes as $i => $fallbackCode ) {
 			// decay x% for each fallback language
 			$decayedBoost = $this->settings['boost']['caption'] *
-				( $this->settings['decay']['caption-fallback'] ** ( $i + 1 ) );
-			$query->addShould(
+							( $this->settings['decay']['caption-fallback'] ** ( $i + 1 ) );
+			$query->addQuery(
 				( new MultiMatch() )
 					->setQuery( $term )
 					->setParam( 'boost', $decayedBoost )
@@ -231,14 +286,14 @@ class MediaQueryBuilder implements FullTextQueryBuilder {
 						array_merge(
 							!empty( $this->stemmingSettings[$fallbackCode]['query'] ) ?
 								[ 'descriptions.' . $fallbackCode . '^3' ] : [],
-								[ 'descriptions.' . $fallbackCode . '.plain^1' ]
+							[ 'descriptions.' . $fallbackCode . '.plain^1' ]
 						)
 					)
 			);
 		}
 
 		// other fulltext fields, similar to original Cirrus fulltext search
-		$query->addShould(
+		$query->addQuery(
 			( new MultiMatch() )
 				->setQuery( $term )
 				->setParam( 'boost', $this->settings['boost']['title'] )
@@ -247,7 +302,7 @@ class MediaQueryBuilder implements FullTextQueryBuilder {
 				->setFields( [ 'title^3', 'title.plain^1' ] )
 		);
 
-		$query->addShould(
+		$query->addQuery(
 			( new MultiMatch() )
 				->setQuery( $term )
 				->setParam( 'boost', $this->settings['boost']['category'] )
@@ -256,79 +311,39 @@ class MediaQueryBuilder implements FullTextQueryBuilder {
 				->setFields( [ 'category^3', 'category.plain^1' ] )
 		);
 
-		$query->addShould(
+		$query->addQuery(
 			( new MultiMatch() )
 				->setQuery( $term )
-				->setParam( 'boost', $this->settings['boost']['heading'] )
+				->setParam( 'boost', $this->settings['boost']['redirect.title'] )
 				->setParam( 'minimum_should_match', 1 )
 				->setType( 'most_fields' )
-				->setFields( [ 'heading^3', 'heading.plain^1' ] )
+				->setFields( [ 'redirect.title^3', 'redirect.title.plain^1' ] )
 		);
 
-		$query->addShould(
+		$query->addQuery(
 			( new MultiMatch() )
 				->setQuery( $term )
-				->setParam( 'boost', $this->settings['boost']['auxiliary_text'] )
+				->setParam( 'boost', $this->settings['boost']['suggest'] )
 				->setParam( 'minimum_should_match', 1 )
 				->setType( 'most_fields' )
-				->setFields( [ 'auxiliary_text^3', 'auxiliary_text.plain^1' ] )
-		);
-
-		$query->addShould(
-			( new DisMax() )
-				->addQuery(
-					( new MultiMatch() )
-						->setQuery( $term )
-						->setParam( 'boost', $this->settings['boost']['redirect.title'] )
-						->setParam( 'minimum_should_match', 1 )
-						->setType( 'most_fields' )
-						->setFields( [ 'redirect.title^3', 'redirect.title.plain^1' ] )
-				)
-				->addQuery(
-					( new MultiMatch() )
-						->setQuery( $term )
-						->setParam( 'boost', $this->settings['boost']['suggest'] )
-						->setParam( 'minimum_should_match', 1 )
-						->setType( 'most_fields' )
-						->setFields( [ 'suggest' ] )
-				)
-		);
-
-		$query->addShould(
-			( new MultiMatch() )
-				->setQuery( $term )
-				->setParam( 'boost', $this->settings['boost']['text'] )
-				->setParam( 'minimum_should_match', 1 )
-				->setType( 'most_fields' )
-				->setFields( [ 'text^3', 'text.plain^1' ] )
-		);
-
-		$query->addShould(
-			( new MultiMatch() )
-				->setQuery( $term )
-				->setParam( 'boost', $this->settings['boost']['file_text'] )
-				->setParam( 'minimum_should_match', 1 )
-				->setType( 'most_fields' )
-				->setFields( [ 'file_text^3', 'file_text.plain^1' ] )
+				->setFields( [ 'suggest' ] )
 		);
 
 		return $query;
 	}
 
-	private function createStatementsRankingQuery( string $term ) : ?BoolQuery {
+	private function createStatementsRankingQuery( string $term ) : ?DisMax {
 		$statementTerms = $this->getStatementTerms( $term );
 		if ( count( $statementTerms ) === 0 ) {
 			return null;
 		}
 
-		$query = new BoolQuery();
+		$query = new DisMax();
 		foreach ( $statementTerms as $statementTerm ) {
-			$query->addShould(
-				( new ConstantScore() )
-					->setFilter(
-						( new Match() )->setFieldQuery( StatementsField::NAME, $statementTerm['term'] )
-					)
-					->setBoost( $statementTerm['boost'] )
+			$query->addQuery(
+				( new Match() )
+					->setFieldQuery( StatementsField::NAME, $statementTerm['term'] )
+					->setFieldBoost( StatementsField::NAME, $statementTerm['boost'] )
 			);
 		}
 		return $query;

@@ -47,217 +47,205 @@
 		],
 		"should": [
 			[
-				{
-					"bool": {
-						"should": [
-							{
-								"multi_match": {
-									"query": "another search term",
-									"boost": 1,
-									"minimum_should_match": 1,
-									"type": "most_fields",
-									"fields": [
-										"descriptions.ga.plain^1"
-									]
-								}
-							},
-							{
-								"multi_match": {
-									"query": "another search term",
-									"boost": 1,
-									"minimum_should_match": 1,
-									"type": "most_fields",
-									"fields": [
-										"descriptions.fr.plain^1"
-									]
-								}
-							},
-							{
-								"multi_match": {
-									"query": "another search term",
-									"boost": 1,
-									"minimum_should_match": 1,
-									"type": "most_fields",
-									"fields": [
-										"descriptions.es.plain^1"
-									]
-								}
-							},
-							{
-								"multi_match": {
-									"query": "another search term",
-									"boost": 1,
-									"minimum_should_match": 1,
-									"type": "most_fields",
-									"fields": [
-										"title^3",
-										"title.plain^1"
-									]
-								}
-							},
-							{
-								"multi_match": {
-									"query": "another search term",
-									"boost": 1,
-									"minimum_should_match": 1,
-									"type": "most_fields",
-									"fields": [
-										"category^3",
-										"category.plain^1"
-									]
-								}
-							},
-							{
-								"multi_match": {
-									"query": "another search term",
-									"boost": 1,
-									"minimum_should_match": 1,
-									"type": "most_fields",
-									"fields": [
-										"heading^3",
-										"heading.plain^1"
-									]
-								}
-							},
-							{
-								"multi_match": {
-									"query": "another search term",
-									"boost": 1,
-									"minimum_should_match": 1,
-									"type": "most_fields",
-									"fields": [
-										"auxiliary_text^3",
-										"auxiliary_text.plain^1"
-									]
-								}
-							},
-							{
-								"dis_max": {
-									"queries": [
-										{
-											"multi_match": {
-												"query": "another search term",
-												"boost": 1,
-												"minimum_should_match": 1,
-												"type": "most_fields",
-												"fields": [
-													"redirect.title^3",
-													"redirect.title.plain^1"
-												]
-											}
-										},
-										{
-											"multi_match": {
-												"query": "another search term",
-												"boost": 1,
-												"minimum_should_match": 1,
-												"type": "most_fields",
-												"fields": [
-													"suggest"
-												]
-											}
-										}
-									]
-								}
-							},
-							{
-
-								"multi_match": {
-									"query": "another search term",
-									"boost": 1,
-									"minimum_should_match": 1,
-									"type": "most_fields",
-									"fields": [
-										"text^3",
-										"text.plain^1"
-									]
-								}
-							},
-							{
-
-								"multi_match": {
-									"query": "another search term",
-									"boost": 1,
-									"minimum_should_match": 1,
-									"type": "most_fields",
-									"fields": [
-										"file_text^3",
-										"file_text.plain^1"
-									]
-								}
+			{
+				"dis_max": {
+					"queries": [
+						{
+							"multi_match": {
+								"query": "another search term",
+								"boost": 1,
+								"minimum_should_match": 1,
+								"type": "most_fields",
+								"fields": [
+									"descriptions.ga.plain^1"
+								]
 							}
-						]
-					}
-				},
-				{
-					"bool": {
-						"should": [
-							{
-								"constant_score": {
-									"filter": {
-										"match": {
-											"statement_keywords": {
-												"query": "P999=Q9"
-											}
-										}
-									},
+						},
+						{
+							"multi_match": {
+								"query": "another search term",
+								"boost": 1,
+								"minimum_should_match": 1,
+								"type": "most_fields",
+								"fields": [
+									"descriptions.fr.plain^1"
+								]
+							}
+						},
+						{
+							"multi_match": {
+								"query": "another search term",
+								"boost": 1,
+								"minimum_should_match": 1,
+								"type": "most_fields",
+								"fields": [
+									"descriptions.es.plain^1"
+								]
+							}
+						},
+						{
+							"multi_match": {
+								"query": "another search term",
+								"boost": 1,
+								"minimum_should_match": 1,
+								"type": "most_fields",
+								"fields": [
+									"title^3",
+									"title.plain^1"
+								]
+							}
+						},
+						{
+							"multi_match": {
+								"query": "another search term",
+								"boost": 1,
+								"minimum_should_match": 1,
+								"type": "most_fields",
+								"fields": [
+									"category^3",
+									"category.plain^1"
+								]
+							}
+						},
+						{
+							"multi_match": {
+								"query": "another search term",
+								"boost": 1,
+								"minimum_should_match": 1,
+								"type": "most_fields",
+								"fields": [
+									"redirect.title^3",
+									"redirect.title.plain^1"
+								]
+							}
+						},
+						{
+							"multi_match": {
+								"query": "another search term",
+								"boost": 1,
+								"minimum_should_match": 1,
+								"type": "most_fields",
+								"fields": [
+									"suggest"
+								]
+							}
+						}
+					]
+				}
+			},
+			{
+				"dis_max": {
+					"queries": [
+						{
+							"multi_match": {
+								"query": "another search term",
+								"boost": 1,
+								"minimum_should_match": 1,
+								"type": "most_fields",
+								"fields": [
+									"heading^3",
+									"heading.plain^1"
+								]
+							}
+						},
+						{
+							"multi_match": {
+								"query": "another search term",
+								"boost": 1,
+								"minimum_should_match": 1,
+								"type": "most_fields",
+								"fields": [
+									"auxiliary_text^3",
+									"auxiliary_text.plain^1"
+								]
+							}
+						},
+						{
+
+							"multi_match": {
+								"query": "another search term",
+								"boost": 1,
+								"minimum_should_match": 1,
+								"type": "most_fields",
+								"fields": [
+									"text^3",
+									"text.plain^1"
+								]
+							}
+						},
+						{
+
+							"multi_match": {
+								"query": "another search term",
+								"boost": 1,
+								"minimum_should_match": 1,
+								"type": "most_fields",
+								"fields": [
+									"file_text^3",
+									"file_text.plain^1"
+								]
+							}
+						}
+					]
+				}
+			},
+			{
+				"dis_max": {
+					"queries": [
+						{
+							"match": {
+								"statement_keywords": {
+									"query": "P999=Q9",
 									"boost": 1
 								}
-							},
-							{
-								"constant_score": {
-									"filter": {
-										"match": {
-											"statement_keywords": {
-												"query": "P999=Q2"
-											}
-										}
-									},
+							}
+						},
+						{
+							"match": {
+								"statement_keywords": {
+									"query": "P999=Q2",
 									"boost": 0.83333333333333333
 								}
-							},
-							{
-								"constant_score": {
-									"filter": {
-										"match": {
-											"statement_keywords": {
-												"query": "P999=Q999999"
-											}
-										}
-									},
+							}
+						},
+						{
+							"match": {
+								"statement_keywords": {
+									"query": "P999=Q999999",
 									"boost": 0.57971014492753625
 								}
 							}
-						]
-					}
-				},
-				{
-					"bool": {
-						"must": [
-							{
-								"multi_match": {
-									"fields": [
-										"all_near_match^2",
-										"all_near_match.asciifolding^1.5"
-									],
-									"query": "another search term",
-									"operator": "and"
-								}
-							}
-						],
-						"filter": [
-							{
-								"terms": {
-									"namespace": [
-										0,
-										14
-									]
-								}
-							}
-						],
-						"boost": 1
-					}
+						}
+					]
 				}
+			},
+			{
+				"bool": {
+					"must": [
+						{
+							"multi_match": {
+								"fields": [
+									"all_near_match^2",
+									"all_near_match.asciifolding^1.5"
+								],
+								"query": "another search term",
+								"operator": "and"
+							}
+						}
+					],
+					"filter": [
+						{
+							"terms": {
+								"namespace": [
+									0,
+									14
+								]
+							}
+						}
+					],
+					"boost": 1
+				}
+			}
 			]
 		]
 	}

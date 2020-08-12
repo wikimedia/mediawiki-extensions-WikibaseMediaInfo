@@ -89,6 +89,12 @@ module.exports = {
 		 * @fires show-details
 		 */
 		showDetails: function ( e ) {
+			// Stop the original event (most likely a "click") from
+			// propagating in case other scripts (user scripts, etc)
+			// are listening. See https://phabricator.wikimedia.org/T260203
+			// for an example.
+			e.stopPropagation();
+
 			this.$emit( 'show-details', this.pageid, e.target.href );
 		},
 

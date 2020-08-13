@@ -31,8 +31,8 @@
 				<observer @intersect="getMoreResultsForTabIfAvailable( tab )">
 				</observer>
 
-				<mw-spinner v-if="pending[ tab ]">
-				</mw-spinner>
+				<spinner v-if="pending[ tab ]">
+				</spinner>
 
 				<template v-else-if="hasNoResults( tab )">
 					<no-results></no-results>
@@ -70,9 +70,9 @@ var mapState = require( 'vuex' ).mapState,
 	mapGetters = require( 'vuex' ).mapGetters,
 	mapMutations = require( 'vuex' ).mapMutations,
 	mapActions = require( 'vuex' ).mapActions,
-	AutocompleteSearchInput = require( './base/AutocompleteSearchInput.vue' ),
-	Tab = require( './base/Tab.vue' ),
-	Tabs = require( './base/Tabs.vue' ),
+	WbmiAutocompleteSearchInput = require( './base/AutocompleteSearchInput.vue' ),
+	WbmiTab = require( './base/Tab.vue' ),
+	WbmiTabs = require( './base/Tabs.vue' ),
 	SearchResults = require( './SearchResults.vue' ),
 	NoResults = require( './NoResults.vue' ),
 	Observer = require( './base/Observer.vue' ),
@@ -86,12 +86,12 @@ module.exports = {
 	name: 'MediaSearch',
 
 	components: {
-		'wbmi-tabs': Tabs,
-		'wbmi-tab': Tab,
-		'wbmi-autocomplete-search-input': AutocompleteSearchInput,
+		'wbmi-tabs': WbmiTabs,
+		'wbmi-tab': WbmiTab,
+		'wbmi-autocomplete-search-input': WbmiAutocompleteSearchInput,
 		'search-results': SearchResults,
 		observer: Observer,
-		'mw-spinner': Spinner,
+		spinner: Spinner,
 		'empty-state': EmptyState,
 		'no-results': NoResults
 	},

@@ -1,29 +1,29 @@
 <template>
 	<button
-		class="mw-button"
+		class="wbmi-button"
 		:class="builtInClasses"
 		:disabled="disabled"
 		@click="$emit( 'click' )"
 	>
-		<icon v-if="icon" :icon="icon"></icon>
-		<span class="mw-button__content">
+		<wbmi-icon v-if="icon" :icon="icon"></wbmi-icon>
+		<span class="wbmi-button__content">
 			<slot></slot>
 		</span>
 	</button>
 </template>
 
 <script>
-var Icon = require( './Icon.vue' );
+var WbmiIcon = require( './Icon.vue' );
 
 /**
  * Button with optional icon.
  */
 // @vue/component
 module.exports = {
-	name: 'MWButton',
+	name: 'WbmiButton',
 
 	components: {
-		icon: Icon
+		'wbmi-icon': WbmiIcon
 	},
 
 	props: {
@@ -66,12 +66,12 @@ module.exports = {
 	computed: {
 		builtInClasses: function () {
 			return {
-				'mw-button--framed': !this.frameless,
-				'mw-button--icon': this.icon,
-				'mw-button--invisible-text': this.invisibletext,
-				'mw-button--progressive': this.progressive,
-				'mw-button--destructive': this.destructive,
-				'mw-button--primary': this.primary
+				'wbmi-button--framed': !this.frameless,
+				'wbmi-button--icon': this.icon,
+				'wbmi-button--invisible-text': this.invisibletext,
+				'wbmi-button--progressive': this.progressive,
+				'wbmi-button--destructive': this.destructive,
+				'wbmi-button--primary': this.primary
 			};
 		}
 	}
@@ -82,8 +82,7 @@ module.exports = {
 @import 'mediawiki.mixins';
 @import '../../../../lib/wikimedia-ui-base.less';
 
-/* stylelint-disable selector-class-pattern */
-.mw-button {
+.wbmi-button {
 	.transition( ~'background-color 100ms, color 100ms, border-color 100ms, box-shadow 100ms' );
 	background-color: transparent;
 	border: @border-width-base @border-style-base transparent;
@@ -106,7 +105,7 @@ module.exports = {
 		outline: 0;
 	}
 
-	.mw-icon {
+	.wbmi-icon {
 		height: 100%;
 		left: 5/14em;
 		position: absolute;
@@ -130,13 +129,13 @@ module.exports = {
 			color: @color-base--hover;
 		}
 
-		&.mw-button--icon {
+		&.wbmi-button--icon {
 			padding-left: 38/14em;
 			position: relative;
 		}
 
 		/* stylelint-disable-next-line no-descending-specificity */
-		.mw-icon {
+		.wbmi-icon {
 			left: 11/14em;
 		}
 	}
@@ -148,7 +147,7 @@ module.exports = {
 			color: @color-primary--hover;
 		}
 
-		&.mw-button--framed {
+		&.wbmi-button--framed {
 			&:hover {
 				border-color: @color-primary--hover;
 			}
@@ -167,7 +166,7 @@ module.exports = {
 			box-shadow: inset 0 0 0 1px @color-destructive;
 		}
 
-		&.mw-button--framed {
+		&.wbmi-button--framed {
 			&:hover {
 				border-color: @color-destructive--hover;
 			}
@@ -180,7 +179,7 @@ module.exports = {
 	}
 
 	&--primary {
-		&.mw-button--framed {
+		&.wbmi-button--framed {
 			// Default to progressive.
 			background-color: @color-primary;
 			border-color: @color-primary;
@@ -195,7 +194,7 @@ module.exports = {
 				box-shadow: @box-shadow-primary--focus;
 			}
 
-			&.mw-button--destructive {
+			&.wbmi-button--destructive {
 				background-color: @color-destructive;
 				border-color: @color-destructive;
 
@@ -221,7 +220,7 @@ module.exports = {
 			background-color: @background-color-base;
 		}
 
-		&.mw-button--framed {
+		&.wbmi-button--framed {
 			background-color: @background-color-filled--disabled;
 			border-color: @border-color-base--disabled;
 			color: @color-base--inverted;
@@ -234,7 +233,7 @@ module.exports = {
 			}
 		}
 
-		&:not( .mw-button--framed ) .mw-icon {
+		&:not( .wbmi-button--framed ) .wbmi-icon {
 			opacity: @opacity-base--disabled;
 		}
 	}
@@ -242,7 +241,7 @@ module.exports = {
 	&--invisible-text {
 		padding-right: 0;
 
-		.mw-button__content {
+		.wbmi-button__content {
 			border: 0;
 			clip: rect( 1px, 1px, 1px, 1px );
 			display: block;

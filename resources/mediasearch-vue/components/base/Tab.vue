@@ -1,11 +1,11 @@
 <template>
-	<transition name="mw-tab-fade-in">
+	<transition name="wbmi-tab-fade-in">
 		<div
 			v-show="isActive"
 			:id="id"
 			:aria-hidden="!isActive"
 			:aria-labeledby="id + '-label'"
-			class="mw-tab"
+			class="wbmi-tab"
 			role="tabpanel"
 		>
 			<slot></slot>
@@ -19,7 +19,7 @@
  */
 // @vue/component
 module.exports = {
-	name: 'Tab',
+	name: 'WbmiTab',
 	props: {
 		name: {
 			type: String,
@@ -44,21 +44,19 @@ module.exports = {
 
 	computed: {
 		id: function () {
-			return 'mw-tab-' + this.name;
+			return 'wbmi-tab-' + this.name;
 		}
 	}
 };
 </script>
 
 <style lang="less">
-/* stylelint-disable selector-class-pattern */
-
 // Transitions.
-.mw-tab-fade-in-enter {
+.wbmi-tab-fade-in-enter {
 	opacity: 0;
 }
 
-.mw-tab-fade-in-enter-active {
+.wbmi-tab-fade-in-enter-active {
 	transition: opacity 0.25s;
 }
 </style>

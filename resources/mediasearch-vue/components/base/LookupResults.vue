@@ -35,13 +35,16 @@
  * On hover, active item index is emitted to the parent. On mouse leave, the
  * index is reset to -1 (i.e. no active active).
  */
+// @vue/component
 module.exports = {
-	name: 'LookupResults',
+	name: 'WbmiLookupResults',
 
 	props: {
 		lookupResults: {
 			type: Array,
-			default: []
+			default: function () {
+				return [];
+			}
 		},
 
 		activeLookupItemIndex: {

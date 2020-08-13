@@ -1,5 +1,5 @@
 <template>
-	<div class="mw-observer"></div>
+	<div class="wbmi-observer"></div>
 </template>
 
 <script>
@@ -17,7 +17,7 @@
  * effect.
  */
 module.exports = {
-	name: 'Observer',
+	name: 'WbmiObserver',
 
 	props: {
 		options: Object

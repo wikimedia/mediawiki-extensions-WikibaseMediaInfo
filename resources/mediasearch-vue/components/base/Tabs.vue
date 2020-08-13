@@ -1,7 +1,7 @@
 <template>
-	<div class="mw-tabs">
+	<div class="wbmi-tabs">
 		<div
-			class="mw-tabs__header"
+			class="wbmi-tabs__header"
 			role="tablist"
 			tabindex="0"
 			:aria-activedescendant="currentTabId"
@@ -16,7 +16,7 @@
 				:class="determineTabLabelClasses( tab )"
 				:aria-selected="tab.name === currentTabName"
 				:aria-controls="tab.id"
-				class="mw-tabs__header__item"
+				class="wbmi-tabs__header__item"
 				role="tab"
 				@click="selectTab( tab.name )"
 				@keyup.enter="selectTab( tab.name )"
@@ -25,7 +25,7 @@
 			</div>
 		</div>
 
-		<div class="mw-tabs__content">
+		<div class="wbmi-tabs__content">
 			<slot></slot>
 		</div>
 	</div>
@@ -42,7 +42,7 @@ var Vue = require( 'vue' ); // Vue is imported here for type definition
  */
 // @vue/component
 module.exports = {
-	name: 'Tabs',
+	name: 'WbmiTabs',
 
 	props: {
 		active: {
@@ -191,8 +191,7 @@ module.exports = {
 
 /* stylelint-disable selector-class-pattern */
 /* stylelint-disable no-descending-specificity */
-
-.mw-tabs {
+.wbmi-tabs {
 	&__header {
 		.flex-display();
 		.box-shadow( inset 0 -1px 0 0 @border-color-base );
@@ -200,7 +199,7 @@ module.exports = {
 		&:focus {
 			outline: 0;
 
-			.mw-tabs__header__item.is-active {
+			.wbmi-tabs__header__item.is-active {
 				border-radius: 2px;
 				box-shadow: inset 0 0 0 2px @color-primary;
 			}

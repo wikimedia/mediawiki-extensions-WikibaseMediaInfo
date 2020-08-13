@@ -43,16 +43,16 @@
 				<wbmi-icon :icon="icons.wbmiIconClear" :title="clearTitle"></wbmi-icon>
 			</span>
 
-			<wbmi-lookup-results
+			<wbmi-select-menu
 				v-if="hasLookupResults && showLookupResults"
-				:lookup-results="lookupResults"
-				:active-lookup-item-index="activeLookupItemIndex"
+				:items="lookupResults"
+				:active-item-index="activeLookupItemIndex"
 				:listbox-id="lookupResultsElementId"
 				:labelled-by="labelElementId"
 				@select="onLookupItemSelect"
 				@active-item-change="onActiveItemChange"
 			>
-			</wbmi-lookup-results>
+			</wbmi-select-menu>
 		</div>
 
 		<wbmi-button
@@ -70,7 +70,7 @@
 <script>
 var WbmiButton = require( './Button.vue' ),
 	WbmiIcon = require( './Icon.vue' ),
-	WbmiLookupResults = require( './LookupResults.vue' ),
+	WbmiSelectMenu = require( './SelectMenu.vue' ),
 	icons = require( '../../../../lib/icons.js' );
 
 /**
@@ -89,7 +89,7 @@ module.exports = {
 	components: {
 		'wbmi-button': WbmiButton,
 		'wbmi-icon': WbmiIcon,
-		'wbmi-lookup-results': WbmiLookupResults
+		'wbmi-select-menu': WbmiSelectMenu
 	},
 
 	props: {
@@ -223,8 +223,8 @@ module.exports = {
 		 * @return {string|boolean}
 		 */
 		activeLookupItemId: function () {
-			return this.activeLookupItem ?
-				'wbmi-lookup-result__list-item--' + this.activeLookupItem :
+			return this.activeLookupItemIndex > -1 ?
+				this.lookupResultsElementId + '-item-' + this.activeLookupItemIndex :
 				false;
 		},
 
@@ -293,11 +293,11 @@ module.exports = {
 		/**
 		 * Handle lookup item click.
 		 *
-		 * @param {string} lookupItem
+		 * @param {number} index
 		 * @fires submit
 		 */
-		onLookupItemSelect: function ( lookupItem ) {
-			this.value = lookupItem;
+		onLookupItemSelect: function ( index ) {
+			this.value = this.lookupResults[ index ];
 			this.$emit( 'submit', this.value );
 			this.clearLookupResults();
 		},
@@ -433,7 +433,6 @@ module.exports = {
 			// Icon size is based on font size, so we'll set it here to make the
 			// indicator smaller than the default font size.
 			// Equal to 12px in ems.
-			// stylelint-disable-next-line max-len
 			font-size: unit( @min-size-indicator / @wbmi-font-size-browser / @wbmi-font-size-base, em );
 		}
 	}

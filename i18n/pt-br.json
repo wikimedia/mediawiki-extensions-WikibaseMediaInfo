@@ -131,5 +131,8 @@
 	"wikibasemediainfo-special-mediasearch-filter-size-medium": "Médio",
 	"wikibasemediainfo-special-mediasearch-filter-size-large": "Grande",
 	"wikibasemediainfo-special-mediasearch-no-results": "Não encontramos nenhum resultado",
-	"wikibasemediainfo-special-mediasearch-no-results-tips": "Experimente termos mais gerais ou verifique a ortografia"
+	"wikibasemediainfo-special-mediasearch-no-results-tips": "Experimente termos mais gerais ou verifique a ortografia",
+	"wikibasemediainfo-special-mediasearch-clear-title": "Remover",
+	"wikibasemediainfo-special-mediasearch-input-label": "Pesquisar mídia",
+	"wikibasemediainfo-special-mediasearch-input-placeholder": "Pesquise imagens, áudio, vídeo e muito mais"
 }

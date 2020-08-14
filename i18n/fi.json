@@ -46,5 +46,9 @@
 	"wikibasemediainfo-statements-unsupported-property-title": "Ominaisuutta ei tueta",
 	"wikibasemediainfo-statements-link-notice-dismiss": "Hylkää",
 	"wikibasemediainfo-remove-all-statements-confirm-title": "Poistetaanko kaikki?",
-	"wikibasemediainfo-remove-all-statements-confirm-accept": "Poista"
+	"wikibasemediainfo-remove-all-statements-confirm-accept": "Poista",
+	"wikibasemediainfo-time-precision-year1k": "vuosituhat",
+	"wikibasemediainfo-special-mediasearch-clear-title": "Poista",
+	"wikibasemediainfo-special-mediasearch-input-label": "Etsi mediaa",
+	"wikibasemediainfo-special-mediasearch-input-placeholder": "Hae kuvia, ääntä, videota ja muuta"
 }

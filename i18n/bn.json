@@ -55,5 +55,6 @@
 	"wikibasemediainfo-special-mediasearch-filter-size-any": "যেকোন আকার",
 	"wikibasemediainfo-special-mediasearch-filter-size-small": "ছোট",
 	"wikibasemediainfo-special-mediasearch-filter-size-medium": "মাঝারি",
-	"wikibasemediainfo-special-mediasearch-filter-size-large": "বড়"
+	"wikibasemediainfo-special-mediasearch-filter-size-large": "বড়",
+	"wikibasemediainfo-special-mediasearch-input-label": "মিডিয়া অনুসন্ধান"
 }

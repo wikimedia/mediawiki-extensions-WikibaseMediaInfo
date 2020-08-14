@@ -135,5 +135,8 @@
 	"wikibasemediainfo-special-mediasearch-filter-size-large": "Büyük",
 	"wikibasemediainfo-special-mediasearch-no-results": "Herhangi bir sonuç bulamadık",
 	"wikibasemediainfo-special-mediasearch-no-results-tips": "Daha genel terimleri deneyin veya yazımınızı kontrol edin",
-	"wikibasemediainfo-special-mediasearch-empty-state": "Yeniden kullanımı ücretsiz olan $1 daha fazla medya dosyasını arayın"
+	"wikibasemediainfo-special-mediasearch-empty-state": "Yeniden kullanımı ücretsiz olan $1 daha fazla medya dosyasını arayın",
+	"wikibasemediainfo-special-mediasearch-clear-title": "Kaldır",
+	"wikibasemediainfo-special-mediasearch-input-label": "Medya ara",
+	"wikibasemediainfo-special-mediasearch-input-placeholder": "Resim, ses, video ve daha fazlasını arayın"
 }

@@ -81,5 +81,8 @@
 	"wikibasemediainfo-special-mediasearch-tab-category": "Kategorie",
 	"wikibasemediainfo-special-mediasearch-no-results": "Nie znaleźliśmy żadnych wyników",
 	"wikibasemediainfo-special-mediasearch-no-results-tips": "Wypróbuj bardziej ogólne frazy lub sprawdź pisownię",
-	"wikibasemediainfo-special-mediasearch-empty-state": "Szukaj pośród ponad <span class=\"wbmi-media-search-empty-state__file-count\">$1</span> {{PLURAL:$1|pliku multimedialnego, którego|plików multimedialnych, które}} możesz swobodnie wykorzystać"
+	"wikibasemediainfo-special-mediasearch-empty-state": "Szukaj pośród ponad <span class=\"wbmi-media-search-empty-state__file-count\">$1</span> {{PLURAL:$1|pliku multimedialnego, którego|plików multimedialnych, które}} możesz swobodnie wykorzystać",
+	"wikibasemediainfo-special-mediasearch-clear-title": "Usuń",
+	"wikibasemediainfo-special-mediasearch-input-label": "Wyszukiwanie multimediów",
+	"wikibasemediainfo-special-mediasearch-input-placeholder": "Szukaj obrazów, plików audio, filmów i innych"
 }

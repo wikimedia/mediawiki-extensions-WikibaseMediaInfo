@@ -130,5 +130,8 @@
 	"wikibasemediainfo-special-mediasearch-filter-size-large": "Голема",
 	"wikibasemediainfo-special-mediasearch-no-results": "Не пронајдов ништо",
 	"wikibasemediainfo-special-mediasearch-no-results-tips": "Пробајте со поопшти поими или проверете дали е добро напишано",
-	"wikibasemediainfo-special-mediasearch-empty-state": "Пребарајте повеќе од <span class=\"wbmi-media-search-empty-state__file-count\">$1</span> {{PLURAL:$1|податотека|податотеки}} {{PLURAL:$1|која е|кои се}} за слободна пренамена"
+	"wikibasemediainfo-special-mediasearch-empty-state": "Пребарајте повеќе од <span class=\"wbmi-media-search-empty-state__file-count\">$1</span> {{PLURAL:$1|податотека|податотеки}} {{PLURAL:$1|која е|кои се}} за слободна пренамена",
+	"wikibasemediainfo-special-mediasearch-clear-title": "Отстрани",
+	"wikibasemediainfo-special-mediasearch-input-label": "Пребарување на слики и снимки",
+	"wikibasemediainfo-special-mediasearch-input-placeholder": "Пребарување на слики, звучни снимки, видеоснимки и повеќе"
 }

@@ -23,8 +23,8 @@
 		"should": [
 			[
 				{
-					"bool": {
-						"should": [
+					"dis_max": {
+						"queries": [
 							{
 								"multi_match": {
 									"query": "yet another search term",
@@ -84,6 +84,36 @@
 									]
 								}
 							},
+
+							{
+								"multi_match": {
+									"query": "yet another search term",
+									"boost": 1,
+									"minimum_should_match": 1,
+									"type": "most_fields",
+									"fields": [
+										"redirect.title^3",
+										"redirect.title.plain^1"
+									]
+								}
+							},
+							{
+								"multi_match": {
+									"query": "yet another search term",
+									"boost": 1,
+									"minimum_should_match": 1,
+									"type": "most_fields",
+									"fields": [
+										"suggest"
+									]
+								}
+							}
+						]
+					}
+				},
+				{
+					"dis_max": {
+						"queries": [
 							{
 								"multi_match": {
 									"query": "yet another search term",
@@ -105,35 +135,6 @@
 									"fields": [
 										"auxiliary_text^3",
 										"auxiliary_text.plain^1"
-									]
-								}
-							},
-							{
-								"dis_max": {
-									"queries": [
-										{
-											"multi_match": {
-												"query": "yet another search term",
-												"boost": 1,
-												"minimum_should_match": 1,
-												"type": "most_fields",
-												"fields": [
-													"redirect.title^3",
-													"redirect.title.plain^1"
-												]
-											}
-										},
-										{
-											"multi_match": {
-												"query": "yet another search term",
-												"boost": 1,
-												"minimum_should_match": 1,
-												"type": "most_fields",
-												"fields": [
-													"suggest"
-												]
-											}
-										}
 									]
 								}
 							},

@@ -724,7 +724,7 @@ class WikibaseMediaInfoHooks {
 			// Need to register a rescore profile for the profile context
 			// Register the same one as used by fulltext search for comparison purposes
 			$service->registerDefaultProfile( SearchProfileService::RESCORE,
-				$searchProfileContextName, 'wsum_inclinks_pv' );
+				$searchProfileContextName, 'classic_noboostlinks' );
 
 			$service->registerFTSearchQueryRoute( $searchProfileContextName, 1, [ NS_FILE ],
 				[ BasicQueryClassifier::SIMPLE_BAG_OF_WORDS, BasicQueryClassifier::COMPLEX_QUERY ] );

@@ -69,8 +69,8 @@
 		"should": [
 			[
 				{
-					"bool": {
-						"should": [
+					"dis_max": {
+						"queries": [
 							{
 								"multi_match": {
 									"query": "some search term",
@@ -113,6 +113,35 @@
 									"minimum_should_match": 1,
 									"type": "most_fields",
 									"fields": [
+										"redirect.title^3",
+										"redirect.title.plain^1"
+									]
+								}
+							},
+							{
+								"multi_match": {
+									"query": "some search term",
+									"boost": 1,
+									"minimum_should_match": 1,
+									"type": "most_fields",
+									"fields": [
+										"suggest"
+									]
+								}
+							}
+						]
+					}
+				},
+				{
+					"dis_max": {
+						"queries": [
+							{
+								"multi_match": {
+									"query": "some search term",
+									"boost": 1,
+									"minimum_should_match": 1,
+									"type": "most_fields",
+									"fields": [
 										"heading^3",
 										"heading.plain^1"
 									]
@@ -127,35 +156,6 @@
 									"fields": [
 										"auxiliary_text^3",
 										"auxiliary_text.plain^1"
-									]
-								}
-							},
-							{
-								"dis_max": {
-									"queries": [
-										{
-											"multi_match": {
-												"query": "some search term",
-												"boost": 1,
-												"minimum_should_match": 1,
-												"type": "most_fields",
-												"fields": [
-													"redirect.title^3",
-													"redirect.title.plain^1"
-												]
-											}
-										},
-										{
-											"multi_match": {
-												"query": "some search term",
-												"boost": 1,
-												"minimum_should_match": 1,
-												"type": "most_fields",
-												"fields": [
-													"suggest"
-												]
-											}
-										}
 									]
 								}
 							},
@@ -187,78 +187,54 @@
 					}
 				},
 				{
-					"bool": {
-						"should": [
+					"dis_max": {
+						"queries": [
 							{
-								"constant_score": {
-									"filter": {
-										"match": {
-											"statement_keywords": {
-												"query": "P1=Q1"
-											}
-										}
-									},
-									"boost": 1
+								"match": {
+									"statement_keywords": {
+										"query": "P1=Q1",
+										"boost": 1
+									}
 								}
 							},
 							{
-								"constant_score": {
-									"filter": {
-										"match": {
-											"statement_keywords": {
-												"query": "P2=Q1"
-											}
-										}
-									},
-									"boost": 1
+								"match": {
+									"statement_keywords": {
+										"query": "P2=Q1",
+										"boost": 1
+									}
 								}
 							},
 							{
-								"constant_score": {
-									"filter": {
-										"match": {
-											"statement_keywords": {
-												"query": "P1=Q2"
-											}
-										}
-									},
-									"boost": 0.83333333333333333
+								"match": {
+									"statement_keywords": {
+										"query": "P1=Q2",
+										"boost": 0.83333333333333333
+									}
 								}
 							},
 							{
-								"constant_score": {
-									"filter": {
-										"match": {
-											"statement_keywords": {
-												"query": "P2=Q2"
-											}
-										}
-									},
-									"boost": 0.83333333333333333
+								"match": {
+									"statement_keywords": {
+										"query": "P2=Q2",
+										"boost": 0.83333333333333333
+									}
 								}
 							},
 							{
-								"constant_score": {
-									"filter": {
-										"match": {
-											"statement_keywords": {
-												"query": "P1=Q999999"
-											}
-										}
-									},
-									"boost": 0.56666666666666666
+								"match": {
+									"statement_keywords": {
+										"query": "P1=Q999999",
+										"boost": 0.56666666666666666
+									}
 								}
 							},
 							{
-								"constant_score": {
-									"filter": {
-										"match": {
-											"statement_keywords": {
-												"query": "P2=Q999999"
-											}
-										}
-									},
-									"boost": 0.56666666666666666
+								"match": {
+									"statement_keywords": {
+										"query": "P2=Q999999",
+										"boost": 0.56666666666666666
+									}
 								}
 							}
 						]

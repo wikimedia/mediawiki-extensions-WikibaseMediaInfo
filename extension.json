@@ -376,7 +376,8 @@
 				"wikibasemediainfo-special-mediasearch-clear-title",
 				"wikibasemediainfo-special-mediasearch-input-label",
 				"wikibasemediainfo-special-mediasearch-input-placeholder",
-				"searchbutton"
+				"searchbutton",
+				"wikibasemediainfo-special-mediasearch-load-more-results"
 			],
 			"dependencies": [
 				"wikibase.mediainfo.mediasearch.styles",

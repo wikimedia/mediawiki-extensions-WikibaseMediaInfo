@@ -138,5 +138,6 @@
 	"wikibasemediainfo-special-mediasearch-empty-state": "Text prompting the user to search for media files. Parameters:\n* $1 - Total number of media files",
 	"wikibasemediainfo-special-mediasearch-clear-title": "Accessible title for search input clear button",
 	"wikibasemediainfo-special-mediasearch-input-label": "Visually-hidden label for the Media Search search input",
-	"wikibasemediainfo-special-mediasearch-input-placeholder": "Placeholder text for Media Search search input"
+	"wikibasemediainfo-special-mediasearch-input-placeholder": "Placeholder text for Media Search search input",
+	"wikibasemediainfo-special-mediasearch-load-more-results": "Text for the 'load more results' button"
 }

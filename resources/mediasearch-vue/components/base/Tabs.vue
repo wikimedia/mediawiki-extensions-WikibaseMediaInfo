@@ -1,27 +1,33 @@
 <template>
 	<div class="wbmi-tabs">
-		<div
-			class="wbmi-tabs__header"
-			role="tablist"
-			tabindex="0"
-			:aria-activedescendant="currentTabId"
-			@keydown.left="moveBack"
-			@keydown.up.prevent="moveBack"
-			@keydown.right="moveForward"
-			@keydown.down.prevent="moveForward"
-		>
-			<div v-for="tab in tabs"
-				:id="tab.id + '-label'"
-				:key="tab.title"
-				:class="determineTabLabelClasses( tab )"
-				:aria-selected="tab.name === currentTabName"
-				:aria-controls="tab.id"
-				class="wbmi-tabs__header__item"
-				role="tab"
-				@click="selectTab( tab.name )"
-				@keyup.enter="selectTab( tab.name )"
+		<div class="wbmi-tabs__header">
+			<div
+				class="wbmi-tabs__tabs-list"
+				role="tablist"
+				tabindex="0"
+				:aria-activedescendant="currentTabId"
+				@keydown.left="moveBack"
+				@keydown.up.prevent="moveBack"
+				@keydown.right="moveForward"
+				@keydown.down.prevent="moveForward"
 			>
-				{{ tab.title }}
+				<div v-for="tab in tabs"
+					:id="tab.id + '-label'"
+					:key="tab.title"
+					:class="determineTabLabelClasses( tab )"
+					:aria-selected="tab.name === currentTabName"
+					:aria-controls="tab.id"
+					class="wbmi-tabs__tabs-list__item"
+					role="tab"
+					@click="selectTab( tab.name )"
+					@keyup.enter="selectTab( tab.name )"
+				>
+					{{ tab.title }}
+				</div>
+			</div>
+
+			<div class="wbmi-tabs__filters">
+				<slot name="filters"></slot>
 			</div>
 		</div>
 
@@ -35,10 +41,14 @@
 var Vue = require( 'vue' ); // Vue is imported here for type definition
 
 /**
- * A group of tabs with a tab menu. See App for usage example.
+ * A group of tabs with a tab menu.
  *
  * Tab can be changed via user click on a tab menu item or by changing the
  * active prop passed to the Tabs component.
+ *
+ * This component has two slots: the main slot, which is meant to contain Tab
+ * components, and the filters slot, which can contain Select components that
+ * will be displayed inline with the tabs list in the heading.
  */
 // @vue/component
 module.exports = {
@@ -140,11 +150,11 @@ module.exports = {
 		 * isActive attribute for each tab.
 		 */
 		initializeTabs: function () {
-			var tabs = this.$children;
+			var tabs = this.$slots.default;
 			this.tabs = {};
 
 			tabs.forEach( function ( tab ) {
-				this.tabs[ tab.name ] = tab;
+				this.tabs[ tab.componentInstance.name ] = tab.componentInstance;
 			}.bind( this ) );
 
 			// If no active tab was passed in as a prop, default to first one.
@@ -187,19 +197,25 @@ module.exports = {
 
 <style lang="less">
 @import 'mediawiki.mixins';
-@import '../../../../lib/wikimedia-ui-base.less';
+@import './../../../mediainfo-variables.less';
 
 /* stylelint-disable selector-class-pattern */
 /* stylelint-disable no-descending-specificity */
 .wbmi-tabs {
 	&__header {
-		.flex-display();
 		.box-shadow( inset 0 -1px 0 0 @border-color-base );
+		.flex-display();
+		align-items: flex-end;
+		justify-content: space-between;
+	}
+
+	&__tabs-list {
+		.flex-display();
 
 		&:focus {
 			outline: 0;
 
-			.wbmi-tabs__header__item.is-active {
+			.wbmi-tabs__tabs-list__item.is-active {
 				border-radius: 2px;
 				box-shadow: inset 0 0 0 2px @color-primary;
 			}
@@ -209,8 +225,8 @@ module.exports = {
 			color: @color-base--subtle;
 			cursor: pointer;
 			font-weight: bold;
-			margin: 6px 6px 0 0;
-			padding: 6px 13px;
+			margin: @wbmi-padding-vertical-base @wbmi-padding-vertical-base 0 0;
+			padding: @wbmi-padding-vertical-base @wbmi-padding-horizontal-base;
 			transition: color 100ms, box-shadow 100ms;
 
 			&:hover,
@@ -234,6 +250,58 @@ module.exports = {
 					box-shadow: unset;
 				}
 			}
+		}
+	}
+
+	&__filters {
+		.flex-display();
+
+		// Note: this code is currently specific to the Tabs component but could
+		// be useful elsewhere in the future. If that's the case, we might want
+		// to add an alternate style ("frameless"?) to the Select component.
+		.wbmi-select {
+			margin: @wbmi-padding-vertical-base @wbmi-padding-vertical-base 0 0;
+
+			&:last-child {
+				margin-right: 0;
+			}
+
+			// Styles for when a filter value has been selected.
+			&--value-selected {
+				.wbmi-select__content {
+					.box-shadow( inset 0 -2px 0 0 @color-primary );
+					color: @color-primary;
+
+					.wbmi-select__handle {
+						color: @color-primary;
+					}
+				}
+			}
+
+			&__content {
+				background-color: transparent;
+				border: 0;
+				border-radius: 0;
+				font-weight: bold;
+
+				&:hover,
+				&:focus {
+					.box-shadow( inset 0 -2px 0 0 @color-primary--hover );
+					border-color: transparent;
+					color: @color-primary--hover;
+					outline: 0;
+
+					.wbmi-select__handle {
+						color: @color-primary--hover;
+					}
+				}
+			}
+		}
+
+		// Align the select menu to the right.
+		.wbmi-select-menu {
+			left: auto;
+			right: 0;
 		}
 	}
 }

@@ -1,5 +1,5 @@
 <template>
-	<span class="mw-icon" :class="builtInClasses">
+	<span class="wbmi-icon" :class="builtInClasses">
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
 			width="1em"
@@ -58,7 +58,7 @@
  *    }
  */
 module.exports = {
-	name: 'MwIcon',
+	name: 'WbmiIcon',
 
 	props: {
 		/** The SVG path or an object containing that path plus other data. */
@@ -100,7 +100,7 @@ module.exports = {
 	computed: {
 		builtInClasses: function () {
 			return {
-				'mw-icon--flip-for-rtl': this.shouldFlip
+				'wbmi-icon--flip-for-rtl': this.shouldFlip
 			};
 		},
 
@@ -164,7 +164,7 @@ module.exports = {
 <style lang="less">
 @import './../../../mediainfo-variables.less';
 
-.mw-icon {
+.wbmi-icon {
 	align-items: center;
 	// Maintain an inline outer element while using flexbox to center the SVG
 	// and avoid extra space around the image.
@@ -178,7 +178,7 @@ module.exports = {
 }
 
 // Horizontally flip icons that should be flipped for RTL languages.
-[ dir='rtl' ] .mw-icon--flip-for-rtl svg {
+[ dir='rtl' ] .wbmi-icon--flip-for-rtl svg {
 	transform: scaleX( -1 );
 }
 </style>

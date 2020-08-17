@@ -68,9 +68,9 @@
 </template>
 
 <script>
-var Button = require( './Button.vue' ),
-	Icon = require( './Icon.vue' ),
-	LookupResults = require( './LookupResults.vue' ),
+var WbmiButton = require( './Button.vue' ),
+	WbmiIcon = require( './Icon.vue' ),
+	WbmiLookupResults = require( './LookupResults.vue' ),
 	icons = require( '../../../../lib/icons.js' );
 
 /**
@@ -82,13 +82,14 @@ var Button = require( './Button.vue' ),
  * have a search icon and clear indicator button, etc. This could be made more
  * general for wider usage.
  */
+// @vue/component
 module.exports = {
-	name: 'AutocompleteSearchInput',
+	name: 'WbmiAutocompleteSearchInput',
 
 	components: {
-		'wbmi-button': Button,
-		'wbmi-icon': Icon,
-		'wbmi-lookup-results': LookupResults
+		'wbmi-button': WbmiButton,
+		'wbmi-icon': WbmiIcon,
+		'wbmi-lookup-results': WbmiLookupResults
 	},
 
 	props: {
@@ -116,20 +117,25 @@ module.exports = {
 		},
 
 		placeholder: {
-			type: [ String, Object ]
+			type: [ String, Object ],
+			default: null
 		},
 
 		clearTitle: {
-			type: [ String, Object ]
+			type: [ String, Object ],
+			default: null
 		},
 
 		buttonLabel: {
-			type: [ String, Object ]
+			type: [ String, Object ],
+			default: null
 		},
 
 		lookupResults: {
 			type: Array,
-			default: []
+			default: function () {
+				return [];
+			}
 		}
 	},
 
@@ -435,14 +441,12 @@ module.exports = {
 		padding-right: @wbmi-padding-horizontal-input-text;
 		right: 0;
 
-		.mw-icon {
+		.wbmi-icon {
 			// Icon size is based on font size, so we'll set it here to make the
 			// indicator smaller than the default font size.
 			// Equal to 12px in ems.
-			font-size: unit(
-				@min-size-indicator / @wbmi-font-size-browser / @wbmi-font-size-base,
-				em
-			);
+			// stylelint-disable-next-line max-len
+			font-size: unit( @min-size-indicator / @wbmi-font-size-browser / @wbmi-font-size-base, em );
 		}
 	}
 
@@ -488,6 +492,12 @@ module.exports = {
 		}
 	}
 
+	// Apply pending state mixin, which generates a moving striped background,
+	// while autocomplete results are fetched.
+	&--pending .wbmi-input__input {
+		.wbmi-pending-state();
+	}
+
 	&--button {
 		display: flex;
 
@@ -506,12 +516,6 @@ module.exports = {
 			line-height: @wbmi-line-height-base;
 			margin: 0; // Undo Safari style.
 		}
-	}
-
-	// Apply pending state mixin, which generates a moving striped background,
-	// while autocomplete results are fetched.
-	&--pending .wbmi-input__input {
-		.wbmi-pending-state();
 	}
 
 	&:hover {

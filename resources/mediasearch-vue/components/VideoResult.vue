@@ -87,6 +87,19 @@ module.exports = {
 		transition: color @transition-base ease;
 	}
 
+	&__body {
+		.flex-display();
+		.flex( 1, 0, auto );
+		flex-direction: column;
+		padding: @wbmi-spacing-sm;
+
+		& .wbmi-video-result__title {
+			line-height: @line-height-heading;
+			margin-top: 0;
+			padding-top: 0;
+		}
+	}
+
 	&:hover &__title {
 		color: @color-primary--active;
 	}
@@ -123,19 +136,6 @@ module.exports = {
 	&__mime {
 		color: @color-base--subtle;
 		font-weight: normal;
-	}
-
-	&__body {
-		.flex-display();
-		.flex( 1, 0, auto );
-		flex-direction: column;
-		padding: @wbmi-spacing-sm;
-
-		& .wbmi-video-result__title {
-			line-height: @line-height-heading;
-			margin-top: 0;
-			padding-top: 0;
-		}
 	}
 }
 </style>

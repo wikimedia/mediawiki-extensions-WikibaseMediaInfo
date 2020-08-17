@@ -1,19 +1,19 @@
 <template>
 	<div
-		class="mw-message"
+		class="wbmi-message"
 		:class="builtInClasses"
 		:aria-live="type !== 'error' ? 'polite' : false"
 		:role="type === 'error' ? 'alert' : false "
 	>
-		<mw-icon :icon="icon"></mw-icon>
-		<div class="mw-message__content">
+		<wbmi-icon :icon="icon"></wbmi-icon>
+		<div class="wbmi-message__content">
 			<slot></slot>
 		</div>
 	</div>
 </template>
 
 <script>
-var Icon = require( './Icon.vue' ),
+var WbmiIcon = require( './Icon.vue' ),
 	icons = require( './../../../../lib/icons.js' ),
 	ICON_MAP = {
 		notice: icons.wbmiIconInfoFilled,
@@ -29,10 +29,10 @@ var Icon = require( './Icon.vue' ),
  */
 // @vue/component
 module.exports = {
-	name: 'Message',
+	name: 'WbmiMessage',
 
 	components: {
-		'mw-icon': Icon
+		'wbmi-icon': WbmiIcon
 	},
 
 	props: {
@@ -49,11 +49,11 @@ module.exports = {
 
 	computed: {
 		typeClass: function () {
-			return 'mw-message--' + this.type;
+			return 'wbmi-message--' + this.type;
 		},
 
 		builtInClasses: function () {
-			var classes = { 'mw-message--block': !this.inline };
+			var classes = { 'wbmi-message--block': !this.inline };
 			classes[ this.typeClass ] = true;
 			return classes;
 		},
@@ -69,8 +69,7 @@ module.exports = {
 @import 'mediawiki.mixins';
 @import '../../../../lib/wikimedia-ui-base.less';
 
-/* stylelint-disable selector-class-pattern */
-.mw-message {
+.wbmi-message {
 	color: @color-notice;
 	font-weight: bold;
 	max-width: 50em;
@@ -89,33 +88,33 @@ module.exports = {
 		font-weight: normal;
 		padding: 16px 24px;
 
-		&.mw-message--notice {
+		&.wbmi-message--notice {
 			background-color: @background-color-notice--framed;
 			border: @border-notice;
 		}
 
-		&.mw-message--error {
+		&.wbmi-message--error {
 			background-color: @background-color-error--framed;
 			border: @border-error;
 		}
 
-		&.mw-message--warning {
+		&.wbmi-message--warning {
 			background-color: @background-color-warning--framed;
 			border: @border-warning;
 		}
 
-		&.mw-message--success {
+		&.wbmi-message--success {
 			background-color: @background-color-success--framed;
 			border: @border-success;
 		}
 	}
 
-	.mw-icon {
+	.wbmi-icon {
 		position: absolute;
 	}
 }
 
-.mw-message__content {
+.wbmi-message__content {
 	margin-left: 2em;
 }
 </style>

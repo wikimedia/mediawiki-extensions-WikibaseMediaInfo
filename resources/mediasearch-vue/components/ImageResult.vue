@@ -23,14 +23,14 @@
  * currently used but may be relevant in the future for layout.
  */
 var searchResult = require( '../mixins/searchResult.js' ),
-	Image = require( './base/Image.vue' );
+	WbmiImage = require( './base/Image.vue' );
 
 // @vue/component
 module.exports = {
 	name: 'ImageResult',
 
 	components: {
-		'wbmi-image': Image
+		'wbmi-image': WbmiImage
 	},
 
 	mixins: [ searchResult ],

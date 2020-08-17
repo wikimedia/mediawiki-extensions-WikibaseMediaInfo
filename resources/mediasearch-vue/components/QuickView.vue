@@ -37,8 +37,8 @@
 				role="button"
 				@keyup.enter="closeAndRestoreFocus"
 				@click="close">
-				<mw-icon :icon="icons.wbmiIconClose">
-				</mw-icon>
+				<wbmi-icon :icon="icons.wbmiIconClose">
+				</wbmi-icon>
 			</a>
 		</header>
 
@@ -60,14 +60,14 @@
 			</p>
 
 			<p v-if="artist">
-				<mw-icon :icon="icons.wbmiIconUserAvatar"></mw-icon>
+				<wbmi-icon :icon="icons.wbmiIconUserAvatar"></wbmi-icon>
 				<span v-html="artist"></span>
 			</p>
 
 			<!-- Attempt to show license text, an appropriate icon, and an
 			optional link to external license URL -->
 			<p v-if="licenseText">
-				<mw-icon v-if="licenseIcon" :icon="licenseIcon"></mw-icon>
+				<wbmi-icon v-if="licenseIcon" :icon="licenseIcon"></wbmi-icon>
 				<a v-if="licenseUrl"
 					:href="licenseUrl"
 					target="_blank">
@@ -79,33 +79,33 @@
 			<!-- Sometimes this is free text, sometimes it is formatted. Can
 			we make things semi-consistent? -->
 			<p v-if="creationDate">
-				<mw-icon :icon="icons.wbmiIconClock"></mw-icon>
+				<wbmi-icon :icon="icons.wbmiIconClock"></wbmi-icon>
 				<span v-html="creationDate"></span>
 			</p>
 
 			<p v-if="resolution">
-				<mw-icon :icon="icons.wbmiIconCamera"></mw-icon>
+				<wbmi-icon :icon="icons.wbmiIconCamera"></wbmi-icon>
 				<span>{{ resolution }}</span>
 			</p>
 
 			<p v-if="mimeType">
-				<mw-icon :icon="icons.wbmiIconPageSettings"></mw-icon>
+				<wbmi-icon :icon="icons.wbmiIconPageSettings"></wbmi-icon>
 				<span>{{ mimeType }}</span>
 			</p>
 
-			<mw-button
+			<wbmi-button
 				class="wbmi-media-search-quick-view__cta"
 				:progressive="true"
 				@click="goToFilePage( canonicalurl )">
 				More Details
-			</mw-button>
+			</wbmi-button>
 		</div>
 	</div>
 </template>
 
 <script>
-var Icon = require( './base/Icon.vue' ),
-	Button = require( './base/Button.vue' ),
+var WbmiIcon = require( './base/Icon.vue' ),
+	WbmiButton = require( './base/Button.vue' ),
 	icons = require( '../../../lib/icons.js' );
 
 // Helper function to check for date validity
@@ -123,8 +123,8 @@ module.exports = {
 	name: 'QuickView',
 
 	components: {
-		'mw-icon': Icon,
-		'mw-button': Button
+		'wbmi-icon': WbmiIcon,
+		'wbmi-button': WbmiButton
 	},
 
 	props: {
@@ -386,8 +386,7 @@ module.exports = {
 	&__body {
 		padding: 16px;
 
-		// stylelint-disable-next-line selector-class-pattern
-		.mw-icon {
+		.wbmi-icon {
 			color: @wbmi-icon-color--subtle;
 			margin-right: 4px;
 		}
@@ -424,16 +423,14 @@ module.exports = {
 		top: 8px;
 		width: 30px;
 
-		// stylelint-disable-next-line selector-class-pattern
-		.mw-icon {
+		.wbmi-icon {
 			color: @color-base--subtle;
 			transition: color @transition-base;
 		}
 
 		&:hover,
 		&:focus {
-			// stylelint-disable-next-line selector-class-pattern
-			.mw-icon {
+			.wbmi-icon {
 				color: @color-base;
 			}
 		}

@@ -5,7 +5,8 @@
 			"Lucas Werkmeister",
 			"Metalhead64",
 			"Mirzali",
-			"Speravir"
+			"Speravir",
+			"Umherirrender"
 		]
 	},
 	"action-mediainfo-term": "Bildtexte oder Zusammenfassungen zu ändern",
@@ -117,7 +118,7 @@
 	"wikibasemediainfo-quantity-unit-button-text": "Einheit setzen",
 	"wikibasemediainfo-globecoordinate-input-button-text": "Hinzufügen",
 	"wikibasemediainfo-globecoordinate-map-button-text": "Auf Karte auswählen",
-	"wikibasemediainfo-search-suggestions-title-depicts": "Dateien stellen dar ...",
+	"wikibasemediainfo-search-suggestions-title-depicts": "Dateien stellen dar …",
 	"wikibasemediainfo-search-suggestions-preference-label": "Suchvorschläge der automatischen Vervollständigung basierend auf den strukturierten Daten",
 	"wikibasemediainfo-search-suggestions-preference-disable-confirm": "Bist du sicher, dass du die Suchvorschläge der automatischen Vervollständigung basierend auf den strukturierten Daten entfernen möchtest? (Diese Einstellung kann in den [[Special:Preferences#mw-prefsection-searchoptions|Einstellungen]] geändert werden.)",
 	"wikibasemediainfo-special-mediasearch-title": "Nach Medien suchen",

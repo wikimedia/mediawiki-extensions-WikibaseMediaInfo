@@ -102,5 +102,6 @@
 	"wikibasemediainfo-special-mediasearch-filter-size-small": "Liten",
 	"wikibasemediainfo-special-mediasearch-filter-size-medium": "Medel",
 	"wikibasemediainfo-special-mediasearch-filter-size-large": "Stor",
-	"wikibasemediainfo-special-mediasearch-no-results": "Vi hittade inga resultat"
+	"wikibasemediainfo-special-mediasearch-no-results": "Vi hittade inga resultat",
+	"wikibasemediainfo-special-mediasearch-no-results-tips": "Försök med allmännare söktermer eller kontrollera stavningen"
 }

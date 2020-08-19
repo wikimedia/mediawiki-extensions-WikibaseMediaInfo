@@ -14,7 +14,7 @@
 				:class="getItemClasses( index )"
 				role="option"
 				:aria-selected="isActiveItem( index )"
-				@mousedown="$emit( 'select', index, item )"
+				@mousedown="onMousedown( index, item )"
 				@mouseover="$emit( 'active-item-change', index )"
 				@mouseleave="$emit( 'active-item-change', -1 )"
 			>
@@ -92,6 +92,22 @@ module.exports = {
 
 	methods: {
 		/**
+		 * Handle mousedown.
+		 *
+		 * @param {number} index
+		 * @param {Object} item
+		 * @fires select
+		 */
+		onMousedown: function ( index, item ) {
+			// If this is the selected item, do nothing.
+			if ( index === this.selectedItemIndex ) {
+				return;
+			}
+
+			this.$emit( 'select', index, item );
+		},
+
+		/**
 		 * Determine if a list item should have the active class.
 		 *
 		 * @param {number} index
@@ -151,7 +167,7 @@ module.exports = {
 				typeof items[ 0 ] === 'object'
 			) {
 				return items.map( function ( item ) {
-					if ( item.label && item.value ) {
+					if ( 'label' in item && 'value' in item ) {
 						return item;
 					}
 

@@ -25,10 +25,6 @@
 					{{ tab.title }}
 				</div>
 			</div>
-
-			<div class="wbmi-tabs__filters">
-				<slot name="filters"></slot>
-			</div>
 		</div>
 
 		<div class="wbmi-tabs__content">
@@ -250,58 +246,6 @@ module.exports = {
 					box-shadow: unset;
 				}
 			}
-		}
-	}
-
-	&__filters {
-		.flex-display();
-
-		// Note: this code is currently specific to the Tabs component but could
-		// be useful elsewhere in the future. If that's the case, we might want
-		// to add an alternate style ("frameless"?) to the Select component.
-		.wbmi-select {
-			margin: @wbmi-padding-vertical-base @wbmi-padding-vertical-base 0 0;
-
-			&:last-child {
-				margin-right: 0;
-			}
-
-			// Styles for when a filter value has been selected.
-			&--value-selected {
-				.wbmi-select__content {
-					.box-shadow( inset 0 -2px 0 0 @color-primary );
-					color: @color-primary;
-
-					.wbmi-select__handle {
-						color: @color-primary;
-					}
-				}
-			}
-
-			&__content {
-				background-color: transparent;
-				border: 0;
-				border-radius: 0;
-				font-weight: bold;
-
-				&:hover,
-				&:focus {
-					.box-shadow( inset 0 -2px 0 0 @color-primary--hover );
-					border-color: transparent;
-					color: @color-primary--hover;
-					outline: 0;
-
-					.wbmi-select__handle {
-						color: @color-primary--hover;
-					}
-				}
-			}
-		}
-
-		// Align the select menu to the right.
-		.wbmi-select-menu {
-			left: auto;
-			right: 0;
 		}
 	}
 }

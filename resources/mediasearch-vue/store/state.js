@@ -44,6 +44,13 @@ module.exports = {
 		category: false
 	},
 
+	filterValues: {
+		bitmap: {},
+		audio: {},
+		video: {},
+		category: {}
+	},
+
 	/**
 	 * Number of total files on commons (used in messages)
 	 */

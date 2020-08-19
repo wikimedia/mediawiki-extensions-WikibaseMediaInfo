@@ -23,6 +23,13 @@
 				:key="tab"
 				:name="tab"
 				:title="tabNames[ tab ]">
+				<!-- Display search filters for each tab. -->
+				<search-filters
+					:media-type="tab"
+					@filter-change="performNewSearch"
+				>
+				</search-filters>
+
 				<!-- Display the available results for each tab -->
 				<search-results
 					:media-type="tab"
@@ -95,6 +102,7 @@ var AUTOLOAD_COUNT = 2,
 	WbmiTabs = require( './base/Tabs.vue' ),
 	WbmiButton = require( './base/Button.vue' ),
 	SearchResults = require( './SearchResults.vue' ),
+	SearchFilters = require( './SearchFilters.vue' ),
 	NoResults = require( './NoResults.vue' ),
 	Observer = require( './base/Observer.vue' ),
 	Spinner = require( './Spinner.vue' ),
@@ -112,6 +120,7 @@ module.exports = {
 		'wbmi-autocomplete-search-input': WbmiAutocompleteSearchInput,
 		'wbmi-button': WbmiButton,
 		'search-results': SearchResults,
+		'search-filters': SearchFilters,
 		observer: Observer,
 		spinner: Spinner,
 		'empty-state': EmptyState,

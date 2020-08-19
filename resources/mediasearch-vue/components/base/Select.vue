@@ -95,6 +95,15 @@ module.exports = {
 			required: true
 		},
 
+		/**
+		 * If an item should be selected on component mount, the selected item
+		 * index can be included via this prop.
+		 */
+		initialSelectedItemIndex: {
+			type: Number,
+			default: -1
+		},
+
 		disabled: {
 			type: Boolean
 		}
@@ -106,7 +115,7 @@ module.exports = {
 			showMenu: false,
 			icons: icons,
 			activeItemIndex: -1,
-			selectedItemIndex: -1
+			selectedItemIndex: this.initialSelectedItemIndex
 		};
 	},
 
@@ -189,6 +198,7 @@ module.exports = {
 		/**
 		 * Handle enter keypress.
 		 *
+		 * @fires select
 		 * @return {void}
 		 */
 		onEnter: function () {
@@ -305,6 +315,12 @@ module.exports = {
 
 			this.showMenu = show;
 		}
+	},
+
+	created: function () {
+		if ( this.selectedItemIndex > -1 ) {
+			this.currentSelection = this.items[ this.selectedItemIndex ].label;
+		}
 	}
 };
 </script>
@@ -339,7 +355,6 @@ module.exports = {
 		box-sizing: border-box;
 		color: @color-base;
 		cursor: pointer;
-		line-height: @wbmi-line-height-input;
 		min-height: @size-base;
 		padding: @wbmi-padding-vertical-base
 			@wbmi-padding-end-dropdown

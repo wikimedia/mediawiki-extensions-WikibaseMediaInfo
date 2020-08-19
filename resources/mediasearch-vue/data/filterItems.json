@@ -1,0 +1,22 @@
+{
+	"bitmap": {
+		"imageSize":[
+			{ 
+				"label": "wikibasemediainfo-special-mediasearch-filter-size-any",
+				"value": ""
+			},
+			{
+				"label":"wikibasemediainfo-special-mediasearch-filter-size-small",
+				"value": "<500"
+			},
+			{
+				"label": "wikibasemediainfo-special-mediasearch-filter-size-medium",
+				"value": "500,1000"
+			},
+			{
+				"label": "wikibasemediainfo-special-mediasearch-filter-size-large",
+				"value": ">1000"
+			}
+		]
+	}
+}

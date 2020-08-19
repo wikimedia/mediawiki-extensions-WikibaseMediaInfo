@@ -24,11 +24,11 @@ module.exports = {
 	 * @param {Object} options
 	 * @param {string} options.type bitmap / category / audio / video
 	 * @param {string} options.term search term
-	 * @param {string} options.resolution
 	 * @return {jQuery.Deferred}
 	 */
 	search: function ( context, options ) {
-		var params = { // common request params for all requests
+		// common request params for all requests
+		var params = {
 				format: 'json',
 				uselang: mw.config.get( 'wgUserLanguage' ),
 				action: 'query',
@@ -36,7 +36,12 @@ module.exports = {
 				prop: options.type === 'category' ? 'info' : 'info|imageinfo|pageterms',
 				inprop: 'url'
 			},
-			request;
+			request,
+			resolution = 'imageSize' in context.state.filterValues[ options.type ] ?
+				context.state.filterValues.bitmap.imageSize : null,
+			raw = resolution ?
+				'filetype:' + options.type + ' fileres:' + resolution :
+				'filetype:' + options.type;
 
 		if ( options.type === 'category' ) {
 			// category-specific params
@@ -51,7 +56,7 @@ module.exports = {
 			params.iiurlheight = options.type === 'bitmap' ? 180 : undefined;
 			params.iiurlwidth = options.type === 'video' ? 200 : undefined;
 			params.wbptterms = 'label';
-			params.gmsrawsearch = 'filetype:' + options.type; // TODO: suppport resolution via fileres:
+			params.gmsrawsearch = raw;
 			params.gmslimit = LIMIT;
 			params.gmscontinue = context.state.continue[ options.type ];
 		}

@@ -1,3 +1,5 @@
+var Vue = require( 'vue' );
+
 module.exports = {
 
 	setTerm: function ( state, newTerm ) {
@@ -63,5 +65,30 @@ module.exports = {
 
 	setFileCount: function ( state, fileCount ) {
 		state.fileCount = fileCount;
+	},
+
+	/**
+	 * Add a new filter value.
+	 *
+	 * @param {Object} state
+	 * @param {Object} payload
+	 * @param {string} payload.value The new value
+	 * @param {string} payload.mediaType Which mediaType this is for
+	 * @param {string} payload.filterType Which filter this is for
+	 */
+	addFilterValue: function ( state, payload ) {
+		Vue.set( state.filterValues[ payload.mediaType ], payload.filterType, payload.value );
+	},
+
+	/**
+	 * Set a new filter value.
+	 *
+	 * @param {Object} state
+	 * @param {Object} payload
+	 * @param {string} payload.mediaType Which mediaType this is for
+	 * @param {string} payload.filterType Which filter this is for
+	 */
+	removeFilterValue: function ( state, payload ) {
+		Vue.delete( state.filterValues[ payload.mediaType ], payload.filterType );
 	}
 };

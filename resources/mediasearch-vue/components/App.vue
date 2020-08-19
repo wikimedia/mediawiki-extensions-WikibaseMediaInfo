@@ -23,24 +23,43 @@
 				:key="tab"
 				:name="tab"
 				:title="tabNames[ tab ]">
+				<!-- Display the available results for each tab -->
 				<search-results
 					:media-type="tab"
 					:enable-quick-view="enableQuickView">
 				</search-results>
 
-				<observer @intersect="getMoreResultsForTabIfAvailable( tab )">
-				</observer>
-
+				<!-- Loading indicator if results are still pending -->
 				<spinner v-if="pending[ tab ]">
 				</spinner>
 
+				<!-- No results found message if search has completed and come back empty -->
 				<template v-else-if="hasNoResults( tab )">
 					<no-results></no-results>
 				</template>
 
+				<!-- Empty-state encouraging user to search if they have not done so yet -->
 				<template v-else-if="shouldShowEmptyState">
 					<empty-state></empty-state>
 				</template>
+
+				<!-- Auto-load more results when user scrolls to the end of the list/grid,
+				as long as the "autoload counter" for the tab has not reached zero -->
+				<observer
+					v-if="autoloadCounter[ tab ] > 0"
+					@intersect="getMoreResultsForTabIfAvailable( tab )">
+				</observer>
+
+				<!-- When the autoload counter for a given tab reaches zero,
+				don't load more results until user explicitly clicks on a
+				"load more" button; this resets the autoload count -->
+				<wbmi-button
+					v-else-if="hasMore[ tab ] && !( pending[ tab ] )"
+					class="wbmi-media-search-load-more"
+					:progressive="true"
+					@click="resetCountAndLoadMore( tab )">
+					{{ $i18n( 'wikibasemediainfo-special-mediasearch-load-more-results' ) }}
+				</wbmi-button>
 			</wbmi-tab>
 		</wbmi-tabs>
 	</div>
@@ -66,13 +85,15 @@
  * request and this component passes an array of string lookup results to the
  * AutocompleteSearchInput for display.
  */
-var mapState = require( 'vuex' ).mapState,
+var AUTOLOAD_COUNT = 2,
+	mapState = require( 'vuex' ).mapState,
 	mapGetters = require( 'vuex' ).mapGetters,
 	mapMutations = require( 'vuex' ).mapMutations,
 	mapActions = require( 'vuex' ).mapActions,
 	WbmiAutocompleteSearchInput = require( './base/AutocompleteSearchInput.vue' ),
 	WbmiTab = require( './base/Tab.vue' ),
 	WbmiTabs = require( './base/Tabs.vue' ),
+	WbmiButton = require( './base/Button.vue' ),
 	SearchResults = require( './SearchResults.vue' ),
 	NoResults = require( './NoResults.vue' ),
 	Observer = require( './base/Observer.vue' ),
@@ -89,6 +110,7 @@ module.exports = {
 		'wbmi-tabs': WbmiTabs,
 		'wbmi-tab': WbmiTab,
 		'wbmi-autocomplete-search-input': WbmiAutocompleteSearchInput,
+		'wbmi-button': WbmiButton,
 		'search-results': SearchResults,
 		observer: Observer,
 		spinner: Spinner,
@@ -104,7 +126,11 @@ module.exports = {
 			// temporary feature flag for QuickView feature: ?quickview=true
 			// params must be present in URL; the actual value of the param
 			// doesn't matter, just provide something to enable
-			enableQuickView: !!url.query.quickview
+			enableQuickView: !!url.query.quickview,
+
+			// Object with keys corresponding to each tab;
+			// values are integers; set in the created() hook
+			autoloadCounter: {}
 		};
 	},
 
@@ -187,6 +213,8 @@ module.exports = {
 		/**
 		 * Dispatch Vuex actions to clear existing term and results whenever a
 		 * "clear" event is detected. Update the URL and history as well.
+		 * Also resets the autoload counter to clear any "load more" buttons
+		 * that may have previously been visible in any of the tabs.
 		 */
 		onClear: function () {
 			this.clearTerm();
@@ -194,6 +222,7 @@ module.exports = {
 			this.resetResults();
 			url.query.q = '';
 			window.history.pushState( url.query, null, '?' + url.getQueryString() );
+			this.autoloadCounter = this.setInitialAutoloadCountForTabs();
 		},
 
 		/**
@@ -224,6 +253,9 @@ module.exports = {
 			}
 
 			if ( this.hasMore[ tab ] && !this.pending[ tab ] ) {
+				// Decrement the autoload count of the appropriate tab
+				this.autoloadCounter[ tab ]--;
+
 				// If more results are available, and if another request is not
 				// already pending, then launch a search request
 				this.search( {
@@ -241,11 +273,25 @@ module.exports = {
 			}
 		},
 
+		resetCountAndLoadMore: function ( tab ) {
+			// Reset the autoload count for the given tab
+			this.autoloadCounter[ tab ] = AUTOLOAD_COUNT;
+
+			// Launch a search request
+			this.search( {
+				term: this.term,
+				type: this.currentTab
+			} );
+		},
+
 		/**
-		 * Dispatch Vuex actions to clear existing results and fetch new ones
+		 * Dispatch Vuex actions to clear existing results and fetch new ones.
+		 * Also resets the autoload counter for all tabs for semi-infinite
+		 * scroll behavior.
 		 */
 		performNewSearch: function () {
 			this.resetResults();
+			this.autoloadCounter = this.setInitialAutoloadCountForTabs();
 
 			this.search( {
 				term: this.term,
@@ -265,6 +311,19 @@ module.exports = {
 				this.pending[ tab ] === false && // tab is not pending
 				this.results[ tab ].length === 0 && // tab has no results
 				this.continue[ tab ] === null; // query cannot be continued
+		},
+
+		/**
+		 * @return {Object} counter object broken down by tab name
+		 */
+		setInitialAutoloadCountForTabs: function () {
+			var count = {};
+
+			this.tabs.forEach( function ( tabName ) {
+				count[ tabName ] = AUTOLOAD_COUNT;
+			} );
+
+			return count;
 		}
 	} ),
 
@@ -322,6 +381,10 @@ module.exports = {
 
 		// Set up the event listener
 		window.addEventListener( 'popstate', this.boundOnPopState );
+
+		// Set the initial autoload count for all tabs for semi-infinite scroll
+		// behavior
+		this.autoloadCounter = this.setInitialAutoloadCountForTabs();
 	},
 
 	mounted: function () {
@@ -349,5 +412,10 @@ module.exports = {
 	body.rtl.sitedir-ltr & input {
 		direction: unset;
 	}
+}
+
+.wbmi-media-search-load-more {
+	display: block;
+	margin: 0 auto;
 }
 </style>

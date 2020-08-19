@@ -116,7 +116,10 @@ module.exports = {
 		 * @return {jQuery.promise}
 		 */
 		getLookupRequestForTerm: function ( term ) {
-			var api = wikibase.api.getLocationAgnosticMwApi( this.apiUri );
+			var apiUri = mw.config.get( 'wbmiExternalEntitySearchBaseUri' ) ||
+					mw.config.get( 'wbmiRepoApiUrl' ) ||
+					mw.config.get( 'wbRepoApiUrl' ),
+				api = wikibase.api.getLocationAgnosticMwApi( apiUri );
 
 			// To test with production Wikidata items, uncomment the line below
 			// and enable the Allow CORS: Access-Control-Allow-Origin browser
@@ -130,8 +133,8 @@ module.exports = {
 				language: mw.config.get( 'wgUserLanguage' ),
 				uselang: mw.config.get( 'wgUserLanguage' ),
 				type: 'item',
-				// request more than `limit`, so we can omit duplicates
-				limit: this.lookupResultsLimit + 50
+				// request more than our limit, so we can omit duplicates
+				limit: 50
 			} );
 		},
 

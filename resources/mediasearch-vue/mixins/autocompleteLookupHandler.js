@@ -29,17 +29,23 @@ module.exports = {
 		 * @param {string} input
 		 */
 		getLookupResults: function ( input ) {
-			var words, inputRegex;
+			// String.prototype.trim doesn't have quite the browser support that
+			// we need, so just do it the long way. Regex taken from
+			// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/trim.
+			var trimmedInput = input.replace( /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '' ),
+				words,
+				inputRegex;
 
-			if ( input.length === 0 ) {
+			// If this is an empty string or just whitespace, bail early.
+			if ( trimmedInput.length === 0 ) {
 				this.lookupResults = [];
 				return;
 			}
 
-			words = input.match( /[^\s]+/g ).length;
+			words = trimmedInput.match( /[^\s]+/g ).length;
 			inputRegex = new RegExp( '^' + new Array( words + 1 ).join( '[^\\s]+\\s*' ), 'i' );
 
-			this.doLookupRequest( input )
+			this.doLookupRequest( trimmedInput )
 				.then( function ( results ) {
 					this.lookupResults = this.getFilteredLookupResults( results, inputRegex );
 				}.bind( this ) );

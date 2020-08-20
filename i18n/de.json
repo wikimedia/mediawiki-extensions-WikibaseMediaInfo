@@ -137,5 +137,6 @@
 	"wikibasemediainfo-special-mediasearch-empty-state": "Suche nach mehr als <span class=\"wbmi-media-search-empty-state__file-count\">$1</span> {{PLURAL:$1|Mediendatei|Mediendateien}}, {{PLURAL:$1|die frei wiederverwendet werden kann|die frei wiederverwendet werden können}}",
 	"wikibasemediainfo-special-mediasearch-clear-title": "Entfernen",
 	"wikibasemediainfo-special-mediasearch-input-label": "Nach Medien suchen",
-	"wikibasemediainfo-special-mediasearch-input-placeholder": "Suche nach Bildern, Audio, Video und mehr"
+	"wikibasemediainfo-special-mediasearch-input-placeholder": "Suche nach Bildern, Audio, Video und mehr",
+	"wikibasemediainfo-special-mediasearch-load-more-results": "Mehr laden"
 }

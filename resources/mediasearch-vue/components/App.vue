@@ -236,6 +236,14 @@ module.exports = {
 				this.setTerm( e.state.q || '' );
 				this.currentTab = e.state.type;
 
+				// if the newly-active history entry includes a "null" query
+				// (the result of clicking the clear button, for example),
+				// ensure that the results are reset
+				if ( this.term === '' ) {
+					this.resetResults();
+					this.clearLookupResults();
+				}
+
 				// Also update the mw.Uri object since we use it to generate
 				// future states
 				url.query.q = this.term;
@@ -364,12 +372,13 @@ module.exports = {
 		if ( this.currentTab === '' ) {
 			this.currentTab = 'bitmap';
 			url.query.type = 'bitmap';
-
-			// history.pushState is used for changes the user makes, but this
-			// first change is more of an auto-correction; we don't want to record
-			// a new history entry for it
-			window.history.replaceState( url.query, null, '?' + url.getQueryString() );
 		}
+
+		// Record whatever the initial query params are that the user arrived on
+		// the page with as "state" in the history stack using history.replaceState;
+		// this will enable us to access it later if the user starts navigating
+		// through history states
+		window.history.replaceState( url.query, null, '?' + url.getQueryString() );
 
 		// Set up a listener for popState events in case the user navigates
 		// through their history stack. Previous search queries should be

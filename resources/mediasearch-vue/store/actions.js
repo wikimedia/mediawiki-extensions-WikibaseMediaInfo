@@ -1,7 +1,8 @@
 'use strict';
 
 var LIMIT = 40,
-	api = new mw.Api();
+	api = new mw.Api(),
+	activeRequest = null;
 
 module.exports = {
 	/**
@@ -27,15 +28,15 @@ module.exports = {
 	 * @return {jQuery.Deferred}
 	 */
 	search: function ( context, options ) {
-		// common request params for all requests
-		var params = {
-			format: 'json',
-			uselang: mw.config.get( 'wgUserLanguage' ),
-			action: 'query',
-			generator: options.type === 'category' ? 'search' : 'mediasearch',
-			prop: options.type === 'category' ? 'info' : 'info|imageinfo|pageterms',
-			inprop: 'url'
-		};
+		var params = { // common request params for all requests
+				format: 'json',
+				uselang: mw.config.get( 'wgUserLanguage' ),
+				action: 'query',
+				generator: options.type === 'category' ? 'search' : 'mediasearch',
+				prop: options.type === 'category' ? 'info' : 'info|imageinfo|pageterms',
+				inprop: 'url'
+			},
+			request;
 
 		if ( options.type === 'category' ) {
 			// category-specific params
@@ -55,16 +56,29 @@ module.exports = {
 			params.gmscontinue = context.state.continue[ options.type ];
 		}
 
+		// If a search request is already in-flight, abort it
+		if ( activeRequest ) {
+			activeRequest.abort();
+		}
+
 		// Set the pending state for the given queue
 		context.commit( 'setPending', {
 			type: options.type,
 			pending: true
 		} );
 
-		// Use for testing
-		// return $.get( 'https://commons.wikimedia.org/w/api.php', params ).then( function ( response ) {
+		// request = $.get( 'https://commons.wikimedia.org/w/api.php', params ); // for testing
+		request = api.get( params );
 
-		return api.get( params ).then( function ( response ) {
+		request.promise( {
+			abort: function () {
+				request.abort();
+			}
+		} );
+
+		activeRequest = request;
+
+		return request.then( function ( response ) {
 			var results, pageIDs, sortedResults;
 
 			if ( response.query && response.query.pages ) {
@@ -103,6 +117,7 @@ module.exports = {
 				} );
 			}
 		} ).done( function () {
+			activeRequest = null;
 			// Set pending back to false when request is complete
 			context.commit( 'setPending', {
 				type: options.type,

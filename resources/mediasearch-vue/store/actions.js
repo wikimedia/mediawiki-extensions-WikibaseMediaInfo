@@ -4,6 +4,37 @@ var LIMIT = 40,
 	api = new mw.Api(),
 	activeRequest = null;
 
+/**
+ * Generate the gmsrawsearch param value.
+ *
+ * @param {string} mediaType
+ * @param {Object} filterValues Filter values for this media type
+ * @return {string}
+ */
+function getRawSearchParams( mediaType, filterValues ) {
+	var raw = 'filetype:' + mediaType;
+
+	// For the Images tab, we want bitmap and drawing file types.
+	if ( mediaType === 'bitmap' ) {
+		raw += '|drawing';
+	}
+
+	function addFilterToRaw( filterType, paramKey ) {
+		var value = filterType in filterValues ?
+			filterValues[ filterType ] : null;
+		if ( value ) {
+			return ' ' + paramKey + ':' + value;
+		}
+
+		return '';
+	}
+
+	raw += addFilterToRaw( 'mimeType', 'filemime' );
+	raw += addFilterToRaw( 'imageSize', 'fileres' );
+
+	return raw;
+}
+
 module.exports = {
 	/**
 	 * Perform a search via API request. Should return a promise.
@@ -36,12 +67,7 @@ module.exports = {
 				prop: options.type === 'category' ? 'info' : 'info|imageinfo|pageterms',
 				inprop: 'url'
 			},
-			request,
-			resolution = 'imageSize' in context.state.filterValues[ options.type ] ?
-				context.state.filterValues.bitmap.imageSize : null,
-			raw = resolution ?
-				'filetype:' + options.type + ' fileres:' + resolution :
-				'filetype:' + options.type;
+			request;
 
 		if ( options.type === 'category' ) {
 			// category-specific params
@@ -56,7 +82,7 @@ module.exports = {
 			params.iiurlheight = options.type === 'bitmap' ? 180 : undefined;
 			params.iiurlwidth = options.type === 'video' ? 200 : undefined;
 			params.wbptterms = 'label';
-			params.gmsrawsearch = raw;
+			params.gmsrawsearch = getRawSearchParams( options.type, context.state.filterValues[ options.type ] );
 			params.gmslimit = LIMIT;
 			params.gmscontinue = context.state.continue[ options.type ];
 		}

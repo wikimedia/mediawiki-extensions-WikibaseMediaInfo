@@ -48,7 +48,8 @@ module.exports = {
 		bitmap: {},
 		audio: {},
 		video: {},
-		category: {}
+		category: {},
+		other: {}
 	},
 
 	/**

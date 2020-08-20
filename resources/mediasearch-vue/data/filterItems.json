@@ -1,21 +1,124 @@
 {
 	"bitmap": {
-		"imageSize":[
-			{ 
-				"label": "wikibasemediainfo-special-mediasearch-filter-size-any",
+		"imageSize": [
+			{
+				"labelMessage": "wikibasemediainfo-special-mediasearch-filter-size-any",
 				"value": ""
 			},
 			{
-				"label":"wikibasemediainfo-special-mediasearch-filter-size-small",
+				"labelMessage":"wikibasemediainfo-special-mediasearch-filter-size-small",
 				"value": "<500"
 			},
 			{
-				"label": "wikibasemediainfo-special-mediasearch-filter-size-medium",
+				"labelMessage": "wikibasemediainfo-special-mediasearch-filter-size-medium",
 				"value": "500,1000"
 			},
 			{
-				"label": "wikibasemediainfo-special-mediasearch-filter-size-large",
+				"labelMessage": "wikibasemediainfo-special-mediasearch-filter-size-large",
 				"value": ">1000"
+			}
+		],
+		"mimeType": [
+			{
+				"labelMessage": "wikibasemediainfo-special-mediasearch-filter-file-type-any",
+				"value": ""
+			},
+			{
+				"label": "tiff",
+				"value": "tiff"
+			},
+			{
+				"label": "png",
+				"value": "png"
+			},
+			{
+				"label": "gif",
+				"value": "gif"
+			},
+			{
+				"label": "jpg",
+				"value": "jpeg"
+			},
+			{
+				"label": "webp",
+				"value": "webp"
+			},
+			{
+				"label": "xcf",
+				"value": "xcf"
+			},
+			{
+				"label": "svg",
+				"value": "svg"
+			}
+		]
+	},
+	"audio": {
+		"mimeType": [
+			{
+				"labelMessage": "wikibasemediainfo-special-mediasearch-filter-file-type-any",
+				"value": ""
+			},
+			{
+				"label": "mid",
+				"value": "midi"
+			},
+			{
+				"label": "flac",
+				"value": "flac"
+			},
+			{
+				"label": "wav",
+				"value": "wav"
+			},
+			{
+				"label": "mp3",
+				"value": "mpeg"
+			},
+			{
+				"label": "ogg",
+				"value": "ogg"
+			}
+		]
+	},
+	"video": {
+		"mimeType": [
+			{
+				"labelMessage": "wikibasemediainfo-special-mediasearch-filter-file-type-any",
+				"value": ""
+			},
+			{
+				"label": "webm",
+				"value": "webm"
+			},
+			{
+				"label": "mpg",
+				"value": "mpeg"
+			},
+			{
+				"label": "ogg",
+				"value": "ogg"
+			}
+		]
+	},
+	"category": {},
+	"other": {
+		"mimeType": [
+			{
+				"labelMessage": "wikibasemediainfo-special-mediasearch-filter-file-type-any",
+				"value": ""
+			},
+			{
+				"label": "pdf",
+				"value": "pdf"
+			},
+			{
+				"label": "djvu",
+				"value": "djvu"
+			},
+			{
+				"label": "stl",
+				"value": "stl"
 			}
 		]
 	}

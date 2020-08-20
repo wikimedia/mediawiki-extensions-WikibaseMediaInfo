@@ -133,6 +133,7 @@
 	"wikibasemediainfo-special-mediasearch-filter-size-small": "Label text for option to filter media search results by small sizes",
 	"wikibasemediainfo-special-mediasearch-filter-size-medium": "Label text for option to filter media search results by medium sizes",
 	"wikibasemediainfo-special-mediasearch-filter-size-large": "Label text for option to filter media search results by large sizes",
+	"wikibasemediainfo-special-mediasearch-filter-file-type-any": "Label text for option to filter media search results by any file type",
 	"wikibasemediainfo-special-mediasearch-no-results": "Message informing the user that no results were found",
 	"wikibasemediainfo-special-mediasearch-no-results-tips": "Tips on how the user could improve their search query",
 	"wikibasemediainfo-special-mediasearch-empty-state": "Text prompting the user to search for media files. Parameters:\n* $1 - Total number of media files",

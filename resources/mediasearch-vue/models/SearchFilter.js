@@ -20,7 +20,7 @@ WbmiSearchFilter.prototype.getProcessedItems = function ( items ) {
 	items.forEach( function ( item ) {
 		processedItems.push( {
 			// eslint-disable-next-line mediawiki/msg-doc
-			label: mw.msg( item.label ),
+			label: 'labelMessage' in item ? mw.msg( item.labelMessage ) : item.label,
 			value: item.value
 		} );
 	} );

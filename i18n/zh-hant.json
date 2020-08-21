@@ -134,5 +134,9 @@
 	"wikibasemediainfo-special-mediasearch-filter-size-large": "大",
 	"wikibasemediainfo-special-mediasearch-no-results": "我們找不到任何結果",
 	"wikibasemediainfo-special-mediasearch-no-results-tips": "嘗試更多一般項目或是檢查您的拼寫",
-	"wikibasemediainfo-special-mediasearch-empty-state": "搜尋超過 <span class=\"wbmi-media-search-empty-state__file-count\">$1</span> 個{{PLURAL:$1|為}}免費重複使用的{{PLURAL:$1|多媒體檔案}}"
+	"wikibasemediainfo-special-mediasearch-empty-state": "搜尋超過 <span class=\"wbmi-media-search-empty-state__file-count\">$1</span> 個{{PLURAL:$1|為}}免費重複使用的{{PLURAL:$1|多媒體檔案}}",
+	"wikibasemediainfo-special-mediasearch-clear-title": "移除",
+	"wikibasemediainfo-special-mediasearch-input-label": "搜尋多媒體",
+	"wikibasemediainfo-special-mediasearch-input-placeholder": "搜尋圖片、音訊、影片與更多內容",
+	"wikibasemediainfo-special-mediasearch-load-more-results": "載入更多"
 }

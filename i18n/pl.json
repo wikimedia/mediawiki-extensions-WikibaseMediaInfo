@@ -84,5 +84,6 @@
 	"wikibasemediainfo-special-mediasearch-empty-state": "Szukaj pośród ponad <span class=\"wbmi-media-search-empty-state__file-count\">$1</span> {{PLURAL:$1|pliku multimedialnego, którego|plików multimedialnych, które}} możesz swobodnie wykorzystać",
 	"wikibasemediainfo-special-mediasearch-clear-title": "Usuń",
 	"wikibasemediainfo-special-mediasearch-input-label": "Wyszukiwanie multimediów",
-	"wikibasemediainfo-special-mediasearch-input-placeholder": "Szukaj obrazów, plików audio, filmów i innych"
+	"wikibasemediainfo-special-mediasearch-input-placeholder": "Szukaj obrazów, plików audio, filmów i innych",
+	"wikibasemediainfo-special-mediasearch-load-more-results": "Załaduj więcej"
 }

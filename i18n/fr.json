@@ -140,5 +140,6 @@
 	"wikibasemediainfo-special-mediasearch-no-results": "Nous n’avons trouvé aucun résultat",
 	"wikibasemediainfo-special-mediasearch-no-results-tips": "Essayer des termes plus généraux ou vérifiez votre orthographe",
 	"wikibasemediainfo-special-mediasearch-empty-state": "Rechercher plus de <span class=\"wbmi-media-search-empty-state__file-count\">$1</span> {{PLURAL:$1|fichier de média|fichiers de média}} qui {{PLURAL:$1|soit libre|soient libres}} de réutilisation",
-	"wikibasemediainfo-special-mediasearch-clear-title": "Supprimer"
+	"wikibasemediainfo-special-mediasearch-clear-title": "Supprimer",
+	"wikibasemediainfo-special-mediasearch-load-more-results": "Charger davantage"
 }

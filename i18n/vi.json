@@ -3,6 +3,7 @@
 		"authors": [
 			"Leduyquang753",
 			"Minh Nguyen",
+			"Nguyễn Mạnh An",
 			"Vinhtantran"
 		]
 	},
@@ -124,5 +125,6 @@
 	"wikibasemediainfo-special-mediasearch-empty-state": "Tìm hơn <span class=\"wbmi-media-search-empty-state__file-count\">$1</span> tập tin phương tiện có sẵn để sử dụng thoải mái miễn phí",
 	"wikibasemediainfo-special-mediasearch-clear-title": "Loại bỏ",
 	"wikibasemediainfo-special-mediasearch-input-label": "Tìm phương tiện",
-	"wikibasemediainfo-special-mediasearch-input-placeholder": "Tìm hình ảnh, âm thanh, video, và đủ loại thứ"
+	"wikibasemediainfo-special-mediasearch-input-placeholder": "Tìm hình ảnh, âm thanh, video, và đủ loại thứ",
+	"wikibasemediainfo-special-mediasearch-load-more-results": "Tải thêm"
 }

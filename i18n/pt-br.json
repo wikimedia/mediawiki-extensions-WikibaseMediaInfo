@@ -134,5 +134,6 @@
 	"wikibasemediainfo-special-mediasearch-no-results-tips": "Experimente termos mais gerais ou verifique a ortografia",
 	"wikibasemediainfo-special-mediasearch-clear-title": "Remover",
 	"wikibasemediainfo-special-mediasearch-input-label": "Pesquisar mídia",
-	"wikibasemediainfo-special-mediasearch-input-placeholder": "Pesquise imagens, áudio, vídeo e muito mais"
+	"wikibasemediainfo-special-mediasearch-input-placeholder": "Pesquise imagens, áudio, vídeo e muito mais",
+	"wikibasemediainfo-special-mediasearch-load-more-results": "Carregar mais"
 }

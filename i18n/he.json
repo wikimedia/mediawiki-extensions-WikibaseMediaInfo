@@ -136,5 +136,6 @@
 	"wikibasemediainfo-special-mediasearch-empty-state": "לחפש יותר {{PLURAL:$1|מקובץ מדיה <span class=\"wbmi-media-search-empty-state__file-count\">אחד</span> שאפשר לעשות בו|מ־<span class=\"wbmi-media-search-empty-state__file-count\">$1</span> קובצי מדיה שאפשר לעשות בהם}} שימוש חוזר חופשי",
 	"wikibasemediainfo-special-mediasearch-clear-title": "הסרה",
 	"wikibasemediainfo-special-mediasearch-input-label": "חיפוש מדיה",
-	"wikibasemediainfo-special-mediasearch-input-placeholder": "חיפוש תמונות, צלילים, סרטים, ועוד"
+	"wikibasemediainfo-special-mediasearch-input-placeholder": "חיפוש תמונות, צלילים, סרטים, ועוד",
+	"wikibasemediainfo-special-mediasearch-load-more-results": "לטעון עוד"
 }

@@ -245,7 +245,8 @@ return [
 
 			$wbRepo = WikibaseRepo::getDefaultInstance();
 			// TODO: this all scaffolding should probably be somehow moved to Wikibase Repo or so?
-			$databaseName = $wbRepo->getEntitySourceDefinitions()->getSourceForEntityType( MediaInfo::ENTITY_TYPE )->getDatabaseName();
+			$databaseName = $wbRepo->getEntitySourceDefinitions()
+				->getSourceForEntityType( MediaInfo::ENTITY_TYPE )->getDatabaseName();
 
 			$contentCodec = new EntityContentDataCodec(
 				$wbRepo->getEntityIdParser(),

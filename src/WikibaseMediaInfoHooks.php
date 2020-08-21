@@ -132,7 +132,8 @@ class WikibaseMediaInfoHooks {
 
 	public static function onRegistration() {
 		if ( !class_exists( EntityContent::class ) ) {
-			// HACK: Declaring a dependency on Wikibase in extension.json requires Wikibase to have its own extension.json
+			// HACK: Declaring a dependency on Wikibase in extension.json
+			// requires Wikibase to have its own extension.json
 			throw new \ExtensionDependencyError( [ [
 				'msg' => 'WikibaseMediaInfo requires Wikibase to be installed.',
 				'type' => 'missing-phpExtension',
@@ -266,7 +267,8 @@ class WikibaseMediaInfoHooks {
 				foreach ( $entity->getStatements() as $statement ) {
 					$propertyId = $statement->getPropertyId();
 					try {
-						$existingPropertyTypes[$propertyId->serialize()] = WBMIHooksHelper::getPropertyType( $propertyId );
+						$existingPropertyTypes[$propertyId->serialize()] =
+							WBMIHooksHelper::getPropertyType( $propertyId );
 					} catch ( PropertyDataTypeLookupException $e ) {
 						// ignore when property can't be found - it likely no longer exists;
 						// either way, we can't find what datatype is has, so there's no

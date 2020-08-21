@@ -42,13 +42,21 @@ class FilePageRedirectHandlingRevisionLookup implements EntityRevisionLookup {
 	 */
 	private $entityDataLoader;
 
-	public function __construct( EntityRevisionLookup $lookup, RevisionStore $revisionStore, WikiPageEntityDataLoader $entityDataLoader ) {
+	public function __construct(
+		EntityRevisionLookup $lookup,
+		RevisionStore $revisionStore,
+		WikiPageEntityDataLoader $entityDataLoader
+	) {
 		$this->lookup = $lookup;
 		$this->revisionStore = $revisionStore;
 		$this->entityDataLoader = $entityDataLoader;
 	}
 
-	public function getEntityRevision( EntityId $entityId, $revisionId = 0, $mode = LookupConstants::LATEST_FROM_REPLICA ) {
+	public function getEntityRevision(
+		EntityId $entityId,
+		$revisionId = 0,
+		$mode = LookupConstants::LATEST_FROM_REPLICA
+	) {
 		return $this->lookup->getEntityRevision( $entityId, $revisionId, $mode );
 	}
 
@@ -56,7 +64,8 @@ class FilePageRedirectHandlingRevisionLookup implements EntityRevisionLookup {
 		try {
 			return $this->lookup->getLatestRevisionId( $entityId, $mode );
 		} catch ( InconsistentRedirectException $e ) {
-			$revStoreFlags = ( $mode == LookupConstants::LATEST_FROM_MASTER || $mode == LookupConstants::LATEST_FROM_REPLICA_WITH_FALLBACK )
+			$revStoreFlags = ( $mode == LookupConstants::LATEST_FROM_MASTER
+				|| $mode == LookupConstants::LATEST_FROM_REPLICA_WITH_FALLBACK )
 				? IDBAccessObject::READ_LATEST : 0;
 
 			// TODO: WikiPageEntityMetaDataLookup should use RevisionStore::getQueryInfo,

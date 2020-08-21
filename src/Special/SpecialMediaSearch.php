@@ -127,7 +127,8 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 			'searchButton' => $this->msg( 'searchbutton' )->text(),
 			'searchPlaceholder' => $this->msg( 'wikibasemediainfo-special-mediasearch-input-placeholder' )->text(),
 			'continueMessage' => $this->msg( 'wikibasemediainfo-special-mediasearch-load-more-results' )->text(),
-			'emptyMessage' => $this->msg( 'wikibasemediainfo-special-mediasearch-empty-state', $totalSiteImages )->text(),
+			'emptyMessage' => $this->msg( 'wikibasemediainfo-special-mediasearch-empty-state', $totalSiteImages )
+				->text(),
 			'noResultsMessage' => $this->msg( 'wikibasemediainfo-special-mediasearch-no-results' )->text(),
 			'noResultsMessageExtra' => $this->msg( 'wikibasemediainfo-special-mediasearch-no-results-tips' )->text(),
 		];
@@ -209,7 +210,8 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 
 		// Pull data from commons: for use in testing
 		// $url = 'https://commons.wikimedia.org/w/api.php?' . http_build_query( $request->getQueryValues() );
-		// $request = \MediaWiki\MediaWikiServices::getInstance()->getHttpRequestFactory()->create( $url, [], __METHOD__ );
+		// $request = \MediaWiki\MediaWikiServices::getInstance()->getHttpRequestFactory()
+		// 	->create( $url, [], __METHOD__ );
 		// $request->execute();
 		// $data = $request->getContent();
 		// $response = json_decode( $data, true ) ?: [];

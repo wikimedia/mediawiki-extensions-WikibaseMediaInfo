@@ -7,12 +7,6 @@
 		<exclude name="PSR12.Properties.ConstantVisibility.NotFound" />
 	</rule>
 
-	<rule ref="Generic.Files.LineLength">
-		<properties>
-			<property name="lineLimit" value="140" />
-		</properties>
-	</rule>
-
 	<rule ref="Squiz.Classes.ValidClassName.NotCamelCaps">
 		<exclude-pattern>Scribunto_LuaWikibaseMediaInfo*</exclude-pattern>
 	</rule>

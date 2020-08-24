@@ -128,15 +128,17 @@
 	"wikibasemediainfo-special-mediasearch-tab-audio": "Ses",
 	"wikibasemediainfo-special-mediasearch-tab-video": "Video",
 	"wikibasemediainfo-special-mediasearch-tab-category": "Kategoriler",
-	"wikibasemediainfo-special-mediasearch-filter-size": "Medya boyutu",
-	"wikibasemediainfo-special-mediasearch-filter-size-any": "Herhangi beden",
+	"wikibasemediainfo-special-mediasearch-filter-size": "Resim boyutu",
+	"wikibasemediainfo-special-mediasearch-filter-size-any": "Tüm resim boyutları",
 	"wikibasemediainfo-special-mediasearch-filter-size-small": "Küçük",
 	"wikibasemediainfo-special-mediasearch-filter-size-medium": "Orta",
 	"wikibasemediainfo-special-mediasearch-filter-size-large": "Büyük",
+	"wikibasemediainfo-special-mediasearch-filter-file-type-any": "Tüm dosya türleri",
 	"wikibasemediainfo-special-mediasearch-no-results": "Herhangi bir sonuç bulamadık",
 	"wikibasemediainfo-special-mediasearch-no-results-tips": "Daha genel terimleri deneyin veya yazımınızı kontrol edin",
 	"wikibasemediainfo-special-mediasearch-empty-state": "Yeniden kullanımı ücretsiz olan $1 daha fazla medya dosyasını arayın",
 	"wikibasemediainfo-special-mediasearch-clear-title": "Kaldır",
 	"wikibasemediainfo-special-mediasearch-input-label": "Medya ara",
-	"wikibasemediainfo-special-mediasearch-input-placeholder": "Resim, ses, video ve daha fazlasını arayın"
+	"wikibasemediainfo-special-mediasearch-input-placeholder": "Resim, ses, video ve daha fazlasını arayın",
+	"wikibasemediainfo-special-mediasearch-load-more-results": "Daha fazla yükle"
 }

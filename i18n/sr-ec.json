@@ -56,9 +56,10 @@
 	"wikibasemediainfo-special-mediasearch-tab-audio": "Аудио",
 	"wikibasemediainfo-special-mediasearch-tab-video": "Видео",
 	"wikibasemediainfo-special-mediasearch-tab-category": "Категорије",
-	"wikibasemediainfo-special-mediasearch-filter-size": "Величина медија",
-	"wikibasemediainfo-special-mediasearch-filter-size-any": "Било које величине",
+	"wikibasemediainfo-special-mediasearch-filter-size": "Величина слике",
+	"wikibasemediainfo-special-mediasearch-filter-size-any": "Све величине слика",
 	"wikibasemediainfo-special-mediasearch-filter-size-small": "Мала",
 	"wikibasemediainfo-special-mediasearch-filter-size-medium": "Средња",
-	"wikibasemediainfo-special-mediasearch-filter-size-large": "Велика"
+	"wikibasemediainfo-special-mediasearch-filter-size-large": "Велика",
+	"wikibasemediainfo-special-mediasearch-filter-file-type-any": "Сви типови датотека"
 }

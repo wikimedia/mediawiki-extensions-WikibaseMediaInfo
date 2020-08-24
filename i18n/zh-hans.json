@@ -7,6 +7,7 @@
 			"Liuxinyu970226",
 			"Nadine Siak",
 			"Phenolla",
+			"SolidBlock",
 			"SomeyaMako",
 			"Viztor",
 			"Zazzzz",
@@ -78,10 +79,12 @@
 	"wikibasemediainfo-globecoordinate-map-button-text": "在地图上选择",
 	"wikibasemediainfo-special-mediasearch-tab-bitmap": "图像",
 	"wikibasemediainfo-special-mediasearch-tab-video": "视频",
-	"wikibasemediainfo-special-mediasearch-filter-size": "媒体大小",
-	"wikibasemediainfo-special-mediasearch-filter-size-any": "任何大小",
+	"wikibasemediainfo-special-mediasearch-filter-size": "图像大小",
+	"wikibasemediainfo-special-mediasearch-filter-size-any": "任何图像大小",
 	"wikibasemediainfo-special-mediasearch-filter-size-small": "较小",
 	"wikibasemediainfo-special-mediasearch-filter-size-medium": "中等",
 	"wikibasemediainfo-special-mediasearch-filter-size-large": "较大",
-	"wikibasemediainfo-special-mediasearch-no-results": "我们没有找到任何结果"
+	"wikibasemediainfo-special-mediasearch-filter-file-type-any": "所有文件类型",
+	"wikibasemediainfo-special-mediasearch-no-results": "我们没有找到任何结果",
+	"wikibasemediainfo-special-mediasearch-load-more-results": "加载更多"
 }

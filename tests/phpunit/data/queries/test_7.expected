@@ -1,0 +1,14 @@
+{
+    "query_string": {
+        "query": "(all.plain:\"phrase search\"~0^1)",
+        "fields": [
+            "all.plain^1",
+            "all^"
+        ],
+        "phrase_slop": 0,
+        "default_operator": "AND",
+        "allow_leading_wildcard": false,
+        "fuzzy_prefix_length": 2,
+        "rewrite": "top_terms_boost_1024"
+    }
+}

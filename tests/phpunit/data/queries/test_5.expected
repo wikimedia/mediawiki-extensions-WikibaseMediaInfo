@@ -1,171 +1,171 @@
 {
-	"bool": {
-		"filter": [
-			{
-				"bool": {
-					"should": [
-						{
-							"multi_match": {
-								"fields": [
-									"all",
-									"all.plain"
-								],
-								"query": "on the 4th of July 1806",
-								"operator": "and"
-							}
-						}
-					]
-				}
-			}
-		],
-		"should": [
-			[
-				{
-					"dis_max": {
-						"queries": [
-							{
-								"multi_match": {
-									"query": "on the 4th of July 1806",
-									"boost": 1,
-									"minimum_should_match": 1,
-									"type": "most_fields",
-									"fields": [
-										"descriptions.de.plain^1"
-									]
-								}
-							},
-							{
-								"multi_match": {
-									"query": "on the 4th of July 1806",
-									"boost": 1,
-									"minimum_should_match": 1,
-									"type": "most_fields",
-									"fields": [
-										"title^3",
-										"title.plain^1"
-									]
-								}
-							},
-							{
-								"multi_match": {
-									"query": "on the 4th of July 1806",
-									"boost": 1,
-									"minimum_should_match": 1,
-									"type": "most_fields",
-									"fields": [
-										"category^3",
-										"category.plain^1"
-									]
-								}
-							},
-							{
-								"multi_match": {
-									"query": "on the 4th of July 1806",
-									"boost": 1,
-									"minimum_should_match": 1,
-									"type": "most_fields",
-									"fields": [
-										"redirect.title^3",
-										"redirect.title.plain^1"
-									]
-								}
-							},
-							{
-								"multi_match": {
-									"query": "on the 4th of July 1806",
-									"boost": 1,
-									"minimum_should_match": 1,
-									"type": "most_fields",
-									"fields": [
-										"suggest"
-									]
-								}
-							}
-						]
-					}
-				},
-				{
-					"dis_max": {
-						"queries": [
-							{
-								"multi_match": {
-									"query": "on the 4th of July 1806",
-									"boost": 1,
-									"minimum_should_match": 1,
-									"type": "most_fields",
-									"fields": [
-										"heading^3",
-										"heading.plain^1"
-									]
-								}
-							},
-							{
-								"multi_match": {
-									"query": "on the 4th of July 1806",
-									"boost": 1,
-									"minimum_should_match": 1,
-									"type": "most_fields",
-									"fields": [
-										"auxiliary_text^3",
-										"auxiliary_text.plain^1"
-									]
-								}
-							},
-							{
-								"multi_match": {
-									"query": "on the 4th of July 1806",
-									"boost": 1,
-									"minimum_should_match": 1,
-									"type": "most_fields",
-									"fields": [
-										"text^3",
-										"text.plain^1"
-									]
-								}
-							},
-							{
-								"multi_match": {
-									"query": "on the 4th of July 1806",
-									"boost": 1,
-									"minimum_should_match": 1,
-									"type": "most_fields",
-									"fields": [
-										"file_text^3",
-										"file_text.plain^1"
-									]
-								}
-							}
-						]
-					}
-				},
-				{
-					"bool": {
-						"must": [
-							{
-								"multi_match": {
-									"fields": [
-										"all_near_match^2",
-										"all_near_match.asciifolding^1.5"
-									],
-									"query": "on the 4th of July 1806",
-									"operator": "and"
-								}
-							}
-						],
-						"filter": [
-							{
-								"terms": {
-									"namespace": [
-										0,
-										14
-									]
-								}
-							}
-						],
-						"boost": 1
-					}
-				}
-			]
-		]
-	}
+    "bool": {
+        "filter": [
+            {
+                "bool": {
+                    "should": [
+                        {
+                            "multi_match": {
+                                "fields": [
+                                    "all",
+                                    "all.plain"
+                                ],
+                                "query": "on the 4th of July 1806",
+                                "operator": "and"
+                            }
+                        }
+                    ]
+                }
+            }
+        ],
+        "should": [
+            [
+                {
+                    "dis_max": {
+                        "queries": [
+                            {
+                                "multi_match": {
+                                    "query": "on the 4th of July 1806",
+                                    "boost": 1,
+                                    "minimum_should_match": 1,
+                                    "type": "most_fields",
+                                    "fields": [
+                                        "descriptions.de.plain^1"
+                                    ]
+                                }
+                            },
+                            {
+                                "multi_match": {
+                                    "query": "on the 4th of July 1806",
+                                    "boost": 1,
+                                    "minimum_should_match": 1,
+                                    "type": "most_fields",
+                                    "fields": [
+                                        "title^3",
+                                        "title.plain^1"
+                                    ]
+                                }
+                            },
+                            {
+                                "multi_match": {
+                                    "query": "on the 4th of July 1806",
+                                    "boost": 1,
+                                    "minimum_should_match": 1,
+                                    "type": "most_fields",
+                                    "fields": [
+                                        "category^3",
+                                        "category.plain^1"
+                                    ]
+                                }
+                            },
+                            {
+                                "multi_match": {
+                                    "query": "on the 4th of July 1806",
+                                    "boost": 1,
+                                    "minimum_should_match": 1,
+                                    "type": "most_fields",
+                                    "fields": [
+                                        "redirect.title^3",
+                                        "redirect.title.plain^1"
+                                    ]
+                                }
+                            },
+                            {
+                                "multi_match": {
+                                    "query": "on the 4th of July 1806",
+                                    "boost": 1,
+                                    "minimum_should_match": 1,
+                                    "type": "most_fields",
+                                    "fields": [
+                                        "suggest"
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "dis_max": {
+                        "queries": [
+                            {
+                                "multi_match": {
+                                    "query": "on the 4th of July 1806",
+                                    "boost": 1,
+                                    "minimum_should_match": 1,
+                                    "type": "most_fields",
+                                    "fields": [
+                                        "heading^3",
+                                        "heading.plain^1"
+                                    ]
+                                }
+                            },
+                            {
+                                "multi_match": {
+                                    "query": "on the 4th of July 1806",
+                                    "boost": 1,
+                                    "minimum_should_match": 1,
+                                    "type": "most_fields",
+                                    "fields": [
+                                        "auxiliary_text^3",
+                                        "auxiliary_text.plain^1"
+                                    ]
+                                }
+                            },
+                            {
+                                "multi_match": {
+                                    "query": "on the 4th of July 1806",
+                                    "boost": 1,
+                                    "minimum_should_match": 1,
+                                    "type": "most_fields",
+                                    "fields": [
+                                        "text^3",
+                                        "text.plain^1"
+                                    ]
+                                }
+                            },
+                            {
+                                "multi_match": {
+                                    "query": "on the 4th of July 1806",
+                                    "boost": 1,
+                                    "minimum_should_match": 1,
+                                    "type": "most_fields",
+                                    "fields": [
+                                        "file_text^3",
+                                        "file_text.plain^1"
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "bool": {
+                        "must": [
+                            {
+                                "multi_match": {
+                                    "fields": [
+                                        "all_near_match^2",
+                                        "all_near_match.asciifolding^1.5"
+                                    ],
+                                    "query": "on the 4th of July 1806",
+                                    "operator": "and"
+                                }
+                            }
+                        ],
+                        "filter": [
+                            {
+                                "terms": {
+                                    "namespace": [
+                                        0,
+                                        14
+                                    ]
+                                }
+                            }
+                        ],
+                        "boost": 1
+                    }
+                }
+            ]
+        ]
+    }
 }

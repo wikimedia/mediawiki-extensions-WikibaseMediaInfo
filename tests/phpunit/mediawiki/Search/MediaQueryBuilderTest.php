@@ -2,12 +2,13 @@
 
 namespace Wikibase\MediaInfo\Tests\Unit\Search;
 
+use CirrusSearch\HashSearchConfig;
 use CirrusSearch\Parser\FullTextKeywordRegistry;
 use CirrusSearch\Search\SearchContext;
 use CirrusSearch\SearchConfig;
 use MediaWiki\Http\HttpRequestFactory;
 use MediaWiki\MediaWikiServices;
-use PHPUnit\Framework\TestCase;
+use MediaWikiTestCase;
 use Wikibase\Lib\LanguageFallbackChainFactory;
 use Wikibase\Lib\TermLanguageFallbackChain;
 use Wikibase\MediaInfo\Search\MediaQueryBuilder;
@@ -15,7 +16,7 @@ use Wikibase\MediaInfo\Search\MediaQueryBuilder;
 /**
  * @covers \Wikibase\MediaInfo\Search\MediaQueryBuilder
  */
-class MediaQueryBuilderTest extends TestCase {
+class MediaQueryBuilderTest extends MediaWikiTestCase {
 
 	private function createSUT( array $params = [] ) : MediaQueryBuilder {
 		$configFactory = MediaWikiServices::getInstance()->getConfigFactory();
@@ -40,6 +41,13 @@ class MediaQueryBuilderTest extends TestCase {
 		);
 
 		return new MediaQueryBuilder(
+			new HashSearchConfig( [
+				'CirrusSearchPhraseSlop' => [
+					'precise' => 0,
+					'default' => 0,
+					'boost' => 1
+				],
+			] ),
 			$features,
 			$settings,
 			$stemmingSettings,
@@ -119,16 +127,17 @@ class MediaQueryBuilderTest extends TestCase {
 	/**
 	 * @dataProvider searchDataProvider
 	 * @param array $settings
-	 * @param array $expected
+	 * @param string $expectedFile
 	 */
-	public function testQuery( array $settings, array $expected ) : void {
+	public function testQuery( array $settings, string $expectedFile ) : void {
 		$builder = $this->createSUT( $settings );
 		$searchContext = $this->createSearchContext();
 		$builder->build( $searchContext, $settings['term'] );
 
-		$this->assertEquals(
-			$expected,
-			$searchContext->getQuery()->toArray(),
+		$this->assertFileContains(
+			$expectedFile,
+			json_encode( $searchContext->getQuery()->toArray(), JSON_PRETTY_PRINT ),
+			getenv( "MEDIAINFO_REBUILD_FIXTURES" ) === 'yes',
 			$settings['title'] . ': failed'
 		);
 	}
@@ -140,8 +149,7 @@ class MediaQueryBuilderTest extends TestCase {
 			$testFileName = substr( $settingsFile, 0, - 9 );
 			$settings = json_decode( file_get_contents( $settingsFile ), true );
 			$expectedFile = "$testFileName.expected";
-			$expected = json_decode( file_get_contents( $expectedFile ), true );
-			$tests[$settings['title']] = [ $settings, $expected ];
+			$tests[$settings['title']] = [ $settings, $expectedFile ];
 		}
 
 		return $tests;

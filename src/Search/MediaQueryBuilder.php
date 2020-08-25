@@ -3,8 +3,7 @@
 namespace Wikibase\MediaInfo\Search;
 
 use CirrusSearch\Parser\FullTextKeywordRegistry;
-use CirrusSearch\Query\FullTextQueryBuilder;
-use CirrusSearch\Query\KeywordFeature;
+use CirrusSearch\Query\FullTextQueryStringQueryBuilder;
 use CirrusSearch\Search\SearchContext;
 use CirrusSearch\SearchConfig;
 use Elastica\Query\BoolQuery;
@@ -18,13 +17,11 @@ use Wikibase\Lib\LanguageFallbackChainFactory;
 use Wikibase\Repo\WikibaseRepo;
 use Wikibase\Search\Elastic\Fields\StatementsField;
 
-class MediaQueryBuilder implements FullTextQueryBuilder {
+class MediaQueryBuilder extends FullTextQueryStringQueryBuilder {
 
 	public const SEARCH_PROFILE_CONTEXT_NAME = 'mediasearch';
 	public const FULLTEXT_PROFILE_NAME = 'mediainfo_fulltext';
 
-	/** @var KeywordFeature[] */
-	private $features;
 	/** @var array */
 	private $settings;
 	/** @var array */
@@ -43,6 +40,7 @@ class MediaQueryBuilder implements FullTextQueryBuilder {
 	private $idsForTerm = [];
 
 	public function __construct(
+		SearchConfig $config,
 		array $features,
 		array $settings,
 		array $stemmingSettings,
@@ -52,7 +50,7 @@ class MediaQueryBuilder implements FullTextQueryBuilder {
 		string $externalEntitySearchBaseUri,
 		LanguageFallbackChainFactory $languageFallbackChainFactory
 	) {
-		$this->features = $features;
+		parent::__construct( $config, $features );
 		$this->settings = array_replace_recursive(
 			[
 				'boost' => [
@@ -103,6 +101,7 @@ class MediaQueryBuilder implements FullTextQueryBuilder {
 		$features = ( new FullTextKeywordRegistry( $searchConfig ) )->getKeywords();
 
 		return new static(
+			$searchConfig,
 			$features,
 			$settings,
 			$stemmingSettings,
@@ -117,17 +116,25 @@ class MediaQueryBuilder implements FullTextQueryBuilder {
 	/**
 	 * Search articles with provided term.
 	 *
-	 * @param SearchContext $searchContext
-	 * @param string $term term to search
+	 * @param SearchContext $context
+	 * @param array $fields
+	 * @param array $nearMatchFields
+	 * @param string $queryString
+	 * @param string $nearMatchQuery
+	 * @return \Elastica\Query\AbstractQuery|BoolQuery|\Elastica\Query\QueryString
 	 */
-	public function build( SearchContext $searchContext, $term ) {
-		// Transform Mediawiki specific syntax to filters and extra
-		// (pre-escaped) query string
-		foreach ( $this->features as $feature ) {
-			$term = $feature->apply( $searchContext, $term );
+	protected function buildSearchTextQuery(
+		SearchContext $context,
+		array $fields,
+		array $nearMatchFields,
+		$queryString,
+		$nearMatchQuery
+	) {
+		if ( $context->isSyntaxUsed( 'query_string' ) ) {
+			return parent::buildSearchTextQuery( $context, $fields,
+				$nearMatchFields, $queryString, $nearMatchQuery );
 		}
-		$term = trim( $term );
-
+		$term = $queryString;
 		$filter = new BoolQuery();
 		$filter->addShould( $this->createFulltextFilterQuery( $term ) );
 		$statementsFilterQuery = $this->createStatementsFilterQuery( $term );
@@ -151,7 +158,7 @@ class MediaQueryBuilder implements FullTextQueryBuilder {
 		$query->addFilter( $filter );
 		$query->addShould( $rankingQueries );
 
-		$searchContext->setMainQuery( $query );
+		return $query;
 	}
 
 	private function createFulltextFilterQuery( string $term ) : MultiMatch {

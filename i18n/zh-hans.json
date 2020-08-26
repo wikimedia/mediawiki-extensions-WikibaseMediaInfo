@@ -86,5 +86,6 @@
 	"wikibasemediainfo-special-mediasearch-filter-size-large": "较大",
 	"wikibasemediainfo-special-mediasearch-filter-file-type-any": "所有文件类型",
 	"wikibasemediainfo-special-mediasearch-no-results": "我们没有找到任何结果",
+	"wikibasemediainfo-special-mediasearch-clear-title": "移除",
 	"wikibasemediainfo-special-mediasearch-load-more-results": "加载更多"
 }

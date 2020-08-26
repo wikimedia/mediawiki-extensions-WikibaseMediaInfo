@@ -1,13 +1,12 @@
 <template>
 	<!-- eslint-disable vue/no-v-html -->
-	<div class="wbmi-media-search-quick-view">
+	<div class="wbmi-media-search-quick-view" :class="rootClasses">
 		<header class="wbmi-media-search-quick-view__header">
 			<img v-if="isBitmap"
 				:src="thumbnail"
 				:alt="title"
 				class="wbmi-media-search-quick-view__thumbnail
 					wbmi-media-search-quick-view__thumbnail--image">
-			>
 
 			<video v-else-if="isVideo"
 				controls
@@ -97,7 +96,7 @@
 				class="wbmi-media-search-quick-view__cta"
 				:progressive="true"
 				@click="goToFilePage( canonicalurl )">
-				More Details
+				{{ $i18n( 'wikibasemediainfo-special-mediasearch-quickview-button-text' ) }}
 			</wbmi-button>
 		</div>
 	</div>
@@ -165,6 +164,14 @@ module.exports = {
 	},
 
 	computed: {
+		rootClasses: function () {
+			return {
+				'wbmi-media-search-quick-view--bitmap': this.isBitmap,
+				'wbmi-media-search-quick-view--audio': this.isAudio,
+				'wbmi-media-search-quick-view--video': this.isVideo
+			};
+		},
+
 		isBitmap: function () {
 			return this.mediaType === 'bitmap';
 		},
@@ -349,34 +356,23 @@ module.exports = {
 @import '../../mediainfo-variables.less';
 
 .wbmi-media-search-quick-view {
-	.box-shadow( 4px 4px 5px -2px @border-color-base );
-	background-color: @background-color-base;
-	border-radius: 4px;
 	box-sizing: border-box;
-	margin: 16px;
-	overflow: hidden; // needed to ensure border radius clips content
+	padding: @wbmi-spacing-base-px * 1.5;
 	position: relative;
 
 	&__thumbnail {
-		background-color: @wmui-color-base30;
+		height: auto;
+		max-height: 60vh; // Ensure that portrait-orientation images don't become huge
 		object-fit: contain;
-		max-height: 300px;
 		width: 100%;
 
-		&--image {
-			height: auto;
-		}
-
+		// Special styles for audio player.
 		&--audio {
-			background-color: transparent;
-			padding: 48px 16px 0 16px;
-			// The ~ is required to prevent evaluation on compilation; we want
-			// what's inside calc to stay there.
-			width: calc( ~'100% - 32px' );
+			padding-top: @wbmi-spacing-base-px * 3;
 
 			// This is just removing a general Mediawiki focus style, not a
 			// native browser focus style, because the rectangular focus outline
-			// looks around the rounded Chrome audio player.
+			// looks awkward around the rounded Chrome audio player.
 			&:focus {
 				outline-color: transparent;
 			}
@@ -384,7 +380,7 @@ module.exports = {
 	}
 
 	&__body {
-		padding: 16px;
+		margin-top: @wbmi-spacing-base-px;
 
 		.wbmi-icon {
 			color: @wbmi-icon-color--subtle;
@@ -417,10 +413,10 @@ module.exports = {
 		box-sizing: border-box;
 		height: 30px;
 		justify-content: center;
-		left: 8px;
+		left: @wbmi-spacing-base-px * 2;
 		padding: 0;
 		position: absolute;
-		top: 8px;
+		top: @wbmi-spacing-base-px * 2;
 		width: 30px;
 
 		.wbmi-icon {
@@ -433,6 +429,14 @@ module.exports = {
 			.wbmi-icon {
 				color: @color-base;
 			}
+		}
+	}
+
+	&--audio {
+		// Close button should be placed differently with the audio player.
+		.wbmi-media-search-quick-view__close-button {
+			left: @wbmi-spacing-base-px * 1.5;
+			top: @wbmi-spacing-base-px * 1.5;
 		}
 	}
 }

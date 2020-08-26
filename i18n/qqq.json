@@ -140,5 +140,6 @@
 	"wikibasemediainfo-special-mediasearch-clear-title": "Accessible title for search input clear button",
 	"wikibasemediainfo-special-mediasearch-input-label": "Visually-hidden label for the Media Search search input",
 	"wikibasemediainfo-special-mediasearch-input-placeholder": "Placeholder text for Media Search search input",
-	"wikibasemediainfo-special-mediasearch-load-more-results": "Text for the 'load more results' button"
+	"wikibasemediainfo-special-mediasearch-load-more-results": "Text for the 'load more results' button",
+	"wikibasemediainfo-special-mediasearch-quickview-button-text": "Text for the button to go to the file page in the QuickView panel"
 }

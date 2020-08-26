@@ -12,8 +12,10 @@
 			</component>
 		</div>
 
-		<aside class="wbmi-media-search-results__details"
-			:class="{ 'wbmi-media-search-results__details--expanded': !!details }">
+		<aside
+			class="wbmi-media-search-results__details"
+			:class="{ 'wbmi-media-search-results__details--expanded': !!details }"
+			:hidden="!details">
 			<quick-view
 				v-if="details"
 				ref="quickview"

@@ -35,9 +35,12 @@
 				class="wbmi-media-search-quick-view__close-button"
 				role="button"
 				@keyup.enter="closeAndRestoreFocus"
-				@click="close">
-				<wbmi-icon :icon="icons.wbmiIconClose">
-				</wbmi-icon>
+				@click="close"
+			>
+				<wbmi-icon :icon="icons.wbmiIconClose"></wbmi-icon>
+				<span class="wbmi-media-search-quick-view__close-button-text">
+					{{ closeButtonText }}
+				</span>
 			</a>
 		</header>
 
@@ -48,6 +51,7 @@
 			<h3 class="wbmi-media-search-quick-view__title">
 				<a ref="title"
 					:href="canonicalurl"
+					:title="title"
 					target="blank">
 					{{ title }}
 				</a>
@@ -92,19 +96,18 @@
 				<span>{{ mimeType }}</span>
 			</p>
 
-			<wbmi-button
-				class="wbmi-media-search-quick-view__cta"
-				:progressive="true"
-				@click="goToFilePage( canonicalurl )">
+			<a :href="canonicalurl"
+				:title="title"
+				target="_blank"
+				class="wbmi-media-search-quick-view__cta">
 				{{ $i18n( 'wikibasemediainfo-special-mediasearch-quickview-button-text' ) }}
-			</wbmi-button>
+			</a>
 		</div>
 	</div>
 </template>
 
 <script>
 var WbmiIcon = require( './base/Icon.vue' ),
-	WbmiButton = require( './base/Button.vue' ),
 	icons = require( '../../../lib/icons.js' );
 
 // Helper function to check for date validity
@@ -122,8 +125,7 @@ module.exports = {
 	name: 'QuickView',
 
 	components: {
-		'wbmi-icon': WbmiIcon,
-		'wbmi-button': WbmiButton
+		'wbmi-icon': WbmiIcon
 	},
 
 	props: {
@@ -159,7 +161,8 @@ module.exports = {
 
 	data: function () {
 		return {
-			icons: icons
+			icons: icons,
+			closeButtonText: this.$i18n( 'wikibasemediainfo-special-mediasearch-quickview-close-button-text' )
 		};
 	},
 
@@ -336,10 +339,6 @@ module.exports = {
 			}
 		},
 
-		goToFilePage: function ( url ) {
-			window.open( url, '_blank' );
-		},
-
 		/**
 		 * Programatically set focus on the title element; used by the parent
 		 * component when the Quickview is opened.
@@ -393,10 +392,6 @@ module.exports = {
 		margin-top: 0;
 	}
 
-	&__cta {
-		margin: @wbmi-spacing-sm 0;
-	}
-
 	&__description {
 		// We really have no idea what we will find here; hopefully we can force it
 		// to fit...
@@ -405,10 +400,42 @@ module.exports = {
 		}
 	}
 
+	// Style CTA link to look like a button. See https://phabricator.wikimedia.org/T258110
+	// for details of this design decision.
+	&__cta {
+		.transition( ~'background-color 100ms, color 100ms, border-color 100ms, box-shadow 100ms' );
+		background-color: @background-color-framed;
+		border: @border-width-base @border-style-base @border-color-base;
+		border-radius: 2px;
+		color: @color-primary;
+		display: inline-block;
+		font-weight: bold;
+		line-height: 1.4;
+		margin: @wbmi-spacing-sm 0;
+		padding: 6px 12px;
+		text-decoration: none;
+		user-select: none;
+
+		&:hover {
+			background-color: @background-color-framed--hover;
+			border-color: @color-primary--hover;
+			color: @color-primary--hover;
+			text-decoration: none;
+		}
+
+		&:focus {
+			border-color: @color-primary;
+			box-shadow: @box-shadow-base--focus;
+			outline: 0;
+			text-decoration: none;
+		}
+	}
+
 	&__close-button {
 		.flex-display();
 		align-items: center;
 		background-color: @background-color-base;
+		border: @border-width-base * 2 @border-style-base transparent;
 		border-radius: 15px;
 		box-sizing: border-box;
 		height: 30px;
@@ -430,6 +457,15 @@ module.exports = {
 				color: @color-base;
 			}
 		}
+
+		&:focus {
+			border-color: @color-primary;
+			outline: 0;
+		}
+	}
+
+	&__close-button-text {
+		.wbmi-visually-hidden();
 	}
 
 	&--audio {

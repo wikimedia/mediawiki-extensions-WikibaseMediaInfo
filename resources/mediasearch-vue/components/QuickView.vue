@@ -7,7 +7,6 @@
 				:alt="title"
 				class="wbmi-media-search-quick-view__thumbnail
 					wbmi-media-search-quick-view__thumbnail--image">
-			>
 
 			<video v-else-if="isVideo"
 				controls

@@ -124,15 +124,17 @@
 	"wikibasemediainfo-special-mediasearch-tab-audio": "Lyd",
 	"wikibasemediainfo-special-mediasearch-tab-video": "Video",
 	"wikibasemediainfo-special-mediasearch-tab-category": "Kategorier",
-	"wikibasemediainfo-special-mediasearch-filter-size": "Mediestørrelse",
-	"wikibasemediainfo-special-mediasearch-filter-size-any": "Enhver størrelse",
+	"wikibasemediainfo-special-mediasearch-filter-size": "Bildestørrelse",
+	"wikibasemediainfo-special-mediasearch-filter-size-any": "Alle bildestørrelser",
 	"wikibasemediainfo-special-mediasearch-filter-size-small": "Liten",
 	"wikibasemediainfo-special-mediasearch-filter-size-medium": "Medium",
 	"wikibasemediainfo-special-mediasearch-filter-size-large": "Stor",
+	"wikibasemediainfo-special-mediasearch-filter-file-type-any": "Alle filtyper",
 	"wikibasemediainfo-special-mediasearch-no-results": "Vi fant ingen resultater",
 	"wikibasemediainfo-special-mediasearch-no-results-tips": "Prøv med mer generelle begreper og sjekk stavemåten",
 	"wikibasemediainfo-special-mediasearch-empty-state": "Søk blant mer enn <span class=\"wbmi-media-search-empty-state__file-count\">$1</span> {{PLURAL:$1|mediefil|mediefiler}} som kan gjenbrukes fritt",
 	"wikibasemediainfo-special-mediasearch-clear-title": "Fjern",
 	"wikibasemediainfo-special-mediasearch-input-label": "Mediesøk",
-	"wikibasemediainfo-special-mediasearch-input-placeholder": "Søk etter bilder, lyd, video og mer"
+	"wikibasemediainfo-special-mediasearch-input-placeholder": "Søk etter bilder, lyd, video og mer",
+	"wikibasemediainfo-special-mediasearch-load-more-results": "Last inn mer"
 }

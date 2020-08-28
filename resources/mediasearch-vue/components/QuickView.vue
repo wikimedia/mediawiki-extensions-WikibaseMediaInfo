@@ -156,6 +156,10 @@ module.exports = {
 			type: String,
 			required: false,
 			default: 'bitmap'
+		},
+
+		isDialog: {
+			type: Boolean
 		}
 	},
 
@@ -171,7 +175,8 @@ module.exports = {
 			return {
 				'wbmi-media-search-quick-view--bitmap': this.isBitmap,
 				'wbmi-media-search-quick-view--audio': this.isAudio,
-				'wbmi-media-search-quick-view--video': this.isVideo
+				'wbmi-media-search-quick-view--video': this.isVideo,
+				'wbmi-media-search-quick-view--dialog': this.isDialog
 			};
 		},
 

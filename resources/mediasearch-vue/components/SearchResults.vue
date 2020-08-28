@@ -12,7 +12,29 @@
 			</component>
 		</div>
 
+		<!-- QuickView dialog for mobile skin. -->
+		<template v-if="isMobileSkin">
+			<wbmi-dialog
+				v-if="details"
+				class="wbmi-media-search-results__details-dialog"
+				:no-header="true"
+				:fullscreen="true"
+				@close="hideDetails"
+			>
+				<quick-view
+					ref="quickview"
+					:key="details.pageid"
+					v-bind="details"
+					:media-type="mediaType"
+					:is-dialog="true"
+					@close="hideDetails"
+				></quick-view>
+			</wbmi-dialog>
+		</template>
+
+		<!-- QuickView panel for desktop skin. -->
 		<aside
+			v-else
 			class="wbmi-media-search-results__details"
 			:class="{ 'wbmi-media-search-results__details--expanded': !!details }"
 			:hidden="!details">
@@ -45,6 +67,7 @@ var mapState = require( 'vuex' ).mapState,
 	VideoResult = require( './results/VideoResult.vue' ),
 	PageResult = require( './results/PageResult.vue' ),
 	OtherResult = require( './results/OtherResult.vue' ),
+	WbmiDialog = require( './base/Dialog.vue' ),
 	QuickView = require( './QuickView.vue' ),
 	api = new mw.Api();
 
@@ -58,7 +81,8 @@ module.exports = {
 		'audio-result': AudioResult,
 		'page-result': PageResult,
 		'other-result': OtherResult,
-		'quick-view': QuickView
+		'quick-view': QuickView,
+		'wbmi-dialog': WbmiDialog
 	},
 
 	props: {
@@ -98,7 +122,7 @@ module.exports = {
 		listClasses: function () {
 			var listTypeModifier = 'wbmi-media-search-results__list--' + this.mediaType,
 				classObject = {
-					'wbmi-media-search-results__list--collapsed': !!this.details
+					'wbmi-media-search-results__list--collapsed': !!this.details && !this.isMobileSkin
 				};
 
 			// Without ES6 string interpolation generating a dynamic classname
@@ -106,6 +130,13 @@ module.exports = {
 			classObject[ listTypeModifier ] = true;
 
 			return classObject;
+		},
+
+		/**
+		 * @return {boolean}
+		 */
+		isMobileSkin: function () {
+			return mw.config.get( 'skin' ) === 'minerva';
 		}
 	} ),
 

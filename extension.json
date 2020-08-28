@@ -292,6 +292,7 @@
 			"styles": [
 				"resources/mediasearch-vue/components/base/AutocompleteSearchInput.less",
 				"resources/mediasearch-vue/components/base/Button.less",
+				"resources/mediasearch-vue/components/base/Dialog.less",
 				"resources/mediasearch-vue/components/base/Icon.less",
 				"resources/mediasearch-vue/components/base/Message.less",
 				"resources/mediasearch-vue/components/base/Select.less",
@@ -323,6 +324,7 @@
 				"lib/icons.js",
 				"resources/mediasearch-vue/components/base/AutocompleteSearchInput.vue",
 				"resources/mediasearch-vue/components/base/Button.vue",
+				"resources/mediasearch-vue/components/base/Dialog.vue",
 				"resources/mediasearch-vue/components/base/Icon.vue",
 				"resources/mediasearch-vue/components/base/Message.vue",
 				"resources/mediasearch-vue/components/base/Select.vue",

@@ -1,0 +1,136 @@
+@import 'mediawiki.mixins';
+@import './../../../mediainfo-variables.less';
+
+.wbmi-dialog {
+	.flex-display();
+	align-items: center;
+	display: flex;
+	height: 100%;
+	justify-content: center;
+	left: 0;
+	position: fixed;
+	top: 0;
+	width: 100%;
+	z-index: 4;
+
+	&__overlay {
+		background-color: rgba( 255, 255, 255, 0.5 );
+		height: 100%;
+		left: 0;
+		position: absolute;
+		top: 0;
+		width: 100%;
+	}
+
+	&__shell {
+		box-shadow: 0 2px 2px 0 rgba( 0, 0, 0, 0.25 );
+		background-color: @background-color-base;
+		border: @border-base;
+		border-radius: @border-radius-base;
+		flex-direction: column;
+		max-width: calc( ~'100vw - 100px' );
+		min-width: 300px;
+		max-height: calc( ~'100vh - 100px' );
+		min-height: 200px;
+		// Add scroll when necessary.
+		overflow-y: auto;
+		position: relative;
+	}
+
+	&--fullscreen {
+		z-index: 101;
+
+		.wbmi-dialog__shell {
+			left: 0;
+			max-height: 100vh;
+			max-width: 100vw;
+			min-height: calc( ~'100vh - 2px' );
+			min-width: calc( ~'100vw - 2px' );
+			position: absolute;
+			top: 0;
+		}
+	}
+
+	&__header {
+		border-bottom: @border-base;
+		// In case there's no title.
+		min-height: 1.6em;
+		padding: 0.5em 0;
+		position: relative;
+		text-align: center;
+
+		.wbmi-dialog__header-title {
+			font-weight: bold;
+			max-height: 2em;
+			max-width: 100%;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+
+		.wbmi-dialog__header-action--safe {
+			left: 0;
+			position: absolute;
+			top: 50%;
+			transform: translateY( -50% );
+		}
+	}
+
+	&__divider {
+		border: @border-width-base @border-style-base @border-color-base;
+		margin: 0;
+		padding: 0;
+	}
+
+	&__body {
+		flex: 1;
+		height: 100%;
+		overflow: auto;
+	}
+
+	&__footer:not( :empty ) {
+		border-top: @border-width-base @border-style-base @border-color-base;
+		max-height: 2em;
+	}
+}
+
+// Disable scrolling for the rest of the UI when dialog exists.
+body.wbmi-body--open-dialog {
+	overflow: hidden;
+}
+
+// Transitions.
+@keyframes wbmi-scale-in {
+	0% {
+		opacity: 0;
+		transform: scale( 0.5 );
+	}
+
+	100% {
+		opacity: 1;
+		transform: scale( 1 );
+	}
+}
+
+.wbmi-scale-enter-active {
+	animation: wbmi-scale-in 0.2s;
+}
+
+// Instead of just reversing the scale-in animation, let's make the scale-out
+// animation a bit less dramatic to give the user the perception of quickly
+// removing the dialog.
+@keyframes wbmi-scale-out {
+	0% {
+		opacity: 1;
+		transform: scale( 1 );
+	}
+
+	100% {
+		opacity: 0;
+		transform: scale( 0.75 );
+	}
+}
+
+.wbmi-scale-leave-active {
+	animation: wbmi-scale-out 0.15s;
+}

@@ -3,6 +3,7 @@
 		"authors": [
 			"Aftabuzzaman",
 			"Tahmid02016",
+			"Titodutta",
 			"আফতাবুজ্জামান"
 		]
 	},
@@ -56,5 +57,6 @@
 	"wikibasemediainfo-special-mediasearch-filter-size-small": "ছোট",
 	"wikibasemediainfo-special-mediasearch-filter-size-medium": "মাঝারি",
 	"wikibasemediainfo-special-mediasearch-filter-size-large": "বড়",
-	"wikibasemediainfo-special-mediasearch-input-label": "মিডিয়া অনুসন্ধান"
+	"wikibasemediainfo-special-mediasearch-input-label": "মিডিয়া অনুসন্ধান",
+	"wikibasemediainfo-special-mediasearch-load-more-results": "আরও লোড করুন"
 }

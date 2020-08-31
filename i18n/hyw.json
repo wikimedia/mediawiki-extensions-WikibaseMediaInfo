@@ -3,10 +3,14 @@
 		"authors": [
 			"Azniv Stepanian",
 			"Kareyac",
-			"Թալին Նայիր"
+			"Թալին Նայիր",
+			"Շահէն"
 		]
 	},
 	"wikibasemediainfo-statements-link-notice-dismiss": "Հեռացնել",
 	"wikibasemediainfo-remove-all-statements-confirm-accept": "Հանել",
-	"wikibasemediainfo-coordinate-input-placeholder": "Լայնութիւն, երկայնութիւն"
+	"wikibasemediainfo-coordinate-input-placeholder": "Լայնութիւն, երկայնութիւն",
+	"wikibasemediainfo-special-mediasearch-filter-size": "Պատկերի չափ",
+	"wikibasemediainfo-special-mediasearch-filter-size-any": "Բոլոր պատկերներուն չափերը",
+	"wikibasemediainfo-special-mediasearch-clear-title": "Հանել"
 }

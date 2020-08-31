@@ -702,9 +702,6 @@ class WikibaseMediaInfoHooks {
 	 * @param SearchProfileService $service
 	 */
 	public static function onCirrusSearchProfileService( SearchProfileService $service ) {
-		// @todo: once T254388 is complete revert to using the MediaQueryBuilder only for NS_FILE
-		$namespaces = MediaWikiServices::getInstance()->getNamespaceInfo()->getValidNamespaces();
-
 		$searchProfileContextName = MediaQueryBuilder::SEARCH_PROFILE_CONTEXT_NAME;
 		// array key in MediaSearchProfiles.php
 		$fulltextProfileName = MediaQueryBuilder::FULLTEXT_PROFILE_NAME;

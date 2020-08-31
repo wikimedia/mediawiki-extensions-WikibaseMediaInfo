@@ -1,18 +1,24 @@
 'use strict';
 
 var initialResults = mw.config.get( 'wbmiInitialSearchResults' ),
-	initialTerm = new mw.Uri().query.q || '';
-
-// TODO: Remove this, it's just a workaround for now
-// while we use data from Production commons to test features locally
-function ensureArray( obj ) {
-	if ( Array.isArray( obj ) ) {
-		return obj;
-	} else {
-		// eslint-disable-next-line es/no-object-values
-		return Object.values( obj );
-	}
-}
+	ensureArray = function ( obj ) {
+		// TODO: Remove this, it's just a workaround for now
+		// while we use data from Production commons to test features locally
+		if ( Array.isArray( obj ) ) {
+			return obj;
+		} else {
+			return Object.keys( obj ).map( function ( key ) {
+				return obj[ key ];
+			} );
+		}
+	},
+	sortedResults = ensureArray( initialResults.results || [] ).sort( function ( a, b ) {
+		return a.index - b.index;
+	} ),
+	// grab straight from existing input field in case already user started changing input
+	// before JS loaded, and disable right away to prevent further input
+	// eslint-disable-next-line no-jquery/no-global-selector
+	initialTerm = $( '#wbmi-media-search-input__input' ).prop( 'disabled', true ).val() || '';
 
 module.exports = {
 	/**
@@ -24,17 +30,17 @@ module.exports = {
 	 * Arrays of objects broken down by type
 	 */
 	results: {
-		bitmap: ensureArray( initialResults.bitmap.results ),
-		audio: ensureArray( initialResults.audio.results ),
-		video: ensureArray( initialResults.video.results ),
-		category: ensureArray( initialResults.category.results )
+		bitmap: initialResults.activeType === 'bitmap' ? sortedResults : [],
+		audio: initialResults.activeType === 'audio' ? sortedResults : [],
+		video: initialResults.activeType === 'video' ? sortedResults : [],
+		category: initialResults.activeType === 'category' ? sortedResults : []
 	},
 
 	continue: {
-		bitmap: initialResults.bitmap.continue,
-		audio: initialResults.audio.continue,
-		video: initialResults.video.continue,
-		category: initialResults.category.continue
+		bitmap: initialResults.activeType === 'bitmap' ? initialResults.continue : 0,
+		audio: initialResults.activeType === 'audio' ? initialResults.continue : 0,
+		video: initialResults.activeType === 'video' ? initialResults.continue : 0,
+		category: initialResults.activeType === 'category' ? initialResults.continue : 0
 	},
 
 	pending: {
@@ -50,10 +56,5 @@ module.exports = {
 		video: {},
 		category: {},
 		other: {}
-	},
-
-	/**
-	 * Number of total files on commons (used in messages)
-	 */
-	fileCount: null
+	}
 };

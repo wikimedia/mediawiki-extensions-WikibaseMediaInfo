@@ -71,10 +71,6 @@ module.exports = {
 		state.pending[ payload.type ] = payload.pending;
 	},
 
-	setFileCount: function ( state, fileCount ) {
-		state.fileCount = fileCount;
-	},
-
 	/**
 	 * Add a new filter value.
 	 *

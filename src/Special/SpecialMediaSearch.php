@@ -6,15 +6,9 @@ use ApiBase;
 use ApiMain;
 use DerivativeContext;
 use FauxRequest;
-use MediaWiki\Widget\SearchInputWidget;
-use OOUI\ActionFieldLayout;
-use OOUI\ButtonInputWidget;
-use OOUI\HtmlSnippet;
-use OOUI\IndexLayout;
-use OOUI\TabPanelLayout;
-use OOUI\Tag;
 use OutputPage;
 use RequestContext;
+use SiteStats;
 use TemplateParser;
 use Title;
 use UnlistedSpecialPage;
@@ -80,20 +74,48 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 			$this->getRequest()->getText( 'continue' )
 		);
 
+		$totalSiteImages = (int)SiteStats::images();
+
 		$data = [
+			'querystring' => array_map( function ( $key, $value ) {
+				return [
+					'key' => $key,
+					'value' => $value,
+					'is' . ucfirst( $key ) => true,
+				];
+			}, array_keys( $querystring ), array_values( $querystring ) ),
 			'page' => $url,
 			'path' => parse_url( $url, PHP_URL_PATH ),
-			'querystring' => $querystring,
 			'term' => $term,
-			'type' => $type,
+			'hasTerm' => (bool)$term,
 			'limit' => $limit,
-		];
-		$emptyTabData = $data + [
-			'results' => [],
-			'continue' => '',
-			'hasMore' => true,
-		];
-		$activeTabData = $data + [
+			'activeType' => $type,
+			'tabs' => [
+				[
+					'type' => 'bitmap',
+					'label' => $this->msg( 'wikibasemediainfo-special-mediasearch-tab-bitmap' )->text(),
+					'isActive' => $type === 'bitmap',
+					'isBitmap' => true,
+				],
+				[
+					'type' => 'audio',
+					'label' => $this->msg( 'wikibasemediainfo-special-mediasearch-tab-audio' )->text(),
+					'isActive' => $type === 'audio',
+					'isAudio' => true,
+				],
+				[
+					'type' => 'video',
+					'label' => $this->msg( 'wikibasemediainfo-special-mediasearch-tab-video' )->text(),
+					'isActive' => $type === 'video',
+					'isVideo' => true,
+				],
+				[
+					'type' => 'category',
+					'label' => $this->msg( 'wikibasemediainfo-special-mediasearch-tab-category' )->text(),
+					'isActive' => $type === 'category',
+					'isCategory' => true,
+				],
+			],
 			'results' => array_map( function ( $result ) {
 				$title = Title::newFromDBkey( $result['title'] );
 				$filename = $title ? $title->getText() : $result['title'];
@@ -101,113 +123,24 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 			}, $results ),
 			'continue' => $continue,
 			'hasMore' => $continue !== null,
-			'emptyMessage' => $this->msg( 'wikibasemediainfo-special-mediasearch-no-results' )->text(),
-		];
-		$tabs = [
-			'bitmap' => $type === 'bitmap' ? $activeTabData : $emptyTabData,
-			'audio' => $type === 'audio' ? $activeTabData : $emptyTabData,
-			'video' => $type === 'video' ? $activeTabData : $emptyTabData,
-			'category' => $type === 'category' ? $activeTabData : $emptyTabData,
+			'searchLabel' => $this->msg( 'wikibasemediainfo-special-mediasearch-input-label' )->text(),
+			'searchButton' => $this->msg( 'searchbutton' )->text(),
+			'searchPlaceholder' => $this->msg( 'wikibasemediainfo-special-mediasearch-input-placeholder' )->text(),
+			'continueMessage' => $this->msg( 'wikibasemediainfo-special-mediasearch-load-more-results' )->text(),
+			'emptyMessage' => $this->msg( 'wikibasemediainfo-special-mediasearch-empty-state', $totalSiteImages )->text(),
+			'noResultsMessage' => $this->msg( 'wikibasemediainfo-special-mediasearch-no-results' )->text(),
+			'noResultsMessageExtra' => $this->msg( 'wikibasemediainfo-special-mediasearch-no-results-tips' )->text(),
 		];
 
-		$inputWidget = new ActionFieldLayout(
-			new SearchInputWidget( [
-				'classes' => [ 'wbmi-special-search--input' ],
-				'name' => 'q',
-				'autocomplete' => false,
-				'autofocus' => trim( $term ) === '',
-				'value' => $term,
-				'dataLocation' => 'content',
-				// should not be infused, JS will just take over entirely, replacing
-				// it with a new (autocompleting API results) element
-				'infusable' => false,
-			] ),
-			new ButtonInputWidget( [
-				'type' => 'submit',
-				'label' => $this->msg( 'searchbutton' )->text(),
-				'flags' => [ 'progressive', 'primary' ],
-			] ),
-			[ 'align' => 'top' ]
-		);
-
-		$this->getOutput()->addHTML( $this->templateParser->processTemplate(
-			'SERPWidget',
-			$data + [
-				'querystring' => array_map( function ( $key, $value ) {
-					return [ 'key' => $key, 'value' => $value ];
-				}, array_keys( $querystring ), array_values( $querystring ) ),
-				'inputWidget' => $inputWidget,
-				'tabs' => $this->renderTabs( $tabs ),
-			]
-		) );
-		$this->getOutput()->addModuleStyles( [
-			'oojs-ui-core.styles',
-			'oojs-ui-core.icons',
-			'oojs-ui-widgets.styles',
-			'wikibase.mediainfo.mediasearch.styles'
-		] );
+		$this->getOutput()->addHTML( $this->templateParser->processTemplate( 'SERPWidget', $data ) );
+		$this->getOutput()->addModuleStyles( [ 'wikibase.mediainfo.mediasearch.vue.styles' ] );
 		$this->getOutput()->addModules( [ 'wikibase.mediainfo.mediasearch.vue' ] );
-		$this->getOutput()->addJsConfigVars( [ 'wbmiInitialSearchResults' => $tabs ] );
+		$this->getOutput()->addJsConfigVars( [
+			'wbmiInitialSearchResults' => $data,
+			'wbmiTotalSiteImages' => $totalSiteImages,
+		] );
 
 		return parent::execute( $subPage );
-	}
-
-	/**
-	 * @param array $tabs
-	 * @return string
-	 */
-	protected function renderTabs( array $tabs ): string {
-		$layout = new IndexLayout( [
-			'classes' => [ 'wbmi-special-search--tabs' ],
-			'autoFocus' => false,
-			'framed' => false,
-			'expanded' => false,
-		] );
-
-		foreach ( $tabs as $name => $data ) {
-			$nextButton = new ButtonInputWidget( [
-				'type' => 'submit',
-				'label' => $this->msg( 'wikibasemediainfo-special-mediasearch-continue' )->text(),
-				'flags' => [ 'progressive' ]
-			] );
-
-			$layout->addTabPanels( [
-				new TabPanelLayout(
-					$name,
-					[
-						'label' => new HtmlSnippet(
-							( new Tag( 'a' ) )
-								->setAttributes( [ 'href' => $data['path'] . '?' .
-									http_build_query( [ 'type' => $name ] + $data['querystring'] ) ] )
-								->appendContent( $this->msg( "wikibasemediainfo-special-mediasearch-tab-$name" )->text() )
-								->toString()
-						),
-						// @todo selected is not yet supported in OOUI/PHP
-						'selected' => $data['type'] === $name,
-						'expanded' => false,
-						'scrollable' => false,
-						'content' => new HtmlSnippet(
-							$this->templateParser->processTemplate(
-								'SearchResultsWidget',
-								$data + [
-									'querystring' => array_map( function ( $key, $value ) {
-										return [ 'key' => $key, 'value' => $value ];
-									}, array_keys( $data['querystring'] ), array_values( $data['querystring'] ) ),
-									'nextButton' => $nextButton,
-									'isBitmap' => $data['type'] === 'bitmap',
-									'isAudio' => $data['type'] === 'audio',
-									'isVideo' => $data['type'] === 'video',
-									'isCategory' => $data['type'] === 'category',
-								]
-							)
-						),
-					]
-				),
-			] );
-		}
-		$layout->setInfusable( true );
-
-		return $layout->toString();
 	}
 
 	/**
@@ -244,13 +177,18 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 				'inprop' => 'url',
 			] );
 		} else {
+			$filetype = $type;
+			if ( $type === 'bitmap' ) {
+				$filetype .= '|drawing';
+			}
+
 			$request = new FauxRequest( [
 				'format' => 'json',
 				'uselang' => $langCode,
 				'action' => 'query',
 				'generator' => 'mediasearch',
 				'gmssearch' => $term,
-				'gmsrawsearch' => $type ? "filetype:$type" : '',
+				'gmsrawsearch' => $filetype ? "filetype:$filetype" : '',
 				'gmslimit' => $limit,
 				'gmscontinue' => $continue,
 				'prop' => 'info|imageinfo|pageterms',

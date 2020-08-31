@@ -65,16 +65,3 @@ module.exports = {
 	}
 };
 </script>
-
-<style lang="less">
-@import 'mediawiki.mixins';
-
-.wbmi-image {
-	.transition( opacity 0.2s ease );
-	opacity: 0;
-
-	&[ src ] {
-		opacity: 1;
-	}
-}
-</style>

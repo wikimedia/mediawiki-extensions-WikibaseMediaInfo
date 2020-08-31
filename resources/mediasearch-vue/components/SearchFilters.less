@@ -1,0 +1,47 @@
+@import 'mediawiki.mixins';
+@import '../../mediainfo-variables.less';
+
+.wbmi-media-search-filters {
+	.flex-display();
+	background-color: @background-color-framed;
+	padding: @wbmi-padding-vertical-base 0;
+
+	// set an initial height so that, even if there is no content (such
+	// as from the initial page load without filters), it already loads
+	// at the final height and there is no FOUC
+	min-height: 2.5em;
+	align-items: center;
+
+	.wbmi-select {
+		&__content {
+			background-color: transparent;
+			border: 0;
+			border-radius: 0;
+			box-shadow: none;
+			font-size: 0.9em;
+
+			&:hover,
+			&:focus {
+				border-color: transparent;
+				color: @color-primary--hover;
+				outline: 0;
+
+				.wbmi-select__handle {
+					color: @color-primary--hover;
+				}
+			}
+		}
+
+		// Styles for when a filter value has been selected.
+		&.wbmi-search-filter--selected {
+			.wbmi-select__content {
+				color: @color-primary;
+				font-weight: bold;
+
+				.wbmi-select__handle {
+					color: @color-primary;
+				}
+			}
+		}
+	}
+}

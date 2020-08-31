@@ -285,42 +285,28 @@
 				"mobile"
 			]
 		},
-		"wikibase.mediainfo.mediasearch": {
-			"packageFiles": [
-				"resources/mediasearch/index.js",
-				"resources/mediasearch/AutocompleteSearchInputWidget.js",
-				"resources/mediasearch/SearchResultsWidget.js",
-				"resources/mediasearch/TabFilterWidget.js"
-			],
-			"messages": [
-				"wikibasemediainfo-special-mediasearch-filter-size",
-				"wikibasemediainfo-special-mediasearch-filter-size-any",
-				"wikibasemediainfo-special-mediasearch-filter-size-small",
-				"wikibasemediainfo-special-mediasearch-filter-size-medium",
-				"wikibasemediainfo-special-mediasearch-filter-size-large",
-				"wikibasemediainfo-special-mediasearch-no-results"
-			],
-			"dependencies": [
-				"wikibase.mediainfo.mediasearch.styles",
-				"jquery.spinner",
-				"oojs",
-				"oojs-ui-core",
-				"oojs-ui-widgets",
-				"oojs-ui.styles.indicators",
-				"wikibase.api.RepoApi"
-			],
-			"templates": [
-				"templates/mediasearch/SearchResultsWidget.mustache+dom"
-			],
-			"targets": [
-				"desktop",
-				"mobile"
-			]
-		},
-		"wikibase.mediainfo.mediasearch.styles": {
+		"wikibase.mediainfo.mediasearch.vue.styles": {
 			"styles": [
-				"resources/mediasearch-styles/SearchResultsWidget.less",
-				"resources/mediasearch-styles/TabFilterWidget.less"
+				"resources/mediasearch-vue/components/base/AutocompleteSearchInput.less",
+				"resources/mediasearch-vue/components/base/Button.less",
+				"resources/mediasearch-vue/components/base/Icon.less",
+				"resources/mediasearch-vue/components/base/Message.less",
+				"resources/mediasearch-vue/components/base/Select.less",
+				"resources/mediasearch-vue/components/base/SelectMenu.less",
+				"resources/mediasearch-vue/components/base/Tab.less",
+				"resources/mediasearch-vue/components/base/Tabs.less",
+				"resources/mediasearch-vue/components/base/Image.less",
+				"resources/mediasearch-vue/components/App.less",
+				"resources/mediasearch-vue/components/SearchResults.less",
+				"resources/mediasearch-vue/components/ImageResult.less",
+				"resources/mediasearch-vue/components/VideoResult.less",
+				"resources/mediasearch-vue/components/AudioResult.less",
+				"resources/mediasearch-vue/components/GenericResult.less",
+				"resources/mediasearch-vue/components/QuickView.less",
+				"resources/mediasearch-vue/components/Spinner.less",
+				"resources/mediasearch-vue/components/EmptyState.less",
+				"resources/mediasearch-vue/components/NoResults.less",
+				"resources/mediasearch-vue/components/SearchFilters.less"
 			],
 			"targets": [
 				"desktop",
@@ -386,7 +372,7 @@
 				"wikibasemediainfo-special-mediasearch-quickview-close-button-text"
 			],
 			"dependencies": [
-				"wikibase.mediainfo.mediasearch.styles",
+				"wikibase.mediainfo.mediasearch.vue.styles",
 				"vue",
 				"vuex",
 				"wikibase.api.RepoApi"

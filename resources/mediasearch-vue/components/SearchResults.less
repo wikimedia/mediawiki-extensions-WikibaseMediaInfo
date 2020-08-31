@@ -1,0 +1,78 @@
+@import 'mediawiki.mixins';
+@import '../../mediainfo-variables.less';
+
+.wbmi-media-search-results {
+	.flex-display();
+	.flex-wrap( nowrap );
+	margin: @wbmi-spacing-base-px 0;
+
+	// The "list" part of search results should always fill all available space.
+	// By default lists will display results in a single column.
+	&__list {
+		.flex( 1, 1, auto );
+		margin: -@wbmi-spacing-base-px / 2;
+		max-width: 100%;
+
+		// Audio results are limited to half-width
+		&--audio {
+			> * {
+				max-width: @max-width-base;
+			}
+		}
+
+		// Video results are displayed as tiles/cards with a uniform size
+		&--video {
+			.flex-display();
+			.flex-wrap( wrap );
+			justify-content: flex-start;
+
+			// stylelint-disable-next-line no-descending-specificity
+			> * {
+				.flex( 1, 1, 260px );
+			}
+		}
+
+		// Image results are arranged flush in a "masonry" style layout that
+		// attempts to do as little cropping as possible.
+		// @TODO on mobile, image grid should switch to vertical columns with
+		// fixed width instead of horizontal rows with fixed height.
+		&--bitmap {
+			.flex-display();
+			.flex-wrap( wrap );
+
+			// stylelint-disable-next-line no-descending-specificity
+			> * {
+				.flex( 1, 1, auto );
+
+				&:last-child {
+					.flex( 0, 1, auto );
+				}
+			}
+		}
+
+		&--collapsed {
+			margin-right: @wbmi-spacing-base-px;
+			width: 50%;
+		}
+	}
+
+	// The "details" part of search result (container for QuickView) is
+	// collapsed by default, but can expand to 50% or a set max-width, whichever
+	// is smaller
+	&__details {
+		.flex( 0, 0, auto );
+		max-width: @max-width-base;
+		width: 0%;
+
+		&--expanded {
+			.flex( 0, 0, 50% );
+			background-color: @background-color-framed;
+			-webkit-overflow-scrolling: touch;
+			height: 100vh;
+			// Add a scrollbar if content extends below viewport bottom.
+			overflow-y: auto;
+			position: sticky;
+			top: 0;
+		}
+	}
+}

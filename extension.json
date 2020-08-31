@@ -381,7 +381,8 @@
 				"wikibasemediainfo-special-mediasearch-input-label",
 				"wikibasemediainfo-special-mediasearch-input-placeholder",
 				"searchbutton",
-				"wikibasemediainfo-special-mediasearch-load-more-results"
+				"wikibasemediainfo-special-mediasearch-load-more-results",
+				"wikibasemediainfo-special-mediasearch-quickview-button-text"
 			],
 			"dependencies": [
 				"wikibase.mediainfo.mediasearch.styles",

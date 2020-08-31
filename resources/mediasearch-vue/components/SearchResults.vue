@@ -176,10 +176,11 @@ module.exports = {
 				pageids: pageid
 			};
 
-			// Real version: use mw.api
-			return api.get( params );
 			// Test version: use production commons API
 			// return $.get( 'https://commons.wikimedia.org/w/api.php', params );
+
+			// Real version: use mw.api
+			return api.get( params );
 		}
 	},
 
@@ -199,12 +200,13 @@ module.exports = {
 .wbmi-media-search-results {
 	.flex-display();
 	.flex-wrap( nowrap );
+	margin: @wbmi-spacing-base-px 0;
 
 	// The "list" part of search results should always fill all available space.
 	// By default lists will display results in a single column.
 	&__list {
 		.flex( 1, 1, auto );
-		margin: @wbmi-spacing-sm;
+		margin: -@wbmi-spacing-base-px / 2;
 		max-width: 100%;
 
 		// Audio results are limited to half-width
@@ -245,6 +247,7 @@ module.exports = {
 		}
 
 		&--collapsed {
+			margin-right: @wbmi-spacing-base-px;
 			width: 50%;
 		}
 	}
@@ -259,21 +262,13 @@ module.exports = {
 
 		&--expanded {
 			.flex( 0, 0, 50% );
-			background-color: @wmui-color-base80;
+			background-color: @background-color-framed;
 			-webkit-overflow-scrolling: touch;
 			height: 100vh;
-			margin-right: -1rem; // needed for full-bleed of background color
-			overflow-y: scroll;
+			// Add a scrollbar if content extends below viewport bottom.
+			overflow-y: auto;
 			position: sticky;
 			top: 0;
-
-			// Needed to override extra padding that gets applied at this screen
-			// size from these styles (we want this element to line up with the
-			// right edge at all times):
-			// https://gerrit.wikimedia.org/r/plugins/gitiles/mediawiki/skins/Vector/+/refs/heads/master/resources/skins.vector.styles/legacy/layout.less#152
-			@media screen and ( min-width: 982px ) {
-				margin-right: -1.5rem;
-			}
 		}
 	}
 }

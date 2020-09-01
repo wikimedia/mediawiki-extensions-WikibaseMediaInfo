@@ -139,5 +139,6 @@
 	"wikibasemediainfo-special-mediasearch-clear-title": "Entfernen",
 	"wikibasemediainfo-special-mediasearch-input-label": "Nach Medien suchen",
 	"wikibasemediainfo-special-mediasearch-input-placeholder": "Suche nach Bildern, Audio, Video und mehr",
-	"wikibasemediainfo-special-mediasearch-load-more-results": "Mehr laden"
+	"wikibasemediainfo-special-mediasearch-load-more-results": "Mehr laden",
+	"wikibasemediainfo-special-mediasearch-quickview-button-text": "Weitere Einzelheiten"
 }

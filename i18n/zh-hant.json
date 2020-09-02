@@ -139,5 +139,6 @@
 	"wikibasemediainfo-special-mediasearch-clear-title": "移除",
 	"wikibasemediainfo-special-mediasearch-input-label": "搜尋多媒體",
 	"wikibasemediainfo-special-mediasearch-input-placeholder": "搜尋圖片、音訊、影片與更多內容",
-	"wikibasemediainfo-special-mediasearch-load-more-results": "載入更多"
+	"wikibasemediainfo-special-mediasearch-load-more-results": "載入更多",
+	"wikibasemediainfo-special-mediasearch-quickview-button-text": "更多詳情"
 }

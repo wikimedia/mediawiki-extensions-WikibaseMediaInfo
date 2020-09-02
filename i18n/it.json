@@ -101,5 +101,6 @@
 	"wikibasemediainfo-special-mediasearch-filter-size-medium": "Medio",
 	"wikibasemediainfo-special-mediasearch-filter-size-large": "Grande",
 	"wikibasemediainfo-special-mediasearch-filter-file-type-any": "Tutti i tipi di file",
-	"wikibasemediainfo-special-mediasearch-no-results": "Non troviamo alcun risultato"
+	"wikibasemediainfo-special-mediasearch-no-results": "Non troviamo alcun risultato",
+	"wikibasemediainfo-special-mediasearch-quickview-button-text": "Ulteriori dettagli"
 }

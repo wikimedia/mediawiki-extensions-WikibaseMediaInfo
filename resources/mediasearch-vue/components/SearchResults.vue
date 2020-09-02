@@ -148,9 +148,10 @@ module.exports = {
 		 * @param {boolean} restoreFocus
 		 */
 		hideDetails: function ( restoreFocus ) {
-			var originatingResultId = this.details.pageid;
+			var originatingResultId;
 
 			if ( restoreFocus ) {
+				originatingResultId = this.details.pageid;
 				this.$refs[ originatingResultId ][ 0 ].focus();
 			}
 

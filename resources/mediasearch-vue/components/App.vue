@@ -32,6 +32,7 @@
 
 				<!-- Display the available results for each tab -->
 				<search-results
+					:ref="tab"
 					:media-type="tab"
 					:enable-quick-view="enableQuickView">
 				</search-results>
@@ -213,6 +214,7 @@ module.exports = {
 		onFilterChange: function ( tab ) {
 			this.resetResults( tab );
 			this.resetCountAndLoadMore( tab );
+			this.$refs[ tab ][ 0 ].hideDetails();
 		},
 
 		/**

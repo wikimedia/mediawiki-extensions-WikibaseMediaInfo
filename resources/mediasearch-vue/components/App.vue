@@ -26,7 +26,7 @@
 				<!-- Display search filters for each tab. -->
 				<search-filters
 					:media-type="tab"
-					@filter-change="performNewSearch"
+					@filter-change="onFilterChange( tab )"
 				>
 				</search-filters>
 
@@ -205,6 +205,14 @@ module.exports = {
 			this.currentTab = newTab.name;
 			url.query.type = newTab.name;
 			window.history.pushState( url.query, null, '?' + url.getQueryString() );
+		},
+
+		/**
+		 * @param {string} tab bitmap, video, etc
+		 */
+		onFilterChange: function ( tab ) {
+			this.resetResults( tab );
+			this.resetCountAndLoadMore( tab );
 		},
 
 		/**

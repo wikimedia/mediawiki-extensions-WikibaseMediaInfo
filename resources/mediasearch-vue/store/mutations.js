@@ -23,20 +23,28 @@ module.exports = {
 	},
 
 	/**
-	 * TODO: make this less dumb
+	 * Reset results and related data. If a payload is provided, only reset the
+	 * results and related data for a specific media type; otherwise reset all
+	 * results.
 	 *
 	 * @param {Object} state
+	 * @param {string} mediaType bitmap, audio, etc
 	 */
-	resetResults: function ( state ) {
-		state.results.bitmap = [];
-		state.results.audio = [];
-		state.results.video = [];
-		state.results.category = [];
+	resetResults: function ( state, mediaType ) {
+		var types = Object.keys( state.results );
 
-		state.continue.bitmap = '';
-		state.continue.audio = '';
-		state.continue.video = '';
-		state.continue.category = '';
+		if ( mediaType ) {
+			// Reset results for only a single result type if the second arg is
+			// provided
+			state.results[ mediaType ] = [];
+			state.continue[ mediaType ] = '';
+		} else {
+			// Reset results for all types if second arg is not provided
+			types.forEach( function ( type ) {
+				state.results[ type ] = [];
+				state.continue[ type ] = '';
+			} );
+		}
 	},
 
 	/**

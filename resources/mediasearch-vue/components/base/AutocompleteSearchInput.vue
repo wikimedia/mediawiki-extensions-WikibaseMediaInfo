@@ -396,6 +396,17 @@ module.exports = {
 		 */
 		initialValue: function ( newValue ) {
 			this.value = newValue;
+		},
+
+		/**
+		 * Clear lookup results if the user manually delets all characters
+		 *
+		 * @param {string} newValue
+		 */
+		value: function ( newValue ) {
+			if ( newValue === '' ) {
+				this.clearLookupResults();
+			}
 		}
 	}
 };

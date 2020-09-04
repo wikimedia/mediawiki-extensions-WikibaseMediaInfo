@@ -145,5 +145,6 @@
 	"wikibasemediainfo-special-mediasearch-input-label": "Rechercher un média",
 	"wikibasemediainfo-special-mediasearch-input-placeholder": "Rechercher des images, de l’audio, des vidéos et plus",
 	"wikibasemediainfo-special-mediasearch-load-more-results": "Charger davantage",
-	"wikibasemediainfo-special-mediasearch-quickview-button-text": "Plus de détails"
+	"wikibasemediainfo-special-mediasearch-quickview-button-text": "Plus de détails",
+	"wikibasemediainfo-special-mediasearch-quickview-close-button-text": "Fermer les détails du fichier"
 }

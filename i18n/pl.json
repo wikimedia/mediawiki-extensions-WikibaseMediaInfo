@@ -89,5 +89,6 @@
 	"wikibasemediainfo-special-mediasearch-input-label": "Wyszukiwanie multimediów",
 	"wikibasemediainfo-special-mediasearch-input-placeholder": "Szukaj obrazów, plików audio, filmów i innych",
 	"wikibasemediainfo-special-mediasearch-load-more-results": "Załaduj więcej",
-	"wikibasemediainfo-special-mediasearch-quickview-button-text": "Więcej szczegółów"
+	"wikibasemediainfo-special-mediasearch-quickview-button-text": "Więcej szczegółów",
+	"wikibasemediainfo-special-mediasearch-quickview-close-button-text": "Zamknij szczegóły pliku"
 }

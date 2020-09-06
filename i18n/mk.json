@@ -135,5 +135,7 @@
 	"wikibasemediainfo-special-mediasearch-clear-title": "Отстрани",
 	"wikibasemediainfo-special-mediasearch-input-label": "Пребарување на слики и снимки",
 	"wikibasemediainfo-special-mediasearch-input-placeholder": "Пребарување на слики, звучни снимки, видеоснимки и повеќе",
-	"wikibasemediainfo-special-mediasearch-load-more-results": "Вчитај уште"
+	"wikibasemediainfo-special-mediasearch-load-more-results": "Вчитај уште",
+	"wikibasemediainfo-special-mediasearch-quickview-button-text": "Поподробно",
+	"wikibasemediainfo-special-mediasearch-quickview-close-button-text": "Затвори подробности за податотеката"
 }

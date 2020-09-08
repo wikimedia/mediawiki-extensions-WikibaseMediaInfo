@@ -107,5 +107,6 @@
 	"wikibasemediainfo-special-mediasearch-no-results": "Vi hittade inga resultat",
 	"wikibasemediainfo-special-mediasearch-no-results-tips": "Försök med allmännare söktermer eller kontrollera stavningen",
 	"wikibasemediainfo-special-mediasearch-load-more-results": "Läs in fler",
-	"wikibasemediainfo-special-mediasearch-quickview-button-text": "Fler detaljer"
+	"wikibasemediainfo-special-mediasearch-quickview-button-text": "Fler detaljer",
+	"wikibasemediainfo-special-mediasearch-quickview-close-button-text": "Stäng fildetaljer"
 }

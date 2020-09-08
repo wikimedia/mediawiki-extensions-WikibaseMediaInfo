@@ -5,13 +5,13 @@ var LIMIT = 40,
 	activeRequest = null;
 
 /**
- * Generate the gmsrawsearch param value.
+ * Generate additional (non-term) search keywords for filters.
  *
  * @param {string} mediaType
  * @param {Object} filterValues Filter values for this media type
  * @return {string}
  */
-function getRawSearchParams( mediaType, filterValues ) {
+function getMediaFilters( mediaType, filterValues ) {
 	var raw = 'filetype:' + mediaType;
 
 	// For the Images tab, we want bitmap and drawing file types.
@@ -19,7 +19,7 @@ function getRawSearchParams( mediaType, filterValues ) {
 		raw += '|drawing';
 	}
 
-	function addFilterToRaw( filterType, paramKey ) {
+	function addFilter( filterType, paramKey ) {
 		var value = filterType in filterValues ?
 			filterValues[ filterType ] : null;
 		if ( value ) {
@@ -29,8 +29,8 @@ function getRawSearchParams( mediaType, filterValues ) {
 		return '';
 	}
 
-	raw += addFilterToRaw( 'mimeType', 'filemime' );
-	raw += addFilterToRaw( 'imageSize', 'fileres' );
+	raw += addFilter( 'mimeType', 'filemime' );
+	raw += addFilter( 'imageSize', 'fileres' );
 
 	return raw;
 }
@@ -63,28 +63,32 @@ module.exports = {
 				format: 'json',
 				uselang: mw.config.get( 'wgUserLanguage' ),
 				action: 'query',
-				generator: options.type === 'category' ? 'search' : 'mediasearch',
+				generator: 'search',
+				gsrsearch: options.term,
+				gsrlimit: LIMIT,
+				gsroffset: context.state.continue[ options.type ] || 0,
 				prop: options.type === 'category' ? 'info' : 'info|imageinfo|pageterms',
 				inprop: 'url'
 			},
+			filters,
 			request;
 
 		if ( options.type === 'category' ) {
 			// category-specific params
-			params.gsrsearch = options.term;
 			params.gsrnamespace = 14; // NS_CATEGORY
-			params.gsrlimit = LIMIT;
-			params.gsroffset = context.state.continue[ options.type ] || 0;
 		} else {
+			filters = getMediaFilters( options.type, context.state.filterValues[ options.type ] );
+			if ( filters ) {
+				params.gsrsearch += ' ' + filters;
+			}
+
 			// params used in all non-category searches
-			params.gmssearch = options.term;
+			params.gsrnamespace = 6; // NS_FILE
 			params.iiprop = 'url|size|mime';
 			params.iiurlheight = options.type === 'bitmap' ? 180 : undefined;
 			params.iiurlwidth = options.type === 'video' ? 200 : undefined;
 			params.wbptterms = 'label';
-			params.gmsrawsearch = getRawSearchParams( options.type, context.state.filterValues[ options.type ] );
-			params.gmslimit = LIMIT;
-			params.gmscontinue = context.state.continue[ options.type ];
+			params.mediasearch = true; // @todo this is temporary to force the use of the mediasearch profile
 		}
 
 		// If a search request is already in-flight, abort it
@@ -137,9 +141,7 @@ module.exports = {
 				// Store the "continue" property of the request so we can pick up where we left off
 				context.commit( 'setContinue', {
 					type: options.type,
-					continue: options.type === 'category' ?
-						response.continue.gsroffset :
-						response.continue.gmscontinue
+					continue: response.continue.gsroffset
 				} );
 			} else {
 				context.commit( 'setContinue', {

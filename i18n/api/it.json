@@ -1,9 +1,0 @@
-{
-	"@metadata": {
-		"authors": [
-			"Beta16"
-		]
-	},
-	"apihelp-query+mediasearch-param-rawsearch": "Ricerca per query grezza, in aggiunta al termine di ricerca (non interpretata, utile per aggiungere filtri specifici, ecc.)",
-	"apihelp-query+mediasearch-param-limit": "Numero massimo di risultati"
-}

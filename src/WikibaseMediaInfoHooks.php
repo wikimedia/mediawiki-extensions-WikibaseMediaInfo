@@ -713,8 +713,10 @@ class WikibaseMediaInfoHooks {
 			__DIR__ . '/Search/MediaSearchProfiles.php' );
 
 		$request = RequestContext::getMain()->getRequest();
+		$title = RequestContext::getMain()->getTitle() ?? Title::newMainPage();
+
 		// Only activate a query route if mediasearch is explicitly requested
-		if ( $request->getVal( 'mediasearch' ) ) {
+		if ( $request->getVal( 'mediasearch' ) || $title->equals( \SpecialPage::getTitleFor( 'MediaSearch' ) ) ) {
 			$service->registerDefaultProfile( SearchProfileService::FT_QUERY_BUILDER,
 				$searchProfileContextName, $fulltextProfileName );
 

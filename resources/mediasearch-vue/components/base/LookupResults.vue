@@ -76,38 +76,3 @@ module.exports = {
 	}
 };
 </script>
-
-<style lang="less">
-@import 'mediawiki.mixins';
-@import './../../../mediainfo-variables.less';
-
-.wbmi-lookup-results {
-	.box-shadow( @box-shadow-dialog );
-	background-color: @background-color-base;
-	border: @border-base;
-	position: absolute;
-	width: 100%;
-	// Match existing OOUI dialog z-index.
-	z-index: 4;
-
-	&__list-item {
-		.transition( ~'background-color 100ms, color 100ms' );
-		color: @color-base;
-		cursor: pointer;
-		list-style: none;
-		margin: 0;
-		padding: 7px 12px;
-
-		&--active {
-			background-color: @background-color-base--hover;
-			color: @color-base--emphasized;
-		}
-	}
-}
-
-// Unfortunately, we need the element selector to override a Mediawiki style.
-ul.wbmi-lookup-results__list {
-	margin: 0;
-	padding: 0;
-}
-</style>

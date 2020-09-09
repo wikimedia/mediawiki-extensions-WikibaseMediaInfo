@@ -55,19 +55,3 @@ module.exports = {
 	}
 };
 </script>
-
-<style lang="less">
-@import '../../mediainfo-variables.less';
-
-.wbmi-generic-result {
-	padding: @wbmi-spacing-sm;
-
-	&:nth-of-type( odd ) {
-		background-color: @wbmi-background-color--odd;
-	}
-
-	h3 {
-		padding-bottom: @wbmi-spacing-sm;
-	}
-}
-</style>

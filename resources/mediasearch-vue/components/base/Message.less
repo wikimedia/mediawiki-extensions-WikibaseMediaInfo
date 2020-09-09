@@ -1,0 +1,51 @@
+@import 'mediawiki.mixins';
+@import '../../../../lib/wikimedia-ui-base.less';
+
+.wbmi-message {
+	color: @color-notice;
+	font-weight: bold;
+	max-width: 50em;
+	position: relative;
+
+	&--error {
+		color: @color-error;
+	}
+
+	&--success {
+		color: @color-success;
+	}
+
+	&--block {
+		color: @color-notice;
+		font-weight: normal;
+		padding: 16px 24px;
+
+		&.wbmi-message--notice {
+			background-color: @background-color-notice--framed;
+			border: @border-notice;
+		}
+
+		&.wbmi-message--error {
+			background-color: @background-color-error--framed;
+			border: @border-error;
+		}
+
+		&.wbmi-message--warning {
+			background-color: @background-color-warning--framed;
+			border: @border-warning;
+		}
+
+		&.wbmi-message--success {
+			background-color: @background-color-success--framed;
+			border: @border-success;
+		}
+	}
+
+	.wbmi-icon {
+		position: absolute;
+	}
+}
+
+.wbmi-message__content {
+	margin-left: 2em;
+}

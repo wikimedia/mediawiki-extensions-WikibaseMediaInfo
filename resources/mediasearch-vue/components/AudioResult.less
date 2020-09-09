@@ -1,0 +1,26 @@
+@import '../../mediainfo-variables.less';
+
+.wbmi-audio-result {
+	box-sizing: border-box;
+	padding: @wbmi-spacing-sm;
+
+	&__title + &__meta {
+		margin-top: 0;
+		padding-top: 0;
+	}
+
+	&__duration {
+		border-radius: @border-radius-base;
+		color: @color-base--subtle;
+		display: inline-block;
+		background-color: @wmui-color-base80;
+		font-weight: normal;
+		padding: 0 @wbmi-spacing-xs;
+		margin-right: @wbmi-spacing-sm;
+	}
+
+	&__mime {
+		color: @color-base--subtle;
+		font-weight: normal;
+	}
+}

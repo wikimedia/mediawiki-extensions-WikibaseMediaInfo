@@ -84,37 +84,3 @@ module.exports = {
 
 };
 </script>
-
-<style lang="less">
-@import 'mediawiki.mixins';
-@import '../../mediainfo-variables.less';
-
-// Base element is an anchor tag for the sake of keyboard navigation.
-.wbmi-image-result {
-	background-color: @wmui-color-base80;
-	box-sizing: border-box;
-	display: block;
-	height: 180px;
-	margin: @wbmi-spacing-sm;
-	transition: box-shadow @transition-base ease, outline @transition-base ease;
-
-	&:hover,
-	&:focus {
-		.wbmi-result-box-shadow();
-	}
-
-	// Extra prominence on focus using outline, for users navigating via keyboard
-	&:focus {
-		outline: solid 2px @color-primary;
-		outline-offset: -2px;
-	}
-
-	img {
-		height: 100%;
-		object-fit: cover;
-		object-position: center center;
-		pointer-events: none;
-		width: 100%;
-	}
-}
-</style>

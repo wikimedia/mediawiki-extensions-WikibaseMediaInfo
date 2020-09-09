@@ -1,7 +1,231 @@
 <form method="get" action="{{page}}">
-	{{#type}}<input type="hidden" name="type" value="{{type}}" />{{/type}}
-	{{#querystring}}<input type="hidden" name="{{key}}" value="{{value}}" />{{/querystring}}
-	{{{inputWidget}}}
+	{{#querystring}}
+		{{^isQ}}
+			<input type="hidden" name="{{key}}" value="{{value}}" />
+		{{/isQ}}
+	{{/querystring}}
+
+	<div class="wbmi-input wbmi-media-search-input wbmi-input--button">
+		<div class="wbmi-input__wrapper">
+			<label
+				id="wbmi-media-search-input__label"
+				for="wbmi-media-search-input__input"
+				class="wbmi-input__label"
+			>
+				{{searchLabel}}
+			</label>
+
+			<input
+				value="{{term}}"
+				name="q"
+				id="wbmi-media-search-input__input"
+				dir="auto"
+				class="wbmi-input__input"
+				type="text"
+				placeholder="{{searchPlaceholder}}"
+			>
+
+			{{!
+				JS version will have 'search' indicator & 'clear' action, both of which are an icon...
+				the way these are implemented in JS is quite annoying to replicate here, and since
+				they're just a visual gimmick rather than an essential feature, we'll skip them
+			}}
+		</div>
+
+		<button type="submit" class="wbmi-button wbmi-input__button wbmi-button--framed wbmi-button--progressive wbmi-button--primary">
+			<span class="wbmi-button__content">{{searchButton}}</span>
+		</button>
+	</div>
 </form>
 
-{{{tabs}}}
+<div class="wbmi-tabs">
+	<div class="wbmi-tabs__header">
+		<div role="tablist" tabindex="0" class="wbmi-tabs__tabs-list" aria-activedescendant="wbmi-tab-{{activeType}}-label">
+			{{#tabs}}
+				<div
+					id="wbmi-tab-{{type}}-label"
+					{{#isActive}}aria-selected="true"{{/isActive}}
+					aria-controls="wbmi-tab-{{type}}"
+					role="tab"
+					class="wbmi-tabs__tabs-list__item {{#isActive}}is-active{{/isActive}}"
+				>
+					{{! below form is a bit of a hack to mimick tabs without JS, where tab label is submit button }}
+					<form method="get" action="{{page}}">
+						{{#querystring}}
+							{{^isType}}
+								{{^isContinue}}
+									<input type="hidden" name="{{key}}" value="{{value}}" />
+								{{/isContinue}}
+							{{/isType}}
+						{{/querystring}}
+						<input type="hidden" name="q" value="{{term}}" />
+
+						<label>
+							<input
+								type="submit"
+								name="type"
+								value="{{type}}"
+								{{#isActive}}checked="checked"{{/isActive}}
+								style="display: none"
+							/>
+							{{label}}
+						</label>
+					</form>
+				</div>
+			{{/tabs}}
+		</div>
+	</div>
+
+	<div class="wbmi-tabs__content">
+		{{#tabs}}
+			{{#isActive}}
+				<div
+					id="wbmi-tab-{{activeType}}"
+					aria-labeledby="wbmi-tab-{{activeType}}-label"
+					role="tabpanel"
+					class="wbmi-tab"
+				>
+					{{^isCategory}}
+						<div class="wbmi-media-search-filters">
+							{{! this has no content, but container is here to preserve the space after page load }}
+						</div>
+					{{/isCategory}}
+
+					<div class="wbmi-media-search-results">
+						<div class="wbmi-media-search-results__list wbmi-media-search-results__list--{{type}}">
+							{{#isBitmap}}
+								{{#results}}
+									<a
+										ref="link"
+										class="wbmi-image-result"
+										href="{{canonicalurl}}"
+										title="{{title}}"
+										style="width: {{imageinfo.0.thumbwidth}}px; height: {{imageinfo.0.thumbheight}}px;"
+										target="_blank"
+									>
+										<img
+											src="{{imageinfo.0.thumburl}}"
+											data-src="{{imageinfo.0.thumburl}}"
+											alt="{{name}}"
+											loading="lazy"
+											class="wbmi-image"
+										>
+									</a>
+								{{/results}}
+							{{/isBitmap}}
+
+							{{#isAudio}}
+								{{#results}}
+									<div class="wbmi-audio-result">
+										<h3 class="wbmi-audio-result__title">
+											<a ref="link"
+												href="{{canonicalurl}}"
+												title="{{title}}"
+												target="_blank"
+											>
+												{{name}}
+											</a>
+										</h3>
+
+										{{#imageinfo.0.mime}}
+											<h4 class="wbmi-audio-result__meta">
+												{{! note: duration formatting is implemented in JS - not worth reimplementing here }}
+												<span class="wbmi-audio-result__mime">{{.}}</span>
+											</h4>
+										{{/imageinfo.0.mime}}
+
+										{{#terms.label}}
+											<p>{{.}}</p>
+										{{/terms.label}}
+									</div>
+								{{/results}}
+							{{/isAudio}}
+
+							{{#isVideo}}
+								{{#results}}
+									<a ref="link"
+										class="wbmi-video-result"
+										href="{{canonicalurl}}"
+										title="{{title}}"
+										target="_blank"
+									>
+										<img
+											src="{{imageinfo.0.thumburl}}"
+											alt="{{name}}"
+											class="wbmi-video-result__thumbnail"
+											loading="lazy"
+										>
+
+										<div class="wbmi-video-result__body">
+											<h3 class="wbmi-video-result__title">
+												{{name}}
+											</h3>
+
+											{{#imageinfo.0.mime}}
+												<h4 class="wbmi-video-result__meta">
+													{{! note: duration formatting is implemented in JS - not worth reimplementing here }}
+													<span class="wbmi-video-result__mime">{{.}}</span>
+												</h4>
+											{{/imageinfo.0.mime}}
+										</div>
+									</a>
+								{{/results}}
+							{{/isVideo}}
+
+							{{#isCategory}}
+								{{#results}}
+									<div class="wbmi-generic-result">
+										<h3>
+											<a href="{{canonicalurl}}"
+												title="{{title}}"
+												target="_blank"
+											>
+												{{name}}
+											</a>
+										</h3>
+									</div>
+								{{/results}}
+							{{/isCategory}}
+						</div>
+					</div>
+
+					{{#hasMore}}
+						<form method="get" action="{{page}}">
+							{{#querystring}}
+								{{^isContinue}}
+									<input type="hidden" name="{{key}}" value="{{value}}" />
+								{{/isContinue}}
+							{{/querystring}}
+							<input type="hidden" name="continue" value="{{continue}}" />
+							<button type="submit" class="wbmi-button wbmi-media-search-load-more wbmi-button--framed wbmi-button--progressive">
+								<span class="wbmi-button__content">{{continueMessage}}</span>
+							</button>
+						</form>
+					{{/hasMore}}
+
+					{{^results}}
+						{{#hasTerm}}
+							<div class="wbmi-media-search-no-results">
+								<div class="wbmi-media-search-no-results__icon"></div>
+								<p>
+									{{{noResultsMessage}}}
+									<span class="wbmi-media-search-no-results__tips">
+										{{{noResultsMessageExtra}}}
+									</span>
+								</p>
+							</div>
+						{{/hasTerm}}
+						{{^hasTerm}}
+							<div class="wbmi-media-search-empty-state">
+								<div class="wbmi-media-search-empty-state__icon"></div>
+								<p>
+									{{{emptyMessage}}}
+								</p>
+							</div>
+						{{/hasTerm}}
+					{{/results}}
+				</div>
+			{{/isActive}}
+		{{/tabs}}
+	</div>
+</div>

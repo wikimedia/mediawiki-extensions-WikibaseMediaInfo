@@ -1,0 +1,18 @@
+@import '../../mediainfo-variables.less';
+
+.wbmi-media-search-input {
+	max-width: @max-width-base;
+
+	// See: https://phabricator.wikimedia.org/T222283
+	// This overrides an override in mediawiki.legacy/shared.css which keeps
+	// this input element from flipping over to RTL orientation;
+	// stylelint-disable-next-line selector-class-pattern
+	body.rtl.sitedir-ltr & input {
+		direction: unset;
+	}
+}
+
+.wbmi-media-search-load-more {
+	display: block;
+	margin: 0 auto;
+}

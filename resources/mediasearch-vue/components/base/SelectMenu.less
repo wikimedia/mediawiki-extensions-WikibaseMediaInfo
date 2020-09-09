@@ -1,0 +1,49 @@
+@import 'mediawiki.mixins';
+@import './../../../mediainfo-variables.less';
+
+.wbmi-select-menu {
+	.box-shadow( @box-shadow-menu );
+	background-color: @background-color-base;
+	border: @border-base;
+	border-radius: 0 0 @border-radius-base @border-radius-base;
+	box-sizing: border-box;
+	left: 0;
+	margin-bottom: -1px;
+	margin-top: -1px;
+	max-width: @max-width-base;
+	min-width: 100%;
+	position: absolute;
+	// Match existing OOUI menu z-index.
+	z-index: 4;
+
+	&__list-item {
+		.transition( ~'background-color 100ms, color 100ms' );
+		color: @color-base;
+		cursor: pointer;
+		list-style: none;
+		margin: 0;
+		overflow: hidden;
+		padding: 7px 12px;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+
+		&--active {
+			background-color: @background-color-base--hover;
+			color: @color-base--emphasized;
+		}
+
+		&--selected {
+			background-color: @background-color-primary;
+		}
+
+		&--active.wbmi-select-menu__list-item--selected {
+			color: @color-primary;
+		}
+	}
+}
+
+// Unfortunately, we need the element selector to override a Mediawiki style.
+ul.wbmi-select-menu__list {
+	margin: 0;
+	padding: 0;
+}

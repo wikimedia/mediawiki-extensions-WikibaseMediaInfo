@@ -49,14 +49,3 @@ module.exports = {
 	}
 };
 </script>
-
-<style lang="less">
-// Transitions.
-.wbmi-tab-fade-in-enter {
-	opacity: 0;
-}
-
-.wbmi-tab-fade-in-enter-active {
-	transition: opacity 0.25s;
-}
-</style>

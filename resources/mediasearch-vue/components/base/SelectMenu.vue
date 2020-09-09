@@ -84,10 +84,13 @@ module.exports = {
 		}
 	},
 
-	data: function () {
-		return {
-			formattedItems: this.getFormattedItems( this.items )
-		};
+	computed: {
+		/**
+		 * @return {Array} Array of objects with label and value keys
+		 */
+		formattedItems: function () {
+			return this.getFormattedItems( this.items );
+		}
 	},
 
 	methods: {

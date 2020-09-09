@@ -28,6 +28,7 @@
 	"wikibasemediainfo-filepage-caption-too-long": "$1 {{PLURAL:$1|teikn}} over grensa",
 	"wikibasemediainfo-filepage-caption-approaching-limit": "{{PLURAL:$1|$1|0=Ingen}} teikn att",
 	"wikibasemediainfo-filepage-statement-no-results": "Fann ingen resultat",
+	"wikibasemediainfo-filepage-statement-some-value": "Verdi utan eit element på {{WBREPONAME}}",
 	"wikibasemediainfo-filepage-license-title": "Bilettekstar og andre strukturerte data-bidrag",
 	"wikibasemediainfo-filepage-license-content": "Ved å klikka «Publiser endringar», samtykkjer du til [[wmf:Terms_of_Use|bruksvilkåra]], og du gjev endeleg samtykke til å gje ut bidraget ditt under lisensen [https://creativecommons.org/publicdomain/zero/1.0/ Creative Commons CC0].",
 	"wikibasemediainfo-filepage-license-content-acceptance": "Eg godtek desse vilkåra for endringar eg gjer i framtida. Ikkje vis denne meldinga meir.",

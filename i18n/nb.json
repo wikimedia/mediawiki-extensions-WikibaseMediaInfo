@@ -136,5 +136,7 @@
 	"wikibasemediainfo-special-mediasearch-clear-title": "Fjern",
 	"wikibasemediainfo-special-mediasearch-input-label": "Mediesøk",
 	"wikibasemediainfo-special-mediasearch-input-placeholder": "Søk etter bilder, lyd, video og mer",
-	"wikibasemediainfo-special-mediasearch-load-more-results": "Last inn mer"
+	"wikibasemediainfo-special-mediasearch-load-more-results": "Last inn mer",
+	"wikibasemediainfo-special-mediasearch-quickview-button-text": "Flere detaljer",
+	"wikibasemediainfo-special-mediasearch-quickview-close-button-text": "Lukk fildetaljer"
 }

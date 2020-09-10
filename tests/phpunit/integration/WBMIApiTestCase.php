@@ -53,7 +53,7 @@ abstract class WBMIApiTestCase extends \ApiUploadTestCase {
 		$tokenType = 'csrf'
 	) {
 		if ( !$user ) {
-			$user = $GLOBALS['wgUser'];
+			$user = $this->getTestUser()->getUser();
 		}
 
 		if ( !array_key_exists( 'token', $params ) ) {

@@ -114,6 +114,19 @@ class MediaQueryBuilder extends FullTextQueryStringQueryBuilder {
 	}
 
 	/**
+	 * @inheritDoc
+	 */
+	protected function isPhraseRescoreNeeded( SearchContext $context ) {
+		if ( $context->isSyntaxUsed( 'query_string' ) ) {
+			return parent::isPhraseRescoreNeeded( $context );
+		}
+
+		// don't perform fulltext-based phrase rescore, as it would massively
+		// overpower statement matches
+		return false;
+	}
+
+	/**
 	 * Search articles with provided term.
 	 *
 	 * @param SearchContext $context

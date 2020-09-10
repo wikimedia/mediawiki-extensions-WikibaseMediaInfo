@@ -2,11 +2,12 @@
 	<div v-if="hasFilters" class="wbmi-media-search-filters">
 		<wbmi-select
 			v-for="filter in searchFilters"
+			ref="filters"
 			:key="filter.type"
-			:class="getFilterClasses( filter )"
+			:class="getFilterClasses( filter.type )"
 			:name="filter.type"
 			:items="filter.items"
-			:initial-selected-item-index="getSelectedItemIndex( filter )"
+			:initial-selected-item-index="0"
 			@select="onSelect( $event, filter.type )"
 		>
 		</wbmi-select>
@@ -69,6 +70,17 @@ module.exports = {
 		 */
 		hasFilters: function () {
 			return this.searchFilters.length > 0;
+		},
+
+		/**
+		 * Key names (not values) of all active filters for the given tab;
+		 * Having a shorthand computed property for this makes it easier to
+		 * watch for changes.
+		 *
+		 * @return {Array} Empty array or [ "imageSize", "mimeType" ], etc
+		 */
+		currentActiveFilters: function () {
+			return Object.keys( this.filterValues[ this.mediaType ] );
 		}
 	} ),
 
@@ -104,35 +116,36 @@ module.exports = {
 		/**
 		 * We need a class for select lists where a non-default item is selected.
 		 *
-		 * @param {SearchFilter} filter
+		 * @param {string} filterType
 		 * @return {Object}
 		 */
-		getFilterClasses: function ( filter ) {
+		getFilterClasses: function ( filterType ) {
 			return {
-				'wbmi-search-filter--selected': this.getSelectedItemIndex( filter ) > 0
+				'wbmi-search-filter--selected': this.currentActiveFilters.indexOf( filterType ) !== -1
 			};
-		},
-
-		/**
-		 * Get the index of the selected item for a filter.
-		 *
-		 * @param {Object} filter
-		 * @return {number}
-		 */
-		getSelectedItemIndex: function ( filter ) {
-			// Select the first option by default.
-			var selectedItemIndex = 0,
-				filterValue = filter.type in this.filterValues[ this.mediaType ] ?
-					this.filterValues[ this.mediaType ][ filter.type ] : null;
-
-			filter.items.forEach( function ( item, index ) {
-				if ( item.value === filterValue ) {
-					selectedItemIndex = index;
-				}
-			} );
-
-			return selectedItemIndex;
 		}
-	} )
+	} ),
+
+	watch: {
+		/**
+		 * Watch for changes in active filters (regardless of value) so that we
+		 * can re-set the Select components to initial values if filters are
+		 * cleared via a Vuex action.
+		 *
+		 * @param {Array} newValue
+		 * @param {Array} oldValue
+		 */
+		currentActiveFilters: function ( newValue, oldValue ) {
+			// If we are going from one or more active filters to no filters,
+			// then forcibly reset any filter components to their initial state
+			// in case that change comes from a Vuex "clear" action rather than
+			// the user clicking around.
+			if ( oldValue.length > 0 && newValue.length === 0 ) {
+				this.$refs.filters.forEach( function ( filter ) {
+					filter.reset();
+				} );
+			}
+		}
+	}
 };
 </script>

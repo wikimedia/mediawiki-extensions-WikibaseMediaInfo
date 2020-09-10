@@ -191,6 +191,7 @@ module.exports = {
 	methods: $.extend( {}, mapMutations( [
 		'clearTerm',
 		'resetResults',
+		'resetFilters',
 		'setTerm'
 	] ), mapActions( [
 		'search'
@@ -238,6 +239,7 @@ module.exports = {
 			this.clearTerm();
 			this.clearLookupResults();
 			this.resetResults();
+			this.resetFilters();
 			url.query.q = '';
 			window.history.pushState( url.query, null, '?' + url.getQueryString() );
 			this.autoloadCounter = this.setInitialAutoloadCountForTabs();

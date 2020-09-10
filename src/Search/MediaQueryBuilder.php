@@ -206,12 +206,12 @@ class MediaQueryBuilder extends FullTextQueryStringQueryBuilder {
 	 * A ranking query for text-like fields
 	 *
 	 * @param string $term
-	 * @return DisMax
+	 * @return BoolQuery
 	 */
-	private function createTextRankingQuery( string $term ) : DisMax {
-		$query = new DisMax();
+	private function createTextRankingQuery( string $term ) : BoolQuery {
+		$query = new BoolQuery();
 
-		$query->addQuery(
+		$query->addShould(
 			( new MultiMatch() )
 				->setQuery( $term )
 				->setParam( 'boost', $this->settings['boost']['heading'] )
@@ -220,7 +220,7 @@ class MediaQueryBuilder extends FullTextQueryStringQueryBuilder {
 				->setFields( [ 'heading^3', 'heading.plain^1' ] )
 		);
 
-		$query->addQuery(
+		$query->addShould(
 			( new MultiMatch() )
 				->setQuery( $term )
 				->setParam( 'boost', $this->settings['boost']['auxiliary_text'] )
@@ -229,7 +229,7 @@ class MediaQueryBuilder extends FullTextQueryStringQueryBuilder {
 				->setFields( [ 'auxiliary_text^3', 'auxiliary_text.plain^1' ] )
 		);
 
-		$query->addQuery(
+		$query->addShould(
 			( new MultiMatch() )
 				->setQuery( $term )
 				->setParam( 'boost', $this->settings['boost']['text'] )
@@ -238,7 +238,7 @@ class MediaQueryBuilder extends FullTextQueryStringQueryBuilder {
 				->setFields( [ 'text^3', 'text.plain^1' ] )
 		);
 
-		$query->addQuery(
+		$query->addShould(
 			( new MultiMatch() )
 				->setQuery( $term )
 				->setParam( 'boost', $this->settings['boost']['file_text'] )
@@ -254,13 +254,13 @@ class MediaQueryBuilder extends FullTextQueryStringQueryBuilder {
 	 * A ranking query for title-like fields
 	 *
 	 * @param string $term
-	 * @return DisMax
+	 * @return BoolQuery
 	 */
-	private function createTitleRankingQuery( string $term ) : DisMax {
-		$query = new DisMax();
+	private function createTitleRankingQuery( string $term ) : BoolQuery {
+		$query = new BoolQuery();
 
 		// captions in user's own language
-		$query->addQuery(
+		$query->addShould(
 			( new MultiMatch() )
 				->setQuery( $term )
 				->setParam( 'boost', $this->settings['boost']['caption'] )
@@ -283,7 +283,7 @@ class MediaQueryBuilder extends FullTextQueryStringQueryBuilder {
 			// decay x% for each fallback language
 			$decayedBoost = $this->settings['boost']['caption'] *
 							( $this->settings['decay']['caption-fallback'] ** ( $i + 1 ) );
-			$query->addQuery(
+			$query->addShould(
 				( new MultiMatch() )
 					->setQuery( $term )
 					->setParam( 'boost', $decayedBoost )
@@ -300,7 +300,7 @@ class MediaQueryBuilder extends FullTextQueryStringQueryBuilder {
 		}
 
 		// other fulltext fields, similar to original Cirrus fulltext search
-		$query->addQuery(
+		$query->addShould(
 			( new MultiMatch() )
 				->setQuery( $term )
 				->setParam( 'boost', $this->settings['boost']['title'] )
@@ -309,7 +309,7 @@ class MediaQueryBuilder extends FullTextQueryStringQueryBuilder {
 				->setFields( [ 'title^3', 'title.plain^1' ] )
 		);
 
-		$query->addQuery(
+		$query->addShould(
 			( new MultiMatch() )
 				->setQuery( $term )
 				->setParam( 'boost', $this->settings['boost']['category'] )
@@ -318,7 +318,7 @@ class MediaQueryBuilder extends FullTextQueryStringQueryBuilder {
 				->setFields( [ 'category^3', 'category.plain^1' ] )
 		);
 
-		$query->addQuery(
+		$query->addShould(
 			( new MultiMatch() )
 				->setQuery( $term )
 				->setParam( 'boost', $this->settings['boost']['redirect.title'] )
@@ -327,7 +327,7 @@ class MediaQueryBuilder extends FullTextQueryStringQueryBuilder {
 				->setFields( [ 'redirect.title^3', 'redirect.title.plain^1' ] )
 		);
 
-		$query->addQuery(
+		$query->addShould(
 			( new MultiMatch() )
 				->setQuery( $term )
 				->setParam( 'boost', $this->settings['boost']['suggest'] )

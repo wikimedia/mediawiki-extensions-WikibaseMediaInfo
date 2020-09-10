@@ -21,8 +21,8 @@
         "should": [
             [
                 {
-                    "dis_max": {
-                        "queries": [
+                    "bool": {
+                        "should": [
                             {
                                 "multi_match": {
                                     "query": "on the 4th of July 1806",
@@ -85,8 +85,8 @@
                     }
                 },
                 {
-                    "dis_max": {
-                        "queries": [
+                    "bool": {
+                        "should": [
                             {
                                 "multi_match": {
                                     "query": "on the 4th of July 1806",

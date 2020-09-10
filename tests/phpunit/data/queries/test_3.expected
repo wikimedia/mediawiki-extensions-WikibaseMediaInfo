@@ -23,8 +23,8 @@
         "should": [
             [
                 {
-                    "dis_max": {
-                        "queries": [
+                    "bool": {
+                        "should": [
                             {
                                 "multi_match": {
                                     "query": "yet another search term",
@@ -111,8 +111,8 @@
                     }
                 },
                 {
-                    "dis_max": {
-                        "queries": [
+                    "bool": {
+                        "should": [
                             {
                                 "multi_match": {
                                     "query": "yet another search term",

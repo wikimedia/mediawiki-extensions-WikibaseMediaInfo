@@ -193,8 +193,7 @@ module.exports = {
 		'resetResults',
 		'setTerm'
 	] ), mapActions( [
-		'search',
-		'fetchFileCount'
+		'search'
 	] ), {
 		/**
 		 * Keep UI state, URL, and history in sync as the user changes tabs
@@ -413,12 +412,6 @@ module.exports = {
 		// Set the initial autoload count for all tabs for semi-infinite scroll
 		// behavior
 		this.autoloadCounter = this.setInitialAutoloadCountForTabs();
-	},
-
-	mounted: function () {
-		// Fetch a total count of media files for use in the empty state
-		this.fetchFileCount();
-
 	},
 
 	beforeDestroy: function () {

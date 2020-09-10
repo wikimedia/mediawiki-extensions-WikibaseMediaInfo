@@ -1,5 +1,5 @@
 <template>
-	<div v-if="hasFilters" class="wbmi-media-search-filters">
+	<div class="wbmi-media-search-filters">
 		<wbmi-select
 			v-for="filter in searchFilters"
 			ref="filters"
@@ -8,6 +8,7 @@
 			:name="filter.type"
 			:items="filter.items"
 			:initial-selected-item-index="0"
+			:prefix="getFilterPrefix( filter.type )"
 			@select="onSelect( $event, filter.type )"
 		>
 		</wbmi-select>
@@ -27,7 +28,8 @@ var mapState = require( 'vuex' ).mapState,
 	mapMutations = require( 'vuex' ).mapMutations,
 	WbmiSelect = require( './base/Select.vue' ),
 	SearchFilter = require( '../models/SearchFilter.js' ),
-	filterItems = require( './../data/filterItems.json' );
+	filterItems = require( './../data/filterItems.json' ),
+	sortFilterItems = require( './../data/sortFilterItems.json' );
 
 // @vue/component
 module.exports = {
@@ -53,7 +55,8 @@ module.exports = {
 		searchFilters: function () {
 			var filtersArray = [],
 				filterKey,
-				newFilter;
+				newFilter,
+				sortFilter = new SearchFilter( 'sort', sortFilterItems );
 
 			for ( filterKey in filterItems[ this.mediaType ] ) {
 				newFilter = new SearchFilter(
@@ -62,14 +65,10 @@ module.exports = {
 				);
 				filtersArray.push( newFilter );
 			}
-			return filtersArray;
-		},
 
-		/**
-		 * @return {boolean} Whether or not this media type has any filters
-		 */
-		hasFilters: function () {
-			return this.searchFilters.length > 0;
+			// All media types use the sort filter.
+			filtersArray.push( sortFilter );
+			return filtersArray;
 		},
 
 		/**
@@ -123,6 +122,20 @@ module.exports = {
 			return {
 				'wbmi-search-filter--selected': this.currentActiveFilters.indexOf( filterType ) !== -1
 			};
+		},
+
+		/**
+		 * Add select list prefixes per filter type.
+		 *
+		 * @param {string} filterType
+		 * @return {string}
+		 */
+		getFilterPrefix: function ( filterType ) {
+			if ( filterType === 'sort' ) {
+				return this.$i18n( 'wikibasemediainfo-special-mediasearch-filter-sort-label' );
+			}
+
+			return '';
 		}
 	} ),
 

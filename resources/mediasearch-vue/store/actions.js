@@ -91,6 +91,19 @@ module.exports = {
 			params.mediasearch = true; // @todo this is temporary to force the use of the mediasearch profile
 		}
 
+		// Add sort filter.
+		if ( 'sort' in context.state.filterValues[ options.type ] ) {
+			if ( context.state.filterValues[ options.type ].sort === 'recency' ) {
+				params.gsrsort = 'create_timestamp_desc';
+			}
+
+			// "Popularity" sort option doesn't really apply a sort; instead
+			// adds rescoring profile that adds weight to items with more links.
+			if ( context.state.filterValues[ options.type ].sort === 'popularity' ) {
+				params.gsrqiprofile = 'popular_inclinks';
+			}
+		}
+
 		// If a search request is already in-flight, abort it
 		if ( activeRequest ) {
 			activeRequest.abort();

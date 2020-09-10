@@ -23,6 +23,9 @@
 				role="textbox"
 				aria-readonly="true"
 			>
+				<template v-if="selectedItemIndex > -1">
+					{{ prefix }}
+				</template>
 				{{ currentSelection }}
 			</span>
 			<wbmi-icon
@@ -106,6 +109,14 @@ module.exports = {
 
 		disabled: {
 			type: Boolean
+		},
+
+		/**
+		 * Prefix will be shown before the selected value, e.g. "Sort by:"
+		 */
+		prefix: {
+			type: [ String, Object ],
+			default: ''
 		}
 	},
 

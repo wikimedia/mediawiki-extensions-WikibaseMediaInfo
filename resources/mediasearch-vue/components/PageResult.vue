@@ -1,5 +1,5 @@
 <template>
-	<div class="wbmi-generic-result">
+	<div class="wbmi-page-result">
 		<h3>
 			<a :href="canonicalurl"
 				target="_blank"
@@ -7,19 +7,25 @@
 				{{ displayName }}
 			</a>
 		</h3>
+		<p v-if="hasCategoryText"
+			v-i18n-html:wikibasemediainfo-special-mediasearch-category-info="[
+				categoryinfo.size,
+				categoryinfo.subcats,
+				categoryinfo.files
+			]"></p>
 	</div>
 </template>
 
 <script>
 /**
- * @file GenericResult.vue
+ * @file PageResult.vue
  *
- * Fallback Result component. Does not implement the searchResult mixin; props
- * need to be directly specified here.
+ * Represents page and category results. Does not implement the searchResult
+ * mixin; props need to be directly specified here.
  */
 // @vue/component
 module.exports = {
-	name: 'GenericResult',
+	name: 'PageResult',
 
 	props: {
 		title: {
@@ -40,6 +46,13 @@ module.exports = {
 		index: {
 			type: Number,
 			required: true
+		},
+
+		categoryinfo: {
+			type: Object,
+			default: function () {
+				return {};
+			}
 		}
 	},
 
@@ -51,6 +64,13 @@ module.exports = {
 		 */
 		displayName: function () {
 			return new mw.Title( this.title ).getMainText();
+		},
+
+		/**
+		 * @return {boolean}
+		 */
+		hasCategoryText: function () {
+			return Object.keys( this.categoryinfo ).length > 0;
 		}
 	}
 };

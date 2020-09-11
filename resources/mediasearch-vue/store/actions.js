@@ -53,7 +53,7 @@ module.exports = {
 	 *
 	 * @param {Object} context
 	 * @param {Object} options
-	 * @param {string} options.type bitmap / category / audio / video
+	 * @param {string} options.type bitmap / page / audio / video
 	 * @param {string} options.term search term
 	 * @return {jQuery.Deferred}
 	 */
@@ -67,22 +67,22 @@ module.exports = {
 				gsrsearch: options.term,
 				gsrlimit: LIMIT,
 				gsroffset: context.state.continue[ options.type ] || 0,
-				prop: options.type === 'category' ? 'info' : 'info|imageinfo|pageterms',
+				prop: options.type === 'page' ? 'info|categoryinfo' : 'info|imageinfo|pageterms',
 				inprop: 'url'
 			},
 			filters,
 			request;
 
-		if ( options.type === 'category' ) {
-			// category-specific params
-			params.gsrnamespace = 14; // NS_CATEGORY
+		if ( options.type === 'page' ) {
+			// Page/category-specific params.
+			params.gsrnamespace = mw.config.get( 'wbmiMediaSearchPageNamespaces' );
 		} else {
+			// Params used in all non-page/category searches.
 			filters = getMediaFilters( options.type, context.state.filterValues[ options.type ] );
 			if ( filters ) {
 				params.gsrsearch += ' ' + filters;
 			}
 
-			// params used in all non-category searches
 			params.gsrnamespace = 6; // NS_FILE
 			params.iiprop = 'url|size|mime';
 			params.iiurlheight = options.type === 'bitmap' ? 180 : undefined;

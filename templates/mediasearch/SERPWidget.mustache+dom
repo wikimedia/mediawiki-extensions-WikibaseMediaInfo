@@ -85,11 +85,11 @@
 					role="tabpanel"
 					class="wbmi-tab"
 				>
-					{{^isCategory}}
+					{{^isPage}}
 						<div class="wbmi-media-search-filters">
 							{{! this has no content, but container is here to preserve the space after page load }}
 						</div>
-					{{/isCategory}}
+					{{/isPage}}
 
 					<div class="wbmi-media-search-results">
 						<div class="wbmi-media-search-results__list wbmi-media-search-results__list--{{type}}">
@@ -172,9 +172,9 @@
 								{{/results}}
 							{{/isVideo}}
 
-							{{#isCategory}}
+							{{#isPage}}
 								{{#results}}
-									<div class="wbmi-generic-result">
+									<div class="wbmi-page-result">
 										<h3>
 											<a href="{{canonicalurl}}"
 												title="{{title}}"
@@ -183,9 +183,12 @@
 												{{name}}
 											</a>
 										</h3>
+										{{#categoryInfoText}}
+											<p>{{.}}</p>
+										{{/categoryInfoText}}
 									</div>
 								{{/results}}
-							{{/isCategory}}
+							{{/isPage}}
 						</div>
 					</div>
 

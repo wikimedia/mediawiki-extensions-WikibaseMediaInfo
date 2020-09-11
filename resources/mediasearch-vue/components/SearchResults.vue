@@ -43,7 +43,7 @@ var mapState = require( 'vuex' ).mapState,
 	ImageResult = require( './ImageResult.vue' ),
 	AudioResult = require( './AudioResult.vue' ),
 	VideoResult = require( './VideoResult.vue' ),
-	GenericResult = require( './GenericResult.vue' ),
+	PageResult = require( './PageResult.vue' ),
 	QuickView = require( './QuickView.vue' ),
 	api = new mw.Api();
 
@@ -55,7 +55,7 @@ module.exports = {
 		'image-result': ImageResult,
 		'video-result': VideoResult,
 		'audio-result': AudioResult,
-		'generic-result': GenericResult,
+		'page-result': PageResult,
 		'quick-view': QuickView
 	},
 
@@ -84,7 +84,7 @@ module.exports = {
 		/**
 		 * Which component should be used to display individual search results
 		 *
-		 * @return {string} image-result|video-result|generic-result
+		 * @return {string} image-result|video-result|page-result
 		 */
 		resultComponent: function () {
 			if ( this.mediaType === 'bitmap' ) {
@@ -94,7 +94,7 @@ module.exports = {
 			} else if ( this.mediaType === 'audio' ) {
 				return 'audio-result';
 			} else {
-				return 'generic-result';
+				return 'page-result';
 			}
 		},
 

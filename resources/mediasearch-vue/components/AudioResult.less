@@ -1,8 +1,18 @@
 @import '../../mediainfo-variables.less';
 
 .wbmi-audio-result {
+	border-bottom: @border-width-base @border-style-base @wbmi-border-color-text-result;
 	box-sizing: border-box;
-	padding: @wbmi-spacing-sm;
+	padding: @wbmi-spacing-base-px * 0.75 0;
+
+	&:last-child {
+		border-bottom: 0;
+	}
+
+	h3 {
+		margin: 0;
+		padding: 0;
+	}
 
 	&__title + &__meta {
 		margin-top: 0;

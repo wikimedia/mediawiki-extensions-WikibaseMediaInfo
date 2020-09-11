@@ -154,14 +154,14 @@ module.exports = {
 	] ), {
 
 		/**
-		 * @return {string[]} [ 'bitmap', 'video', 'audio', 'category' ]
+		 * @return {string[]} [ 'bitmap', 'video', 'audio', 'page' ]
 		 */
 		tabs: function () {
 			return Object.keys( this.results );
 		},
 
 		/**
-		 * @return {Object} { bitmap: 'Images', video: 'Video', category: 'Categories'... }
+		 * @return {Object} { bitmap: 'Images', video: 'Video', page: 'Categories and Pages'... }
 		 */
 		tabNames: function () {
 			var names = {},
@@ -183,7 +183,7 @@ module.exports = {
 		 * @return {boolean}
 		 */
 		shouldShowEmptyState: function () {
-			return this.term.length === 0 &&
+			return this.term.length === 0 && this.results[ this.currentTab ] &&
 				this.results[ this.currentTab ].length === 0;
 		}
 	} ),

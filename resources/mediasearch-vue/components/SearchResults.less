@@ -11,21 +11,16 @@
 	&__list {
 		.flex( 1, 1, auto );
 		align-content: flex-start;
-		margin: -@wbmi-spacing-base-px / 2;
 		max-width: 100%;
-
-		// Audio results are limited to half-width
-		&--audio {
-			> * {
-				max-width: @max-width-base;
-			}
-		}
 
 		// Video results are displayed as tiles/cards with a uniform size
 		&--video {
 			.flex-display();
 			.flex-wrap( wrap );
 			justify-content: flex-start;
+			// Grid items each have a margin; add a negative margin around the
+			// wrapper to align it with the rest of the page.
+			margin: -@wbmi-spacing-base-px / 2;
 
 			// stylelint-disable-next-line no-descending-specificity
 			> * {
@@ -40,6 +35,9 @@
 		&--bitmap {
 			.flex-display();
 			.flex-wrap( wrap );
+			// Grid items each have a margin; add a negative margin around the
+			// wrapper to align it with the rest of the page.
+			margin: -@wbmi-spacing-base-px / 2;
 
 			// stylelint-disable-next-line no-descending-specificity
 			> * {

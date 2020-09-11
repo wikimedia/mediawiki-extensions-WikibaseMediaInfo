@@ -33,28 +33,28 @@ module.exports = {
 		bitmap: initialResults.activeType === 'bitmap' ? sortedResults : [],
 		audio: initialResults.activeType === 'audio' ? sortedResults : [],
 		video: initialResults.activeType === 'video' ? sortedResults : [],
-		category: initialResults.activeType === 'category' ? sortedResults : []
+		page: initialResults.activeType === 'page' ? sortedResults : []
 	},
 
 	continue: {
 		bitmap: initialResults.activeType === 'bitmap' ? initialResults.continue : 0,
 		audio: initialResults.activeType === 'audio' ? initialResults.continue : 0,
 		video: initialResults.activeType === 'video' ? initialResults.continue : 0,
-		category: initialResults.activeType === 'category' ? initialResults.continue : 0
+		page: initialResults.activeType === 'page' ? initialResults.continue : 0
 	},
 
 	pending: {
 		bitmap: false,
 		audio: false,
 		video: false,
-		category: false
+		page: false
 	},
 
 	filterValues: {
 		bitmap: {},
 		audio: {},
 		video: {},
-		category: {},
+		page: {},
 		other: {}
 	}
 };

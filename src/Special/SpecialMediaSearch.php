@@ -57,6 +57,8 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 	 * @inheritDoc
 	 */
 	public function execute( $subPage ) {
+		global $wgMediaInfoMediaSearchPageNamespaces;
+
 		OutputPage::setupOOUI();
 
 		// url & querystring params of this page
@@ -110,16 +112,30 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 					'isVideo' => true,
 				],
 				[
-					'type' => 'category',
-					'label' => $this->msg( 'wikibasemediainfo-special-mediasearch-tab-category' )->text(),
-					'isActive' => $type === 'category',
-					'isCategory' => true,
+					'type' => 'page',
+					'label' => $this->msg( 'wikibasemediainfo-special-mediasearch-tab-page' )->text(),
+					'isActive' => $type === 'page',
+					'isPage' => true,
 				],
 			],
 			'results' => array_map( function ( $result ) {
 				$title = Title::newFromDBkey( $result['title'] );
 				$filename = $title ? $title->getText() : $result['title'];
-				return $result + [ 'name' => $filename ];
+				$result += [ 'name' => $filename ];
+				if ( array_key_exists( 'categoryinfo', $result ) ) {
+					$categoryInfoParams = [
+						$result['categoryinfo']['size'],
+						$result['categoryinfo']['subcats'],
+						$result['categoryinfo']['files']
+					];
+					$result += [
+						'categoryInfoText' => $this->msg(
+							'wikibasemediainfo-special-mediasearch-category-info',
+							$categoryInfoParams
+						)->parse()
+					];
+				}
+				return $result;
 			}, $results ),
 			'continue' => $continue,
 			'hasMore' => $continue !== null,
@@ -139,6 +155,7 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 		$this->getOutput()->addJsConfigVars( [
 			'wbmiInitialSearchResults' => $data,
 			'wbmiTotalSiteImages' => $totalSiteImages,
+			'wbmiMediaSearchPageNamespaces' => $wgMediaInfoMediaSearchPageNamespaces
 		] );
 
 		return parent::execute( $subPage );
@@ -153,6 +170,8 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 	 * @throws \MWException
 	 */
 	protected function search( $term, $type = null, $limit = null, $continue = null ): array {
+		global $wgMediaInfoMediaSearchPageNamespaces;
+
 		Assert::parameterType( 'string', $term, '$term' );
 		Assert::parameterType( 'string|null', $type, '$type' );
 		Assert::parameterType( 'integer|null', $limit, '$limit' );
@@ -164,17 +183,17 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 
 		$langCode = $this->getContext()->getLanguage()->getCode();
 
-		if ( $type === 'category' ) {
+		if ( $type === 'page' ) {
 			$request = new FauxRequest( [
 				'format' => 'json',
 				'uselang' => $langCode,
 				'action' => 'query',
 				'generator' => 'search',
 				'gsrsearch' => $term,
-				'gsrnamespace' => NS_CATEGORY,
+				'gsrnamespace' => $wgMediaInfoMediaSearchPageNamespaces,
 				'gsrlimit' => $limit,
 				'gsroffset' => $continue ?: 0,
-				'prop' => 'info',
+				'prop' => 'info|categoryinfo',
 				'inprop' => 'url',
 			] );
 		} else {

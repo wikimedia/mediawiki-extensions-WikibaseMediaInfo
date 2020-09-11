@@ -83,8 +83,7 @@
 	},
 	"MessagesDirs": {
 		"WikibaseMediaInfo": [
-			"i18n",
-			"i18n/api"
+			"i18n"
 		]
 	},
 	"ResourceModules": {
@@ -553,12 +552,6 @@
 		"wbmi-cc0-confirmed": 0,
 		"wbmi-wikidata-link-notice-dismissed": 0,
 		"wbmi-search-suggestions": 1
-	},
-	"APIListModules": {
-		"mediasearch": {
-			"class": "Wikibase\\MediaInfo\\Api\\ApiQueryMediaSearch",
-			"factory": "Wikibase\\MediaInfo\\Api\\ApiQueryMediaSearch::factory"
-		}
 	},
 	"SpecialPages": {
 		"MediaSearch": "Wikibase\\MediaInfo\\Special\\SpecialMediaSearch"

@@ -186,11 +186,11 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 				'format' => 'json',
 				'uselang' => $langCode,
 				'action' => 'query',
-				'generator' => 'mediasearch',
-				'gmssearch' => $term,
-				'gmsrawsearch' => $filetype ? "filetype:$filetype" : '',
-				'gmslimit' => $limit,
-				'gmscontinue' => $continue,
+				'generator' => 'search',
+				'gsrsearch' => $term . ( $filetype ? " filetype:$filetype" : '' ),
+				'gsrnamespace' => NS_FILE,
+				'gsrlimit' => $limit,
+				'gsroffset' => $continue ?: 0,
 				'prop' => 'info|imageinfo|pageterms',
 				'inprop' => 'url',
 				'iiprop' => 'url|size|mime',
@@ -215,7 +215,7 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 		// $response = json_decode( $data, true ) ?: [];
 
 		$results = array_values( $response['query']['pages'] ?? [] );
-		$continue = $response['continue']['gmscontinue'] ?? $response['continue']['gsroffset'] ?? null;
+		$continue = $response['continue']['gsroffset'] ?? null;
 
 		uasort( $results, function ( $a, $b ) {
 			return $a['index'] <=> $b['index'];

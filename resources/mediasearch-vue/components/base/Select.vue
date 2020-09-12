@@ -111,7 +111,6 @@ module.exports = {
 
 	data: function () {
 		return {
-			currentSelection: this.label,
 			showMenu: false,
 			icons: icons,
 			activeItemIndex: -1,
@@ -120,6 +119,17 @@ module.exports = {
 	},
 
 	computed: {
+		/**
+		 * @return {string} The user-visible label for the current selection
+		 */
+		currentSelection: function () {
+			if ( this.selectedItemIndex === -1 ) {
+				return this.label;
+			} else {
+				return this.items[ this.selectedItemIndex ].label;
+			}
+		},
+
 		/**
 		 * @return {Object}
 		 */
@@ -202,7 +212,7 @@ module.exports = {
 		 * @return {void}
 		 */
 		onEnter: function () {
-			var label, value, keys;
+			var value, keys;
 
 			// If the menu is hidden, show it.
 			if ( !this.showMenu ) {
@@ -228,7 +238,6 @@ module.exports = {
 				typeof this.items[ 0 ] === 'string'
 			) {
 				// Handle array of strings.
-				label = this.items[ this.activeItemIndex ];
 				value = this.items[ this.activeItemIndex ];
 			} else if (
 				Array.isArray( this.items ) &&
@@ -236,16 +245,13 @@ module.exports = {
 				typeof this.items[ 0 ] === 'object'
 			) {
 				// Handle array of objects.
-				label = this.items[ this.activeItemIndex ].label;
 				value = this.items[ this.activeItemIndex ].value;
 			} else if ( typeof this.items === 'object' ) {
 				// Handle object.
 				keys = Object.keys( this.items );
-				label = this.items[ keys[ this.activeItemIndex ] ];
 				value = keys[ this.activeItemIndex ];
 			}
 
-			this.currentSelection = label;
 			this.selectedItemIndex = this.activeItemIndex;
 			this.$emit( 'select', value );
 			this.toggleMenu( false );
@@ -263,7 +269,6 @@ module.exports = {
 		onSelect: function ( index, item ) {
 			this.activeItemIndex = index;
 			this.selectedItemIndex = index;
-			this.currentSelection = item.label;
 			this.$emit( 'select', item.value );
 			this.toggleMenu( false );
 		},
@@ -314,12 +319,15 @@ module.exports = {
 			}
 
 			this.showMenu = show;
-		}
-	},
+		},
 
-	created: function () {
-		if ( this.selectedItemIndex > -1 ) {
-			this.currentSelection = this.items[ this.selectedItemIndex ].label;
+		/**
+		 * Reset the component to initial values for selection index and
+		 * user-visible label
+		 */
+		reset: function () {
+			this.selectedItemIndex = this.initialSelectedItemIndex;
+			this.activeItemIndex = -1;
 		}
 	}
 };

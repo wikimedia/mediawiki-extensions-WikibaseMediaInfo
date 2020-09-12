@@ -94,5 +94,22 @@ module.exports = {
 	 */
 	removeFilterValue: function ( state, payload ) {
 		Vue.delete( state.filterValues[ payload.mediaType ], payload.filterType );
+	},
+
+	/**
+	 * Reset all filters for all media types to empty values
+	 *
+	 * @param {Object} state
+	 */
+	resetFilters: function ( state ) {
+		var mediaTypes = Object.keys( state.filterValues );
+
+		mediaTypes.forEach( function ( mediaType ) {
+			var activeFiltersForMediaType = Object.keys( state.filterValues[ mediaType ] );
+
+			activeFiltersForMediaType.forEach( function ( filterType ) {
+				Vue.delete( state.filterValues[ mediaType ], filterType );
+			} );
+		} );
 	}
 };

@@ -1,0 +1,12 @@
+{
+	"@metadata": {
+		"authors": [
+			"Movses"
+		]
+	},
+	"apihelp-query+mediasearch-summary": "Пошук медіа-файлів",
+	"apihelp-query+mediasearch-example": "Пошук медіа за <kbd>test</kbd>.",
+	"apihelp-query+mediasearch-param-search": "Пошук тексту",
+	"apihelp-query+mediasearch-param-limit": "Максимальна кількість результатів",
+	"apihelp-query+mediasearch-param-continue": "Зміщення, з якого продовжити пошук"
+}

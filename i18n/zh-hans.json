@@ -3,6 +3,7 @@
 		"authors": [
 			"A Chinese Wikipedian",
 			"A Retired User",
+			"AYZ04",
 			"Angrydog001",
 			"Liuxinyu970226",
 			"Nadine Siak",
@@ -85,6 +86,9 @@
 	"wikibasemediainfo-special-mediasearch-filter-size-medium": "中等",
 	"wikibasemediainfo-special-mediasearch-filter-size-large": "较大",
 	"wikibasemediainfo-special-mediasearch-filter-file-type-any": "所有文件类型",
+	"wikibasemediainfo-special-mediasearch-filter-sort-label": "排序方式：",
+	"wikibasemediainfo-special-mediasearch-filter-sort-default": "相关度",
+	"wikibasemediainfo-special-mediasearch-filter-sort-popularity": "人气度",
 	"wikibasemediainfo-special-mediasearch-no-results": "我们没有找到任何结果",
 	"wikibasemediainfo-special-mediasearch-clear-title": "移除",
 	"wikibasemediainfo-special-mediasearch-load-more-results": "加载更多"

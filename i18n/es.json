@@ -97,6 +97,10 @@
 	"wikibasemediainfo-special-mediasearch-filter-size-medium": "Mediano",
 	"wikibasemediainfo-special-mediasearch-filter-size-large": "Grande",
 	"wikibasemediainfo-special-mediasearch-filter-file-type-any": "Todos los tipos de archivo",
+	"wikibasemediainfo-special-mediasearch-filter-sort-label": "Ordenar por:",
+	"wikibasemediainfo-special-mediasearch-filter-sort-default": "Relevancia",
+	"wikibasemediainfo-special-mediasearch-filter-sort-recency": "Novedad",
+	"wikibasemediainfo-special-mediasearch-filter-sort-popularity": "Popularidad",
 	"wikibasemediainfo-special-mediasearch-no-results": "No se encontró ningún resultado",
 	"wikibasemediainfo-special-mediasearch-load-more-results": "Cargar más",
 	"wikibasemediainfo-special-mediasearch-quickview-button-text": "Más detalles"

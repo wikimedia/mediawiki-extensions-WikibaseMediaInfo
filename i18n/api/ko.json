@@ -1,0 +1,9 @@
+{
+	"@metadata": {
+		"authors": [
+			"Ykhwong"
+		]
+	},
+	"apihelp-query+mediasearch-summary": "미디어 파일 검색",
+	"apihelp-query+mediasearch-param-limit": "최대 결과 수"
+}

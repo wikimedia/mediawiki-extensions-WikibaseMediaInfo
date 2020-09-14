@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": []
+	},
+	"apihelp-query+mediasearch-summary": "{{doc-apihelp-summary|query+mediasearch}}",
+	"apihelp-query+mediasearch-example": "{{doc-apihelp-example|query+mediasearch}}.",
+	"apihelp-query+mediasearch-param-search": "{{doc-apihelp-param|query+mediasearch|search}}",
+	"apihelp-query+mediasearch-param-rawsearch": "{{doc-apihelp-param|query+mediasearch|rawsearch}}",
+	"apihelp-query+mediasearch-param-limit": "{{doc-apihelp-param|query+mediasearch|limit}}",
+	"apihelp-query+mediasearch-param-continue": "{{doc-apihelp-param|query+mediasearch|continue}}"
+}

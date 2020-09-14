@@ -1,0 +1,13 @@
+{
+	"@metadata": {
+		"authors": [
+			"Fulup"
+		]
+	},
+	"apihelp-query+mediasearch-summary": "Klask restroù media",
+	"apihelp-query+mediasearch-example": "Klask mediaoù evit <kbd>test</kbd>.",
+	"apihelp-query+mediasearch-param-search": "Klask an termen",
+	"apihelp-query+mediasearch-param-rawsearch": "Reked klask kriz, ouzhpenn an termen klasket (arabat klask pelloc'h, talvoudus evit ouzhpennañ siloù dibar, h.a.)",
+	"apihelp-query+mediasearch-param-limit": "Niver brasañ a zisoc'hoù",
+	"apihelp-query+mediasearch-param-continue": "Rikladur da genderc'hel da glask adalek dezhañ"
+}

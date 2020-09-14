@@ -1,8 +1,10 @@
 {
 	"@metadata": {
 		"authors": [
-			"GabiBil"
+			"GabiBil",
+			"NGC 54"
 		]
 	},
-	"wikibasemediainfo-precision-input-label": "Precizie"
+	"wikibasemediainfo-precision-input-label": "Precizie",
+	"wikibasemediainfo-special-mediasearch-quickview-button-text": "Mai multe detalii"
 }

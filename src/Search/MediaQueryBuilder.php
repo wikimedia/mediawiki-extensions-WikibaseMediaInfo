@@ -449,7 +449,7 @@ class MediaQueryBuilder extends FullTextQueryStringQueryBuilder {
 			// takes into account additional factors such as popularity of
 			// the page) and the naive term frequency to calculate how relevant
 			// the results are relative to one another
-			$relativeOrder = 1 - $i / count( $matches );
+			$relativeOrder = 1 / ( $i + 1 );
 			$itemIds[$match['title']] = ( $relativeOrder + $maxTermFrequency ) / 2;
 		}
 

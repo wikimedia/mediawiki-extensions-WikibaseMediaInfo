@@ -202,7 +202,7 @@
                                 "match": {
                                     "statement_keywords": {
                                         "query": "P999=Q2",
-                                        "boost": 0.83333333333333337
+                                        "boost": 0.75
                                     }
                                 }
                             },

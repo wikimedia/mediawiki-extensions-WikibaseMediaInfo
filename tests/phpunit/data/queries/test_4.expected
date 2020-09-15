@@ -216,7 +216,7 @@
                                 "match": {
                                     "statement_keywords": {
                                         "query": "P1=Q2",
-                                        "boost": 0.83333333333333337
+                                        "boost": 0.75
                                     }
                                 }
                             },
@@ -224,7 +224,7 @@
                                 "match": {
                                     "statement_keywords": {
                                         "query": "P2=Q2",
-                                        "boost": 0.83333333333333337
+                                        "boost": 0.75
                                     }
                                 }
                             },

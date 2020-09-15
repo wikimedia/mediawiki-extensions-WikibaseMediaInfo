@@ -297,6 +297,11 @@ module.exports = {
 		},
 
 		resetCountAndLoadMore: function ( tab ) {
+			// Don't make API requests if the search term is empty
+			if ( this.term === '' ) {
+				return;
+			}
+
 			// Reset the autoload count for the given tab
 			this.autoloadCounter[ tab ] = AUTOLOAD_COUNT;
 

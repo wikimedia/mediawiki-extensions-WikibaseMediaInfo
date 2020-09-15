@@ -33,8 +33,7 @@
 				<!-- Display the available results for each tab -->
 				<search-results
 					:ref="tab"
-					:media-type="tab"
-					:enable-quick-view="enableQuickView">
+					:media-type="tab">
 				</search-results>
 
 				<!-- Loading indicator if results are still pending -->
@@ -133,10 +132,6 @@ module.exports = {
 	data: function () {
 		return {
 			currentTab: url.query.type || '',
-			// temporary feature flag for QuickView feature: ?quickview=true
-			// params must be present in URL; the actual value of the param
-			// doesn't matter, just provide something to enable
-			enableQuickView: !!url.query.quickview,
 
 			// Object with keys corresponding to each tab;
 			// values are integers; set in the created() hook

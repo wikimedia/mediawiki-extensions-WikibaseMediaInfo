@@ -63,10 +63,6 @@ module.exports = {
 		mediaType: {
 			type: String,
 			required: true
-		},
-
-		enableQuickView: {
-			type: Boolean
 		}
 	},
 
@@ -123,13 +119,7 @@ module.exports = {
 		 * @param {number} pageid
 		 * @param {string} originalUrl
 		 */
-		showDetails: function ( pageid, originalUrl ) {
-			// Do not show the Quickview unless the feature has been enabled
-			if ( !this.enableQuickView ) {
-				window.open( originalUrl, '_blank' );
-				return;
-			}
-
+		showDetails: function ( pageid ) {
 			// @TODO show a placeholder Quickview UI immediately, and then
 			// replace with the real data as soon as the request has completed
 			this.fetchDetails( pageid ).then( function ( response ) {

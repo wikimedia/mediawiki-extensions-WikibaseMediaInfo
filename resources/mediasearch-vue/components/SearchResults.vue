@@ -40,10 +40,11 @@
  * result, including some additional data fetched from the API.
  */
 var mapState = require( 'vuex' ).mapState,
-	ImageResult = require( './ImageResult.vue' ),
-	AudioResult = require( './AudioResult.vue' ),
-	VideoResult = require( './VideoResult.vue' ),
-	PageResult = require( './PageResult.vue' ),
+	ImageResult = require( './results/ImageResult.vue' ),
+	AudioResult = require( './results/AudioResult.vue' ),
+	VideoResult = require( './results/VideoResult.vue' ),
+	PageResult = require( './results/PageResult.vue' ),
+	OtherResult = require( './results/OtherResult.vue' ),
 	QuickView = require( './QuickView.vue' ),
 	api = new mw.Api();
 
@@ -56,6 +57,7 @@ module.exports = {
 		'video-result': VideoResult,
 		'audio-result': AudioResult,
 		'page-result': PageResult,
+		'other-result': OtherResult,
 		'quick-view': QuickView
 	},
 
@@ -89,12 +91,8 @@ module.exports = {
 		resultComponent: function () {
 			if ( this.mediaType === 'bitmap' ) {
 				return 'image-result';
-			} else if ( this.mediaType === 'video' ) {
-				return 'video-result';
-			} else if ( this.mediaType === 'audio' ) {
-				return 'audio-result';
 			} else {
-				return 'page-result';
+				return this.mediaType + '-result';
 			}
 		},
 

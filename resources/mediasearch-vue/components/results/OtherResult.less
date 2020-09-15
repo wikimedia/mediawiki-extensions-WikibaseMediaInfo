@@ -1,0 +1,26 @@
+@import 'mediawiki.mixins';
+@import '../../../mediainfo-variables.less';
+
+.wbmi-other-result {
+	.flex-display();
+	margin-bottom: @wbmi-spacing-base-px * 1.5;
+
+	h3,
+	p {
+		margin: 0;
+		padding: 0;
+	}
+
+	.wbmi-image-result {
+		.flex( 0, 0, auto, 0 );
+		margin: 0 @wbmi-spacing-base-px 0 0;
+	}
+
+	&__meta {
+		color: @color-base--subtle;
+	}
+
+	&__extension {
+		font-weight: bold;
+	}
+}

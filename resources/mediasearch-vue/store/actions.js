@@ -12,11 +12,21 @@ var LIMIT = 40,
  * @return {string}
  */
 function getMediaFilters( mediaType, filterValues ) {
-	var raw = 'filetype:' + mediaType;
+	var raw;
 
-	// For the Images tab, we want bitmap and drawing file types.
-	if ( mediaType === 'bitmap' ) {
-		raw += '|drawing';
+	// Start with a filter based on media type(s).
+	switch ( mediaType ) {
+		case 'bitmap':
+			raw = 'filetype:bitmap|drawing';
+			break;
+
+		case 'other':
+			raw = 'filetype:multimedia|office|archive|3d';
+			break;
+
+		default:
+			raw = 'filetype:' + mediaType;
+			break;
 	}
 
 	function addFilter( filterType, paramKey ) {
@@ -53,7 +63,7 @@ module.exports = {
 	 *
 	 * @param {Object} context
 	 * @param {Object} options
-	 * @param {string} options.type bitmap / page / audio / video
+	 * @param {string} options.type bitmap / page / audio / video / other
 	 * @param {string} options.term search term
 	 * @return {jQuery.Deferred}
 	 */
@@ -71,6 +81,7 @@ module.exports = {
 				inprop: 'url'
 			},
 			filters,
+			urlWidth,
 			request;
 
 		if ( options.type === 'page' ) {
@@ -83,10 +94,20 @@ module.exports = {
 				params.gsrsearch += ' ' + filters;
 			}
 
+			switch ( options.type ) {
+				case 'video':
+					urlWidth = 200;
+					break;
+
+				case 'other':
+					urlWidth = 120;
+					break;
+			}
+
 			params.gsrnamespace = 6; // NS_FILE
 			params.iiprop = 'url|size|mime';
 			params.iiurlheight = options.type === 'bitmap' ? 180 : undefined;
-			params.iiurlwidth = options.type === 'video' ? 200 : undefined;
+			params.iiurlwidth = urlWidth;
 			params.wbptterms = 'label';
 			params.mediasearch = true; // @todo this is temporary to force the use of the mediasearch profile
 		}

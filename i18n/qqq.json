@@ -128,6 +128,7 @@
 	"wikibasemediainfo-special-mediasearch-tab-audio": "Label text for tab with audio search results\n{{identical|Audio}}",
 	"wikibasemediainfo-special-mediasearch-tab-video": "Label text for tab with video search results",
 	"wikibasemediainfo-special-mediasearch-tab-page": "Label text for tab with categories and pages search results",
+	"wikibasemediainfo-special-mediasearch-tab-other": "Label text for tab with other file results",
 	"wikibasemediainfo-special-mediasearch-filter-size": "Label text for dropdown to filter image search results by size",
 	"wikibasemediainfo-special-mediasearch-filter-size-any": "Label text for option to filter media search results by any size",
 	"wikibasemediainfo-special-mediasearch-filter-size-small": "Label text for option to filter media search results by small sizes",

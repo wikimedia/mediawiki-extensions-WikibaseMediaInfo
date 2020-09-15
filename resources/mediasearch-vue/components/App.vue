@@ -154,7 +154,7 @@ module.exports = {
 	] ), {
 
 		/**
-		 * @return {string[]} [ 'bitmap', 'video', 'audio', 'page' ]
+		 * @return {string[]} [ 'bitmap', 'video', 'audio', 'page', 'other' ]
 		 */
 		tabs: function () {
 			return Object.keys( this.results );

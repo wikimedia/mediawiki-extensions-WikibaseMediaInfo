@@ -29,8 +29,8 @@
  * Audio-specific search result layout. Implements the general searchResult
  * mixin as well as the "time-based" result mixin.
  */
-var searchResult = require( '../mixins/searchResult.js' ),
-	searchResultTimeBased = require( '../mixins/searchResultTimeBased.js' );
+var searchResult = require( '../../mixins/searchResult.js' ),
+	searchResultTimeBased = require( '../../mixins/searchResultTimeBased.js' );
 
 // @vue/component
 module.exports = {

@@ -3,7 +3,7 @@
 	<div class="wbmi-media-search-quick-view" :class="rootClasses">
 		<header class="wbmi-media-search-quick-view__header">
 			<img v-if="isBitmap"
-				:src="thumbnail"
+				:src="previewImage"
 				:alt="title"
 				class="wbmi-media-search-quick-view__thumbnail
 					wbmi-media-search-quick-view__thumbnail--image">
@@ -192,6 +192,16 @@ module.exports = {
 		 */
 		thumbnail: function () {
 			return this.imageinfo[ 0 ].thumburl;
+		},
+
+		/**
+		 * A larger thumbnail image, generated with mw.util.parseImageUrl
+		 * https://doc.wikimedia.org/mediawiki-core/master/js/#!/api/mw.util-method-parseImageUrl
+		 *
+		 * @return {string|null}
+		 */
+		previewImage: function () {
+			return mw.util.parseImageUrl( this.thumbnail ).resizeUrl( 640 );
 		},
 
 		/**

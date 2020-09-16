@@ -38,16 +38,6 @@ module.exports = {
 			required: true
 		},
 
-		pageid: {
-			type: Number,
-			required: true
-		},
-
-		index: {
-			type: Number,
-			required: true
-		},
-
 		categoryinfo: {
 			type: Object,
 			default: function () {

@@ -22,8 +22,8 @@
  * mixin and includes some custom computed properties. aspectRatio is not
  * currently used but may be relevant in the future for layout.
  */
-var searchResult = require( '../mixins/searchResult.js' ),
-	WbmiImage = require( './base/Image.vue' );
+var searchResult = require( '../../mixins/searchResult.js' ),
+	WbmiImage = require( './../base/Image.vue' );
 
 // @vue/component
 module.exports = {

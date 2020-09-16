@@ -38,8 +38,8 @@
  * mixin as well as the "time-based" result mixin. Also includes custom
  * computed properties for resolution and mime type.
  */
-var searchResult = require( '../mixins/searchResult.js' ),
-	searchResultTimeBased = require( '../mixins/searchResultTimeBased.js' );
+var searchResult = require( '../../mixins/searchResult.js' ),
+	searchResultTimeBased = require( '../../mixins/searchResultTimeBased.js' );
 
 // @vue/component
 module.exports = {

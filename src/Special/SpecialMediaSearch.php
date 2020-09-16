@@ -117,6 +117,12 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 					'isActive' => $type === 'page',
 					'isPage' => true,
 				],
+				[
+					'type' => 'other',
+					'label' => $this->msg( 'wikibasemediainfo-special-mediasearch-tab-other' )->text(),
+					'isActive' => $type === 'other',
+					'isOther' => true,
+				],
 			],
 			'results' => array_map( function ( $result ) {
 				$title = Title::newFromDBkey( $result['title'] );
@@ -201,6 +207,22 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 			if ( $type === 'bitmap' ) {
 				$filetype .= '|drawing';
 			}
+			if ( $type === 'other' ) {
+				$filetype = 'multimedia|office|archive|3d';
+			}
+
+			switch ( $type ) {
+				case 'video':
+					$width = 200;
+				break;
+
+				case 'other':
+					$width = 120;
+				break;
+
+				default:
+					$width = null;
+			}
 
 			$request = new FauxRequest( [
 				'format' => 'json',
@@ -215,7 +237,7 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 				'inprop' => 'url',
 				'iiprop' => 'url|size|mime',
 				'iiurlheight' => $type === 'bitmap' ? 180 : null,
-				'iiurlwidth' => $type === 'video' ? 200 : null,
+				'iiurlwidth' => $width,
 				'wbptterms' => 'label',
 			] );
 		}

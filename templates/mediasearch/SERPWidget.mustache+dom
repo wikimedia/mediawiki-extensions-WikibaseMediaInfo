@@ -189,6 +189,35 @@
 									</div>
 								{{/results}}
 							{{/isPage}}
+
+							{{#isOther}}
+								{{#results}}
+									<div class="wbmi-other-result">
+										<a class="wbmi-image-result"
+											href="{{canonicalurl}}"
+											title="{{title}}"
+											style="width: {{imageinfo.0.thumbwidth}}px; height: {{imageinfo.0.thumbheight}}px;"
+											target="_blank"
+										>
+											<img
+												src="{{imageinfo.0.thumburl}}"
+												alt="{{name}}"
+												loading="lazy"
+											>
+										</a>
+										<div class="wbmi-other-result__text">
+											<h3>
+												<a href="{{canonicalurl}}"
+													target="_blank"
+													title="{{title}}"
+												>
+													{{ name }}
+												</a>
+											</h3>
+										</div>
+									</div>
+								{{/results}}
+							{{/isOther}}
 						</div>
 					</div>
 

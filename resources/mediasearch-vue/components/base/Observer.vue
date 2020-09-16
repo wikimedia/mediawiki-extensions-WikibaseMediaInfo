@@ -43,6 +43,10 @@ module.exports = {
 			if ( entry && entry.isIntersecting ) {
 				this.$emit( 'intersect' );
 			}
+
+			if ( entry && !entry.isIntersecting ) {
+				this.$emit( 'hide' );
+			}
 		}
 
 		this.observer = new IntersectionObserver(

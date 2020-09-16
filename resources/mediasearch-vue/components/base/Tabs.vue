@@ -1,6 +1,6 @@
 <template>
 	<div class="wbmi-tabs">
-		<div class="wbmi-tabs__header">
+		<div class="wbmi-tabs__header" :class="headerClasses">
 			<div
 				class="wbmi-tabs__tabs-list"
 				role="tablist"
@@ -11,7 +11,7 @@
 				@keydown.right="moveForward"
 				@keydown.down.prevent="moveForward"
 			>
-				<div v-for="tab in tabs"
+				<div v-for="( tab, index ) in tabs"
 					:id="tab.id + '-label'"
 					:key="tab.title"
 					:class="determineTabLabelClasses( tab )"
@@ -23,6 +23,11 @@
 					@keyup.enter="selectTab( tab.name )"
 				>
 					{{ tab.title }}
+					<observer
+						v-if="isLastTab( index )"
+						@intersect="removeGradientClass"
+						@hide="addGradientClass"
+					></observer>
 				</div>
 			</div>
 		</div>
@@ -34,7 +39,8 @@
 </template>
 
 <script>
-var Vue = require( 'vue' ); // Vue is imported here for type definition
+var Vue = require( 'vue' ), // Vue is imported here for type definition
+	Observer = require( './Observer.vue' );
 
 /**
  * A group of tabs with a tab menu.
@@ -50,6 +56,10 @@ var Vue = require( 'vue' ); // Vue is imported here for type definition
 module.exports = {
 	name: 'WbmiTabs',
 
+	components: {
+		observer: Observer
+	},
+
 	props: {
 		active: {
 			type: String,
@@ -60,11 +70,18 @@ module.exports = {
 	data: function () {
 		return {
 			tabs: {},
-			currentTabName: null
+			currentTabName: null,
+			hasGradient: false
 		};
 	},
 
 	computed: {
+		headerClasses: function () {
+			return {
+				'wbmi-tabs__header--gradient': this.hasGradient
+			};
+		},
+
 		currentTabId: function () {
 			return this.tabs[ this.currentTabName ] ?
 				this.tabs[ this.currentTabName ].id + '-label' :
@@ -156,6 +173,30 @@ module.exports = {
 			// If no active tab was passed in as a prop, default to first one.
 			this.currentTabName = this.active ? this.active : Object.keys( this.tabs )[ 0 ];
 			this.setTabState( this.currentTabName );
+		},
+
+		/**
+		 * @param {string} mediaType bitmap, audio, video, etc.
+		 * @return {boolean}
+		 */
+		isLastTab: function ( mediaType ) {
+			var tabKeys = Object.keys( this.tabs );
+			return mediaType === tabKeys[ tabKeys.length - 1 ];
+		},
+
+		/**
+		 * When final tab is out of view, add class that will add a gradient to
+		 * indicate to the user that they can horizontally scroll.
+		 */
+		addGradientClass: function () {
+			this.hasGradient = true;
+		},
+
+		/**
+		 * When final tab is in view, don't show the gradient.
+		 */
+		removeGradientClass: function () {
+			this.hasGradient = false;
 		}
 	},
 

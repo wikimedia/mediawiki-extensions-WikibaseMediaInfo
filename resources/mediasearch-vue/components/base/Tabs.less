@@ -9,10 +9,45 @@
 		.flex-display();
 		align-items: flex-end;
 		justify-content: space-between;
+
+		// Add gradient to suggest to users that they can scroll horizontally to
+		// see more tabs.
+		&--gradient {
+			position: relative;
+
+			&:after {
+				.horizontal-gradient( rgba( 255, 255, 255, 0), rgba( 255, 255, 255, 1), 85%, 100% );
+				background-color: transparent;
+				content: '';
+				height: 100%;
+				left: 0;
+				pointer-events: none;
+				position: absolute;
+				top: 0;
+				width: 100%;
+				z-index: 1;
+			}
+		}
 	}
 
+	// When the viewport width is narrower than the tab list, horizontal
+	// scrolling is activated via overflow-x (with the scrollbar hidden).
 	&__tabs-list {
 		.flex-display();
+		// Use momentum-based scrolling in iOS.
+		-webkit-overflow-scrolling: touch;
+		// Auto-hide scrollbar in IE/Edge.
+		-ms-overflow-style: -ms-autohiding-scrollbar;
+		// Add horizontal scroll when needed.
+		overflow-x: auto;
+		// Hide scrollbar in Firefox.
+		scrollbar-width: none;
+
+		// Hide scrollbar in Safari.
+		&::-webkit-scrollbar {
+			-webkit-appearance: none;
+			display: none;
+		}
 
 		&:focus {
 			outline: 0;
@@ -30,6 +65,8 @@
 			margin: @wbmi-padding-vertical-base @wbmi-padding-vertical-base 0 0;
 			padding: @wbmi-padding-vertical-base @wbmi-padding-horizontal-base;
 			transition: color 100ms, box-shadow 100ms;
+			// Don't wrap text since we're using horizontal scrolling.
+			white-space: nowrap;
 
 			&:hover,
 			&.is-active {

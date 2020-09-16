@@ -3,7 +3,9 @@
 	<div class="wbmi-media-search-quick-view" :class="rootClasses">
 		<header class="wbmi-media-search-quick-view__header">
 			<img v-if="isBitmap"
-				:src="previewImage"
+				:srcset="srcset"
+				:sizes="sizes"
+				:src="thumbnail"
 				:alt="title"
 				class="wbmi-media-search-quick-view__thumbnail
 					wbmi-media-search-quick-view__thumbnail--image">
@@ -108,7 +110,9 @@
 
 <script>
 var WbmiIcon = require( './base/Icon.vue' ),
-	icons = require( '../../../lib/icons.js' );
+	icons = require( '../../../lib/icons.js' ),
+	PREVIEW_SIZES = [ 640, 800, 1200, 1600 ], // Pre-defined set of thumbnail image width values
+	MAX_SIZE = 2000;
 
 // Helper function to check for date validity
 function isValidDate( d ) {
@@ -200,13 +204,58 @@ module.exports = {
 		},
 
 		/**
-		 * A larger thumbnail image, generated with mw.util.parseImageUrl
+		 * Progressively larger thumbnail images, generated with mw.util.parseImageUrl
 		 * https://doc.wikimedia.org/mediawiki-core/master/js/#!/api/mw.util-method-parseImageUrl
 		 *
-		 * @return {string|null}
+		 * @return {string}
 		 */
-		previewImage: function () {
-			return mw.util.parseImageUrl( this.thumbnail ).resizeUrl( 640 );
+		srcset: function () {
+			var attributeString = '';
+
+			if ( this.isDialog ) {
+				// For Dialog-mode quickview, the image can theoretically become
+				// any size (some users enable mobile skin even when using large
+				// desktop monitors). So we should generate a series of image
+				// URLs to attempt to accommodate most sizes and concatenate a
+				// string to use as the attribute value.
+				PREVIEW_SIZES.forEach( function ( size ) {
+					var url = mw.util.parseImageUrl( this.thumbnail ).resizeUrl( size );
+					attributeString += url + ' ' + size + 'w,\n';
+				}.bind( this ) );
+				// Add one final item to the list representing the maximum size.
+				// If the underlying image file is smaller than the requested size,
+				// parseImageUrl will simply return a link to the full-size image.
+				attributeString += mw.util.parseImageUrl( this.thumbnail ).resizeUrl( MAX_SIZE ) + ' ' + MAX_SIZE + 'w';
+			} else {
+				// For non-dialog quickview, the element will remain confined to
+				// a sidebar and will rarely be wider ~640px (would require a
+				// massive screen)
+				attributeString += mw.util.parseImageUrl( this.thumbnail ).resizeUrl( PREVIEW_SIZES[ 0 ] ) + ' ' + PREVIEW_SIZES[ 0 ] + 'w';
+			}
+
+			return attributeString;
+		},
+
+		/**
+		 * @return {string}
+		 */
+		sizes: function () {
+			var attributeString = '';
+
+			if ( this.isDialog ) {
+				// For dialog mode, use an image size that matches the width of
+				// the viewport since the Quickview is full-width
+				PREVIEW_SIZES.forEach( function ( size ) {
+					attributeString += '(min-width: ' + size + 'px) ' + size + 'px,\n';
+				} );
+				attributeString += MAX_SIZE + 'px';
+			} else {
+				// For non-dialog mode, the first preview size is all that is
+				// necessary
+				attributeString += PREVIEW_SIZES[ 0 ] + 'px';
+			}
+
+			return attributeString;
 		},
 
 		/**

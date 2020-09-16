@@ -1,17 +1,26 @@
 <template>
-	<div class="wbmi-media-search-filters">
-		<wbmi-select
-			v-for="filter in searchFilters"
-			ref="filters"
-			:key="filter.type"
-			:class="getFilterClasses( filter.type )"
-			:name="filter.type"
-			:items="filter.items"
-			:initial-selected-item-index="0"
-			:prefix="getFilterPrefix( filter.type )"
-			@select="onSelect( $event, filter.type )"
-		>
-		</wbmi-select>
+	<div class="wbmi-media-search-filters-wrapper" :class="rootClasses">
+		<div class="wbmi-media-search-filters">
+			<template v-for="( filter, index ) in searchFilters">
+				<wbmi-select
+					ref="filters"
+					:key="'filter-' + index"
+					:class="getFilterClasses( filter.type )"
+					:name="filter.type"
+					:items="filter.items"
+					:initial-selected-item-index="0"
+					:prefix="getFilterPrefix( filter.type )"
+					@select="onSelect( $event, filter.type )"
+				>
+				</wbmi-select>
+				<wbmi-observer
+					v-if="index === searchFilters.length - 1"
+					:key="'filter-observer-' + index"
+					@intersect="removeGradientClass"
+					@hide="addGradientClass"
+				></wbmi-observer>
+			</template>
+		</div>
 	</div>
 </template>
 
@@ -27,6 +36,7 @@
 var mapState = require( 'vuex' ).mapState,
 	mapMutations = require( 'vuex' ).mapMutations,
 	WbmiSelect = require( './base/Select.vue' ),
+	WbmiObserver = require( './base/Observer.vue' ),
 	SearchFilter = require( '../models/SearchFilter.js' ),
 	filterItems = require( './../data/filterItems.json' ),
 	sortFilterItems = require( './../data/sortFilterItems.json' );
@@ -36,7 +46,8 @@ module.exports = {
 	name: 'SearchFilters',
 
 	components: {
-		'wbmi-select': WbmiSelect
+		'wbmi-select': WbmiSelect,
+		'wbmi-observer': WbmiObserver
 	},
 
 	props: {
@@ -46,9 +57,24 @@ module.exports = {
 		}
 	},
 
+	data: function () {
+		return {
+			hasGradient: false
+		};
+	},
+
 	computed: $.extend( {}, mapState( [
 		'filterValues'
 	] ), {
+		/**
+		 * @return {Object}
+		 */
+		rootClasses: function () {
+			return {
+				'wbmi-media-search-filters-wrapper--gradient': this.hasGradient
+			};
+		},
+
 		/**
 		 * @return {Array} SearchFilter objects for this media type.
 		 */
@@ -136,6 +162,21 @@ module.exports = {
 			}
 
 			return '';
+		},
+
+		/**
+		 * When final filter is out of view, add class that will add a gradient
+		 * to indicate to the user that they can horizontally scroll.
+		 */
+		addGradientClass: function () {
+			this.hasGradient = true;
+		},
+
+		/**
+		 * When final filter is in view, don't show the gradient.
+		 */
+		removeGradientClass: function () {
+			this.hasGradient = false;
 		}
 	} ),
 

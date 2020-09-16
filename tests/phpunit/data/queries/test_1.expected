@@ -69,8 +69,8 @@
         "should": [
             [
                 {
-                    "dis_max": {
-                        "queries": [
+                    "bool": {
+                        "should": [
                             {
                                 "multi_match": {
                                     "query": "some search term",
@@ -133,8 +133,8 @@
                     }
                 },
                 {
-                    "dis_max": {
-                        "queries": [
+                    "bool": {
+                        "should": [
                             {
                                 "multi_match": {
                                     "query": "some search term",

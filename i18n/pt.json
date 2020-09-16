@@ -84,6 +84,5 @@
 	"wikibasemediainfo-search-suggestions-preference-disable-confirm": "Tem a certeza de que pretende remover as sugestões de preenchimento de pesquisa baseadas em dados estruturados (esta configuração pode ser alterada nas [[Special:Preferences#mw-prefsection-searchoptions|preferências]])?",
 	"wikibasemediainfo-special-mediasearch-tab-bitmap": "Imagens",
 	"wikibasemediainfo-special-mediasearch-tab-audio": "Áudio",
-	"wikibasemediainfo-special-mediasearch-tab-video": "Vídeo",
-	"wikibasemediainfo-special-mediasearch-tab-category": "Categorias"
+	"wikibasemediainfo-special-mediasearch-tab-video": "Vídeo"
 }

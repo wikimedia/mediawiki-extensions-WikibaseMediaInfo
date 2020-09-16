@@ -148,5 +148,4 @@
 	"wikibasemediainfo-special-mediasearch-quickview-button-text": "Text for the button to go to the file page in the QuickView panel",
 	"wikibasemediainfo-special-mediasearch-quickview-close-button-text": "Text for the button to close the QuickView panel",
 	"wikibasemediainfo-special-mediasearch-category-info": "Meta information for category results. Parameters:\n* $1 - Number of category members\n* $2 - Number of subcategories\n* $3 - Number of files"
-
 }

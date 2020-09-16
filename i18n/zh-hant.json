@@ -126,7 +126,7 @@
 	"wikibasemediainfo-special-mediasearch-tab-bitmap": "圖片",
 	"wikibasemediainfo-special-mediasearch-tab-audio": "音訊",
 	"wikibasemediainfo-special-mediasearch-tab-video": "影片",
-	"wikibasemediainfo-special-mediasearch-tab-category": "分類",
+	"wikibasemediainfo-special-mediasearch-tab-page": "分類與頁面",
 	"wikibasemediainfo-special-mediasearch-filter-size": "圖片大小",
 	"wikibasemediainfo-special-mediasearch-filter-size-any": "任何圖片大小",
 	"wikibasemediainfo-special-mediasearch-filter-size-small": "小",
@@ -145,5 +145,6 @@
 	"wikibasemediainfo-special-mediasearch-input-placeholder": "搜尋圖片、音訊、影片與更多內容",
 	"wikibasemediainfo-special-mediasearch-load-more-results": "載入更多",
 	"wikibasemediainfo-special-mediasearch-quickview-button-text": "更多詳情",
-	"wikibasemediainfo-special-mediasearch-quickview-close-button-text": "關閉檔案詳情"
+	"wikibasemediainfo-special-mediasearch-quickview-close-button-text": "關閉檔案詳情",
+	"wikibasemediainfo-special-mediasearch-category-info": "$1 {{PLURAL:$1|個成員}} – $2 {{PLURAL:$2|個子分類}}，$3 {{PLURAL:$3|個檔案}}"
 }

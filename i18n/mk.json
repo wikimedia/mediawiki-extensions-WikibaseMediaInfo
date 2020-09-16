@@ -122,7 +122,7 @@
 	"wikibasemediainfo-special-mediasearch-tab-bitmap": "Слики",
 	"wikibasemediainfo-special-mediasearch-tab-audio": "Звук",
 	"wikibasemediainfo-special-mediasearch-tab-video": "Видео",
-	"wikibasemediainfo-special-mediasearch-tab-category": "Категории",
+	"wikibasemediainfo-special-mediasearch-tab-page": "Категории и страници",
 	"wikibasemediainfo-special-mediasearch-filter-size": "Големина на сликата",
 	"wikibasemediainfo-special-mediasearch-filter-size-any": "Сите големини на слики",
 	"wikibasemediainfo-special-mediasearch-filter-size-small": "Мала",
@@ -135,11 +135,12 @@
 	"wikibasemediainfo-special-mediasearch-filter-sort-popularity": "Популарност",
 	"wikibasemediainfo-special-mediasearch-no-results": "Не пронајдов ништо",
 	"wikibasemediainfo-special-mediasearch-no-results-tips": "Пробајте со поопшти поими или проверете дали е добро напишано",
-	"wikibasemediainfo-special-mediasearch-empty-state": "Пребарајте повеќе од <span class=\"wbmi-media-search-empty-state__file-count\">$1</span> {{PLURAL:$1|податотека|податотеки}} {{PLURAL:$1|која е|кои се}} за слободна пренамена",
+	"wikibasemediainfo-special-mediasearch-empty-state": "Пребарајте повеќе од <span class=\"wbmi-media-search-empty-state__file-count\">$1</span> {{PLURAL:$1|податотека|податотеки}} {{PLURAL:$1|која е|кои се}} за слободна пренамена\n\n<span class=\"wbmi-media-search-empty-state__file-count\">$1</span> {{PLURAL:$1|податотека|податотеки}} за слободна пренамена",
 	"wikibasemediainfo-special-mediasearch-clear-title": "Отстрани",
 	"wikibasemediainfo-special-mediasearch-input-label": "Пребарување на слики и снимки",
 	"wikibasemediainfo-special-mediasearch-input-placeholder": "Пребарување на слики, звучни снимки, видеоснимки и повеќе",
 	"wikibasemediainfo-special-mediasearch-load-more-results": "Вчитај уште",
 	"wikibasemediainfo-special-mediasearch-quickview-button-text": "Поподробно",
-	"wikibasemediainfo-special-mediasearch-quickview-close-button-text": "Затвори подробности за податотеката"
+	"wikibasemediainfo-special-mediasearch-quickview-close-button-text": "Затвори подробности за податотеката",
+	"wikibasemediainfo-special-mediasearch-category-info": "$1 {{PLURAL:$1|член|членови}} — $2 {{PLURAL:$2|поткатегорија|поткатегории}}, $3 {{PLURAL:$3|податотека|податотеки}}"
 }

@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"Codenstory",
 			"Jonghaya",
 			"Kwj2772",
 			"Songhee",
@@ -109,7 +110,6 @@
 	"wikibasemediainfo-special-mediasearch-tab-bitmap": "이미지",
 	"wikibasemediainfo-special-mediasearch-tab-audio": "소리",
 	"wikibasemediainfo-special-mediasearch-tab-video": "동영상",
-	"wikibasemediainfo-special-mediasearch-tab-category": "분류",
 	"wikibasemediainfo-special-mediasearch-filter-size": "이미지 크기",
 	"wikibasemediainfo-special-mediasearch-filter-size-any": "모든 이미지 크기",
 	"wikibasemediainfo-special-mediasearch-filter-size-small": "작음",
@@ -118,11 +118,11 @@
 	"wikibasemediainfo-special-mediasearch-filter-file-type-any": "모든 파일 유형",
 	"wikibasemediainfo-special-mediasearch-filter-sort-label": "정렬 기준:",
 	"wikibasemediainfo-special-mediasearch-filter-sort-default": "관련성",
-	"wikibasemediainfo-special-mediasearch-filter-sort-recency": "최근",
+	"wikibasemediainfo-special-mediasearch-filter-sort-recency": "최신",
 	"wikibasemediainfo-special-mediasearch-no-results": "결과를 찾지 못했습니다",
 	"wikibasemediainfo-special-mediasearch-clear-title": "제거",
 	"wikibasemediainfo-special-mediasearch-input-label": "미디어 검색",
 	"wikibasemediainfo-special-mediasearch-input-placeholder": "이미지, 오디오, 비디오 등을 검색합니다",
 	"wikibasemediainfo-special-mediasearch-load-more-results": "더 불러오기",
-	"wikibasemediainfo-special-mediasearch-quickview-button-text": "더 자세한 설명"
+	"wikibasemediainfo-special-mediasearch-quickview-button-text": "자세한 내용"
 }

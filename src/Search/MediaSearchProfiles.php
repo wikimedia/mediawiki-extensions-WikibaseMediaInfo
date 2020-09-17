@@ -8,7 +8,7 @@ return [
 		'builder_factory' => [ \Wikibase\MediaInfo\Search\MediaQueryBuilder::class, 'newFromGlobals' ],
 		'settings' => [
 			'boost' => [
-				'statement' => 5.0,
+				'statement' => 3.0,
 				'caption' => 1.0,
 				'title' => 0.3,
 				'category' => 0.05,
@@ -18,7 +18,6 @@ return [
 				'redirect.title' => 0.27,
 				'suggest' => 0.2,
 				'text' => 0.6,
-				'opening_text' => 0.5,
 				'non-file_namespace_boost' => 5.0,
 			],
 			'decay' => [

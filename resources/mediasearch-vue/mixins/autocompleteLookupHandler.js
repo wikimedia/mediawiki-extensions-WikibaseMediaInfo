@@ -42,8 +42,17 @@ module.exports = {
 				return;
 			}
 
-			words = trimmedInput.match( /[^\s]+/g ).length;
-			inputRegex = new RegExp( '^' + new Array( words + 1 ).join( '[^\\s]+\\s*' ), 'i' );
+			if ( 'unicode' in RegExp.prototype ) {
+				// below could be a regex literal, but eslint fails to parse the `u` flag...
+				// eslint-disable-next-line prefer-regex-literals
+				words = trimmedInput.match( new RegExp( '[\\p{L}\\p{M}\\p{N}\\p{S}]+', 'gu' ) ).length;
+				inputRegex = new RegExp( '^' + new Array( words + 1 ).join( '[\\p{L}\\p{M}\\p{N}\\p{S}]+.*?' ), 'iu' );
+			} else {
+				// if browser doesn't support unicode regexes, fall back to simple
+				// space/punctuation-based word detection
+				words = trimmedInput.match( /[^\s\-.:;,]+/g ).length;
+				inputRegex = new RegExp( '^' + new Array( words + 1 ).join( '[^\\s\\-]+[\\s\\-.:;,]*' ), 'i' );
+			}
 
 			this.doLookupRequest( trimmedInput )
 				.then( function ( results ) {
@@ -58,7 +67,8 @@ module.exports = {
 		 * @return {Array}
 		 */
 		doLookupRequest: function ( input ) {
-			var lastWordRegex = /[^\s]+$/,
+			// eslint-disable-next-line prefer-regex-literals
+			var lastWordRegex = 'unicode' in RegExp.prototype ? new RegExp( '[\\p{L}\\p{M}\\p{N}\\p{S}]+$', 'u' ) : /[^\s\-.:;,]+$/,
 				lastWord = input.match( lastWordRegex ),
 				inputPromise,
 				promises = [],

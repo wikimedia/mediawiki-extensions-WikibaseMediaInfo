@@ -6,6 +6,27 @@
 	background-color: @background-color-framed;
 	padding: @wbmi-padding-vertical-base 0;
 
+	// Use momentum-based scrolling in iOS.
+	-webkit-overflow-scrolling: touch;
+	// Auto-hide scrollbar in IE/Edge.
+	-ms-overflow-style: -ms-autohiding-scrollbar;
+	// On small screens, enable horizontal scrolling.
+	overflow-x: auto;
+	// Hide scrollbar in Firefox.
+	scrollbar-width: none;
+
+	// Hide scrollbar in Safari.
+	&::-webkit-scrollbar {
+		-webkit-appearance: none;
+		display: none;
+	}
+
+	// Unset scroll on larger screens. We shouldn't need to bother resetting
+	// all the scrollbar rules.
+	@media screen and ( min-width: @width-breakpoint-tablet ) {
+		overflow-x: visible;
+	}
+
 	// set an initial height so that, even if there is no content (such
 	// as from the initial page load without filters), it already loads
 	// at the final height and there is no FOUC
@@ -13,6 +34,12 @@
 	align-items: center;
 
 	.wbmi-select {
+		position: static;
+
+		@media screen and ( min-width: @width-breakpoint-tablet ) {
+			position: relative;
+		}
+
 		&__content {
 			background-color: transparent;
 			border: 0;
@@ -43,5 +70,27 @@
 				}
 			}
 		}
+
+		.wbmi-select__current-selection {
+			white-space: nowrap;
+		}
+	}
+}
+
+// Gradient for horizontally-scrolling filters on smaller screens.
+.wbmi-media-search-filters-wrapper--gradient {
+	position: relative;
+
+	&:after {
+		.horizontal-gradient( rgba( 255, 255, 255, 0), white, 85%, 100% );
+		background-color: transparent;
+		content: '';
+		height: 100%;
+		left: 0;
+		pointer-events: none;
+		position: absolute;
+		top: 0;
+		width: 100%;
+		z-index: 1;
 	}
 }

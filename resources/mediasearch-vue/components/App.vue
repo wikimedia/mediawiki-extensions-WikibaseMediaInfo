@@ -30,25 +30,33 @@
 				>
 				</search-filters>
 
-				<!-- Display the available results for each tab -->
-				<search-results
-					:ref="tab"
-					:media-type="tab">
-				</search-results>
+				<transition-group
+					name="wbmi-concept-chips-transition"
+					class="wbmi-concept-chips-transition"
+					tag="div"
+				>
+					<concept-chips
+						v-if="enableConceptChips && tab === 'bitmap' && relatedConcepts.length > 0"
+						:key="'concept-chips-' + tab"
+						:media-type="tab"
+						:concepts="relatedConcepts"
+						@concept-select="onUpdateTerm">
+					</concept-chips>
 
-				<!-- Loading indicator if results are still pending -->
-				<spinner v-if="pending[ tab ]">
-				</spinner>
+					<div :key="'tab-content-' + tab">
+						<!-- Display the available results for each tab -->
+						<search-results :ref="tab" :media-type="tab"></search-results>
 
-				<!-- No results found message if search has completed and come back empty -->
-				<template v-else-if="hasNoResults( tab )">
-					<no-results></no-results>
-				</template>
+						<!-- Loading indicator if results are still pending -->
+						<spinner v-if="pending[ tab ]"></spinner>
 
-				<!-- Empty-state encouraging user to search if they have not done so yet -->
-				<template v-else-if="shouldShowEmptyState">
-					<empty-state></empty-state>
-				</template>
+						<!-- No results message if search has completed and come back empty -->
+						<no-results v-else-if="hasNoResults( tab )"></no-results>
+
+						<!-- Empty-state encouraging user to search if they have not done so yet -->
+						<empty-state v-else-if="shouldShowEmptyState"></empty-state>
+					</div>
+				</transition-group>
 
 				<!-- Auto-load more results when user scrolls to the end of the list/grid,
 				as long as the "autoload counter" for the tab has not reached zero -->
@@ -103,6 +111,7 @@ var AUTOLOAD_COUNT = 2,
 	WbmiButton = require( './base/Button.vue' ),
 	SearchResults = require( './SearchResults.vue' ),
 	SearchFilters = require( './SearchFilters.vue' ),
+	ConceptChips = require( './ConceptChips.vue' ),
 	NoResults = require( './NoResults.vue' ),
 	Observer = require( './base/Observer.vue' ),
 	Spinner = require( './Spinner.vue' ),
@@ -121,6 +130,7 @@ module.exports = {
 		'wbmi-button': WbmiButton,
 		'search-results': SearchResults,
 		'search-filters': SearchFilters,
+		'concept-chips': ConceptChips,
 		observer: Observer,
 		spinner: Spinner,
 		'empty-state': EmptyState,
@@ -135,7 +145,11 @@ module.exports = {
 
 			// Object with keys corresponding to each tab;
 			// values are integers; set in the created() hook
-			autoloadCounter: {}
+			autoloadCounter: {},
+
+			// Temporary feature flag for Concept Chips. To enable, add
+			// ?conceptchips=true to the URL.
+			enableConceptChips: !!url.query.conceptchips
 		};
 	},
 
@@ -143,7 +157,8 @@ module.exports = {
 		'term',
 		'results',
 		'continue',
-		'pending'
+		'pending',
+		'relatedConcepts'
 	] ), mapGetters( [
 		'hasMore'
 	] ), {
@@ -184,12 +199,15 @@ module.exports = {
 	} ),
 
 	methods: $.extend( {}, mapMutations( [
-		'clearTerm',
-		'resetResults',
 		'resetFilters',
-		'setTerm'
+		'resetResults',
+		'clearRelatedConcepts',
+		'setTerm',
+		'setPending'
 	] ), mapActions( [
-		'search'
+		'search',
+		'getRelatedConcepts',
+		'clear'
 	] ), {
 		/**
 		 * Keep UI state, URL, and history in sync as the user changes tabs
@@ -231,10 +249,10 @@ module.exports = {
 		 * that may have previously been visible in any of the tabs.
 		 */
 		onClear: function () {
-			this.clearTerm();
+			this.clear( this.currentTab );
 			this.clearLookupResults();
-			this.resetResults();
-			this.resetFilters();
+			this.setPending( { type: this.currentTab, pending: false } );
+
 			url.query.q = '';
 			window.history.pushState( url.query, null, '?' + url.getQueryString() );
 			this.autoloadCounter = this.setInitialAutoloadCountForTabs();
@@ -256,6 +274,7 @@ module.exports = {
 				// ensure that the results are reset
 				if ( this.term === '' ) {
 					this.resetResults();
+					this.clearRelatedConcepts();
 					this.clearLookupResults();
 				}
 
@@ -319,6 +338,7 @@ module.exports = {
 		 */
 		performNewSearch: function () {
 			this.resetResults();
+			this.clearRelatedConcepts();
 			this.autoloadCounter = this.setInitialAutoloadCountForTabs();
 
 			this.search( {
@@ -366,6 +386,10 @@ module.exports = {
 		currentTab: function ( newTab, oldTab ) {
 			if ( newTab && newTab !== oldTab ) {
 				this.getMoreResultsForTabIfAvailable( newTab );
+
+				if ( this.enableConceptChips && newTab === 'bitmap' && this.relatedConcepts.length < 1 ) {
+					this.getRelatedConcepts( this.term );
+				}
 			}
 
 		},
@@ -380,6 +404,10 @@ module.exports = {
 		term: function ( newTerm, oldTerm ) {
 			if ( newTerm && newTerm !== oldTerm ) {
 				this.performNewSearch();
+
+				if ( this.enableConceptChips && this.currentTab === 'bitmap' ) {
+					this.getRelatedConcepts( newTerm );
+				}
 			}
 		}
 	},
@@ -414,6 +442,12 @@ module.exports = {
 		// Set the initial autoload count for all tabs for semi-infinite scroll
 		// behavior
 		this.autoloadCounter = this.setInitialAutoloadCountForTabs();
+
+		// If a search term exists on page load, fetch related concepts for
+		// concept chips.
+		if ( this.enableConceptChips && this.term && this.currentTab === 'bitmap' ) {
+			this.getRelatedConcepts( this.term );
+		}
 	},
 
 	beforeDestroy: function () {

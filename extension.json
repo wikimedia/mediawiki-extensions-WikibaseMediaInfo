@@ -318,7 +318,8 @@
 				"resources/mediasearch-vue/components/Spinner.less",
 				"resources/mediasearch-vue/components/EmptyState.less",
 				"resources/mediasearch-vue/components/NoResults.less",
-				"resources/mediasearch-vue/components/SearchFilters.less"
+				"resources/mediasearch-vue/components/SearchFilters.less",
+				"resources/mediasearch-vue/components/ConceptChips.less"
 			],
 			"targets": [
 				"desktop",
@@ -352,6 +353,7 @@
 				"resources/mediasearch-vue/components/EmptyState.vue",
 				"resources/mediasearch-vue/components/NoResults.vue",
 				"resources/mediasearch-vue/components/SearchFilters.vue",
+				"resources/mediasearch-vue/components/ConceptChips.vue",
 				"resources/mediasearch-vue/data/filterItems.json",
 				"resources/mediasearch-vue/data/sortFilterItems.json",
 				"resources/mediasearch-vue/models/SearchFilter.js",

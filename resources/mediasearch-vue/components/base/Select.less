@@ -28,12 +28,19 @@
 		color: @color-base;
 		cursor: pointer;
 		min-height: @size-base;
-		padding: @wbmi-padding-vertical-base
+		padding: @wbmi-padding-vertical-mobile
 			@wbmi-padding-end-dropdown
-			@wbmi-padding-vertical-base
+			@wbmi-padding-vertical-mobile
 			@wbmi-padding-horizontal-base;
 		position: relative;
 		width: 100%;
+
+		@media screen and ( min-width: @width-breakpoint-tablet ) {
+			padding: @wbmi-padding-vertical-base
+				@wbmi-padding-end-dropdown
+				@wbmi-padding-vertical-base
+				@wbmi-padding-horizontal-base;
+		}
 
 		&:last-child {
 			margin-right: 0;

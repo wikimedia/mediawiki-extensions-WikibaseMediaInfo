@@ -8,9 +8,11 @@ use CirrusSearch\Search\SearchContext;
 use CirrusSearch\SearchConfig;
 use Elastica\Query\BoolQuery;
 use Elastica\Query\DisMax;
+use Elastica\Query\FunctionScore;
 use Elastica\Query\Match;
 use Elastica\Query\MultiMatch;
 use Elastica\Query\Terms;
+use Elastica\Script\Script;
 use MediaWiki\Http\HttpRequestFactory;
 use MediaWiki\MediaWikiServices;
 use WANObjectCache;
@@ -357,93 +359,89 @@ class MediaQueryBuilder extends FullTextQueryStringQueryBuilder {
 		return $query;
 	}
 
-	protected function createStatementsRankingQuery( string $term ) : ?DisMax {
+	protected function createStatementsRankingQuery( string $term ) : ?FunctionScore {
 		$statementTerms = $this->getStatementTerms( $term );
 		if ( count( $statementTerms ) === 0 ) {
 			return null;
 		}
 
-		$tokenBoost = $this->getTokenBoost( $term );
-
-		$query = new DisMax();
+		$statementsQuery = new DisMax();
 		foreach ( $statementTerms as $statementTerm ) {
-			$query->addQuery(
+			$statementsQuery->addQuery(
 				( new Match() )
 					->setFieldQuery( StatementsField::NAME, $statementTerm['term'] )
-					->setFieldBoost( StatementsField::NAME, $statementTerm['boost'] * $tokenBoost )
+					->setFieldBoost( StatementsField::NAME, $statementTerm['boost'] )
 			);
 		}
-		return $query;
-	}
 
-	protected function getTokens( string $term ) : array {
-		// don't simply split on space: hyphenated words etc. are also
-		// considered separate tokens - let's consider any uninterrupted
-		// sequence of letters, marks, numbers & symbols a token
-		if ( !preg_match_all( '/[\p{L}\p{M}\p{N}\p{S}]+/u', $term, $matches ) ) {
-			return [];
-		}
+		$termsCountQuery = $this->getTermsCountQuery( $term );
 
-		$tokens = $matches[0];
-
-		// ignore case differences & strip uniques
-		$tokens = array_map( 'strtolower', $tokens );
-		$tokens = array_unique( $tokens );
-
-		return $tokens;
+		// below is a convoluted way of multiplying the scores of 2 queries
+		// (the statement match score, and the boost based on the amount of terms);
+		// multiple queries are always summed (unless with dis_max, but that's also
+		// not relevant here), but we need them multiplied...
+		// using log & exp, we can simulate a multiplication, though, because:
+		// exp(ln(A) + ln(B)) is actually the same as A * B
+		// yay for making simply things complicated!
+		// @todo after upgrading to ES7, we'll be able to simply use 2 script_score
+		// (with query) and multiply them via function_score, like so:
+		// function_score:
+		//  - script_score:
+		//    - query $statementsQuery
+		//    - script: _score
+		//  - script_score:
+		//    - $termsCountQuery
+		//    - script: _score / 2 + 0.5
+		//  - score_mode: multiply (= default)
+		return ( new FunctionScore() )
+			->setQuery(
+				( new BoolQuery() )
+					->addShould(
+						( new FunctionScore() )
+							->setQuery( $statementsQuery )
+							->addScriptScoreFunction(
+								// script_score must not return a negative score, which could be
+								// produced when 0 < _score < 1; we'll simply ignore those for being
+								// too small to make any meaningful impact anyway...
+								new Script( 'max(0, ln(_score))', [], 'expression' )
+							)
+					)
+					->addShould(
+						( new FunctionScore() )
+							->setQuery( $termsCountQuery )
+							// When a search term consists of multiple tokens, multiple things can
+							// contribute to the score & they can reach a higher combined score than
+							// when there was just 1 token.
+							// Not all tokens are worth the same, though. The more words there are,
+							// the less they matter: not all words are going to be repeated
+							// throughout all text in equal amounts.
+							// An analysis of a large variety of popular search terms indicates
+							// that, on average, every additional token is worth about half the
+							// score of only 1 token.
+							// Avg total scores per token, roughly - based on ~125 popular queries:
+							// | 1      | 2      | 3      | 4      # token count
+							// | 71     | 108    | 135    | 181    # max score
+							->addScriptScoreFunction(
+								new Script( 'max(0, ln(_score / 2 + 0.5))', [], 'expression' )
+							)
+					)
+			)
+			->addScriptScoreFunction( new Script( 'exp(_score)', [], 'expression' ) );
 	}
 
 	/**
-	 * When a search term consists of multiple tokens, multiple things can
-	 * contribute to the score & they can reach a higher combined score than
-	 * when there was just 1 token.
-	 *
-	 * Not all tokens are worth the same, though. The more words there are,
-	 * the less they matter: not all words are going to be repeated throughout
-	 * all text in equal amounts.
-	 *
-	 * An analysis of a large variety of popular search terms indicates that,
-	 * on average, every additional token is worth about half the score of
-	 * only 1 token.
-	 *
-	 * Avg total scores per token, roughly - based on ~125 popular queries:
-	 * | 1      | 2      | 3      | 4      # token count
-	 * | 71     | 108    | 135    | 181    # max score
-	 *
-	 * This is a naive PHP-based implementation; ideally we'd get this straight
-	 * from ElasticSearch (and exclude duplicates, stopwords, ...), though
-	 * we'd need to look into whether that's even possible.
-	 *
 	 * @param string $term
-	 * @return float
+	 * @return MatchExplorerQuery
 	 */
-	protected function getTokenBoost( string $term ) : float {
-		$tokens = $this->getTokens( $term );
-
-		$tokenBoost = 0.5;
-		foreach ( $tokens as $token ) {
-			// stopwords (e.g. "the") and extremely common words (e.g. "do") will
-			// also not (or barely) contribute to the score, but are not filtered
-			// out in above tokens
-			// we have no way of reliably filtering out such terms or estimating
-			// their impact on the score, but they are increasingly likely to
-			// occur in longer, multi-word search terms...
-			// one thing most stopwords (in latin languages at least) have in common
-			// is that they are short; let's use the character length as somewhat
-			// of a proxy for how likely a token is to be a stopword, decaying the
-			// additional boost more the shorted the word is
-			$limit = 4;
-
-			// use strlen instead of mb_strlen - bytecount is perfect, that'll cause
-			// non-latin languages - where words are often fewer, more complex
-			// characters - to bypass this decay
-			$length = strlen( $token );
-			$decay = max( 0, $limit - $length ) / $limit;
-
-			$tokenBoost += 0.5 * ( 1 - $decay );
-		}
-
-		return $tokenBoost;
+	protected function getTermsCountQuery( string $term ) : MatchExplorerQuery {
+		return new MatchExplorerQuery(
+			MatchExplorerQuery::TYPE_UNIQUE_TERMS_COUNT,
+			// match 'text' field because the analyzer applied there
+			// is likely to be most relevant to how search term is interpreted
+			// in terms of stripping stopwords etc; text.plain, for example,
+			// doesn't exclude those
+			( new Match() )->setFieldQuery( 'text', $term )
+		);
 	}
 
 	protected function createNonFileNamespaceRankingQuery( string $term ) : BoolQuery {

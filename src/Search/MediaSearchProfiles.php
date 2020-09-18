@@ -13,7 +13,7 @@ return [
 		'builder_factory' => [ MediaQueryBuilder::class, 'newFromGlobals' ],
 		'settings' => [
 			'boost' => [
-				'statement' => 3.0,
+				'statement' => 5.0,
 				'caption' => 1.0,
 				'title' => 0.3,
 				'category' => 0.05,
@@ -34,7 +34,7 @@ return [
 		'builder_factory' => [ ExperimentalEntityTraversingMediaQueryBuilder::class, 'newFromGlobals' ],
 		'settings' => [
 			'boost' => [
-				'statement' => 3.0,
+				'statement' => 5.0,
 				'caption' => 1.0,
 				'title' => 0.3,
 				'category' => 0.05,

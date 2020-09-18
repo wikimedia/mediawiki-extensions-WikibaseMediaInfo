@@ -132,6 +132,7 @@
 	"wikibasemediainfo-special-mediasearch-tab-audio": "Audio",
 	"wikibasemediainfo-special-mediasearch-tab-video": "Vidéo",
 	"wikibasemediainfo-special-mediasearch-tab-page": "Catégories et pages",
+	"wikibasemediainfo-special-mediasearch-tab-other": "Autre",
 	"wikibasemediainfo-special-mediasearch-filter-size": "Taille de l’image",
 	"wikibasemediainfo-special-mediasearch-filter-size-any": "Toutes les tailles d’image",
 	"wikibasemediainfo-special-mediasearch-filter-size-small": "Petite",
@@ -150,5 +151,6 @@
 	"wikibasemediainfo-special-mediasearch-input-placeholder": "Rechercher des images, de l’audio, des vidéos et plus",
 	"wikibasemediainfo-special-mediasearch-load-more-results": "Charger davantage",
 	"wikibasemediainfo-special-mediasearch-quickview-button-text": "Plus de détails",
-	"wikibasemediainfo-special-mediasearch-quickview-close-button-text": "Fermer les détails du fichier"
+	"wikibasemediainfo-special-mediasearch-quickview-close-button-text": "Fermer les détails du fichier",
+	"wikibasemediainfo-special-mediasearch-category-info": "$1 {{PLURAL:$1|membre|membres}} – $2 {{PLURAL:$2|sous-catégorie|sous-catégories}}, $3 {{PLURAL:$3|fichier|fichiers}}"
 }

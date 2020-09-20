@@ -18,7 +18,7 @@ var ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
  * @constructor
  * @param {Object} config
  */
-TemplatingFeatures = function TemplatingFeatures( config ) {
+TemplatingFeatures = function TemplatingFeaturesConstructor( config ) {
 	config = config || {};
 
 	TemplatingFeatures.parent.call( this, config );

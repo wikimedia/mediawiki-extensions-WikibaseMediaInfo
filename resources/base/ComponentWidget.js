@@ -423,7 +423,7 @@ ComponentWidget.prototype.matchNodes = function ( $one, $two, preserve ) {
 		// in $one)
 		.map( function ( $nodesInTwo, i ) {
 			var $nodeInOne = $one.eq( i );
-			return $nodesInTwo.filter( function ( i, nodeInTwo ) {
+			return $nodesInTwo.filter( function ( j, nodeInTwo ) {
 				var $nodesInOne = mapTwo[ $two.index( nodeInTwo ) ];
 				return $nodesInOne.filter( $nodeInOne ).length > 0;
 			} );
@@ -474,7 +474,7 @@ ComponentWidget.prototype.findBestMatchingNodes = function ( $needle, $haystack 
 		// narrow down to potential matches, based on tag name and node characteristics
 		$potentialMatches = $haystack
 			.filter( $needle.prop( 'tagName' ) )
-			.filter( function ( i, node ) {
+			.filter( function ( j, node ) {
 				// test whether nodes are similar enough
 				// (we'll do this again for all their children to find the
 				// *most similar* later on - this just eliminates some,
@@ -490,8 +490,8 @@ ComponentWidget.prototype.findBestMatchingNodes = function ( $needle, $haystack 
 
 		if ( maxMatchingChildren > 0 ) {
 			// return the best matching node(s) - the one(s) with the largest amount of matching children
-			return $potentialMatches.filter( function ( i ) {
-				return matchingChildrenAmounts[ i ] === maxMatchingChildren;
+			return $potentialMatches.filter( function ( j ) {
+				return matchingChildrenAmounts[ j ] === maxMatchingChildren;
 			} );
 		}
 	}

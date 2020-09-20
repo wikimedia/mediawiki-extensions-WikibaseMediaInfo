@@ -39,10 +39,10 @@ mw.template.registerCompiler( 'mustache+dom', {
 				transformNodes = function ( d ) {
 					var keys = Object.keys( d ),
 						result = new d.constructor(),
-						key, i, node, $stub;
+						key, j, node, $stub;
 
-					for ( i = 0; i < keys.length; i++ ) {
-						key = keys[ i ];
+					for ( j = 0; j < keys.length; j++ ) {
+						key = keys[ j ];
 
 						if ( d[ key ] instanceof Function ) {
 							// on<event> handlers can't be parsed into the HTML, so we'll

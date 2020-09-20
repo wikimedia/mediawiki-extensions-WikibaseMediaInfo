@@ -70,8 +70,8 @@ QUnit.module( 'LinkNoticeWidget', Object.assign( {}, hooks.mediainfo, {
 			// wait for initial render to complete
 			widget.render().then( function ( $element ) {
 				assert.strictEqual( $element.find( '.wbmi-link-notice' ).length, 1 );
-				widget.dismiss().then( function ( $element ) {
-					assert.strictEqual( $element.find( '.wbmi-link-notice' ).length, 0 );
+				widget.dismiss().then( function ( $innerElement ) {
+					assert.strictEqual( $innerElement.find( '.wbmi-link-notice' ).length, 0 );
 					done();
 				} );
 			} );

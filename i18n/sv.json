@@ -97,15 +97,22 @@
 	"wikibasemediainfo-special-mediasearch-tab-bitmap": "Bilder",
 	"wikibasemediainfo-special-mediasearch-tab-audio": "Ljud",
 	"wikibasemediainfo-special-mediasearch-tab-video": "Video",
+	"wikibasemediainfo-special-mediasearch-tab-page": "Kategorier och sidor",
+	"wikibasemediainfo-special-mediasearch-tab-other": "Övrigt",
 	"wikibasemediainfo-special-mediasearch-filter-size": "Bildstorlek",
 	"wikibasemediainfo-special-mediasearch-filter-size-any": "Alla bildstorlekar",
 	"wikibasemediainfo-special-mediasearch-filter-size-small": "Liten",
 	"wikibasemediainfo-special-mediasearch-filter-size-medium": "Medel",
 	"wikibasemediainfo-special-mediasearch-filter-size-large": "Stor",
 	"wikibasemediainfo-special-mediasearch-filter-file-type-any": "Alla filtyper",
+	"wikibasemediainfo-special-mediasearch-filter-sort-label": "Sortera efter:",
+	"wikibasemediainfo-special-mediasearch-filter-sort-default": "Relevans",
+	"wikibasemediainfo-special-mediasearch-filter-sort-recency": "Nylighet",
+	"wikibasemediainfo-special-mediasearch-filter-sort-popularity": "Popularitet",
 	"wikibasemediainfo-special-mediasearch-no-results": "Vi hittade inga resultat",
 	"wikibasemediainfo-special-mediasearch-no-results-tips": "Försök med allmännare söktermer eller kontrollera stavningen",
 	"wikibasemediainfo-special-mediasearch-load-more-results": "Läs in fler",
 	"wikibasemediainfo-special-mediasearch-quickview-button-text": "Fler detaljer",
-	"wikibasemediainfo-special-mediasearch-quickview-close-button-text": "Stäng fildetaljer"
+	"wikibasemediainfo-special-mediasearch-quickview-close-button-text": "Stäng fildetaljer",
+	"wikibasemediainfo-special-mediasearch-category-info": "$1 {{PLURAL:$1|medlem|medlemmar}} – $2 {{PLURAL:$2|underkategori|underkategorier}}, $3 {{PLURAL:$3|fil|filer}}"
 }

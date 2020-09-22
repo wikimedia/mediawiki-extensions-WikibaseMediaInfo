@@ -62,11 +62,16 @@
 			color: @color-base--subtle;
 			cursor: pointer;
 			font-weight: bold;
-			margin: @wbmi-padding-vertical-base @wbmi-padding-vertical-base 0 0;
-			padding: @wbmi-padding-vertical-base @wbmi-padding-horizontal-base;
+			margin: @wbmi-margin-vertical-base @wbmi-margin-horizontal-mobile 0 0;
+			padding: @wbmi-padding-vertical-mobile @wbmi-padding-horizontal-base;
 			transition: color 100ms, box-shadow 100ms;
 			// Don't wrap text since we're using horizontal scrolling.
 			white-space: nowrap;
+
+			@media screen and ( min-width: @width-breakpoint-tablet ) {
+				margin: @wbmi-margin-vertical-base @wbmi-margin-vertical-base 0 0;
+				padding: @wbmi-padding-vertical-base @wbmi-padding-horizontal-base;
+			}
 
 			&:hover,
 			&.is-active {

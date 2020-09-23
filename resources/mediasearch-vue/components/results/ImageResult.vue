@@ -35,6 +35,8 @@ module.exports = {
 
 	mixins: [ searchResult ],
 
+	inheritAttrs: false,
+
 	computed: {
 		/**
 		 * @return {number}

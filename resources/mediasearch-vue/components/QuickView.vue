@@ -132,6 +132,8 @@ module.exports = {
 		'wbmi-icon': WbmiIcon
 	},
 
+	inheritAttrs: false,
+
 	props: {
 		title: {
 			type: String,

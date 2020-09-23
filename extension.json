@@ -46,6 +46,12 @@
 		"MediaInfoExternalEntitySearchBaseUri": {
 			"value": ""
 		},
+		"MediaInfoMediaSearchEntitiesSparqlEndpointUri": {
+			"value": ""
+		},
+		"MediaInfoMediaSearchConceptChipsHeuristics": {
+			"value": []
+		},
 		"MediaInfoSupportedDataTypes": {
 			"description": "List of property datatypes which are supported in the UI",
 			"value": [
@@ -87,7 +93,8 @@
 	},
 	"MessagesDirs": {
 		"WikibaseMediaInfo": [
-			"i18n"
+			"i18n",
+			"i18n/api"
 		]
 	},
 	"ResourceModules": {
@@ -567,6 +574,13 @@
 		"wbmi-cc0-confirmed": 0,
 		"wbmi-wikidata-link-notice-dismissed": 0,
 		"wbmi-search-suggestions": 1
+	},
+	"APIModules": {
+		"relatedconcepts": {
+			"class": "Wikibase\\MediaInfo\\Api\\ApiRelatedConcepts",
+			"factory": "Wikibase\\MediaInfo\\Api\\ApiRelatedConcepts::factory",
+			"services": ["HttpRequestFactory", "LanguageFallback"]
+		}
 	},
 	"SpecialPages": {
 		"MediaSearch": "Wikibase\\MediaInfo\\Special\\SpecialMediaSearch"

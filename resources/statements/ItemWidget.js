@@ -379,9 +379,9 @@ ItemWidget.prototype.setData = function ( data ) {
 			promises.push( widget.setData( qualifier ) );
 		} else {
 			widgetPromise = self.createQualifier()
-				.then( function ( widget ) {
-					self.insertItem( widget, i );
-					return widget.setData( qualifier );
+				.then( function ( innerWidget ) {
+					self.insertItem( innerWidget, i );
+					return innerWidget.setData( qualifier );
 				} );
 			promises.push( widgetPromise );
 		}

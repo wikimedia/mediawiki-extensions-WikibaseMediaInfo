@@ -28,7 +28,7 @@ var AnonWarning = require( './AnonWarning.js' ),
  *  e.g. { P1: "https://commons.wikimedia.org/wiki/Special:MyLanguage/Commons:Depicts" }
  * @fires dataLoadedReadOnly
  */
-StatementPanel = function StatementPanel( config ) {
+StatementPanel = function StatementPanelConstructor( config ) {
 	// Parent constructor
 	StatementPanel.super.apply( this, arguments );
 

@@ -16,7 +16,7 @@ var ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
  * @constructor
  * @param {Object} config
  */
-BestPractices = function BestPractices( config ) {
+BestPractices = function BestPracticesConstructor( config ) {
 	config = config || {};
 
 	BestPractices.parent.call( this, config );

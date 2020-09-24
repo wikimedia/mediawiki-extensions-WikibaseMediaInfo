@@ -473,11 +473,11 @@ StatementWidget.prototype.submit = function ( baseRevId ) {
 	} );
 
 	changedStatements.forEach( function ( statement ) {
-		promise = promise.then( function ( statement, prevResponse ) {
+		promise = promise.then( function ( innerStatement, prevResponse ) {
 			return api.postWithEditToken( {
 				action: 'wbsetclaim',
 				format: 'json',
-				claim: JSON.stringify( serializer.serialize( statement ) ),
+				claim: JSON.stringify( serializer.serialize( innerStatement ) ),
 				// fetch the previous response's rev id and feed it to the next
 				baserevid: prevResponse.pageinfo ? ( prevResponse.pageinfo.lastrevid || undefined ) : undefined,
 				bot: 1,
@@ -489,18 +489,18 @@ StatementWidget.prototype.submit = function ( baseRevId ) {
 					var guid = response.claim.id,
 						originalStatement = statementsByGuid[ guid ],
 						deserializer = new serialization.StatementDeserializer(),
-						statement;
+						responseStatement;
 					if ( response.claim.qualifiers !== undefined ) {
 						// Capture hashes for new qualifiers by replacing the original
 						// statement with a new statement created from the response
-						statement = deserializer.deserialize( response.claim );
+						responseStatement = deserializer.deserialize( response.claim );
 						if ( data.hasItem( originalStatement ) ) {
 							data.removeItem( originalStatement );
 							// also remove the item from the StatementWidget itself,
 							// or the data will be recreated in this.resetData()
 							self.removeItems( [ self.findItemFromData( originalStatement ) ] );
 						}
-						data.addItem( statement );
+						data.addItem( responseStatement );
 					}
 					return response;
 				}
@@ -509,8 +509,8 @@ StatementWidget.prototype.submit = function ( baseRevId ) {
 					var apiError = wikibase.api.RepoApiError.newFromApiResponse( error, 'save' ),
 						errorMessage = new OO.ui.HtmlSnippet( apiError.detailedMessage ),
 						guid = statement.getClaim().getGuid(),
-						initialStatement = self.state.initialData.toArray().filter( function ( statement ) {
-							return statement.getClaim().getGuid() === guid;
+						initialStatement = self.state.initialData.toArray().filter( function ( filterStatement ) {
+							return filterStatement.getClaim().getGuid() === guid;
 						} )[ 0 ];
 
 					// TODO: show item-specific errors within item UI by using

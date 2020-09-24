@@ -34,7 +34,7 @@ var ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
  * @constructor
  * @param {Object} config
  */
-ExampleComponentWidget = function ExampleComponentWidget( config ) {
+ExampleComponentWidget = function ExampleComponentWidgetConstructor( config ) {
 	config = config || {};
 
 	ExampleComponentWidget.parent.call( this, config );

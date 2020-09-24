@@ -27,8 +27,8 @@ FormatValueElement.getKey = function ( dataValue, format, language, propertyId )
 		if ( value instanceof Object && !( value instanceof Array ) ) {
 			return Object.keys( value )
 				.sort()
-				.reduce( function ( sorted, key ) {
-					sorted[ key ] = value[ key ];
+				.reduce( function ( sorted, sortedKey ) {
+					sorted[ sortedKey ] = value[ sortedKey ];
 					return sorted;
 				}, {} );
 		}

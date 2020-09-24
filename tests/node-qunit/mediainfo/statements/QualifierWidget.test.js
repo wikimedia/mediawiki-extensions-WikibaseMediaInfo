@@ -147,8 +147,8 @@ QUnit.module( 'QualifierWidget', hooks.mediainfo, function () {
 		widget.render().then( function ( $element ) {
 			assert.strictEqual( $element.find( '.wbmi-qualifier-value' ).length, 1 );
 
-			widget.setEditing( true ).then( function ( $element ) {
-				assert.strictEqual( $element.find( '.wbmi-qualifier-value' ).length, 0 );
+			widget.setEditing( true ).then( function ( $innerElement ) {
+				assert.strictEqual( $innerElement.find( '.wbmi-qualifier-value' ).length, 0 );
 				done();
 			} );
 		} );
@@ -174,8 +174,8 @@ QUnit.module( 'QualifierWidget', hooks.mediainfo, function () {
 		widget.render().then( function ( $element ) {
 			assert.strictEqual( $element.find( '.wbmi-qualifier-value' ).length, 0 );
 
-			widget.setEditing( false ).then( function ( $element ) {
-				assert.strictEqual( $element.find( '.wbmi-qualifier-value' ).length, 1 );
+			widget.setEditing( false ).then( function ( $innerElement ) {
+				assert.strictEqual( $innerElement.find( '.wbmi-qualifier-value' ).length, 1 );
 				done();
 			} );
 		} );

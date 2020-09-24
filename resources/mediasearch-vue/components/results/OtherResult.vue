@@ -47,6 +47,8 @@ module.exports = {
 		'wbmi-image': WbmiImage
 	},
 
+	inheritAttrs: false,
+
 	props: {
 		title: {
 			type: String,

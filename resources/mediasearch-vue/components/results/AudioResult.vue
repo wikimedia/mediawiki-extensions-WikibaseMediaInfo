@@ -39,6 +39,8 @@ module.exports = {
 	mixins: [
 		searchResult,
 		searchResultTimeBased
-	]
+	],
+
+	inheritAttrs: false
 };
 </script>

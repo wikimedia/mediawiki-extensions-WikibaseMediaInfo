@@ -27,6 +27,8 @@
 module.exports = {
 	name: 'PageResult',
 
+	inheritAttrs: false,
+
 	props: {
 		title: {
 			type: String,

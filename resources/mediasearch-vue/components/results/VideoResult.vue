@@ -50,6 +50,8 @@ module.exports = {
 		searchResultTimeBased
 	],
 
+	inheritAttrs: false,
+
 	computed: {
 		/**
 		 * @return {string}

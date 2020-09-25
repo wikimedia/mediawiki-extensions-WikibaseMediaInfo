@@ -143,5 +143,6 @@
 	"wikibasemediainfo-special-mediasearch-input-placeholder": "Søk etter bilder, lyd, video og mer",
 	"wikibasemediainfo-special-mediasearch-load-more-results": "Last inn mer",
 	"wikibasemediainfo-special-mediasearch-quickview-button-text": "Flere detaljer",
-	"wikibasemediainfo-special-mediasearch-quickview-close-button-text": "Lukk fildetaljer"
+	"wikibasemediainfo-special-mediasearch-quickview-close-button-text": "Lukk fildetaljer",
+	"wikibasemediainfo-special-mediasearch-category-info": "$1 {{PLURAL:$1|medlem|medlemmer}} – $2 {{PLURAL:$2|underkategori|underkategorier}}, $3 {{PLURAL:$3|fil|filer}}"
 }

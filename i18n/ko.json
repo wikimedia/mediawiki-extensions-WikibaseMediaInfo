@@ -110,6 +110,8 @@
 	"wikibasemediainfo-special-mediasearch-tab-bitmap": "이미지",
 	"wikibasemediainfo-special-mediasearch-tab-audio": "소리",
 	"wikibasemediainfo-special-mediasearch-tab-video": "동영상",
+	"wikibasemediainfo-special-mediasearch-tab-page": "분류 및 페이지",
+	"wikibasemediainfo-special-mediasearch-tab-other": "기타",
 	"wikibasemediainfo-special-mediasearch-filter-size": "이미지 크기",
 	"wikibasemediainfo-special-mediasearch-filter-size-any": "모든 이미지 크기",
 	"wikibasemediainfo-special-mediasearch-filter-size-small": "작음",

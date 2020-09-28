@@ -138,5 +138,7 @@
 	"wikibasemediainfo-special-mediasearch-filter-size-small": "Маленький",
 	"wikibasemediainfo-special-mediasearch-filter-size-medium": "Средний",
 	"wikibasemediainfo-special-mediasearch-filter-size-large": "Большой",
+	"wikibasemediainfo-special-mediasearch-filter-sort-label": "Сортировать по:",
+	"wikibasemediainfo-special-mediasearch-filter-sort-default": "Релевантность",
 	"wikibasemediainfo-special-mediasearch-no-results": "Результаты не найдены"
 }

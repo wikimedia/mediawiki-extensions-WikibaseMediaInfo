@@ -3,16 +3,19 @@
 		<h3>
 			<a :href="canonicalurl"
 				target="_blank"
-				:title="title">
+				:title="title"
+				@click="$emit('click')">
 				{{ displayName }}
 			</a>
 		</h3>
+
 		<p v-if="hasCategoryText"
 			v-i18n-html:wikibasemediainfo-special-mediasearch-category-info="[
 				categoryinfo.size,
 				categoryinfo.subcats,
 				categoryinfo.files
-			]"></p>
+			]">
+		</p>
 	</div>
 </template>
 

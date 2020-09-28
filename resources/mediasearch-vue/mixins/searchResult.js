@@ -108,8 +108,7 @@ module.exports = {
 			// are listening. See https://phabricator.wikimedia.org/T260203
 			// for an example.
 			e.stopPropagation();
-
-			this.$emit( 'show-details', this.pageid, e.target.href );
+			this.$emit( 'show-details', this.pageid );
 		},
 
 		/**

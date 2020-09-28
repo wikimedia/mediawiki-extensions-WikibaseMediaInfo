@@ -225,6 +225,14 @@ module.exports = {
 			this.currentTab = newTab.name;
 			url.query.type = newTab.name;
 			window.history.pushState( url.query, null, '?' + url.getQueryString() );
+
+			/* eslint-disable camelcase */
+			this.$log( {
+				action: 'tab_change',
+				search_query: this.term,
+				search_media_type: this.currentTab
+			} );
+			/* eslint-enable camelcase */
 		},
 
 		/**
@@ -262,6 +270,8 @@ module.exports = {
 			url.query.q = '';
 			window.history.pushState( url.query, null, '?' + url.getQueryString() );
 			this.autoloadCounter = this.setInitialAutoloadCountForTabs();
+
+			this.$log( { action: 'search_clear' } );
 		},
 
 		/**
@@ -309,7 +319,17 @@ module.exports = {
 				this.search( {
 					term: this.term,
 					type: this.currentTab
-				} );
+				} ).then( function () {
+					/* eslint-disable camelcase */
+					this.$log( {
+						action: 'search_load_more',
+						search_query: this.term,
+						search_media_type: this.currentTab,
+						search_result_count: this.results[ this.currentTab ].length
+					} );
+					/* eslint-enable camelcase */
+				}.bind( this ) );
+
 			} else if ( this.hasMore[ tab ] && this.pending[ tab ] ) {
 				// If more results are available but another request is
 				// currently in-flight, attempt to make the request again
@@ -334,7 +354,16 @@ module.exports = {
 			this.search( {
 				term: this.term,
 				type: this.currentTab
-			} );
+			} ).then( function () {
+				/* eslint-disable camelcase */
+				this.$log( {
+					action: 'search_load_more',
+					search_query: this.term,
+					search_media_type: this.currentTab,
+					search_result_count: this.results[ this.currentTab ].length
+				} );
+				/* eslint-enable camelcase */
+			}.bind( this ) );
 		},
 
 		/**
@@ -356,7 +385,16 @@ module.exports = {
 			this.search( {
 				term: this.term,
 				type: this.currentTab
-			} );
+			} ).then( function () {
+				/* eslint-disable camelcase */
+				this.$log( {
+					action: 'search_new',
+					search_query: this.term,
+					search_media_type: this.currentTab,
+					search_result_count: this.results[ this.currentTab ].length
+				} );
+				/* eslint-enable camelcase */
+			}.bind( this ) );
 		},
 
 		/**
@@ -459,6 +497,20 @@ module.exports = {
 		// concept chips.
 		if ( this.enableConceptChips && this.term && this.currentTab === 'bitmap' ) {
 			this.getRelatedConcepts( this.term );
+		}
+
+		// If a search term was already present when the user arrives on the page,
+		// log the results of the initial server-rendered search query regardless
+		// of whether any results were found
+		if ( this.term && this.term !== '' ) {
+			/* eslint-disable camelcase */
+			this.$log( {
+				action: 'search_new',
+				search_query: this.term,
+				search_media_type: this.currentTab,
+				search_result_count: this.results[ this.currentTab ].length
+			} );
+			/* eslint-enable camelcase */
 		}
 	},
 

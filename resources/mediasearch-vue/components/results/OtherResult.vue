@@ -6,6 +6,7 @@
 			:title="title"
 			:style="style"
 			target="_blank"
+			@click="$emit('click')"
 		>
 			<wbmi-image
 				:source="thumbnail"
@@ -17,7 +18,7 @@
 				<a :href="canonicalurl"
 					target="_blank"
 					:title="title"
-				>
+					@click="$emit('click')">
 					{{ displayName }}
 				</a>
 			</h3>

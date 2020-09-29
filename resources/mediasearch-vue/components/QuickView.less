@@ -58,6 +58,17 @@
 		}
 	}
 
+	&__list-item {
+		// Use flexbox so the icons will act like bullets for multiline content.
+		.flex-display();
+		align-items: flex-start;
+
+		.wbmi-icon {
+			// Mimic natural inline element spacing.
+			margin-right: 0.4em;
+		}
+	}
+
 	// Style CTA link to look like a button. See https://phabricator.wikimedia.org/T258110
 	// for details of this design decision.
 	&__cta {

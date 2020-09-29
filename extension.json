@@ -303,6 +303,7 @@
 			"styles": [
 				"resources/mediasearch-vue/components/base/AutocompleteSearchInput.less",
 				"resources/mediasearch-vue/components/base/Button.less",
+				"resources/mediasearch-vue/components/base/CopyTextLayout.less",
 				"resources/mediasearch-vue/components/base/Dialog.less",
 				"resources/mediasearch-vue/components/base/Icon.less",
 				"resources/mediasearch-vue/components/base/Message.less",
@@ -337,6 +338,7 @@
 				"lib/icons.js",
 				"resources/mediasearch-vue/components/base/AutocompleteSearchInput.vue",
 				"resources/mediasearch-vue/components/base/Button.vue",
+				"resources/mediasearch-vue/components/base/CopyTextLayout.vue",
 				"resources/mediasearch-vue/components/base/Dialog.vue",
 				"resources/mediasearch-vue/components/base/Icon.vue",
 				"resources/mediasearch-vue/components/base/Message.vue",
@@ -400,7 +402,10 @@
 				"wikibasemediainfo-special-mediasearch-quickview-close-button-text",
 				"wikibasemediainfo-special-mediasearch-quickview-previous-button-text",
 				"wikibasemediainfo-special-mediasearch-quickview-next-button-text",
-				"wikibasemediainfo-special-mediasearch-category-info"
+				"wikibasemediainfo-special-mediasearch-category-info",
+				"wikibasemediainfo-copytextlayout-copy",
+				"wikibasemediainfo-copytextlayout-copy-fail",
+				"wikibasemediainfo-copytextlayout-copy-success"
 			],
 			"dependencies": [
 				"wikibase.mediainfo.mediasearch.vue.styles",

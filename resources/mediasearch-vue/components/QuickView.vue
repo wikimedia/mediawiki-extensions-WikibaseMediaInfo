@@ -91,14 +91,14 @@
 				v-html="description">
 			</p>
 
-			<p v-if="artist">
+			<p v-if="artist" class="wbmi-quick-view__list-item">
 				<wbmi-icon :icon="icons.wbmiIconUserAvatar"></wbmi-icon>
 				<span v-html="artist"></span>
 			</p>
 
 			<!-- Attempt to show license text, an appropriate icon, and an
 			optional link to external license URL -->
-			<p v-if="licenseText">
+			<p v-if="licenseText" class="wbmi-quick-view__list-item">
 				<wbmi-icon v-if="licenseIcon" :icon="licenseIcon"></wbmi-icon>
 				<a v-if="licenseUrl"
 					:href="licenseUrl"
@@ -108,19 +108,36 @@
 				<span v-else v-html="licenseText"></span>
 			</p>
 
+			<p class="wbmi-quick-view__list-item">
+				<wbmi-icon :icon="filenameIcon"></wbmi-icon>
+				<wbmi-copy-text-layout
+					:copy-text="displayName"
+					:inline="true"
+				></wbmi-copy-text-layout>
+			</p>
+
+			<p class="wbmi-quick-view__list-item">
+				<wbmi-icon :icon="icons.wbmiIconWikiText"></wbmi-icon>
+				<wbmi-copy-text-layout
+					:copy-text="'[[' + title + '|' + displayNameWithoutExtension + ']]'"
+					:inline="true"
+					:hide-overflow="true"
+				></wbmi-copy-text-layout>
+			</p>
+
 			<!-- Sometimes this is free text, sometimes it is formatted. Can
 			we make things semi-consistent? -->
-			<p v-if="creationDate">
+			<p v-if="creationDate" class="wbmi-quick-view__list-item">
 				<wbmi-icon :icon="icons.wbmiIconClock"></wbmi-icon>
 				<span v-html="creationDate"></span>
 			</p>
 
-			<p v-if="resolution">
+			<p v-if="resolution" class="wbmi-quick-view__list-item">
 				<wbmi-icon :icon="icons.wbmiIconCamera"></wbmi-icon>
 				<span>{{ resolution }}</span>
 			</p>
 
-			<p v-if="mimeType">
+			<p v-if="mimeType" class="wbmi-quick-view__list-item">
 				<wbmi-icon :icon="icons.wbmiIconPageSettings"></wbmi-icon>
 				<span>{{ mimeType }}</span>
 			</p>
@@ -139,6 +156,7 @@
 var WbmiIcon = require( './base/Icon.vue' ),
 	WbmiPlayer = require( './base/Player.vue' ),
 	Spinner = require( './Spinner.vue' ),
+	WbmiCopyTextLayout = require( './base/CopyTextLayout.vue' ),
 	icons = require( '../../../lib/icons.js' ),
 	PREVIEW_SIZES = [ 640, 800, 1200, 1600 ], // Pre-defined set of thumbnail image width values
 	MAX_SIZE = 2000;
@@ -160,7 +178,8 @@ module.exports = {
 	components: {
 		'wbmi-icon': WbmiIcon,
 		'wbmi-player': WbmiPlayer,
-		spinner: Spinner
+		spinner: Spinner,
+		'wbmi-copy-text-layout': WbmiCopyTextLayout
 	},
 
 	inheritAttrs: false,
@@ -371,6 +390,27 @@ module.exports = {
 				return this.metadata.LicenseUrl.value;
 			} else {
 				return null;
+			}
+		},
+
+		displayName: function () {
+			return new mw.Title( this.title ).getMainText();
+		},
+
+		displayNameWithoutExtension: function () {
+			return new mw.Title( this.title ).getName();
+		},
+
+		filenameIcon: function () {
+			switch ( this.mediaType ) {
+				case 'audio':
+					return this.icons.wbmiIconVolumeUp;
+
+				case 'video':
+					return this.icons.wbmiIconPlay;
+
+				default:
+					return this.icons.wbmiIconImageLayoutFrameless;
 			}
 		},
 

@@ -130,6 +130,27 @@
 		}
 	}
 
+	&--invisible-text {
+		padding: 30/14em 0 0 30/14em;
+
+		.wbmi-button__content {
+			border: 0;
+			clip: rect( 1px, 1px, 1px, 1px );
+			display: block;
+			height: 1px;
+			margin: -1px;
+			overflow: hidden;
+			padding: 0;
+			position: absolute;
+			width: 1px;
+		}
+
+		.wbmi-icon {
+			left: 50%;
+			transform: translateX( -50% );
+		}
+	}
+
 	&:disabled {
 		color: @color-base--disabled;
 		cursor: auto;
@@ -154,22 +175,6 @@
 
 		&:not( .wbmi-button--framed ) .wbmi-icon {
 			opacity: @opacity-base--disabled;
-		}
-	}
-
-	&--invisible-text {
-		padding-right: 0;
-
-		.wbmi-button__content {
-			border: 0;
-			clip: rect( 1px, 1px, 1px, 1px );
-			display: block;
-			height: 1px;
-			margin: -1px;
-			overflow: hidden;
-			padding: 0;
-			position: absolute;
-			width: 1px;
 		}
 	}
 }

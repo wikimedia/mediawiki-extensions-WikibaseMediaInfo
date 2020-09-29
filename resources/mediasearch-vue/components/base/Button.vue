@@ -42,7 +42,7 @@ module.exports = {
 		},
 
 		// Set to true to hide text node.
-		invisibletext: {
+		invisibleText: {
 			type: Boolean
 		},
 
@@ -68,7 +68,7 @@ module.exports = {
 			return {
 				'wbmi-button--framed': !this.frameless,
 				'wbmi-button--icon': this.icon,
-				'wbmi-button--invisible-text': this.invisibletext,
+				'wbmi-button--invisible-text': this.invisibleText,
 				'wbmi-button--progressive': this.progressive,
 				'wbmi-button--destructive': this.destructive,
 				'wbmi-button--primary': this.primary

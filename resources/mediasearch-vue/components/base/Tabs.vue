@@ -24,7 +24,7 @@
 				>
 					{{ tab.title }}
 					<observer
-						v-if="isLastTab( index )"
+						v-if="isLastTab( index ) && supportsObserver"
 						@intersect="removeGradientClass"
 						@hide="addGradientClass"
 					></observer>
@@ -86,6 +86,12 @@ module.exports = {
 			return this.tabs[ this.currentTabName ] ?
 				this.tabs[ this.currentTabName ].id + '-label' :
 				false;
+		},
+
+		supportsObserver: function () {
+			return 'IntersectionObserver' in window &&
+				'IntersectionObserverEntry' in window &&
+				'intersectionRatio' in window.IntersectionObserverEntry.prototype;
 		}
 	},
 

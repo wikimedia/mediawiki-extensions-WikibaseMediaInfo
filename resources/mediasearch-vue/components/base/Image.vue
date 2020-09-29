@@ -1,5 +1,6 @@
 <template>
 	<img
+		:src="supportsObserver ? false : source"
 		:data-src="source"
 		:alt="alt"
 		class="wbmi-image"
@@ -20,6 +21,14 @@ module.exports = {
 		alt: {
 			type: String,
 			default: ''
+		}
+	},
+
+	computed: {
+		supportsObserver: function () {
+			return 'IntersectionObserver' in window &&
+				'IntersectionObserverEntry' in window &&
+				'intersectionRatio' in window.IntersectionObserverEntry.prototype;
 		}
 	},
 
@@ -48,20 +57,24 @@ module.exports = {
 			}
 		}
 
-		this.observer = new IntersectionObserver(
-			intersectionCallback.bind( this ), {
-				root: null,
-				threshold: 0
-			} );
+		if ( this.supportsObserver ) {
+			this.observer = new IntersectionObserver(
+				intersectionCallback.bind( this ), {
+					root: null,
+					threshold: 0
+				} );
 
-		this.observer.observe( this.$el );
+			this.observer.observe( this.$el );
+		}
 	},
 
 	/**
 	 * Disconnect the observer when the component is destroyed
 	 */
 	destroyed: function () {
-		this.observer.disconnect();
+		if ( this.supportsObserver ) {
+			this.observer.disconnect();
+		}
 	}
 };
 </script>

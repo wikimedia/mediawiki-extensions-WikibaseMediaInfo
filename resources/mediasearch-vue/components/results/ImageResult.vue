@@ -78,8 +78,8 @@ module.exports = {
 		 */
 		style: function () {
 			return {
-				width: this.thumbwidth + 'px',
-				height: this.thumbheight + 'px'
+				width: ( this.thumbwidth * 180 / this.thumbheight ) + 'px',
+				height: '180px'
 			};
 		}
 	}

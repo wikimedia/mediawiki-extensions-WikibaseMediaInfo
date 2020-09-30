@@ -17,7 +17,7 @@ use Wikibase\DataModel\Entity\Int32EntityId;
  */
 class MediaInfoId extends EntityId implements Int32EntityId {
 
-	const PATTERN = '/^M[1-9]\d{0,9}\z/i';
+	public const PATTERN = '/^M[1-9]\d{0,9}\z/i';
 
 	/**
 	 * @param string $idSerialization

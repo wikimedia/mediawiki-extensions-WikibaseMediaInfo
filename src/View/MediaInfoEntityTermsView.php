@@ -43,10 +43,10 @@ class MediaInfoEntityTermsView {
 	 */
 	private $termFallbackChain;
 
-	const CAPTIONS_CUSTOM_TAG = 'mediaInfoViewCaptions';
-	const CAPTION_EMPTY_CLASS = 'wbmi-entityview-emptyCaption';
-	const HIDEABLE_CAPTION_CLASS = 'wbmi-entityview-hideable';
-	const CAPTIONS_CONTAINER = 'wbmi-entityview-captionsPanel';
+	public const CAPTIONS_CUSTOM_TAG = 'mediaInfoViewCaptions';
+	public const CAPTION_EMPTY_CLASS = 'wbmi-entityview-emptyCaption';
+	public const HIDEABLE_CAPTION_CLASS = 'wbmi-entityview-hideable';
+	private const CAPTIONS_CONTAINER = 'wbmi-entityview-captionsPanel';
 
 	/**
 	 * @param LanguageNameLookup $languageNameLookup

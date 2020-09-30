@@ -31,7 +31,7 @@ class MediaInfoView implements EntityDocumentView {
 	 */
 	private $statementsView;
 
-	const MEDIAINFOVIEW_CUSTOM_TAG = 'mediaInfoView';
+	public const MEDIAINFOVIEW_CUSTOM_TAG = 'mediaInfoView';
 
 	/**
 	 * @param MediaInfoEntityTermsView $captionsView

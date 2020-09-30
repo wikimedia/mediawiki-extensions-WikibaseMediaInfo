@@ -46,7 +46,7 @@ class MediaInfoEntityStatementsView {
 	private $languageCode;
 	private $properties;
 
-	const STATEMENTS_CUSTOM_TAG = 'mediaInfoViewStatements';
+	public const STATEMENTS_CUSTOM_TAG = 'mediaInfoViewStatements';
 
 	/**
 	 * @param PropertyOrderProvider $propertyOrderProvider

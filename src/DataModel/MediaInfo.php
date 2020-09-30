@@ -23,7 +23,7 @@ class MediaInfo
 	implements StatementListProvidingEntity, LabelsProvider, DescriptionsProvider, ClearableEntity
 {
 
-	const ENTITY_TYPE = 'mediainfo';
+	public const ENTITY_TYPE = 'mediainfo';
 
 	/**
 	 * @var MediaInfoId|null

@@ -58,7 +58,7 @@ use WikiPage;
  */
 class WikibaseMediaInfoHooks {
 
-	const MEDIAINFO_SLOT_HEADER_PLACEHOLDER = '<mediainfoslotheader />';
+	public const MEDIAINFO_SLOT_HEADER_PLACEHOLDER = '<mediainfoslotheader />';
 
 	/**
 	 * Hook to register the MediaInfo slot role.

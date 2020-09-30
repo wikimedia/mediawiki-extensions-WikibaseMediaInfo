@@ -16,7 +16,7 @@ use Wikibase\Repo\FingerprintSearchTextGenerator;
  */
 class MediaInfoContent extends EntityContent {
 
-	const CONTENT_MODEL_ID = 'wikibase-mediainfo';
+	public const CONTENT_MODEL_ID = 'wikibase-mediainfo';
 
 	/**
 	 * @var EntityHolder|null

@@ -29,8 +29,7 @@ use Wikimedia\Assert\Assert;
  */
 class MediaInfoHandler extends EntityHandler {
 
-	const FILE_PAGE_SEARCH_INDEX_KEY_MEDIAINFO_TEXT = 'opening_text';
-	const FILE_PAGE_SEARCH_INDEX_KEY_MEDIAINFO_VERSION = 'mediaInfoVersion';
+	public const FILE_PAGE_SEARCH_INDEX_KEY_MEDIAINFO_TEXT = 'opening_text';
 
 	/**
 	 * @var MissingMediaInfoHandler

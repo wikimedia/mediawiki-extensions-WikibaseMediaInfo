@@ -128,6 +128,7 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 				$title = Title::newFromDBkey( $result['title'] );
 				$filename = $title ? $title->getText() : $result['title'];
 				$result += [ 'name' => $filename ];
+
 				if ( array_key_exists( 'categoryinfo', $result ) ) {
 					$categoryInfoParams = [
 						$result['categoryinfo']['size'],
@@ -140,6 +141,28 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 							$categoryInfoParams
 						)->parse()
 					];
+				}
+
+				if ( isset( $result['imageinfo'][0]['thumburl'] ) ) {
+					// phpcs:ignore Generic.Files.LineLength.TooLong
+					$commonWidths = [ 48, 75, 80, 100, 120, 150, 160, 180, 200, 220, 240, 250, 300, 320, 400, 450, 500, 600, 640, 800, 1024, 1200, 1280, 1920, 2880 ];
+					$oldWidth = $result['imageinfo'][0]['thumbwidth'];
+					$newWidth = $oldWidth;
+
+					// find the closest (larger) width that is more common, it is (much) more
+					// likely to have a thumbnail cached
+					foreach ( $commonWidths as $commonWidth ) {
+						if ( $commonWidth >= $oldWidth ) {
+							$newWidth = $commonWidth;
+							break;
+						}
+					}
+
+					$result['imageinfo'][0]['thumburl'] = str_replace(
+						'/' . $oldWidth . 'px-',
+						'/' . $newWidth . 'px-',
+						$result['imageinfo'][0]['thumburl']
+					);
 				}
 				return $result;
 			}, $results ),

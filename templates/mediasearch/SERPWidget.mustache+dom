@@ -100,7 +100,7 @@
 										class="wbmi-image-result"
 										href="{{canonicalurl}}"
 										title="{{title}}"
-										style="width: {{imageinfo.0.thumbwidth}}px; height: {{imageinfo.0.thumbheight}}px;"
+										style="width: calc({{imageinfo.0.thumbwidth}}px * 180 / {{imageinfo.0.thumbheight}}); height: 180px;"
 										target="_blank"
 									>
 										<img

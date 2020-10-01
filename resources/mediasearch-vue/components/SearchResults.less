@@ -13,14 +13,20 @@
 		align-content: flex-start;
 		max-width: 100%;
 
-		// Video results are displayed as tiles/cards with a uniform size
-		&--video {
+		&--video,
+		&--bitmap {
 			.flex-display();
 			.flex-wrap( wrap );
-			justify-content: flex-start;
 			// Grid items each have a margin; add a negative margin around the
 			// wrapper to align it with the rest of the page.
 			margin: -@wbmi-spacing-base-px / 2;
+			// Account for negative margin.
+			max-width: calc( ~'100% + 16px' );
+		}
+
+		// Video results are displayed as tiles/cards with a uniform size
+		&--video {
+			justify-content: flex-start;
 
 			// stylelint-disable-next-line no-descending-specificity
 			> * {
@@ -33,12 +39,6 @@
 		// @TODO on mobile, image grid should switch to vertical columns with
 		// fixed width instead of horizontal rows with fixed height.
 		&--bitmap {
-			.flex-display();
-			.flex-wrap( wrap );
-			// Grid items each have a margin; add a negative margin around the
-			// wrapper to align it with the rest of the page.
-			margin: -@wbmi-spacing-base-px / 2;
-
 			// stylelint-disable-next-line no-descending-specificity
 			> * {
 				.flex( 1, 1, auto );

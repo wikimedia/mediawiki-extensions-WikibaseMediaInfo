@@ -6,9 +6,5 @@
 	{
 		"labelMessage":"wikibasemediainfo-special-mediasearch-filter-sort-recency",
 		"value": "recency"
-	},
-	{
-		"labelMessage": "wikibasemediainfo-special-mediasearch-filter-sort-popularity",
-		"value": "popularity"
 	}
 ]

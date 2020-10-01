@@ -55,7 +55,21 @@ module.exports = {
 		 * @return {string|undefined}
 		 */
 		thumbnail: function () {
-			return this.imageinfo[ 0 ].thumburl;
+			var commonWidths = [ 48, 75, 80, 100, 120, 150, 160, 180, 200, 220, 240, 250, 300, 320, 400, 450, 500, 600, 640, 800, 1024, 1200, 1280, 1920, 2880 ],
+				oldWidth = this.imageinfo[ 0 ].thumbwidth,
+				newWidth = oldWidth,
+				i;
+
+			// find the closest (larger) width that is more common, it is (much) more
+			// likely to have a thumbnail cached
+			for ( i = 0; i < commonWidths.length; i++ ) {
+				if ( commonWidths[ i ] >= oldWidth ) {
+					newWidth = commonWidths[ i ];
+					break;
+				}
+			}
+
+			return this.imageinfo[ 0 ].thumburl.replace( '/' + oldWidth + 'px-', '/' + newWidth + 'px-' );
 		},
 
 		/**

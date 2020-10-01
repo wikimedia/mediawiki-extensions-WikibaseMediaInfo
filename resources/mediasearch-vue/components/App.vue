@@ -321,6 +321,12 @@ module.exports = {
 			this.resetResults();
 			this.autoloadCounter = this.setInitialAutoloadCountForTabs();
 
+			// Abort in-flight lookup promises to ensure the results provided
+			// are for the most recent search input.
+			if ( this.lookupPromises ) {
+				this.lookupPromises.abort();
+			}
+
 			this.search( {
 				term: this.term,
 				type: this.currentTab

@@ -2,6 +2,7 @@
 	"@metadata": {
 		"authors": [
 			"Csega",
+			"Hanna Tardos",
 			"Tacsipacsi",
 			"Worrida"
 		]
@@ -119,5 +120,6 @@
 	"wikibasemediainfo-special-mediasearch-filter-size-small": "Kicsi",
 	"wikibasemediainfo-special-mediasearch-filter-size-medium": "Közepes",
 	"wikibasemediainfo-special-mediasearch-filter-size-large": "Nagy",
+	"wikibasemediainfo-special-mediasearch-filter-sort-label": "Válogatás szempontja:",
 	"wikibasemediainfo-special-mediasearch-no-results": "Nincs találat"
 }

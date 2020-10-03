@@ -394,6 +394,8 @@
 				"wikibasemediainfo-special-mediasearch-load-more-results",
 				"wikibasemediainfo-special-mediasearch-quickview-button-text",
 				"wikibasemediainfo-special-mediasearch-quickview-close-button-text",
+				"wikibasemediainfo-special-mediasearch-quickview-previous-button-text",
+				"wikibasemediainfo-special-mediasearch-quickview-next-button-text",
 				"wikibasemediainfo-special-mediasearch-category-info"
 			],
 			"dependencies": [

@@ -6,7 +6,7 @@
 			tabindex="0"
 			role="dialog"
 			aria-fullscreen="true"
-			@keyup.esc="close"
+			@keyup="onKeyup"
 		>
 			<div class="wbmi-dialog__overlay" @click="close"></div>
 
@@ -106,6 +106,18 @@ module.exports = {
 		 */
 		close: function () {
 			this.$emit( 'close' );
+		},
+
+		/**
+		 * @param {KeyboardEvent} e
+		 * @fires close|key
+		 */
+		onKeyup: function ( e ) {
+			if ( e.code === 'Escape' ) {
+				this.$emit( 'close' );
+			} else {
+				this.$emit( 'key', e.code );
+			}
 		}
 	},
 

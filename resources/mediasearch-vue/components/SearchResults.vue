@@ -7,6 +7,7 @@
 				v-for="(result, index) in results[ mediaType ]"
 				:ref="result.pageid"
 				:key="index"
+				:class="getResultClass( result.pageid )"
 				v-bind="result"
 				@show-details="showDetails">
 			</component>
@@ -20,6 +21,7 @@
 				:no-header="true"
 				:fullscreen="true"
 				@close="hideDetails"
+				@key="onDialogKeyup"
 			>
 				<quick-view
 					ref="quickview"
@@ -28,6 +30,8 @@
 					:media-type="mediaType"
 					:is-dialog="true"
 					@close="hideDetails"
+					@previous="changeQuickViewResult( $event, -1 )"
+					@next="changeQuickViewResult( $event, 1 )"
 				></quick-view>
 			</wbmi-dialog>
 		</template>
@@ -44,7 +48,10 @@
 				:key="details.pageid"
 				v-bind="details"
 				:media-type="mediaType"
-				@close="hideDetails">
+				@close="hideDetails"
+				@previous="changeQuickViewResult( $event, -1 )"
+				@next="changeQuickViewResult( $event, 1 )"
+			>
 			</quick-view>
 		</aside>
 	</div>
@@ -94,7 +101,9 @@ module.exports = {
 
 	data: function () {
 		return {
-			details: null
+			details: null,
+			// Which quickview control to focus on when the panel opens.
+			focusOn: 'close'
 		};
 	},
 
@@ -157,11 +166,13 @@ module.exports = {
 				// Let the QuickView component programatically manage focus
 				// once it is displayed
 				this.$nextTick( function () {
-					this.$refs.quickview.focus();
+					this.$refs.quickview.focus( this.focusOn );
 				}.bind( this ) );
 
+				this.scrollIntoViewIfNeeded( pageid );
 			}.bind( this ) );
 		},
+
 		/**
 		 * Reset details data to null. Restores focus to the originating result
 		 * if an optional argument is provided.
@@ -177,7 +188,78 @@ module.exports = {
 			}
 
 			this.details = null;
+			this.focusOn = 'close';
 		},
+
+		/**
+		 * Scroll through results in QuickView via arrow keys.
+		 *
+		 * @param {boolean} shouldChangeFocus
+		 * @param {number} addend 1 for next, -1 for previous
+		 */
+		changeQuickViewResult: function ( shouldChangeFocus, addend ) {
+			var tabResults = this.results[ this.mediaType ],
+				currentItem = tabResults.filter( function ( result ) {
+					return result.pageid === this.details.pageid;
+				}.bind( this ) ),
+				currentIndex = tabResults.indexOf( currentItem[ 0 ] ),
+				nextIndex = currentIndex + addend;
+
+			// If we're not surpassing either end of the results array, go to
+			// the previous or next item.
+			if ( nextIndex >= 0 && nextIndex < tabResults.length ) {
+				this.showDetails( tabResults[ nextIndex ].pageid );
+			}
+
+			// When the user navigates between results via keyboard, we want the
+			// new QuickView panel to focus on the just-pressed button when it
+			// opens. Otherwise, we should remove focus from the close button
+			// to avoid confusion for mouse-users.
+			if ( shouldChangeFocus ) {
+				this.focusOn = addend === 1 ? 'next' : 'previous';
+			} else {
+				this.focusOn = null;
+			}
+		},
+
+		/**
+		 * Scroll current QuickView result into view if it's not fully visible.
+		 *
+		 * @param {number} pageid
+		 */
+		scrollIntoViewIfNeeded: function ( pageid ) {
+			var element = this.$refs[ pageid ][ 0 ].$el,
+				bounds = element.getBoundingClientRect(),
+				viewportHeight = window.innerHeight || document.documentElement.clientHeight,
+				isAboveViewport = bounds.top < 0 || bounds.bottom < 0,
+				isBelowViewport = bounds.top > viewportHeight || bounds.bottom > viewportHeight;
+
+			if ( isAboveViewport ) {
+				// Scroll into view and align to top.
+				element.scrollIntoView();
+			}
+
+			if ( isBelowViewport ) {
+				// Scroll into view and align to bottom.
+				element.scrollIntoView( false );
+			}
+		},
+
+		/**
+		 * Look for arrow keyups on dialog.
+		 *
+		 * @param {string} code KeyboardEvent.code
+		 */
+		onDialogKeyup: function ( code ) {
+			if ( code === 'ArrowRight' ) {
+				this.changeQuickViewResult( true, 1 );
+			}
+
+			if ( code === 'ArrowLeft' ) {
+				this.changeQuickViewResult( true, -1 );
+			}
+		},
+
 		/**
 		 * Make an API request for basic image information plus extended
 		 * metadata
@@ -210,6 +292,16 @@ module.exports = {
 
 			// Real version: use mw.api
 			return api.get( params );
+		},
+
+		/**
+		 * @param {number} pageid
+		 * @return {Object}
+		 */
+		getResultClass: function ( pageid ) {
+			return {
+				'wbmi-media-search-result--highlighted': this.details && this.details.pageid === pageid
+			};
 		}
 	},
 

@@ -6,9 +6,11 @@ use CirrusSearch\HashSearchConfig;
 use CirrusSearch\Parser\FullTextKeywordRegistry;
 use CirrusSearch\Search\SearchContext;
 use CirrusSearch\SearchConfig;
+use HashBagOStuff;
 use MediaWiki\Http\HttpRequestFactory;
 use MediaWiki\MediaWikiServices;
 use MediaWikiTestCase;
+use WANObjectCache;
 use Wikibase\Lib\LanguageFallbackChainFactory;
 use Wikibase\Lib\TermLanguageFallbackChain;
 use Wikibase\MediaInfo\Search\MediaQueryBuilder;
@@ -35,6 +37,7 @@ class MediaQueryBuilderTest extends MediaWikiTestCase {
 			$entityIds,
 			$externalEntitySearchBaseUri
 		);
+		$objectCache = new WANObjectCache( [ 'cache' => new HashBagOStuff() ] );
 		$fallbackChainFactory = $this->createMockFallbackChainFactory(
 			$userLanguage,
 			$fallbackLangs
@@ -53,6 +56,7 @@ class MediaQueryBuilderTest extends MediaWikiTestCase {
 			$stemmingSettings,
 			$userLanguage,
 			$httpRequestFactory,
+			$objectCache,
 			$defaultProperties,
 			$externalEntitySearchBaseUri,
 			$fallbackChainFactory

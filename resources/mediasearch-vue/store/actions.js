@@ -2,7 +2,8 @@
 
 var LIMIT = 40,
 	api = new mw.Api(),
-	activeRequest = null;
+	activeSearchRequest = null,
+	activeConceptsRequest = null;
 
 /**
  * Generate additional (non-term) search keywords for filters.
@@ -119,8 +120,8 @@ module.exports = {
 		}
 
 		// If a search request is already in-flight, abort it
-		if ( activeRequest ) {
-			activeRequest.abort();
+		if ( activeSearchRequest ) {
+			activeSearchRequest.abort();
 		}
 
 		// Set the pending state for the given queue
@@ -138,7 +139,7 @@ module.exports = {
 			}
 		} );
 
-		activeRequest = request;
+		activeSearchRequest = request;
 
 		return request.then( function ( response ) {
 			var results, pageIDs, sortedResults;
@@ -177,12 +178,73 @@ module.exports = {
 				} );
 			}
 		} ).done( function () {
-			activeRequest = null;
+			activeSearchRequest = null;
 			// Set pending back to false when request is complete
 			context.commit( 'setPending', {
 				type: options.type,
 				pending: false
 			} );
 		} );
+	},
+
+	/**
+	 * Fetch data for concept chips.
+	 *
+	 * @param {Object} context
+	 * @param {string} term
+	 * @return {jQuery.Deferred}
+	 */
+	getRelatedConcepts: function ( context, term ) {
+		var params = {
+				format: 'json',
+				uselang: mw.config.get( 'wgUserLanguage' ),
+				action: 'relatedconcepts',
+				term: term,
+				limit: 10
+			},
+			request;
+
+		// Abort in-flight request, if it exists.
+		if ( activeConceptsRequest ) {
+			activeConceptsRequest.abort();
+		}
+
+		request = api.get( params );
+		request.promise( {
+			abort: function () {
+				request.abort();
+			}
+		} );
+		activeConceptsRequest = request;
+
+		return request.then( function ( response ) {
+			activeConceptsRequest = null;
+
+			if ( response.query && response.query.relatedconcepts && response.query.relatedconcepts.length > 0 ) {
+				context.commit( 'setRelatedConcepts', response.query.relatedconcepts );
+			}
+		} );
+	},
+
+	/**
+	 * Handle search term clear.
+	 *
+	 * @param {Object} context
+	 */
+	clear: function ( context ) {
+		if ( activeSearchRequest ) {
+			activeSearchRequest.abort();
+			activeSearchRequest = null;
+		}
+
+		if ( activeConceptsRequest ) {
+			activeConceptsRequest.abort();
+			activeConceptsRequest = null;
+		}
+
+		context.commit( 'clearTerm' );
+		context.commit( 'clearRelatedConcepts' );
+		context.commit( 'resetFilters' );
+		context.commit( 'resetResults' );
 	}
 };

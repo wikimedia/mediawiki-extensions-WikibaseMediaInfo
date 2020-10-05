@@ -26,6 +26,8 @@ module.exports = {
 	 */
 	term: initialTerm,
 
+	relatedConcepts: [],
+
 	/**
 	 * Arrays of objects broken down by type
 	 */

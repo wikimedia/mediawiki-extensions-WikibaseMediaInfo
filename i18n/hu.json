@@ -115,11 +115,16 @@
 	"wikibasemediainfo-special-mediasearch-tab-bitmap": "Képek",
 	"wikibasemediainfo-special-mediasearch-tab-audio": "Hangfájlok",
 	"wikibasemediainfo-special-mediasearch-tab-video": "Videók",
+	"wikibasemediainfo-special-mediasearch-tab-page": "Kategóriák és Oldalak",
+	"wikibasemediainfo-special-mediasearch-tab-other": "Egyéb",
 	"wikibasemediainfo-special-mediasearch-filter-size": "Média mérete",
 	"wikibasemediainfo-special-mediasearch-filter-size-any": "Bármilyen méret",
 	"wikibasemediainfo-special-mediasearch-filter-size-small": "Kicsi",
 	"wikibasemediainfo-special-mediasearch-filter-size-medium": "Közepes",
 	"wikibasemediainfo-special-mediasearch-filter-size-large": "Nagy",
 	"wikibasemediainfo-special-mediasearch-filter-sort-label": "Válogatás szempontja:",
-	"wikibasemediainfo-special-mediasearch-no-results": "Nincs találat"
+	"wikibasemediainfo-special-mediasearch-filter-sort-default": "Relevancia",
+	"wikibasemediainfo-special-mediasearch-filter-sort-popularity": "Népszerűség",
+	"wikibasemediainfo-special-mediasearch-no-results": "Nincs találat",
+	"wikibasemediainfo-special-mediasearch-category-info": "$1 tag - $2 alkategória, $3 fájl"
 }

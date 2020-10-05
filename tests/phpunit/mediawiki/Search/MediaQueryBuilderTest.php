@@ -1,6 +1,6 @@
 <?php
 
-namespace Wikibase\MediaInfo\Tests\Unit\Search;
+namespace Wikibase\MediaInfo\Tests\MediaWiki\Search;
 
 use CirrusSearch\HashSearchConfig;
 use CirrusSearch\Parser\FullTextKeywordRegistry;

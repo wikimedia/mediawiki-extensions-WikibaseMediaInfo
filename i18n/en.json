@@ -142,5 +142,6 @@
 	"wikibasemediainfo-special-mediasearch-load-more-results": "Load more",
 	"wikibasemediainfo-special-mediasearch-quickview-button-text": "More Details",
 	"wikibasemediainfo-special-mediasearch-quickview-close-button-text": "Close file details",
-	"wikibasemediainfo-special-mediasearch-category-info": "$1 {{PLURAL:$1|member|members}} – $2 {{PLURAL:$2|subcategory|subcategories}}, $3 {{PLURAL:$3|file|files}}"
+	"wikibasemediainfo-special-mediasearch-category-info": "$1 {{PLURAL:$1|member|members}} – $2 {{PLURAL:$2|subcategory|subcategories}}, $3 {{PLURAL:$3|file|files}}",
+	"wikibasemediainfo-rescore-profile-classic-noboostlinks-max-boost-template": "Ranking based on best template, page language and recency when activated on this wiki."
 }

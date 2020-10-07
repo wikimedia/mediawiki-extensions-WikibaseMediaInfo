@@ -714,6 +714,16 @@ class WikibaseMediaInfoHooks {
 			'mediainfo_base',
 			__DIR__ . '/Search/MediaSearchProfiles.php' );
 
+		$service->registerFileRepository( SearchProfileService::RESCORE,
+			// this string is to prevent overwriting, not used for retrieval
+			'mediainfo_base',
+			__DIR__ . '/Search/MediaSearchRescoreProfiles.php' );
+
+		$service->registerFileRepository( SearchProfileService::RESCORE_FUNCTION_CHAINS,
+			// this string is to prevent overwriting, not used for retrieval
+			'mediainfo_base',
+			__DIR__ . '/Search/MediaSearchRescoreFunctionChains.php' );
+
 		$request = RequestContext::getMain()->getRequest();
 		$title = RequestContext::getMain()->getTitle() ?? Title::newMainPage();
 
@@ -725,7 +735,7 @@ class WikibaseMediaInfoHooks {
 			// Need to register a rescore profile for the profile context
 			// Register the same one as used by fulltext search for comparison purposes
 			$service->registerDefaultProfile( SearchProfileService::RESCORE,
-				$searchProfileContextName, 'classic_noboostlinks' );
+				$searchProfileContextName, 'classic_noboostlinks_max_boost_template' );
 
 			$service->registerFTSearchQueryRoute( $searchProfileContextName, 1, [ NS_FILE ],
 				[ BasicQueryClassifier::SIMPLE_BAG_OF_WORDS, BasicQueryClassifier::COMPLEX_QUERY ] );

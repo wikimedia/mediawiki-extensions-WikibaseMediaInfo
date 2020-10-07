@@ -10,27 +10,11 @@
 				class="wbmi-media-search-quick-view__thumbnail
 					wbmi-media-search-quick-view__thumbnail--image">
 
-			<video v-else-if="isVideo"
-				controls
-				class="wbmi-media-search-quick-view__thumbnail
-					wbmi-media-search-quick-view__thumbnail--video">
-
-				<source
-					:src="imageinfo[ 0 ].url"
-					:type="mimeType"
-				>
-			</video>
-
-			<audio v-else-if="isAudio"
-				controls
-				class="wbmi-media-search-quick-view__thumbnail
-					wbmi-media-search-quick-view__thumbnail--audio">
-
-				<source
-					:src="imageinfo[ 0 ].url"
-					:type="mimeType"
-				>
-			</audio>
+			<wbmi-player
+				v-else-if="isVideo || isAudio"
+				:options="playerOptions"
+				:fallback-url="videoinfo[ 0 ].url"
+			></wbmi-player>
 
 			<a ref="close"
 				tabindex="0"
@@ -110,6 +94,7 @@
 
 <script>
 var WbmiIcon = require( './base/Icon.vue' ),
+	WbmiPlayer = require( './base/Player.vue' ),
 	icons = require( '../../../lib/icons.js' ),
 	PREVIEW_SIZES = [ 640, 800, 1200, 1600 ], // Pre-defined set of thumbnail image width values
 	MAX_SIZE = 2000;
@@ -129,7 +114,8 @@ module.exports = {
 	name: 'QuickView',
 
 	components: {
-		'wbmi-icon': WbmiIcon
+		'wbmi-icon': WbmiIcon,
+		'wbmi-player': WbmiPlayer
 	},
 
 	inheritAttrs: false,
@@ -151,6 +137,14 @@ module.exports = {
 		},
 
 		imageinfo: {
+			type: Array,
+			required: false,
+			default: function () {
+				return [ {} ];
+			}
+		},
+
+		videoinfo: {
 			type: Array,
 			required: false,
 			default: function () {
@@ -264,7 +258,14 @@ module.exports = {
 		 * @return {Object|undefined}
 		 */
 		metadata: function () {
-			return this.imageinfo[ 0 ].extmetadata;
+			// If we are dealing with an audio or video file, metadata will live
+			// in a videoinfo prop instead of an imageinfo prop. Contents will
+			// be mostly the same.
+			if ( this.isAudio || this.isVideo ) {
+				return this.videoinfo[ 0 ].extmetadata;
+			} else {
+				return this.imageinfo[ 0 ].extmetadata;
+			}
 		},
 
 		/**
@@ -364,6 +365,20 @@ module.exports = {
 
 		mimeType: function () {
 			return this.imageinfo[ 0 ].mime;
+		},
+
+		playerOptions: function () {
+			if ( this.isVideo || this.isAudio ) {
+				return {
+					autoplay: false,
+					controls: true,
+					fluid: true,
+					poster: this.videoinfo[ 0 ].thumburl,
+					sources: this.videoinfo[ 0 ].derivatives
+				};
+			} else {
+				return {};
+			}
 		}
 	},
 

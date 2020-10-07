@@ -190,13 +190,20 @@ module.exports = {
 				format: 'json',
 				uselang: mw.config.get( 'wgUserLanguage' ),
 				action: 'query',
-				prop: 'info|imageinfo|pageterms',
-				iiprop: 'url|size|mime|extmetadata',
-				iiurlheight: this.mediaType === 'bitmap' ? 180 : undefined,
-				iiurlwidth: this.mediaType === 'video' ? 200 : undefined,
 				inprop: 'url',
 				pageids: pageid
 			};
+
+			// Set special params for audio/video files
+			if ( this.mediaType === 'video' || this.mediaType === 'audio' ) {
+				params.prop = 'info|videoinfo|pageterms';
+				params.viprop = 'url|size|mime|extmetadata|derivatives';
+				params.viurlwidth = 640;
+			} else {
+				params.prop = 'info|imageinfo|pageterms';
+				params.iiprop = 'url|size|mime|extmetadata';
+				params.iiurlheight = this.mediaType === 'bitmap' ? 180 : undefined;
+			}
 
 			// Test version: use production commons API
 			// return $.get( 'https://commons.wikimedia.org/w/api.php', params );

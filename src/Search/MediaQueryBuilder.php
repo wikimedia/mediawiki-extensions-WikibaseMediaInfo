@@ -64,7 +64,6 @@ class MediaQueryBuilder extends FullTextQueryStringQueryBuilder {
 					'redirect.title' => 1.0,
 					'suggest' => 1.0,
 					'text' => 1.0,
-					'opening_text' => 1.0,
 					'non-file_namespace_boost' => 1.0,
 				],
 				'decay' => [
@@ -358,15 +357,87 @@ class MediaQueryBuilder extends FullTextQueryStringQueryBuilder {
 			return null;
 		}
 
+		$tokenBoost = $this->getTokenBoost( $term );
+
 		$query = new DisMax();
 		foreach ( $statementTerms as $statementTerm ) {
 			$query->addQuery(
 				( new Match() )
 					->setFieldQuery( StatementsField::NAME, $statementTerm['term'] )
-					->setFieldBoost( StatementsField::NAME, $statementTerm['boost'] )
+					->setFieldBoost( StatementsField::NAME, $statementTerm['boost'] * $tokenBoost )
 			);
 		}
 		return $query;
+	}
+
+	private function getTokens( string $term ) : array {
+		// don't simply split on space: hyphenated words etc. are also
+		// considered separate tokens - let's consider any uninterrupted
+		// sequence of letters, marks, numbers & symbols a token
+		if ( !preg_match_all( '/[\p{L}\p{M}\p{N}\p{S}]+/u', $term, $matches ) ) {
+			return [];
+		}
+
+		$tokens = $matches[0];
+
+		// ignore case differences & strip uniques
+		$tokens = array_map( 'strtolower', $tokens );
+		$tokens = array_unique( $tokens );
+
+		return $tokens;
+	}
+
+	/**
+	 * When a search term consists of multiple tokens, multiple things can
+	 * contribute to the score & they can reach a higher combined score than
+	 * when there was just 1 token.
+	 *
+	 * Not all tokens are worth the same, though. The more words there are,
+	 * the less they matter: not all words are going to be repeated throughout
+	 * all text in equal amounts.
+	 *
+	 * An analysis of a large variety of popular search terms indicates that,
+	 * on average, every additional token is worth about half the score of
+	 * only 1 token.
+	 *
+	 * Avg total scores per token, roughly - based on ~125 popular queries:
+	 * | 1      | 2      | 3      | 4      # token count
+	 * | 71     | 108    | 135    | 181    # max score
+	 *
+	 * This is a naive PHP-based implementation; ideally we'd get this straight
+	 * from ElasticSearch (and exclude duplicates, stopwords, ...), though
+	 * we'd need to look into whether that's even possible.
+	 *
+	 * @param string $term
+	 * @return float
+	 */
+	private function getTokenBoost( string $term ) : float {
+		$tokens = $this->getTokens( $term );
+
+		$tokenBoost = 0.5;
+		foreach ( $tokens as $token ) {
+			// stopwords (e.g. "the") and extremely common words (e.g. "do") will
+			// also not (or barely) contribute to the score, but are not filtered
+			// out in above tokens
+			// we have no way of reliably filtering out such terms or estimating
+			// their impact on the score, but they are increasingly likely to
+			// occur in longer, multi-word search terms...
+			// one thing most stopwords (in latin languages at least) have in common
+			// is that they are short; let's use the character length as somewhat
+			// of a proxy for how likely a token is to be a stopword, decaying the
+			// additional boost more the shorted the word is
+			$limit = 4;
+
+			// use strlen instead of mb_strlen - bytecount is perfect, that'll cause
+			// non-latin languages - where words are often fewer, more complex
+			// characters - to bypass this decay
+			$length = strlen( $token );
+			$decay = max( 0, $limit - $length ) / $limit;
+
+			$tokenBoost += 0.5 * ( 1 - $decay );
+		}
+
+		return $tokenBoost;
 	}
 
 	private function createNonFileNamespaceRankingQuery( string $term ) : BoolQuery {

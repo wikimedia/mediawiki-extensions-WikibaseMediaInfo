@@ -194,7 +194,7 @@
                                 "match": {
                                     "statement_keywords": {
                                         "query": "P999=Q9",
-                                        "boost": 1
+                                        "boost": 2
                                     }
                                 }
                             },
@@ -202,7 +202,7 @@
                                 "match": {
                                     "statement_keywords": {
                                         "query": "P999=Q2",
-                                        "boost": 0.75
+                                        "boost": 1.5
                                     }
                                 }
                             },
@@ -210,7 +210,7 @@
                                 "match": {
                                     "statement_keywords": {
                                         "query": "P999=Q999999",
-                                        "boost": 0.57971014492753625
+                                        "boost": 1.1594202898550725
                                     }
                                 }
                             }

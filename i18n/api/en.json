@@ -4,6 +4,6 @@
 	},
 	"apihelp-relatedconcepts-summary": "Find concepts related to a term",
 	"apihelp-relatedconcepts-example": "Find concepts related to <kbd>apple</kbd>.",
-	"apihelp-relatedconcepts-param-term": "{{doc-apihelp-param|relatedconcepts|term}}",
-	"apihelp-relatedconcepts-param-limit": "{{doc-apihelp-param|relatedconcepts|limit}}"
+	"apihelp-relatedconcepts-param-term": "The term to find related concepts for",
+	"apihelp-relatedconcepts-param-limit": "The maximum amount of related concepts to return"
 }

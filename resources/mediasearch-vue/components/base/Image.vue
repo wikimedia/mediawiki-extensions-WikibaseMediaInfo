@@ -96,7 +96,10 @@ module.exports = {
 		if ( this.supportsObserver ) {
 			this.observer = new IntersectionObserver(
 				intersectionCallback.bind( this ), {
-					root: null,
+					// Set the detection area to extend past the bottom of the
+					// viewport by 50% (a figure that comes from MobileFrontEnd) so
+					// images will load before they enter the viewport.
+					rootMargin: '0px 0px 50% 0px',
 					threshold: 0
 				} );
 

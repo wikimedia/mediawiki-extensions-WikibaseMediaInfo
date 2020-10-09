@@ -1,13 +1,12 @@
 {
 	"@metadata": {
 		"authors": [
-			"BaRaN6161 TURK"
+			"BaRaN6161 TURK",
+			"MuratTheTurkish"
 		]
 	},
-	"apihelp-query+mediasearch-summary": "Medya dosyalarında ara",
-	"apihelp-query+mediasearch-example": "<kbd>test</kbd> için medya arayın.",
-	"apihelp-query+mediasearch-param-search": "Arama terimi",
-	"apihelp-query+mediasearch-param-rawsearch": "Arama terimine ek olarak ham arama sorgusu (yorumlanmayacak, belirli filtreler eklemek için yararlı vb.)",
-	"apihelp-query+mediasearch-param-limit": "Azami sonuç sayısı",
-	"apihelp-query+mediasearch-param-continue": "Bir aramaya devam etmek için nereye ofsetlenecek"
+	"apihelp-relatedconcepts-summary": "Bir terimle ilgili kavramları bulun",
+	"apihelp-relatedconcepts-example": "<kbd>apple</kbd> ile ilgili kavramları bulun.",
+	"apihelp-relatedconcepts-param-term": "İlgili kavramları bulmak için kullanılan terim",
+	"apihelp-relatedconcepts-param-limit": "Döndürülecek maksimum ilgili kavram miktarı"
 }

@@ -125,12 +125,18 @@
 	"wikibasemediainfo-special-mediasearch-tab-bitmap": "תמונות",
 	"wikibasemediainfo-special-mediasearch-tab-audio": "שמע",
 	"wikibasemediainfo-special-mediasearch-tab-video": "וידאו",
+	"wikibasemediainfo-special-mediasearch-tab-page": "קטגוריות ודפים",
+	"wikibasemediainfo-special-mediasearch-tab-other": "אחר",
 	"wikibasemediainfo-special-mediasearch-filter-size": "גודל התמונה",
 	"wikibasemediainfo-special-mediasearch-filter-size-any": "תמונות בכל גודל",
 	"wikibasemediainfo-special-mediasearch-filter-size-small": "קטן",
 	"wikibasemediainfo-special-mediasearch-filter-size-medium": "בינוני",
 	"wikibasemediainfo-special-mediasearch-filter-size-large": "גדול",
 	"wikibasemediainfo-special-mediasearch-filter-file-type-any": "כל סוגי הקבצים",
+	"wikibasemediainfo-special-mediasearch-filter-sort-label": "למיין לפי:",
+	"wikibasemediainfo-special-mediasearch-filter-sort-default": "רלוונטיוּת",
+	"wikibasemediainfo-special-mediasearch-filter-sort-recency": "אחרונוּת",
+	"wikibasemediainfo-special-mediasearch-filter-sort-popularity": "פופולריוּת",
 	"wikibasemediainfo-special-mediasearch-no-results": "לא מצאנו שום תוצאה",
 	"wikibasemediainfo-special-mediasearch-no-results-tips": "נא לנסות מונחים כליים יותר או לבדוק את האיות שלך",
 	"wikibasemediainfo-special-mediasearch-empty-state": "לחפש יותר {{PLURAL:$1|מקובץ מדיה <span class=\"wbmi-media-search-empty-state__file-count\">אחד</span> שאפשר לעשות בו|מ־<span class=\"wbmi-media-search-empty-state__file-count\">$1</span> קובצי מדיה שאפשר לעשות בהם}} שימוש חוזר חופשי",
@@ -139,5 +145,6 @@
 	"wikibasemediainfo-special-mediasearch-input-placeholder": "חיפוש תמונות, צלילים, סרטים, ועוד",
 	"wikibasemediainfo-special-mediasearch-load-more-results": "לטעון עוד",
 	"wikibasemediainfo-special-mediasearch-quickview-button-text": "פרטים נוספים",
-	"wikibasemediainfo-special-mediasearch-quickview-close-button-text": "סגירת פרטי הקובץ"
+	"wikibasemediainfo-special-mediasearch-quickview-close-button-text": "סגירת פרטי הקובץ",
+	"wikibasemediainfo-special-mediasearch-category-info": "{{PLURAL:$1|פריט אחד|$1 פריטים}} – {{PLURAL:$2|תת־קטגוריה אחת|$2 תת־קטגוריות}}, {{PLURAL:$1|קובץ אחד|$3 קבצים}}"
 }

@@ -1,0 +1,9 @@
+{
+	"@metadata": {
+		"authors": [
+			"Al Riaz Uddin Ripon"
+		]
+	},
+	"apihelp-relatedconcepts-summary": "একটি শব্দ বা পদ সম্পর্কিত ধারণাগুলো খুঁজুন",
+	"apihelp-relatedconcepts-example": "<kbd>apple</kbd> সম্পর্কিত ধারণাগুলো খুঁজুন"
+}

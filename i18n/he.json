@@ -146,5 +146,6 @@
 	"wikibasemediainfo-special-mediasearch-load-more-results": "לטעון עוד",
 	"wikibasemediainfo-special-mediasearch-quickview-button-text": "פרטים נוספים",
 	"wikibasemediainfo-special-mediasearch-quickview-close-button-text": "סגירת פרטי הקובץ",
-	"wikibasemediainfo-special-mediasearch-category-info": "{{PLURAL:$1|פריט אחד|$1 פריטים}} – {{PLURAL:$2|תת־קטגוריה אחת|$2 תת־קטגוריות}}, {{PLURAL:$1|קובץ אחד|$3 קבצים}}"
+	"wikibasemediainfo-special-mediasearch-category-info": "{{PLURAL:$1|פריט אחד|$1 פריטים}} – {{PLURAL:$2|תת־קטגוריה אחת|$2 תת־קטגוריות}}, {{PLURAL:$1|קובץ אחד|$3 קבצים}}",
+	"wikibasemediainfo-rescore-profile-classic-noboostlinks-max-boost-template": "הדירוג מבוסס על התבנית הטובה ביותר, על שפת הדף, ועל האחרונוּת של ההפעלה בוויקי הזה."
 }

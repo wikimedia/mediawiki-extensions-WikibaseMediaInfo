@@ -6,10 +6,8 @@
 			"Wladek92"
 		]
 	},
-	"apihelp-query+mediasearch-summary": "Rechercher des fichiers de médias",
-	"apihelp-query+mediasearch-example": "Rechercher des médias pour <kbd>test</kbd>.",
-	"apihelp-query+mediasearch-param-search": "Terme à rechercher",
-	"apihelp-query+mediasearch-param-rawsearch": "Requête de recherche brute, en plus du terme recherché (à ne pas interpréter, utile pour ajouter des filtres spécifiques, etc.)",
-	"apihelp-query+mediasearch-param-limit": "Nombre maximal de résultats",
-	"apihelp-query+mediasearch-param-continue": "Décalage à partir duquel continuer à chercher"
+	"apihelp-relatedconcepts-summary": "Trouver les concepts relatifs à un terme",
+	"apihelp-relatedconcepts-example": "Trouver les concepts relatifs à <kbd>apple</kbd>.",
+	"apihelp-relatedconcepts-param-term": "Le terme pour lequel trouver des concepts liés",
+	"apihelp-relatedconcepts-param-limit": "Le nombre maximum de concepts liés à renvoyer"
 }

@@ -143,5 +143,6 @@
 	"wikibasemediainfo-special-mediasearch-load-more-results": "Вчитај уште",
 	"wikibasemediainfo-special-mediasearch-quickview-button-text": "Поподробно",
 	"wikibasemediainfo-special-mediasearch-quickview-close-button-text": "Затвори подробности за податотеката",
-	"wikibasemediainfo-special-mediasearch-category-info": "$1 {{PLURAL:$1|член|членови}} — $2 {{PLURAL:$2|поткатегорија|поткатегории}}, $3 {{PLURAL:$3|податотека|податотеки}}"
+	"wikibasemediainfo-special-mediasearch-category-info": "$1 {{PLURAL:$1|член|членови}} — $2 {{PLURAL:$2|поткатегорија|поткатегории}}, $3 {{PLURAL:$3|податотека|податотеки}}",
+	"wikibasemediainfo-rescore-profile-classic-noboostlinks-max-boost-template": "Котирање според најдобрата предлошка, јазик на страницата и скорешност на активирање на ова вики."
 }

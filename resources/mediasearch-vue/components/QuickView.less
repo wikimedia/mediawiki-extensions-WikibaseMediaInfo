@@ -1,7 +1,7 @@
 @import 'mediawiki.mixins';
 @import '../../mediainfo-variables.less';
 
-.wbmi-media-search-quick-view {
+.wbmi-quick-view {
 	box-sizing: border-box;
 	padding: @wbmi-spacing-base-px * 1.5;
 	position: relative;
@@ -66,23 +66,20 @@
 		}
 	}
 
-	&__close-button {
-		.flex-display();
-		align-items: center;
+	&__button {
 		background-color: @background-color-base;
 		border: @border-width-base * 2 @border-style-base transparent;
 		border-radius: 15px;
 		box-sizing: border-box;
-		height: 30px;
-		justify-content: center;
-		left: @wbmi-spacing-base-px * 2;
-		padding: 0;
-		position: absolute;
-		top: @wbmi-spacing-base-px * 2;
-		width: 30px;
+		cursor: pointer;
+		// Inline flex will keep the element round (no extra space after the
+		// icon span) but still inline.
+		display: inline-flex;
+		padding: 3px;
 
 		.wbmi-icon {
 			color: @color-base--subtle;
+			font-size: 20px;
 			transition: color @transition-base;
 		}
 
@@ -97,21 +94,42 @@
 			border-color: @color-primary;
 			outline: 0;
 		}
+
+		&__text {
+			.wbmi-visually-hidden();
+		}
 	}
 
-	&__close-button-text {
-		.wbmi-visually-hidden();
+	&__close-button {
+		left: @wbmi-spacing-base-px * 2;
+		position: absolute;
+		top: @wbmi-spacing-base-px * 2;
+	}
+
+	&__controls {
+		position: absolute;
+		right: @wbmi-spacing-base-px * 2;
+		top: @wbmi-spacing-base-px * 2;
+
+		.wbmi-quick-view__button:first-child {
+			margin-right: @wbmi-spacing-base-px / 2;
+		}
 	}
 
 	&--dialog {
 		padding: 0;
 
-		.wbmi-media-search-quick-view__body {
+		.wbmi-quick-view__body {
 			padding: 0 @wbmi-spacing-base-px * 1.5 @wbmi-spacing-base-px * 1.5;
 		}
 
-		.wbmi-media-search-quick-view__close-button {
+		.wbmi-quick-view__close-button {
 			left: @wbmi-spacing-base-px / 2;
+			top: @wbmi-spacing-base-px / 2;
+		}
+
+		.wbmi-quick-view__controls {
+			right: @wbmi-spacing-base-px / 2;
 			top: @wbmi-spacing-base-px / 2;
 		}
 	}

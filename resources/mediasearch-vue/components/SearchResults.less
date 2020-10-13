@@ -78,4 +78,12 @@
 	&__details-dialog {
 		background-color: @background-color-base;
 	}
+
+	// Visually highlight current QuickView result.
+	.wbmi-media-search-result--highlighted {
+		&.wbmi-image-result,
+		&.wbmi-video-result {
+			border: solid 2px @color-primary;
+		}
+	}
 }

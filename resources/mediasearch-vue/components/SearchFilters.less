@@ -34,11 +34,16 @@
 	align-items: center;
 
 	.wbmi-select {
-		margin-right: @wbmi-margin-horizontal-mobile;
+		// Using margin-left instead of margin-right here is a little weird, but
+		// we need the observer element to come right after the last filter. If
+		// that last filter has a margin-right applied, the observer will never
+		// intersect, and we can't target the last filter with last-child
+		// anymore since the observer is the last-child.
+		margin-left: @wbmi-margin-horizontal-mobile;
 		position: static;
 
-		&:last-child {
-			margin-right: 0;
+		&:first-child {
+			margin-left: 0;
 		}
 
 		@media screen and ( min-width: @width-breakpoint-tablet ) {

@@ -4,10 +4,8 @@
 			"Jon Harald Søby"
 		]
 	},
-	"apihelp-query+mediasearch-summary": "Søk i mediefiler",
-	"apihelp-query+mediasearch-example": "Søk etter <kbd>test</kbd> i mediefiler.",
-	"apihelp-query+mediasearch-param-search": "Søkebegrep",
-	"apihelp-query+mediasearch-param-rawsearch": "Rå spørring, i tillegg til søkebegrepet (tolkes ikke, nyttig for å legge til spesifikke filtre osv.)",
-	"apihelp-query+mediasearch-param-limit": "Maksimalt antall resultater",
-	"apihelp-query+mediasearch-param-continue": "Offset for hvor søket skal fortsettes"
+	"apihelp-relatedconcepts-summary": "Finn konsepter som gjelder et begrep",
+	"apihelp-relatedconcepts-example": "Finn konsepter som gjelder <kbd>apple</kbd>.",
+	"apihelp-relatedconcepts-param-term": "Begrepet relaterte konsepter skal finnes for",
+	"apihelp-relatedconcepts-param-limit": "Maksimalt antall relaterte konsepter som skal returneres"
 }

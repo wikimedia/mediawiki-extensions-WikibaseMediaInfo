@@ -147,5 +147,6 @@
 	"wikibasemediainfo-special-mediasearch-load-more-results": "載入更多",
 	"wikibasemediainfo-special-mediasearch-quickview-button-text": "更多詳情",
 	"wikibasemediainfo-special-mediasearch-quickview-close-button-text": "關閉檔案詳情",
-	"wikibasemediainfo-special-mediasearch-category-info": "$1 {{PLURAL:$1|個成員}} – $2 {{PLURAL:$2|個子分類}}，$3 {{PLURAL:$3|個檔案}}"
+	"wikibasemediainfo-special-mediasearch-category-info": "$1 {{PLURAL:$1|個成員}} – $2 {{PLURAL:$2|個子分類}}，$3 {{PLURAL:$3|個檔案}}",
+	"wikibasemediainfo-rescore-profile-classic-noboostlinks-max-boost-template": "在此 wiki 上啟用時，基於最佳模板、頁面語言，以及新近事物的排名。"
 }

@@ -34,7 +34,7 @@ class MediaQueryBuilder extends FullTextQueryStringQueryBuilder {
 	/** @var WANObjectCache */
 	protected $objectCache;
 	/** @var array */
-	protected $defaultProperties;
+	protected $searchProperties;
 	/** @var string */
 	protected $externalEntitySearchBaseUri;
 	/** @var \Wikibase\Lib\TermLanguageFallbackChain */
@@ -50,7 +50,7 @@ class MediaQueryBuilder extends FullTextQueryStringQueryBuilder {
 		string $userLanguage,
 		HttpRequestFactory $httpRequestFactory,
 		WANObjectCache $objectCache,
-		array $defaultProperties,
+		array $searchProperties,
 		string $externalEntitySearchBaseUri,
 		LanguageFallbackChainFactory $languageFallbackChainFactory
 	) {
@@ -80,7 +80,7 @@ class MediaQueryBuilder extends FullTextQueryStringQueryBuilder {
 		$this->userLanguage = $userLanguage;
 		$this->httpRequestFactory = $httpRequestFactory;
 		$this->objectCache = $objectCache;
-		$this->defaultProperties = $defaultProperties;
+		$this->searchProperties = $searchProperties;
 		$this->externalEntitySearchBaseUri = $externalEntitySearchBaseUri;
 		$this->languageFallbackChain = $languageFallbackChainFactory
 			->newFromLanguageCode( $userLanguage );
@@ -94,7 +94,8 @@ class MediaQueryBuilder extends FullTextQueryStringQueryBuilder {
 	 */
 	public static function newFromGlobals( array $settings ) {
 		global $wgMediaInfoProperties,
-			   $wgMediaInfoExternalEntitySearchBaseUri;
+			$wgMediaInfoMediaSearchProperties,
+			$wgMediaInfoExternalEntitySearchBaseUri;
 		$repo = WikibaseRepo::getDefaultInstance();
 		$configFactory = MediaWikiServices::getInstance()->getConfigFactory();
 		$stemmingSettings = $configFactory->makeConfig( 'WikibaseCirrusSearch' )->get( 'UseStemming' );
@@ -112,7 +113,7 @@ class MediaQueryBuilder extends FullTextQueryStringQueryBuilder {
 			$repo->getUserLanguage()->getCode(),
 			MediaWikiServices::getInstance()->getHttpRequestFactory(),
 			MediaWikiServices::getInstance()->getMainWANObjectCache(),
-			array_values( $wgMediaInfoProperties ),
+			$wgMediaInfoMediaSearchProperties ?? array_fill_keys( array_values( $wgMediaInfoProperties ), 1 ),
 			$wgMediaInfoExternalEntitySearchBaseUri,
 			$repo->getLanguageFallbackChainFactory()
 		);
@@ -476,10 +477,10 @@ class MediaQueryBuilder extends FullTextQueryStringQueryBuilder {
 
 		$boost = $this->settings['boost']['statement'];
 		foreach ( $matchingWikibaseItems as $item ) {
-			foreach ( $this->defaultProperties as $propertyId ) {
+			foreach ( $this->searchProperties as $propertyId => $propertyWeight ) {
 				$statementTerms[] = [
 					'term' => $propertyId . StatementsField::STATEMENT_SEPARATOR . $item['entityId'],
-					'boost' => $boost * $item['score'],
+					'boost' => $propertyWeight * $boost * $item['score'],
 				];
 			}
 		}

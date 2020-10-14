@@ -147,6 +147,8 @@
 	"wikibasemediainfo-special-mediasearch-load-more-results": "Mehr laden",
 	"wikibasemediainfo-special-mediasearch-quickview-button-text": "Weitere Einzelheiten",
 	"wikibasemediainfo-special-mediasearch-quickview-close-button-text": "Details zur Datei schließen",
+	"wikibasemediainfo-special-mediasearch-quickview-previous-button-text": "Vorheriges Ergebnis anzeigen",
+	"wikibasemediainfo-special-mediasearch-quickview-next-button-text": "Nächstes Ergebnis anzeigen",
 	"wikibasemediainfo-special-mediasearch-category-info": "$1 {{PLURAL:$1|Mitglied|Mitglieder}} – $2 {{PLURAL:$2|Unterkategorie|Unterkategorien}}, $3 {{PLURAL:$3|Datei|Dateien}}",
 	"wikibasemediainfo-rescore-profile-classic-noboostlinks-max-boost-template": "Platzierung basierend auf der besten Vorlage, der Seitensprache und der Aktualität bei Aktivierung in diesem Wiki."
 }

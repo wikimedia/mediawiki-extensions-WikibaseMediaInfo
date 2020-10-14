@@ -337,7 +337,7 @@ class WikibaseMediaInfoHooks {
 	 *
 	 * @param ResourceLoaderContext $context
 	 * @param Config $config
-	 * @return array language codes as keys, autonyms as values
+	 * @return string[] language codes as keys, autonyms as values
 	 */
 	public static function generateWbTermsLanguages( ResourceLoaderContext $context, Config $config ) {
 		$wbRepo = WikibaseRepo::getDefaultInstance();
@@ -570,7 +570,7 @@ class WikibaseMediaInfoHooks {
 	 * https://www.mediawiki.org/wiki/Manual:Messages_API#Using_messages_in_JavaScript.
 	 *
 	 * @param OutputPage $out
-	 * @return string|NULL
+	 * @return string|null
 	 */
 	private function getProtectionMsg( $out ) {
 		$imgTitle = $out->getTitle();
@@ -745,8 +745,8 @@ class WikibaseMediaInfoHooks {
 	/**
 	 * Handler for the GetPreferences hook
 	 *
-	 * @param \User $user The user object
-	 * @param array &$preferences Their preferences object
+	 * @param \User $user
+	 * @param array[] &$preferences
 	 */
 	public static function onGetPreferences( \User $user, array &$preferences ) {
 		$preferences['wbmi-cc0-confirmed'] = [

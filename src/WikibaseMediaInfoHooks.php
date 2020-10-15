@@ -39,6 +39,7 @@ use Wikibase\MediaInfo\Content\MediaInfoHandler;
 use Wikibase\MediaInfo\DataAccess\Scribunto\Scribunto_LuaWikibaseMediaInfoEntityLibrary;
 use Wikibase\MediaInfo\DataAccess\Scribunto\Scribunto_LuaWikibaseMediaInfoLibrary;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
+use Wikibase\MediaInfo\Search\ExperimentalEntityTraversingMediaQueryBuilder;
 use Wikibase\MediaInfo\Search\MediaQueryBuilder;
 use Wikibase\MediaInfo\Services\MediaInfoByLinkedTitleLookup;
 use Wikibase\MediaInfo\Services\MediaInfoServices;
@@ -704,9 +705,8 @@ class WikibaseMediaInfoHooks {
 	 * @param SearchProfileService $service
 	 */
 	public static function onCirrusSearchProfileService( SearchProfileService $service ) {
-		$searchProfileContextName = MediaQueryBuilder::SEARCH_PROFILE_CONTEXT_NAME;
-		// array key in MediaSearchProfiles.php
-		$fulltextProfileName = MediaQueryBuilder::FULLTEXT_PROFILE_NAME;
+		$request = RequestContext::getMain()->getRequest();
+		$title = RequestContext::getMain()->getTitle() ?? Title::newMainPage();
 
 		// Register the query builder profiles so that they are usable in interleaved A/B test
 		$service->registerFileRepository( SearchProfileService::FT_QUERY_BUILDER,
@@ -724,16 +724,22 @@ class WikibaseMediaInfoHooks {
 			'mediainfo_base',
 			__DIR__ . '/Search/MediaSearchRescoreFunctionChains.php' );
 
-		$request = RequestContext::getMain()->getRequest();
-		$title = RequestContext::getMain()->getTitle() ?? Title::newMainPage();
+		$searchProfileContextName = MediaQueryBuilder::SEARCH_PROFILE_CONTEXT_NAME;
+		// array key in MediaSearchProfiles.php
+		$fulltextProfileName = MediaQueryBuilder::FULLTEXT_PROFILE_NAME;
+
+		if ( $request->getCheck( 'mediasearch_experimental' ) ) {
+			// switch to experimental implementation (only) when explicitly requested
+			$searchProfileContextName = ExperimentalEntityTraversingMediaQueryBuilder::SEARCH_PROFILE_CONTEXT_NAME;
+			$fulltextProfileName = ExperimentalEntityTraversingMediaQueryBuilder::FULLTEXT_PROFILE_NAME;
+		}
 
 		// Only activate a query route if mediasearch is explicitly requested
-		if ( $request->getVal( 'mediasearch' ) || $title->equals( \SpecialPage::getTitleFor( 'MediaSearch' ) ) ) {
+		if ( $request->getCheck( 'mediasearch' ) || $title->equals( \SpecialPage::getTitleFor( 'MediaSearch' ) ) ) {
 			$service->registerDefaultProfile( SearchProfileService::FT_QUERY_BUILDER,
 				$searchProfileContextName, $fulltextProfileName );
 
 			// Need to register a rescore profile for the profile context
-			// Register the same one as used by fulltext search for comparison purposes
 			$service->registerDefaultProfile( SearchProfileService::RESCORE,
 				$searchProfileContextName, 'classic_noboostlinks_max_boost_template' );
 

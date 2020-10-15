@@ -24,23 +24,23 @@ class MediaQueryBuilder extends FullTextQueryStringQueryBuilder {
 	public const FULLTEXT_PROFILE_NAME = 'mediainfo_fulltext';
 
 	/** @var array */
-	private $settings;
+	protected $settings;
 	/** @var array */
-	private $stemmingSettings;
+	protected $stemmingSettings;
 	/** @var string */
-	private $userLanguage;
+	protected $userLanguage;
 	/** @var HttpRequestFactory */
-	private $httpRequestFactory;
+	protected $httpRequestFactory;
 	/** @var WANObjectCache */
-	private $objectCache;
+	protected $objectCache;
 	/** @var array */
-	private $defaultProperties;
+	protected $defaultProperties;
 	/** @var string */
-	private $externalEntitySearchBaseUri;
+	protected $externalEntitySearchBaseUri;
 	/** @var \Wikibase\Lib\TermLanguageFallbackChain */
-	private $languageFallbackChain;
+	protected $languageFallbackChain;
 	/** @var array */
-	private $entitiesForTerm = [];
+	protected $entitiesForTerm = [];
 
 	public function __construct(
 		SearchConfig $config,
@@ -179,7 +179,7 @@ class MediaQueryBuilder extends FullTextQueryStringQueryBuilder {
 		return $query;
 	}
 
-	private function createFulltextFilterQuery( string $term ) : MultiMatch {
+	protected function createFulltextFilterQuery( string $term ) : MultiMatch {
 		$fields = [ 'all', 'all.plain' ];
 		if ( !empty( $this->stemmingSettings[$this->userLanguage]['query'] ) ) {
 			$fields[] = 'descriptions.' . $this->userLanguage;
@@ -202,7 +202,7 @@ class MediaQueryBuilder extends FullTextQueryStringQueryBuilder {
 			->setOperator( MultiMatch::OPERATOR_AND );
 	}
 
-	private function createStatementsFilterQuery( $term ) : ?BoolQuery {
+	protected function createStatementsFilterQuery( $term ) : ?BoolQuery {
 		$statementTerms = $this->getStatementTerms( $term );
 		if ( count( $statementTerms ) === 0 ) {
 			return null;
@@ -226,7 +226,7 @@ class MediaQueryBuilder extends FullTextQueryStringQueryBuilder {
 	 * @param string $term
 	 * @return BoolQuery
 	 */
-	private function createTextRankingQuery( string $term ) : BoolQuery {
+	protected function createTextRankingQuery( string $term ) : BoolQuery {
 		$query = new BoolQuery();
 
 		$query->addShould(
@@ -274,7 +274,7 @@ class MediaQueryBuilder extends FullTextQueryStringQueryBuilder {
 	 * @param string $term
 	 * @return BoolQuery
 	 */
-	private function createTitleRankingQuery( string $term ) : BoolQuery {
+	protected function createTitleRankingQuery( string $term ) : BoolQuery {
 		$query = new BoolQuery();
 
 		// captions in user's own language
@@ -357,7 +357,7 @@ class MediaQueryBuilder extends FullTextQueryStringQueryBuilder {
 		return $query;
 	}
 
-	private function createStatementsRankingQuery( string $term ) : ?DisMax {
+	protected function createStatementsRankingQuery( string $term ) : ?DisMax {
 		$statementTerms = $this->getStatementTerms( $term );
 		if ( count( $statementTerms ) === 0 ) {
 			return null;
@@ -376,7 +376,7 @@ class MediaQueryBuilder extends FullTextQueryStringQueryBuilder {
 		return $query;
 	}
 
-	private function getTokens( string $term ) : array {
+	protected function getTokens( string $term ) : array {
 		// don't simply split on space: hyphenated words etc. are also
 		// considered separate tokens - let's consider any uninterrupted
 		// sequence of letters, marks, numbers & symbols a token
@@ -417,7 +417,7 @@ class MediaQueryBuilder extends FullTextQueryStringQueryBuilder {
 	 * @param string $term
 	 * @return float
 	 */
-	private function getTokenBoost( string $term ) : float {
+	protected function getTokenBoost( string $term ) : float {
 		$tokens = $this->getTokens( $term );
 
 		$tokenBoost = 0.5;
@@ -446,7 +446,7 @@ class MediaQueryBuilder extends FullTextQueryStringQueryBuilder {
 		return $tokenBoost;
 	}
 
-	private function createNonFileNamespaceRankingQuery( string $term ) : BoolQuery {
+	protected function createNonFileNamespaceRankingQuery( string $term ) : BoolQuery {
 		$titleMatch = ( new MultiMatch() )
 			->setFields( [ 'all_near_match^2', 'all_near_match.asciifolding^1.5' ] )
 			->setQuery( $term )
@@ -467,7 +467,7 @@ class MediaQueryBuilder extends FullTextQueryStringQueryBuilder {
 		return false;
 	}
 
-	private function getStatementTerms( $term ) : array {
+	protected function getStatementTerms( $term ) : array {
 		$statementTerms = [];
 		$matchingWikibaseItems = $this->getMatchingWikibaseItems( $term );
 		if ( count( $matchingWikibaseItems ) === 0 ) {
@@ -496,7 +496,7 @@ class MediaQueryBuilder extends FullTextQueryStringQueryBuilder {
 	 * @param string $term
 	 * @return array
 	 */
-	private function getMatchingWikibaseItems( string $term ): array {
+	protected function getMatchingWikibaseItems( string $term ): array {
 		if ( !isset( $this->entitiesForTerm[$term] ) ) {
 			$cacheKey = $this->objectCache->makeGlobalKey( 'wbmi-mediasearch-entities', $term );
 			$data = $this->objectCache->getWithSetCallback(
@@ -521,7 +521,7 @@ class MediaQueryBuilder extends FullTextQueryStringQueryBuilder {
 	 * @param string $term
 	 * @return array
 	 */
-	private function fetchMatchingWikibaseData( string $term ): array {
+	protected function fetchMatchingWikibaseData( string $term ): array {
 		$params = [
 			'format' => 'json',
 			'action' => 'query',
@@ -578,7 +578,7 @@ class MediaQueryBuilder extends FullTextQueryStringQueryBuilder {
 		}, $response['query']['search'] ?? [], array_keys( $response['query']['search'] ?? [] ) );
 	}
 
-	private function apiRequest( array $params ) : array {
+	protected function apiRequest( array $params ) : array {
 		$url = $this->externalEntitySearchBaseUri . '?' . http_build_query( $params );
 		$request = $this->httpRequestFactory->create( $url, [], __METHOD__ );
 		$request->execute();

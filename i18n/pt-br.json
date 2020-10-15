@@ -143,5 +143,7 @@
 	"wikibasemediainfo-special-mediasearch-input-placeholder": "Pesquise imagens, áudio, vídeo e muito mais",
 	"wikibasemediainfo-special-mediasearch-load-more-results": "Carregar mais",
 	"wikibasemediainfo-special-mediasearch-quickview-button-text": "Mais detalhes",
-	"wikibasemediainfo-special-mediasearch-quickview-close-button-text": "Fechar detalhes do arquivo"
+	"wikibasemediainfo-special-mediasearch-quickview-close-button-text": "Fechar detalhes do arquivo",
+	"wikibasemediainfo-special-mediasearch-quickview-previous-button-text": "Ver o resultado anterior",
+	"wikibasemediainfo-special-mediasearch-quickview-next-button-text": "Ver o próximo resultado"
 }

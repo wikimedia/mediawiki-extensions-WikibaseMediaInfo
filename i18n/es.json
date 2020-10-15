@@ -8,7 +8,8 @@
 			"La Mantis",
 			"Macofe",
 			"Marcelo9987",
-			"MarcoAurelio"
+			"MarcoAurelio",
+			"Mpayansilva"
 		]
 	},
 	"right-mediainfo-term": "Cambiar términos de información de medio (leyendas, resúmenes…)",
@@ -103,5 +104,6 @@
 	"wikibasemediainfo-special-mediasearch-filter-sort-popularity": "Popularidad",
 	"wikibasemediainfo-special-mediasearch-no-results": "No se encontró ningún resultado",
 	"wikibasemediainfo-special-mediasearch-load-more-results": "Cargar más",
-	"wikibasemediainfo-special-mediasearch-quickview-button-text": "Más detalles"
+	"wikibasemediainfo-special-mediasearch-quickview-button-text": "Más detalles",
+	"wikibasemediainfo-special-mediasearch-quickview-next-button-text": "Ver el siguiente resultado"
 }

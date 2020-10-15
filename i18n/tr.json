@@ -149,6 +149,8 @@
 	"wikibasemediainfo-special-mediasearch-load-more-results": "Daha fazla yükle",
 	"wikibasemediainfo-special-mediasearch-quickview-button-text": "Daha Fazla Detay",
 	"wikibasemediainfo-special-mediasearch-quickview-close-button-text": "Dosya ayrıntıları kapat",
+	"wikibasemediainfo-special-mediasearch-quickview-previous-button-text": "Önceki sonucu görüntüle",
+	"wikibasemediainfo-special-mediasearch-quickview-next-button-text": "Sonraki sonucu görüntüle",
 	"wikibasemediainfo-special-mediasearch-category-info": "$1 üye – $2 alt kategori, $3 dosya",
 	"wikibasemediainfo-rescore-profile-classic-noboostlinks-max-boost-template": "Bu vikide etkinleştirildiğinde en iyi şablona, ​​sayfa diline ve yeniliğe göre sıralama."
 }

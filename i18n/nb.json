@@ -144,6 +144,8 @@
 	"wikibasemediainfo-special-mediasearch-load-more-results": "Last inn mer",
 	"wikibasemediainfo-special-mediasearch-quickview-button-text": "Flere detaljer",
 	"wikibasemediainfo-special-mediasearch-quickview-close-button-text": "Lukk fildetaljer",
+	"wikibasemediainfo-special-mediasearch-quickview-previous-button-text": "Vis forrige resultat",
+	"wikibasemediainfo-special-mediasearch-quickview-next-button-text": "Vis neste resultat",
 	"wikibasemediainfo-special-mediasearch-category-info": "$1 {{PLURAL:$1|medlem|medlemmer}} – $2 {{PLURAL:$2|underkategori|underkategorier}}, $3 {{PLURAL:$3|fil|filer}}",
 	"wikibasemediainfo-rescore-profile-classic-noboostlinks-max-boost-template": "Rangering basert på beste mal, sidespråk og nylighet når aktivert på denne wikien."
 }

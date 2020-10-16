@@ -25,7 +25,14 @@
 					if ( !image.src && image.dataset && image.dataset.src ) {
 						image.src = image.dataset.src;
 					}
-					return image.decode();
+
+					if ( typeof image.decode === 'function' ) {
+						return image.decode();
+					}
+
+					// If image.decode() isn't supported (e.g. IE) just return
+					// a resolved promise.
+					return $.Deferred().resolve().promise();
 				} );
 
 				$.when.apply( $, promises.map( function ( promise ) {

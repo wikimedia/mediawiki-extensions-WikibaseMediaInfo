@@ -14,7 +14,7 @@
 				>
 				</wbmi-select>
 				<wbmi-observer
-					v-if="index === searchFilters.length - 1"
+					v-if="index === searchFilters.length - 1 && supportsObserver"
 					:key="'filter-observer-' + index"
 					@intersect="removeGradientClass"
 					@hide="addGradientClass"
@@ -106,6 +106,12 @@ module.exports = {
 		 */
 		currentActiveFilters: function () {
 			return Object.keys( this.filterValues[ this.mediaType ] );
+		},
+
+		supportsObserver: function () {
+			return 'IntersectionObserver' in window &&
+				'IntersectionObserverEntry' in window &&
+				'intersectionRatio' in window.IntersectionObserverEntry.prototype;
 		}
 	} ),
 

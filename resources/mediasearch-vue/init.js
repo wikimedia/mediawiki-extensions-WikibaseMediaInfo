@@ -39,6 +39,7 @@
 					// only replace serverside render once entire view has rendered
 					// and images are settled, ensuring a smooth transition
 					$container.show().siblings().remove();
+					store.dispatch( 'ready' );
 				} );
 			} );
 		}

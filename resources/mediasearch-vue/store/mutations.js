@@ -130,5 +130,16 @@ module.exports = {
 	 */
 	clearRelatedConcepts: function ( state ) {
 		state.relatedConcepts = [];
+	},
+
+	/**
+	 * Let the entire app know that the UI is fully initialized.
+	 *
+	 * Useful for things like taking measurements of DOM elements.
+	 *
+	 * @param {Object} state
+	 */
+	setInitialized: function ( state ) {
+		state.initialized = true;
 	}
 };

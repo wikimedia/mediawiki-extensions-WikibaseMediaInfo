@@ -42,7 +42,7 @@ class ExperimentalEntityTraversingMediaQueryBuilder extends MediaQueryBuilder {
 		string $userLanguage,
 		HttpRequestFactory $httpRequestFactory,
 		WANObjectCache $objectCache,
-		array $defaultProperties,
+		array $searchProperties,
 		string $externalEntitySearchBaseUri,
 		LanguageFallbackChainFactory $languageFallbackChainFactory,
 		SparqlClient $sparqlClient
@@ -55,7 +55,7 @@ class ExperimentalEntityTraversingMediaQueryBuilder extends MediaQueryBuilder {
 			$userLanguage,
 			$httpRequestFactory,
 			$objectCache,
-			$defaultProperties,
+			$searchProperties,
 			$externalEntitySearchBaseUri,
 			$languageFallbackChainFactory
 		);
@@ -179,7 +179,7 @@ class ExperimentalEntityTraversingMediaQueryBuilder extends MediaQueryBuilder {
 				$query = '#defaultView:ImageGrid
 					SELECT ?image {
 						VALUES ?item { wd:' . implode( ' wd:', $batch ) . ' } .
-						?file (wdt:' . implode( '|wdt:', $this->defaultProperties ) . ') ?item .
+						?file (wdt:' . implode( '|wdt:', array_keys( $this->searchProperties ) ) . ') ?item .
 						?file schema:contentUrl ?url .
 						BIND(IRI(CONCAT(
 							"http://commons.wikimedia.org/wiki/Special:FilePath/",
@@ -203,7 +203,7 @@ class ExperimentalEntityTraversingMediaQueryBuilder extends MediaQueryBuilder {
 		// we'll simply grab a significant chunk and deal with what we've got, this is
 		// only a (very) experimental thing anyway, and the various dump* query params can
 		// be used for more detail, if needed
-		$limit = round( 750 / count( $this->defaultProperties ) );
+		$limit = round( 750 / count( $this->searchProperties ) );
 		uasort( $childItemIds, function ( $a, $b ) {
 			return $b['score'] <=> $a['score'];
 		} );

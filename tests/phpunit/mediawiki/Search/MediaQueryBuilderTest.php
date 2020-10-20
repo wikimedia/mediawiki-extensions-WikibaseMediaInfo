@@ -57,7 +57,7 @@ class MediaQueryBuilderTest extends MediaWikiTestCase {
 			$userLanguage,
 			$httpRequestFactory,
 			$objectCache,
-			$defaultProperties,
+			array_fill_keys( $defaultProperties, 1 ),
 			$externalEntitySearchBaseUri,
 			$fallbackChainFactory
 		);

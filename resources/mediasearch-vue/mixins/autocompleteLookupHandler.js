@@ -135,12 +135,9 @@ module.exports = {
 			var apiUri = mw.config.get( 'wbmiExternalEntitySearchBaseUri' ) ||
 					mw.config.get( 'wbmiRepoApiUrl' ) ||
 					mw.config.get( 'wbRepoApiUrl' ),
-				api = wikibase.api.getLocationAgnosticMwApi( apiUri );
-
-			// To test with production Wikidata items, uncomment the line below
-			// and enable the Allow CORS: Access-Control-Allow-Origin browser
-			// extension.
-			// var api = new mw.Api( { ajax: { url: 'https://www.wikidata.org/w/api.php' } } );
+				api = mw.config.get( 'wbmiLocalDev' ) ?
+					new mw.Api( { ajax: { url: 'https://www.wikidata.org/w/api.php' } } ) :
+					wikibase.api.getLocationAgnosticMwApi( apiUri );
 
 			return api.get( {
 				action: 'wbsearchentities',

@@ -296,11 +296,9 @@ module.exports = {
 				params.iiurlheight = this.mediaType === 'bitmap' ? 180 : undefined;
 			}
 
-			// Test version: use production commons API
-			// return $.get( 'https://commons.wikimedia.org/w/api.php', params );
-
-			// Real version: use mw.api
-			return api.get( params );
+			return mw.config.get( 'wbmiLocalDev' ) ?
+				$.get( 'https://commons.wikimedia.org/w/api.php', params ) : // local testing
+				api.get( params ); // real
 		},
 
 		/**

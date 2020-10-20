@@ -43,6 +43,10 @@
 			"description": "Links to pages to learn more about wikibase properties. E.g. { P1: 'https://commons.wikimedia.org/wiki/Special:MyLanguage/Commons:Depicts' }",
 			"value":  {}
 		},
+		"MediaInfoLocalDev": {
+			"description": "Set to true when developing in a local environment to pull data from production for things like Media Search",
+			"value": false
+		},
 		"MediaInfoExternalEntitySearchBaseUri": {
 			"value": ""
 		},

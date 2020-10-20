@@ -154,5 +154,6 @@
 	"wikibasemediainfo-special-mediasearch-quickview-close-button-text": "Fermer les détails du fichier",
 	"wikibasemediainfo-special-mediasearch-quickview-previous-button-text": "Afficher le résultat précédent",
 	"wikibasemediainfo-special-mediasearch-quickview-next-button-text": "Voir le résultat suivant",
-	"wikibasemediainfo-special-mediasearch-category-info": "$1 {{PLURAL:$1|membre|membres}} – $2 {{PLURAL:$2|sous-catégorie|sous-catégories}}, $3 {{PLURAL:$3|fichier|fichiers}}"
+	"wikibasemediainfo-special-mediasearch-category-info": "$1 {{PLURAL:$1|membre|membres}} – $2 {{PLURAL:$2|sous-catégorie|sous-catégories}}, $3 {{PLURAL:$3|fichier|fichiers}}",
+	"wikibasemediainfo-rescore-profile-classic-noboostlinks-max-boost-template": "Classement basé sur le meilleur modèle, la langue de la page et l’ancienneté, quand cela est activé sur ce wiki."
 }

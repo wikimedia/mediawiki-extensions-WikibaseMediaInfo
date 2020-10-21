@@ -26,7 +26,7 @@
 				<!-- Display search filters for each tab. -->
 				<search-filters
 					:media-type="tab"
-					@filter-change="onFilterChange( tab )"
+					@filter-change="onFilterChange"
 				>
 				</search-filters>
 
@@ -101,6 +101,7 @@
  * AutocompleteSearchInput for display.
  */
 var AUTOLOAD_COUNT = 2,
+	FILTER_DATA = require( '../data/filterItems.json' ),
 	mapState = require( 'vuex' ).mapState,
 	mapGetters = require( 'vuex' ).mapGetters,
 	mapMutations = require( 'vuex' ).mapMutations,
@@ -158,9 +159,11 @@ module.exports = {
 		'results',
 		'continue',
 		'pending',
-		'relatedConcepts'
+		'relatedConcepts',
+		'filterValues'
 	] ), mapGetters( [
-		'hasMore'
+		'hasMore',
+		'allActiveFilters'
 	] ), {
 
 		/**
@@ -209,14 +212,18 @@ module.exports = {
 		'resetResults',
 		'clearRelatedConcepts',
 		'setTerm',
-		'setPending'
+		'setPending',
+		'resetFilters',
+		'addFilterValue'
 	] ), mapActions( [
 		'search',
 		'getRelatedConcepts',
 		'clear'
 	] ), {
 		/**
-		 * Keep UI state, URL, and history in sync as the user changes tabs
+		 * Keep UI state, URL, and history in sync as the user changes tabs.
+		 * Filter and sort preferences are tab-specific, so they need to be
+		 * re-created every time the current tab changes.
 		 *
 		 * @param {Object} newTab
 		 * @param {string} newTab.name
@@ -224,6 +231,16 @@ module.exports = {
 		onTabChange: function ( newTab ) {
 			this.currentTab = newTab.name;
 			url.query.type = newTab.name;
+
+			// Record any currently active filters for the given tab in the URL
+			// query params
+			this.clearFilterQueryParams();
+			Object.keys( this.filterValues[ this.currentTab ] ).forEach( function ( filter ) {
+				url.query[ filter ] = this.filterValues[ this.currentTab ][ filter ];
+			}.bind( this ) );
+
+			// Extract the complete set of query params as a new entry in the
+			// history stack
 			window.history.pushState( url.query, null, '?' + url.getQueryString() );
 
 			/* eslint-disable camelcase */
@@ -236,12 +253,23 @@ module.exports = {
 		},
 
 		/**
-		 * @param {string} tab bitmap, video, etc
+		 * @param {Object} data
+		 * @param {string} data.mediaType
+		 * @param {string} data.filterType
+		 * @param {string} [data.value]
 		 */
-		onFilterChange: function ( tab ) {
-			this.resetResults( tab );
-			this.resetCountAndLoadMore( tab );
-			this.$refs[ tab ][ 0 ].hideDetails();
+		onFilterChange: function ( data ) {
+			this.resetResults( data.mediaType );
+			this.resetCountAndLoadMore( data.mediaType );
+			this.$refs[ data.mediaType ][ 0 ].hideDetails();
+
+			if ( data.value ) {
+				url.query[ data.filterType ] = data.value;
+			} else {
+				delete url.query[ data.filterType ];
+			}
+
+			window.history.pushState( url.query, null, '?' + url.getQueryString() );
 		},
 
 		/**
@@ -268,6 +296,7 @@ module.exports = {
 			this.setPending( { type: this.currentTab, pending: false } );
 
 			url.query.q = '';
+			this.clearFilterQueryParams();
 			window.history.pushState( url.query, null, '?' + url.getQueryString() );
 			this.autoloadCounter = this.setInitialAutoloadCountForTabs();
 
@@ -294,10 +323,25 @@ module.exports = {
 					this.clearLookupResults();
 				}
 
-				// Also update the mw.Uri object since we use it to generate
-				// future states
+				// Retreive any previously-active filters from the state object
+				// and manipulate the current state of both the application and
+				// the URL object to match the previously-stored values
+				this.resetFilters();
+				this.clearFilterQueryParams();
 				url.query.q = this.term;
 				url.query.type = this.currentTab;
+
+				Object.keys( e.state ).forEach( function ( key ) {
+					if ( key in FILTER_DATA[ this.currentTab ] || key === 'sort' ) {
+						url.query[ key ] = e.state[ key ];
+
+						this.addFilterValue( {
+							mediaType: this.currentTab,
+							filterType: key,
+							value: e.state[ key ]
+						} );
+					}
+				}.bind( this ) );
 			}
 		},
 
@@ -382,6 +426,11 @@ module.exports = {
 				this.lookupPromises.abort();
 			}
 
+			// Don't make API requests if the search term is empty
+			if ( this.term === '' ) {
+				return;
+			}
+
 			this.search( {
 				term: this.term,
 				type: this.currentTab
@@ -422,6 +471,21 @@ module.exports = {
 			} );
 
 			return count;
+		},
+
+		/**
+		 * Delete all filter query params from the mw.Uri object but leave any
+		 * other filters such as debug mode, feature flags, etc. intact.
+		 */
+		clearFilterQueryParams: function () {
+			Object.keys( FILTER_DATA ).forEach( function ( type ) {
+				Object.keys( FILTER_DATA[ type ] ).forEach( function ( filter ) {
+					delete url.query[ filter ];
+				} );
+			} );
+
+			// Delete any sort params that may have been added from a prior tab
+			delete url.query.sort;
 		}
 	} ),
 
@@ -458,6 +522,12 @@ module.exports = {
 				if ( this.enableConceptChips && this.currentTab === 'bitmap' ) {
 					this.getRelatedConcepts( newTerm );
 				}
+			}
+		},
+
+		allActiveFilters: function ( newVal, oldVal ) {
+			if ( newVal && newVal !== oldVal ) {
+				this.performNewSearch();
 			}
 		}
 	},

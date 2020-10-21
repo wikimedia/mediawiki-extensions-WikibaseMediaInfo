@@ -333,6 +333,41 @@ module.exports = {
 		},
 
 		/**
+		 * Programmatically set the selection if it has been changed by means
+		 * other than direct user interaction. Changes made in this way should
+		 * never emit "select" events. This method needs to handle all the
+		 * different possible forms that the "items" property can take.
+		 *
+		 * @param {string} selection value of the item to be selected
+		 */
+		select: function ( selection ) {
+			var selectionIndex;
+
+			if ( Array.isArray( this.items ) && typeof this.items[ 0 ] === 'string' ) {
+				// Handle array of strings
+				// eslint-disable-next-line no-restricted-properties
+				selectionIndex = this.items.findIndex( function ( item ) {
+					return item === selection;
+				} );
+			} else if ( Array.isArray( this.items ) && typeof this.items[ 0 ] === 'object' ) {
+				// Handle array of objects
+				// eslint-disable-next-line no-restricted-properties
+				selectionIndex = this.items.findIndex( function ( item ) {
+					return item.value === selection;
+				} );
+			} else {
+				// Handle key/value pairs
+				// eslint-disable-next-line no-restricted-syntax
+				selectionIndex = Object.keys( this.items ).find( function ( key ) {
+					return this.items[ key ] === selection;
+				} );
+			}
+
+			this.selectedItemIndex = selectionIndex;
+			this.activeItemIndex = selectionIndex;
+		},
+
+		/**
 		 * Reset the component to initial values for selection index and
 		 * user-visible label
 		 */

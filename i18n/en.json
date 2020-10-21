@@ -153,5 +153,6 @@
 	"wikibasemediainfo-rescore-profile-classic-noboostlinks-max-boost-template": "Ranking based on best template, page language and recency when activated on this wiki.",
 	"wikibasemediainfo-copytextlayout-copy": "Copy",
 	"wikibasemediainfo-copytextlayout-copy-fail": "Failed to copy to clipboard.",
-	"wikibasemediainfo-copytextlayout-copy-success": "Copied to clipboard."
+	"wikibasemediainfo-copytextlayout-copy-success": "Copied to clipboard.",
+	"wikibasemediainfo-special-mediasearch-clear-filters": "Clear filters"
 }

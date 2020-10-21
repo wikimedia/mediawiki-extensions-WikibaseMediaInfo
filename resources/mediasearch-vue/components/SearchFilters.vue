@@ -3,7 +3,7 @@
 		<div class="wbmi-media-search-filters">
 			<template v-for="( filter, index ) in searchFilters">
 				<wbmi-select
-					ref="filters"
+					:ref="filter.type"
 					:key="'filter-' + index"
 					:class="getFilterClasses( filter.type )"
 					:name="filter.type"
@@ -131,9 +131,9 @@ module.exports = {
 
 			if ( value ) {
 				this.addFilterValue( {
-					value: value,
 					mediaType: this.mediaType,
-					filterType: filterType
+					filterType: filterType,
+					value: value
 				} );
 				/* eslint-disable camelcase */
 				this.$log( {
@@ -163,8 +163,13 @@ module.exports = {
 				/* eslint-enable camelcase */
 			}
 
-			// Tell the App component to do a new search.
-			this.$emit( 'filter-change' );
+			// Tell the App component to do a new search and update the URL
+			// params
+			this.$emit( 'filter-change', {
+				mediaType: this.mediaType,
+				filterType: filterType,
+				value: value
+			} );
 		},
 
 		/**
@@ -206,29 +211,49 @@ module.exports = {
 		 */
 		removeGradientClass: function () {
 			this.hasGradient = false;
+		},
+
+		resetAllFilters: function () {
+			this.searchFilters.forEach( function ( filter ) {
+				this.$refs[ filter.type ][ 0 ].reset();
+			}.bind( this ) );
+		},
+
+		/**
+		 * Set each filter component's state to match the appropriate
+		 * value in Vuex
+		 */
+		synchronizeFilters: function () {
+			this.searchFilters.forEach( function ( filter ) {
+				var currentValue = this.filterValues[ this.mediaType ][ filter.type ];
+
+				if ( currentValue ) {
+					this.$refs[ filter.type ][ 0 ].select( currentValue );
+				} else {
+					this.$refs[ filter.type ][ 0 ].reset();
+				}
+			}.bind( this ) );
 		}
 	} ),
 
 	watch: {
 		/**
-		 * Watch for changes in active filters (regardless of value) so that we
-		 * can re-set the Select components to initial values if filters are
-		 * cleared via a Vuex action.
-		 *
-		 * @param {Array} newValue
-		 * @param {Array} oldValue
+		 * Programmatically set or reset filters if Vuex state changes for
+		 * reasons other than the user setting filters manually (clicking the
+		 * clear button, URL filter params, popstate, etc)
 		 */
-		currentActiveFilters: function ( newValue, oldValue ) {
-			// If we are going from one or more active filters to no filters,
-			// then forcibly reset any filter components to their initial state
-			// in case that change comes from a Vuex "clear" action rather than
-			// the user clicking around.
-			if ( oldValue.length > 0 && newValue.length === 0 ) {
-				this.$refs.filters.forEach( function ( filter ) {
-					filter.reset();
-				} );
-			}
+		currentActiveFilters: function () {
+			this.synchronizeFilters();
 		}
+	},
+
+	/**
+	 * If filters have already been set at the time of page initialization
+	 * via URL params, update the relevant Select child component with
+	 * the appropriate value
+	 */
+	mounted: function () {
+		this.synchronizeFilters();
 	}
 };
 </script>

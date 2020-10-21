@@ -90,6 +90,20 @@
 			white-space: nowrap;
 		}
 	}
+
+	&__spacer {
+		flex: 1 1 auto;
+	}
+
+	&__clear {
+		&--no-js {
+			margin-right: @wbmi-spacing-sm;
+
+			@media screen and ( min-width: @width-breakpoint-tablet ) {
+				font-size: 0.9em;
+			}
+		}
+	}
 }
 
 // Gradient for horizontally-scrolling filters on smaller screens.

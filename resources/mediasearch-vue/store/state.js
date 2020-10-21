@@ -1,9 +1,10 @@
 'use strict';
 
 var initialResults = mw.config.get( 'wbmiInitialSearchResults' ),
+	initialFilters = JSON.parse( mw.config.get( 'wbmiInitialFilters' ) ),
+	// TODO: Remove this, it's just a workaround for now
+	// while we use data from Production commons to test features locally
 	ensureArray = function ( obj ) {
-		// TODO: Remove this, it's just a workaround for now
-		// while we use data from Production commons to test features locally
 		if ( Array.isArray( obj ) ) {
 			return obj;
 		} else {
@@ -56,11 +57,11 @@ module.exports = {
 	},
 
 	filterValues: {
-		bitmap: {},
-		audio: {},
-		video: {},
-		page: {},
-		other: {}
+		bitmap: initialResults.activeType === 'bitmap' ? initialFilters : {},
+		audio: initialResults.activeType === 'audio' ? initialFilters : {},
+		video: initialResults.activeType === 'video' ? initialFilters : {},
+		page: initialResults.activeType === 'page' ? initialFilters : {},
+		other: initialResults.activeType === 'other' ? initialFilters : {}
 	},
 
 	/**

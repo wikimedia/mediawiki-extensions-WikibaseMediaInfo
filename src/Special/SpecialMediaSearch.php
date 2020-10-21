@@ -65,6 +65,7 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 	 * @inheritDoc
 	 */
 	public function execute( $subPage ) {
+		global $wgMediaInfoMediaSearchPageNamespaces;
 		OutputPage::setupOOUI();
 
 		// url & querystring params of this page
@@ -72,14 +73,20 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 		parse_str( parse_url( $url, PHP_URL_QUERY ), $querystring );
 
 		$term = str_replace( "\n", " ", $this->getRequest()->getText( 'q' ) );
+		$activeFilters = $this->getActiveFilters( $querystring );
+
 		$type = $querystring['type'] ?? 'bitmap';
+		$filtersForDisplay = $this->getFiltersForDisplay( $activeFilters, $type );
 		$limit = $this->getRequest()->getText( 'limit' ) ? (int)$this->getRequest()->getText( 'limit' ) : 40;
+		$termWithFilters = $this->getTermWithFilters( $term, $activeFilters );
+		$clearFiltersUrl = $this->getPageTitle()->getLinkURL( array_diff( $querystring, $activeFilters ) );
 
 		list( $results, $continue ) = $this->search(
-			$term,
+			$termWithFilters,
 			$type,
 			$limit,
-			$this->getRequest()->getText( 'continue' )
+			$this->getRequest()->getText( 'continue' ),
+			$this->getSort( $activeFilters )
 		);
 
 		$totalSiteImages = (int)SiteStats::images();
@@ -208,6 +215,11 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 				return $result;
 			}, $results ),
 			'continue' => $continue,
+			'hasFilters' => count( $activeFilters ) > 0,
+			'activeFilters' => array_values( $activeFilters ),
+			'filtersForDisplay' => array_values( $filtersForDisplay ),
+			'clearFiltersUrl' => $clearFiltersUrl,
+			'clearFiltersText' => $this->msg( 'wikibasemediainfo-special-mediasearch-clear-filters' )->text(),
 			'hasMore' => $continue !== null,
 			'searchLabel' => $this->msg( 'wikibasemediainfo-special-mediasearch-input-label' )->text(),
 			'searchButton' => $this->msg( 'searchbutton' )->text(),
@@ -226,6 +238,8 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 			'wbmiInitialSearchResults' => $data,
 			'wbmiTotalSiteImages' => $totalSiteImages,
 			'wbmiLocalDev' => $this->getConfig()->get( 'MediaInfoLocalDev' ),
+			'wbmiMediaSearchPageNamespaces' => $wgMediaInfoMediaSearchPageNamespaces,
+			'wbmiInitialFilters' => json_encode( (object)$activeFilters )
 		] );
 
 		$this->addHelpLink( 'Help:MediaSearch' );
@@ -238,14 +252,21 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 	 * @param string|null $type
 	 * @param int|null $limit
 	 * @param string|null $continue
+	 * @param string|null $sort
 	 * @return array [ search results, continuation value ]
 	 * @throws \MWException
 	 */
-	protected function search( $term, $type = null, $limit = null, $continue = null ): array {
+	protected function search(
+		$term, $type = null,
+		$limit = null,
+		$continue = null,
+		$sort = 'relevance'
+	): array {
 		Assert::parameterType( 'string', $term, '$term' );
 		Assert::parameterType( 'string|null', $type, '$type' );
 		Assert::parameterType( 'integer|null', $limit, '$limit' );
 		Assert::parameterType( 'string|null', $continue, '$continue' );
+		Assert::parameterType( 'string|null', $sort, '$sort' );
 
 		if ( $term === '' ) {
 			return [ [], null ];
@@ -264,6 +285,7 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 				'gsrnamespace' => implode( '|', $namespaces ),
 				'gsrlimit' => $limit,
 				'gsroffset' => $continue ?: 0,
+				'gsrsort' => $sort,
 				'prop' => 'info|categoryinfo',
 				'inprop' => 'url',
 			] );
@@ -298,6 +320,7 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 				'gsrnamespace' => NS_FILE,
 				'gsrlimit' => $limit,
 				'gsroffset' => $continue ?: 0,
+				'gsrsort' => $sort,
 				'prop' => 'info|imageinfo|entityterms',
 				'inprop' => 'url',
 				'iiprop' => 'url|size|mime',
@@ -334,4 +357,110 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 		return [ $results, $continue ];
 	}
 
+	/**
+	 * @param array $queryParams
+	 * @return array
+	 */
+	protected function getActiveFilters( $queryParams ) : array {
+		$enabledParams = $this->getConfig()->get( 'MediaInfoMediaSearchSupportedFilterParams' );
+
+		if ( $enabledParams ) {
+			return array_intersect_key(
+				$queryParams,
+				array_flip( $enabledParams )
+			);
+		} else {
+			return [];
+		}
+	}
+
+	/**
+	 * We need to see if the values for each active filter as specified by URL
+	 * params match any of the pre-defined possible values for a given filter
+	 * type. For example, an imageSize setting determined by url params like
+	 * &imageSize=500,1000 should be presented to the user as "Medium".
+	 *
+	 * @todo There is probably a cleaner way to do this in PHP than this ugly
+	 * nested for loop...
+	 *
+	 * @param array $activeFilters
+	 * @param string $mediaType
+	 * @return array
+	 */
+	protected function getFiltersForDisplay( $activeFilters, $mediaType ) : array {
+		$display = [];
+		$allFilters = file_get_contents( __DIR__ . '/../../resources/mediasearch-vue/data/filterItems.json' );
+		$allSorts = file_get_contents( __DIR__ . '/../../resources/mediasearch-vue/data/sortFilterItems.json' );
+		$filterData = json_decode( $allFilters, true );
+		$sortData = json_decode( $allSorts, true );
+
+		// Sort options are handled differently from filters. Possible values
+		// will be defined by the relevant JSON file, but they will always live
+		// under the "sort" key and will not be specific to a particular media
+		// type. Manually adding a "sort" key with the values from the JSON file
+		// to the current media type's set of potential filters seemed like one
+		// way to handle this.
+		$filterData[ $mediaType ][ 'sort' ] = $sortData;
+
+		foreach ( $filterData[ $mediaType ] as $filterType => $possibleValues ) {
+			if ( array_key_exists( $filterType, $activeFilters ) ) {
+				foreach ( $possibleValues as $item ) {
+					if ( $activeFilters[ $filterType ] === $item[ 'value' ] ) {
+						$display[ $filterType ] = array_key_exists( 'labelMessage', $item ) ?
+							$this->msg( $item[ 'labelMessage' ] )->text() :
+							$item[ 'label' ];
+					}
+				}
+			}
+		}
+
+		return $display;
+	}
+
+	/**
+	 * Prepare a string of original search term plus additional filter or sort
+	 * parameters, suitable to be passed to the API. If no valid filters are
+	 * provided, the original term is returned.
+	 *
+	 * @param string $term
+	 * @param array $filters [ "mimeType" => "tiff", "imageSize" => ">500" ]
+	 * @return string "kittens filemime:tiff fileres:>500"
+	 */
+	protected function getTermWithFilters( $term, $filters ) : string {
+		if ( empty( $term ) || empty( $filters ) ) {
+			return $term;
+		}
+
+		$withFilters = $term;
+
+		foreach ( $filters as $key => $value ) {
+			if ( $key === 'mimeType' ) {
+				$withFilters = "filemime:$value " . $withFilters;
+			}
+
+			if ( $key === 'imageSize' ) {
+				$withFilters = "fileres:$value " . $withFilters;
+			}
+
+			if ( $key === 'license' ) {
+				$withFilters = "haslicense:$value " . $withFilters;
+			}
+		}
+
+		return $withFilters;
+	}
+
+	/**
+	 * Determine what the API sort value should be
+	 *
+	 * @param array $activeFilters
+	 * @return string
+	 */
+	protected function getSort( $activeFilters ) : string {
+		if ( array_key_exists( 'sort', $activeFilters ) && $activeFilters[ 'sort' ] === 'recency' ) {
+			return 'create_timestamp_desc';
+		} else {
+			return 'relevance';
+		}
+	}
 }

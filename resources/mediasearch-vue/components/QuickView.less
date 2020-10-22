@@ -6,11 +6,34 @@
 	padding: @wbmi-spacing-base-px * 1.5;
 	position: relative;
 
+	&__thumbnail-wrapper {
+		.flex-display();
+		align-items: center;
+		justify-content: center;
+
+		.wbmi-media-search-spinner {
+			padding: 0;
+			width: auto;
+		}
+	}
+
 	&__thumbnail {
+		.transition( opacity 200ms );
 		height: auto;
 		max-height: 60vh; // Ensure that portrait-orientation images don't become huge
 		object-fit: contain;
-		width: 100%;
+		opacity: 0;
+		width: 0;
+
+		&--loaded {
+			opacity: 1;
+			width: auto;
+		}
+
+		&--xsmall {
+			// 15px will align the top of the image with the controls.
+			padding: 15px 0;
+		}
 	}
 
 	&__body {

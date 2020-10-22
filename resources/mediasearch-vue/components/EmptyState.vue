@@ -3,8 +3,8 @@
 		<div class="wbmi-media-search-empty-state__icon">
 		</div>
 
-		<p v-i18n-html:wikibasemediainfo-special-mediasearch-empty-state="[ fileCount ]">
-		</p>
+		<!-- eslint-disable-next-line vue/no-v-html-->
+		<p v-html="message"></p>
 	</div>
 </template>
 
@@ -25,6 +25,12 @@ module.exports = {
 		return {
 			fileCount: fileCount
 		};
+	},
+
+	computed: {
+		message: function () {
+			return mw.message( 'wikibasemediainfo-special-mediasearch-empty-state', this.fileCount ).text();
+		}
 	}
 };
 </script>

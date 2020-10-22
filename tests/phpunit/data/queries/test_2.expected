@@ -188,29 +188,89 @@
                     }
                 },
                 {
-                    "dis_max": {
-                        "queries": [
-                            {
-                                "match": {
-                                    "statement_keywords": {
-                                        "query": "P999=Q9",
-                                        "boost": 2
+                    "function_score": {
+                        "query": {
+                            "bool": {
+                                "should": [
+                                    {
+                                        "function_score": {
+                                            "query": {
+                                                "dis_max": {
+                                                    "queries": [
+                                                        {
+                                                            "match": {
+                                                                "statement_keywords": {
+                                                                    "query": "P999=Q9",
+                                                                    "boost": 1
+                                                                }
+                                                            }
+                                                        },
+                                                        {
+                                                            "match": {
+                                                                "statement_keywords": {
+                                                                    "query": "P999=Q2",
+                                                                    "boost": 0.75
+                                                                }
+                                                            }
+                                                        },
+                                                        {
+                                                            "match": {
+                                                                "statement_keywords": {
+                                                                    "query": "P999=Q999999",
+                                                                    "boost": 0.57971014492753625
+                                                                }
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            "functions": [
+                                                {
+                                                    "script_score": {
+                                                        "script": {
+                                                            "source": "max(0, ln(_score))",
+                                                            "lang": "expression"
+                                                        }
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "function_score": {
+                                            "query": {
+                                                "match_explorer": {
+                                                    "type": "unique_terms_count",
+                                                    "query": {
+                                                        "match": {
+                                                            "text": {
+                                                                "query": "another search term"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "functions": [
+                                                {
+                                                    "script_score": {
+                                                        "script": {
+                                                            "source": "max(0, ln(_score \/ 2 + 0.5))",
+                                                            "lang": "expression"
+                                                        }
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
-                                }
-                            },
+                                ]
+                            }
+                        },
+                        "functions": [
                             {
-                                "match": {
-                                    "statement_keywords": {
-                                        "query": "P999=Q2",
-                                        "boost": 1.5
-                                    }
-                                }
-                            },
-                            {
-                                "match": {
-                                    "statement_keywords": {
-                                        "query": "P999=Q999999",
-                                        "boost": 1.1594202898550725
+                                "script_score": {
+                                    "script": {
+                                        "source": "exp(_score)",
+                                        "lang": "expression"
                                     }
                                 }
                             }

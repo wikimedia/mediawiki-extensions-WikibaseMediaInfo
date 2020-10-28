@@ -61,5 +61,10 @@ module.exports = {
 		video: {},
 		page: {},
 		other: {}
-	}
+	},
+
+	/**
+	 * Whether the app is fully initialized (app mounted, images resolved).
+	 */
+	initialized: false
 };

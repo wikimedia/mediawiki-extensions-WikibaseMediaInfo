@@ -30,7 +30,9 @@
 
 			// stylelint-disable-next-line no-descending-specificity
 			> * {
-				.flex( 1, 1, 260px );
+				// Video components can grow but shouldn't shrink below their
+				// flex-basis.
+				.flex( 1, 0, 260px );
 			}
 		}
 
@@ -51,7 +53,7 @@
 
 		&--collapsed {
 			margin-right: @wbmi-spacing-base-px;
-			width: 50%;
+			width: 55%;
 		}
 	}
 
@@ -64,7 +66,7 @@
 		width: 0%;
 
 		&--expanded {
-			.flex( 0, 0, 50% );
+			.flex( 0, 0, 45% );
 			background-color: @background-color-framed;
 			-webkit-overflow-scrolling: touch;
 			height: 100vh;

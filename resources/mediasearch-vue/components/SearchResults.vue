@@ -1,15 +1,20 @@
 <template>
 	<div class="wbmi-media-search-results">
-		<div :class="listClasses"
-			class="wbmi-media-search-results__list">
+		<div
+			ref="list"
+			class="wbmi-media-search-results__list"
+			:class="listClasses"
+		>
 			<component
 				:is="resultComponent"
 				v-for="(result, index) in results[ mediaType ]"
 				:ref="result.pageid"
 				:key="index"
 				:class="getResultClass( result.pageid )"
+				:style="resultStyle"
 				v-bind="result"
-				@show-details="showDetails">
+				@show-details="showDetails"
+			>
 			</component>
 		</div>
 
@@ -103,14 +108,16 @@ module.exports = {
 		return {
 			details: null,
 			// Which quickview control to focus on when the panel opens.
-			focusOn: 'close'
+			focusOn: 'close',
+			resultStyle: false
 		};
 	},
 
 	computed: $.extend( {}, mapState( [
 		'term',
 		'results',
-		'pending'
+		'pending',
+		'initialized'
 	] ), {
 		/**
 		 * Which component should be used to display individual search results
@@ -302,6 +309,48 @@ module.exports = {
 			return {
 				'wbmi-media-search-result--highlighted': this.details && this.details.pageid === pageid
 			};
+		},
+
+		/**
+		 * Get style attribute for components.
+		 */
+		getResultStyle: function () {
+			var rowWidth, rowItemCount, maxWidth;
+
+			// Do nothing if the app isn't displayed yet, or if this isn't the
+			// video tab.
+			if ( !this.initialized || this.mediaType !== 'video' ) {
+				return;
+			}
+
+			// Get the current width of the search results list.
+			rowWidth = this.$refs.list.offsetWidth;
+			if ( rowWidth === 0 ) {
+				return;
+			}
+
+			// Divide row width by the min size of a result (flex-basis of 260
+			// plus 16px of horizontal margin) to find the current number of
+			// items per row.
+			rowItemCount = Math.floor( ( rowWidth - 20 ) / 272 );
+
+			// If this number is greater than the number of results, set
+			// max-width to the natural max-width in this particular flex layout
+			// to avoid overly-stretching the components. Note that this value
+			// is also set in the CSS so that the PHP version of these
+			// components aren't too wide, helping to avoid a layout jump when
+			// the JS UI loads.
+			if ( rowItemCount > this.results[ this.mediaType ].length ) {
+				maxWidth = 401.5;
+			} else {
+				// Find the current width of each item in a full row, and
+				// account for the 16 px of negative horizontal margin.
+				maxWidth = ( rowWidth / rowItemCount ) - 16;
+			}
+
+			this.resultStyle = {
+				'max-width': maxWidth.toString() + 'px'
+			};
 		}
 	},
 
@@ -309,7 +358,23 @@ module.exports = {
 		// if search term changes, immediately discard any expanded detail view
 		term: function ( /* newTerm */ ) {
 			this.details = null;
+		},
+
+		initialized: function () {
+			this.getResultStyle();
+		},
+
+		details: function () {
+			this.$nextTick( this.getResultStyle.bind( this ) );
 		}
+	},
+
+	created: function () {
+		window.addEventListener( 'resize', this.getResultStyle );
+	},
+
+	destroyed: function () {
+		window.removeEventListener( 'resize', this.getResultStyle );
 	}
 };
 </script>

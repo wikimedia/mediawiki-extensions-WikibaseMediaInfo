@@ -11,6 +11,14 @@
 	color: @color-primary;
 	flex-direction: column;
 	margin: @wbmi-spacing-sm;
+	// Natural max-width of this component. This is needed to ensure that, if
+	// there are only 1 or 2 components on a wide row, the PHP version of those
+	// components aren't stretched too wide. This is important for 2 reasons:
+	//  1. It just looks bad.
+	//  2. The JS version will set a max-width less than or equal to the
+	//     figure below, and we want to avoid a noticeable decrease in width
+	//     when the JS UI loads.
+	max-width: 401.5px;
 	transition: box-shadow @transition-base ease, outline @transition-base ease;
 
 	// Title is a heading element inside of a link, but we want this to look

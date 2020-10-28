@@ -246,5 +246,12 @@ module.exports = {
 		context.commit( 'clearRelatedConcepts' );
 		context.commit( 'resetFilters' );
 		context.commit( 'resetResults' );
+	},
+
+	/**
+	 * @param {Object} context
+	 */
+	ready: function ( context ) {
+		context.commit( 'setInitialized' );
 	}
 };

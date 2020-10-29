@@ -7,14 +7,26 @@
 		@keyup.left="$emit( 'previous', true )"
 		@keyup.right="$emit( 'next', true )"
 	>
-		<header class="wbmi-quick-view__header">
-			<img v-if="isBitmap"
-				:srcset="srcset"
-				:sizes="sizes"
-				:src="thumbnail"
-				:alt="title"
-				class="wbmi-quick-view__thumbnail
-					wbmi-quick-view__thumbnail--image">
+		<header ref="header" class="wbmi-quick-view__header">
+			<div
+				v-if="isBitmap"
+				class="wbmi-quick-view__thumbnail-wrapper"
+				:style="thumbnailWrapperStyle"
+			>
+				<spinner
+					v-if="thumbnailWrapperStyle && showSpinner"
+					class="wbmi-quick-view__spinner"
+				></spinner>
+				<img
+					:srcset="srcset"
+					:sizes="sizes"
+					:src="thumbnail"
+					:alt="title"
+					class="wbmi-quick-view__thumbnail"
+					:class="imageClasses"
+					@load="onThumbnailLoad"
+				>
+			</div>
 
 			<wbmi-player
 				v-else-if="isVideo || isAudio"
@@ -126,6 +138,7 @@
 <script>
 var WbmiIcon = require( './base/Icon.vue' ),
 	WbmiPlayer = require( './base/Player.vue' ),
+	Spinner = require( './Spinner.vue' ),
 	icons = require( '../../../lib/icons.js' ),
 	PREVIEW_SIZES = [ 640, 800, 1200, 1600 ], // Pre-defined set of thumbnail image width values
 	MAX_SIZE = 2000;
@@ -146,7 +159,8 @@ module.exports = {
 
 	components: {
 		'wbmi-icon': WbmiIcon,
-		'wbmi-player': WbmiPlayer
+		'wbmi-player': WbmiPlayer,
+		spinner: Spinner
 	},
 
 	inheritAttrs: false,
@@ -196,6 +210,9 @@ module.exports = {
 
 	data: function () {
 		return {
+			thumbnailWrapperStyle: false,
+			isExtraSmall: false,
+			showSpinner: false,
 			icons: icons,
 			closeButtonText: this.$i18n( 'wikibasemediainfo-special-mediasearch-quickview-close-button-text' ),
 			previousButtonText: this.$i18n( 'wikibasemediainfo-special-mediasearch-quickview-previous-button-text' ),
@@ -210,6 +227,13 @@ module.exports = {
 				'wbmi-quick-view--audio': this.isAudio,
 				'wbmi-quick-view--video': this.isVideo,
 				'wbmi-quick-view--dialog': this.isDialog
+			};
+		},
+
+		imageClasses: function () {
+			return {
+				'wbmi-quick-view__thumbnail--loaded': !this.thumbnailWrapperStyle,
+				'wbmi-quick-view__thumbnail--xsmall': this.isExtraSmall
 			};
 		},
 
@@ -463,7 +487,76 @@ module.exports = {
 			if ( focusOn ) {
 				this.$refs[ focusOn ].focus();
 			}
+		},
+
+		/**
+		 * Set the height of the div wrapping the thumbnail image to the display
+		 * height of that image to avoid a layout jump when the image loads.
+		 */
+		getThumbnailWrapperStyle: function () {
+			var imgWidth, imgHeight, elWidth, height;
+
+			if ( !this.imageinfo ) {
+				return;
+			}
+
+			imgWidth = this.imageinfo[ 0 ].width;
+			imgHeight = this.imageinfo[ 0 ].height;
+			elWidth = this.$refs.header.offsetWidth;
+
+			if ( imgWidth >= imgHeight ) {
+				// For landscape-oriented images, calculate the height
+				// based on the aspect ratio and the width of the container.
+				// Use this, unless the natural height of the original file is
+				// smaller.
+				height = Math.min(
+					( imgHeight * elWidth ) / imgWidth,
+					imgHeight
+				);
+			} else {
+				// A portrait-oriented image could be limited by several
+				// constraints: the natural image height (e.g. an original file
+				// that's only 200px tall), the CSS-enforced max-height of the
+				// image (60vh), or the max-width of the container.
+				height = Math.min(
+					imgHeight,
+					window.innerHeight * 0.6,
+					( imgHeight * elWidth ) / imgWidth
+				);
+			}
+
+			// For very short images, we need to add some vertical padding so
+			// that the content below the image doesn't crowd the absolutely-
+			// positioned controls.
+			if ( height < 100 ) {
+				height += 30;
+				// We'll use this to add a class to the image to add 15px of
+				// top and bottom padding.
+				this.isExtraSmall = true;
+			}
+
+			this.thumbnailWrapperStyle = {
+				height: height + 'px',
+				width: '100%'
+			};
+		},
+
+		/**
+		 * Once the thumbnail has loaded, we no longer need the spinner, and we
+		 * need to remove the hard-coded height of the wrapper element in case
+		 * the user adjusts the viewport size.
+		 */
+		onThumbnailLoad: function () {
+			this.thumbnailWrapperStyle = false;
 		}
+	},
+
+	mounted: function () {
+		this.getThumbnailWrapperStyle();
+
+		setTimeout( function () {
+			this.showSpinner = true;
+		}.bind( this ), 500 );
 	}
 };
 </script>

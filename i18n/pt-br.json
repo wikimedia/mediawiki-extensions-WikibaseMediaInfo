@@ -4,7 +4,8 @@
 			"!Silent",
 			"Eduardo Addad de Oliveira",
 			"Jhonnatanricardo",
-			"TheEduGobi"
+			"TheEduGobi",
+			"Tks4Fish"
 		]
 	},
 	"action-mediainfo-term": "alterar termos de informação de mídia (legendas, resumos)",
@@ -145,5 +146,8 @@
 	"wikibasemediainfo-special-mediasearch-quickview-button-text": "Mais detalhes",
 	"wikibasemediainfo-special-mediasearch-quickview-close-button-text": "Fechar detalhes do arquivo",
 	"wikibasemediainfo-special-mediasearch-quickview-previous-button-text": "Ver o resultado anterior",
-	"wikibasemediainfo-special-mediasearch-quickview-next-button-text": "Ver o próximo resultado"
+	"wikibasemediainfo-special-mediasearch-quickview-next-button-text": "Ver o próximo resultado",
+	"wikibasemediainfo-copytextlayout-copy": "Copiar",
+	"wikibasemediainfo-copytextlayout-copy-fail": "Falha ao copiar para a área de transferência.",
+	"wikibasemediainfo-copytextlayout-copy-success": "Copiado para a área de transferência."
 }

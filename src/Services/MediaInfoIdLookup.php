@@ -24,7 +24,7 @@ class MediaInfoIdLookup implements EntityIdLookup {
 	private $entityIdComposer;
 
 	/**
-	 * @var integer
+	 * @var int
 	 */
 	private $mediaInfoNamespace;
 

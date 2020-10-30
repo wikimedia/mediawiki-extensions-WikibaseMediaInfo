@@ -150,7 +150,7 @@ class MediaQueryBuilderTest extends MediaWikiTestCase {
 		$fixturesDir = __DIR__ . '/../../data/queries/';
 		$tests = [];
 		foreach ( glob( $fixturesDir . '*.settings' ) as $settingsFile ) {
-			$testFileName = substr( $settingsFile, 0, - 9 );
+			$testFileName = substr( $settingsFile, 0, -9 );
 			$settings = json_decode( file_get_contents( $settingsFile ), true );
 			$expectedFile = "$testFileName.expected";
 			$tests[$settings['title']] = [ $settings, $expectedFile ];

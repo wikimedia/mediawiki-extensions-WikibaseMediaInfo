@@ -63,6 +63,13 @@
 		.flex-display();
 		align-items: flex-start;
 
+		&--user {
+			// Get rid of formatting on markup inside username.
+			p {
+				margin: 0;
+			}
+		}
+
 		.wbmi-icon {
 			// Mimic natural inline element spacing.
 			margin-right: 0.4em;

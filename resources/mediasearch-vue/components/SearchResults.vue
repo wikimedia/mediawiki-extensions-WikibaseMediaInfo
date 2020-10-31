@@ -275,13 +275,15 @@ module.exports = {
 		 * @return {jQuery.Deferred}
 		 */
 		fetchDetails: function ( pageid ) {
-			var params = {
-				format: 'json',
-				uselang: mw.config.get( 'wgUserLanguage' ),
-				action: 'query',
-				inprop: 'url',
-				pageids: pageid
-			};
+			var userLanguage = mw.config.get( 'wgUserLanguage' ),
+				params = {
+					format: 'json',
+					uselang: userLanguage,
+					action: 'query',
+					inprop: 'url',
+					pageids: pageid,
+					iiextmetadatalanguage: userLanguage
+				};
 
 			// Set special params for audio/video files
 			if ( this.mediaType === 'video' || this.mediaType === 'audio' ) {

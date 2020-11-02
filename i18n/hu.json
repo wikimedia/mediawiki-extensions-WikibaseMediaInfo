@@ -129,5 +129,8 @@
 	"wikibasemediainfo-special-mediasearch-quickview-previous-button-text": "Korábbi eredmények megtekintése",
 	"wikibasemediainfo-special-mediasearch-quickview-next-button-text": "Következő eredmények megtekintése",
 	"wikibasemediainfo-special-mediasearch-category-info": "$1 tag - $2 alkategória, $3 fájl",
-	"wikibasemediainfo-rescore-profile-classic-noboostlinks-max-boost-template": "A rangsor a legjobb sablonokon, a lap nyelvén és újdonságán alapszik, amennyiben elérhető ezen a wikin."
+	"wikibasemediainfo-rescore-profile-classic-noboostlinks-max-boost-template": "A rangsor a legjobb sablonokon, a lap nyelvén és újdonságán alapszik, amennyiben elérhető ezen a wikin.",
+	"wikibasemediainfo-copytextlayout-copy": "Másolás",
+	"wikibasemediainfo-copytextlayout-copy-fail": "A vágólapra másolás nem sikerült.",
+	"wikibasemediainfo-copytextlayout-copy-success": "Vágólapra másolva."
 }

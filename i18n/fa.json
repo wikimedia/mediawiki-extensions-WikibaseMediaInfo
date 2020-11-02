@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"Ajam",
 			"Amirsara",
 			"FarsiNevis",
 			"Ladsgroup",
@@ -96,5 +97,6 @@
 	"wikibasemediainfo-special-mediasearch-filter-size-small": "کوچک",
 	"wikibasemediainfo-special-mediasearch-filter-size-medium": "متوسط",
 	"wikibasemediainfo-special-mediasearch-filter-size-large": "بزرگ",
-	"wikibasemediainfo-special-mediasearch-no-results": "هیچ نتیجه‌ای یافته نشد"
+	"wikibasemediainfo-special-mediasearch-no-results": "هیچ نتیجه‌ای یافته نشد",
+	"wikibasemediainfo-copytextlayout-copy": "رونوشت"
 }

@@ -117,5 +117,8 @@
 	"wikibasemediainfo-special-mediasearch-filter-size-large": "Velika",
 	"wikibasemediainfo-special-mediasearch-filter-file-type-any": "Sve vrste datoteka",
 	"wikibasemediainfo-special-mediasearch-no-results": "Nije pronađen nijedan rezultat",
-	"wikibasemediainfo-special-mediasearch-quickview-button-text": "Više pojedinosti"
+	"wikibasemediainfo-special-mediasearch-quickview-button-text": "Više pojedinosti",
+	"wikibasemediainfo-copytextlayout-copy": "Kopiraj",
+	"wikibasemediainfo-copytextlayout-copy-fail": "Neuspješno kopiranje u međuspremnik.",
+	"wikibasemediainfo-copytextlayout-copy-success": "Kopirano u međuspremnik."
 }

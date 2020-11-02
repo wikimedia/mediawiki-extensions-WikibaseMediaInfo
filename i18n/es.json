@@ -105,5 +105,8 @@
 	"wikibasemediainfo-special-mediasearch-no-results": "No se encontró ningún resultado",
 	"wikibasemediainfo-special-mediasearch-load-more-results": "Cargar más",
 	"wikibasemediainfo-special-mediasearch-quickview-button-text": "Más detalles",
-	"wikibasemediainfo-special-mediasearch-quickview-next-button-text": "Ver el siguiente resultado"
+	"wikibasemediainfo-special-mediasearch-quickview-next-button-text": "Ver el siguiente resultado",
+	"wikibasemediainfo-copytextlayout-copy": "Copiar",
+	"wikibasemediainfo-copytextlayout-copy-fail": "No se pudo copiar en el portapapeles.",
+	"wikibasemediainfo-copytextlayout-copy-success": "Se copió en el portapapeles."
 }

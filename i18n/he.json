@@ -149,5 +149,8 @@
 	"wikibasemediainfo-special-mediasearch-quickview-previous-button-text": "הצגת התוצאה הקודמת",
 	"wikibasemediainfo-special-mediasearch-quickview-next-button-text": "הצגת התוצאה הבאה",
 	"wikibasemediainfo-special-mediasearch-category-info": "{{PLURAL:$1|פריט אחד|$1 פריטים}} – {{PLURAL:$2|תת־קטגוריה אחת|$2 תת־קטגוריות}}, {{PLURAL:$1|קובץ אחד|$3 קבצים}}",
-	"wikibasemediainfo-rescore-profile-classic-noboostlinks-max-boost-template": "הדירוג מבוסס על התבנית הטובה ביותר, על שפת הדף, ועל האחרונוּת של ההפעלה בוויקי הזה."
+	"wikibasemediainfo-rescore-profile-classic-noboostlinks-max-boost-template": "הדירוג מבוסס על התבנית הטובה ביותר, על שפת הדף, ועל האחרונוּת של ההפעלה בוויקי הזה.",
+	"wikibasemediainfo-copytextlayout-copy": "העתקה",
+	"wikibasemediainfo-copytextlayout-copy-fail": "ההעתקה ללוח לא עבדה.",
+	"wikibasemediainfo-copytextlayout-copy-success": "הועתק ללוח."
 }

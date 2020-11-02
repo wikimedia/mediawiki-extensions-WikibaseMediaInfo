@@ -107,5 +107,8 @@
 	"wikibasemediainfo-special-mediasearch-no-results": "Non troviamo alcun risultato",
 	"wikibasemediainfo-special-mediasearch-quickview-button-text": "Ulteriori dettagli",
 	"wikibasemediainfo-special-mediasearch-quickview-previous-button-text": "Mostra risultato precedente",
-	"wikibasemediainfo-special-mediasearch-quickview-next-button-text": "Mostra risultato successivo"
+	"wikibasemediainfo-special-mediasearch-quickview-next-button-text": "Mostra risultato successivo",
+	"wikibasemediainfo-copytextlayout-copy": "Copia",
+	"wikibasemediainfo-copytextlayout-copy-fail": "Copia negli appunti non riuscita.",
+	"wikibasemediainfo-copytextlayout-copy-success": "Copiato negli appunti."
 }

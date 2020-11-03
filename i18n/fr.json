@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"Alno",
 			"Ayack",
 			"Derugon",
 			"Eneelk",
@@ -157,6 +158,6 @@
 	"wikibasemediainfo-special-mediasearch-category-info": "$1 {{PLURAL:$1|membre|membres}} – $2 {{PLURAL:$2|sous-catégorie|sous-catégories}}, $3 {{PLURAL:$3|fichier|fichiers}}",
 	"wikibasemediainfo-rescore-profile-classic-noboostlinks-max-boost-template": "Classement basé sur le meilleur modèle, la langue de la page et l’ancienneté, quand cela est activé sur ce wiki.",
 	"wikibasemediainfo-copytextlayout-copy": "Copier",
-	"wikibasemediainfo-copytextlayout-copy-fail": "Échec de copie dans le presse-papier.",
+	"wikibasemediainfo-copytextlayout-copy-fail": "Échec de copie vers le presse-papiers.",
 	"wikibasemediainfo-copytextlayout-copy-success": "Copié dans le presse-papier."
 }

@@ -2,6 +2,7 @@
 	"@metadata": {
 		"authors": [
 			"Bjankuloski06",
+			"Catrope",
 			"Vlad5250"
 		]
 	},
@@ -136,7 +137,7 @@
 	"wikibasemediainfo-special-mediasearch-filter-sort-popularity": "Популарност",
 	"wikibasemediainfo-special-mediasearch-no-results": "Не пронајдов ништо",
 	"wikibasemediainfo-special-mediasearch-no-results-tips": "Пробајте со поопшти поими или проверете дали е добро напишано",
-	"wikibasemediainfo-special-mediasearch-empty-state": "Пребарајте повеќе од <span class=\"wbmi-media-search-empty-state__file-count\">$1</span> {{PLURAL:$1|податотека|податотеки}} {{PLURAL:$1|која е|кои се}} за слободна пренамена\n\n<span class=\"wbmi-media-search-empty-state__file-count\">$1</span> {{PLURAL:$1|податотека|податотеки}} за слободна пренамена",
+	"wikibasemediainfo-special-mediasearch-empty-state": "Пребарајте повеќе од <span class=\"wbmi-media-search-empty-state__file-count\">$1</span> {{PLURAL:$1|податотека|податотеки}} {{PLURAL:$1|која е|кои се}} за слободна пренамена",
 	"wikibasemediainfo-special-mediasearch-clear-title": "Отстрани",
 	"wikibasemediainfo-special-mediasearch-input-label": "Пребарување на слики и снимки",
 	"wikibasemediainfo-special-mediasearch-input-placeholder": "Пребарување на слики, звучни снимки, видеоснимки и повеќе",
@@ -146,5 +147,8 @@
 	"wikibasemediainfo-special-mediasearch-quickview-previous-button-text": "Претходна исходна ставка",
 	"wikibasemediainfo-special-mediasearch-quickview-next-button-text": "Следна исходна ставка",
 	"wikibasemediainfo-special-mediasearch-category-info": "$1 {{PLURAL:$1|член|членови}} — $2 {{PLURAL:$2|поткатегорија|поткатегории}}, $3 {{PLURAL:$3|податотека|податотеки}}",
-	"wikibasemediainfo-rescore-profile-classic-noboostlinks-max-boost-template": "Котирање според најдобрата предлошка, јазик на страницата и скорешност на активирање на ова вики."
+	"wikibasemediainfo-rescore-profile-classic-noboostlinks-max-boost-template": "Котирање според најдобрата предлошка, јазик на страницата и скорешност на активирање на ова вики.",
+	"wikibasemediainfo-copytextlayout-copy": "Копирај",
+	"wikibasemediainfo-copytextlayout-copy-fail": "Не успав да ископирам во меѓускладот.",
+	"wikibasemediainfo-copytextlayout-copy-success": "Ископирано во меѓускладот."
 }

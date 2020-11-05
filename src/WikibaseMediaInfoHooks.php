@@ -68,11 +68,14 @@ class WikibaseMediaInfoHooks {
 	 */
 	public static function onMediaWikiServices( MediaWikiServices $services ) {
 		$services->addServiceManipulator( 'SlotRoleRegistry', function ( SlotRoleRegistry $registry ) {
-			$registry->defineRoleWithModel(
-				/* role */ 'mediainfo',
-				/* content handler */ MediaInfoContent::CONTENT_MODEL_ID
-				/*, layout – we want to set "prepend" in future, once MediaWiki supports that */
-			);
+			if ( !$registry->isDefinedRole( 'mediainfo' ) ) {
+				// Sanity check
+				$registry->defineRoleWithModel(
+					/* role */ 'mediainfo',
+					/* content handler */ MediaInfoContent::CONTENT_MODEL_ID
+					/*, layout – we want to set "prepend" in future, once MediaWiki supports that */
+				);
+			}
 		} );
 	}
 

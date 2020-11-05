@@ -147,5 +147,8 @@
 	"wikibasemediainfo-special-mediasearch-quickview-previous-button-text": "Vis forrige resultat",
 	"wikibasemediainfo-special-mediasearch-quickview-next-button-text": "Vis neste resultat",
 	"wikibasemediainfo-special-mediasearch-category-info": "$1 {{PLURAL:$1|medlem|medlemmer}} – $2 {{PLURAL:$2|underkategori|underkategorier}}, $3 {{PLURAL:$3|fil|filer}}",
-	"wikibasemediainfo-rescore-profile-classic-noboostlinks-max-boost-template": "Rangering basert på beste mal, sidespråk og nylighet når aktivert på denne wikien."
+	"wikibasemediainfo-rescore-profile-classic-noboostlinks-max-boost-template": "Rangering basert på beste mal, sidespråk og nylighet når aktivert på denne wikien.",
+	"wikibasemediainfo-copytextlayout-copy": "Kopier",
+	"wikibasemediainfo-copytextlayout-copy-fail": "Kunne ikke kopiere til utklippstavlen.",
+	"wikibasemediainfo-copytextlayout-copy-success": "Kopiert til utklippstavlen."
 }

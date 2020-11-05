@@ -98,5 +98,7 @@
 	"wikibasemediainfo-special-mediasearch-filter-size-medium": "متوسط",
 	"wikibasemediainfo-special-mediasearch-filter-size-large": "بزرگ",
 	"wikibasemediainfo-special-mediasearch-no-results": "هیچ نتیجه‌ای یافته نشد",
-	"wikibasemediainfo-copytextlayout-copy": "رونوشت"
+	"wikibasemediainfo-copytextlayout-copy": "رونوشت",
+	"wikibasemediainfo-copytextlayout-copy-fail": "رونویسی در کلیپ‌برد انجام نشد.",
+	"wikibasemediainfo-copytextlayout-copy-success": "در کلیپ‌برد رونویسی شد."
 }

@@ -418,32 +418,57 @@ module.exports = {
 		 * @return {string|null} String that may contain HTML
 		 */
 		creationDate: function () {
-			var d;
+			var date, trimmedDate, count, options = {
+				timeZone: 'UTC',
+				year: 'numeric'
+			};
 
-			if ( this.metadata && this.metadata.DateTimeOriginal ) {
-				d = new Date( this.metadata.DateTimeOriginal.value );
-
-				// If we have a value for DateTimeOriginal at all, create a date
-				// object using that value and test for validity (JS unhelpfully
-				// doesn't throw an error in the Date constructor if invalid).
-				// If we are dealing with a parseable date value, return a
-				// consistently-formatted string.
-				//
-				// Otherwise just return whatever the original string was in the
-				// hope that it will make sense to the user.
-				if ( isValidDate( d ) ) {
-					return d.toLocaleDateString( undefined, {
-						day: 'numeric',
-						year: 'numeric',
-						month: 'long'
-					} );
-				} else {
-					return this.metadata.DateTimeOriginal.value;
-				}
-
-			} else {
+			if ( !this.metadata || !this.metadata.DateTimeOriginal ) {
 				return null;
 			}
+
+			date = this.metadata.DateTimeOriginal.value;
+
+			// If we have a value for DateTimeOriginal at all, create a date
+			// object using that value and test for validity (JS unhelpfully
+			// doesn't throw an error in the Date constructor if invalid).
+			// If we are dealing with a parseable date value, return a
+			// consistently-formatted, translated string.
+			//
+			// Otherwise just return whatever the original string was in the
+			// hope that it will make sense to the user. In most cases, it will:
+			// for example, we're already getting back a translated string if a
+			// common phrase like "circa" is used.
+			if ( isValidDate( new Date( date ) ) ) {
+				// At this point, we know we have a valid datetime attribute to
+				// work with.
+				// Remove time, which could come after a space or a T.
+				trimmedDate = date.split( ' ' )[ 0 ].split( 'T' )[ 0 ];
+
+				// Build locale date string options, depending on how many date
+				// parts we have (year, year-month, or year-month-day).
+				// We'll discern that from the number of dashes.
+				count = ( trimmedDate.match( /-/g ) || [] ).length;
+
+				if ( count > 0 ) {
+					options.month = 'long';
+				}
+
+				if ( count > 1 ) {
+					options.day = 'numeric';
+				}
+
+				// Format the date in the user's language. Passing undefined as
+				// the first arg to toLocaleDateString() will cause it to
+				// default to the browser language, but we should keep this
+				// consistent with the UI language.
+				date = new Date( trimmedDate ).toLocaleDateString(
+					mw.config.get( 'wgUserLanguage' ),
+					options
+				);
+			}
+
+			return date;
 		},
 
 		/**

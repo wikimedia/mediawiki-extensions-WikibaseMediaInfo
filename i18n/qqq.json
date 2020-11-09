@@ -152,7 +152,7 @@
 	"wikibasemediainfo-special-mediasearch-quickview-next-button-text": "Text for the button in the QuickView panel to open the next result in QuickView",
 	"wikibasemediainfo-special-mediasearch-category-info": "Meta information for category results. Parameters:\n* $1 - Number of category members\n* $2 - Number of subcategories\n* $3 - Number of files",
 	"wikibasemediainfo-rescore-profile-classic-noboostlinks-max-boost-template": "Classic query independent search profile without boost links (affects fulltext search ranking algorithm).",
-	"wikibasemediainfo-copytextlayout-copy": "Text for button to copy text to the clipboard",
+	"wikibasemediainfo-copytextlayout-copy": "Text for button to copy text to the clipboard\n{{identical|Copy}}",
 	"wikibasemediainfo-copytextlayout-copy-fail": "Message shown when copying to the clipboard fails",
 	"wikibasemediainfo-copytextlayout-copy-success": "Message shown when copying to the clipboard succeeds"
 }

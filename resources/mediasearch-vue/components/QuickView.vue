@@ -86,14 +86,13 @@
 				</a>
 			</h3>
 
-			<p v-if="description"
-				class="wbmi-quick-view__description"
-				v-html="description">
+			<p v-if="description" class="wbmi-quick-view__description">
+				<bdi v-html="description"></bdi>
 			</p>
 
-			<p v-if="artist" class="wbmi-quick-view__list-item">
+			<p v-if="artist" class="wbmi-quick-view__list-item wbmi-quick-view__list-item--user">
 				<wbmi-icon :icon="icons.wbmiIconUserAvatar"></wbmi-icon>
-				<span v-html="artist"></span>
+				<bdi><span v-html="artist"></span></bdi>
 			</p>
 
 			<!-- Attempt to show license text, an appropriate icon, and an
@@ -134,7 +133,8 @@
 
 			<p v-if="resolution" class="wbmi-quick-view__list-item">
 				<wbmi-icon :icon="icons.wbmiIconCamera"></wbmi-icon>
-				<span>{{ resolution }}</span>
+				<!-- Resolution should never flip. -->
+				<span dir="ltr">{{ resolution }}</span>
 			</p>
 
 			<p v-if="mimeType" class="wbmi-quick-view__list-item">

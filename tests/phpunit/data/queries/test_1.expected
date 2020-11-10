@@ -44,20 +44,6 @@
                                                 "query": "P2=Q2"
                                             }
                                         }
-                                    },
-                                    {
-                                        "match": {
-                                            "statement_keywords": {
-                                                "query": "P1=Q999999"
-                                            }
-                                        }
-                                    },
-                                    {
-                                        "match": {
-                                            "statement_keywords": {
-                                                "query": "P2=Q999999"
-                                            }
-                                        }
                                     }
                                 ]
                             }
@@ -275,7 +261,7 @@
                                 "match": {
                                     "statement_keywords": {
                                         "query": "P1=Q2",
-                                        "boost": 0.75
+                                        "boost": 0.5
                                     }
                                 }
                             },
@@ -283,23 +269,7 @@
                                 "match": {
                                     "statement_keywords": {
                                         "query": "P2=Q2",
-                                        "boost": 0.75
-                                    }
-                                }
-                            },
-                            {
-                                "match": {
-                                    "statement_keywords": {
-                                        "query": "P1=Q999999",
-                                        "boost": 0.56666666666666665
-                                    }
-                                }
-                            },
-                            {
-                                "match": {
-                                    "statement_keywords": {
-                                        "query": "P2=Q999999",
-                                        "boost": 0.56666666666666665
+                                        "boost": 0.5
                                     }
                                 }
                             }

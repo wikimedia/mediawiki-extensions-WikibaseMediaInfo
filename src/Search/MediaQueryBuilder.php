@@ -14,10 +14,8 @@ use Elastica\Query\Match;
 use Elastica\Query\MultiMatch;
 use Elastica\Query\Terms;
 use Elastica\Script\Script;
-use MediaWiki\Http\HttpRequestFactory;
 use MediaWiki\MediaWikiServices;
 use RequestContext;
-use WANObjectCache;
 use Wikibase\Lib\LanguageFallbackChainFactory;
 use Wikibase\Repo\WikibaseRepo;
 use Wikibase\Search\Elastic\Fields\StatementsField;
@@ -33,18 +31,12 @@ class MediaQueryBuilder extends FullTextQueryStringQueryBuilder {
 	protected $stemmingSettings;
 	/** @var string */
 	protected $userLanguage;
-	/** @var HttpRequestFactory */
-	protected $httpRequestFactory;
-	/** @var WANObjectCache */
-	protected $objectCache;
 	/** @var array */
 	protected $searchProperties;
-	/** @var string */
-	protected $externalEntitySearchBaseUri;
+	/** @var MediaSearchEntitiesFetcher */
+	protected $entitiesFetcher;
 	/** @var \Wikibase\Lib\TermLanguageFallbackChain */
 	protected $languageFallbackChain;
-	/** @var array */
-	protected $entitiesForTerm = [];
 	/** @var bool */
 	protected $normalizeFulltextScores;
 
@@ -54,10 +46,8 @@ class MediaQueryBuilder extends FullTextQueryStringQueryBuilder {
 		array $settings,
 		array $stemmingSettings,
 		string $userLanguage,
-		HttpRequestFactory $httpRequestFactory,
-		WANObjectCache $objectCache,
 		array $searchProperties,
-		string $externalEntitySearchBaseUri,
+		MediaSearchEntitiesFetcher $entitiesFetcher,
 		LanguageFallbackChainFactory $languageFallbackChainFactory
 	) {
 		parent::__construct( $config, $features );
@@ -84,10 +74,8 @@ class MediaQueryBuilder extends FullTextQueryStringQueryBuilder {
 		);
 		$this->stemmingSettings = $stemmingSettings;
 		$this->userLanguage = $userLanguage;
-		$this->httpRequestFactory = $httpRequestFactory;
-		$this->objectCache = $objectCache;
 		$this->searchProperties = $searchProperties;
-		$this->externalEntitySearchBaseUri = $externalEntitySearchBaseUri;
+		$this->entitiesFetcher = $entitiesFetcher;
 		$this->languageFallbackChain = $languageFallbackChainFactory
 			->newFromLanguageCode( $userLanguage );
 		$this->normalizeFulltextScores = (bool)( $settings['normalizeFulltextScores'] ?? true );
@@ -103,8 +91,10 @@ class MediaQueryBuilder extends FullTextQueryStringQueryBuilder {
 		global $wgMediaInfoProperties,
 			$wgMediaInfoMediaSearchProperties,
 			$wgMediaInfoExternalEntitySearchBaseUri;
+
+		$mwServices = MediaWikiServices::getInstance();
 		$repo = WikibaseRepo::getDefaultInstance();
-		$configFactory = MediaWikiServices::getInstance()->getConfigFactory();
+		$configFactory = $mwServices->getConfigFactory();
 		$stemmingSettings = $configFactory->makeConfig( 'WikibaseCirrusSearch' )->get( 'UseStemming' );
 		$searchConfig = $configFactory->makeConfig( 'CirrusSearch' );
 		if ( !$searchConfig instanceof SearchConfig ) {
@@ -123,10 +113,17 @@ class MediaQueryBuilder extends FullTextQueryStringQueryBuilder {
 			$settings,
 			$stemmingSettings,
 			$repo->getUserLanguage()->getCode(),
-			MediaWikiServices::getInstance()->getHttpRequestFactory(),
-			MediaWikiServices::getInstance()->getMainWANObjectCache(),
 			$wgMediaInfoMediaSearchProperties ?? array_fill_keys( array_values( $wgMediaInfoProperties ), 1 ),
-			$wgMediaInfoExternalEntitySearchBaseUri,
+			new MediaSearchMemoryEntitiesFetcher(
+				new MediaSearchCachingEntitiesFetcher(
+					new MediaSearchEntitiesFetcher(
+						$mwServices->getHttpRequestFactory()->createMultiClient(),
+						$wgMediaInfoExternalEntitySearchBaseUri,
+						$repo->getUserLanguage()->getCode()
+					),
+					$mwServices->getMainWANObjectCache()
+				)
+			),
 			$repo->getLanguageFallbackChainFactory()
 		);
 	}
@@ -518,7 +515,7 @@ class MediaQueryBuilder extends FullTextQueryStringQueryBuilder {
 
 	protected function getStatementTerms( $term ) : array {
 		$statementTerms = [];
-		$matchingWikibaseItems = $this->getMatchingWikibaseItems( $term );
+		$matchingWikibaseItems = $this->entitiesFetcher->get( [ $term ] )[$term] ?? [];
 		if ( count( $matchingWikibaseItems ) === 0 ) {
 			return $statementTerms;
 		}
@@ -533,106 +530,5 @@ class MediaQueryBuilder extends FullTextQueryStringQueryBuilder {
 			}
 		}
 		return $statementTerms;
-	}
-
-	/**
-	 * This is a wrapper around fetchMatchingWikibaseData where the actual data
-	 * is fetched. This simply reads from/writes to 2 intermediate caching levels:
-	 * - in a property to allow for repeated calls within the same execution thread
-	 * - in a separate key-value store, for follow-up requests (e.g. loading next
-	 *   batch of results for the same term)
-	 *
-	 * @param string $term
-	 * @return array
-	 */
-	protected function getMatchingWikibaseItems( string $term ): array {
-		if ( !isset( $this->entitiesForTerm[$term] ) ) {
-			$cacheKey = $this->objectCache->makeGlobalKey( 'wbmi-mediasearch-entities', $term );
-			$data = $this->objectCache->getWithSetCallback(
-				$cacheKey,
-				$this->objectCache::TTL_DAY,
-				function () use ( $term ) {
-					return $this->fetchMatchingWikibaseData( $term );
-				}
-			);
-
-			$this->entitiesForTerm[$term] = $data;
-		}
-
-		return $this->entitiesForTerm[$term];
-	}
-
-	/**
-	 * Find wikibase entities that match a given search term and return their ids,
-	 * along with a (normalized, between 0-1) score indicating good of a match
-	 * they are.
-	 *
-	 * @param string $term
-	 * @return array
-	 */
-	protected function fetchMatchingWikibaseData( string $term ): array {
-		$params = [
-			'format' => 'json',
-			'action' => 'query',
-			'list' => 'search',
-			'srsearch' => $term,
-			'srnamespace' => 0,
-			'srlimit' => 50,
-			'srqiprofile' => 'wikibase',
-			'srprop' => 'snippet|titlesnippet|extensiondata',
-			'uselang' => $this->userLanguage,
-		];
-		$response = $this->apiRequest( $params );
-
-		return array_map( function ( $result, $i ) {
-			// unfortunately, the search API doesn't return an actual score
-			// (for relevancy of the match), which means that we have no way
-			// of telling which results are awesome matches and which are only
-			// somewhat relevant
-			// since we can't rely on the order to tell us much about how
-			// relevant a result is (except for relative to one another), and
-			// we don't know the actual score of these results, we'll try to
-			// approximate a term frequency - it won't be great, but at least
-			// we'll be able to tell which of "cat" and "Pirates of Catalonia"
-			// most resemble "cat"
-			// the highlight will either be in extensiondata (in the case
-			// of a matching alias), snippet (for descriptions), or
-			// titlesnippet (for labels)
-			$snippets = [
-				$result['snippet'],
-				$result['titlesnippet'],
-				$result['extensiondata']['wikibase']['extrasnippet'] ?? ''
-			];
-
-			$maxTermFrequency = 0;
-			foreach ( $snippets as $snippet ) {
-				// let's figure out how much of the snippet actually matched
-				// the search term based on the highlight
-				$source = preg_replace( '/<span class="searchmatch">(.*?)<\/span>/', '$1', $snippet );
-				$omitted = preg_replace( '/<span class="searchmatch">.*?<\/span>/', '', $snippet );
-				$termFrequency = $source === '' ? 0 : 1 - mb_strlen( $omitted ) / mb_strlen( $source );
-				$maxTermFrequency = max( $maxTermFrequency, $termFrequency );
-			}
-
-			// average the order in which results were returned (because that
-			// takes into account additional factors such as popularity of
-			// the page) and the naive term frequency to calculate how relevant
-			// the results are relative to one another
-			$relativeOrder = 1 / ( $i + 1 );
-
-			return [
-				'entityId' => $result['title'],
-				'score' => ( $relativeOrder + $maxTermFrequency ) / 2,
-			];
-		}, $response['query']['search'] ?? [], array_keys( $response['query']['search'] ?? [] ) );
-	}
-
-	protected function apiRequest( array $params ) : array {
-		$url = $this->externalEntitySearchBaseUri . '?' . http_build_query( $params );
-		$request = $this->httpRequestFactory->create( $url, [], __METHOD__ );
-		$request->execute();
-		$data = $request->getContent();
-
-		return json_decode( $data, true ) ?: [];
 	}
 }

@@ -6,14 +6,12 @@ use CirrusSearch\HashSearchConfig;
 use CirrusSearch\Parser\FullTextKeywordRegistry;
 use CirrusSearch\Search\SearchContext;
 use CirrusSearch\SearchConfig;
-use HashBagOStuff;
-use MediaWiki\Http\HttpRequestFactory;
 use MediaWiki\MediaWikiServices;
 use MediaWikiTestCase;
-use WANObjectCache;
 use Wikibase\Lib\LanguageFallbackChainFactory;
 use Wikibase\Lib\TermLanguageFallbackChain;
 use Wikibase\MediaInfo\Search\MediaQueryBuilder;
+use Wikibase\MediaInfo\Search\MediaSearchEntitiesFetcher;
 
 /**
  * @covers \Wikibase\MediaInfo\Search\MediaQueryBuilder
@@ -23,25 +21,17 @@ class MediaQueryBuilderTest extends MediaWikiTestCase {
 	private function createSUT( array $params = [] ) : MediaQueryBuilder {
 		$configFactory = MediaWikiServices::getInstance()->getConfigFactory();
 		$features = ( new FullTextKeywordRegistry( $configFactory->makeConfig( 'CirrusSearch' ) ) )->getKeywords();
-		$term = $params['term'] ?? 'test_search_term';
 		$settings = $params['settings'] ?? [];
 		$stemmingSettings = $params['stemmingSettings'] ?? [];
 		$userLanguage = $params['userLanguage'] ?? 'en';
 		$fallbackLangs = $params['fallbackLangs'] ?? [];
 		$entityIds = $params['entityIdsForTerm'] ?? [];
 		$defaultProperties = $params['defaultProperties'] ?? [];
-		$externalEntitySearchBaseUri = 'http://example.com/';
-		$httpRequestFactory = $this->createMockHttpFactory(
-			// strip filters from the search input
-			preg_replace( '/\s+[^\s]+:[^\s]+/i', '', $term ),
-			$entityIds,
-			$externalEntitySearchBaseUri
-		);
-		$objectCache = new WANObjectCache( [ 'cache' => new HashBagOStuff() ] );
 		$fallbackChainFactory = $this->createMockFallbackChainFactory(
 			$userLanguage,
 			$fallbackLangs
 		);
+		$mockMediaSearchEntitiesFetcher = $this->createMockMediaSearchEntitiesFetcher( $entityIds );
 
 		return new MediaQueryBuilder(
 			new HashSearchConfig( [
@@ -55,52 +45,27 @@ class MediaQueryBuilderTest extends MediaWikiTestCase {
 			$settings,
 			$stemmingSettings,
 			$userLanguage,
-			$httpRequestFactory,
-			$objectCache,
 			array_fill_keys( $defaultProperties, 1 ),
-			$externalEntitySearchBaseUri,
+			$mockMediaSearchEntitiesFetcher,
 			$fallbackChainFactory
 		);
 	}
 
-	private function createMockHttpFactory(
-		$term,
-		$idsToReturn,
-		$uriBase
-	) : HttpRequestFactory {
-		$requestResponse = [];
-		foreach ( $idsToReturn as $revId => $entityId ) {
-			$requestResponse['query']['search'][] = [
-				'title' => $entityId,
-				'titlesnippet' => "<span class=\"searchmatch\">$term</span>",
-				'snippet' => "$term",
-			];
-		}
-		if ( count( $idsToReturn ) > 0 ) {
-			// Add an extra match with a partially matching, less relevant term
-			$requestResponse['query']['search'][] = [
-				'title' => 'Q999999',
-				'titlesnippet' => 'XXX',
-				'snippet' => "<span class=\"searchmatch\">$term</span> XXX",
-			];
+	private function createMockMediaSearchEntitiesFetcher( $entityIdsMap ) : MediaSearchEntitiesFetcher {
+		$response = [];
+		foreach ( $entityIdsMap as $term => $entityIds ) {
+			foreach ( $entityIds as $index => $entityId ) {
+				$response[$term][] = [
+					'entityId' => $entityId,
+					'score' => 1 / ( $index + 1 ),
+				];
+			}
 		}
 
-		$request = $this->createMock( \MWHttpRequest::class );
-		$request->method( 'getContent' )
-			->willReturn(
-				json_encode( $requestResponse )
-			);
-		$requestFactory = $this->createMock( HttpRequestFactory::class );
-		$requestFactory->method( 'create' )
-			->with( $this->callback( function ( $arg ) use ( $term, $uriBase ) {
-				return (bool)preg_match(
-					'@^' . preg_quote( $uriBase ) . '.*' . preg_quote( urlencode( $term ) ) . '@',
-					$arg
-				);
-			} ) )
-			->willReturn( $request );
-
-		return $requestFactory;
+		$mockEntitiesFetcher = $this->createMock( MediaSearchEntitiesFetcher::class );
+		$mockEntitiesFetcher->method( 'get' )
+			->willReturn( $response );
+		return $mockEntitiesFetcher;
 	}
 
 	private function createMockFallbackChainFactory(

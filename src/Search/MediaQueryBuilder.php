@@ -6,6 +6,7 @@ use CirrusSearch\Parser\FullTextKeywordRegistry;
 use CirrusSearch\Query\FullTextQueryStringQueryBuilder;
 use CirrusSearch\Search\SearchContext;
 use CirrusSearch\SearchConfig;
+use Elastica\Query\AbstractQuery;
 use Elastica\Query\BoolQuery;
 use Elastica\Query\DisMax;
 use Elastica\Query\FunctionScore;
@@ -142,7 +143,7 @@ class MediaQueryBuilder extends FullTextQueryStringQueryBuilder {
 	 * @param array $nearMatchFields
 	 * @param string $queryString
 	 * @param string $nearMatchQuery
-	 * @return \Elastica\Query\AbstractQuery|BoolQuery|\Elastica\Query\QueryString
+	 * @return AbstractQuery|BoolQuery|\Elastica\Query\QueryString
 	 */
 	protected function buildSearchTextQuery(
 		SearchContext $context,
@@ -163,10 +164,10 @@ class MediaQueryBuilder extends FullTextQueryStringQueryBuilder {
 			$filter->addShould( $statementsFilterQuery );
 		}
 
-		$rankingQueries = [
-			$this->createTitleRankingQuery( $term ),
-			$this->createTextRankingQuery( $term )
-		];
+		$fullTextQueries = ( new BoolQuery() )
+			->addShould( $this->createTitleRankingQuery( $term ) )
+			->addShould( $this->createTextRankingQuery( $term ) );
+		$rankingQueries = [ $this->normalizeFulltextScores( $fullTextQueries, $term ) ];
 		$statementsRankingQuery = $this->createStatementsRankingQuery( $term );
 		if ( $statementsRankingQuery ) {
 			$rankingQueries[] = $statementsRankingQuery;
@@ -360,21 +361,31 @@ class MediaQueryBuilder extends FullTextQueryStringQueryBuilder {
 		return $query;
 	}
 
-	protected function createStatementsRankingQuery( string $term ) : ?FunctionScore {
-		$statementTerms = $this->getStatementTerms( $term );
-		if ( count( $statementTerms ) === 0 ) {
-			return null;
-		}
-
-		$statementsQuery = new DisMax();
-		foreach ( $statementTerms as $statementTerm ) {
-			$statementsQuery->addQuery(
-				( new Match() )
-					->setFieldQuery( StatementsField::NAME, $statementTerm['term'] )
-					->setFieldBoost( StatementsField::NAME, $statementTerm['boost'] )
-			);
-		}
-
+	/**
+	 * When a search term consists of multiple tokens, multiple things can
+	 * contribute to the score & they can reach a higher combined score than
+	 * when there was just 1 token.
+	 * Not all tokens are worth the same, though. The more words there are,
+	 * the less they matter: not all words are going to be repeated
+	 * throughout all text in equal amounts; there appears to be a
+	 * significant difference between 1 & 2, but then remains mostly
+	 * constant. On average, that is, because there is an enormously
+	 * wide range of scores, for any amount of tokens.
+	 * An analysis of a large variety of popular search terms indicates
+	 * that, on average, every additional token is worth about half the
+	 * score of only 1 token.
+	 * Avg max scores per token, roughly - based on ~1580 popular queries:
+	 * | 1      | 2      | 3      | 4      | 5      | 6    # token count
+	 * | 68     | 86.5   | 88.5   | 86.5   | 82.5   | 83   # max score
+	 * Essentially, when there is more than 1 token, the score seems to
+	 * increase by 1.25.
+	 * This will normalize scores to the range of 1 token.
+	 *
+	 * @param AbstractQuery $originalQuery
+	 * @param string $term
+	 * @return FunctionScore
+	 */
+	protected function normalizeFulltextScores( AbstractQuery $originalQuery, string $term ) : FunctionScore {
 		$termsCountQuery = $this->getTermsCountQuery( $term );
 
 		// below is a convoluted way of multiplying the scores of 2 queries
@@ -392,14 +403,14 @@ class MediaQueryBuilder extends FullTextQueryStringQueryBuilder {
 		//    - script: _score
 		//  - script_score:
 		//    - $termsCountQuery
-		//    - script: _score / 2 + 0.5
+		//    - script: 1 / max(1.25, _score)
 		//  - score_mode: multiply (= default)
 		return ( new FunctionScore() )
 			->setQuery(
 				( new BoolQuery() )
 					->addShould(
 						( new FunctionScore() )
-							->setQuery( $statementsQuery )
+							->setQuery( $originalQuery )
 							->addScriptScoreFunction(
 								// script_score must not return a negative score, which could be
 								// produced when 0 < _score < 1; we'll simply ignore those for being
@@ -410,24 +421,30 @@ class MediaQueryBuilder extends FullTextQueryStringQueryBuilder {
 					->addShould(
 						( new FunctionScore() )
 							->setQuery( $termsCountQuery )
-							// When a search term consists of multiple tokens, multiple things can
-							// contribute to the score & they can reach a higher combined score than
-							// when there was just 1 token.
-							// Not all tokens are worth the same, though. The more words there are,
-							// the less they matter: not all words are going to be repeated
-							// throughout all text in equal amounts.
-							// An analysis of a large variety of popular search terms indicates
-							// that, on average, every additional token is worth about half the
-							// score of only 1 token.
-							// Avg total scores per token, roughly - based on ~125 popular queries:
-							// | 1      | 2      | 3      | 4      # token count
-							// | 71     | 108    | 135    | 181    # max score
 							->addScriptScoreFunction(
-								new Script( 'max(0, ln(_score / 2 + 0.5))', [], 'expression' )
+								new Script( 'ln(1 / max(1.25, _score))', [], 'expression' )
 							)
 					)
 			)
 			->addScriptScoreFunction( new Script( 'exp(_score)', [], 'expression' ) );
+	}
+
+	protected function createStatementsRankingQuery( string $term ) : ?DisMax {
+		$statementTerms = $this->getStatementTerms( $term );
+		if ( count( $statementTerms ) === 0 ) {
+			return null;
+		}
+
+		$statementsQuery = new DisMax();
+		foreach ( $statementTerms as $statementTerm ) {
+			$statementsQuery->addQuery(
+				( new Match() )
+					->setFieldQuery( StatementsField::NAME, $statementTerm['term'] )
+					->setFieldBoost( StatementsField::NAME, $statementTerm['boost'] )
+			);
+		}
+
+		return $statementsQuery;
 	}
 
 	/**

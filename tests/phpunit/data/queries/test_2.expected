@@ -48,146 +48,6 @@
         "should": [
             [
                 {
-                    "bool": {
-                        "should": [
-                            {
-                                "multi_match": {
-                                    "query": "another search term",
-                                    "boost": 1,
-                                    "minimum_should_match": 1,
-                                    "type": "most_fields",
-                                    "fields": [
-                                        "descriptions.ga.plain^1"
-                                    ]
-                                }
-                            },
-                            {
-                                "multi_match": {
-                                    "query": "another search term",
-                                    "boost": 1,
-                                    "minimum_should_match": 1,
-                                    "type": "most_fields",
-                                    "fields": [
-                                        "descriptions.fr.plain^1"
-                                    ]
-                                }
-                            },
-                            {
-                                "multi_match": {
-                                    "query": "another search term",
-                                    "boost": 1,
-                                    "minimum_should_match": 1,
-                                    "type": "most_fields",
-                                    "fields": [
-                                        "descriptions.es.plain^1"
-                                    ]
-                                }
-                            },
-                            {
-                                "multi_match": {
-                                    "query": "another search term",
-                                    "boost": 1,
-                                    "minimum_should_match": 1,
-                                    "type": "most_fields",
-                                    "fields": [
-                                        "title^3",
-                                        "title.plain^1"
-                                    ]
-                                }
-                            },
-                            {
-                                "multi_match": {
-                                    "query": "another search term",
-                                    "boost": 1,
-                                    "minimum_should_match": 1,
-                                    "type": "most_fields",
-                                    "fields": [
-                                        "category^3",
-                                        "category.plain^1"
-                                    ]
-                                }
-                            },
-                            {
-                                "multi_match": {
-                                    "query": "another search term",
-                                    "boost": 1,
-                                    "minimum_should_match": 1,
-                                    "type": "most_fields",
-                                    "fields": [
-                                        "redirect.title^3",
-                                        "redirect.title.plain^1"
-                                    ]
-                                }
-                            },
-                            {
-                                "multi_match": {
-                                    "query": "another search term",
-                                    "boost": 1,
-                                    "minimum_should_match": 1,
-                                    "type": "most_fields",
-                                    "fields": [
-                                        "suggest"
-                                    ]
-                                }
-                            }
-                        ]
-                    }
-                },
-                {
-                    "bool": {
-                        "should": [
-                            {
-                                "multi_match": {
-                                    "query": "another search term",
-                                    "boost": 1,
-                                    "minimum_should_match": 1,
-                                    "type": "most_fields",
-                                    "fields": [
-                                        "heading^3",
-                                        "heading.plain^1"
-                                    ]
-                                }
-                            },
-                            {
-                                "multi_match": {
-                                    "query": "another search term",
-                                    "boost": 1,
-                                    "minimum_should_match": 1,
-                                    "type": "most_fields",
-                                    "fields": [
-                                        "auxiliary_text^3",
-                                        "auxiliary_text.plain^1"
-                                    ]
-                                }
-                            },
-                            {
-                                "multi_match": {
-                                    "query": "another search term",
-                                    "boost": 1,
-                                    "minimum_should_match": 1,
-                                    "type": "most_fields",
-                                    "fields": [
-                                        "text^3",
-                                        "text.plain^1"
-                                    ]
-                                }
-                            },
-                            {
-                                "multi_match": {
-                                    "query": "another search term",
-                                    "boost": 1,
-                                    "minimum_should_match": 1,
-                                    "type": "most_fields",
-                                    "fields": [
-                                        "file_text^3",
-                                        "file_text.plain^1"
-                                    ]
-                                }
-                            }
-                        ]
-                    }
-                },
-                {
                     "function_score": {
                         "query": {
                             "bool": {
@@ -195,30 +55,146 @@
                                     {
                                         "function_score": {
                                             "query": {
-                                                "dis_max": {
-                                                    "queries": [
+                                                "bool": {
+                                                    "should": [
                                                         {
-                                                            "match": {
-                                                                "statement_keywords": {
-                                                                    "query": "P999=Q9",
-                                                                    "boost": 1
-                                                                }
+                                                            "bool": {
+                                                                "should": [
+                                                                    {
+                                                                        "multi_match": {
+                                                                            "query": "another search term",
+                                                                            "boost": 1,
+                                                                            "minimum_should_match": 1,
+                                                                            "type": "most_fields",
+                                                                            "fields": [
+                                                                                "descriptions.ga.plain^1"
+                                                                            ]
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        "multi_match": {
+                                                                            "query": "another search term",
+                                                                            "boost": 1,
+                                                                            "minimum_should_match": 1,
+                                                                            "type": "most_fields",
+                                                                            "fields": [
+                                                                                "descriptions.fr.plain^1"
+                                                                            ]
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        "multi_match": {
+                                                                            "query": "another search term",
+                                                                            "boost": 1,
+                                                                            "minimum_should_match": 1,
+                                                                            "type": "most_fields",
+                                                                            "fields": [
+                                                                                "descriptions.es.plain^1"
+                                                                            ]
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        "multi_match": {
+                                                                            "query": "another search term",
+                                                                            "boost": 1,
+                                                                            "minimum_should_match": 1,
+                                                                            "type": "most_fields",
+                                                                            "fields": [
+                                                                                "title^3",
+                                                                                "title.plain^1"
+                                                                            ]
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        "multi_match": {
+                                                                            "query": "another search term",
+                                                                            "boost": 1,
+                                                                            "minimum_should_match": 1,
+                                                                            "type": "most_fields",
+                                                                            "fields": [
+                                                                                "category^3",
+                                                                                "category.plain^1"
+                                                                            ]
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        "multi_match": {
+                                                                            "query": "another search term",
+                                                                            "boost": 1,
+                                                                            "minimum_should_match": 1,
+                                                                            "type": "most_fields",
+                                                                            "fields": [
+                                                                                "redirect.title^3",
+                                                                                "redirect.title.plain^1"
+                                                                            ]
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        "multi_match": {
+                                                                            "query": "another search term",
+                                                                            "boost": 1,
+                                                                            "minimum_should_match": 1,
+                                                                            "type": "most_fields",
+                                                                            "fields": [
+                                                                                "suggest"
+                                                                            ]
+                                                                        }
+                                                                    }
+                                                                ]
                                                             }
                                                         },
                                                         {
-                                                            "match": {
-                                                                "statement_keywords": {
-                                                                    "query": "P999=Q2",
-                                                                    "boost": 0.75
-                                                                }
-                                                            }
-                                                        },
-                                                        {
-                                                            "match": {
-                                                                "statement_keywords": {
-                                                                    "query": "P999=Q999999",
-                                                                    "boost": 0.57971014492753625
-                                                                }
+                                                            "bool": {
+                                                                "should": [
+                                                                    {
+                                                                        "multi_match": {
+                                                                            "query": "another search term",
+                                                                            "boost": 1,
+                                                                            "minimum_should_match": 1,
+                                                                            "type": "most_fields",
+                                                                            "fields": [
+                                                                                "heading^3",
+                                                                                "heading.plain^1"
+                                                                            ]
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        "multi_match": {
+                                                                            "query": "another search term",
+                                                                            "boost": 1,
+                                                                            "minimum_should_match": 1,
+                                                                            "type": "most_fields",
+                                                                            "fields": [
+                                                                                "auxiliary_text^3",
+                                                                                "auxiliary_text.plain^1"
+                                                                            ]
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        "multi_match": {
+                                                                            "query": "another search term",
+                                                                            "boost": 1,
+                                                                            "minimum_should_match": 1,
+                                                                            "type": "most_fields",
+                                                                            "fields": [
+                                                                                "text^3",
+                                                                                "text.plain^1"
+                                                                            ]
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        "multi_match": {
+                                                                            "query": "another search term",
+                                                                            "boost": 1,
+                                                                            "minimum_should_match": 1,
+                                                                            "type": "most_fields",
+                                                                            "fields": [
+                                                                                "file_text^3",
+                                                                                "file_text.plain^1"
+                                                                            ]
+                                                                        }
+                                                                    }
+                                                                ]
                                                             }
                                                         }
                                                     ]
@@ -254,7 +230,7 @@
                                                 {
                                                     "script_score": {
                                                         "script": {
-                                                            "source": "max(0, ln(_score \/ 2 + 0.5))",
+                                                            "source": "ln(1 \/ max(1.25, _score))",
                                                             "lang": "expression"
                                                         }
                                                     }
@@ -271,6 +247,36 @@
                                     "script": {
                                         "source": "exp(_score)",
                                         "lang": "expression"
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "dis_max": {
+                        "queries": [
+                            {
+                                "match": {
+                                    "statement_keywords": {
+                                        "query": "P999=Q9",
+                                        "boost": 1
+                                    }
+                                }
+                            },
+                            {
+                                "match": {
+                                    "statement_keywords": {
+                                        "query": "P999=Q2",
+                                        "boost": 0.75
+                                    }
+                                }
+                            },
+                            {
+                                "match": {
+                                    "statement_keywords": {
+                                        "query": "P999=Q999999",
+                                        "boost": 0.57971014492753625
                                     }
                                 }
                             }

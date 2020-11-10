@@ -146,7 +146,7 @@
 	"wikibasemediainfo-special-mediasearch-filter-sort-popularity": "Popularité",
 	"wikibasemediainfo-special-mediasearch-no-results": "Aucun résultat trouvé",
 	"wikibasemediainfo-special-mediasearch-no-results-tips": "Essayer des termes plus généraux ou vérifiez votre orthographe",
-	"wikibasemediainfo-special-mediasearch-empty-state": "Rechercher parmi plus de <span class=\"wbmi-media-search-empty-state__file-count\">{{formatnum:$1|O|,|_}}</span> {{PLURAL:$1|fichier de média libre|fichiers de média libres}} de réutilisation",
+	"wikibasemediainfo-special-mediasearch-empty-state": "Rechercher parmi plus de <span class=\"wbmi-media-search-empty-state__file-count\">$1</span> {{PLURAL:$1|fichier de média libre|fichiers de média libres}} de réutilisation",
 	"wikibasemediainfo-special-mediasearch-clear-title": "Supprimer",
 	"wikibasemediainfo-special-mediasearch-input-label": "Rechercher un média",
 	"wikibasemediainfo-special-mediasearch-input-placeholder": "Rechercher des images, de l’audio, des vidéos et plus",

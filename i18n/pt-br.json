@@ -139,6 +139,7 @@
 	"wikibasemediainfo-special-mediasearch-filter-sort-popularity": "Popularidade",
 	"wikibasemediainfo-special-mediasearch-no-results": "Não encontramos nenhum resultado",
 	"wikibasemediainfo-special-mediasearch-no-results-tips": "Experimente termos mais gerais ou verifique a ortografia",
+	"wikibasemediainfo-special-mediasearch-empty-state": "Pesquise mais de <span class=\"wbmi-media-search-empty-state__file-count\">$1</span> {{PLURAL:$1|arquivo|arquivos}} de mídia livre para reutilizar",
 	"wikibasemediainfo-special-mediasearch-clear-title": "Remover",
 	"wikibasemediainfo-special-mediasearch-input-label": "Pesquisar mídia",
 	"wikibasemediainfo-special-mediasearch-input-placeholder": "Pesquise imagens, áudio, vídeo e muito mais",

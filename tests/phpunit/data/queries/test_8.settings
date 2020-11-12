@@ -1,7 +1,10 @@
 {
 	"title": "fallback to cirrus",
-	"term": "\"phrase search\"",
-	"entityIdsForTerm": { "\"phrase search\"": [] },
+	"term": "cat AND dog NOT donkey",
+	"entityIdsForTerm": {
+		"cat": [ "P1" ],
+		"donkey": [ "P2" ]
+	 },
 	"defaultProperties": [
 		"P999"
 	],

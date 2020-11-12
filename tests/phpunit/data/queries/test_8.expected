@@ -1,0 +1,652 @@
+{
+    "bool": {
+        "must": [
+            {
+                "bool": {
+                    "should": [
+                        {
+                            "function_score": {
+                                "query": {
+                                    "bool": {
+                                        "must": [
+                                            {
+                                                "function_score": {
+                                                    "query": {
+                                                        "bool": {
+                                                            "should": [
+                                                                {
+                                                                    "multi_match": {
+                                                                        "query": "cat",
+                                                                        "boost": 1,
+                                                                        "type": "most_fields",
+                                                                        "fields": [
+                                                                            "title^3",
+                                                                            "title.plain^1"
+                                                                        ]
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "multi_match": {
+                                                                        "query": "cat",
+                                                                        "boost": 1,
+                                                                        "type": "most_fields",
+                                                                        "fields": [
+                                                                            "category^3",
+                                                                            "category.plain^1"
+                                                                        ]
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "multi_match": {
+                                                                        "query": "cat",
+                                                                        "boost": 1,
+                                                                        "type": "most_fields",
+                                                                        "fields": [
+                                                                            "redirect.title^3",
+                                                                            "redirect.title.plain^1"
+                                                                        ]
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "multi_match": {
+                                                                        "query": "cat",
+                                                                        "boost": 1,
+                                                                        "type": "most_fields",
+                                                                        "fields": [
+                                                                            "suggest^3",
+                                                                            "suggest.plain^1"
+                                                                        ]
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "multi_match": {
+                                                                        "query": "cat",
+                                                                        "boost": 1,
+                                                                        "type": "most_fields",
+                                                                        "fields": [
+                                                                            "heading^3",
+                                                                            "heading.plain^1"
+                                                                        ]
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "multi_match": {
+                                                                        "query": "cat",
+                                                                        "boost": 1,
+                                                                        "type": "most_fields",
+                                                                        "fields": [
+                                                                            "auxiliary_text^3",
+                                                                            "auxiliary_text.plain^1"
+                                                                        ]
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "multi_match": {
+                                                                        "query": "cat",
+                                                                        "boost": 1,
+                                                                        "type": "most_fields",
+                                                                        "fields": [
+                                                                            "text^3",
+                                                                            "text.plain^1"
+                                                                        ]
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "multi_match": {
+                                                                        "query": "cat",
+                                                                        "boost": 1,
+                                                                        "type": "most_fields",
+                                                                        "fields": [
+                                                                            "file_text^3",
+                                                                            "file_text.plain^1"
+                                                                        ]
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "multi_match": {
+                                                                        "query": "cat",
+                                                                        "boost": 1,
+                                                                        "type": "most_fields",
+                                                                        "fields": [
+                                                                            "descriptions.de.plain^1"
+                                                                        ]
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    },
+                                                    "functions": [
+                                                        {
+                                                            "script_score": {
+                                                                "script": {
+                                                                    "source": "max(0, ln(_score))",
+                                                                    "lang": "expression"
+                                                                }
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ],
+                                        "should": [
+                                            {
+                                                "function_score": {
+                                                    "query": {
+                                                        "match_explorer": {
+                                                            "type": "unique_terms_count",
+                                                            "query": {
+                                                                "match": {
+                                                                    "text": {
+                                                                        "query": "cat"
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    },
+                                                    "functions": [
+                                                        {
+                                                            "script_score": {
+                                                                "script": {
+                                                                    "source": "ln(1 \/ max(1, min(1.25, _score)))",
+                                                                    "lang": "expression"
+                                                                }
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    }
+                                },
+                                "min_score": 0,
+                                "functions": [
+                                    {
+                                        "script_score": {
+                                            "script": {
+                                                "source": "exp(_score)",
+                                                "lang": "expression"
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "dis_max": {
+                                "queries": [
+                                    {
+                                        "match": {
+                                            "statement_keywords": {
+                                                "query": "P999=P1",
+                                                "boost": 1
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "filter": [
+                        {
+                            "bool": {
+                                "should": [
+                                    {
+                                        "multi_match": {
+                                            "query": "cat",
+                                            "fields": [
+                                                "all",
+                                                "all.plain"
+                                            ],
+                                            "operator": "and"
+                                        }
+                                    },
+                                    {
+                                        "dis_max": {
+                                            "queries": [
+                                                {
+                                                    "match": {
+                                                        "statement_keywords": {
+                                                            "query": "P999=P1",
+                                                            "boost": 1
+                                                        }
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "bool": {
+                    "should": [
+                        {
+                            "function_score": {
+                                "query": {
+                                    "bool": {
+                                        "must": [
+                                            {
+                                                "function_score": {
+                                                    "query": {
+                                                        "bool": {
+                                                            "should": [
+                                                                {
+                                                                    "multi_match": {
+                                                                        "query": "dog",
+                                                                        "boost": 1,
+                                                                        "type": "most_fields",
+                                                                        "fields": [
+                                                                            "title^3",
+                                                                            "title.plain^1"
+                                                                        ]
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "multi_match": {
+                                                                        "query": "dog",
+                                                                        "boost": 1,
+                                                                        "type": "most_fields",
+                                                                        "fields": [
+                                                                            "category^3",
+                                                                            "category.plain^1"
+                                                                        ]
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "multi_match": {
+                                                                        "query": "dog",
+                                                                        "boost": 1,
+                                                                        "type": "most_fields",
+                                                                        "fields": [
+                                                                            "redirect.title^3",
+                                                                            "redirect.title.plain^1"
+                                                                        ]
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "multi_match": {
+                                                                        "query": "dog",
+                                                                        "boost": 1,
+                                                                        "type": "most_fields",
+                                                                        "fields": [
+                                                                            "suggest^3",
+                                                                            "suggest.plain^1"
+                                                                        ]
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "multi_match": {
+                                                                        "query": "dog",
+                                                                        "boost": 1,
+                                                                        "type": "most_fields",
+                                                                        "fields": [
+                                                                            "heading^3",
+                                                                            "heading.plain^1"
+                                                                        ]
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "multi_match": {
+                                                                        "query": "dog",
+                                                                        "boost": 1,
+                                                                        "type": "most_fields",
+                                                                        "fields": [
+                                                                            "auxiliary_text^3",
+                                                                            "auxiliary_text.plain^1"
+                                                                        ]
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "multi_match": {
+                                                                        "query": "dog",
+                                                                        "boost": 1,
+                                                                        "type": "most_fields",
+                                                                        "fields": [
+                                                                            "text^3",
+                                                                            "text.plain^1"
+                                                                        ]
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "multi_match": {
+                                                                        "query": "dog",
+                                                                        "boost": 1,
+                                                                        "type": "most_fields",
+                                                                        "fields": [
+                                                                            "file_text^3",
+                                                                            "file_text.plain^1"
+                                                                        ]
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "multi_match": {
+                                                                        "query": "dog",
+                                                                        "boost": 1,
+                                                                        "type": "most_fields",
+                                                                        "fields": [
+                                                                            "descriptions.de.plain^1"
+                                                                        ]
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    },
+                                                    "functions": [
+                                                        {
+                                                            "script_score": {
+                                                                "script": {
+                                                                    "source": "max(0, ln(_score))",
+                                                                    "lang": "expression"
+                                                                }
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ],
+                                        "should": [
+                                            {
+                                                "function_score": {
+                                                    "query": {
+                                                        "match_explorer": {
+                                                            "type": "unique_terms_count",
+                                                            "query": {
+                                                                "match": {
+                                                                    "text": {
+                                                                        "query": "dog"
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    },
+                                                    "functions": [
+                                                        {
+                                                            "script_score": {
+                                                                "script": {
+                                                                    "source": "ln(1 \/ max(1, min(1.25, _score)))",
+                                                                    "lang": "expression"
+                                                                }
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    }
+                                },
+                                "min_score": 0,
+                                "functions": [
+                                    {
+                                        "script_score": {
+                                            "script": {
+                                                "source": "exp(_score)",
+                                                "lang": "expression"
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "match_none": {}
+                        }
+                    ],
+                    "filter": [
+                        {
+                            "bool": {
+                                "should": [
+                                    {
+                                        "multi_match": {
+                                            "query": "dog",
+                                            "fields": [
+                                                "all",
+                                                "all.plain"
+                                            ],
+                                            "operator": "and"
+                                        }
+                                    },
+                                    {
+                                        "match_none": {}
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            }
+        ],
+        "must_not": [
+            {
+                "bool": {
+                    "should": [
+                        {
+                            "function_score": {
+                                "query": {
+                                    "bool": {
+                                        "must": [
+                                            {
+                                                "function_score": {
+                                                    "query": {
+                                                        "bool": {
+                                                            "should": [
+                                                                {
+                                                                    "multi_match": {
+                                                                        "query": "donkey",
+                                                                        "boost": 1,
+                                                                        "type": "most_fields",
+                                                                        "fields": [
+                                                                            "title^3",
+                                                                            "title.plain^1"
+                                                                        ]
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "multi_match": {
+                                                                        "query": "donkey",
+                                                                        "boost": 1,
+                                                                        "type": "most_fields",
+                                                                        "fields": [
+                                                                            "category^3",
+                                                                            "category.plain^1"
+                                                                        ]
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "multi_match": {
+                                                                        "query": "donkey",
+                                                                        "boost": 1,
+                                                                        "type": "most_fields",
+                                                                        "fields": [
+                                                                            "redirect.title^3",
+                                                                            "redirect.title.plain^1"
+                                                                        ]
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "multi_match": {
+                                                                        "query": "donkey",
+                                                                        "boost": 1,
+                                                                        "type": "most_fields",
+                                                                        "fields": [
+                                                                            "suggest^3",
+                                                                            "suggest.plain^1"
+                                                                        ]
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "multi_match": {
+                                                                        "query": "donkey",
+                                                                        "boost": 1,
+                                                                        "type": "most_fields",
+                                                                        "fields": [
+                                                                            "heading^3",
+                                                                            "heading.plain^1"
+                                                                        ]
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "multi_match": {
+                                                                        "query": "donkey",
+                                                                        "boost": 1,
+                                                                        "type": "most_fields",
+                                                                        "fields": [
+                                                                            "auxiliary_text^3",
+                                                                            "auxiliary_text.plain^1"
+                                                                        ]
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "multi_match": {
+                                                                        "query": "donkey",
+                                                                        "boost": 1,
+                                                                        "type": "most_fields",
+                                                                        "fields": [
+                                                                            "text^3",
+                                                                            "text.plain^1"
+                                                                        ]
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "multi_match": {
+                                                                        "query": "donkey",
+                                                                        "boost": 1,
+                                                                        "type": "most_fields",
+                                                                        "fields": [
+                                                                            "file_text^3",
+                                                                            "file_text.plain^1"
+                                                                        ]
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "multi_match": {
+                                                                        "query": "donkey",
+                                                                        "boost": 1,
+                                                                        "type": "most_fields",
+                                                                        "fields": [
+                                                                            "descriptions.de.plain^1"
+                                                                        ]
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    },
+                                                    "functions": [
+                                                        {
+                                                            "script_score": {
+                                                                "script": {
+                                                                    "source": "max(0, ln(_score))",
+                                                                    "lang": "expression"
+                                                                }
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ],
+                                        "should": [
+                                            {
+                                                "function_score": {
+                                                    "query": {
+                                                        "match_explorer": {
+                                                            "type": "unique_terms_count",
+                                                            "query": {
+                                                                "match": {
+                                                                    "text": {
+                                                                        "query": "donkey"
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    },
+                                                    "functions": [
+                                                        {
+                                                            "script_score": {
+                                                                "script": {
+                                                                    "source": "ln(1 \/ max(1, min(1.25, _score)))",
+                                                                    "lang": "expression"
+                                                                }
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    }
+                                },
+                                "min_score": 0,
+                                "functions": [
+                                    {
+                                        "script_score": {
+                                            "script": {
+                                                "source": "exp(_score)",
+                                                "lang": "expression"
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "dis_max": {
+                                "queries": [
+                                    {
+                                        "match": {
+                                            "statement_keywords": {
+                                                "query": "P999=P2",
+                                                "boost": 1
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "filter": [
+                        {
+                            "bool": {
+                                "should": [
+                                    {
+                                        "multi_match": {
+                                            "query": "donkey",
+                                            "fields": [
+                                                "all",
+                                                "all.plain"
+                                            ],
+                                            "operator": "and"
+                                        }
+                                    },
+                                    {
+                                        "dis_max": {
+                                            "queries": [
+                                                {
+                                                    "match": {
+                                                        "statement_keywords": {
+                                                            "query": "P999=P2",
+                                                            "boost": 1
+                                                        }
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            }
+        ],
+        "filter": [
+            {
+                "terms": {
+                    "namespace": [
+                        0
+                    ]
+                }
+            }
+        ]
+    }
+}

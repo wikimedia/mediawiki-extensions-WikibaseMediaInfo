@@ -93,6 +93,7 @@
 		"RevisionUndeleted": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onRevisionUndeleted",
 		"ArticleUndelete": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onArticleUndelete",
 		"CirrusSearchProfileService": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onCirrusSearchProfileService",
+		"CirrusSearchRegisterFullTextQueryClassifiers": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onCirrusSearchRegisterFullTextQueryClassifiers",
 		"SidebarBeforeOutput": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onSidebarBeforeOutput"
 	},
 	"MessagesDirs": {

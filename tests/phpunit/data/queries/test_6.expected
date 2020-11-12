@@ -2,15 +2,28 @@
     "bool": {
         "must": [
             {
-                "match_all": {}
+                "match_none": {}
             }
         ],
         "filter": [
             {
-                "match": {
-                    "template": {
-                        "query": "Template:Foo"
-                    }
+                "bool": {
+                    "must": [
+                        {
+                            "match": {
+                                "template": {
+                                    "query": "Template:Foo"
+                                }
+                            }
+                        },
+                        {
+                            "terms": {
+                                "namespace": [
+                                    0
+                                ]
+                            }
+                        }
+                    ]
                 }
             }
         ]

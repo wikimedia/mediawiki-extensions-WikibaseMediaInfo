@@ -134,9 +134,9 @@
 											</h4>
 										{{/imageinfo.0.mime}}
 
-										{{#terms.label}}
+										{{#entityterms.label}}
 											<p>{{.}}</p>
-										{{/terms.label}}
+										{{/entityterms.label}}
 									</div>
 								{{/results}}
 							{{/isAudio}}

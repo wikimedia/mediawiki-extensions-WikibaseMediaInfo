@@ -78,7 +78,7 @@ module.exports = {
 				gsrsearch: options.term,
 				gsrlimit: LIMIT,
 				gsroffset: context.state.continue[ options.type ] || 0,
-				prop: options.type === 'page' ? 'info|categoryinfo' : 'info|imageinfo|pageterms',
+				prop: options.type === 'page' ? 'info|categoryinfo' : 'info|imageinfo|entityterms',
 				inprop: 'url'
 			},
 			filters,
@@ -109,7 +109,7 @@ module.exports = {
 			params.iiprop = 'url|size|mime';
 			params.iiurlheight = options.type === 'bitmap' ? 180 : undefined;
 			params.iiurlwidth = urlWidth;
-			params.wbptterms = 'label';
+			params.wbetterms = 'label';
 			params.mediasearch = true; // @todo this is temporary to force the use of the mediasearch profile
 		}
 

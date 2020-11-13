@@ -256,12 +256,12 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 				'gsrnamespace' => NS_FILE,
 				'gsrlimit' => $limit,
 				'gsroffset' => $continue ?: 0,
-				'prop' => 'info|imageinfo|pageterms',
+				'prop' => 'info|imageinfo|entityterms',
 				'inprop' => 'url',
 				'iiprop' => 'url|size|mime',
 				'iiurlheight' => $type === 'bitmap' ? 180 : null,
 				'iiurlwidth' => $width,
-				'wbptterms' => 'label',
+				'wbetterms' => 'label',
 			] );
 		}
 

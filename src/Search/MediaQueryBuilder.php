@@ -16,6 +16,7 @@ use Elastica\Query\Terms;
 use Elastica\Script\Script;
 use MediaWiki\Http\HttpRequestFactory;
 use MediaWiki\MediaWikiServices;
+use RequestContext;
 use WANObjectCache;
 use Wikibase\Lib\LanguageFallbackChainFactory;
 use Wikibase\Repo\WikibaseRepo;
@@ -44,6 +45,8 @@ class MediaQueryBuilder extends FullTextQueryStringQueryBuilder {
 	protected $languageFallbackChain;
 	/** @var array */
 	protected $entitiesForTerm = [];
+	/** @var bool */
+	protected $balanceStatementAndFulltextScores;
 
 	public function __construct(
 		SearchConfig $config,
@@ -87,6 +90,8 @@ class MediaQueryBuilder extends FullTextQueryStringQueryBuilder {
 		$this->externalEntitySearchBaseUri = $externalEntitySearchBaseUri;
 		$this->languageFallbackChain = $languageFallbackChainFactory
 			->newFromLanguageCode( $userLanguage );
+		$this->balanceStatementAndFulltextScores =
+			$settings['balanceStatementAndFulltextScores'] ?? true;
 	}
 
 	/**
@@ -108,6 +113,11 @@ class MediaQueryBuilder extends FullTextQueryStringQueryBuilder {
 		}
 		$features = ( new FullTextKeywordRegistry( $searchConfig ) )->getKeywords();
 
+		$settings = array_replace_recursive(
+			$settings,
+			self::getBoostSettingsFromRequest()
+		);
+
 		return new static(
 			$searchConfig,
 			$features,
@@ -120,6 +130,55 @@ class MediaQueryBuilder extends FullTextQueryStringQueryBuilder {
 			$wgMediaInfoExternalEntitySearchBaseUri,
 			$repo->getLanguageFallbackChainFactory()
 		);
+	}
+
+	private static function getBoostSettingsFromRequest() {
+		$boost = $decay = [];
+
+		// Note that '.' in the url is replaced with '_' in the keys of getQueryValues
+		foreach ( RequestContext::getMain()->getRequest()->getQueryValues() as $key => $value ) {
+			if ( strpos( $key, 'boost_' ) === 0 && floatval( $value ) > 0 ) {
+				$boost[ str_replace( 'boost_', '', $key )  ] = floatval( $value );
+			}
+			if ( strpos( $key, 'decay_' ) === 0 && floatval( $value ) > 0 ) {
+				$decay[ str_replace( 'decay_', '', $key ) ] = floatval( $value );
+			}
+		}
+		if ( count( $boost ) == 0 ) {
+			return [];
+		}
+		// ... again, working around '.' being replaced by '_'
+		if ( isset( $boost['redirect_title'] ) ) {
+			$boost['redirect.title'] = $boost['redirect_title'];
+			unset( $boost['redirect_title'] );
+		}
+
+		$settings = array_replace_recursive(
+			[
+				'boost' => [
+					'statement' => 0.0,
+					'caption' => 0.0,
+					'title' => 0.0,
+					'category' => 0.0,
+					'heading' => 0.0,
+					'auxiliary_text' => 0.0,
+					'file_text' => 0.0,
+					'redirect.title' => 0.0,
+					'suggest' => 0.0,
+					'text' => 0.0,
+					'non-file_namespace_boost' => 0.0,
+				],
+				'decay' => [
+					'caption-fallback' => 0.0,
+				],
+				'balanceStatementAndFulltextScores' => false,
+			],
+			[
+				'boost' => $boost,
+				'decay' => $decay,
+			]
+		);
+		return $settings;
 	}
 
 	/**
@@ -383,9 +442,13 @@ class MediaQueryBuilder extends FullTextQueryStringQueryBuilder {
 	 *
 	 * @param AbstractQuery $originalQuery
 	 * @param string $term
-	 * @return FunctionScore
+	 * @return AbstractQuery
 	 */
-	protected function normalizeFulltextScores( AbstractQuery $originalQuery, string $term ) : FunctionScore {
+	protected function normalizeFulltextScores( AbstractQuery $originalQuery, string $term ) : AbstractQuery {
+		if ( $this->balanceStatementAndFulltextScores === false ) {
+			return $originalQuery;
+		}
+
 		$termsCountQuery = $this->getTermsCountQuery( $term );
 
 		// below is a convoluted way of multiplying the scores of 2 queries

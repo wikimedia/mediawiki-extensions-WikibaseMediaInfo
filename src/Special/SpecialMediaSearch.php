@@ -6,6 +6,7 @@ use ApiBase;
 use ApiMain;
 use DerivativeContext;
 use FauxRequest;
+use NamespaceInfo;
 use OutputPage;
 use RequestContext;
 use SiteStats;
@@ -21,6 +22,11 @@ use Wikimedia\Assert\Assert;
 class SpecialMediaSearch extends UnlistedSpecialPage {
 
 	/**
+	 * @var NamespaceInfo
+	 */
+	protected $namespaceInfo;
+
+	/**
 	 * @var ApiBase
 	 */
 	protected $api;
@@ -34,12 +40,14 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 	 * @inheritDoc
 	 */
 	public function __construct(
+		NamespaceInfo $namespaceInfo,
 		$name = 'MediaSearch',
 		ApiBase $api = null,
 		TemplateParser $templateParser = null
 	) {
 		parent::__construct( $name, 'mediasearch' );
 
+		$this->namespaceInfo = $namespaceInfo;
 		$this->api = $api ?: new ApiMain( new FauxRequest() );
 		$this->templateParser = $templateParser ?: new MustacheDomTemplateParser(
 			__DIR__ . '/../../templates/mediasearch'
@@ -57,8 +65,6 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 	 * @inheritDoc
 	 */
 	public function execute( $subPage ) {
-		global $wgMediaInfoMediaSearchPageNamespaces;
-
 		OutputPage::setupOOUI();
 
 		// url & querystring params of this page
@@ -184,7 +190,6 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 		$this->getOutput()->addJsConfigVars( [
 			'wbmiInitialSearchResults' => $data,
 			'wbmiTotalSiteImages' => $totalSiteImages,
-			'wbmiMediaSearchPageNamespaces' => $wgMediaInfoMediaSearchPageNamespaces
 		] );
 
 		return parent::execute( $subPage );
@@ -199,8 +204,6 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 	 * @throws \MWException
 	 */
 	protected function search( $term, $type = null, $limit = null, $continue = null ): array {
-		global $wgMediaInfoMediaSearchPageNamespaces;
-
 		Assert::parameterType( 'string', $term, '$term' );
 		Assert::parameterType( 'string|null', $type, '$type' );
 		Assert::parameterType( 'integer|null', $limit, '$limit' );
@@ -219,7 +222,7 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 				'action' => 'query',
 				'generator' => 'search',
 				'gsrsearch' => $term,
-				'gsrnamespace' => $wgMediaInfoMediaSearchPageNamespaces,
+				'gsrnamespace' => array_diff_key( $this->namespaceInfo->getValidNamespaces(), [ NS_FILE ] ),
 				'gsrlimit' => $limit,
 				'gsroffset' => $continue ?: 0,
 				'prop' => 'info|categoryinfo',

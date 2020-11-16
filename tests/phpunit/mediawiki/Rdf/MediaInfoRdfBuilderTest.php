@@ -9,9 +9,9 @@ use RepoGroup;
 use Wikibase\DataAccess\EntitySource;
 use Wikibase\DataAccess\EntitySourceDefinitions;
 use Wikibase\Lib\EntityTypeDefinitions;
-use Wikibase\Lib\Store\EntityTitleLookup;
 use Wikibase\MediaInfo\Content\MediaInfoHandler;
 use Wikibase\MediaInfo\Rdf\MediaInfoRdfBuilder;
+use Wikibase\Repo\Content\EntityContentFactory;
 use Wikibase\Repo\Rdf\HashDedupeBag;
 use Wikibase\Repo\Rdf\RdfBuilder;
 use Wikibase\Repo\Rdf\RdfProducer;
@@ -181,12 +181,11 @@ class MediaInfoRdfBuilderTest extends TestCase {
 	/**
 	 * @param RdfWriter $writer
 	 * @param int $produce One of the RdfProducer::PRODUCE_... constants.
-	 * @param EntityTitleLookup $entityTitleLookup
 	 *
 	 * @return RdfBuilder
 	 */
 	private function newFullBuilder(
-		RdfWriter $writer, $produce, EntityTitleLookup $entityTitleLookup
+		RdfWriter $writer, $produce
 	) {
 		$wikibaseRepo = WikibaseRepo::getDefaultInstance();
 		$builder = new RdfBuilder(
@@ -197,7 +196,7 @@ class MediaInfoRdfBuilderTest extends TestCase {
 			$produce,
 			$writer,
 			new HashDedupeBag(),
-			$entityTitleLookup
+			$this->createMock( EntityContentFactory::class )
 		);
 		$builder->startDocument();
 		return $builder;
@@ -215,9 +214,8 @@ class MediaInfoRdfBuilderTest extends TestCase {
 	public function testMediaInfoFullRDF( $entityName, $dataSetName ) {
 		$entity = $this->getTestData()->getEntity( $entityName );
 		$writer = $this->getTestData()->getNTriplesWriter( false );
-		$entityTitleLookup = $this->createMock( EntityTitleLookup::class );
 
-		$builder = $this->newFullBuilder( $writer, RdfProducer::PRODUCE_ALL, $entityTitleLookup );
+		$builder = $this->newFullBuilder( $writer, RdfProducer::PRODUCE_ALL );
 		$builder->addEntity( $entity );
 		$this->assertOrCreateNTriples( $dataSetName, $writer );
 	}

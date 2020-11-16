@@ -64,8 +64,10 @@ class ExperimentalEntityTraversingMediaQueryBuilder extends MediaQueryBuilder {
 
 	public static function newFromGlobals( array $settings ) {
 		global $wgMediaInfoProperties,
+			$wgMediaInfoMediaSearchProperties,
 			$wgMediaInfoExternalEntitySearchBaseUri,
 			$wgMediaInfoMediaSearchEntitiesSparqlEndpointUri;
+
 		$repo = WikibaseRepo::getDefaultInstance();
 		$configFactory = MediaWikiServices::getInstance()->getConfigFactory();
 		$httpRequestFactory = MediaWikiServices::getInstance()->getHttpRequestFactory();
@@ -88,7 +90,7 @@ class ExperimentalEntityTraversingMediaQueryBuilder extends MediaQueryBuilder {
 			$repo->getUserLanguage()->getCode(),
 			$httpRequestFactory,
 			MediaWikiServices::getInstance()->getMainWANObjectCache(),
-			array_values( $wgMediaInfoProperties ),
+			$wgMediaInfoMediaSearchProperties ?? array_fill_keys( array_values( $wgMediaInfoProperties ), 1 ),
 			$wgMediaInfoExternalEntitySearchBaseUri,
 			$repo->getLanguageFallbackChainFactory(),
 			$sparqlClient
@@ -172,7 +174,7 @@ class ExperimentalEntityTraversingMediaQueryBuilder extends MediaQueryBuilder {
 
 		if ( $request->getCheck( 'dumpExtraFiles' ) ) {
 			// WCQS will not accept a massive list of entities, so we'll chunk it up...
-			$batchSize = 400;
+			$batchSize = 250;
 			$count = count( $childItemIds );
 			for ( $i = 0; $i * $batchSize < $count; $i++ ) {
 				$batch = array_slice( array_keys( $childItemIds ), $i * $batchSize, $batchSize );

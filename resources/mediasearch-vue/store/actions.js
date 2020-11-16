@@ -81,13 +81,27 @@ module.exports = {
 				prop: options.type === 'page' ? 'info|categoryinfo' : 'info|imageinfo|pageterms',
 				inprop: 'url'
 			},
+			namespaces = mw.config.get( 'wgNamespaceIds' ),
 			filters,
 			urlWidth,
 			request;
 
 		if ( options.type === 'page' ) {
 			// Page/category-specific params.
-			params.gsrnamespace = mw.config.get( 'wbmiMediaSearchPageNamespaces' );
+			params.gsrnamespace = Object.keys( namespaces )
+				.map( function ( key ) {
+					return namespaces[ key ];
+				} )
+				.filter( function ( id, i, ids ) {
+					return (
+						// exclude virtual namespaces
+						id >= 0 &&
+						// exclude file namespace
+						( !( 'file' in namespaces ) || id !== namespaces.file ) &&
+						// exclude duplicates (namespace ids known under multiple aliases)
+						ids.indexOf( id ) === i
+					);
+				} );
 		} else {
 			// Params used in all non-page/category searches.
 			filters = getMediaFilters( options.type, context.state.filterValues[ options.type ] );

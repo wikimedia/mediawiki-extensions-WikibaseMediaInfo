@@ -279,10 +279,16 @@ module.exports = {
 		 * Progressively larger thumbnail images, generated with mw.util.parseImageUrl
 		 * https://doc.wikimedia.org/mediawiki-core/master/js/#!/api/mw.util-method-parseImageUrl
 		 *
-		 * @return {string}
+		 * @return {string|boolean}
 		 */
 		srcset: function () {
 			var attributeString = '';
+
+			// If the URL produced by parseImageUrl isn't a thumbnail, we won't
+			// be able to use resizeUrl and should just omit the srcset.
+			if ( typeof mw.util.parseImageUrl( this.thumbnail ).resizeUrl !== 'function' ) {
+				return false;
+			}
 
 			if ( this.isDialog ) {
 				// For Dialog-mode quickview, the image can theoretically become
@@ -294,6 +300,7 @@ module.exports = {
 					var url = mw.util.parseImageUrl( this.thumbnail ).resizeUrl( size );
 					attributeString += url + ' ' + size + 'w,\n';
 				}.bind( this ) );
+
 				// Add one final item to the list representing the maximum size.
 				// If the underlying image file is smaller than the requested size,
 				// parseImageUrl will simply return a link to the full-size image.

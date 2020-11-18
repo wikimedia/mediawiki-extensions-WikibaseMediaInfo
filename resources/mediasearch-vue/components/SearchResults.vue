@@ -287,11 +287,11 @@ module.exports = {
 
 			// Set special params for audio/video files
 			if ( this.mediaType === 'video' || this.mediaType === 'audio' ) {
-				params.prop = 'info|videoinfo|pageterms';
+				params.prop = 'info|videoinfo|entityterms';
 				params.viprop = 'url|size|mime|extmetadata|derivatives';
 				params.viurlwidth = 640;
 			} else {
-				params.prop = 'info|imageinfo|pageterms';
+				params.prop = 'info|imageinfo|entityterms';
 				params.iiprop = 'url|size|mime|extmetadata';
 				params.iiurlheight = this.mediaType === 'bitmap' ? 180 : undefined;
 			}

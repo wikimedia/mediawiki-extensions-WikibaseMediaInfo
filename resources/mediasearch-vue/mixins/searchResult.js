@@ -44,7 +44,7 @@ module.exports = {
 			required: false
 		},
 
-		terms: {
+		entityterms: {
 			type: Object,
 			required: false
 		}
@@ -80,8 +80,8 @@ module.exports = {
 		},
 
 		label: function () {
-			if ( this.terms && this.terms.label ) {
-				return this.terms.label[ 0 ];
+			if ( this.entityterms && this.entityterms.label ) {
+				return this.entityterms.label[ 0 ];
 			} else {
 				return null;
 			}

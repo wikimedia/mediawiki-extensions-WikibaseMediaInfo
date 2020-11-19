@@ -256,7 +256,7 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 				'uselang' => $langCode,
 				'action' => 'query',
 				'generator' => 'search',
-				'gsrsearch' => $term . ( $filetype ? " filetype:$filetype" : '' ),
+				'gsrsearch' => ( $filetype ? "filetype:$filetype " : '' ) . $term,
 				'gsrnamespace' => NS_FILE,
 				'gsrlimit' => $limit,
 				'gsroffset' => $continue ?: 0,

@@ -242,8 +242,9 @@ return [
 		Def::ENTITY_REVISION_LOOKUP_FACTORY_CALLBACK => function (
 			EntityRevisionLookup $defaultLookup
 		) {
-			$revisionStoreFactory = MediaWikiServices::getInstance()->getRevisionStoreFactory();
-			$blobStoreFactory = MediaWikiServices::getInstance()->getBlobStoreFactory();
+			$services = MediaWikiServices::getInstance();
+			$revisionStoreFactory = $services->getRevisionStoreFactory();
+			$blobStoreFactory = $services->getBlobStoreFactory();
 
 			$wbRepo = WikibaseRepo::getDefaultInstance();
 			// TODO: this all scaffolding should probably be somehow moved to Wikibase Repo or so?
@@ -251,7 +252,7 @@ return [
 				->getSourceForEntityType( MediaInfo::ENTITY_TYPE )->getDatabaseName();
 
 			$contentCodec = new EntityContentDataCodec(
-				$wbRepo->getEntityIdParser(),
+				WikibaseRepo::getEntityIdParser( $services ),
 				$wbRepo->getStorageEntitySerializer(),
 				$wbRepo->getInternalFormatEntityDeserializer(),
 				$wbRepo->getDataAccessSettings()->maxSerializedEntitySizeInBytes()

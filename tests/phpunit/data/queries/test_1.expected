@@ -12,101 +12,139 @@
                                             "bool": {
                                                 "should": [
                                                     {
-                                                        "multi_match": {
-                                                            "query": "some search term",
-                                                            "boost": 1,
-                                                            "type": "most_fields",
-                                                            "fields": [
-                                                                "title^3",
-                                                                "title.plain^1"
-                                                            ]
+                                                        "match": {
+                                                            "title": {
+                                                                "query": "some search term",
+                                                                "boost": 3
+                                                            }
                                                         }
                                                     },
                                                     {
-                                                        "multi_match": {
-                                                            "query": "some search term",
-                                                            "boost": 1,
-                                                            "type": "most_fields",
-                                                            "fields": [
-                                                                "category^3",
-                                                                "category.plain^1"
-                                                            ]
+                                                        "match": {
+                                                            "title.plain": {
+                                                                "query": "some search term",
+                                                                "boost": 1
+                                                            }
                                                         }
                                                     },
                                                     {
-                                                        "multi_match": {
-                                                            "query": "some search term",
-                                                            "boost": 1,
-                                                            "type": "most_fields",
-                                                            "fields": [
-                                                                "redirect.title^3",
-                                                                "redirect.title.plain^1"
-                                                            ]
+                                                        "match": {
+                                                            "category": {
+                                                                "query": "some search term",
+                                                                "boost": 3
+                                                            }
                                                         }
                                                     },
                                                     {
-                                                        "multi_match": {
-                                                            "query": "some search term",
-                                                            "boost": 1,
-                                                            "type": "most_fields",
-                                                            "fields": [
-                                                                "suggest^3",
-                                                                "suggest.plain^1"
-                                                            ]
+                                                        "match": {
+                                                            "category.plain": {
+                                                                "query": "some search term",
+                                                                "boost": 1
+                                                            }
                                                         }
                                                     },
                                                     {
-                                                        "multi_match": {
-                                                            "query": "some search term",
-                                                            "boost": 1,
-                                                            "type": "most_fields",
-                                                            "fields": [
-                                                                "heading^3",
-                                                                "heading.plain^1"
-                                                            ]
+                                                        "match": {
+                                                            "redirect.title": {
+                                                                "query": "some search term",
+                                                                "boost": 3
+                                                            }
                                                         }
                                                     },
                                                     {
-                                                        "multi_match": {
-                                                            "query": "some search term",
-                                                            "boost": 1,
-                                                            "type": "most_fields",
-                                                            "fields": [
-                                                                "auxiliary_text^3",
-                                                                "auxiliary_text.plain^1"
-                                                            ]
+                                                        "match": {
+                                                            "redirect.title.plain": {
+                                                                "query": "some search term",
+                                                                "boost": 1
+                                                            }
                                                         }
                                                     },
                                                     {
-                                                        "multi_match": {
-                                                            "query": "some search term",
-                                                            "boost": 1,
-                                                            "type": "most_fields",
-                                                            "fields": [
-                                                                "text^3",
-                                                                "text.plain^1"
-                                                            ]
+                                                        "match": {
+                                                            "suggest": {
+                                                                "query": "some search term",
+                                                                "boost": 3
+                                                            }
                                                         }
                                                     },
                                                     {
-                                                        "multi_match": {
-                                                            "query": "some search term",
-                                                            "boost": 1,
-                                                            "type": "most_fields",
-                                                            "fields": [
-                                                                "file_text^3",
-                                                                "file_text.plain^1"
-                                                            ]
+                                                        "match": {
+                                                            "suggest.plain": {
+                                                                "query": "some search term",
+                                                                "boost": 1
+                                                            }
                                                         }
                                                     },
                                                     {
-                                                        "multi_match": {
-                                                            "query": "some search term",
-                                                            "boost": 1,
-                                                            "type": "most_fields",
-                                                            "fields": [
-                                                                "descriptions.en.plain^1"
-                                                            ]
+                                                        "match": {
+                                                            "heading": {
+                                                                "query": "some search term",
+                                                                "boost": 3
+                                                            }
+                                                        }
+                                                    },
+                                                    {
+                                                        "match": {
+                                                            "heading.plain": {
+                                                                "query": "some search term",
+                                                                "boost": 1
+                                                            }
+                                                        }
+                                                    },
+                                                    {
+                                                        "match": {
+                                                            "auxiliary_text": {
+                                                                "query": "some search term",
+                                                                "boost": 3
+                                                            }
+                                                        }
+                                                    },
+                                                    {
+                                                        "match": {
+                                                            "auxiliary_text.plain": {
+                                                                "query": "some search term",
+                                                                "boost": 1
+                                                            }
+                                                        }
+                                                    },
+                                                    {
+                                                        "match": {
+                                                            "text": {
+                                                                "query": "some search term",
+                                                                "boost": 3
+                                                            }
+                                                        }
+                                                    },
+                                                    {
+                                                        "match": {
+                                                            "text.plain": {
+                                                                "query": "some search term",
+                                                                "boost": 1
+                                                            }
+                                                        }
+                                                    },
+                                                    {
+                                                        "match": {
+                                                            "file_text": {
+                                                                "query": "some search term",
+                                                                "boost": 3
+                                                            }
+                                                        }
+                                                    },
+                                                    {
+                                                        "match": {
+                                                            "file_text.plain": {
+                                                                "query": "some search term",
+                                                                "boost": 1
+                                                            }
+                                                        }
+                                                    },
+                                                    {
+                                                        "match": {
+                                                            "descriptions.en.plain": {
+                                                                "query": "some search term",
+                                                                "boost": 1
+                                                            }
                                                         }
                                                     }
                                                 ]

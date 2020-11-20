@@ -214,6 +214,7 @@ class MediaInfoEntityStatementsView {
 			$formatValueCache = array_replace_recursive(
 				$formatValueCache,
 				$this->getValueFormatValueCache(
+					// @phan-suppress-next-line PhanPossiblyUndeclaredVariable
 					new EntityIdValue( $statement->getPropertyId() ),
 					[ SnakFormatter::FORMAT_HTML ]
 				)

@@ -188,7 +188,6 @@ class ExperimentalEntityTraversingMediaQueryBuilder extends MediaQueryBuilder {
 							REPLACE(SUBSTR(STR(?url),53),"_","%20")
 						)) AS ?image)
 					}';
-				// @phan-suppress-next-line SecurityCheck-XSS
 				echo '<a href="https://wcqs-beta.wmflabs.org/#' . rawurlencode( $query ) . '">
 					Run batch #' . ( $i + 1 ) . ' on WCQS
 				</a>

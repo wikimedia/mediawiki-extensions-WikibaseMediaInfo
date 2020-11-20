@@ -62,9 +62,7 @@ class MediaInfoIdLookup implements EntityIdLookup {
 				MediaInfo::ENTITY_TYPE,
 				$title->getArticleID()
 			);
-		} catch ( InvalidArgumentException $e ) {
-			return null;
-		} catch ( UnexpectedValueException $e ) {
+		} catch ( InvalidArgumentException | UnexpectedValueException $e ) {
 			return null;
 		}
 	}

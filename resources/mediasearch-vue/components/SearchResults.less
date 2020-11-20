@@ -11,6 +11,7 @@
 	&__list {
 		.flex( 1, 1, auto );
 		align-content: flex-start;
+		justify-content: flex-start;
 		max-width: 100%;
 
 		&--video,
@@ -25,32 +26,48 @@
 		}
 
 		// Video results are displayed as tiles/cards with a uniform size
-		&--video {
-			justify-content: flex-start;
-
-			// stylelint-disable-next-line no-descending-specificity
-			> * {
-				// Video components can grow but shouldn't shrink below their
-				// flex-basis.
-				.flex( 1, 0, 260px );
-			}
+		.wbmi-video-result {
+			// Video components can grow but shouldn't shrink below their
+			// flex-basis.
+			.flex( 1, 0, 260px );
 		}
 
 		// Image results are arranged flush in a "masonry" style layout that
 		// attempts to do as little cropping as possible.
-		// @TODO on mobile, image grid should switch to vertical columns with
-		// fixed width instead of horizontal rows with fixed height.
-		&--bitmap {
-			// stylelint-disable-next-line no-descending-specificity
-			> * {
-				.flex( 1, 1, auto );
+		.wbmi-image-result {
+			.flex( 1, 1, auto);
+			// The mixin above adds justify-content: space-between, which we
+			// don't want and can't override in the ImageResult.less file
+			// without increasing specificity, so here's this:
+			justify-content: center;
+		}
 
-				&:last-child {
-					.flex( 0, 1, auto );
+		// When QuickView is closed...
+		// This is implied when the class isn't there, but writing the style
+		// inside this :not selector allows us to avoid repeating ourselves
+		// in the &--collapsed ruleset.
+		&:not( .wbmi-media-search-results__list--collapsed ) {
+			.wbmi-image-result {
+				// On larger screens, there are some circumstances under which
+				// we want to limit the growth of certain items.
+				// The wmui tablet breakpoint won't quite cut it here - this
+				// starts to break down on iPad-size screens, with gaps at the
+				// end of rows.
+				@media screen and ( min-width: 770px ) {
+					// Don't stretch the last image the width of the whole row,
+					// and don't let portrait-oriented images grow, lest they
+					// become wide and blurry.
+					&:last-child,
+					&--portrait {
+						.flex( 0, 1, auto );
+						// Yep, need this again:
+						justify-content: center;
+					}
 				}
 			}
 		}
 
+		// When QuickView is open...
 		&--collapsed {
 			margin-right: @wbmi-spacing-base-px;
 			width: 55%;

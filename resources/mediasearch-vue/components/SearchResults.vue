@@ -165,8 +165,6 @@ module.exports = {
 		 * @param {string} originalUrl
 		 */
 		showDetails: function ( pageid ) {
-			// @TODO show a placeholder Quickview UI immediately, and then
-			// replace with the real data as soon as the request has completed
 			this.fetchDetails( pageid ).then( function ( response ) {
 				this.details = response.query.pages[ pageid ];
 

@@ -1,7 +1,7 @@
 <template>
 	<div class="wbmi-other-result">
 		<a v-if="thumbnail"
-			class="wbmi-image-result"
+			class="wbmi-other-result__thumbnail-wrapper"
 			:href="canonicalurl"
 			:title="title"
 			:style="style"

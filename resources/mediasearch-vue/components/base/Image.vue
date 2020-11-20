@@ -5,6 +5,7 @@
 		:alt="alt"
 		class="wbmi-image"
 		loading="lazy"
+		:style="imageStyle"
 	>
 </template>
 
@@ -21,14 +22,49 @@ module.exports = {
 		alt: {
 			type: String,
 			default: ''
+		},
+
+		originalWidth: {
+			type: Number,
+			default: 0
+		},
+
+		originalHeight: {
+			type: Number,
+			default: 0
 		}
 	},
 
 	computed: {
+		/**
+		 * @return {boolean}
+		 */
 		supportsObserver: function () {
 			return 'IntersectionObserver' in window &&
 				'IntersectionObserverEntry' in window &&
 				'intersectionRatio' in window.IntersectionObserverEntry.prototype;
+		},
+
+		/**
+		 * If we have image dimensions, add a style attribute to constrain the
+		 * image to its original size to avoid stretching a small image.
+		 *
+		 * @return {Object|boolean}
+		 */
+		imageStyle: function () {
+			if ( this.originalWidth > 0 && this.originalHeight > 0 ) {
+				return {
+					// There are height and max-width rules with the important
+					// keyword for .content a > img in Minerva Neue, and they
+					// have to be overridden.
+					// I don't see any other way around this...
+					height: '100% !important',
+					maxWidth: this.originalWidth + 'px !important',
+					maxHeight: this.originalHeight + 'px'
+				};
+			}
+
+			return false;
 		}
 	},
 

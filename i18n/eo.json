@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"KuboF",
 			"Mirin",
 			"NMaia",
 			"Renardo",
@@ -33,7 +34,7 @@
 	"wikibasemediainfo-property-placeholder": "Eco",
 	"wikibasemediainfo-filepage-license-agree": "Mi konsentas",
 	"wikibasemediainfo-statements-item-add-qualifier": "Aldoni kvalifikon",
-	"wikibasemediainfo-statements-item-input-label": "el Vikidatumoj",
+	"wikibasemediainfo-statements-item-input-label": "el {{WBREPONAME}}",
 	"wikibasemediainfo-statements-item-is-prominent": "Elstara",
 	"wikibasemediainfo-statements-item-mark-as-prominent": "Marki kiel elstaran",
 	"wikibasemediainfo-statements-item-remove": "Forigi",

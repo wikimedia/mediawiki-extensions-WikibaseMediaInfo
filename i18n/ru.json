@@ -14,6 +14,7 @@
 			"Putnik",
 			"Saimongoltinio",
 			"Vlad5250",
+			"WindEwriX",
 			"Чаховіч Уладзіслаў"
 		]
 	},
@@ -47,7 +48,7 @@
 	"wikibasemediainfo-filepage-cancel-confirm-accept": "Отменить",
 	"wikibasemediainfo-filepage-edit": "Редактировать",
 	"wikibasemediainfo-filepage-publish": "Опубликовать изменения",
-	"wikibasemediainfo-filepage-caption-empty": "Опишите однострочное описание того, что собой представляет этот файл",
+	"wikibasemediainfo-filepage-caption-empty": "Добавьте однострочное описание того, что собой представляет этот файл",
 	"wikibasemediainfo-filepage-caption-too-short": "Требуется ещё $1 {{PLURAL:$1|символ|символов|символа}}",
 	"wikibasemediainfo-filepage-caption-too-long": "$1 {{PLURAL:$1|символ|символа|символов}} сверх лимита",
 	"wikibasemediainfo-filepage-caption-approaching-limit": "осталось $1 {{PLURAL:$1|символ|символа|символов|0=символов}}",

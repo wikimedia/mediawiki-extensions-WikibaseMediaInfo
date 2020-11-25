@@ -216,13 +216,14 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 		$langCode = $this->getContext()->getLanguage()->getCode();
 
 		if ( $type === 'page' ) {
+			$namespaces = array_diff_key( $this->namespaceInfo->getValidNamespaces(), [ NS_FILE ] );
 			$request = new FauxRequest( [
 				'format' => 'json',
 				'uselang' => $langCode,
 				'action' => 'query',
 				'generator' => 'search',
 				'gsrsearch' => $term,
-				'gsrnamespace' => array_diff_key( $this->namespaceInfo->getValidNamespaces(), [ NS_FILE ] ),
+				'gsrnamespace' => implode( '|', $namespaces ),
 				'gsrlimit' => $limit,
 				'gsroffset' => $continue ?: 0,
 				'prop' => 'info|categoryinfo',

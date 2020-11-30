@@ -5,7 +5,7 @@
 		:title="title"
 		:style="style"
 		target="_blank"
-		@click.prevent="showDetails">
+		@click="showDetails">
 
 		<wbmi-image
 			:source="thumbnail"

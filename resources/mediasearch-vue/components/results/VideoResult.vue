@@ -4,7 +4,7 @@
 		:href="canonicalurl"
 		target="_blank"
 		:title="title"
-		@click.prevent="showDetails">
+		@click="showDetails">
 
 		<img
 			:src="thumbnail"

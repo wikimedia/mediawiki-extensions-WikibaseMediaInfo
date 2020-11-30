@@ -5,7 +5,7 @@
 				:href="canonicalurl"
 				target="_blank"
 				:title="title"
-				@click.prevent="showDetails">
+				@click="showDetails">
 				{{ displayName }}
 			</a>
 		</h3>

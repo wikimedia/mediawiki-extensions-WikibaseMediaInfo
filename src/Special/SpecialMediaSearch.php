@@ -192,6 +192,8 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 			'wbmiTotalSiteImages' => $totalSiteImages,
 		] );
 
+		$this->addHelpLink( 'Help:MediaSearch' );
+
 		return parent::execute( $subPage );
 	}
 

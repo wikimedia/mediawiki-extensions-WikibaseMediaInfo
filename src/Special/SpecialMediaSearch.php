@@ -190,6 +190,7 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 		$this->getOutput()->addJsConfigVars( [
 			'wbmiInitialSearchResults' => $data,
 			'wbmiTotalSiteImages' => $totalSiteImages,
+			'wbmiLocalDev' => $this->getConfig()->get( 'MediaInfoLocalDev' ),
 		] );
 
 		$this->addHelpLink( 'Help:MediaSearch' );
@@ -271,20 +272,22 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 			] );
 		}
 
-		// Local results (real)
-		$context = new DerivativeContext( RequestContext::getMain() );
-		$context->setRequest( $request );
-		$this->api->setContext( $context );
-		$this->api->execute();
-		$response = $this->api->getResult()->getResultData( [], [ 'Strip' => 'all' ] );
-
-		// Pull data from commons: for use in testing
-		// $url = 'https://commons.wikimedia.org/w/api.php?' . http_build_query( $request->getQueryValues() );
-		// $request = \MediaWiki\MediaWikiServices::getInstance()->getHttpRequestFactory()
-		// 	->create( $url, [], __METHOD__ );
-		// $request->execute();
-		// $data = $request->getContent();
-		// $response = json_decode( $data, true ) ?: [];
+		if ( $this->getConfig()->get( 'MediaInfoLocalDev' ) ) {
+			// Pull data from Commons: for use in testing
+			$url = 'https://commons.wikimedia.org/w/api.php?' . http_build_query( $request->getQueryValues() );
+			$request = \MediaWiki\MediaWikiServices::getInstance()->getHttpRequestFactory()
+				->create( $url, [], __METHOD__ );
+			$request->execute();
+			$data = $request->getContent();
+			$response = json_decode( $data, true ) ?: [];
+		} else {
+			// Local results (real)
+			$context = new DerivativeContext( RequestContext::getMain() );
+			$context->setRequest( $request );
+			$this->api->setContext( $context );
+			$this->api->execute();
+			$response = $this->api->getResult()->getResultData( [], [ 'Strip' => 'all' ] );
+		}
 
 		$results = array_values( $response['query']['pages'] ?? [] );
 		$continue = $response['continue']['gsroffset'] ?? null;

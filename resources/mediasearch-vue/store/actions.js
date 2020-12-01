@@ -144,8 +144,9 @@ module.exports = {
 			pending: true
 		} );
 
-		// request = $.get( 'https://commons.wikimedia.org/w/api.php', params ); // for testing
-		request = api.get( params );
+		request = mw.config.get( 'wbmiLocalDev' ) ?
+			$.get( 'https://commons.wikimedia.org/w/api.php', params ) : // local testing
+			api.get( params ); // real
 
 		request.promise( {
 			abort: function () {

@@ -7,11 +7,13 @@
 			"Object＊tofu",
 			"Omotecho",
 			"Shirayuki",
-			"Tmv"
+			"Tmv",
+			"おはぐろ蜻蛉"
 		]
 	},
 	"action-mediainfo-term": "メディアの情報用語の変更 (キャプション、概要等)",
 	"right-mediainfo-term": "メディアの情報用語を変更 (キャプション、概要等)",
+	"group-mediasearch-tester": "メディアサーチテスター",
 	"slot-name-mediainfo": "構造化したメディア情報",
 	"wikibase-entity-mediainfo": "メディア情報",
 	"wikibase-mediainfo-summary-wbsetlabel-add": "[$2]のキャプションを追加",

@@ -97,10 +97,10 @@
 								{{#results}}
 									<a
 										ref="link"
-										class="wbmi-image-result"
+										class="{{imageResultClass}}"
 										href="{{canonicalurl}}"
 										title="{{title}}"
-										style="width: calc({{imageinfo.0.thumbwidth}}px * 180 / {{imageinfo.0.thumbheight}}); height: 180px;"
+										style="{{wrapperStyle}}"
 										target="_blank"
 									>
 										<img
@@ -109,6 +109,7 @@
 											alt="{{name}}"
 											loading="lazy"
 											class="wbmi-image"
+											style="{{imageStyle}}"
 										>
 									</a>
 								{{/results}}
@@ -193,7 +194,7 @@
 							{{#isOther}}
 								{{#results}}
 									<div class="wbmi-other-result">
-										<a class="wbmi-image-result"
+										<a class="wbmi-other-result__thumbnail-wrapper"
 											href="{{canonicalurl}}"
 											title="{{title}}"
 											style="width: {{imageinfo.0.thumbwidth}}px; height: {{imageinfo.0.thumbheight}}px;"

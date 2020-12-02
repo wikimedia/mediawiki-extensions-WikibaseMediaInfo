@@ -150,9 +150,10 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 				}
 
 				if ( isset( $result['imageinfo'][0]['thumburl'] ) ) {
+					$imageInfo = $result['imageinfo'][0];
 					// phpcs:ignore Generic.Files.LineLength.TooLong
 					$commonWidths = [ 48, 75, 80, 100, 120, 150, 160, 180, 200, 220, 240, 250, 300, 320, 400, 450, 500, 600, 640, 800, 1024, 1200, 1280, 1920, 2880 ];
-					$oldWidth = $result['imageinfo'][0]['thumbwidth'];
+					$oldWidth = $imageInfo['thumbwidth'];
 					$newWidth = $oldWidth;
 
 					// find the closest (larger) width that is more common, it is (much) more
@@ -164,12 +165,46 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 						}
 					}
 
-					$result['imageinfo'][0]['thumburl'] = str_replace(
+					$imageInfo['thumburl'] = str_replace(
 						'/' . $oldWidth . 'px-',
 						'/' . $newWidth . 'px-',
-						$result['imageinfo'][0]['thumburl']
+						$imageInfo['thumburl']
 					);
+
+					$result['imageResultClass'] = 'wbmi-image-result';
+					if (
+						$imageInfo['thumbwidth'] && $imageInfo['thumbheight'] &&
+						is_numeric( $imageInfo['thumbwidth'] ) && is_numeric( $imageInfo['thumbheight'] ) &&
+						$imageInfo['thumbheight'] > 0
+					) {
+						if ( $imageInfo['thumbwidth'] / $imageInfo['thumbheight'] < 1 ) {
+							$result['imageResultClass'] .= ' wbmi-image-result--portrait';
+						}
+
+						// Generate style attribute for image wrapper.
+						$displayWidth = $imageInfo['thumbwidth'];
+						if ( $imageInfo['thumbheight'] < 180 ) {
+							// For small images, set the wrapper width to the
+							// thumbnail width plus a little extra to simulate
+							// left/right padding.
+							$displayWidth += 60;
+						}
+						// Set max initial width of 350px.
+						$result['wrapperStyle'] = 'width: ' . min( [ $imageInfo['thumbwidth'], 350 ] ) . 'px;';
+					}
+
+					// Generate style attribute for the image itself.
+					// There are height and max-width rules with the important
+					// keyword for .content a > img in Minerva Neue, and they
+					// have to be overridden.
+					if ( $imageInfo['width'] && $imageInfo['height'] ) {
+						$result['imageStyle'] =
+						'height: 100% !important; ' .
+						'max-width: ' . $imageInfo['width'] . 'px !important; ' .
+						'max-height: ' . $imageInfo['height'] . 'px;';
+					}
 				}
+
 				return $result;
 			}, $results ),
 			'continue' => $continue,

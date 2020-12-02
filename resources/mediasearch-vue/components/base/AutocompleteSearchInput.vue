@@ -356,6 +356,7 @@ module.exports = {
 			this.$emit( 'clear' );
 			this.value = '';
 			this.clearLookupResults();
+			this.$refs.input.focus();
 		},
 
 		/**

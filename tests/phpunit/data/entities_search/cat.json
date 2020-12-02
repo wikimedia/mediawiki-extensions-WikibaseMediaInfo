@@ -1,0 +1,430 @@
+{
+	"batchcomplete": "",
+	"continue": {
+		"sroffset": 50,
+		"continue": "-||"
+	},
+	"query": {
+		"searchinfo": {
+			"totalhits": 131167
+		},
+		"search": [
+			{
+				"ns": 0,
+				"title": "Q146",
+				"pageid": 282,
+				"snippet": "domesticated feline",
+				"titlesnippet": "house <span class=\"searchmatch\">cat</span>"
+			},
+			{
+				"ns": 0,
+				"title": "Q1022892",
+				"pageid": 972245,
+				"snippet": "Wikimedia disambiguation page",
+				"titlesnippet": "<span class=\"searchmatch\">Cat</span>"
+			},
+			{
+				"ns": 0,
+				"title": "Q300918",
+				"pageid": 289937,
+				"snippet": "Unix utility that concatenates and lists files",
+				"titlesnippet": "<span class=\"searchmatch\">cat</span>"
+			},
+			{
+				"ns": 0,
+				"title": "Q20825926",
+				"pageid": 22569869,
+				"snippet": "fur of the domestic house cat",
+				"titlesnippet": "<span class=\"searchmatch\">cat</span> fur"
+			},
+			{
+				"ns": 0,
+				"title": "Q56677316",
+				"pageid": 56618912,
+				"snippet": "Museu Paulista&#039;s collection",
+				"titlesnippet": "Affonso d&#039;Escragnolle Taunay collection",
+				"extensiondata": {
+					"wikibase": {
+						"extrasnippet": "Cole\u00e7\u00e3o Affonso d'Escragnolle Taunay - <span class=\"searchmatch\">CAT</span>",
+						"extrasnippet-language": "en"
+					}
+				}
+			},
+			{
+				"ns": 0,
+				"title": "Q912640",
+				"pageid": 863147,
+				"snippet": "comic book character",
+				"titlesnippet": "Black <span class=\"searchmatch\">Cat</span>"
+			},
+			{
+				"ns": 0,
+				"title": "Q32566",
+				"pageid": 35417,
+				"snippet": "medical imaging procedure using X-rays to produce cross-sectional images",
+				"titlesnippet": "computed tomography",
+				"extensiondata": {
+					"wikibase": {
+						"extrasnippet": "<span class=\"searchmatch\">CAT</span> scan",
+						"extrasnippet-language": "en"
+					}
+				}
+			},
+			{
+				"ns": 0,
+				"title": "Q94418109",
+				"pageid": 93415411,
+				"snippet": "female given name, nickname for Catherine, Catharine etc",
+				"titlesnippet": "<span class=\"searchmatch\">Cat</span>"
+			},
+			{
+				"ns": 0,
+				"title": "Q37227737",
+				"pageid": 38605446,
+				"snippet": "family name",
+				"titlesnippet": "<span class=\"searchmatch\">Cat</span>"
+			},
+			{
+				"ns": 0,
+				"title": "Q12628574",
+				"pageid": 13937638,
+				"snippet": "unofficial international vehicle registration code for Catalonia",
+				"titlesnippet": "<span class=\"searchmatch\">CAT</span>"
+			},
+			{
+				"ns": 0,
+				"title": "Q52554818",
+				"pageid": 53386640,
+				"snippet": "given name",
+				"titlesnippet": "<span class=\"searchmatch\">Cat</span>"
+			},
+			{
+				"ns": 0,
+				"title": "Q15953436",
+				"pageid": 17576904,
+				"snippet": "Dutch musician of The Cats",
+				"titlesnippet": "Cees Veerman",
+				"extensiondata": {
+					"wikibase": {
+						"extrasnippet": "<span class=\"searchmatch\">Cat</span>",
+						"extrasnippet-language": "en"
+					}
+				}
+			},
+			{
+				"ns": 0,
+				"title": "Q7721618",
+				"pageid": 7648595,
+				"snippet": "2011 film",
+				"titlesnippet": "The <span class=\"searchmatch\">Cat</span>"
+			},
+			{
+				"ns": 0,
+				"title": "Q2941568",
+				"pageid": 2813603,
+				"snippet": "programming language",
+				"titlesnippet": "<span class=\"searchmatch\">Cat</span>"
+			},
+			{
+				"ns": 0,
+				"title": "Q100288323",
+				"pageid": 97947101,
+				"snippet": "newspaper published in Oklahoma City, Oklahoma",
+				"titlesnippet": "The <span class=\"searchmatch\">Cat</span>"
+			},
+			{
+				"ns": 0,
+				"title": "Q54808621",
+				"pageid": 54908481,
+				"snippet": "cell line",
+				"titlesnippet": "<span class=\"searchmatch\">CAT</span>(Wil)"
+			},
+			{
+				"ns": 0,
+				"title": "Q48672546",
+				"pageid": 49694891,
+				"snippet": "1966 film",
+				"titlesnippet": "The <span class=\"searchmatch\">Cat</span>"
+			},
+			{
+				"ns": 0,
+				"title": "Q7714263",
+				"pageid": 7640935,
+				"snippet": "cat and Internet meme celebrity",
+				"titlesnippet": "Grumpy <span class=\"searchmatch\">Cat</span>"
+			},
+			{
+				"ns": 0,
+				"title": "Q11227569",
+				"pageid": 12378813,
+				"snippet": "Yamaguchi Prefecture musical group",
+				"titlesnippet": "<span class=\"searchmatch\">Cat</span>"
+			},
+			{
+				"ns": 0,
+				"title": "Q14849060",
+				"pageid": 16517921,
+				"snippet": "protein-coding gene in the species Homo sapiens",
+				"titlesnippet": "<span class=\"searchmatch\">CAT</span>"
+			},
+			{
+				"ns": 0,
+				"title": "Q24615263",
+				"pageid": 26580915,
+				"snippet": "gene of the species macaca nemestrina",
+				"titlesnippet": "<span class=\"searchmatch\">CAT</span>"
+			},
+			{
+				"ns": 0,
+				"title": "Q27700782",
+				"pageid": 29420623,
+				"snippet": "island in Myanmar",
+				"titlesnippet": "<span class=\"searchmatch\">Cat</span>"
+			},
+			{
+				"ns": 0,
+				"title": "Q1053705",
+				"pageid": 1002645,
+				"snippet": "time zone",
+				"titlesnippet": "Central Africa Time",
+				"extensiondata": {
+					"wikibase": {
+						"extrasnippet": "<span class=\"searchmatch\">CAT</span>",
+						"extrasnippet-language": "en"
+					}
+				}
+			},
+			{
+				"ns": 0,
+				"title": "Q1735642",
+				"pageid": 1668646,
+				"snippet": "form of reinsurance",
+				"titlesnippet": "catastrophe bond",
+				"extensiondata": {
+					"wikibase": {
+						"extrasnippet": "<span class=\"searchmatch\">cat</span> bond",
+						"extrasnippet-language": "en"
+					}
+				}
+			},
+			{
+				"ns": 0,
+				"title": "Q25207737",
+				"pageid": 27166141,
+				"snippet": "1956 film",
+				"titlesnippet": "The <span class=\"searchmatch\">Cat</span>"
+			},
+			{
+				"ns": 0,
+				"title": "Q26761084",
+				"pageid": 28689449,
+				"snippet": "Island in Indonesia",
+				"titlesnippet": "Pulau <span class=\"searchmatch\">Cat</span>"
+			},
+			{
+				"ns": 0,
+				"title": "Q7721617",
+				"pageid": 7648594,
+				"snippet": "1992 Hong Kong science fiction action film directed by Lam Ngai Kai",
+				"titlesnippet": "The <span class=\"searchmatch\">Cat</span>"
+			},
+			{
+				"ns": 0,
+				"title": "Q686698",
+				"pageid": 647012,
+				"snippet": "cat breed",
+				"titlesnippet": "Munchkin <span class=\"searchmatch\">cat</span>"
+			},
+			{
+				"ns": 0,
+				"title": "Q13564880",
+				"pageid": 15239289,
+				"snippet": "Wikimedia set index page",
+				"titlesnippet": "<span class=\"searchmatch\">Cat</span>"
+			},
+			{
+				"ns": 0,
+				"title": "Q692603",
+				"pageid": 652514,
+				"snippet": "fictional cat from cartoons",
+				"titlesnippet": "Felix the <span class=\"searchmatch\">Cat</span>"
+			},
+			{
+				"ns": 0,
+				"title": "Q387278",
+				"pageid": 368514,
+				"snippet": "cat",
+				"titlesnippet": "Kellas <span class=\"searchmatch\">cat</span>"
+			},
+			{
+				"ns": 0,
+				"title": "Q42583",
+				"pageid": 44823,
+				"snippet": "cat breed",
+				"titlesnippet": "Bengal <span class=\"searchmatch\">cat</span>"
+			},
+			{
+				"ns": 0,
+				"title": "Q42610",
+				"pageid": 44848,
+				"snippet": "cat breed",
+				"titlesnippet": "Persian <span class=\"searchmatch\">cat</span>"
+			},
+			{
+				"ns": 0,
+				"title": "Q63375282",
+				"pageid": 63102755,
+				"snippet": "method of obtaining a series of cross-sections of internal structures of a body or object to create three-dimensional images",
+				"titlesnippet": "computerized axial tomography",
+				"extensiondata": {
+					"wikibase": {
+						"extrasnippet": "<span class=\"searchmatch\">CAT</span>",
+						"extrasnippet-language": "en"
+					}
+				}
+			},
+			{
+				"ns": 0,
+				"title": "Q7957",
+				"pageid": 9224,
+				"snippet": "cat breed",
+				"titlesnippet": "Aegean <span class=\"searchmatch\">cat</span>"
+			},
+			{
+				"ns": 0,
+				"title": "Q16415028",
+				"pageid": 18042239,
+				"snippet": "1933 film",
+				"titlesnippet": "<span class=\"searchmatch\">Cat</span>"
+			},
+			{
+				"ns": 0,
+				"title": "Q468495",
+				"pageid": 441858,
+				"snippet": "Use of software to aid in language translation",
+				"titlesnippet": "computer-assisted translation",
+				"extensiondata": {
+					"wikibase": {
+						"extrasnippet": "<span class=\"searchmatch\">CAT</span>",
+						"extrasnippet-language": "en"
+					}
+				}
+			},
+			{
+				"ns": 0,
+				"title": "Q48979927",
+				"pageid": 49994504,
+				"snippet": "list of people",
+				"titlesnippet": "<span class=\"searchmatch\">Cat</span>"
+			},
+			{
+				"ns": 0,
+				"title": "Q5008903",
+				"pageid": 4785944,
+				"snippet": "",
+				"titlesnippet": "<span class=\"searchmatch\">CAT</span>"
+			},
+			{
+				"ns": 0,
+				"title": "Q5050997",
+				"pageid": 4826960,
+				"snippet": "symbol of the Vietnamese zodiac",
+				"titlesnippet": "<span class=\"searchmatch\">Cat</span>"
+			},
+			{
+				"ns": 0,
+				"title": "Q13024941",
+				"pageid": 14535146,
+				"snippet": "actress",
+				"titlesnippet": "Stephany\u00a0Auernig",
+				"extensiondata": {
+					"wikibase": {
+						"extrasnippet": "<span class=\"searchmatch\">Cat</span>",
+						"extrasnippet-language": "en"
+					}
+				}
+			},
+			{
+				"ns": 0,
+				"title": "Q42633",
+				"pageid": 44872,
+				"snippet": "cat breed",
+				"titlesnippet": "snowshoe",
+				"extensiondata": {
+					"wikibase": {
+						"extrasnippet": "snowshoe <span class=\"searchmatch\">cat</span>",
+						"extrasnippet-language": "en"
+					}
+				}
+			},
+			{
+				"ns": 0,
+				"title": "Q42732",
+				"pageid": 44969,
+				"snippet": "cat breed",
+				"titlesnippet": "Thai",
+				"extensiondata": {
+					"wikibase": {
+						"extrasnippet": "Old-style Siamese <span class=\"searchmatch\">cat</span>",
+						"extrasnippet-language": "en"
+					}
+				}
+			},
+			{
+				"ns": 0,
+				"title": "Q1758262",
+				"pageid": 1690859,
+				"snippet": "B\u1ebfn C\u00e1t Town",
+				"titlesnippet": "B\u1ebfn <span class=\"searchmatch\">C\u00e1t</span>"
+			},
+			{
+				"ns": 0,
+				"title": "Q96336217",
+				"pageid": 95067496,
+				"snippet": "Wikimedia disambiguation page",
+				"titlesnippet": "<span class=\"searchmatch\">C\u00e1t</span>"
+			},
+			{
+				"ns": 0,
+				"title": "Q5050998",
+				"pageid": 4826961,
+				"snippet": "fictional character in Red Dwarf",
+				"titlesnippet": "<span class=\"searchmatch\">Cat</span>"
+			},
+			{
+				"ns": 0,
+				"title": "Q204814",
+				"pageid": 201179,
+				"snippet": "species of cat",
+				"titlesnippet": "black-footed <span class=\"searchmatch\">cat</span>"
+			},
+			{
+				"ns": 0,
+				"title": "Q7955",
+				"pageid": 9221,
+				"snippet": "<span class=\"searchmatch\">cat</span> breed",
+				"titlesnippet": "Abyssinian"
+			},
+			{
+				"ns": 0,
+				"title": "Q42667",
+				"pageid": 44906,
+				"snippet": "cat breed",
+				"titlesnippet": "Norwegian Forest <span class=\"searchmatch\">Cat</span>"
+			},
+			{
+				"ns": 0,
+				"title": "Q4167836",
+				"pageid": 3975781,
+				"snippet": "use with &#039;instance of&#039; (P31) for Wikimedia category",
+				"titlesnippet": "Wikimedia category",
+				"extensiondata": {
+					"wikibase": {
+						"extrasnippet": "<span class=\"searchmatch\">cat</span>",
+						"extrasnippet-language": "en"
+					}
+				}
+			}
+		]
+	}
+}

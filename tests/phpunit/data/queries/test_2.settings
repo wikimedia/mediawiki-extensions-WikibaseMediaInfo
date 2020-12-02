@@ -1,10 +1,12 @@
 {
 	"title": "Entities found, with lang fallbacks, no stemming",
 	"term": "another search term",
-	"entityIdsForTerm": [
-		"Q9",
-		"Q2"
-	],
+	"entityIdsForTerm": {
+		"another search term": [
+			"Q9",
+			"Q2"
+		]
+	},
 	"defaultProperties": [
 		"P999"
 	],

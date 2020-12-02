@@ -1,7 +1,7 @@
 {
 	"title": "Category and main namespace title boost",
 	"term": "on the 4th of July 1806",
-	"entityIdsForTerm": [],
+	"entityIdsForTerm": { "on the 4th of July 1806": [] },
 	"defaultProperties": [
 		"P999"
 	],

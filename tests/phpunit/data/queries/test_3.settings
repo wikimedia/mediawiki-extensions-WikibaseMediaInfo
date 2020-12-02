@@ -1,7 +1,9 @@
 {
 	"title": "No entities found, lang fallbacks, stemming",
 	"term": "yet another search term",
-	"entityIdsForTerm": [],
+	"entityIdsForTerm": {
+		"yet another search term": []
+	},
 	"defaultProperties": [
 		"P999"
 	],

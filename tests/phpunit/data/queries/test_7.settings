@@ -1,7 +1,7 @@
 {
 	"title": "fallback to cirrus",
 	"term": "\"phrase search\"",
-	"entityIdsForTerm": [],
+	"entityIdsForTerm": { "\"phrase search\"": [] },
 	"defaultProperties": [
 		"P999"
 	],

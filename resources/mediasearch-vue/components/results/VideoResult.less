@@ -6,7 +6,7 @@
 	.flex-display();
 	.flex-wrap( nowrap );
 	border-radius: @border-radius-base;
-	border: solid 1px @wmui-color-base70;
+	border: @border-width-base @border-style-base @wbmi-border-color-result;
 	box-sizing: border-box;
 	color: @color-primary;
 	flex-direction: column;
@@ -68,10 +68,18 @@
 		border-radius: @border-radius-base;
 		color: @color-base--subtle;
 		display: inline-block;
-		background-color: @wmui-color-base80;
+		background-color: @background-color-tabs;
 		font-weight: normal;
 		padding: 0 @wbmi-spacing-xs;
 		margin-right: @wbmi-spacing-sm;
+
+		.wbmi-icon {
+			font-size: 1em;
+		}
+
+		&__text {
+			vertical-align: middle;
+		}
 	}
 
 	&__mime {

@@ -20,7 +20,8 @@
 
 			<h4 v-if="formattedDuration || mime" class="wbmi-video-result__meta">
 				<span v-if="formattedDuration" class="wbmi-video-result__duration">
-					{{ formattedDuration }}
+					<wbmi-icon :icon="icon"></wbmi-icon>
+					<span class="wbmi-video-result__duration__text">{{ formattedDuration }}</span>
 				</span>
 				<span v-if="mime" class="wbmi-video-result__mime">
 					{{ mime }}
@@ -39,11 +40,17 @@
  * computed properties for resolution and mime type.
  */
 var searchResult = require( '../../mixins/searchResult.js' ),
-	searchResultTimeBased = require( '../../mixins/searchResultTimeBased.js' );
+	searchResultTimeBased = require( '../../mixins/searchResultTimeBased.js' ),
+	WbmiIcon = require( '../base/Icon.vue' ),
+	icons = require( '../../../../lib/icons.js' );
 
 // @vue/component
 module.exports = {
 	name: 'VideoResult',
+
+	components: {
+		'wbmi-icon': WbmiIcon
+	},
 
 	mixins: [
 		searchResult,
@@ -51,6 +58,12 @@ module.exports = {
 	],
 
 	inheritAttrs: false,
+
+	data: function () {
+		return {
+			icon: icons.wbmiIconPlay
+		};
+	},
 
 	computed: {
 		/**

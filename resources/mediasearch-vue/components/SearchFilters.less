@@ -3,7 +3,6 @@
 
 .wbmi-media-search-filters {
 	.flex-display();
-	background-color: @background-color-framed;
 	padding: @wbmi-padding-vertical-base 0;
 
 	// Auto-hide scrollbar in IE/Edge.
@@ -40,10 +39,6 @@
 		margin-left: @wbmi-margin-horizontal-mobile;
 		position: static;
 
-		&:first-child {
-			margin-left: 0;
-		}
-
 		@media screen and ( min-width: @width-breakpoint-tablet ) {
 			margin-right: 0;
 			position: relative;
@@ -68,6 +63,14 @@
 				.wbmi-select__handle {
 					color: @color-primary--hover;
 				}
+			}
+		}
+
+		&:first-child {
+			margin-left: 0;
+
+			.wbmi-select__content {
+				padding-left: 0;
 			}
 		}
 

@@ -47,7 +47,7 @@
 					{{#isActive}}aria-selected="true"{{/isActive}}
 					aria-controls="wbmi-tab-{{type}}"
 					role="tab"
-					class="wbmi-tabs__tabs-list__item {{#isActive}}is-active{{/isActive}}"
+					class="wbmi-tabs__tabs-list__item {{#isActive}}wbmi-tabs__tabs-list__item--current{{/isActive}}"
 				>
 					{{! below form is a bit of a hack to mimick tabs without JS, where tab label is submit button }}
 					<form method="get" action="{{page}}">

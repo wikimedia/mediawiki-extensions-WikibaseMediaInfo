@@ -1,8 +1,6 @@
 @import 'mediawiki.mixins';
 @import './../../../mediainfo-variables.less';
 
-/* stylelint-disable selector-class-pattern */
-/* stylelint-disable no-descending-specificity */
 .wbmi-tabs {
 	&__header {
 		.box-shadow( inset 0 -1px 0 0 @border-color-base );
@@ -49,22 +47,13 @@
 			display: none;
 		}
 
-		&:focus {
-			outline: 0;
-
-			.wbmi-tabs__tabs-list__item.is-active {
-				border-radius: 2px;
-				box-shadow: inset 0 0 0 2px @color-primary;
-			}
-		}
-
 		&__item {
-			color: @color-base--subtle;
+			.transition( ~'color 100ms, box-shadow 100ms' );
+			color: @wbmi-color-taboption;
 			cursor: pointer;
 			font-weight: bold;
 			margin: @wbmi-margin-vertical-base @wbmi-margin-horizontal-mobile 0 0;
 			padding: @wbmi-padding-vertical-mobile @wbmi-padding-horizontal-base;
-			transition: color 100ms, box-shadow 100ms;
 			// Don't wrap text since we're using horizontal scrolling.
 			white-space: nowrap;
 
@@ -73,26 +62,56 @@
 				padding: @wbmi-padding-vertical-base @wbmi-padding-horizontal-base;
 			}
 
-			&:hover,
-			&.is-active {
-				color: @color-primary;
+			// Currently selected tab.
+			&--current {
 				.box-shadow( inset 0 -2px 0 0 @color-primary );
+				color: @color-primary;
 			}
 
 			&:hover {
-				color: @color-primary--hover;
 				.box-shadow( inset 0 -2px 0 0 @color-primary--hover );
+				color: @color-primary--hover;
 			}
 
-			&.is-disabled {
+			// During mousedown.
+			&:active {
+				.box-shadow( inset 0 -2px 0 0 @color-primary--active );
+				color: @color-primary--active;
+			}
+
+			&:focus {
+				// Focus style is handled elsewhere.
+				outline: 0;
+			}
+
+			&--disabled {
 				color: @color-base--disabled;
 				cursor: not-allowed;
 
+				&--current,
 				&:hover,
-				&.is-active {
-					color: @color-base--disabled;
+				&:active {
 					box-shadow: unset;
+					color: @color-base--disabled;
 				}
+			}
+		}
+
+		// For PHP UI.
+		label {
+			cursor: pointer;
+		}
+
+		&:focus {
+			outline: 0;
+
+			// If a tab item is clicked, because its tabindex is set to -1, the
+			// item itself will take focus. However, if keyboard nav is used,
+			// the parent element (with tabindex = 0) will take focus and the
+			// style below will apply, acting as a visual focus indicator.
+			.wbmi-tabs__tabs-list__item--current {
+				border-radius: 2px;
+				box-shadow: inset 0 0 0 2px @color-primary;
 			}
 		}
 	}

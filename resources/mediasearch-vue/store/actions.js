@@ -106,7 +106,7 @@ module.exports = {
 			// Params used in all non-page/category searches.
 			filters = getMediaFilters( options.type, context.state.filterValues[ options.type ] );
 			if ( filters ) {
-				params.gsrsearch += ' ' + filters;
+				params.gsrsearch = filters + ' ' + params.gsrsearch;
 			}
 
 			switch ( options.type ) {

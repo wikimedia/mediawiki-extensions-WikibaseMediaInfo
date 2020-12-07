@@ -4,6 +4,11 @@ namespace Wikibase\MediaInfo\Search;
 
 use Elastica\Query\AbstractQuery;
 
+/**
+ * Implementation of "match_explorer" query from ltr-query plugin
+ *
+ * @link https://github.com/o19s/elasticsearch-learning-to-rank
+ */
 class MatchExplorerQuery extends AbstractQuery {
 	public const TYPE_SUM_CLASSIC_IDF = 'sum_classic_idf';
 	public const TYPE_MEAN_CLASSIC_IDF = 'mean_classic_idf';

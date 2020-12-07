@@ -53,19 +53,24 @@ class MediaSearchASTQueryBuilder implements Visitor {
 	/** @var bool */
 	private $normalizeFulltextScores;
 
+	/** @var bool */
+	private $hasLtrPlugin;
+
 	/**
 	 * @param MediaSearchASTEntitiesExtractor $entitiesExtractor
 	 * @param float[] $searchProperties Properties to search statements in ([ propertyId => weight ])
 	 * @param array[] $stemmingSettings Stemming settings (see $wgWBCSUseStemming)
 	 * @param string[] $languages Languages to search text in
 	 * @param array[] $settings Optional weight/decay overrides
+	 * @param bool $hasLtrPlugin Optional weight/decay overrides
 	 */
 	public function __construct(
 		MediaSearchASTEntitiesExtractor $entitiesExtractor,
 		array $searchProperties,
 		array $stemmingSettings,
 		array $languages,
-		array $settings = []
+		array $settings = [],
+		bool $hasLtrPlugin = false
 	) {
 		$this->entitiesExtractor = $entitiesExtractor;
 		$this->searchProperties = $searchProperties;
@@ -87,6 +92,7 @@ class MediaSearchASTQueryBuilder implements Visitor {
 			'descriptions' => 1.0,
 		];
 		$this->normalizeFulltextScores = (bool)( $settings['normalizeFulltextScores'] ?? true );
+		$this->hasLtrPlugin = $hasLtrPlugin;
 	}
 
 	public function getQuery( ParsedQuery $parsedQuery ): AbstractQuery {
@@ -135,7 +141,8 @@ class MediaSearchASTQueryBuilder implements Visitor {
 			$this->languages,
 			$this->stemmingSettings,
 			$this->boosts,
-			$this->decays
+			$this->decays,
+			$this->hasLtrPlugin
 		);
 		$this->map[$node] = $nodeHandler->transform();
 	}

@@ -4,10 +4,7 @@
 			"Kly"
 		]
 	},
-	"apihelp-query+mediasearch-summary": "搜尋媒體檔案",
-	"apihelp-query+mediasearch-example": "搜尋用於 <kbd>test</kbd> 的媒體。",
-	"apihelp-query+mediasearch-param-search": "搜尋項目",
-	"apihelp-query+mediasearch-param-rawsearch": "除了搜尋項目之外的原始搜尋查詢（不會被解釋，在添加特定篩選之類的時候很有用。）",
-	"apihelp-query+mediasearch-param-limit": "結果數量上限",
-	"apihelp-query+mediasearch-param-continue": "持續搜尋的偏移"
+	"apihelp-relatedconcepts-summary": "查找相關某個詞的概念。",
+	"apihelp-relatedconcepts-example": "查找相關 <kbd>apple</kbd> 的概念。",
+	"apihelp-relatedconcepts-param-limit": "回傳相關概念的最大數目"
 }

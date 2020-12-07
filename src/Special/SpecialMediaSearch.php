@@ -254,7 +254,7 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 		$langCode = $this->getContext()->getLanguage()->getCode();
 
 		if ( $type === 'page' ) {
-			$namespaces = array_diff_key( $this->namespaceInfo->getValidNamespaces(), [ NS_FILE ] );
+			$namespaces = array_diff( $this->namespaceInfo->getValidNamespaces(), [ NS_FILE ] );
 			$request = new FauxRequest( [
 				'format' => 'json',
 				'uselang' => $langCode,

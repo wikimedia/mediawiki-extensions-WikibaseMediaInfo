@@ -433,7 +433,7 @@ class MediaQueryBuilder extends FullTextQueryStringQueryBuilder {
 		//    - script: _score
 		//  - script_score:
 		//    - $termsCountQuery
-		//    - script: 1 / max(1.25, _score)
+		//    - script: 1 / min(1.25, _score)
 		//  - score_mode: multiply (= default)
 		return ( new FunctionScore() )
 			->setQuery(
@@ -452,7 +452,7 @@ class MediaQueryBuilder extends FullTextQueryStringQueryBuilder {
 						( new FunctionScore() )
 							->setQuery( $termsCountQuery )
 							->addScriptScoreFunction(
-								new Script( 'ln(1 / max(1.25, _score))', [], 'expression' )
+								new Script( 'ln(1 / min(1.25, _score))', [], 'expression' )
 							)
 					)
 			)

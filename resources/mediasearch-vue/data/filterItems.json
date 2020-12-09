@@ -18,6 +18,28 @@
 				"value": ">1000"
 			}
 		],
+		"license": [
+			{
+				"labelMessage": "wikibasemediainfo-special-mediasearch-filter-license-any",
+				"value": ""
+			},
+			{
+				"labelMessage": "wikibasemediainfo-special-mediasearch-filter-license-cc-by",
+				"value": "cc-by"
+			},
+			{
+				"labelMessage": "wikibasemediainfo-special-mediasearch-filter-license-cc-by-sa",
+				"value": "cc-by-sa"
+			},
+			{
+				"labelMessage": "wikibasemediainfo-special-mediasearch-filter-license-unrestricted",
+				"value": "unrestricted"
+			},
+			{
+				"labelMessage": "wikibasemediainfo-special-mediasearch-filter-license-other",
+				"value": "other"
+			}
+		],
 		"mimeType": [
 			{
 				"labelMessage": "wikibasemediainfo-special-mediasearch-filter-file-type-any",
@@ -54,6 +76,28 @@
 		]
 	},
 	"audio": {
+		"license": [
+			{
+				"labelMessage": "wikibasemediainfo-special-mediasearch-filter-license-any",
+				"value": ""
+			},
+			{
+				"labelMessage": "wikibasemediainfo-special-mediasearch-filter-license-cc-by",
+				"value": "cc-by"
+			},
+			{
+				"labelMessage": "wikibasemediainfo-special-mediasearch-filter-license-cc-by-sa",
+				"value": "cc-by-sa"
+			},
+			{
+				"labelMessage": "wikibasemediainfo-special-mediasearch-filter-license-unrestricted",
+				"value": "unrestricted"
+			},
+			{
+				"labelMessage": "wikibasemediainfo-special-mediasearch-filter-license-other",
+				"value": "other"
+			}
+		],
 		"mimeType": [
 			{
 				"labelMessage": "wikibasemediainfo-special-mediasearch-filter-file-type-any",
@@ -82,6 +126,28 @@
 		]
 	},
 	"video": {
+		"license": [
+			{
+				"labelMessage": "wikibasemediainfo-special-mediasearch-filter-license-any",
+				"value": ""
+			},
+			{
+				"labelMessage": "wikibasemediainfo-special-mediasearch-filter-license-cc-by",
+				"value": "cc-by"
+			},
+			{
+				"labelMessage": "wikibasemediainfo-special-mediasearch-filter-license-cc-by-sa",
+				"value": "cc-by-sa"
+			},
+			{
+				"labelMessage": "wikibasemediainfo-special-mediasearch-filter-license-unrestricted",
+				"value": "unrestricted"
+			},
+			{
+				"labelMessage": "wikibasemediainfo-special-mediasearch-filter-license-other",
+				"value": "other"
+			}
+		],
 		"mimeType": [
 			{
 				"labelMessage": "wikibasemediainfo-special-mediasearch-filter-file-type-any",
@@ -103,6 +169,28 @@
 	},
 	"page": {},
 	"other": {
+		"license": [
+			{
+				"labelMessage": "wikibasemediainfo-special-mediasearch-filter-license-any",
+				"value": ""
+			},
+			{
+				"labelMessage": "wikibasemediainfo-special-mediasearch-filter-license-cc-by",
+				"value": "cc-by"
+			},
+			{
+				"labelMessage": "wikibasemediainfo-special-mediasearch-filter-license-cc-by-sa",
+				"value": "cc-by-sa"
+			},
+			{
+				"labelMessage": "wikibasemediainfo-special-mediasearch-filter-license-unrestricted",
+				"value": "unrestricted"
+			},
+			{
+				"labelMessage": "wikibasemediainfo-special-mediasearch-filter-license-other",
+				"value": "other"
+			}
+		],
 		"mimeType": [
 			{
 				"labelMessage": "wikibasemediainfo-special-mediasearch-filter-file-type-any",

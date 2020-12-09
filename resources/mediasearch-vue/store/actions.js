@@ -42,6 +42,7 @@ function getMediaFilters( mediaType, filterValues ) {
 
 	raw += addFilter( 'mimeType', 'filemime' );
 	raw += addFilter( 'imageSize', 'fileres' );
+	raw += addFilter( 'license', 'haslicense' );
 
 	return raw;
 }

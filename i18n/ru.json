@@ -12,6 +12,7 @@
 			"Okras",
 			"Pacha Tchernof",
 			"Putnik",
+			"Roovinn",
 			"Saimongoltinio",
 			"Vlad5250",
 			"WindEwriX",
@@ -142,5 +143,6 @@
 	"wikibasemediainfo-special-mediasearch-filter-size-large": "Большой",
 	"wikibasemediainfo-special-mediasearch-filter-sort-label": "Сортировать по:",
 	"wikibasemediainfo-special-mediasearch-filter-sort-default": "Релевантность",
+	"wikibasemediainfo-special-mediasearch-filter-license-other": "Другие",
 	"wikibasemediainfo-special-mediasearch-no-results": "Мы не нашли результатов"
 }

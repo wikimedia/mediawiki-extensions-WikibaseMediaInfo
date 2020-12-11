@@ -907,8 +907,7 @@ class WikibaseMediaInfoHooks {
 			return;
 		}
 
-		$repo = WikibaseRepo::getDefaultInstance();
-		$baseConceptUri = $repo->getSettings()->getSetting( 'conceptBaseUri' );
+		$baseConceptUri = WikibaseRepo::getSettings()->getSetting( 'conceptBaseUri' );
 
 		$sidebar['TOOLBOX']['wb-concept-uri'] = [
 			'id' => 't-wb-concept-uri',

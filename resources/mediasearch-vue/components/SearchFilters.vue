@@ -127,17 +127,40 @@ module.exports = {
 		 * @fires filter-change
 		 */
 		onSelect: function ( value, filterType ) {
+			var oldValue = this.filterValues[ this.mediaType ][ filterType ] || '';
+
 			if ( value ) {
 				this.addFilterValue( {
 					value: value,
 					mediaType: this.mediaType,
 					filterType: filterType
 				} );
+				/* eslint-disable camelcase */
+				this.$log( {
+					action: 'filter_change',
+					search_media_type: this.mediaType,
+					search_filter_type: filterType,
+					search_filter_value: value,
+					prior_search_filter_type: filterType,
+					prior_search_filter_value: oldValue
+				} );
+				/* eslint-enable camelcase */
 			} else {
 				this.removeFilterValue( {
 					mediaType: this.mediaType,
 					filterType: filterType
 				} );
+
+				/* eslint-disable camelcase */
+				this.$log( {
+					action: 'filter_change',
+					search_media_type: this.mediaType,
+					search_filter_type: filterType,
+					search_filter_value: '',
+					prior_search_filter_type: filterType,
+					prior_search_filter_value: oldValue
+				} );
+				/* eslint-enable camelcase */
 			}
 
 			// Tell the App component to do a new search.

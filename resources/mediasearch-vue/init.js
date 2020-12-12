@@ -3,9 +3,15 @@
 ( function () {
 	var Vue = require( 'vue' ),
 		App = require( './components/App.vue' ),
+		logger = require( './plugins/eventLogger.js' ),
 		store = require( './store/index.js' ),
 		$container = $( '<div>' ).attr( 'id', 'wbmi-media-search' ),
 		$vue = $( '<div>' ).appendTo( $container );
+
+	Vue.use( logger, {
+		stream: 'analytics.mediawiki.mediasearch_interaction',
+		schema: '/analytics/mediawiki/mediasearch_interaction/1.0.0'
+	} );
 
 	/* eslint-disable no-jquery/no-global-selector */
 	$( '#mw-content-text' ).append( $container.hide() );

@@ -145,7 +145,8 @@
 			<a :href="canonicalurl"
 				:title="title"
 				target="_blank"
-				class="wbmi-quick-view__cta">
+				class="wbmi-quick-view__cta"
+				@click="onMoreDetailsClick">
 				{{ $i18n( 'wikibasemediainfo-special-mediasearch-quickview-button-text' ) }}
 			</a>
 		</div>
@@ -620,6 +621,15 @@ module.exports = {
 		 */
 		onThumbnailLoad: function () {
 			this.thumbnailWrapperStyle = false;
+		},
+
+		onMoreDetailsClick: function () {
+			/* eslint-disable camelcase */
+			this.$log( {
+				action: 'quickview_more_details_click',
+				search_result_page_id: this.pageid
+			} );
+			/* eslint-enable camelcase */
 		}
 	},
 

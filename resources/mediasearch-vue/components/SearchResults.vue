@@ -13,7 +13,8 @@
 				:class="getResultClass( result.pageid )"
 				:style="resultStyle"
 				v-bind="result"
-				@show-details="showDetails"
+				@click="onResultClick( result.pageid, index )"
+				@show-details="showDetails( $event, index )"
 			>
 			</component>
 		</div>
@@ -162,9 +163,11 @@ module.exports = {
 		 * so that it can be passed to the QuickView component.
 		 *
 		 * @param {number} pageid
-		 * @param {string} originalUrl
+		 * @param {number} index
 		 */
-		showDetails: function ( pageid ) {
+		showDetails: function ( pageid, index ) {
+			// @TODO show a placeholder Quickview UI immediately, and then
+			// replace with the real data as soon as the request has completed
 			this.fetchDetails( pageid ).then( function ( response ) {
 				this.details = response.query.pages[ pageid ];
 
@@ -175,6 +178,16 @@ module.exports = {
 				}.bind( this ) );
 
 				this.scrollIntoViewIfNeeded( pageid );
+
+				/* eslint-disable camelcase */
+				this.$log( {
+					action: 'result_click',
+					search_media_type: this.mediaType,
+					search_result_page_id: pageid,
+					search_result_position: index,
+					search_result_has_quickview: true
+				} );
+				/* eslint-enable camelcase */
 			}.bind( this ) );
 		},
 
@@ -194,6 +207,10 @@ module.exports = {
 
 			this.details = null;
 			this.focusOn = 'close';
+
+			this.$log( {
+				action: 'quickview_hide'
+			} );
 		},
 
 		/**
@@ -349,6 +366,25 @@ module.exports = {
 			this.resultStyle = {
 				'max-width': maxWidth.toString() + 'px'
 			};
+		},
+
+		/*
+		 * Clicks on results that do not display a quickview should still be
+		 * logged for analytics purposes
+		 *
+		 * @param {number} pageid
+		 * @param {number} index
+		 */
+		onResultClick: function ( pageid, index ) {
+			/* eslint-disable camelcase */
+			this.$log( {
+				action: 'result_click',
+				search_media_type: this.mediaType,
+				search_result_page_id: pageid,
+				search_result_position: index,
+				search_result_has_quickview: false
+			} );
+			/* eslint-enable camelcase */
 		}
 	},
 

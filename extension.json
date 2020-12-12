@@ -372,7 +372,8 @@
 				"resources/mediasearch-vue/store/actions.js",
 				"resources/mediasearch-vue/mixins/autocompleteLookupHandler.js",
 				"resources/mediasearch-vue/mixins/searchResult.js",
-				"resources/mediasearch-vue/mixins/searchResultTimeBased.js"
+				"resources/mediasearch-vue/mixins/searchResultTimeBased.js",
+				"resources/mediasearch-vue/plugins/eventLogger.js"
 			],
 			"messages": [
 				"wikibasemediainfo-special-mediasearch-filter-size",

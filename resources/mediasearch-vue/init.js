@@ -9,7 +9,7 @@
 		$vue = $( '<div>' ).appendTo( $container );
 
 	Vue.use( logger, {
-		stream: 'analytics.mediawiki.mediasearch_interaction',
+		stream: 'mediawiki.mediasearch_interaction',
 		schema: '/analytics/mediawiki/mediasearch_interaction/1.0.0'
 	} );
 

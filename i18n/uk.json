@@ -131,5 +131,8 @@
 	"wikibasemediainfo-special-mediasearch-filter-size-small": "Малий",
 	"wikibasemediainfo-special-mediasearch-filter-size-medium": "Середній",
 	"wikibasemediainfo-special-mediasearch-filter-size-large": "Великий",
-	"wikibasemediainfo-special-mediasearch-no-results": "Не знайдено результатів"
+	"wikibasemediainfo-special-mediasearch-no-results": "Не знайдено результатів",
+	"wikibasemediainfo-copytextlayout-copy": "Скопіювати",
+	"wikibasemediainfo-copytextlayout-copy-fail": "Помилка копіювання до буферу обміну.",
+	"wikibasemediainfo-copytextlayout-copy-success": "Скопійовано до буферу обміну."
 }

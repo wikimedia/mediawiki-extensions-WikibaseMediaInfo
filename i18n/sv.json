@@ -135,6 +135,7 @@
 	"wikibasemediainfo-special-mediasearch-filter-sort-default": "Relevans",
 	"wikibasemediainfo-special-mediasearch-filter-sort-recency": "Nylighet",
 	"wikibasemediainfo-special-mediasearch-filter-sort-popularity": "Popularitet",
+	"wikibasemediainfo-special-mediasearch-filter-license-unrestricted": "Inga begränsningar",
 	"wikibasemediainfo-special-mediasearch-no-results": "Vi hittade inga resultat",
 	"wikibasemediainfo-special-mediasearch-no-results-tips": "Försök med allmännare söktermer eller kontrollera stavningen",
 	"wikibasemediainfo-special-mediasearch-empty-state": "Sök fler än <span class=\"wbmi-media-search-empty-state__file-count\">$1</span> {{PLURAL:$1|mediefil|mediefiler}} som är fria att använda.",

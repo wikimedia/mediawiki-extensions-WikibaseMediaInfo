@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"Javiero",
 			"KuboF",
 			"Mirin",
 			"NMaia",
@@ -89,6 +90,8 @@
 	"wikibasemediainfo-special-mediasearch-filter-sort-label": "Ordigi laŭ:",
 	"wikibasemediainfo-special-mediasearch-filter-sort-default": "Rilateco",
 	"wikibasemediainfo-special-mediasearch-filter-sort-popularity": "Populareco",
+	"wikibasemediainfo-special-mediasearch-filter-license-cc-by": "Uzu kun atribuo",
+	"wikibasemediainfo-special-mediasearch-filter-license-unrestricted": "Neniuj restriktoj",
 	"wikibasemediainfo-special-mediasearch-no-results": "Ni ne trovis ajnajn rezultojn",
 	"wikibasemediainfo-special-mediasearch-input-label": "Serĉi aŭdvidaĵojn",
 	"wikibasemediainfo-special-mediasearch-load-more-results": "Ŝargi pli",

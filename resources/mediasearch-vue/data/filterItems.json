@@ -1,23 +1,5 @@
 {
 	"bitmap": {
-		"imageSize": [
-			{
-				"labelMessage": "wikibasemediainfo-special-mediasearch-filter-size-any",
-				"value": ""
-			},
-			{
-				"labelMessage":"wikibasemediainfo-special-mediasearch-filter-size-small",
-				"value": "<500"
-			},
-			{
-				"labelMessage": "wikibasemediainfo-special-mediasearch-filter-size-medium",
-				"value": "500,1000"
-			},
-			{
-				"labelMessage": "wikibasemediainfo-special-mediasearch-filter-size-large",
-				"value": ">1000"
-			}
-		],
 		"license": [
 			{
 				"labelMessage": "wikibasemediainfo-special-mediasearch-filter-license-any",
@@ -72,6 +54,24 @@
 			{
 				"label": "svg",
 				"value": "svg"
+			}
+		],
+		"imageSize": [
+			{
+				"labelMessage": "wikibasemediainfo-special-mediasearch-filter-size-any",
+				"value": ""
+			},
+			{
+				"labelMessage": "wikibasemediainfo-special-mediasearch-filter-size-small",
+				"value": "<500"
+			},
+			{
+				"labelMessage": "wikibasemediainfo-special-mediasearch-filter-size-medium",
+				"value": "500,1000"
+			},
+			{
+				"labelMessage": "wikibasemediainfo-special-mediasearch-filter-size-large",
+				"value": ">1000"
 			}
 		]
 	},

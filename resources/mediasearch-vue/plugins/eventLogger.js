@@ -7,12 +7,12 @@ module.exports = {
 	install: function ( Vue, options ) {
 		var stream = options.stream,
 			schema = options.schema,
-			session = mw.user.generateRandomSessionId();
+			token = mw.user.getPageviewToken();
 
 		/* eslint-disable camelcase */
 		Vue.prototype.$log = function ( event ) {
 			event.$schema = schema;
-			event.web_pageview_id = session;
+			event.web_pageview_id = token;
 			event.language_code = mw.language.getFallbackLanguageChain()[ 0 ];
 			event.ui_mw_skin = mw.config.get( 'skin' );
 

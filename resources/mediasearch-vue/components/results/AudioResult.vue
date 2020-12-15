@@ -12,7 +12,10 @@
 
 		<h4 v-if="formattedDuration && mime"
 			class="wbmi-audio-result__meta">
-			<span class="wbmi-audio-result__duration">{{ formattedDuration }}</span>
+			<span class="wbmi-audio-result__duration">
+				<wbmi-icon :icon="icon"></wbmi-icon>
+				<span class="wbmi-audio-result__duration__text">{{ formattedDuration }}</span>
+			</span>
 			<span class="wbmi-audio-result__mime">{{ mime }}</span>
 		</h4>
 
@@ -30,17 +33,29 @@
  * mixin as well as the "time-based" result mixin.
  */
 var searchResult = require( '../../mixins/searchResult.js' ),
-	searchResultTimeBased = require( '../../mixins/searchResultTimeBased.js' );
+	searchResultTimeBased = require( '../../mixins/searchResultTimeBased.js' ),
+	WbmiIcon = require( '../base/Icon.vue' ),
+	icons = require( '../../../../lib/icons.js' );
 
 // @vue/component
 module.exports = {
 	name: 'AudioResult',
+
+	components: {
+		'wbmi-icon': WbmiIcon
+	},
 
 	mixins: [
 		searchResult,
 		searchResultTimeBased
 	],
 
-	inheritAttrs: false
+	inheritAttrs: false,
+
+	data: function () {
+		return {
+			icon: icons.wbmiIconVolumeUp
+		};
+	}
 };
 </script>

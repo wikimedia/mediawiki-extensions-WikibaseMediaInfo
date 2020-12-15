@@ -1,7 +1,7 @@
 @import '../../../mediainfo-variables.less';
 
 .wbmi-audio-result {
-	border-bottom: @border-width-base @border-style-base @wbmi-border-color-text-result;
+	border-bottom: @border-width-base @border-style-base @wbmi-border-color-result;
 	box-sizing: border-box;
 	padding: @wbmi-spacing-base-px * 0.75 0;
 
@@ -23,10 +23,18 @@
 		border-radius: @border-radius-base;
 		color: @color-base--subtle;
 		display: inline-block;
-		background-color: @wmui-color-base80;
+		background-color: @background-color-tabs;
 		font-weight: normal;
 		padding: 0 @wbmi-spacing-xs;
 		margin-right: @wbmi-spacing-sm;
+
+		.wbmi-icon {
+			font-size: 1em;
+		}
+
+		&__text {
+			vertical-align: middle;
+		}
 	}
 
 	&__mime {

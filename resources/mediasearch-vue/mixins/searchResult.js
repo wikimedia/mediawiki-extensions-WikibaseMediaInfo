@@ -103,6 +103,13 @@ module.exports = {
 		 * @fires show-details
 		 */
 		showDetails: function ( e ) {
+			// Allow cmd + click/Windows + click to open file page in new tab.
+			if ( e.metaKey === true ) {
+				return;
+			}
+
+			e.preventDefault();
+
 			// Stop the original event (most likely a "click") from
 			// propagating in case other scripts (user scripts, etc)
 			// are listening. See https://phabricator.wikimedia.org/T260203

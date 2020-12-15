@@ -175,6 +175,7 @@ module.exports = {
 				// once it is displayed
 				this.$nextTick( function () {
 					this.$refs.quickview.focus( this.focusOn );
+					this.$refs.quickview.$el.scrollIntoView();
 				}.bind( this ) );
 
 				this.scrollIntoViewIfNeeded( pageid );

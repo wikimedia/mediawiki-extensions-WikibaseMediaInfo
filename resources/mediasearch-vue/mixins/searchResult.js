@@ -55,7 +55,7 @@ module.exports = {
 		 * @return {string|undefined}
 		 */
 		thumbnail: function () {
-			var commonWidths = [ 48, 75, 80, 100, 120, 150, 160, 180, 200, 220, 240, 250, 300, 320, 400, 450, 500, 600, 640, 800, 1024, 1200, 1280, 1920, 2880 ],
+			var commonWidths = mw.config.get( 'wbmiThumbLimits' ),
 				oldWidth = this.imageinfo[ 0 ].thumbwidth,
 				newWidth = oldWidth,
 				i;

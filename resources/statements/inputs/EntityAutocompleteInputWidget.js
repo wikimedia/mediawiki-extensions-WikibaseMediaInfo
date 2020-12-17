@@ -171,7 +171,7 @@ EntityAutocompleteInputWidget.prototype.onBlur = function () {
 EntityAutocompleteInputWidget.prototype.getLookupRequest = function () {
 	var value = this.getValue(),
 		deferred = $.Deferred(),
-		api = wikibase.api.getLocationAgnosticMwApi( this.apiUri ),
+		api = wikibase.api.getLocationAgnosticMwApi( this.apiUri, { anonymous: true } ),
 		requestParams = {
 			action: 'wbsearchentities',
 			search: value,

@@ -63,10 +63,8 @@ FormatValueElement.prototype.formatValue = function ( dataValue, format, languag
 		otherKey;
 
 	api = wikibase.api.getLocationAgnosticMwApi(
-		mw.config.get(
-			'wbmiRepoApiUrl',
-			mw.config.get( 'wbRepoApiUrl' )
-		)
+		mw.config.get( 'wbmiRepoApiUrl', mw.config.get( 'wbRepoApiUrl' ) ),
+		{ anonymous: true }
 	);
 
 	format = format || 'text/plain';

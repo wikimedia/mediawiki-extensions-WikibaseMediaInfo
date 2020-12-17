@@ -48,7 +48,8 @@ PropertySuggestionsWidget.prototype.getTemplateData = function () {
 	var api = wikibase.api.getLocationAgnosticMwApi(
 			mw.config.get( 'wbmiExternalEntitySearchBaseUri' ) ||
 			mw.config.get( 'wbmiRepoApiUrl' ) ||
-			mw.config.get( 'wbRepoApiUrl' )
+			mw.config.get( 'wbRepoApiUrl' ),
+			{ anonymous: true }
 		),
 		data = {
 			propertyId: this.state.propertyId,

@@ -111,7 +111,8 @@ AbstractInputWidget.prototype.setDisabled = function () {
  */
 AbstractInputWidget.prototype.parseValue = function ( propertyId, datatype ) {
 	var api = wikibase.api.getLocationAgnosticMwApi(
-			mw.config.get( 'wbmiRepoApiUrl', mw.config.get( 'wbRepoApiUrl' ) )
+			mw.config.get( 'wbmiRepoApiUrl', mw.config.get( 'wbRepoApiUrl' ) ),
+			{ anonymous: true }
 		),
 		promise;
 

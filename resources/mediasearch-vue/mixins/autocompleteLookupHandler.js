@@ -151,7 +151,7 @@ module.exports = {
 					mw.config.get( 'wbRepoApiUrl' ),
 				api = mw.config.get( 'wbmiLocalDev' ) ?
 					new mw.Api( { ajax: { url: 'https://www.wikidata.org/w/api.php' } } ) :
-					wikibase.api.getLocationAgnosticMwApi( apiUri );
+					wikibase.api.getLocationAgnosticMwApi( apiUri, { anonymous: true } );
 
 			return api.get( {
 				action: 'wbsearchentities',

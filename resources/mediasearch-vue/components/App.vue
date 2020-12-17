@@ -9,7 +9,7 @@
 			:clear-title="$i18n( 'wikibasemediainfo-special-mediasearch-clear-title' )"
 			:button-label="$i18n( 'searchbutton' )"
 			:lookup-results="lookupResults"
-			@input="getLookupResults"
+			@input="getDebouncedLookupResults"
 			@submit="onUpdateTerm"
 			@clear="onClear"
 			@clear-lookup-results="clearLookupResults"

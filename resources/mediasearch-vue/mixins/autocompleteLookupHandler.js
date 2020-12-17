@@ -12,6 +12,7 @@
 module.exports = {
 	data: function () {
 		return {
+			debounceTimeoutId: null,
 			lookupPromises: null,
 			lookupResults: [],
 			lookupResultsLimit: 7
@@ -21,6 +22,19 @@ module.exports = {
 	methods: {
 		clearLookupResults: function () {
 			this.lookupResults = [];
+		},
+
+		/**
+		 * Get lookup results for current text input.
+		 *
+		 * @param {string} input
+		 */
+		getDebouncedLookupResults: function ( input ) {
+			clearTimeout( this.debounceTimeoutId );
+			this.debounceTimeoutId = setTimeout(
+				this.getLookupResults.bind( this, input ),
+				250
+			);
 		},
 
 		/**

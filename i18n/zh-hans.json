@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			")8",
 			"A Chinese Wikipedian",
 			"A Retired User",
 			"AYZ04",
@@ -90,6 +91,7 @@
 	"wikibasemediainfo-special-mediasearch-filter-sort-label": "排序方式：",
 	"wikibasemediainfo-special-mediasearch-filter-sort-default": "相关度",
 	"wikibasemediainfo-special-mediasearch-filter-sort-popularity": "人气度",
+	"wikibasemediainfo-special-mediasearch-filter-license-other": "其他",
 	"wikibasemediainfo-special-mediasearch-no-results": "我们没有找到任何结果",
 	"wikibasemediainfo-special-mediasearch-clear-title": "移除",
 	"wikibasemediainfo-special-mediasearch-load-more-results": "加载更多"

@@ -121,6 +121,11 @@
 	"wikibasemediainfo-special-mediasearch-filter-sort-label": "Järjestusalus:",
 	"wikibasemediainfo-special-mediasearch-filter-sort-default": "asjakohasus",
 	"wikibasemediainfo-special-mediasearch-filter-sort-recency": "hiljutisus",
+	"wikibasemediainfo-special-mediasearch-filter-license-any": "Kõik litsentsid",
+	"wikibasemediainfo-special-mediasearch-filter-license-cc-by": "Kasutamine autorile viitamisega",
+	"wikibasemediainfo-special-mediasearch-filter-license-cc-by-sa": "Kasutamine autorile viitamise ja sama litsentsiga",
+	"wikibasemediainfo-special-mediasearch-filter-license-unrestricted": "Piiranguteta",
+	"wikibasemediainfo-special-mediasearch-filter-license-other": "Muu",
 	"wikibasemediainfo-special-mediasearch-no-results": "Tulemusi ei leitud.",
 	"wikibasemediainfo-special-mediasearch-no-results-tips": "Proovi üldisemaid otsisõnu või kontrolli kirjapilti.",
 	"wikibasemediainfo-special-mediasearch-empty-state": "Otsi rohkem kui <span class=\"wbmi-media-search-empty-state__file-count\">$1</span> vabaks kasutamiseks mõeldud {{PLURAL:$1|meediumifaili}} seast.",
@@ -132,5 +137,8 @@
 	"wikibasemediainfo-special-mediasearch-quickview-close-button-text": "Sule faili üksikasjad",
 	"wikibasemediainfo-special-mediasearch-quickview-previous-button-text": "Vaata eelmist tulemust",
 	"wikibasemediainfo-special-mediasearch-quickview-next-button-text": "Vaata järgmist tulemust",
-	"wikibasemediainfo-special-mediasearch-category-info": "$1 {{PLURAL:$1|liige|liiget}} – $2 {{PLURAL:$2|alamkategooria|alamkategooriat}}, $3 {{PLURAL:$3|fail|faili}}"
+	"wikibasemediainfo-special-mediasearch-category-info": "$1 {{PLURAL:$1|liige|liiget}} – $2 {{PLURAL:$2|alamkategooria|alamkategooriat}}, $3 {{PLURAL:$3|fail|faili}}",
+	"wikibasemediainfo-copytextlayout-copy": "Kopeeri",
+	"wikibasemediainfo-copytextlayout-copy-fail": "Ei õnnestunud lõikelauale kopeerida.",
+	"wikibasemediainfo-copytextlayout-copy-success": "Kopeeritud lõikelauale."
 }

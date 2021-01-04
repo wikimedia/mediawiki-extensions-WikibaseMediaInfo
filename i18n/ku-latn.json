@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"Balyozxane",
 			"Bikarhêner",
 			"Ghybu",
 			"Guherto",
@@ -9,7 +10,7 @@
 	},
 	"wikibasemediainfo-add-statement": "Daxuyaniyê lê zêde bike",
 	"wikibasemediainfo-filepage-edit-depicts": "Rismê biguherîne",
-	"wikibasemediainfo-filepage-publish": "Guhertinan biweşîne",
+	"wikibasemediainfo-filepage-publish": "Guhartinan biweşîne",
 	"wikibasemediainfo-filepage-statement-no-data": "Naverok ne berdest e",
 	"wikibasemediainfo-property-placeholder": "Taybetmendî",
 	"wikibasemediainfo-statements-item-remove": "Jê bibe"

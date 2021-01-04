@@ -140,7 +140,7 @@
 	"wikibasemediainfo-special-mediasearch-filter-license-other": "Other",
 	"wikibasemediainfo-special-mediasearch-no-results": "We didn't find any results",
 	"wikibasemediainfo-special-mediasearch-no-results-tips": "Try more general terms or check your spelling",
-	"wikibasemediainfo-special-mediasearch-empty-state": "Search more than <span class=\"wbmi-media-search-empty-state__file-count\">$1</span> free to re-use media {{PLURAL:$1|file|files}}",
+	"wikibasemediainfo-special-mediasearch-empty-state": "Search more than $1 free to re-use media {{PLURAL:$1|file|files}}",
 	"wikibasemediainfo-special-mediasearch-clear-title": "Remove",
 	"wikibasemediainfo-special-mediasearch-input-label": "Search media",
 	"wikibasemediainfo-special-mediasearch-input-placeholder": "Search for images, audio, video and more",

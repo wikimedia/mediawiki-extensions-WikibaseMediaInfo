@@ -10,11 +10,15 @@
 	left: 0;
 	margin-bottom: -1px;
 	margin-top: -1px;
-	max-width: @max-width-base;
+	max-width: 100%;
 	min-width: 100%;
 	position: absolute;
 	// Match existing OOUI menu z-index.
 	z-index: 4;
+
+	@media screen and ( min-width: @width-breakpoint-tablet ) {
+		max-width: @max-width-base;
+	}
 
 	&__list-item {
 		.transition( ~'background-color 100ms, color 100ms' );
@@ -25,7 +29,10 @@
 		overflow: hidden;
 		padding: 7px 12px;
 		text-overflow: ellipsis;
-		white-space: nowrap;
+
+		@media screen and ( min-width: @width-breakpoint-tablet ) {
+			white-space: nowrap;
+		}
 
 		&--active {
 			background-color: @background-color-base--hover;

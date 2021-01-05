@@ -49,7 +49,7 @@ class WBMIHooksHelper {
 	}
 
 	public static function getMaxCaptionLength() {
-		$settings = WikibaseRepo::getDefaultInstance()->getSettings();
+		$settings = WikibaseRepo::getSettings();
 		return $settings->getSetting( 'string-limits' )['multilang']['length'];
 	}
 }

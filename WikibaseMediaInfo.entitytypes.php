@@ -212,7 +212,7 @@ return [
 				MediaWikiServices::getInstance()->getSlotRoleStore()
 			);
 
-			$entitySource = $wikibaseRepo->getEntitySourceDefinitions()
+			$entitySource = WikibaseRepo::getEntitySourceDefinitions()
 				->getSourceForEntityType( MediaInfo::ENTITY_TYPE );
 
 			return new WikiPageEntityMetaDataLookup(
@@ -248,7 +248,7 @@ return [
 
 			$wbRepo = WikibaseRepo::getDefaultInstance();
 			// TODO: this all scaffolding should probably be somehow moved to Wikibase Repo or so?
-			$databaseName = $wbRepo->getEntitySourceDefinitions()
+			$databaseName = WikibaseRepo::getEntitySourceDefinitions()
 				->getSourceForEntityType( MediaInfo::ENTITY_TYPE )->getDatabaseName();
 
 			$contentCodec = new EntityContentDataCodec(

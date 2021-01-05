@@ -140,7 +140,7 @@
 	"wikibasemediainfo-special-mediasearch-filter-license-other": "Druhe",
 	"wikibasemediainfo-special-mediasearch-no-results": "Njejsmy žane wuslědki namakali",
 	"wikibasemediainfo-special-mediasearch-no-results-tips": "Spytaj bóle powšitkowne zapřijeća abo přepruwuj twój prawopis",
-	"wikibasemediainfo-special-mediasearch-empty-state": "Pytaj za wjace hač <span class=\"wbmi-media-search-empty-state__file-count\">$1</span> swobodnje {{PLURAL:$1|wužiwajomnej dataju|wužiwajomnymaj datajomaj|wužiwanjomnymi datajemi}}",
+	"wikibasemediainfo-special-mediasearch-empty-state": "Pytaj za wjace hač $1 swobodnje {{PLURAL:$1|wužiwajomnej dataju|wužiwajomnymaj datajomaj|wužiwanjomnymi datajemi}}",
 	"wikibasemediainfo-special-mediasearch-clear-title": "Wotstronić",
 	"wikibasemediainfo-special-mediasearch-input-label": "Za medijemi pytać",
 	"wikibasemediainfo-special-mediasearch-input-placeholder": "Pytanje za wobrazami, awdijemi, widejemi a dalšimi",

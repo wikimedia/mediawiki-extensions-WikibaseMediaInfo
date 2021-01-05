@@ -145,7 +145,7 @@
 	"wikibasemediainfo-special-mediasearch-filter-license-other": "אחר",
 	"wikibasemediainfo-special-mediasearch-no-results": "לא מצאנו שום תוצאה",
 	"wikibasemediainfo-special-mediasearch-no-results-tips": "נא לנסות מונחים כליים יותר או לבדוק את האיות שלך",
-	"wikibasemediainfo-special-mediasearch-empty-state": "לחפש ביותר מ־<span class=\"wbmi-media-search-empty-state__file-count\">$1</span> {{PLURAL:$1|קובץ חופשי|קבצים חופשיים}} לשימוש חוזר",
+	"wikibasemediainfo-special-mediasearch-empty-state": "לחפש ביותר מ־$1 {{PLURAL:$1|קובץ חופשי|קבצים חופשיים}} לשימוש חוזר",
 	"wikibasemediainfo-special-mediasearch-clear-title": "הסרה",
 	"wikibasemediainfo-special-mediasearch-input-label": "חיפוש מדיה",
 	"wikibasemediainfo-special-mediasearch-input-placeholder": "חיפוש תמונות, צלילים, סרטים, ועוד",

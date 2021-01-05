@@ -140,7 +140,7 @@
 	"wikibasemediainfo-special-mediasearch-filter-license-other": "Övrigt",
 	"wikibasemediainfo-special-mediasearch-no-results": "Vi hittade inga resultat",
 	"wikibasemediainfo-special-mediasearch-no-results-tips": "Försök med allmännare söktermer eller kontrollera stavningen",
-	"wikibasemediainfo-special-mediasearch-empty-state": "Sök fler än <span class=\"wbmi-media-search-empty-state__file-count\">$1</span> {{PLURAL:$1|mediefil|mediefiler}} som är fria att använda.",
+	"wikibasemediainfo-special-mediasearch-empty-state": "Sök fler än $1 {{PLURAL:$1|mediefil|mediefiler}} som är fria att använda.",
 	"wikibasemediainfo-special-mediasearch-clear-title": "Ta bort",
 	"wikibasemediainfo-special-mediasearch-input-label": "Sök media",
 	"wikibasemediainfo-special-mediasearch-input-placeholder": "Sök efter bilder, ljud, video och mer",

@@ -128,7 +128,7 @@
 	"wikibasemediainfo-special-mediasearch-filter-license-other": "Muu",
 	"wikibasemediainfo-special-mediasearch-no-results": "Tulemusi ei leitud.",
 	"wikibasemediainfo-special-mediasearch-no-results-tips": "Proovi üldisemaid otsisõnu või kontrolli kirjapilti.",
-	"wikibasemediainfo-special-mediasearch-empty-state": "Otsi rohkem kui <span class=\"wbmi-media-search-empty-state__file-count\">$1</span> vabaks kasutamiseks mõeldud {{PLURAL:$1|meediumifaili}} seast.",
+	"wikibasemediainfo-special-mediasearch-empty-state": "Otsi rohkem kui $1 vabaks kasutamiseks mõeldud {{PLURAL:$1|meediumifaili}} seast.",
 	"wikibasemediainfo-special-mediasearch-clear-title": "Eemalda",
 	"wikibasemediainfo-special-mediasearch-input-label": "Otsi meediumifaile",
 	"wikibasemediainfo-special-mediasearch-input-placeholder": "Otsi pilte, helifaile, videoid ja muud",

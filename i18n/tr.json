@@ -147,7 +147,7 @@
 	"wikibasemediainfo-special-mediasearch-filter-license-other": "Diğer",
 	"wikibasemediainfo-special-mediasearch-no-results": "Herhangi bir sonuç bulamadık",
 	"wikibasemediainfo-special-mediasearch-no-results-tips": "Daha genel terimleri deneyin veya yazımınızı kontrol edin",
-	"wikibasemediainfo-special-mediasearch-empty-state": "Medya dosyasını yeniden kullanmak için <span class=\"wbmi-media-search-empty-state__file-count\">$1</span> daha fazla ücretsiz arama yapın",
+	"wikibasemediainfo-special-mediasearch-empty-state": "Medya dosyasını yeniden kullanmak için $1 daha fazla ücretsiz arama yapın",
 	"wikibasemediainfo-special-mediasearch-clear-title": "Kaldır",
 	"wikibasemediainfo-special-mediasearch-input-label": "Medya ara",
 	"wikibasemediainfo-special-mediasearch-input-placeholder": "Resim, ses, video ve daha fazlasını arayın",

@@ -122,7 +122,7 @@
 	"wikibasemediainfo-special-mediasearch-filter-sort-default": "Độ phù hợp",
 	"wikibasemediainfo-special-mediasearch-no-results": "Không tìm thấy kết quả nào",
 	"wikibasemediainfo-special-mediasearch-no-results-tips": "Hãy thử tìm các từ khóa chung chung hơn hoặc kiểm tra chính tả",
-	"wikibasemediainfo-special-mediasearch-empty-state": "Tìm hơn <span class=\"wbmi-media-search-empty-state__file-count\">$1</span> tập tin phương tiện có sẵn để sử dụng thoải mái miễn phí",
+	"wikibasemediainfo-special-mediasearch-empty-state": "Tìm hơn $1 tập tin phương tiện có sẵn để sử dụng thoải mái miễn phí",
 	"wikibasemediainfo-special-mediasearch-clear-title": "Loại bỏ",
 	"wikibasemediainfo-special-mediasearch-input-label": "Tìm phương tiện",
 	"wikibasemediainfo-special-mediasearch-input-placeholder": "Tìm hình ảnh, âm thanh, video, và đủ loại thứ",

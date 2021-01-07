@@ -221,6 +221,10 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 			'clearFiltersUrl' => $clearFiltersUrl,
 			'clearFiltersText' => $this->msg( 'wikibasemediainfo-special-mediasearch-clear-filters' )->text(),
 			'hasMore' => $continue !== null,
+			'endOfResults' => count( $results ) > 0 && $continue === null,
+			'endOfResultsMessage' => $this->msg( 'wikibasemediainfo-special-mediasearch-end-of-results' )->text(),
+			// phpcs:ignore Generic.Files.LineLength.TooLong
+			'endOfResultsMessageExtra' => $this->msg( 'wikibasemediainfo-special-mediasearch-end-of-results-tips' )->text(),
 			'searchLabel' => $this->msg( 'wikibasemediainfo-special-mediasearch-input-label' )->text(),
 			'searchButton' => $this->msg( 'searchbutton' )->text(),
 			'searchPlaceholder' => $this->msg( 'wikibasemediainfo-special-mediasearch-input-placeholder' )->text(),

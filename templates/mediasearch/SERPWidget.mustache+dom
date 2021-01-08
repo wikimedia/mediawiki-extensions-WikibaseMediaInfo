@@ -87,7 +87,27 @@
 				>
 					{{^isPage}}
 						<div class="wbmi-media-search-filters">
-							{{! this has no content, but container is here to preserve the space after page load }}
+							{{#filtersForDisplay}}
+							<div class="wbmi-select wbmi-select--disabled">
+								<div class="wbmi-select__content">
+									<span class="wbmi-select__current-selection">{{ . }}</span>
+									<span class="wbmi-icon wbmi-select__handle">
+										<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 20 20" aria-hidden="true">
+											<g fill="currentColor">
+												<path d="M17.5 4.75l-7.5 7.5-7.5-7.5L1 6.25l9 9 9-9z"></path>
+											</g>
+										</svg>
+									</span>
+								</div>
+							</div>
+							{{/filtersForDisplay}}
+
+							{{#hasFilters}}
+							<div class="wbmi-media-search-filters__spacer"></div>
+							<div class="wbmi-media-search-filters__clear--no-js">
+								<a href="{{ clearFiltersUrl }}">{{ clearFiltersText }}</a>
+							</div>
+							{{/hasFilters}}
 						</div>
 					{{/isPage}}
 

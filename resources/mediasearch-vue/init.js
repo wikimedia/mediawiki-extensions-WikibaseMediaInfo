@@ -1,5 +1,8 @@
 'use strict';
 
+require( '../polyfills/Array.prototype.find.js' );
+require( '../polyfills/Array.prototype.findIndex.js' );
+
 ( function () {
 	var Vue = require( 'vue' ),
 		App = require( './components/App.vue' ),

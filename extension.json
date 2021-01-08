@@ -72,6 +72,15 @@
 		"MediaInfoMediaSearchProperties": {
 			"description": "Map of { property id: weight } for which statements should be included in media search. When not set, this defaults to default properties (see $wgMediaInfoProperties values) with a weight of 1.",
 			"value": null
+		},
+		"MediaInfoMediaSearchSupportedFilterParams": {
+			"description": "List of valid URL query parameters for search filters",
+			"value": [
+				"mimeType",
+				"imageSize",
+				"sort",
+				"license"
+			]
 		}
 	},
 	"ServiceWiringFiles": [
@@ -373,7 +382,9 @@
 				"resources/mediasearch-vue/mixins/autocompleteLookupHandler.js",
 				"resources/mediasearch-vue/mixins/searchResult.js",
 				"resources/mediasearch-vue/mixins/searchResultTimeBased.js",
-				"resources/mediasearch-vue/plugins/eventLogger.js"
+				"resources/mediasearch-vue/plugins/eventLogger.js",
+				"resources/polyfills/Array.prototype.find.js",
+				"resources/polyfills/Array.prototype.findIndex.js"
 			],
 			"messages": [
 				"wikibasemediainfo-special-mediasearch-filter-size",
@@ -411,7 +422,8 @@
 				"wikibasemediainfo-special-mediasearch-category-info",
 				"wikibasemediainfo-copytextlayout-copy",
 				"wikibasemediainfo-copytextlayout-copy-fail",
-				"wikibasemediainfo-copytextlayout-copy-success"
+				"wikibasemediainfo-copytextlayout-copy-success",
+				"wikibasemediainfo-special-mediasearch-clear-filters"
 			],
 			"dependencies": [
 				"wikibase.mediainfo.mediasearch.vue.styles",

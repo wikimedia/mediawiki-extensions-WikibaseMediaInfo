@@ -7,5 +7,9 @@ module.exports = {
 			page: state.continue.page !== null,
 			other: state.continue.other !== null
 		};
+	},
+
+	allActiveFilters: function ( state ) {
+		return JSON.stringify( state.filterValues );
 	}
 };

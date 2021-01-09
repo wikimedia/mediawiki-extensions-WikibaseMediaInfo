@@ -1,22 +1,48 @@
 <template>
 	<div class="wbmi-media-search-results">
-		<div
-			ref="list"
-			class="wbmi-media-search-results__list"
-			:class="listClasses"
-		>
-			<component
-				:is="resultComponent"
-				v-for="(result, index) in results[ mediaType ]"
-				:ref="result.pageid"
-				:key="index"
-				:class="getResultClass( result.pageid )"
-				:style="resultStyle"
-				v-bind="result"
-				@click="onResultClick( result.pageid, index )"
-				@show-details="showDetails( $event, index )"
+		<div class="wbmi-media-search-results__list-wrapper" :class="listWrapperClasses">
+			<div
+				ref="list"
+				class="wbmi-media-search-results__list"
+				:class="listClasses"
 			>
-			</component>
+				<component
+					:is="resultComponent"
+					v-for="(result, index) in results[ mediaType ]"
+					:ref="result.pageid"
+					:key="index"
+					:class="getResultClass( result.pageid )"
+					:style="resultStyle"
+					v-bind="result"
+					@click="onResultClick( result.pageid, index )"
+					@show-details="showDetails( $event, index )"
+				>
+				</component>
+			</div>
+
+			<!-- Loading indicator if results are still pending -->
+			<spinner v-if="pending[ mediaType ]"></spinner>
+
+			<!-- When the autoload counter for a given tab reaches zero,
+			don't load more results until user explicitly clicks on a
+			"load more" button; this resets the autoload count -->
+			<wbmi-button
+				v-else-if="hasMore[ mediaType ]"
+				class="wbmi-media-search-load-more"
+				:progressive="true"
+				@click="$emit( 'load-more' )"
+			>
+				{{ $i18n( 'wikibasemediainfo-special-mediasearch-load-more-results' ) }}
+			</wbmi-button>
+
+			<!-- No results message if search has completed and come back empty -->
+			<no-results v-else-if="hasNoResults"></no-results>
+
+			<!-- End of results message if query can no longer be continued -->
+			<end-of-results v-else-if="endOfResults"></end-of-results>
+
+			<!-- Empty-state encouraging user to search if they have not done so yet -->
+			<empty-state v-else-if="shouldShowEmptyState"></empty-state>
 		</div>
 
 		<!-- QuickView dialog for mobile skin. -->
@@ -75,13 +101,19 @@
  * result, including some additional data fetched from the API.
  */
 var mapState = require( 'vuex' ).mapState,
+	mapGetters = require( 'vuex' ).mapGetters,
 	ImageResult = require( './results/ImageResult.vue' ),
 	AudioResult = require( './results/AudioResult.vue' ),
 	VideoResult = require( './results/VideoResult.vue' ),
 	PageResult = require( './results/PageResult.vue' ),
 	OtherResult = require( './results/OtherResult.vue' ),
 	WbmiDialog = require( './base/Dialog.vue' ),
+	WbmiButton = require( './base/Button.vue' ),
+	Spinner = require( './Spinner.vue' ),
 	QuickView = require( './QuickView.vue' ),
+	NoResults = require( './NoResults.vue' ),
+	EndOfResults = require( './EndOfResults.vue' ),
+	EmptyState = require( './EmptyState.vue' ),
 	api = new mw.Api();
 
 // @vue/component
@@ -95,7 +127,12 @@ module.exports = {
 		'page-result': PageResult,
 		'other-result': OtherResult,
 		'quick-view': QuickView,
-		'wbmi-dialog': WbmiDialog
+		'wbmi-dialog': WbmiDialog,
+		'wbmi-button': WbmiButton,
+		spinner: Spinner,
+		'empty-state': EmptyState,
+		'no-results': NoResults,
+		'end-of-results': EndOfResults
 	},
 
 	props: {
@@ -118,7 +155,10 @@ module.exports = {
 		'term',
 		'results',
 		'pending',
+		'continue',
 		'initialized'
+	] ), mapGetters( [
+		'hasMore'
 	] ), {
 		/**
 		 * Which component should be used to display individual search results
@@ -131,6 +171,15 @@ module.exports = {
 			} else {
 				return this.mediaType + '-result';
 			}
+		},
+
+		/**
+		 * @return {Object} Dynamic classes for the "list" element's wrapper div
+		 */
+		listWrapperClasses: function () {
+			return {
+				'wbmi-media-search-results__list-wrapper--collapsed': !!this.details && !this.isMobileSkin
+			};
 		},
 
 		/**
@@ -154,6 +203,39 @@ module.exports = {
 		 */
 		isMobileSkin: function () {
 			return mw.config.get( 'skin' ) === 'minerva';
+		},
+
+		/**
+		 * @return {boolean}
+		 *
+		 */
+		hasNoResults: function () {
+			return this.term.length > 0 && // user has entered a search term
+				this.pending[ this.mediaType ] === false && // tab is not pending
+				this.results[ this.mediaType ].length === 0 && // tab has no results
+				this.continue[ this.mediaType ] === null; // query cannot be continued
+		},
+
+		/**
+		 * @return {boolean}
+		 *
+		 */
+		endOfResults: function () {
+			return this.term.length > 0 && // user has entered a search term
+				this.pending[ this.mediaType ] === false && // tab is not pending
+				this.results[ this.mediaType ].length > 0 && // tab has some results
+				this.continue[ this.mediaType ] === null; // query cannot be continued
+		},
+
+		/**
+		 * Whether to show the pre-search empty state; show this whenever a
+		 * search term is not present and there are no results to display
+		 *
+		 * @return {boolean}
+		 */
+		shouldShowEmptyState: function () {
+			return this.term.length === 0 && this.results[ this.mediaType ] &&
+				this.results[ this.mediaType ].length === 0;
 		}
 	} ),
 

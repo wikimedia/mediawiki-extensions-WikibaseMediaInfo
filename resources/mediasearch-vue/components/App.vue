@@ -45,19 +45,11 @@
 
 					<div :key="'tab-content-' + tab">
 						<!-- Display the available results for each tab -->
-						<search-results :ref="tab" :media-type="tab"></search-results>
-
-						<!-- Loading indicator if results are still pending -->
-						<spinner v-if="pending[ tab ]"></spinner>
-
-						<!-- No results message if search has completed and come back empty -->
-						<no-results v-else-if="hasNoResults( tab )"></no-results>
-
-						<!-- No results message if search has completed and come back empty -->
-						<end-of-results v-else-if="endOfResults( tab )"></end-of-results>
-
-						<!-- Empty-state encouraging user to search if they have not done so yet -->
-						<empty-state v-else-if="shouldShowEmptyState"></empty-state>
+						<search-results
+							:ref="tab"
+							:media-type="tab"
+							@load-more="resetCountAndLoadMore( tab )"
+						></search-results>
 					</div>
 				</transition-group>
 
@@ -67,17 +59,6 @@
 					v-if="autoloadCounter[ tab ] > 0 && supportsObserver"
 					@intersect="getMoreResultsForTabIfAvailable( tab )">
 				</observer>
-
-				<!-- When the autoload counter for a given tab reaches zero,
-				don't load more results until user explicitly clicks on a
-				"load more" button; this resets the autoload count -->
-				<wbmi-button
-					v-else-if="hasMore[ tab ] && !( pending[ tab ] )"
-					class="wbmi-media-search-load-more"
-					:progressive="true"
-					@click="resetCountAndLoadMore( tab )">
-					{{ $i18n( 'wikibasemediainfo-special-mediasearch-load-more-results' ) }}
-				</wbmi-button>
 			</wbmi-tab>
 		</wbmi-tabs>
 	</div>
@@ -112,15 +93,10 @@ var AUTOLOAD_COUNT = 2,
 	WbmiAutocompleteSearchInput = require( './base/AutocompleteSearchInput.vue' ),
 	WbmiTab = require( './base/Tab.vue' ),
 	WbmiTabs = require( './base/Tabs.vue' ),
-	WbmiButton = require( './base/Button.vue' ),
 	SearchResults = require( './SearchResults.vue' ),
 	SearchFilters = require( './SearchFilters.vue' ),
 	ConceptChips = require( './ConceptChips.vue' ),
-	NoResults = require( './NoResults.vue' ),
-	EndOfResults = require( './EndOfResults.vue' ),
 	Observer = require( './base/Observer.vue' ),
-	Spinner = require( './Spinner.vue' ),
-	EmptyState = require( './EmptyState.vue' ),
 	autocompleteLookupHandler = require( './../mixins/autocompleteLookupHandler.js' ),
 	url = new mw.Uri();
 
@@ -132,15 +108,10 @@ module.exports = {
 		'wbmi-tabs': WbmiTabs,
 		'wbmi-tab': WbmiTab,
 		'wbmi-autocomplete-search-input': WbmiAutocompleteSearchInput,
-		'wbmi-button': WbmiButton,
 		'search-results': SearchResults,
 		'search-filters': SearchFilters,
 		'concept-chips': ConceptChips,
-		observer: Observer,
-		spinner: Spinner,
-		'empty-state': EmptyState,
-		'no-results': NoResults,
-		'end-of-results': EndOfResults
+		observer: Observer
 	},
 
 	mixins: [ autocompleteLookupHandler ],
@@ -162,7 +133,6 @@ module.exports = {
 	computed: $.extend( {}, mapState( [
 		'term',
 		'results',
-		'continue',
 		'pending',
 		'relatedConcepts',
 		'filterValues'
@@ -192,17 +162,6 @@ module.exports = {
 			}.bind( this ) );
 
 			return names;
-		},
-
-		/**
-		 * Whether to show the pre-search empty state; show this whenever a
-		 * search term is not present and there are no results to display
-		 *
-		 * @return {boolean}
-		 */
-		shouldShowEmptyState: function () {
-			return this.term.length === 0 && this.results[ this.currentTab ] &&
-				this.results[ this.currentTab ].length === 0;
 		},
 
 		supportsObserver: function () {
@@ -449,34 +408,6 @@ module.exports = {
 				} );
 				/* eslint-enable camelcase */
 			}.bind( this ) );
-		},
-
-		/**
-		 * Determine if a given tab should display a "no results found" message
-		 *
-		 * @param {string} tab
-		 * @return {boolean}
-		 *
-		 */
-		hasNoResults: function ( tab ) {
-			return this.term.length > 0 && // user has entered a search term
-				this.pending[ tab ] === false && // tab is not pending
-				this.results[ tab ].length === 0 && // tab has no results
-				this.continue[ tab ] === null; // query cannot be continued
-		},
-
-		/**
-		 * Determine if a given tab should display an end of results message
-		 *
-		 * @param {string} tab
-		 * @return {boolean}
-		 *
-		 */
-		endOfResults: function ( tab ) {
-			return this.term.length > 0 && // user has entered a search term
-				this.pending[ tab ] === false && // tab is not pending
-				this.results[ tab ].length > 0 && // tab has some results
-				this.continue[ tab ] === null; // query cannot be continued
 		},
 
 		/**

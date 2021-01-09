@@ -7,12 +7,21 @@
 	margin: @wbmi-spacing-base-px 0;
 
 	// The "list" part of search results should always fill all available space.
+	&__list-wrapper {
+		.flex( 1, 1, auto );
+		max-width: 100%;
+
+		// When QuickView is open...
+		&--collapsed {
+			margin-right: @wbmi-spacing-base-px;
+			width: 55%;
+		}
+	}
+
 	// By default lists will display results in a single column.
 	&__list {
-		.flex( 1, 1, auto );
 		align-content: flex-start;
 		justify-content: flex-start;
-		max-width: 100%;
 
 		&--video,
 		&--bitmap {
@@ -44,8 +53,8 @@
 
 		// When QuickView is closed...
 		// This is implied when the class isn't there, but writing the style
-		// inside this :not selector allows us to avoid repeating ourselves
-		// in the &--collapsed ruleset.
+		// inside this :not selector would require an additional ruleset for
+		// when QuickView is open.
 		&:not( .wbmi-media-search-results__list--collapsed ) {
 			.wbmi-image-result {
 				// On larger screens, there are some circumstances under which
@@ -65,12 +74,6 @@
 					}
 				}
 			}
-		}
-
-		// When QuickView is open...
-		&--collapsed {
-			margin-right: @wbmi-spacing-base-px;
-			width: 55%;
 		}
 	}
 
@@ -105,4 +108,9 @@
 			border: solid 2px @color-primary;
 		}
 	}
+}
+
+.wbmi-media-search-load-more {
+	display: block;
+	margin: 24px auto 0;
 }

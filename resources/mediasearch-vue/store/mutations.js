@@ -37,12 +37,12 @@ module.exports = {
 			// Reset results for only a single result type if the second arg is
 			// provided
 			state.results[ mediaType ] = [];
-			state.continue[ mediaType ] = '';
+			state.continue[ mediaType ] = null;
 		} else {
 			// Reset results for all types if second arg is not provided
 			types.forEach( function ( type ) {
 				state.results[ type ] = [];
-				state.continue[ type ] = '';
+				state.continue[ type ] = null;
 			} );
 		}
 	},

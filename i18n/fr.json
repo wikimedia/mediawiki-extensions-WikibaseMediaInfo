@@ -11,6 +11,7 @@
 			"Pamputt",
 			"Thibaut120094",
 			"Trial",
+			"VIGNERON",
 			"Verdy p",
 			"Wladek92"
 		]
@@ -85,11 +86,11 @@
 	"wikibasemediainfo-coordinate-input-placeholder": "Latitude, longitude",
 	"wikibasemediainfo-precision-input-label": "Précision",
 	"wikibasemediainfo-select-precision-label": "Sélectionner la précision",
-	"wikibasemediainfo-arcminute-label": "à 1 minute d’arc près (~1,85 km max. à l’équateur)",
-	"wikibasemediainfo-arcsecond-label": "à 1 seconde d’arc près (~30 m max. à l’équateur)",
-	"wikibasemediainfo-tenth-of-arcsecond-label": "à 1/10 de seconde d’arc près (~3 m max. à l’équateur)",
-	"wikibasemediainfo-hundreth-of-arcsecond-label": "à 1/100 de seconde d’arc près (~30 cm max. à l’équateur)",
-	"wikibasemediainfo-thousanth-of-arcsecond-label": "à 1/1000 de seconde d’arc près (~3 cm max. à l’équateur)",
+	"wikibasemediainfo-arcminute-label": "à 1 minute d’arc près",
+	"wikibasemediainfo-arcsecond-label": "à 1 seconde d’arc près",
+	"wikibasemediainfo-tenth-of-arcsecond-label": "à 1/10 de seconde d’arc près",
+	"wikibasemediainfo-hundreth-of-arcsecond-label": "à 1/100 de seconde d’arc près",
+	"wikibasemediainfo-thousanth-of-arcsecond-label": "à 1/1000 de seconde d’arc près",
 	"wikibasemediainfo-string-input-button-text": "Ajouter",
 	"wikibasemediainfo-monolingualtext-input-button-text": "Ajouter",
 	"wikibasemediainfo-monolingualtext-input-placeholder": "Saisir le texte",
@@ -164,5 +165,6 @@
 	"wikibasemediainfo-rescore-profile-classic-noboostlinks-max-boost-template": "Classement basé sur le meilleur modèle, la langue de la page et l’ancienneté, quand cela est activé sur ce wiki.",
 	"wikibasemediainfo-copytextlayout-copy": "Copier",
 	"wikibasemediainfo-copytextlayout-copy-fail": "Échec de copie vers le presse-papiers.",
-	"wikibasemediainfo-copytextlayout-copy-success": "Copié dans le presse-papier."
+	"wikibasemediainfo-copytextlayout-copy-success": "Copié dans le presse-papier.",
+	"wikibasemediainfo-special-mediasearch-clear-filters": "Effacer les filtres"
 }

@@ -144,5 +144,6 @@
 	"wikibasemediainfo-special-mediasearch-filter-sort-label": "Сортировать по:",
 	"wikibasemediainfo-special-mediasearch-filter-sort-default": "Релевантность",
 	"wikibasemediainfo-special-mediasearch-filter-license-other": "Другие",
-	"wikibasemediainfo-special-mediasearch-no-results": "Мы не нашли результатов"
+	"wikibasemediainfo-special-mediasearch-no-results": "Мы не нашли результатов",
+	"wikibasemediainfo-special-mediasearch-clear-filters": "Очистить фильтры"
 }

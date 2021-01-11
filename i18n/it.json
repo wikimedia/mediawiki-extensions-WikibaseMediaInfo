@@ -116,5 +116,6 @@
 	"wikibasemediainfo-special-mediasearch-quickview-next-button-text": "Mostra risultato successivo",
 	"wikibasemediainfo-copytextlayout-copy": "Copia",
 	"wikibasemediainfo-copytextlayout-copy-fail": "Copia negli appunti non riuscita.",
-	"wikibasemediainfo-copytextlayout-copy-success": "Copiato negli appunti."
+	"wikibasemediainfo-copytextlayout-copy-success": "Copiato negli appunti.",
+	"wikibasemediainfo-special-mediasearch-clear-filters": "Cancella filtri"
 }

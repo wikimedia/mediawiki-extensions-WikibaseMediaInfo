@@ -158,5 +158,6 @@
 	"wikibasemediainfo-rescore-profile-classic-noboostlinks-max-boost-template": "הדירוג מבוסס על התבנית הטובה ביותר, על שפת הדף, ועל האחרונוּת של ההפעלה בוויקי הזה.",
 	"wikibasemediainfo-copytextlayout-copy": "העתקה",
 	"wikibasemediainfo-copytextlayout-copy-fail": "ההעתקה ללוח לא עבדה.",
-	"wikibasemediainfo-copytextlayout-copy-success": "הועתק ללוח."
+	"wikibasemediainfo-copytextlayout-copy-success": "הועתק ללוח.",
+	"wikibasemediainfo-special-mediasearch-clear-filters": "ניקוי מסננים"
 }

@@ -155,5 +155,6 @@
 	"wikibasemediainfo-rescore-profile-classic-noboostlinks-max-boost-template": "Котирање според најдобрата предлошка, јазик на страницата и скорешност на активирање на ова вики.",
 	"wikibasemediainfo-copytextlayout-copy": "Копирај",
 	"wikibasemediainfo-copytextlayout-copy-fail": "Не успав да ископирам во меѓускладот.",
-	"wikibasemediainfo-copytextlayout-copy-success": "Ископирано во меѓускладот."
+	"wikibasemediainfo-copytextlayout-copy-success": "Ископирано во меѓускладот.",
+	"wikibasemediainfo-special-mediasearch-clear-filters": "Исчисти филтри"
 }

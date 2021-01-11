@@ -2,6 +2,7 @@
 	"@metadata": {
 		"authors": [
 			"Chrumps",
+			"Kareyac",
 			"Matma Rex",
 			"Mkazberuk",
 			"Rail",
@@ -136,5 +137,6 @@
 	"wikibasemediainfo-special-mediasearch-quickview-close-button-text": "Zamknij szczegóły pliku",
 	"wikibasemediainfo-copytextlayout-copy": "Kopiuj",
 	"wikibasemediainfo-copytextlayout-copy-fail": "Kopiowanie do schowka nie powiodło się.",
-	"wikibasemediainfo-copytextlayout-copy-success": "Skopiowano do schowka."
+	"wikibasemediainfo-copytextlayout-copy-success": "Skopiowano do schowka.",
+	"wikibasemediainfo-special-mediasearch-clear-filters": "Wyczyść filtry"
 }

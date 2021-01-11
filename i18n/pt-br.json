@@ -157,5 +157,6 @@
 	"wikibasemediainfo-rescore-profile-classic-noboostlinks-max-boost-template": "Classificação com base no melhor modelo, idioma da página e tempo para retorno quando ativado nessa wiki.",
 	"wikibasemediainfo-copytextlayout-copy": "Copiar",
 	"wikibasemediainfo-copytextlayout-copy-fail": "Falha ao copiar para a área de transferência.",
-	"wikibasemediainfo-copytextlayout-copy-success": "Copiado para a área de transferência."
+	"wikibasemediainfo-copytextlayout-copy-success": "Copiado para a área de transferência.",
+	"wikibasemediainfo-special-mediasearch-clear-filters": "Limpar filtros"
 }

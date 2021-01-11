@@ -160,5 +160,6 @@
 	"wikibasemediainfo-rescore-profile-classic-noboostlinks-max-boost-template": "Bu vikide etkinleştirildiğinde en iyi şablona, ​​sayfa diline ve yeniliğe göre sıralama.",
 	"wikibasemediainfo-copytextlayout-copy": "Kopyala",
 	"wikibasemediainfo-copytextlayout-copy-fail": "Panoya kopyalanamadı.",
-	"wikibasemediainfo-copytextlayout-copy-success": "Panoya kopyalandı."
+	"wikibasemediainfo-copytextlayout-copy-success": "Panoya kopyalandı.",
+	"wikibasemediainfo-special-mediasearch-clear-filters": "Filtreleri temizle"
 }

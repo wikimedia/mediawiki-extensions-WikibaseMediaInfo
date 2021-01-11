@@ -89,7 +89,7 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 			$this->getSort( $activeFilters )
 		);
 
-		$totalSiteImages = (int)SiteStats::images();
+		$totalSiteImages = $this->getContext()->getLanguage()->formatNum( SiteStats::images() );
 
 		$data = [
 			'querystring' => array_map( function ( $key, $value ) {

@@ -53,6 +53,9 @@
 						<!-- No results message if search has completed and come back empty -->
 						<no-results v-else-if="hasNoResults( tab )"></no-results>
 
+						<!-- No results message if search has completed and come back empty -->
+						<end-of-results v-else-if="endOfResults( tab )"></end-of-results>
+
 						<!-- Empty-state encouraging user to search if they have not done so yet -->
 						<empty-state v-else-if="shouldShowEmptyState"></empty-state>
 					</div>
@@ -114,6 +117,7 @@ var AUTOLOAD_COUNT = 2,
 	SearchFilters = require( './SearchFilters.vue' ),
 	ConceptChips = require( './ConceptChips.vue' ),
 	NoResults = require( './NoResults.vue' ),
+	EndOfResults = require( './EndOfResults.vue' ),
 	Observer = require( './base/Observer.vue' ),
 	Spinner = require( './Spinner.vue' ),
 	EmptyState = require( './EmptyState.vue' ),
@@ -135,7 +139,8 @@ module.exports = {
 		observer: Observer,
 		spinner: Spinner,
 		'empty-state': EmptyState,
-		'no-results': NoResults
+		'no-results': NoResults,
+		'end-of-results': EndOfResults
 	},
 
 	mixins: [ autocompleteLookupHandler ],
@@ -457,6 +462,20 @@ module.exports = {
 			return this.term.length > 0 && // user has entered a search term
 				this.pending[ tab ] === false && // tab is not pending
 				this.results[ tab ].length === 0 && // tab has no results
+				this.continue[ tab ] === null; // query cannot be continued
+		},
+
+		/**
+		 * Determine if a given tab should display an end of results message
+		 *
+		 * @param {string} tab
+		 * @return {boolean}
+		 *
+		 */
+		endOfResults: function ( tab ) {
+			return this.term.length > 0 && // user has entered a search term
+				this.pending[ tab ] === false && // tab is not pending
+				this.results[ tab ].length > 0 && // tab has some results
 				this.continue[ tab ] === null; // query cannot be continued
 		},
 

@@ -144,6 +144,8 @@
 	"wikibasemediainfo-special-mediasearch-filter-license-cc-by-sa": "Label text for option to filter media search results by CC-SA licenses",
 	"wikibasemediainfo-special-mediasearch-filter-license-unrestricted": "Label text for option to filter media search results by CC-0 license or public domain media",
 	"wikibasemediainfo-special-mediasearch-filter-license-other": "Label text for option to filter media search results by other licenses",
+	"wikibasemediainfo-special-mediasearch-end-of-results": "Message informing the user that no additional results were found",
+	"wikibasemediainfo-special-mediasearch-end-of-results-tips": "Tips on how the user could improve their search query",
 	"wikibasemediainfo-special-mediasearch-no-results": "Message informing the user that no results were found",
 	"wikibasemediainfo-special-mediasearch-no-results-tips": "Tips on how the user could improve their search query",
 	"wikibasemediainfo-special-mediasearch-empty-state": "Text prompting the user to search for media files. Parameters:\n* $1 - Total number of media files",

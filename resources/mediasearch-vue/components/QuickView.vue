@@ -82,7 +82,7 @@
 					:href="canonicalurl"
 					:title="title"
 					target="blank">
-					{{ title }}
+					{{ displayName }}
 				</a>
 			</h3>
 

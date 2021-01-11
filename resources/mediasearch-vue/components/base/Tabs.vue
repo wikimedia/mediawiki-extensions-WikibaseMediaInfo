@@ -19,6 +19,7 @@
 					:aria-controls="tab.id"
 					class="wbmi-tabs__tabs-list__item"
 					role="tab"
+					tabindex="-1"
 					@click="selectTab( tab.name )"
 					@keyup.enter="selectTab( tab.name )"
 				>
@@ -129,8 +130,8 @@ module.exports = {
 		 */
 		determineTabLabelClasses: function ( tab ) {
 			return {
-				'is-active': tab.name === this.currentTabName,
-				'is-disabled': tab.disabled
+				'wbmi-tabs__tabs-list__item--current': tab.name === this.currentTabName,
+				'wbmi-tabs__tabs-list__item--disabled': tab.disabled
 			};
 		},
 

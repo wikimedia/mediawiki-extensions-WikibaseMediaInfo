@@ -19,7 +19,7 @@ use Wikibase\Lib\Store\EntityByLinkedTitleLookup;
 use Wikibase\MediaInfo\Content\MediaInfoContent;
 use Wikibase\MediaInfo\Content\MediaInfoHandler;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
-use Wikibase\MediaInfo\Search\MediaQueryBuilder;
+use Wikibase\MediaInfo\Search\MediaSearchQueryBuilder;
 use Wikibase\MediaInfo\Services\MediaInfoByLinkedTitleLookup;
 use Wikibase\MediaInfo\WikibaseMediaInfoHooks;
 use Wikibase\Search\Elastic\Fields\TermIndexField;
@@ -407,7 +407,7 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 		$service->expects( $this->once() )
 			->method( 'registerFTSearchQueryRoute' )
 			->with(
-				MediaQueryBuilder::SEARCH_PROFILE_CONTEXT_NAME,
+				MediaSearchQueryBuilder::SEARCH_PROFILE_CONTEXT_NAME,
 				$this->anything(),
 				$this->containsEqual( NS_FILE )
 			);

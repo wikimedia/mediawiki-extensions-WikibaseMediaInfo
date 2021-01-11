@@ -5,7 +5,7 @@ namespace Wikibase\MediaInfo;
 use AbstractContent;
 use CirrusSearch\CirrusSearch;
 use CirrusSearch\Connection;
-use CirrusSearch\Parser\BasicQueryClassifier;
+use CirrusSearch\Parser\ParsedQueryClassifiersRepository;
 use CirrusSearch\Profile\SearchProfileService;
 use CirrusSearch\Search\CirrusIndexField;
 use Config;
@@ -39,8 +39,8 @@ use Wikibase\MediaInfo\Content\MediaInfoHandler;
 use Wikibase\MediaInfo\DataAccess\Scribunto\Scribunto_LuaWikibaseMediaInfoEntityLibrary;
 use Wikibase\MediaInfo\DataAccess\Scribunto\Scribunto_LuaWikibaseMediaInfoLibrary;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
-use Wikibase\MediaInfo\Search\ExperimentalEntityTraversingMediaQueryBuilder;
-use Wikibase\MediaInfo\Search\MediaQueryBuilder;
+use Wikibase\MediaInfo\Search\MediaSearchASTClassifier;
+use Wikibase\MediaInfo\Search\MediaSearchQueryBuilder;
 use Wikibase\MediaInfo\Services\MediaInfoByLinkedTitleLookup;
 use Wikibase\MediaInfo\Services\MediaInfoServices;
 use Wikibase\Repo\BabelUserLanguageLookup;
@@ -723,14 +723,13 @@ class WikibaseMediaInfoHooks {
 			'mediainfo_base',
 			__DIR__ . '/Search/MediaSearchRescoreFunctionChains.php' );
 
-		$searchProfileContextName = MediaQueryBuilder::SEARCH_PROFILE_CONTEXT_NAME;
+		$searchProfileContextName = MediaSearchQueryBuilder::SEARCH_PROFILE_CONTEXT_NAME;
 		// array key in MediaSearchProfiles.php
-		$fulltextProfileName = MediaQueryBuilder::FULLTEXT_PROFILE_NAME;
+		$fulltextProfileName = MediaSearchQueryBuilder::FULLTEXT_PROFILE_NAME;
 
 		if ( $request->getCheck( 'mediasearch_experimental' ) ) {
 			// switch to experimental implementation (only) when explicitly requested
-			$searchProfileContextName = ExperimentalEntityTraversingMediaQueryBuilder::SEARCH_PROFILE_CONTEXT_NAME;
-			$fulltextProfileName = ExperimentalEntityTraversingMediaQueryBuilder::FULLTEXT_PROFILE_NAME;
+			$fulltextProfileName = 'mediainfo_fulltext_experimental';
 		}
 
 		// Only activate a query route if mediasearch is explicitly requested
@@ -742,9 +741,22 @@ class WikibaseMediaInfoHooks {
 			$service->registerDefaultProfile( SearchProfileService::RESCORE,
 				$searchProfileContextName, 'classic_noboostlinks_max_boost_template' );
 
-			$service->registerFTSearchQueryRoute( $searchProfileContextName, 1, [ NS_FILE ],
-				[ BasicQueryClassifier::SIMPLE_BAG_OF_WORDS, BasicQueryClassifier::COMPLEX_QUERY ] );
+			$service->registerFTSearchQueryRoute(
+				$searchProfileContextName,
+				1,
+				// only for NS_FILE searches
+				[ NS_FILE ],
+				// only when the search query is found to be something mediasearch
+				// is capable of dealing with (as determined by MediaSearchASTClassifier)
+				[ $fulltextProfileName ]
+			);
 		}
+	}
+
+	public static function onCirrusSearchRegisterFullTextQueryClassifiers(
+		ParsedQueryClassifiersRepository $repository
+	) {
+		$repository->registerClassifier( new MediaSearchASTClassifier() );
 	}
 
 	/**

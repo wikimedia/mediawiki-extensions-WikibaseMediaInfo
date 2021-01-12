@@ -144,6 +144,8 @@
 	"wikibasemediainfo-special-mediasearch-filter-license-other": "Outro",
 	"wikibasemediainfo-special-mediasearch-no-results": "Não encontramos nenhum resultado",
 	"wikibasemediainfo-special-mediasearch-no-results-tips": "Experimente termos mais gerais ou verifique a ortografia",
+	"wikibasemediainfo-special-mediasearch-end-of-results": "Não foram encontrados mais resultados",
+	"wikibasemediainfo-special-mediasearch-end-of-results-tips": "Tente ajustar seu termo de pesquisa ou configurações de filtro",
 	"wikibasemediainfo-special-mediasearch-empty-state": "Pesquise mais de $1 {{PLURAL:$1|arquivo|arquivos}} de mídia livre para reutilizar",
 	"wikibasemediainfo-special-mediasearch-clear-title": "Remover",
 	"wikibasemediainfo-special-mediasearch-input-label": "Pesquisar mídia",

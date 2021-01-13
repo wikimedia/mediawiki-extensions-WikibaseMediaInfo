@@ -90,6 +90,7 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 		);
 
 		$totalSiteImages = $this->getContext()->getLanguage()->formatNum( SiteStats::images() );
+		$thumbLimits = $this->getThumbLimits();
 
 		$data = [
 			'querystring' => array_map( function ( $key, $value ) {
@@ -137,7 +138,7 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 					'isOther' => true,
 				],
 			],
-			'results' => array_map( function ( $result ) {
+			'results' => array_map( function ( $result ) use ( $thumbLimits ) {
 				$title = Title::newFromDBkey( $result['title'] );
 				$filename = $title ? $title->getText() : $result['title'];
 				$result += [ 'name' => $filename ];
@@ -158,14 +159,12 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 
 				if ( isset( $result['imageinfo'][0]['thumburl'] ) ) {
 					$imageInfo = $result['imageinfo'][0];
-					// phpcs:ignore Generic.Files.LineLength.TooLong
-					$commonWidths = [ 48, 75, 80, 100, 120, 150, 160, 180, 200, 220, 240, 250, 300, 320, 400, 450, 500, 600, 640, 800, 1024, 1200, 1280, 1920, 2880 ];
 					$oldWidth = $imageInfo['thumbwidth'];
 					$newWidth = $oldWidth;
 
 					// find the closest (larger) width that is more common, it is (much) more
 					// likely to have a thumbnail cached
-					foreach ( $commonWidths as $commonWidth ) {
+					foreach ( $thumbLimits as $commonWidth ) {
 						if ( $commonWidth >= $oldWidth ) {
 							$newWidth = $commonWidth;
 							break;
@@ -241,6 +240,7 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 		$this->getOutput()->addJsConfigVars( [
 			'wbmiInitialSearchResults' => $data,
 			'wbmiTotalSiteImages' => $totalSiteImages,
+			'wbmiThumbLimits' => $thumbLimits,
 			'wbmiLocalDev' => $this->getConfig()->get( 'MediaInfoLocalDev' ),
 			'wbmiMediaSearchPageNamespaces' => $wgMediaInfoMediaSearchPageNamespaces,
 			'wbmiInitialFilters' => json_encode( (object)$activeFilters )
@@ -467,4 +467,25 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 			return 'relevance';
 		}
 	}
+
+	/**
+	 * Gather a list of thumbnail widths that are frequently requested & are
+	 * likely to be warm in that; this is the configured thumnail limits, and
+	 * their responsive 1.5x & 2x versions.
+	 *
+	 * @return array
+	 */
+	protected function getThumbLimits() {
+		$thumbLimits = [];
+		foreach ( $this->getConfig()->get( 'ThumbLimits' ) as $limit ) {
+			$thumbLimits[] = $limit;
+			$thumbLimits[] = $limit * 1.5;
+			$thumbLimits[] = $limit * 2;
+		}
+		$thumbLimits = array_map( 'intval', $thumbLimits );
+		$thumbLimits = array_unique( $thumbLimits );
+		sort( $thumbLimits );
+		return $thumbLimits;
+	}
+
 }

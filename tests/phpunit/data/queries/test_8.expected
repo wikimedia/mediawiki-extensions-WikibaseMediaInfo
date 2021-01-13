@@ -15,101 +15,139 @@
                                                         "bool": {
                                                             "should": [
                                                                 {
-                                                                    "multi_match": {
-                                                                        "query": "cat",
-                                                                        "boost": 1,
-                                                                        "type": "most_fields",
-                                                                        "fields": [
-                                                                            "title^3",
-                                                                            "title.plain^1"
-                                                                        ]
+                                                                    "match": {
+                                                                        "title": {
+                                                                            "query": "cat",
+                                                                            "boost": 3
+                                                                        }
                                                                     }
                                                                 },
                                                                 {
-                                                                    "multi_match": {
-                                                                        "query": "cat",
-                                                                        "boost": 1,
-                                                                        "type": "most_fields",
-                                                                        "fields": [
-                                                                            "category^3",
-                                                                            "category.plain^1"
-                                                                        ]
+                                                                    "match": {
+                                                                        "title.plain": {
+                                                                            "query": "cat",
+                                                                            "boost": 1
+                                                                        }
                                                                     }
                                                                 },
                                                                 {
-                                                                    "multi_match": {
-                                                                        "query": "cat",
-                                                                        "boost": 1,
-                                                                        "type": "most_fields",
-                                                                        "fields": [
-                                                                            "redirect.title^3",
-                                                                            "redirect.title.plain^1"
-                                                                        ]
+                                                                    "match": {
+                                                                        "category": {
+                                                                            "query": "cat",
+                                                                            "boost": 3
+                                                                        }
                                                                     }
                                                                 },
                                                                 {
-                                                                    "multi_match": {
-                                                                        "query": "cat",
-                                                                        "boost": 1,
-                                                                        "type": "most_fields",
-                                                                        "fields": [
-                                                                            "suggest^3",
-                                                                            "suggest.plain^1"
-                                                                        ]
+                                                                    "match": {
+                                                                        "category.plain": {
+                                                                            "query": "cat",
+                                                                            "boost": 1
+                                                                        }
                                                                     }
                                                                 },
                                                                 {
-                                                                    "multi_match": {
-                                                                        "query": "cat",
-                                                                        "boost": 1,
-                                                                        "type": "most_fields",
-                                                                        "fields": [
-                                                                            "heading^3",
-                                                                            "heading.plain^1"
-                                                                        ]
+                                                                    "match": {
+                                                                        "redirect.title": {
+                                                                            "query": "cat",
+                                                                            "boost": 3
+                                                                        }
                                                                     }
                                                                 },
                                                                 {
-                                                                    "multi_match": {
-                                                                        "query": "cat",
-                                                                        "boost": 1,
-                                                                        "type": "most_fields",
-                                                                        "fields": [
-                                                                            "auxiliary_text^3",
-                                                                            "auxiliary_text.plain^1"
-                                                                        ]
+                                                                    "match": {
+                                                                        "redirect.title.plain": {
+                                                                            "query": "cat",
+                                                                            "boost": 1
+                                                                        }
                                                                     }
                                                                 },
                                                                 {
-                                                                    "multi_match": {
-                                                                        "query": "cat",
-                                                                        "boost": 1,
-                                                                        "type": "most_fields",
-                                                                        "fields": [
-                                                                            "text^3",
-                                                                            "text.plain^1"
-                                                                        ]
+                                                                    "match": {
+                                                                        "suggest": {
+                                                                            "query": "cat",
+                                                                            "boost": 3
+                                                                        }
                                                                     }
                                                                 },
                                                                 {
-                                                                    "multi_match": {
-                                                                        "query": "cat",
-                                                                        "boost": 1,
-                                                                        "type": "most_fields",
-                                                                        "fields": [
-                                                                            "file_text^3",
-                                                                            "file_text.plain^1"
-                                                                        ]
+                                                                    "match": {
+                                                                        "suggest.plain": {
+                                                                            "query": "cat",
+                                                                            "boost": 1
+                                                                        }
                                                                     }
                                                                 },
                                                                 {
-                                                                    "multi_match": {
-                                                                        "query": "cat",
-                                                                        "boost": 1,
-                                                                        "type": "most_fields",
-                                                                        "fields": [
-                                                                            "descriptions.de.plain^1"
-                                                                        ]
+                                                                    "match": {
+                                                                        "heading": {
+                                                                            "query": "cat",
+                                                                            "boost": 3
+                                                                        }
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "match": {
+                                                                        "heading.plain": {
+                                                                            "query": "cat",
+                                                                            "boost": 1
+                                                                        }
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "match": {
+                                                                        "auxiliary_text": {
+                                                                            "query": "cat",
+                                                                            "boost": 3
+                                                                        }
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "match": {
+                                                                        "auxiliary_text.plain": {
+                                                                            "query": "cat",
+                                                                            "boost": 1
+                                                                        }
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "match": {
+                                                                        "text": {
+                                                                            "query": "cat",
+                                                                            "boost": 3
+                                                                        }
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "match": {
+                                                                        "text.plain": {
+                                                                            "query": "cat",
+                                                                            "boost": 1
+                                                                        }
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "match": {
+                                                                        "file_text": {
+                                                                            "query": "cat",
+                                                                            "boost": 3
+                                                                        }
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "match": {
+                                                                        "file_text.plain": {
+                                                                            "query": "cat",
+                                                                            "boost": 1
+                                                                        }
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "match": {
+                                                                        "descriptions.de.plain": {
+                                                                            "query": "cat",
+                                                                            "boost": 1
+                                                                        }
                                                                     }
                                                                 }
                                                             ]
@@ -234,101 +272,139 @@
                                                         "bool": {
                                                             "should": [
                                                                 {
-                                                                    "multi_match": {
-                                                                        "query": "dog",
-                                                                        "boost": 1,
-                                                                        "type": "most_fields",
-                                                                        "fields": [
-                                                                            "title^3",
-                                                                            "title.plain^1"
-                                                                        ]
+                                                                    "match": {
+                                                                        "title": {
+                                                                            "query": "dog",
+                                                                            "boost": 3
+                                                                        }
                                                                     }
                                                                 },
                                                                 {
-                                                                    "multi_match": {
-                                                                        "query": "dog",
-                                                                        "boost": 1,
-                                                                        "type": "most_fields",
-                                                                        "fields": [
-                                                                            "category^3",
-                                                                            "category.plain^1"
-                                                                        ]
+                                                                    "match": {
+                                                                        "title.plain": {
+                                                                            "query": "dog",
+                                                                            "boost": 1
+                                                                        }
                                                                     }
                                                                 },
                                                                 {
-                                                                    "multi_match": {
-                                                                        "query": "dog",
-                                                                        "boost": 1,
-                                                                        "type": "most_fields",
-                                                                        "fields": [
-                                                                            "redirect.title^3",
-                                                                            "redirect.title.plain^1"
-                                                                        ]
+                                                                    "match": {
+                                                                        "category": {
+                                                                            "query": "dog",
+                                                                            "boost": 3
+                                                                        }
                                                                     }
                                                                 },
                                                                 {
-                                                                    "multi_match": {
-                                                                        "query": "dog",
-                                                                        "boost": 1,
-                                                                        "type": "most_fields",
-                                                                        "fields": [
-                                                                            "suggest^3",
-                                                                            "suggest.plain^1"
-                                                                        ]
+                                                                    "match": {
+                                                                        "category.plain": {
+                                                                            "query": "dog",
+                                                                            "boost": 1
+                                                                        }
                                                                     }
                                                                 },
                                                                 {
-                                                                    "multi_match": {
-                                                                        "query": "dog",
-                                                                        "boost": 1,
-                                                                        "type": "most_fields",
-                                                                        "fields": [
-                                                                            "heading^3",
-                                                                            "heading.plain^1"
-                                                                        ]
+                                                                    "match": {
+                                                                        "redirect.title": {
+                                                                            "query": "dog",
+                                                                            "boost": 3
+                                                                        }
                                                                     }
                                                                 },
                                                                 {
-                                                                    "multi_match": {
-                                                                        "query": "dog",
-                                                                        "boost": 1,
-                                                                        "type": "most_fields",
-                                                                        "fields": [
-                                                                            "auxiliary_text^3",
-                                                                            "auxiliary_text.plain^1"
-                                                                        ]
+                                                                    "match": {
+                                                                        "redirect.title.plain": {
+                                                                            "query": "dog",
+                                                                            "boost": 1
+                                                                        }
                                                                     }
                                                                 },
                                                                 {
-                                                                    "multi_match": {
-                                                                        "query": "dog",
-                                                                        "boost": 1,
-                                                                        "type": "most_fields",
-                                                                        "fields": [
-                                                                            "text^3",
-                                                                            "text.plain^1"
-                                                                        ]
+                                                                    "match": {
+                                                                        "suggest": {
+                                                                            "query": "dog",
+                                                                            "boost": 3
+                                                                        }
                                                                     }
                                                                 },
                                                                 {
-                                                                    "multi_match": {
-                                                                        "query": "dog",
-                                                                        "boost": 1,
-                                                                        "type": "most_fields",
-                                                                        "fields": [
-                                                                            "file_text^3",
-                                                                            "file_text.plain^1"
-                                                                        ]
+                                                                    "match": {
+                                                                        "suggest.plain": {
+                                                                            "query": "dog",
+                                                                            "boost": 1
+                                                                        }
                                                                     }
                                                                 },
                                                                 {
-                                                                    "multi_match": {
-                                                                        "query": "dog",
-                                                                        "boost": 1,
-                                                                        "type": "most_fields",
-                                                                        "fields": [
-                                                                            "descriptions.de.plain^1"
-                                                                        ]
+                                                                    "match": {
+                                                                        "heading": {
+                                                                            "query": "dog",
+                                                                            "boost": 3
+                                                                        }
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "match": {
+                                                                        "heading.plain": {
+                                                                            "query": "dog",
+                                                                            "boost": 1
+                                                                        }
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "match": {
+                                                                        "auxiliary_text": {
+                                                                            "query": "dog",
+                                                                            "boost": 3
+                                                                        }
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "match": {
+                                                                        "auxiliary_text.plain": {
+                                                                            "query": "dog",
+                                                                            "boost": 1
+                                                                        }
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "match": {
+                                                                        "text": {
+                                                                            "query": "dog",
+                                                                            "boost": 3
+                                                                        }
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "match": {
+                                                                        "text.plain": {
+                                                                            "query": "dog",
+                                                                            "boost": 1
+                                                                        }
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "match": {
+                                                                        "file_text": {
+                                                                            "query": "dog",
+                                                                            "boost": 3
+                                                                        }
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "match": {
+                                                                        "file_text.plain": {
+                                                                            "query": "dog",
+                                                                            "boost": 1
+                                                                        }
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "match": {
+                                                                        "descriptions.de.plain": {
+                                                                            "query": "dog",
+                                                                            "boost": 1
+                                                                        }
                                                                     }
                                                                 }
                                                             ]
@@ -433,101 +509,139 @@
                                                         "bool": {
                                                             "should": [
                                                                 {
-                                                                    "multi_match": {
-                                                                        "query": "donkey",
-                                                                        "boost": 1,
-                                                                        "type": "most_fields",
-                                                                        "fields": [
-                                                                            "title^3",
-                                                                            "title.plain^1"
-                                                                        ]
+                                                                    "match": {
+                                                                        "title": {
+                                                                            "query": "donkey",
+                                                                            "boost": 3
+                                                                        }
                                                                     }
                                                                 },
                                                                 {
-                                                                    "multi_match": {
-                                                                        "query": "donkey",
-                                                                        "boost": 1,
-                                                                        "type": "most_fields",
-                                                                        "fields": [
-                                                                            "category^3",
-                                                                            "category.plain^1"
-                                                                        ]
+                                                                    "match": {
+                                                                        "title.plain": {
+                                                                            "query": "donkey",
+                                                                            "boost": 1
+                                                                        }
                                                                     }
                                                                 },
                                                                 {
-                                                                    "multi_match": {
-                                                                        "query": "donkey",
-                                                                        "boost": 1,
-                                                                        "type": "most_fields",
-                                                                        "fields": [
-                                                                            "redirect.title^3",
-                                                                            "redirect.title.plain^1"
-                                                                        ]
+                                                                    "match": {
+                                                                        "category": {
+                                                                            "query": "donkey",
+                                                                            "boost": 3
+                                                                        }
                                                                     }
                                                                 },
                                                                 {
-                                                                    "multi_match": {
-                                                                        "query": "donkey",
-                                                                        "boost": 1,
-                                                                        "type": "most_fields",
-                                                                        "fields": [
-                                                                            "suggest^3",
-                                                                            "suggest.plain^1"
-                                                                        ]
+                                                                    "match": {
+                                                                        "category.plain": {
+                                                                            "query": "donkey",
+                                                                            "boost": 1
+                                                                        }
                                                                     }
                                                                 },
                                                                 {
-                                                                    "multi_match": {
-                                                                        "query": "donkey",
-                                                                        "boost": 1,
-                                                                        "type": "most_fields",
-                                                                        "fields": [
-                                                                            "heading^3",
-                                                                            "heading.plain^1"
-                                                                        ]
+                                                                    "match": {
+                                                                        "redirect.title": {
+                                                                            "query": "donkey",
+                                                                            "boost": 3
+                                                                        }
                                                                     }
                                                                 },
                                                                 {
-                                                                    "multi_match": {
-                                                                        "query": "donkey",
-                                                                        "boost": 1,
-                                                                        "type": "most_fields",
-                                                                        "fields": [
-                                                                            "auxiliary_text^3",
-                                                                            "auxiliary_text.plain^1"
-                                                                        ]
+                                                                    "match": {
+                                                                        "redirect.title.plain": {
+                                                                            "query": "donkey",
+                                                                            "boost": 1
+                                                                        }
                                                                     }
                                                                 },
                                                                 {
-                                                                    "multi_match": {
-                                                                        "query": "donkey",
-                                                                        "boost": 1,
-                                                                        "type": "most_fields",
-                                                                        "fields": [
-                                                                            "text^3",
-                                                                            "text.plain^1"
-                                                                        ]
+                                                                    "match": {
+                                                                        "suggest": {
+                                                                            "query": "donkey",
+                                                                            "boost": 3
+                                                                        }
                                                                     }
                                                                 },
                                                                 {
-                                                                    "multi_match": {
-                                                                        "query": "donkey",
-                                                                        "boost": 1,
-                                                                        "type": "most_fields",
-                                                                        "fields": [
-                                                                            "file_text^3",
-                                                                            "file_text.plain^1"
-                                                                        ]
+                                                                    "match": {
+                                                                        "suggest.plain": {
+                                                                            "query": "donkey",
+                                                                            "boost": 1
+                                                                        }
                                                                     }
                                                                 },
                                                                 {
-                                                                    "multi_match": {
-                                                                        "query": "donkey",
-                                                                        "boost": 1,
-                                                                        "type": "most_fields",
-                                                                        "fields": [
-                                                                            "descriptions.de.plain^1"
-                                                                        ]
+                                                                    "match": {
+                                                                        "heading": {
+                                                                            "query": "donkey",
+                                                                            "boost": 3
+                                                                        }
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "match": {
+                                                                        "heading.plain": {
+                                                                            "query": "donkey",
+                                                                            "boost": 1
+                                                                        }
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "match": {
+                                                                        "auxiliary_text": {
+                                                                            "query": "donkey",
+                                                                            "boost": 3
+                                                                        }
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "match": {
+                                                                        "auxiliary_text.plain": {
+                                                                            "query": "donkey",
+                                                                            "boost": 1
+                                                                        }
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "match": {
+                                                                        "text": {
+                                                                            "query": "donkey",
+                                                                            "boost": 3
+                                                                        }
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "match": {
+                                                                        "text.plain": {
+                                                                            "query": "donkey",
+                                                                            "boost": 1
+                                                                        }
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "match": {
+                                                                        "file_text": {
+                                                                            "query": "donkey",
+                                                                            "boost": 3
+                                                                        }
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "match": {
+                                                                        "file_text.plain": {
+                                                                            "query": "donkey",
+                                                                            "boost": 1
+                                                                        }
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "match": {
+                                                                        "descriptions.de.plain": {
+                                                                            "query": "donkey",
+                                                                            "boost": 1
+                                                                        }
                                                                     }
                                                                 }
                                                             ]

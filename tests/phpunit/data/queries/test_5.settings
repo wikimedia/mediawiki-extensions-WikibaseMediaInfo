@@ -9,16 +9,14 @@
 	"fallbackLangs": [],
 	"stemmingSettings": {},
 	"settings": {
-		"caption": 1.0,
-		"caption-fallback-discount": 0.1,
+		"statement": 1.0,
+		"descriptions": 1.0,
 		"all": 0.01,
-		"all.plain": 0.02,
 		"category": 0.03,
 		"title": 0.04,
 		"redirect.title": 0.05,
 		"text": 0.06,
 		"auxiliary_text": 0.07,
-		"file_text": 0.08,
-		"non-file_namespace_boost": 20.0
+		"file_text": 0.08
 	}
 }

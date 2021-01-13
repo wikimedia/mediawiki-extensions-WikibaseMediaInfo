@@ -5,7 +5,6 @@ namespace Wikibase\MediaInfo\Search;
 use CirrusSearch\Parser\FullTextKeywordRegistry;
 use CirrusSearch\SearchConfig;
 use MediaWiki\MediaWikiServices;
-use MediaWiki\Sparql\SparqlClient;
 use MWException;
 use RequestContext;
 use Wikibase\Repo\WikibaseRepo;
@@ -100,90 +99,6 @@ return [
 				$settings['boost']['redirect.title'] = $settings['boost']['redirect_title'];
 				unset( $settings['boost']['redirect_title'] );
 			}
-
-			return new MediaSearchQueryBuilder(
-				$features,
-				new MediaSearchASTQueryBuilder(
-					new MediaSearchASTEntitiesExtractor( $entitiesFetcher ),
-					$searchProperties,
-					$configFactory->makeConfig( 'WikibaseCirrusSearch' )->get( 'UseStemming' ),
-					$languages,
-					$settings,
-					$config->get( 'MediaInfoMediaSearchHasLtrPlugin' )
-				)
-			);
-		} ),
-		'settings' => [
-			'boost' => [
-				'statement' => 5.0,
-				'descriptions.$language' => 3.0,
-				'descriptions.$language.plain' => 1.0,
-				'title' => 0.9,
-				'title.plain' => 0.3,
-				'category' => 0.15,
-				'category.plain' => 0.05,
-				'heading' => 0.15,
-				'heading.plain' => 0.05,
-				'auxiliary_text' => 0.15,
-				'auxiliary_text.plain' => 0.05,
-				'file_text' => 1.5,
-				'file_text.plain' => 0.5,
-				'redirect.title' => 0.81,
-				'redirect.title.plain' => 0.27,
-				'text' => 1.8,
-				'text.plain' => 0.6,
-				'suggest' => 0.18,
-			],
-			'decay' => [
-				'descriptions.$language' => 0.9,
-				'descriptions.$language.plain' => 0.9,
-			],
-		],
-	],
-	'mediainfo_fulltext_experimental' => [
-		'builder_factory' => closureToAnonymousClass( function ( array $settings ) {
-			$repo = WikibaseRepo::getDefaultInstance();
-			$languageCode = $repo->getUserLanguage()->getCode();
-			$languageFallbackChain = WikibaseRepo::getLanguageFallbackChainFactory()
-				->newFromLanguageCode( $languageCode );
-
-			$mwServices = MediaWikiServices::getInstance();
-			$httpRequestFactory = $mwServices->getHttpRequestFactory();
-			$config = $mwServices->getMainConfig();
-			$configFactory = $mwServices->getConfigFactory();
-			$searchConfig = $configFactory->makeConfig( 'CirrusSearch' );
-			if ( !$searchConfig instanceof SearchConfig ) {
-				throw new MWException( 'CirrusSearch config must be instanceof SearchConfig' );
-			}
-			$features = ( new FullTextKeywordRegistry( $searchConfig ) )->getKeywords();
-
-			$searchProperties = $config->get( 'MediaInfoMediaSearchProperties' );
-			if ( $searchProperties === null ) {
-				$searchProperties = array_fill_keys( array_values( $config->get( 'MediaInfoProperties' ) ), 1 );
-			}
-
-			$languages = array_merge( [ $languageCode ], $languageFallbackChain->getFetchLanguageCodes() );
-			$languages = array_unique( $languages );
-
-			$sparqlClient = new SparqlClient(
-				$config->get( 'MediaInfoMediaSearchEntitiesSparqlEndpointUri' ),
-				$httpRequestFactory
-			);
-			$sparqlClient->setTimeout( 5 * 60 );
-			$sparqlClient->setClientOptions( [ 'userAgent' => 'WikibaseMediaInfo media search tree traversal' ] );
-
-			$entitiesFetcher = new MediaSearchMemoryEntitiesFetcher(
-				new MediaSearchExperimentalEntityTraversingEntitiesFetcher(
-					new MediaSearchEntitiesFetcher(
-						$httpRequestFactory->createMultiClient(),
-						$config->get( 'MediaInfoExternalEntitySearchBaseUri' ),
-						$languageCode
-					),
-					$sparqlClient,
-					$languageCode,
-					$searchProperties
-				)
-			);
 
 			return new MediaSearchQueryBuilder(
 				$features,

@@ -22,7 +22,6 @@ use OOUI\PanelLayout;
 use OOUI\TabPanelLayout;
 use OutputPage;
 use ParserOutput;
-use RequestContext;
 use Skin;
 use Title;
 use Wikibase\Client\WikibaseClient;
@@ -748,12 +747,6 @@ class WikibaseMediaInfoHooks {
 		$searchProfileContextName = MediaSearchQueryBuilder::SEARCH_PROFILE_CONTEXT_NAME;
 		// array key in MediaSearchProfiles.php
 		$fulltextProfileName = MediaSearchQueryBuilder::FULLTEXT_PROFILE_NAME;
-
-		$request = RequestContext::getMain()->getRequest();
-		if ( $request->getCheck( 'mediasearch_experimental' ) ) {
-			// switch to experimental implementation (only) when explicitly requested
-			$fulltextProfileName = 'mediainfo_fulltext_experimental';
-		}
 
 		$service->registerDefaultProfile( SearchProfileService::FT_QUERY_BUILDER,
 			$searchProfileContextName, $fulltextProfileName );

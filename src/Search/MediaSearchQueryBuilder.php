@@ -5,6 +5,7 @@ namespace Wikibase\MediaInfo\Search;
 use CirrusSearch\Query\FullTextQueryBuilder;
 use CirrusSearch\Query\KeywordFeature;
 use CirrusSearch\Search\SearchContext;
+use Elastica\Query\BoolQuery;
 
 class MediaSearchQueryBuilder implements FullTextQueryBuilder {
 	public const SEARCH_PROFILE_CONTEXT_NAME = 'mediasearch';
@@ -41,7 +42,8 @@ class MediaSearchQueryBuilder implements FullTextQueryBuilder {
 
 		$parsedQuery = $context->getSearchQuery()->getParsedQuery();
 		$context->setMainQuery(
-			$this->queryBuilder->getQuery( $parsedQuery )
+			( new BoolQuery() )
+				->addMust( $this->queryBuilder->getQuery( $parsedQuery ) )
 		);
 	}
 

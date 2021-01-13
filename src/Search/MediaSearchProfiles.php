@@ -10,34 +10,36 @@ use MWException;
 use RequestContext;
 use Wikibase\Repo\WikibaseRepo;
 
-/**
- * This is a bit of a hack, turning a closure (or any callable) into
- * an invokable anonymous function.
- * It'll execute the callable just the same, but it also has a
- * __toString, which will allow ApiResult::validateValue (used in
- * ConfigDump to format this) to process the closure (which it is
- * otherwise unable to do)
- *
- * @param callable $callable
- * @return callable
- */
-function closureToAnonymousClass( callable $callable ) {
-	return new class ( $callable ) {
-		/** @var callable $callable */
-		private $callable;
+if ( !function_exists( 'Wikibase\MediaInfo\Search\closureToAnonymousClass' ) ) {
+	/**
+	 * This is a bit of a hack, turning a closure (or any callable) into
+	 * an invokable anonymous function.
+	 * It'll execute the callable just the same, but it also has a
+	 * __toString, which will allow ApiResult::validateValue (used in
+	 * ConfigDump to format this) to process the closure (which it is
+	 * otherwise unable to do)
+	 *
+	 * @param callable $callable
+	 * @return callable
+	 */
+	function closureToAnonymousClass( callable $callable ) {
+		return new class ( $callable ) {
+			/** @var callable $callable */
+			private $callable;
 
-		public function __construct( callable $callable ) {
-			$this->callable = $callable;
-		}
+			public function __construct( callable $callable ) {
+				$this->callable = $callable;
+			}
 
-		public function __invoke() {
-			return call_user_func_array( $this->callable, func_get_args() );
-		}
+			public function __invoke() {
+				return call_user_func_array( $this->callable, func_get_args() );
+			}
 
-		public function __toString() {
-			return self::class;
-		}
-	};
+			public function __toString() {
+				return self::class;
+			}
+		};
+	}
 }
 
 // Search profiles for fulltext search

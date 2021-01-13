@@ -142,6 +142,8 @@
 	"wikibasemediainfo-special-mediasearch-filter-license-other": "Друго",
 	"wikibasemediainfo-special-mediasearch-no-results": "Не пронајдов ништо",
 	"wikibasemediainfo-special-mediasearch-no-results-tips": "Пробајте со поопшти поими или проверете дали е добро напишано",
+	"wikibasemediainfo-special-mediasearch-end-of-results": "Не пронајдов повеќе исходни ставки",
+	"wikibasemediainfo-special-mediasearch-end-of-results-tips": "Обидете се да го измените пребараниот поим или филтерските нагодувања",
 	"wikibasemediainfo-special-mediasearch-empty-state": "Пребарајте повеќе од $1 {{PLURAL:$1|податотека слободна за пренамена|податотеки слободи за пренамена}}",
 	"wikibasemediainfo-special-mediasearch-clear-title": "Отстрани",
 	"wikibasemediainfo-special-mediasearch-input-label": "Пребарување на слики и снимки",

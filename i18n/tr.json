@@ -147,6 +147,8 @@
 	"wikibasemediainfo-special-mediasearch-filter-license-other": "Diğer",
 	"wikibasemediainfo-special-mediasearch-no-results": "Herhangi bir sonuç bulamadık",
 	"wikibasemediainfo-special-mediasearch-no-results-tips": "Daha genel terimleri deneyin veya yazımınızı kontrol edin",
+	"wikibasemediainfo-special-mediasearch-end-of-results": "Başka sonuç bulunamadı",
+	"wikibasemediainfo-special-mediasearch-end-of-results-tips": "Arama teriminizi veya filtre ayarlarınızı değiştirmeyi deneyin",
 	"wikibasemediainfo-special-mediasearch-empty-state": "Medya dosyasını yeniden kullanmak için $1 daha fazla ücretsiz arama yapın",
 	"wikibasemediainfo-special-mediasearch-clear-title": "Kaldır",
 	"wikibasemediainfo-special-mediasearch-input-label": "Medya ara",

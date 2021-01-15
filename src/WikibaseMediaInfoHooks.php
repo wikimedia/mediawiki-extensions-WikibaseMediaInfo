@@ -818,7 +818,7 @@ class WikibaseMediaInfoHooks {
 		$wbRepo = WikibaseRepo::getDefaultInstance();
 		$dbw = wfGetDB( DB_MASTER );
 		$blobStore = $mwServices->getBlobStoreFactory()->newSqlBlobStore();
-		$statementGuidParser = $wbRepo->getStatementGuidParser();
+		$statementGuidParser = WikibaseRepo::getStatementGuidParser( $mwServices );
 
 		// fetch existing entity data from old revision
 		$slot = $revision->getSlot( 'mediainfo', RevisionRecord::RAW );

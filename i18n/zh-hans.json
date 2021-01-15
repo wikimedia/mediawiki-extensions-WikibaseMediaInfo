@@ -13,6 +13,7 @@
 			"SolidBlock",
 			"SomeyaMako",
 			"Viztor",
+			"Yfdyh000",
 			"Zazzzz",
 			"予弦",
 			"列维劳德",
@@ -93,6 +94,9 @@
 	"wikibasemediainfo-special-mediasearch-filter-sort-popularity": "人气度",
 	"wikibasemediainfo-special-mediasearch-filter-license-other": "其他",
 	"wikibasemediainfo-special-mediasearch-no-results": "我们没有找到任何结果",
+	"wikibasemediainfo-special-mediasearch-end-of-results": "没有找到更多结果",
+	"wikibasemediainfo-special-mediasearch-end-of-results-tips": "请尝试调整您的搜索关键词或过滤设置",
 	"wikibasemediainfo-special-mediasearch-clear-title": "移除",
-	"wikibasemediainfo-special-mediasearch-load-more-results": "加载更多"
+	"wikibasemediainfo-special-mediasearch-load-more-results": "加载更多",
+	"wikibasemediainfo-special-mediasearch-clear-filters": "清除过滤器"
 }

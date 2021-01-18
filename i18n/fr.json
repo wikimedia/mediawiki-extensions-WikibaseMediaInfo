@@ -154,7 +154,7 @@
 	"wikibasemediainfo-special-mediasearch-no-results-tips": "Essayer des termes plus généraux ou vérifiez votre orthographe",
 	"wikibasemediainfo-special-mediasearch-end-of-results": "Pas d’autres résultats trouvés",
 	"wikibasemediainfo-special-mediasearch-end-of-results-tips": "Essayez d’ajuster vos critères ou paramètres de recherche",
-	"wikibasemediainfo-special-mediasearch-empty-state": "Rechercher parmi plus de $1 {{PLURAL:$1|fichier de média libre|fichiers de média libres}} à la réutilisation",
+	"wikibasemediainfo-special-mediasearch-empty-state": "Rechercher parmi plus de $1 {{PLURAL:$1|fichier de média libre|fichiers de média libres}} à la réutilisation",
 	"wikibasemediainfo-special-mediasearch-clear-title": "Supprimer",
 	"wikibasemediainfo-special-mediasearch-input-label": "Rechercher un média",
 	"wikibasemediainfo-special-mediasearch-input-placeholder": "Rechercher des images, de l’audio, des vidéos et plus",

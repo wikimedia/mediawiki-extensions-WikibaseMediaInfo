@@ -451,6 +451,17 @@ module.exports = {
 			};
 		},
 
+		/**
+		 * Debounced version of getResultStyle for use in a resize listener
+		 */
+		getDebouncedResultStyle: function () {
+			clearTimeout( this.debounceTimeoutId );
+			this.debounceTimeoutId = setTimeout(
+				this.getResultStyle.bind( this ),
+				250
+			);
+		},
+
 		/*
 		 * Clicks on results that do not display a quickview should still be
 		 * logged for analytics purposes
@@ -487,11 +498,11 @@ module.exports = {
 	},
 
 	created: function () {
-		window.addEventListener( 'resize', this.getResultStyle );
+		window.addEventListener( 'resize', this.getDebouncedResultStyle );
 	},
 
 	destroyed: function () {
-		window.removeEventListener( 'resize', this.getResultStyle );
+		window.removeEventListener( 'resize', this.getDebouncedResultStyle );
 	}
 };
 </script>

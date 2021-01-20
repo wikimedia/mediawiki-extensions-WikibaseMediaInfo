@@ -137,7 +137,7 @@ module.exports = {
 		'relatedConcepts',
 		'filterValues'
 	] ), mapGetters( [
-		'hasMore',
+		'checkForMore',
 		'allActiveFilters'
 	] ), {
 
@@ -223,7 +223,6 @@ module.exports = {
 		 * @param {string} [data.value]
 		 */
 		onFilterChange: function ( data ) {
-			this.resetResults( data.mediaType );
 			this.resetCountAndLoadMore( data.mediaType );
 			this.$refs[ data.mediaType ][ 0 ].hideDetails();
 
@@ -318,7 +317,7 @@ module.exports = {
 				return;
 			}
 
-			if ( this.hasMore[ tab ] && !this.pending[ tab ] ) {
+			if ( this.checkForMore[ tab ] && !this.pending[ tab ] ) {
 				// Decrement the autoload count of the appropriate tab
 				this.autoloadCounter[ tab ]--;
 
@@ -338,7 +337,7 @@ module.exports = {
 					/* eslint-enable camelcase */
 				}.bind( this ) );
 
-			} else if ( this.hasMore[ tab ] && this.pending[ tab ] ) {
+			} else if ( this.checkForMore[ tab ] && this.pending[ tab ] ) {
 				// If more results are available but another request is
 				// currently in-flight, attempt to make the request again
 				// after some time has passed
@@ -378,9 +377,11 @@ module.exports = {
 		 * Dispatch Vuex actions to clear existing results and fetch new ones.
 		 * Also resets the autoload counter for all tabs for semi-infinite
 		 * scroll behavior.
+		 *
+		 * @param {string} mediaType If provided, only reset results for this type
 		 */
-		performNewSearch: function () {
-			this.resetResults();
+		performNewSearch: function ( mediaType ) {
+			this.resetResults( mediaType );
 			this.clearRelatedConcepts();
 			this.autoloadCounter = this.setInitialAutoloadCountForTabs();
 
@@ -477,7 +478,7 @@ module.exports = {
 
 		allActiveFilters: function ( newVal, oldVal ) {
 			if ( newVal && newVal !== oldVal ) {
-				this.performNewSearch();
+				this.performNewSearch( this.currentTab );
 			}
 		}
 	},

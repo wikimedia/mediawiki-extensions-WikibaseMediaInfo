@@ -40,12 +40,19 @@ module.exports = {
 		other: initialResults.activeType === 'other' ? sortedResults : []
 	},
 
+	/**
+	 * Per-tab value for continue will be one of 3 things:
+	 * 1. Offset value where the next batch of results should start (string)
+	 * 2. undefined (representing that we don't know if there are more
+	 *    results because we haven't done a search API call yet)
+	 * 3. null (representing that there are no more results)
+	 */
 	continue: {
-		bitmap: initialResults.activeType === 'bitmap' ? initialResults.continue : 0,
-		audio: initialResults.activeType === 'audio' ? initialResults.continue : 0,
-		video: initialResults.activeType === 'video' ? initialResults.continue : 0,
-		page: initialResults.activeType === 'page' ? initialResults.continue : 0,
-		other: initialResults.activeType === 'other' ? initialResults.continue : 0
+		bitmap: initialResults.activeType === 'bitmap' ? initialResults.continue : undefined,
+		audio: initialResults.activeType === 'audio' ? initialResults.continue : undefined,
+		video: initialResults.activeType === 'video' ? initialResults.continue : undefined,
+		page: initialResults.activeType === 'page' ? initialResults.continue : undefined,
+		other: initialResults.activeType === 'other' ? initialResults.continue : undefined
 	},
 
 	pending: {

@@ -217,7 +217,7 @@
                                                         {
                                                             "script_score": {
                                                                 "script": {
-                                                                    "source": "ln(1 \/ max(1, min(1.25, _score)))",
+                                                                    "source": "ln(2 \/ max(1, min(1.25, _score)))",
                                                                     "lang": "expression"
                                                                 }
                                                             }
@@ -233,7 +233,7 @@
                                     {
                                         "script_score": {
                                             "script": {
-                                                "source": "exp(_score)",
+                                                "source": "exp(_score) \/ 2",
                                                 "lang": "expression"
                                             }
                                         }

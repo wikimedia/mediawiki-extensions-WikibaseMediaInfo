@@ -145,6 +145,8 @@
 	"wikibasemediainfo-special-mediasearch-filter-license-other": "其它",
 	"wikibasemediainfo-special-mediasearch-no-results": "我們找不到任何結果",
 	"wikibasemediainfo-special-mediasearch-no-results-tips": "嘗試更多一般項目或是檢查您的拼寫",
+	"wikibasemediainfo-special-mediasearch-end-of-results": "查無更多結果",
+	"wikibasemediainfo-special-mediasearch-end-of-results-tips": "請嘗試調整您的搜尋關鍵字詞或篩選設定",
 	"wikibasemediainfo-special-mediasearch-empty-state": "搜尋超過 $1 個免費重複使用的多媒體{{PLURAL:$1|檔案}}",
 	"wikibasemediainfo-special-mediasearch-clear-title": "移除",
 	"wikibasemediainfo-special-mediasearch-input-label": "搜尋多媒體",
@@ -158,5 +160,6 @@
 	"wikibasemediainfo-rescore-profile-classic-noboostlinks-max-boost-template": "在此 wiki 上啟用時，基於最佳模板、頁面語言，以及新近事物的排名。",
 	"wikibasemediainfo-copytextlayout-copy": "複製",
 	"wikibasemediainfo-copytextlayout-copy-fail": "複製到剪貼簿上失敗。",
-	"wikibasemediainfo-copytextlayout-copy-success": "已複製到剪貼簿"
+	"wikibasemediainfo-copytextlayout-copy-success": "已複製到剪貼簿",
+	"wikibasemediainfo-special-mediasearch-clear-filters": "清除篩選"
 }

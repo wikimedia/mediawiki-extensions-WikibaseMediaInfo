@@ -46,6 +46,7 @@
 	"wikibasemediainfo-filepage-caption-approaching-limit": "Warning text when a caption is approaching the length limit. Parameters:\n* $1 - Number of characters left before reaching max character count, for PLURAL support",
 	"wikibasemediainfo-filepage-statement-value-type-dropdown-title": "Title for the value type dropdown",
 	"wikibasemediainfo-filepage-statement-custom-value-option": "Dropdown menu text for 'CUSTOM VALUE' option",
+	"wikibasemediainfo-filepage-statement-invalid-value": "Text to display when a statement has an invalid value that can't be parsed.",
 	"wikibasemediainfo-filepage-statement-no-value-option": "Dropdown menu text for 'NO VALUE' option",
 	"wikibasemediainfo-filepage-statement-no-value": "Text to display when a statement has an explicit 'NO VALUE' value.",
 	"wikibasemediainfo-filepage-statement-no-data": "Text to display when we want to display statements for a particular property (e.g. depicts) but there is no data for it",

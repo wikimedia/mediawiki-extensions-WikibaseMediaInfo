@@ -4,6 +4,7 @@ namespace Wikibase\MediaInfo\View;
 
 use DataValues\DataValue;
 use DataValues\Serializers\DataValueSerializer;
+use Exception;
 use Html;
 use OOUI\HtmlSnippet;
 use OOUI\PanelLayout;
@@ -435,10 +436,14 @@ class MediaInfoEntityStatementsView {
 			new FormatterOptions( [ ValueFormatter::OPT_LANG => $this->languageCode ] )
 		);
 
-		$formatted = $formatter->formatSnak( $snak );
+		try {
+			$formatted = $formatter->formatSnak( $snak );
 
-		// if there are any links inside the formatted content, make them open in a new window
-		return preg_replace( '/<a/', '<a target="_blank"', $formatted );
+			// if there are any links inside the formatted content, make them open in a new window
+			return preg_replace( '/<a/', '<a target="_blank"', $formatted );
+		} catch ( Exception $e ) {
+			return wfMessage( 'wikibasemediainfo-filepage-statement-invalid-value' )->escaped();
+		}
 	}
 
 	/**

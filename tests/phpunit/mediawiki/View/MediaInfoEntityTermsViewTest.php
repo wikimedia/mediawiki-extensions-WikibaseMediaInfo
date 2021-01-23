@@ -24,13 +24,13 @@ use Wikibase\View\LocalizedTextProvider;
  */
 class MediaInfoEntityTermsViewTest extends \PHPUnit\Framework\TestCase {
 
-	/** @var  LanguageNameLookup */
+	/** @var LanguageNameLookup */
 	private $langNameLookup;
-	/** @var  LanguageDirectionalityLookup */
+	/** @var LanguageDirectionalityLookup */
 	private $langDirLookup;
-	/** @var  LocalizedTextProvider */
+	/** @var LocalizedTextProvider */
 	private $textProvider;
-	/** @var  TermLanguageFallbackChain */
+	/** @var TermLanguageFallbackChain */
 	private $fallbackChain;
 
 	private function createDependencies( $fallbackLangCodes ) {
@@ -66,8 +66,8 @@ class MediaInfoEntityTermsViewTest extends \PHPUnit\Framework\TestCase {
 	}
 
 	/**
-	 * @param [] $labels Array with langCodes as keys, label text for that language as values
-	 * @param [] $fallbackLangCodes Array of lang codes
+	 * @param string[] $labels Array with langCodes as keys, label text for that language as values
+	 * @param string[] $fallbackLangCodes Array of lang codes
 	 * @dataProvider provideLabelsAndFallback
 	 */
 	public function testGetHtml( $labels, $fallbackLangCodes ) {

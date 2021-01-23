@@ -9,8 +9,10 @@ use Wikibase\Client\Tests\Integration\DataAccess\Scribunto\Scribunto_LuaWikibase
  */
 class Scribunto_LuaWikibaseMediaInfoEntityLibraryTest extends Scribunto_LuaWikibaseLibraryTestCase {
 
+	/** @inheritDoc */
 	protected static $moduleName = 'LuaWikibaseMediaInfoEntityLibraryTests';
 
+	/** @inheritDoc */
 	protected function getTestModules() {
 		return parent::getTestModules() + [
 			'LuaWikibaseMediaInfoEntityLibraryTests' => __DIR__ . '/LuaWikibaseMediaInfoEntityLibraryTests.lua',

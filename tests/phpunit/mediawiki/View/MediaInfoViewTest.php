@@ -22,19 +22,20 @@ use Wikibase\View\EntityTermsView;
  */
 class MediaInfoViewTest extends \PHPUnit\Framework\TestCase {
 
+	/** @var string[] */
 	private $values = [
 		'entityType' => 'TEST_TYPE',
 		'entityId' => 'P999'
 	];
-	/** @var  EntityTermsView */
+	/** @var EntityTermsView */
 	private $entityTermsView;
-	/** @var  MediaInfoEntityStatementsView */
+	/** @var MediaInfoEntityStatementsView */
 	private $statementsView;
-	/** @var  EntityDocument */
+	/** @var EntityDocument */
 	private $entity;
 	/** @var string */
 	private $languageCode = 'qqq';
-	/** @var  MediaInfoView */
+	/** @var MediaInfoView */
 	private $sut;
 
 	private function createMocks() {

@@ -306,7 +306,9 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 	 *
 	 * I realise that means I'm not testing the Hooks class in total isolation, but it's the best
 	 * I can think of atm
-	 *
+	 * @param Document $document
+	 * @param string $field
+	 * @param string $handler
 	 */
 	private function verifyDocumentMetadata( Document $document, $field, $handler ) {
 		if ( !$document->hasParam( CirrusIndexField::DOC_HINT_PARAM ) ) {

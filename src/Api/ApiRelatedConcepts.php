@@ -5,13 +5,16 @@ namespace Wikibase\MediaInfo\Api;
 use ApiBase;
 use ApiMain;
 use MediaWiki\Http\HttpRequestFactory;
-use MediaWiki\Sparql\SparqlClient;
+use ValueFormatters\FormatterOptions;
+use ValueFormatters\ValueFormatter;
 use Wikibase\DataModel\DeserializerFactory;
 use Wikibase\DataModel\Entity\EntityIdValue;
 use Wikibase\DataModel\Entity\Item;
 use Wikibase\DataModel\Entity\ItemId;
 use Wikibase\DataModel\Entity\PropertyId;
 use Wikibase\DataModel\Snak\PropertyValueSnak;
+use Wikibase\Lib\Formatters\OutputFormatSnakFormatterFactory;
+use Wikibase\Lib\Formatters\SnakFormatter;
 use Wikibase\Repo\WikibaseRepo;
 use Wikimedia\ParamValidator\ParamValidator;
 use Wikimedia\ParamValidator\TypeDef\IntegerDef;
@@ -22,13 +25,10 @@ use Wikimedia\ParamValidator\TypeDef\IntegerDef;
 class ApiRelatedConcepts extends ApiBase {
 
 	/** @var HttpRequestFactory */
-	protected $httpRequestFactory;
+	private $httpRequestFactory;
 
 	/** @var string */
-	protected $externalEntitySearchBaseUri;
-
-	/** @var SparqlClient */
-	private $sparqlClient;
+	private $externalEntitySearchBaseUri;
 
 	/** @var array */
 	private $heuristics;
@@ -36,13 +36,16 @@ class ApiRelatedConcepts extends ApiBase {
 	/** @var DeserializerFactory */
 	private $deserializerFactory;
 
+	/** @var OutputFormatSnakFormatterFactory */
+	private $snakFormatterFactory;
+
 	/**
 	 * @param ApiMain $main
 	 * @param string $moduleName
 	 * @param HttpRequestFactory $httpRequestFactory
 	 * @param DeserializerFactory $deserializerFactory
+	 * @param OutputFormatSnakFormatterFactory $snakFormatterFactory
 	 * @param string $externalEntitySearchBaseUri
-	 * @param SparqlClient $sparqlClient
 	 * @param array $heuristics
 	 */
 	public function __construct(
@@ -50,15 +53,15 @@ class ApiRelatedConcepts extends ApiBase {
 		$moduleName,
 		HttpRequestFactory $httpRequestFactory,
 		DeserializerFactory $deserializerFactory,
+		OutputFormatSnakFormatterFactory $snakFormatterFactory,
 		$externalEntitySearchBaseUri,
-		SparqlClient $sparqlClient,
 		array $heuristics = []
 	) {
 		parent::__construct( $main, $moduleName );
 		$this->httpRequestFactory = $httpRequestFactory;
 		$this->deserializerFactory = $deserializerFactory;
+		$this->snakFormatterFactory = $snakFormatterFactory;
 		$this->externalEntitySearchBaseUri = $externalEntitySearchBaseUri;
-		$this->sparqlClient = $sparqlClient;
 		$this->heuristics = $heuristics;
 	}
 
@@ -70,21 +73,16 @@ class ApiRelatedConcepts extends ApiBase {
 	 */
 	public static function factory( ApiMain $main, $moduleName, HttpRequestFactory $httpRequestFactory ) {
 		$config = $main->getConfig();
-		$sparqlClient = new SparqlClient(
-			$config->get( 'MediaInfoMediaSearchEntitiesSparqlEndpointUri' ),
-			$httpRequestFactory
-		);
-		$sparqlClient->setTimeout( 5 );
-		$sparqlClient->setClientOptions( [ 'userAgent' => 'WikibaseMediaInfo media search tree traversal' ] );
+		$wbRepo = WikibaseRepo::getDefaultInstance();
 
 		return new self(
 			$main,
 			$moduleName,
 			$httpRequestFactory,
-			WikibaseRepo::getDefaultInstance()->getBaseDataModelDeserializerFactory(),
+			$wbRepo->getBaseDataModelDeserializerFactory(),
+			$wbRepo->getSnakFormatterFactory(),
 			$config->get( 'MediaInfoExternalEntitySearchBaseUri' ),
-			$sparqlClient,
-			$config->get( 'MediaInfoMediaSearchConceptChipsHeuristics' )
+			$config->get( 'MediaInfoMediaSearchConceptChipsSimpleHeuristics' )
 		);
 	}
 
@@ -141,37 +139,42 @@ class ApiRelatedConcepts extends ApiBase {
 	}
 
 	/**
-	 * Returns a number of terms related to wikidata entities, obtained via a
-	 * SPARQL query according to a preconfigured array of heuristics.
+	 * Returns a number of terms related to wikidata entities, according
+	 * to a preconfigured array of heuristics.
 	 *
 	 * @param array $entities
 	 * @param int $limit
 	 * @return array
-	 * @throws \MediaWiki\Sparql\SparqlException
 	 */
 	private function getTermsRelatedToWikibaseItems( array $entities, int $limit = 10 ): array {
 		$language = $this->getLanguage()->getCode();
-		$queries = array_filter( array_map( function ( Item $entity ) {
-			$where = $this->evaluateHeuristics( $entity, $this->heuristics );
-			if ( count( $where ) === 0 ) {
-				return '';
-			}
 
-			return 'VALUES ?entity { wd:' . $entity->getId() . ' } {' . implode( '} UNION {', $where ) . '}';
-		}, $entities ) );
-		if ( count( $queries ) === 0 ) {
-			return [];
+		$snaks = [];
+		foreach ( $entities as $entity ) {
+			// figure out which - if any - properties of the given entity we care about
+			$properties = $this->evaluateHeuristics( $entity, $this->heuristics );
+
+			// fetch all relevant (per property ids defined in heuristics)
+			// PropertyValueSnak for these entities
+			$statements = $entity->getStatements();
+			foreach ( $properties as $property ) {
+				$statement = $statements->getByPropertyId( new PropertyId( $property ) );
+				foreach ( $statement->getMainSnaks() as $snak ) {
+					if ( $snak instanceof PropertyValueSnak ) {
+						$snaks[] = $snak;
+					}
+				}
+			}
 		}
 
-		$query = 'SELECT DISTINCT ?label WHERE {
-			{
-				' . implode( "\n} UNION {\n", $queries ) . '
-			}
-			?item rdfs:label ?label FILTER (LANG(?label) = "' . $language . '")
-		}
-		LIMIT ' . $limit;
-		$results = $this->sparqlClient->query( $query );
-		return array_column( $results ?: [], 'label' );
+		// format all snaks in relevant language
+		$formatter = $this->snakFormatterFactory->getSnakFormatter(
+			SnakFormatter::FORMAT_PLAIN,
+			new FormatterOptions( [ ValueFormatter::OPT_LANG => $language ] )
+		);
+		$results = array_map( [ $formatter, 'formatSnak' ], $snaks );
+
+		return array_unique( $results );
 	}
 
 	/**
@@ -322,8 +325,8 @@ class ApiRelatedConcepts extends ApiBase {
 	public function getHelpUrls() {
 		return [
 			// At this point, usage of this API should be limited only to the
-			// experimental media search concept chips feature.
-			// Excessive usage might cause too much stress on the SPARQL endpoint.
+			// experimental media search concept chips feature & its future
+			// implementation will likely change drastically.
 			// There is no point in providing help for something for which usage
 			// is discouraged.
 		];

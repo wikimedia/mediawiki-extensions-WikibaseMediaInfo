@@ -53,7 +53,7 @@
 		"MediaInfoMediaSearchEntitiesSparqlEndpointUri": {
 			"value": ""
 		},
-		"MediaInfoMediaSearchConceptChipsHeuristics": {
+		"MediaInfoMediaSearchConceptChipsSimpleHeuristics": {
 			"value": []
 		},
 		"MediaInfoSupportedDataTypes": {

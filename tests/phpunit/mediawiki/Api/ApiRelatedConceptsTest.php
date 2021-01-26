@@ -5,9 +5,11 @@ namespace Wikibase\MediaInfo\Tests\MediaWiki\Api;
 use ApiMain;
 use FauxRequest;
 use MediaWiki\Http\HttpRequestFactory;
-use MediaWiki\Sparql\SparqlClient;
 use MediaWikiTestCase;
 use MWHttpRequest;
+use Wikibase\DataModel\Snak\PropertyValueSnak;
+use Wikibase\Lib\Formatters\OutputFormatSnakFormatterFactory;
+use Wikibase\Lib\Formatters\SnakFormatter;
 use Wikibase\MediaInfo\Api\ApiRelatedConcepts;
 use Wikibase\Repo\WikibaseRepo;
 
@@ -96,8 +98,8 @@ class ApiRelatedConceptsTest extends MediaWikiTestCase {
 			'relatedconcepts',
 			$httpRequestFactory,
 			WikibaseRepo::getDefaultInstance()->getBaseDataModelDeserializerFactory(),
+			$this->createMockSnakFormatterFactory(),
 			'api.php',
-			$this->createMockSparqlClient(),
 			[]
 		);
 
@@ -116,8 +118,8 @@ class ApiRelatedConceptsTest extends MediaWikiTestCase {
 			'relatedconcepts',
 			$httpRequestFactory,
 			WikibaseRepo::getDefaultInstance()->getBaseDataModelDeserializerFactory(),
+			$this->createMockSnakFormatterFactory(),
 			'api.php',
-			$this->createMockSparqlClient(),
 			[]
 		);
 
@@ -374,8 +376,8 @@ class ApiRelatedConceptsTest extends MediaWikiTestCase {
 			'relatedconcepts',
 			$this->createMockHttpRequestFactory( [] ),
 			$deserializerFactory,
+			$this->createMockSnakFormatterFactory(),
 			'api.php',
-			$this->createMockSparqlClient(),
 			$heuristic
 		);
 
@@ -395,15 +397,13 @@ class ApiRelatedConceptsTest extends MediaWikiTestCase {
 				$this->mockEntityResponse( [ 'Q1' ] ),
 		] );
 
-		$sparqlClient = $this->createMockSparqlClient();
-
 		$api = new ApiRelatedConcepts(
 			new ApiMain( new FauxRequest( [ 'term' => 'cat' ] ) ),
 			'relatedconcepts',
 			$httpRequestFactory,
 			WikibaseRepo::getDefaultInstance()->getBaseDataModelDeserializerFactory(),
+			$this->createMockSnakFormatterFactory(),
 			'api.php',
-			$sparqlClient,
 			[ [
 				// multiple clauses
 				'must not' => [
@@ -421,7 +421,7 @@ class ApiRelatedConceptsTest extends MediaWikiTestCase {
 					'should' => [ [
 						'property' => 'P1',
 					] ],
-					'result' => [ '?item wdt:P1 ?entity' ],
+					'result' => [ 'P1' ],
 				] ],
 			] ]
 		);
@@ -429,7 +429,7 @@ class ApiRelatedConceptsTest extends MediaWikiTestCase {
 		$api->execute();
 		$response = $api->getResult()->getResultData( [], [ 'Strip' => 'all' ] );
 
-		$this->assertEquals( [ 'query' => [ 'relatedconcepts' => [ 'Related via P1' ] ] ], $response );
+		$this->assertEquals( [ 'query' => [ 'relatedconcepts' => [ 'Q10' ] ] ], $response );
 	}
 
 	private function createMockHttpRequestFactory( array $responses ): HttpRequestFactory {
@@ -446,17 +446,20 @@ class ApiRelatedConceptsTest extends MediaWikiTestCase {
 		return $requestFactory;
 	}
 
-	private function createMockSparqlClient(): SparqlClient {
-		$sparqlClient = $this->createMock( SparqlClient::class );
-		$sparqlClient->method( 'query' )
-			->willReturnCallback( function ( $query ) {
-				preg_match_all( '/wdt:(\\w+)/', $query, $matches, PREG_PATTERN_ORDER );
-				return array_map( function ( $match ) {
-					return [ 'label' => 'Related via ' . $match ];
-				}, $matches[1] ?? [] );
+	private function createMockSnakFormatterFactory(): OutputFormatSnakFormatterFactory {
+		$snakFormatterFactory = $this->createMock( OutputFormatSnakFormatterFactory::class );
+		$snakFormatterFactory->method( 'getSnakFormatter' )
+			->willReturnCallback( function () {
+				$snakFormatter = $this->createMock( SnakFormatter::class );
+				$snakFormatter->method( 'formatSnak' )
+					->willReturnCallback( function ( PropertyValueSnak $snak ) {
+						return $snak->getDataValue()->getValue()->getEntityId()->getSerialization();
+					} );
+
+				return $snakFormatter;
 			} );
 
-		return $sparqlClient;
+		return $snakFormatterFactory;
 	}
 
 }

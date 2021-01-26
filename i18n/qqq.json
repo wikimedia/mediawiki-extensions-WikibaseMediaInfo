@@ -162,5 +162,6 @@
 	"wikibasemediainfo-copytextlayout-copy": "Text for button to copy text to the clipboard\n{{identical|Copy}}",
 	"wikibasemediainfo-copytextlayout-copy-fail": "Message shown when copying to the clipboard fails",
 	"wikibasemediainfo-copytextlayout-copy-success": "Message shown when copying to the clipboard succeeds",
-	"wikibasemediainfo-special-mediasearch-clear-filters": "Label text for the control to clear existing search filters"
+	"wikibasemediainfo-special-mediasearch-clear-filters": "Label text for the control to clear existing search filters",
+	"wikibasemediainfo-special-mediasearch-results-count": "Total number of results for a search. Parameters:\n* $1 - Number of results (totalhits)"
 }

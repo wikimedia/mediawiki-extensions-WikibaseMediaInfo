@@ -20,6 +20,9 @@
 					@hide="addGradientClass"
 				></wbmi-observer>
 			</template>
+			<span v-if="showResultsCount" class="wbmi-media-search-results-count">
+				{{ resultsCount }}
+			</span>
 		</div>
 	</div>
 </template>
@@ -64,6 +67,7 @@ module.exports = {
 	},
 
 	computed: $.extend( {}, mapState( [
+		'totalHits',
 		'filterValues'
 	] ), {
 		/**
@@ -112,6 +116,27 @@ module.exports = {
 			return 'IntersectionObserver' in window &&
 				'IntersectionObserverEntry' in window &&
 				'intersectionRatio' in window.IntersectionObserverEntry.prototype;
+		},
+
+		/**
+		 * Number of results should only display if results exist.
+		 *
+		 * @return {boolean} Whether to display the results count
+		 */
+		showResultsCount: function () {
+			return this.totalHits[ this.mediaType ] > 0;
+		},
+
+		/**
+		 * String representing the number of search results.
+		 *
+		 * @return {Object} Message object
+		 */
+		resultsCount: function () {
+			return this.$i18n(
+				'wikibasemediainfo-special-mediasearch-results-count',
+				this.totalHits[ this.mediaType ]
+			);
 		}
 	} ),
 

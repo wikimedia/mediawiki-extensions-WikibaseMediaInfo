@@ -81,7 +81,7 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 		$termWithFilters = $this->getTermWithFilters( $term, $activeFilters );
 		$clearFiltersUrl = $this->getPageTitle()->getLinkURL( array_diff( $querystring, $activeFilters ) );
 
-		list( $results, $continue ) = $this->search(
+		list( $results, $searchinfo, $continue ) = $this->search(
 			$termWithFilters,
 			$type,
 			$limit,
@@ -91,6 +91,7 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 
 		$totalSiteImages = $this->getContext()->getLanguage()->formatNum( SiteStats::images() );
 		$thumbLimits = $this->getThumbLimits();
+		$totalHits = $searchinfo['totalhits'] ?? 0;
 
 		$data = [
 			'querystring' => array_map( function ( $key, $value ) {
@@ -232,6 +233,9 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 				->text(),
 			'noResultsMessage' => $this->msg( 'wikibasemediainfo-special-mediasearch-no-results' )->text(),
 			'noResultsMessageExtra' => $this->msg( 'wikibasemediainfo-special-mediasearch-no-results-tips' )->text(),
+			'totalHits' => $totalHits,
+			'showResultsCount' => $totalHits > 0,
+			'resultsCount' => $this->msg( 'wikibasemediainfo-special-mediasearch-results-count', $totalHits )->text()
 		];
 
 		$this->getOutput()->addHTML( $this->templateParser->processTemplate( 'SERPWidget', $data ) );
@@ -257,7 +261,7 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 	 * @param int|null $limit
 	 * @param string|null $continue
 	 * @param string|null $sort
-	 * @return array [ search results, continuation value ]
+	 * @return array [ search results, searchinfo data, continuation value ]
 	 * @throws \MWException
 	 */
 	protected function search(
@@ -273,7 +277,7 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 		Assert::parameterType( 'string|null', $sort, '$sort' );
 
 		if ( $term === '' ) {
-			return [ [], null ];
+			return [ [], [], null ];
 		}
 
 		$langCode = $this->getContext()->getLanguage()->getCode();
@@ -290,6 +294,7 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 				'gsrlimit' => $limit,
 				'gsroffset' => $continue ?: 0,
 				'gsrsort' => $sort,
+				'gsrinfo' => 'totalhits',
 				'prop' => 'info|categoryinfo',
 				'inprop' => 'url',
 			] );
@@ -325,6 +330,7 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 				'gsrlimit' => $limit,
 				'gsroffset' => $continue ?: 0,
 				'gsrsort' => $sort,
+				'gsrinfo' => 'totalhits',
 				'prop' => 'info|imageinfo|entityterms',
 				'inprop' => 'url',
 				'iiprop' => 'url|size|mime',
@@ -352,13 +358,14 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 		}
 
 		$results = array_values( $response['query']['pages'] ?? [] );
+		$searchinfo = $response['query']['searchinfo'] ?? [];
 		$continue = $response['continue']['gsroffset'] ?? null;
 
 		uasort( $results, function ( $a, $b ) {
 			return $a['index'] <=> $b['index'];
 		} );
 
-		return [ $results, $continue ];
+		return [ $results, $searchinfo, $continue ];
 	}
 
 	/**

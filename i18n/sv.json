@@ -16,7 +16,7 @@
 	"group-mediasearch-tester-member": "{{GENDER:$1|mediesökningstestare}}",
 	"slot-name-mediainfo": "Strukturerad mediainformation",
 	"wikibase-entity-mediainfo": "mediainformation",
-	"wikibase-mediainfo-summary-wbsetlabel-add": "Lade till undertexter [$2]",
+	"wikibase-mediainfo-summary-wbsetlabel-add": "Lade till bildtext [$2]",
 	"wikibase-mediainfo-summary-wbsetlabel-remove": "Tog bort undertexter [$2]",
 	"wikibase-mediainfo-summary-wbsetlabel-set": "Redigerade undertexter [$2]",
 	"wikibasemediainfo-add-property": "Sök efter att lägga till egenskaper (del av, medietyp, etc.)",

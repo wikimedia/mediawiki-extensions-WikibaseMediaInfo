@@ -157,5 +157,7 @@
 	"wikibasemediainfo-copytextlayout-copy-fail": "Failed to copy to clipboard.",
 	"wikibasemediainfo-copytextlayout-copy-success": "Copied to clipboard.",
 	"wikibasemediainfo-special-mediasearch-clear-filters": "Clear filters",
-	"wikibasemediainfo-special-mediasearch-results-count": "$1 {{PLURAL:$1|result|results}}"
+	"wikibasemediainfo-special-mediasearch-results-count": "$1 {{PLURAL:$1|result|results}}",
+	"wikibasemediainfo-special-mediasearch-wordcount": "($1 {{PLURAL:$1|word|words}})",
+	"wikibasemediainfo-special-mediasearch-image-size": "($1)"
 }

@@ -428,7 +428,8 @@
 				"wikibasemediainfo-copytextlayout-copy",
 				"wikibasemediainfo-copytextlayout-copy-fail",
 				"wikibasemediainfo-copytextlayout-copy-success",
-				"wikibasemediainfo-special-mediasearch-clear-filters"
+				"wikibasemediainfo-special-mediasearch-clear-filters",
+				"wikibasemediainfo-special-mediasearch-results-count"
 			],
 			"dependencies": [
 				"wikibase.mediainfo.mediasearch.vue.styles",

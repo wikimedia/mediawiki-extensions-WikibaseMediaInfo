@@ -38,11 +38,13 @@ module.exports = {
 			// provided
 			state.results[ mediaType ] = [];
 			state.continue[ mediaType ] = undefined;
+			state.totalHits[ mediaType ] = 0;
 		} else {
 			// Reset results for all types if second arg is not provided
 			types.forEach( function ( type ) {
 				state.results[ type ] = [];
 				state.continue[ type ] = undefined;
+				state.totalHits[ type ] = 0;
 			} );
 		}
 	},
@@ -69,6 +71,16 @@ module.exports = {
 	 */
 	setPending: function ( state, payload ) {
 		state.pending[ payload.type ] = payload.pending;
+	},
+
+	/**
+	 * @param {Object} state
+	 * @param {Object} payload
+	 * @param {string} payload.mediaType
+	 * @param {string} payload.totalHits
+	 */
+	setTotalHits: function ( state, payload ) {
+		state.totalHits[ payload.mediaType ] = payload.totalHits;
 	},
 
 	/**

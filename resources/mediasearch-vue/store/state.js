@@ -63,6 +63,17 @@ module.exports = {
 		other: false
 	},
 
+	/**
+	 * Total number of search results.
+	 */
+	totalHits: {
+		bitmap: initialResults.activeType === 'bitmap' ? initialResults.totalHits : 0,
+		audio: initialResults.activeType === 'audio' ? initialResults.totalHits : 0,
+		video: initialResults.activeType === 'video' ? initialResults.totalHits : 0,
+		page: initialResults.activeType === 'page' ? initialResults.totalHits : 0,
+		other: initialResults.activeType === 'other' ? initialResults.totalHits : 0
+	},
+
 	filterValues: {
 		bitmap: initialResults.activeType === 'bitmap' ? initialFilters : {},
 		audio: initialResults.activeType === 'audio' ? initialFilters : {},

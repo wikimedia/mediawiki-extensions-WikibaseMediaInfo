@@ -91,6 +91,18 @@
 		}
 	}
 
+	.wbmi-media-search-results-count {
+		flex-shrink: 0;
+		// Send this element all the way to the right in the flex container.
+		margin-left: auto;
+		// Mimic filter spacing.
+		padding-left: 20px;
+
+		@media screen and ( min-width: @width-breakpoint-tablet ) {
+			font-size: 0.9em;
+		}
+	}
+
 	&__spacer {
 		flex: 1 1 auto;
 	}

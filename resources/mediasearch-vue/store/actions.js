@@ -79,6 +79,7 @@ module.exports = {
 				gsrsearch: options.term,
 				gsrlimit: LIMIT,
 				gsroffset: context.state.continue[ options.type ] || 0,
+				gsrinfo: 'totalhits',
 				prop: options.type === 'page' ? 'info|categoryinfo' : 'info|imageinfo|entityterms',
 				inprop: 'url'
 			},
@@ -102,7 +103,8 @@ module.exports = {
 						// exclude duplicates (namespace ids known under multiple aliases)
 						ids.indexOf( id ) === i
 					);
-				} );
+				} )
+				.join( '|' );
 		} else {
 			// Params used in all non-page/category searches.
 			filters = getMediaFilters( options.type, context.state.filterValues[ options.type ] );
@@ -178,6 +180,13 @@ module.exports = {
 						item: result
 					} );
 				} );
+
+				if ( response.query.searchinfo && response.query.searchinfo.totalhits ) {
+					context.commit( 'setTotalHits', {
+						mediaType: options.type,
+						totalHits: response.query.searchinfo.totalhits
+					} );
+				}
 			}
 
 			// Set whether or not the query can be continued

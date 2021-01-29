@@ -152,5 +152,6 @@
 	"wikibasemediainfo-special-mediasearch-category-info": "$1 {{PLURAL:$1|medlem|medlemmar}} – $2 {{PLURAL:$2|underkategori|underkategorier}}, $3 {{PLURAL:$3|fil|filer}}",
 	"wikibasemediainfo-copytextlayout-copy": "Kopiera",
 	"wikibasemediainfo-copytextlayout-copy-fail": "Misslyckades att kopiera till urklipp.",
-	"wikibasemediainfo-copytextlayout-copy-success": "Kopierades till urklipp."
+	"wikibasemediainfo-copytextlayout-copy-success": "Kopierades till urklipp.",
+	"wikibasemediainfo-special-mediasearch-results-count": "$1 {{PLURAL:$1|resultat}}"
 }

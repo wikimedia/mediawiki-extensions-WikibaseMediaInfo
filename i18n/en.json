@@ -40,6 +40,7 @@
 	"wikibasemediainfo-filepage-caption-approaching-limit": "$1 {{PLURAL:$1|character|characters|0=characters}} left",
 	"wikibasemediainfo-filepage-statement-value-type-dropdown-title": "Choose a value type.",
 	"wikibasemediainfo-filepage-statement-custom-value-option": "Custom value",
+	"wikibasemediainfo-filepage-statement-invalid-value": "Invalid value",
 	"wikibasemediainfo-filepage-statement-no-value-option": "No value",
 	"wikibasemediainfo-filepage-statement-no-value": "No value exists for this property",
 	"wikibasemediainfo-filepage-statement-no-data": "No data available",

@@ -433,7 +433,13 @@
 				"wikibasemediainfo-copytextlayout-copy-fail",
 				"wikibasemediainfo-copytextlayout-copy-success",
 				"wikibasemediainfo-special-mediasearch-clear-filters",
-				"wikibasemediainfo-special-mediasearch-results-count"
+				"wikibasemediainfo-special-mediasearch-results-count",
+				"wikibasemediainfo-special-mediasearch-wordcount",
+				"wikibasemediainfo-special-mediasearch-image-size",
+				"size-bytes",
+				"size-kilobytes",
+				"size-megabytes",
+				"size-gigabytes"
 			],
 			"dependencies": [
 				"wikibase.mediainfo.mediasearch.vue.styles",

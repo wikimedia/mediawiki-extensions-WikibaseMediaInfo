@@ -164,5 +164,7 @@
 	"wikibasemediainfo-copytextlayout-copy-fail": "Message shown when copying to the clipboard fails",
 	"wikibasemediainfo-copytextlayout-copy-success": "Message shown when copying to the clipboard succeeds",
 	"wikibasemediainfo-special-mediasearch-clear-filters": "Label text for the control to clear existing search filters",
-	"wikibasemediainfo-special-mediasearch-results-count": "Total number of results for a search. Parameters:\n* $1 - Number of results (totalhits)"
+	"wikibasemediainfo-special-mediasearch-results-count": "Total number of results for a search. Parameters:\n* $1 - Number of results (totalhits)",
+	"wikibasemediainfo-special-mediasearch-wordcount": "Wordcount of a page, wrapped in parentheses. Parameters:\n* $1 - Number of words (wordcount)",
+	"wikibasemediainfo-special-mediasearch-image-size": "Size of an image, wrapped in parentheses. Parameters:\n* $1 - Image size"
 }

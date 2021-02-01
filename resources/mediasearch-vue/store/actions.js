@@ -80,6 +80,7 @@ module.exports = {
 				gsrlimit: LIMIT,
 				gsroffset: context.state.continue[ options.type ] || 0,
 				gsrinfo: 'totalhits',
+				gsrprop: 'size|wordcount',
 				prop: options.type === 'page' ? 'info|categoryinfo' : 'info|imageinfo|entityterms',
 				inprop: 'url'
 			},

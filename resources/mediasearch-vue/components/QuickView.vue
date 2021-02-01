@@ -159,6 +159,7 @@ var WbmiIcon = require( './base/Icon.vue' ),
 	Spinner = require( './Spinner.vue' ),
 	WbmiCopyTextLayout = require( './base/CopyTextLayout.vue' ),
 	icons = require( '../../../lib/icons.js' ),
+	userLangCode = mw.config.get( 'wgUserLanguage' ),
 	PREVIEW_SIZES = [ 640, 800, 1200, 1600 ], // Pre-defined set of thumbnail image width values
 	MAX_SIZE = 2000;
 
@@ -465,7 +466,7 @@ module.exports = {
 				height = this.imageinfo[ 0 ].height;
 
 			if ( this.imageinfo && width && height ) {
-				return width + ' × ' + height;
+				return width.toLocaleString( userLangCode ) + ' × ' + height.toLocaleString( userLangCode );
 			} else {
 				return null;
 			}

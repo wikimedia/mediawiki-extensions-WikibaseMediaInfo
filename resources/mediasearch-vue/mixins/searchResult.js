@@ -124,6 +124,51 @@ module.exports = {
 		 */
 		focus: function () {
 			this.$refs.link.focus();
+		},
+
+		/**
+		 * Format a file size into something readable.
+		 *
+		 * Adapted from Special:Upload code in MediaWiki core. This isn't a
+		 * perfect solution—for example, it will use a dot as the decimal
+		 * separator, which isn't how it's done in every language—but it gets
+		 * us most of the way there without reimplementing the lengthy and
+		 * complex Language::formatNum method.
+		 *
+		 * @param {number} size
+		 * @return {string} Size to the hundreths place plus units
+		 */
+		formatSize: function ( size ) {
+			var decimalPlace = 1,
+				sizeMsgs = [ 'size-bytes', 'size-kilobytes', 'size-megabytes', 'size-gigabytes' ];
+
+			while ( size >= 1024 && sizeMsgs.length > 1 ) {
+				size /= 1024;
+				sizeMsgs = sizeMsgs.slice( 1 );
+			}
+
+			// To match what the Language::formatSize method is doing, we'll
+			// only show decimal places for MB and larger.
+			if ( sizeMsgs.length <= 2 ) {
+				decimalPlace = 100;
+			}
+
+			// The following messages are used here:
+			// * size-bytes
+			// * size-kilobytes
+			// * size-megabytes
+			// * size-gigabytes
+			return mw.msg( sizeMsgs[ 0 ], Math.round( size * decimalPlace ) / decimalPlace );
+		},
+
+		/**
+		 * Format a number per-language (e.g. adding separators).
+		 *
+		 * @param {number} number
+		 * @return {string}
+		 */
+		formatNumber: function ( number ) {
+			return number.toLocaleString( mw.config.get( 'wgUserLanguage' ) );
 		}
 	}
 };

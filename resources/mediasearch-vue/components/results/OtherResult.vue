@@ -26,7 +26,14 @@
 				<span class="wbmi-other-result__extension">
 					{{ extension }}
 				</span>
-				{{ resolution }}
+
+				<span dir="ltr">{{ resolution }}</span>
+
+				<span v-if="imageSize"
+					v-i18n-html:wikibasemediainfo-special-mediasearch-image-size="[
+						formatSize( imageSize )
+					]">
+				</span>
 			</p>
 		</div>
 	</div>
@@ -40,6 +47,8 @@ var WbmiImage = require( './../base/Image.vue' );
  *
  * Represents mediatypes other than bitmap, audio, and video.
  */
+var searchResult = require( '../../mixins/searchResult.js' );
+
 // @vue/component
 module.exports = {
 	name: 'OtherResult',
@@ -48,27 +57,9 @@ module.exports = {
 		'wbmi-image': WbmiImage
 	},
 
+	mixins: [ searchResult ],
+
 	inheritAttrs: false,
-
-	props: {
-		title: {
-			type: String,
-			required: true
-		},
-
-		canonicalurl: {
-			type: String,
-			required: true
-		},
-
-		imageinfo: {
-			type: Array,
-			required: false,
-			default: function () {
-				return [ {} ];
-			}
-		}
-	},
 
 	computed: {
 		/**
@@ -97,10 +88,19 @@ module.exports = {
 				height = this.imageinfo[ 0 ].height;
 
 			if ( this.imageinfo && width && height ) {
-				return width + ' × ' + height;
+				return this.formatNumber( width ) + ' × ' + this.formatNumber( height );
 			} else {
 				return null;
 			}
+		},
+
+		/**
+		 * Raw image size.
+		 *
+		 * @return {number|null}
+		 */
+		imageSize: function () {
+			return this.imageinfo[ 0 ].size ? this.imageinfo[ 0 ].size : null;
 		},
 
 		/**

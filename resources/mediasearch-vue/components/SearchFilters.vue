@@ -135,7 +135,7 @@ module.exports = {
 		resultsCount: function () {
 			return this.$i18n(
 				'wikibasemediainfo-special-mediasearch-results-count',
-				this.totalHits[ this.mediaType ]
+				this.totalHits[ this.mediaType ].toLocaleString( mw.config.get( 'wgUserLanguage' ) )
 			);
 		}
 	} ),

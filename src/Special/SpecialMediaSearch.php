@@ -68,6 +68,8 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 		global $wgMediaInfoMediaSearchPageNamespaces;
 		OutputPage::setupOOUI();
 
+		$userLanguage = $this->getContext()->getLanguage();
+
 		// url & querystring params of this page
 		$url = $this->getContext()->getRequest()->getRequestURL();
 		parse_str( parse_url( $url, PHP_URL_QUERY ), $querystring );
@@ -89,7 +91,7 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 			$this->getSort( $activeFilters )
 		);
 
-		$totalSiteImages = $this->getContext()->getLanguage()->formatNum( SiteStats::images() );
+		$totalSiteImages = $userLanguage->formatNum( SiteStats::images() );
 		$thumbLimits = $this->getThumbLimits();
 		$totalHits = $searchinfo['totalhits'] ?? 0;
 
@@ -139,16 +141,16 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 					'isOther' => true,
 				],
 			],
-			'results' => array_map( function ( $result ) use ( $thumbLimits ) {
+			'results' => array_map( function ( $result ) use ( $thumbLimits, $userLanguage, $type ) {
 				$title = Title::newFromDBkey( $result['title'] );
 				$filename = $title ? $title->getText() : $result['title'];
 				$result += [ 'name' => $filename ];
 
-				if ( array_key_exists( 'categoryinfo', $result ) ) {
+				if ( isset( $result['categoryinfo'] ) ) {
 					$categoryInfoParams = [
-						$result['categoryinfo']['size'],
-						$result['categoryinfo']['subcats'],
-						$result['categoryinfo']['files']
+						$userLanguage->formatNum( $result['categoryinfo']['size'] ),
+						$userLanguage->formatNum( $result['categoryinfo']['subcats'] ),
+						$userLanguage->formatNum( $result['categoryinfo']['files'] )
 					];
 					$result += [
 						'categoryInfoText' => $this->msg(
@@ -158,7 +160,38 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 					];
 				}
 
-				if ( isset( $result['imageinfo'][0]['thumburl'] ) ) {
+				// Formatted page size.
+				if ( isset( $result['size'] ) ) {
+					$result['formattedPageSize'] = $userLanguage->formatSize( $result['size'] );
+				}
+
+				// Word count.
+				if ( isset( $result['wordcount'] ) ) {
+					$result['wordcountMessage'] = $this->msg(
+						'wikibasemediainfo-special-mediasearch-wordcount',
+						$userLanguage->formatNum( $result['wordcount'] )
+					)->text();
+				}
+
+				// Formatted image size.
+				if ( isset( $result['imageinfo'] ) && isset( $result['imageinfo'][0]['size'] ) ) {
+					$result['imageSizeMessage'] = $this->msg(
+						'wikibasemediainfo-special-mediasearch-image-size',
+						$userLanguage->formatSize( $result['imageinfo'][0]['size'] )
+					)->text();
+				}
+
+				if (
+					$type === 'other' &&
+					isset( $result['imageinfo'] ) &&
+					isset( $result['imageinfo'][0]['width'] ) &&
+					isset( $result['imageinfo'][0]['height'] )
+				) {
+					$result['resolution'] = $userLanguage->formatNum( $result['imageinfo'][0]['width'] ) .
+					' × ' . $userLanguage->formatNum( $result['imageinfo'][0]['height'] );
+				}
+
+				if ( isset( $result['imageinfo'] ) && isset( $result['imageinfo'][0]['thumburl'] ) ) {
 					$imageInfo = $result['imageinfo'][0];
 					$oldWidth = $imageInfo['thumbwidth'];
 					$newWidth = $oldWidth;
@@ -235,7 +268,10 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 			'noResultsMessageExtra' => $this->msg( 'wikibasemediainfo-special-mediasearch-no-results-tips' )->text(),
 			'totalHits' => $totalHits,
 			'showResultsCount' => $totalHits > 0,
-			'resultsCount' => $this->msg( 'wikibasemediainfo-special-mediasearch-results-count', $totalHits )->text()
+			'resultsCount' => $this->msg(
+				'wikibasemediainfo-special-mediasearch-results-count',
+				$userLanguage->formatNum( $totalHits )
+			)->text()
 		];
 
 		$this->getOutput()->addHTML( $this->templateParser->processTemplate( 'SERPWidget', $data ) );
@@ -295,6 +331,7 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 				'gsroffset' => $continue ?: 0,
 				'gsrsort' => $sort,
 				'gsrinfo' => 'totalhits',
+				'gsrprop' => 'size|wordcount',
 				'prop' => 'info|categoryinfo',
 				'inprop' => 'url',
 			] );
@@ -331,6 +368,7 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 				'gsroffset' => $continue ?: 0,
 				'gsrsort' => $sort,
 				'gsrinfo' => 'totalhits',
+				'gsrprop' => 'size|wordcount',
 				'prop' => 'info|imageinfo|entityterms',
 				'inprop' => 'url',
 				'iiprop' => 'url|size|mime',

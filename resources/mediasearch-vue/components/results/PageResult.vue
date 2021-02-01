@@ -11,11 +11,23 @@
 
 		<p v-if="hasCategoryText"
 			v-i18n-html:wikibasemediainfo-special-mediasearch-category-info="[
-				categoryinfo.size,
-				categoryinfo.subcats,
-				categoryinfo.files
+				formatNumber( categoryinfo.size ),
+				formatNumber( categoryinfo.subcats ),
+				formatNumber( categoryinfo.files )
 			]">
 		</p>
+
+		<template v-else>
+			<p v-if="size">
+				{{ formatSize( size ) }}
+			</p>
+
+			<p v-if="wordcount"
+				v-i18n-html:wikibasemediainfo-special-mediasearch-wordcount="[
+					formatNumber( wordcount )
+				]">
+			</p>
+		</template>
 	</div>
 </template>
 
@@ -23,44 +35,38 @@
 /**
  * @file PageResult.vue
  *
- * Represents page and category results. Does not implement the searchResult
- * mixin; props need to be directly specified here.
+ * Represents page and category results.
  */
+var searchResult = require( '../../mixins/searchResult.js' );
+
 // @vue/component
 module.exports = {
 	name: 'PageResult',
 
+	mixins: [ searchResult ],
+
 	inheritAttrs: false,
 
 	props: {
-		title: {
-			type: String,
-			required: true
-		},
-
-		canonicalurl: {
-			type: String,
-			required: true
-		},
-
 		categoryinfo: {
 			type: Object,
 			default: function () {
 				return {};
 			}
+		},
+
+		size: {
+			type: Number,
+			default: null
+		},
+
+		wordcount: {
+			type: Number,
+			default: null
 		}
 	},
 
 	computed: {
-		/**
-		 * Use mw.Title to get a normalized title without File, Category, etc. prepending
-		 *
-		 * @return {string}
-		 */
-		displayName: function () {
-			return new mw.Title( this.title ).getMainText();
-		},
-
 		/**
 		 * @return {boolean}
 		 */

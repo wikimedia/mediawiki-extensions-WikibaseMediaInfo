@@ -211,6 +211,16 @@
 										{{#categoryInfoText}}
 											<p>{{.}}</p>
 										{{/categoryInfoText}}
+
+										{{^categoryInfoText}}
+											{{#formattedPageSize}}
+												<p>{{.}}</p>
+											{{/formattedPageSize}}
+
+											{{#wordcountMessage}}
+												<p>{{.}}</p>
+											{{/wordcountMessage}}
+										{{/categoryInfoText}}
 									</div>
 								{{/results}}
 							{{/isPage}}
@@ -239,6 +249,12 @@
 													{{ name }}
 												</a>
 											</h3>
+											{{#resolution}}
+												<p class="wbmi-other-result__meta" dir="ltr">{{.}}</p>
+											{{/resolution}}
+											{{#imageSizeMessage}}
+												<p class="wbmi-other-result__meta">{{.}}</p>
+											{{/imageSizeMessage}}
 										</div>
 									</div>
 								{{/results}}

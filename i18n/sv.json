@@ -44,6 +44,7 @@
 	"wikibasemediainfo-filepage-caption-approaching-limit": "$1 {{PLURAL:$1|tecken|0=tecken}} kvar",
 	"wikibasemediainfo-filepage-statement-value-type-dropdown-title": "Välj en värdetyp.",
 	"wikibasemediainfo-filepage-statement-custom-value-option": "Anpassat värde",
+	"wikibasemediainfo-filepage-statement-invalid-value": "Ogiltigt värde",
 	"wikibasemediainfo-filepage-statement-no-value-option": "Inget värde",
 	"wikibasemediainfo-filepage-statement-no-value": "Inget värde finns för denna egenskap",
 	"wikibasemediainfo-filepage-statement-no-data": "Ingen tillgänglig data",

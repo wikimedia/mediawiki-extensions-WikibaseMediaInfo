@@ -45,6 +45,7 @@
 	"wikibasemediainfo-filepage-caption-approaching-limit": "{{PLURAL:$1|נותר תו אחד|נותרו $1 תווים}}",
 	"wikibasemediainfo-filepage-statement-value-type-dropdown-title": "נא לבחור את סוג הערך.",
 	"wikibasemediainfo-filepage-statement-custom-value-option": "ערך מותאם אישית",
+	"wikibasemediainfo-filepage-statement-invalid-value": "ערך בלתי־תקין",
 	"wikibasemediainfo-filepage-statement-no-value-option": "אין ערך",
 	"wikibasemediainfo-filepage-statement-no-value": "אין ערך למאפיין הזה",
 	"wikibasemediainfo-filepage-statement-no-data": "לא זמינים נתונים",
@@ -161,5 +162,6 @@
 	"wikibasemediainfo-copytextlayout-copy": "העתקה",
 	"wikibasemediainfo-copytextlayout-copy-fail": "ההעתקה ללוח לא עבדה.",
 	"wikibasemediainfo-copytextlayout-copy-success": "הועתק ללוח.",
-	"wikibasemediainfo-special-mediasearch-clear-filters": "ניקוי מסננים"
+	"wikibasemediainfo-special-mediasearch-clear-filters": "ניקוי מסננים",
+	"wikibasemediainfo-special-mediasearch-results-count": "{{PLURAL:$1|תוצאה אחת|$1 תוצאות}}"
 }

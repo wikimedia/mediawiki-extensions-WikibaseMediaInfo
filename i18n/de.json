@@ -45,6 +45,7 @@
 	"wikibasemediainfo-filepage-caption-approaching-limit": "Noch {{PLURAL:$1|ein|$1|0=$1}} Zeichen",
 	"wikibasemediainfo-filepage-statement-value-type-dropdown-title": "Wähle einen Wertetyp aus.",
 	"wikibasemediainfo-filepage-statement-custom-value-option": "Benutzerdefinierter Wert",
+	"wikibasemediainfo-filepage-statement-invalid-value": "Ungültiger Wert",
 	"wikibasemediainfo-filepage-statement-no-value-option": "Kein Wert",
 	"wikibasemediainfo-filepage-statement-no-value": "Für diese Eigenschaft ist kein Wert vorhanden",
 	"wikibasemediainfo-filepage-statement-no-data": "Keine Daten verfügbar",

@@ -132,5 +132,6 @@
 	"wikibasemediainfo-rescore-profile-classic-noboostlinks-max-boost-template": "A rangsor a legjobb sablonokon, a lap nyelvén és újdonságán alapszik, amennyiben elérhető ezen a wikin.",
 	"wikibasemediainfo-copytextlayout-copy": "Másolás",
 	"wikibasemediainfo-copytextlayout-copy-fail": "A vágólapra másolás nem sikerült.",
-	"wikibasemediainfo-copytextlayout-copy-success": "Vágólapra másolva."
+	"wikibasemediainfo-copytextlayout-copy-success": "Vágólapra másolva.",
+	"wikibasemediainfo-special-mediasearch-results-count": "$1 találat"
 }

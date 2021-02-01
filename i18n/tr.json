@@ -3,7 +3,9 @@
 		"authors": [
 			"Arbormedi",
 			"BaRaN6161 TURK",
+			"Cobija",
 			"Hedda",
+			"Joseph",
 			"LuCKY",
 			"Mirzali",
 			"MuratTheTurkish",
@@ -47,12 +49,13 @@
 	"wikibasemediainfo-filepage-caption-approaching-limit": "$1 {{PLURAL:$1|karakter|0=karakter}} kaldı",
 	"wikibasemediainfo-filepage-statement-value-type-dropdown-title": "Bir değer türü seçin.",
 	"wikibasemediainfo-filepage-statement-custom-value-option": "Özel değer",
+	"wikibasemediainfo-filepage-statement-invalid-value": "Geçersiz değer",
 	"wikibasemediainfo-filepage-statement-no-value-option": "Değer yok",
 	"wikibasemediainfo-filepage-statement-no-value": "Bu mülk için değer yok",
 	"wikibasemediainfo-filepage-statement-no-data": "Veri yok",
 	"wikibasemediainfo-filepage-statement-no-results": "Sonuç bulunamadı",
 	"wikibasemediainfo-filepage-statement-some-value-option": "Birkaç değer",
-	"wikibasemediainfo-filepage-statement-some-value": "{{WBREPONAME}} öğesi olmayan bir değer",
+	"wikibasemediainfo-filepage-statement-some-value": "{{WBREPONAME}} ögesi olmayan bir değer",
 	"wikibasemediainfo-filepage-statement-error": "Bu mülkün değeri getirilirken bir hata oluştu",
 	"wikibasemediainfo-filepage-license-title": "Altyazılar ve diğer yapılandırılmış veri katkıları",
 	"wikibasemediainfo-filepage-license-content": "\"Değişiklikleri yayımla\"ya tıklayarak [[wmf:Terms_of_Use|kullanım şartlarını]] ve katkılarınızı, [https://creativecommons.org/publicdomain/zero/1.0/deed.tr Creative Commons CC0 Lisansı] altında yayımlamayı, geri dönülmez bir şekilde kabul etmiş olursunuz.",
@@ -163,5 +166,6 @@
 	"wikibasemediainfo-copytextlayout-copy": "Kopyala",
 	"wikibasemediainfo-copytextlayout-copy-fail": "Panoya kopyalanamadı.",
 	"wikibasemediainfo-copytextlayout-copy-success": "Panoya kopyalandı.",
-	"wikibasemediainfo-special-mediasearch-clear-filters": "Filtreleri temizle"
+	"wikibasemediainfo-special-mediasearch-clear-filters": "Filtreleri temizle",
+	"wikibasemediainfo-special-mediasearch-results-count": "$1 {{PLURAL:$1|sonuç|sonuç}}"
 }

@@ -40,6 +40,7 @@
 	"wikibasemediainfo-filepage-caption-approaching-limit": "$1 {{PLURAL:$1|caratere restad|0=carater restad}}",
 	"wikibasemediainfo-filepage-statement-value-type-dropdown-title": "Cata foeura un tipo de valor.",
 	"wikibasemediainfo-filepage-statement-custom-value-option": "Valor personalizzad",
+	"wikibasemediainfo-filepage-statement-invalid-value": "Valor minga valid",
 	"wikibasemediainfo-filepage-statement-no-value-option": "Nissun valor",
 	"wikibasemediainfo-filepage-statement-no-value": "A gh'è nissun valor per quela proprietà chì",
 	"wikibasemediainfo-filepage-statement-no-data": "Nissun dato disposnibil",

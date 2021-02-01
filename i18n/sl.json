@@ -33,7 +33,7 @@
 	"wikibasemediainfo-filepage-caption-too-long": "$1 {{PLURAL:$1|znak|znaka|znaki|znakov}} preveč",
 	"wikibasemediainfo-filepage-caption-approaching-limit": "$1 {{PLURAL:$1|znak|znaka|znaki|znakov|0=znakov}} na voljo",
 	"wikibasemediainfo-filepage-statement-no-value": "Za to lastnost ne obstaja vrednost",
-	"wikibasemediainfo-filepage-statement-no-data": "Ni podatkov na voljo",
+	"wikibasemediainfo-filepage-statement-no-data": "Na voljo ni nobenih podatkov",
 	"wikibasemediainfo-filepage-statement-no-results": "Ni najdenih zadetkov",
 	"wikibasemediainfo-filepage-statement-some-value": "Neka vrednost brez vnosa na {{GRAMMAR:locative|{{WBREPONAME}}}}",
 	"wikibasemediainfo-filepage-statement-error": "Pri pridobivanju vrednosti za to lastnost je prišlo do napake",

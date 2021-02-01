@@ -42,6 +42,7 @@
 	"wikibasemediainfo-filepage-caption-approaching-limit": "{{PLURAL:$1|преостанува уште $1 знак|преостануваат уште $1 знаци|0=преостануваат уште $1 знаци}}",
 	"wikibasemediainfo-filepage-statement-value-type-dropdown-title": "Изберете тип на вредност.",
 	"wikibasemediainfo-filepage-statement-custom-value-option": "Прилагодена вредност",
+	"wikibasemediainfo-filepage-statement-invalid-value": "Неважечка вредност",
 	"wikibasemediainfo-filepage-statement-no-value-option": "Нема вредност",
 	"wikibasemediainfo-filepage-statement-no-value": "Не постои вредност за ова својство",
 	"wikibasemediainfo-filepage-statement-no-data": "Нема податоци",
@@ -158,5 +159,6 @@
 	"wikibasemediainfo-copytextlayout-copy": "Копирај",
 	"wikibasemediainfo-copytextlayout-copy-fail": "Не успав да ископирам во меѓускладот.",
 	"wikibasemediainfo-copytextlayout-copy-success": "Ископирано во меѓускладот.",
-	"wikibasemediainfo-special-mediasearch-clear-filters": "Исчисти филтри"
+	"wikibasemediainfo-special-mediasearch-clear-filters": "Исчисти филтри",
+	"wikibasemediainfo-special-mediasearch-results-count": "$1 {{PLURAL:$1|ставка|ставки}}"
 }

@@ -38,6 +38,7 @@
 	"wikibasemediainfo-filepage-caption-approaching-limit": "$1 {{PLURAL:$1|carattere rimasto|caratteri rimasti|0=caratteri rimasti}}",
 	"wikibasemediainfo-filepage-statement-value-type-dropdown-title": "Scegli un tipo di valore.",
 	"wikibasemediainfo-filepage-statement-custom-value-option": "Valore personalizzato",
+	"wikibasemediainfo-filepage-statement-invalid-value": "Valore non valido",
 	"wikibasemediainfo-filepage-statement-no-value-option": "Nessun valore",
 	"wikibasemediainfo-filepage-statement-no-value": "Non esiste alcun valore per questa proprietà",
 	"wikibasemediainfo-filepage-statement-no-results": "Nessun risultato trovato",
@@ -118,5 +119,6 @@
 	"wikibasemediainfo-copytextlayout-copy": "Copia",
 	"wikibasemediainfo-copytextlayout-copy-fail": "Copia negli appunti non riuscita.",
 	"wikibasemediainfo-copytextlayout-copy-success": "Copiato negli appunti.",
-	"wikibasemediainfo-special-mediasearch-clear-filters": "Cancella filtri"
+	"wikibasemediainfo-special-mediasearch-clear-filters": "Cancella filtri",
+	"wikibasemediainfo-special-mediasearch-results-count": "$1 {{PLURAL:$1|risultato|risultati}}"
 }

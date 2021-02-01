@@ -107,7 +107,8 @@ return [
 					$searchProperties,
 					$configFactory->makeConfig( 'WikibaseCirrusSearch' )->get( 'UseStemming' ),
 					$languages,
-					$settings
+					$settings,
+					$config->get( 'MediaInfoMediaSearchHasLtrPlugin' )
 				)
 			);
 		} ),
@@ -180,7 +181,8 @@ return [
 					$searchProperties,
 					$configFactory->makeConfig( 'WikibaseCirrusSearch' )->get( 'UseStemming' ),
 					$languages,
-					$settings
+					$settings,
+					$config->get( 'MediaInfoMediaSearchHasLtrPlugin' )
 				)
 			);
 		} ),

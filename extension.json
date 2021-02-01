@@ -81,6 +81,10 @@
 				"sort",
 				"license"
 			]
+		},
+		"MediaInfoMediaSearchHasLtrPlugin": {
+			"description": "Boolean indicating whether the o19s/elasticsearch-learning-to-rank plugin is installed (in which case move advanced search features can be used)",
+			"value": false
 		}
 	},
 	"ServiceWiringFiles": [

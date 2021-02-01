@@ -5,8 +5,10 @@ namespace Wikibase\MediaInfo\Search\ASTQueryBuilder;
 use CirrusSearch\Parser\AST\WordsQueryNode;
 use Elastica\Query\AbstractQuery;
 use Elastica\Query\BoolQuery;
+use Elastica\Query\ConstantScore;
 use Elastica\Query\FunctionScore;
 use Elastica\Query\Match;
+use Elastica\Query\MatchAll;
 use Elastica\Query\MultiMatch;
 use Elastica\Script\Script;
 use Wikibase\MediaInfo\Search\MatchExplorerQuery;
@@ -18,13 +20,17 @@ class WordsQueryNodeHandler extends AbstractTextNodeHandler {
 	/** @var WikibaseEntitiesHandler */
 	private $entitiesHandler;
 
+	/** @var bool */
+	private $hasLtrPlugin;
+
 	public function __construct(
 		WordsQueryNode $node,
 		WikibaseEntitiesHandler $entitiesHandler,
 		array $languages,
 		array $stemmingSettings,
 		array $boosts,
-		array $decays
+		array $decays,
+		bool $hasLtrPlugin = false
 	) {
 		parent::__construct(
 			$languages,
@@ -34,6 +40,7 @@ class WordsQueryNodeHandler extends AbstractTextNodeHandler {
 		);
 		$this->entitiesHandler = $entitiesHandler;
 		$this->node = $node;
+		$this->hasLtrPlugin = $hasLtrPlugin;
 	}
 
 	protected function buildQueryForField( $field, $boost = 0 ): AbstractQuery {
@@ -147,9 +154,20 @@ class WordsQueryNodeHandler extends AbstractTextNodeHandler {
 
 	/**
 	 * @param string $term
-	 * @return MatchExplorerQuery
+	 * @return AbstractQuery
 	 */
-	private function getTermsCountQuery( string $term ): MatchExplorerQuery {
+	private function getTermsCountQuery( string $term ): AbstractQuery {
+		if ( !$this->hasLtrPlugin ) {
+			// if the LTR plugin (required for this feature) is not implemented,
+			// we'll fall back to a very simple & naive token count based on PHP's
+			// word count - it won't take stemming config & stopwords into account,
+			// but at least it won't blow up
+			$count = count( array_unique( str_word_count( $term, 1 ) ) );
+			return ( new ConstantScore() )
+				->setFilter( new MatchAll() )
+				->setBoost( $count );
+		}
+
 		return new MatchExplorerQuery(
 			MatchExplorerQuery::TYPE_UNIQUE_TERMS_COUNT,
 			// match 'text' field because the analyzer applied there

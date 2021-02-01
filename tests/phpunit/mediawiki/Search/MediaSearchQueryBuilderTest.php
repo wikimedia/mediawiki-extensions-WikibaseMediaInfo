@@ -38,7 +38,8 @@ class MediaSearchQueryBuilderTest extends MediaWikiIntegrationTestCase {
 				array_fill_keys( $defaultProperties, 1 ),
 				$stemmingSettings,
 				array_merge( [ $userLanguage ], $fallbackLangs ),
-				$settings
+				$settings,
+				true
 			)
 		);
 	}

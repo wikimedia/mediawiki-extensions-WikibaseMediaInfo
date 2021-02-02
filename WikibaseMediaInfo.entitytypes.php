@@ -261,7 +261,11 @@ return [
 			return new FilePageRedirectHandlingRevisionLookup(
 				new EntityIdFixingRevisionLookup( $defaultLookup, $wbRepo->getLogger() ),
 				$revisionStoreFactory->getRevisionStore( $databaseName ),
-				new WikiPageEntityDataLoader( $contentCodec, $blobStoreFactory->newBlobStore( $databaseName ) )
+				new WikiPageEntityDataLoader(
+					$contentCodec,
+					$blobStoreFactory->newBlobStore( $databaseName ),
+					$databaseName
+				)
 			);
 		},
 		Def::PREFETCHING_TERM_LOOKUP_CALLBACK => function ( SingleEntitySourceServices $services ) {

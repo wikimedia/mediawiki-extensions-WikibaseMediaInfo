@@ -40,6 +40,7 @@
 	"wikibasemediainfo-filepage-caption-approaching-limit": "$1{{PLURAL:$1|자}} 남음",
 	"wikibasemediainfo-filepage-statement-value-type-dropdown-title": "값 유형을 선택하세요.",
 	"wikibasemediainfo-filepage-statement-custom-value-option": "사용자 정의 값",
+	"wikibasemediainfo-filepage-statement-invalid-value": "잘못된 값",
 	"wikibasemediainfo-filepage-statement-no-value-option": "값 없음",
 	"wikibasemediainfo-filepage-statement-no-value": "이 속성에 대한 값이 존재하지 않습니다",
 	"wikibasemediainfo-filepage-statement-no-data": "이용 가능한 데이터 없음",
@@ -149,5 +150,6 @@
 	"wikibasemediainfo-copytextlayout-copy": "복사",
 	"wikibasemediainfo-copytextlayout-copy-fail": "클립보드에 복사하는데 실패했습니다.",
 	"wikibasemediainfo-copytextlayout-copy-success": "클립보드에 복사했습니다.",
-	"wikibasemediainfo-special-mediasearch-clear-filters": "필터 지우기"
+	"wikibasemediainfo-special-mediasearch-clear-filters": "필터 지우기",
+	"wikibasemediainfo-special-mediasearch-results-count": "$1개 {{PLURAL:$1|결과}}"
 }

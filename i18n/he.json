@@ -163,5 +163,6 @@
 	"wikibasemediainfo-copytextlayout-copy-fail": "ההעתקה ללוח לא עבדה.",
 	"wikibasemediainfo-copytextlayout-copy-success": "הועתק ללוח.",
 	"wikibasemediainfo-special-mediasearch-clear-filters": "ניקוי מסננים",
-	"wikibasemediainfo-special-mediasearch-results-count": "{{PLURAL:$1|תוצאה אחת|$1 תוצאות}}"
+	"wikibasemediainfo-special-mediasearch-results-count": "{{PLURAL:$1|תוצאה אחת|$1 תוצאות}}",
+	"wikibasemediainfo-special-mediasearch-wordcount": "({{PLURAL:$1|מילה אחת|$1 מילים}})"
 }

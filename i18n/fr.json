@@ -171,5 +171,6 @@
 	"wikibasemediainfo-copytextlayout-copy-fail": "Échec de copie vers le presse-papiers.",
 	"wikibasemediainfo-copytextlayout-copy-success": "Copié dans le presse-papier.",
 	"wikibasemediainfo-special-mediasearch-clear-filters": "Effacer les filtres",
-	"wikibasemediainfo-special-mediasearch-results-count": "$1 {{PLURAL:$1|résultat|résultats}}"
+	"wikibasemediainfo-special-mediasearch-results-count": "$1 {{PLURAL:$1|résultat|résultats}}",
+	"wikibasemediainfo-special-mediasearch-wordcount": "($1 {{PLURAL:$1|mot|mots}})"
 }

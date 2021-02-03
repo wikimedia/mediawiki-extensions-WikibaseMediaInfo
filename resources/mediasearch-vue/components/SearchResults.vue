@@ -406,7 +406,11 @@ module.exports = {
 		 */
 		getResultClass: function ( pageid ) {
 			return {
-				'wbmi-media-search-result--highlighted': this.details && this.details.pageid === pageid
+				// Visual indication that result is currently displayed in QuickView
+				'wbmi-media-search-result--highlighted': this.details && this.details.pageid === pageid,
+				// If there are 3 or fewer image results, we'll limit their
+				// growth to avoid having one overly-stretched image in the grid.
+				'wbmi-image-result--limit-size': this.mediaType === 'bitmap' && this.results[ this.mediaType ].length <= 3
 			};
 		},
 

@@ -49,6 +49,12 @@
 			// don't want and can't override in the ImageResult.less file
 			// without increasing specificity, so here's this:
 			justify-content: center;
+
+			// The final item should never grow wider, to avoid the case of a
+			// small or portrait-oriented image taking up an entire row.
+			&:last-child {
+				flex-grow: 0;
+			}
 		}
 
 		// When QuickView is closed...
@@ -57,21 +63,23 @@
 		// when QuickView is open.
 		&:not( .wbmi-media-search-results__list--collapsed ) {
 			.wbmi-image-result {
-				// On larger screens, there are some circumstances under which
-				// we want to limit the growth of certain items.
+				// On larger screens, we need to limit the growth of portrait
+				// oriented images to avoid overly-stretching them.
 				// The wmui tablet breakpoint won't quite cut it here - this
 				// starts to break down on iPad-size screens, with gaps at the
 				// end of rows.
 				@media screen and ( min-width: 770px ) {
-					// Don't stretch the last image the width of the whole row,
-					// and don't let portrait-oriented images grow, lest they
-					// become wide and blurry.
-					&:last-child,
 					&--portrait {
-						.flex( 0, 1, auto );
-						// Yep, need this again:
-						justify-content: center;
+						flex-grow: 0;
 					}
+				}
+
+				// If there are 3 or fewer image results, don't let them grow within the
+				// flex container and limit them to 33% width. This will ensure they're all
+				// on the same row and that we'll avoid having one overly-stretched image.
+				&--limit-size {
+					flex-grow: 0;
+					max-width: 33%;
 				}
 			}
 		}

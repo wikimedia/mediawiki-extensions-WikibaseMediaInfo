@@ -116,149 +116,151 @@
 					</div>
 
 					<div class="wbmi-media-search-results">
-						<div class="wbmi-media-search-results__list wbmi-media-search-results__list--{{type}}">
-							{{#isBitmap}}
-								{{#results}}
-									<a
-										ref="link"
-										class="{{imageResultClass}}"
-										href="{{canonicalurl}}"
-										title="{{title}}"
-										style="{{wrapperStyle}}"
-										target="_blank"
-									>
-										<img
-											src="{{imageinfo.0.thumburl}}"
-											data-src="{{imageinfo.0.thumburl}}"
-											alt="{{name}}"
-											loading="lazy"
-											class="wbmi-image"
-											style="{{imageStyle}}"
+						<div class="wbmi-media-search-results__list-wrapper">
+							<div class="wbmi-media-search-results__list wbmi-media-search-results__list--{{type}}">
+								{{#isBitmap}}
+									{{#results}}
+										<a
+											ref="link"
+											class="{{imageResultClass}}"
+											href="{{canonicalurl}}"
+											title="{{title}}"
+											style="{{wrapperStyle}}"
+											target="_blank"
 										>
-									</a>
-								{{/results}}
-							{{/isBitmap}}
-
-							{{#isAudio}}
-								{{#results}}
-									<div class="wbmi-audio-result">
-										<h3 class="wbmi-audio-result__title">
-											<a ref="link"
-												href="{{canonicalurl}}"
-												title="{{title}}"
-												target="_blank"
+											<img
+												src="{{imageinfo.0.thumburl}}"
+												data-src="{{imageinfo.0.thumburl}}"
+												alt="{{name}}"
+												loading="lazy"
+												class="wbmi-image"
+												style="{{imageStyle}}"
 											>
-												{{name}}
-											</a>
-										</h3>
+										</a>
+									{{/results}}
+								{{/isBitmap}}
 
-										{{#imageinfo.0.mime}}
-											<h4 class="wbmi-audio-result__meta">
-												{{! note: duration formatting is implemented in JS - not worth reimplementing here }}
-												<span class="wbmi-audio-result__mime">{{.}}</span>
-											</h4>
-										{{/imageinfo.0.mime}}
-
-										{{#entityterms.label}}
-											<p>{{.}}</p>
-										{{/entityterms.label}}
-									</div>
-								{{/results}}
-							{{/isAudio}}
-
-							{{#isVideo}}
-								{{#results}}
-									<a ref="link"
-										class="wbmi-video-result"
-										href="{{canonicalurl}}"
-										title="{{title}}"
-										target="_blank"
-									>
-										<img
-											src="{{imageinfo.0.thumburl}}"
-											alt="{{name}}"
-											class="wbmi-video-result__thumbnail"
-											loading="lazy"
-										>
-
-										<div class="wbmi-video-result__body">
-											<h3 class="wbmi-video-result__title">
-												{{name}}
+								{{#isAudio}}
+									{{#results}}
+										<div class="wbmi-audio-result">
+											<h3 class="wbmi-audio-result__title">
+												<a ref="link"
+													href="{{canonicalurl}}"
+													title="{{title}}"
+													target="_blank"
+												>
+													{{name}}
+												</a>
 											</h3>
 
 											{{#imageinfo.0.mime}}
-												<h4 class="wbmi-video-result__meta">
+												<h4 class="wbmi-audio-result__meta">
 													{{! note: duration formatting is implemented in JS - not worth reimplementing here }}
-													<span class="wbmi-video-result__mime">{{.}}</span>
+													<span class="wbmi-audio-result__mime">{{.}}</span>
 												</h4>
 											{{/imageinfo.0.mime}}
+
+											{{#entityterms.label}}
+												<p>{{.}}</p>
+											{{/entityterms.label}}
 										</div>
-									</a>
-								{{/results}}
-							{{/isVideo}}
+									{{/results}}
+								{{/isAudio}}
 
-							{{#isPage}}
-								{{#results}}
-									<div class="wbmi-page-result">
-										<h3>
-											<a href="{{canonicalurl}}"
-												title="{{title}}"
-												target="_blank"
-											>
-												{{name}}
-											</a>
-										</h3>
-										{{#categoryInfoText}}
-											<p>{{.}}</p>
-										{{/categoryInfoText}}
-
-										{{^categoryInfoText}}
-											{{#formattedPageSize}}
-												<p>{{.}}</p>
-											{{/formattedPageSize}}
-
-											{{#wordcountMessage}}
-												<p>{{.}}</p>
-											{{/wordcountMessage}}
-										{{/categoryInfoText}}
-									</div>
-								{{/results}}
-							{{/isPage}}
-
-							{{#isOther}}
-								{{#results}}
-									<div class="wbmi-other-result">
-										<a class="wbmi-other-result__thumbnail-wrapper"
+								{{#isVideo}}
+									{{#results}}
+										<a ref="link"
+											class="wbmi-video-result"
 											href="{{canonicalurl}}"
 											title="{{title}}"
-											style="width: {{imageinfo.0.thumbwidth}}px; height: {{imageinfo.0.thumbheight}}px;"
 											target="_blank"
 										>
 											<img
 												src="{{imageinfo.0.thumburl}}"
 												alt="{{name}}"
+												class="wbmi-video-result__thumbnail"
 												loading="lazy"
 											>
+
+											<div class="wbmi-video-result__body">
+												<h3 class="wbmi-video-result__title">
+													{{name}}
+												</h3>
+
+												{{#imageinfo.0.mime}}
+													<h4 class="wbmi-video-result__meta">
+														{{! note: duration formatting is implemented in JS - not worth reimplementing here }}
+														<span class="wbmi-video-result__mime">{{.}}</span>
+													</h4>
+												{{/imageinfo.0.mime}}
+											</div>
 										</a>
-										<div class="wbmi-other-result__text">
+									{{/results}}
+								{{/isVideo}}
+
+								{{#isPage}}
+									{{#results}}
+										<div class="wbmi-page-result">
 											<h3>
 												<a href="{{canonicalurl}}"
-													target="_blank"
 													title="{{title}}"
+													target="_blank"
 												>
-													{{ name }}
+													{{name}}
 												</a>
 											</h3>
-											{{#resolution}}
-												<p class="wbmi-other-result__meta" dir="ltr">{{.}}</p>
-											{{/resolution}}
-											{{#imageSizeMessage}}
-												<p class="wbmi-other-result__meta">{{.}}</p>
-											{{/imageSizeMessage}}
+											{{#categoryInfoText}}
+												<p>{{.}}</p>
+											{{/categoryInfoText}}
+
+											{{^categoryInfoText}}
+												{{#formattedPageSize}}
+													<p>{{.}}</p>
+												{{/formattedPageSize}}
+
+												{{#wordcountMessage}}
+													<p>{{.}}</p>
+												{{/wordcountMessage}}
+											{{/categoryInfoText}}
 										</div>
-									</div>
-								{{/results}}
-							{{/isOther}}
+									{{/results}}
+								{{/isPage}}
+
+								{{#isOther}}
+									{{#results}}
+										<div class="wbmi-other-result">
+											<a class="wbmi-other-result__thumbnail-wrapper"
+												href="{{canonicalurl}}"
+												title="{{title}}"
+												style="width: {{imageinfo.0.thumbwidth}}px; height: {{imageinfo.0.thumbheight}}px;"
+												target="_blank"
+											>
+												<img
+													src="{{imageinfo.0.thumburl}}"
+													alt="{{name}}"
+													loading="lazy"
+												>
+											</a>
+											<div class="wbmi-other-result__text">
+												<h3>
+													<a href="{{canonicalurl}}"
+														target="_blank"
+														title="{{title}}"
+													>
+														{{ name }}
+													</a>
+												</h3>
+												{{#resolution}}
+													<p class="wbmi-other-result__meta" dir="ltr">{{.}}</p>
+												{{/resolution}}
+												{{#imageSizeMessage}}
+													<p class="wbmi-other-result__meta">{{.}}</p>
+												{{/imageSizeMessage}}
+											</div>
+										</div>
+									{{/results}}
+								{{/isOther}}
+							</div>
 						</div>
 					</div>
 

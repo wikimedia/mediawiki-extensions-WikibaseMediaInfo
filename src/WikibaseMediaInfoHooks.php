@@ -704,8 +704,12 @@ class WikibaseMediaInfoHooks {
 	 * @param SearchProfileService $service
 	 */
 	public static function onCirrusSearchProfileService( SearchProfileService $service ) {
-		$request = RequestContext::getMain()->getRequest();
-		$title = RequestContext::getMain()->getTitle() ?? Title::newMainPage();
+		global $wgWBCSUseCirrus;
+		if ( !$wgWBCSUseCirrus ) {
+			// avoid leaking into CirrusSearch test suite, where $wgWBCSUseCirrus
+			// will be false
+			return;
+		}
 
 		// Register the query builder profiles so that they are usable in interleaved A/B test
 		$service->registerFileRepository( SearchProfileService::FT_QUERY_BUILDER,
@@ -727,30 +731,28 @@ class WikibaseMediaInfoHooks {
 		// array key in MediaSearchProfiles.php
 		$fulltextProfileName = MediaSearchQueryBuilder::FULLTEXT_PROFILE_NAME;
 
+		$request = RequestContext::getMain()->getRequest();
 		if ( $request->getCheck( 'mediasearch_experimental' ) ) {
 			// switch to experimental implementation (only) when explicitly requested
 			$fulltextProfileName = 'mediainfo_fulltext_experimental';
 		}
 
-		// Only activate a query route if mediasearch is explicitly requested
-		if ( $request->getCheck( 'mediasearch' ) || $title->equals( \SpecialPage::getTitleFor( 'MediaSearch' ) ) ) {
-			$service->registerDefaultProfile( SearchProfileService::FT_QUERY_BUILDER,
-				$searchProfileContextName, $fulltextProfileName );
+		$service->registerDefaultProfile( SearchProfileService::FT_QUERY_BUILDER,
+			$searchProfileContextName, $fulltextProfileName );
 
-			// Need to register a rescore profile for the profile context
-			$service->registerDefaultProfile( SearchProfileService::RESCORE,
-				$searchProfileContextName, 'classic_noboostlinks_max_boost_template' );
+		// Need to register a rescore profile for the profile context
+		$service->registerDefaultProfile( SearchProfileService::RESCORE,
+			$searchProfileContextName, 'classic_noboostlinks_max_boost_template' );
 
-			$service->registerFTSearchQueryRoute(
-				$searchProfileContextName,
-				1,
-				// only for NS_FILE searches
-				[ NS_FILE ],
-				// only when the search query is found to be something mediasearch
-				// is capable of dealing with (as determined by MediaSearchASTClassifier)
-				[ $fulltextProfileName ]
-			);
-		}
+		$service->registerFTSearchQueryRoute(
+			$searchProfileContextName,
+			1,
+			// only for NS_FILE searches
+			[ NS_FILE ],
+			// only when the search query is found to be something mediasearch
+			// is capable of dealing with (as determined by MediaSearchASTClassifier)
+			[ $fulltextProfileName ]
+		);
 	}
 
 	public static function onCirrusSearchRegisterFullTextQueryClassifiers(

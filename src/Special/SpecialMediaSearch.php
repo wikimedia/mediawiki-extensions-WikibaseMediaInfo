@@ -141,7 +141,7 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 					'isOther' => true,
 				],
 			],
-			'results' => array_map( function ( $result ) use ( $thumbLimits, $userLanguage, $type ) {
+			'results' => array_map( function ( $result ) use ( $thumbLimits, $userLanguage, $type, $results ) {
 				$title = Title::newFromDBkey( $result['title'] );
 				$filename = $title ? $title->getText() : $result['title'];
 				$result += [ 'name' => $filename ];
@@ -212,6 +212,7 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 					);
 
 					$result['imageResultClass'] = 'wbmi-image-result';
+
 					if (
 						$imageInfo['thumbwidth'] && $imageInfo['thumbheight'] &&
 						is_numeric( $imageInfo['thumbwidth'] ) && is_numeric( $imageInfo['thumbheight'] ) &&
@@ -231,6 +232,10 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 						}
 						// Set max initial width of 350px.
 						$result['wrapperStyle'] = 'width: ' . min( [ $imageInfo['thumbwidth'], 350 ] ) . 'px;';
+					}
+
+					if ( count( $results ) <= 3 ) {
+						$result['imageResultClass'] .= ' wbmi-image-result--limit-size';
 					}
 
 					// Generate style attribute for the image itself.

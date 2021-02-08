@@ -2,6 +2,7 @@
 	"@metadata": {
 		"authors": [
 			"BadDog",
+			"Kizule",
 			"Obsuser",
 			"Zoranzoki21",
 			"Вукан Ц",
@@ -41,7 +42,7 @@
 	"wikibasemediainfo-filepage-license-agree": "Прихватам",
 	"wikibasemediainfo-statements-item-add-qualifier": "Додај квалификатор",
 	"wikibasemediainfo-statements-item-input-label": "с пројекта {{WBREPONAME}}",
-	"wikibasemediainfo-statements-item-input-placeholder": "Претражите да бисте додали ставке (домаћа мачка, планина, Таџ Махал итд.)",
+	"wikibasemediainfo-statements-item-input-placeholder": "Претражите да бисте додали ставке",
 	"wikibasemediainfo-statements-item-is-prominent": "Истакнуто",
 	"wikibasemediainfo-statements-item-mark-as-prominent": "Истакни",
 	"wikibasemediainfo-statements-item-remove": "Уклони",

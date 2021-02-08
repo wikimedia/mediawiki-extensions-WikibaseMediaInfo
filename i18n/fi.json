@@ -146,5 +146,7 @@
 	"wikibasemediainfo-special-mediasearch-input-label": "Etsi mediaa",
 	"wikibasemediainfo-special-mediasearch-input-placeholder": "Hae kuvia, ääntä, videota ja muuta",
 	"wikibasemediainfo-special-mediasearch-load-more-results": "Lataa lisää",
-	"wikibasemediainfo-special-mediasearch-quickview-button-text": "Lisätietoja"
+	"wikibasemediainfo-special-mediasearch-quickview-button-text": "Lisätietoja",
+	"wikibasemediainfo-special-mediasearch-results-count": "$1 {{PLURAL:$1|tulos|tulosta}}",
+	"wikibasemediainfo-special-mediasearch-wordcount": "($1 {{PLURAL:$1|sana|sanaa}})"
 }

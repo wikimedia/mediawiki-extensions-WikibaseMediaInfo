@@ -159,5 +159,5 @@
 	"wikibasemediainfo-copytextlayout-copy-success": "Copiad in di apont",
 	"wikibasemediainfo-special-mediasearch-clear-filters": "Scancela i filter",
 	"wikibasemediainfo-special-mediasearch-results-count": "$1 {{PLURAL:$1|risultad}}",
-	"wikibasemediainfo-special-mediasearch-wordcount": "$1 ({{PLURAL:$2|parola|$2 parole}})"
+	"wikibasemediainfo-special-mediasearch-wordcount": "$1 ({{PLURAL:$1|parola|$1 parole}})"
 }

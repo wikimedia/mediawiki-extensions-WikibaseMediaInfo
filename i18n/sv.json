@@ -154,5 +154,7 @@
 	"wikibasemediainfo-copytextlayout-copy": "Kopiera",
 	"wikibasemediainfo-copytextlayout-copy-fail": "Misslyckades att kopiera till urklipp.",
 	"wikibasemediainfo-copytextlayout-copy-success": "Kopierades till urklipp.",
-	"wikibasemediainfo-special-mediasearch-results-count": "$1 {{PLURAL:$1|resultat}}"
+	"wikibasemediainfo-special-mediasearch-clear-filters": "Rensa filter",
+	"wikibasemediainfo-special-mediasearch-results-count": "$1 {{PLURAL:$1|resultat}}",
+	"wikibasemediainfo-special-mediasearch-wordcount": "($1 {{PLURAL:$1|ord}})"
 }

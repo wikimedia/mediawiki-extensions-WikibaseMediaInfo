@@ -128,7 +128,6 @@ module.exports = {
 			params.iiurlheight = options.type === 'bitmap' ? 180 : undefined;
 			params.iiurlwidth = urlWidth;
 			params.wbetterms = 'label';
-			params.mediasearch = true; // @todo this is temporary to force the use of the mediasearch profile
 		}
 
 		// Add sort filter.

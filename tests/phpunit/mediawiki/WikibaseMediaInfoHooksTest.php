@@ -11,7 +11,6 @@ use Language;
 use MediaWiki\Revision\RevisionRecord;
 use MediaWiki\Revision\SlotRecord;
 use ParserOutput;
-use RequestContext;
 use Title;
 use User;
 use Wikibase\DataModel\Services\EntityId\EntityIdComposer;
@@ -402,8 +401,7 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 	}
 
 	public function testOnCirrusSearchProfileServiceMediaSearch() {
-		$request = RequestContext::getMain()->getRequest();
-		$request->setVal( 'mediasearch', 1 );
+		$this->setMwGlobals( 'wgWBCSUseCirrus', true );
 
 		$service = $this->createMock( SearchProfileService::class );
 		$service->expects( $this->once() )
@@ -413,15 +411,6 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 				$this->anything(),
 				$this->containsEqual( NS_FILE )
 			);
-
-		WikibaseMediaInfoHooks::onCirrusSearchProfileService( $service );
-	}
-
-	public function testOnCirrusSearchProfileServiceNoMediaSearch() {
-		$service = $this->createMock( SearchProfileService::class );
-		// The method will never be called, because 'mediasearch' isn't truthy in the request
-		$service->expects( $this->never() )
-			->method( 'registerFTSearchQueryRoute' );
 
 		WikibaseMediaInfoHooks::onCirrusSearchProfileService( $service );
 	}

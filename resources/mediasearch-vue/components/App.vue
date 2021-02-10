@@ -142,10 +142,20 @@ module.exports = {
 	] ), {
 
 		/**
+		 * The names here need to match the keys found in this.results,
+		 * (which originate in Vuex store), but the order here matters
+		 * for visual presentation so they have been manually sorted.
+		 *
 		 * @return {string[]} [ 'bitmap', 'video', 'audio', 'page', 'other' ]
 		 */
 		tabs: function () {
-			return Object.keys( this.results );
+			return [
+				'bitmap',
+				'audio',
+				'video',
+				'other',
+				'page'
+			];
 		},
 
 		/**

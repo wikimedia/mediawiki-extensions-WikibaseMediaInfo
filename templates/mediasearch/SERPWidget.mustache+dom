@@ -153,12 +153,21 @@
 												</a>
 											</h3>
 
-											{{#imageinfo.0.mime}}
-												<h4 class="wbmi-audio-result__meta">
+											<h4 class="wbmi-audio-result__meta">
+												<span class="wbmi-audio-result__duration">
+													<span class="wbmi-icon wbmi-icon--flip-for-rtl">
+														<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 20 20" aria-hidden="true">
+															<g fill="currentColor">
+																<path d="M4 6v8l5.2 3.9c.3.3.8 0 .8-.5V2.6c0-.5-.5-.8-.8-.5zm0 8H1a1 1 0 01-1-1V7a1 1 0 011-1h3m0 0 M16.4 17.4a1 1 0 01-.7-1.7 8 8 0 000-11.4A1 1 0 0117 3a10 10 0 010 14.2 1 1 0 01-.7.3z M13.5 14.5a1 1 0 01-.7-.3 1 1 0 010-1.4 4 4 0 000-5.6 1 1 0 011.4-1.4 6 6 0 010 8.4 1 1 0 01-.7.3z"></path>
+															</g>
+														</svg>
+													</span>
 													{{! note: duration formatting is implemented in JS - not worth reimplementing here }}
+												</span>
+												{{#imageinfo.0.mime}}
 													<span class="wbmi-audio-result__mime">{{.}}</span>
-												</h4>
-											{{/imageinfo.0.mime}}
+												{{/imageinfo.0.mime}}
+											</h4>
 
 											{{#entityterms.label}}
 												<p>{{.}}</p>
@@ -187,12 +196,21 @@
 													{{name}}
 												</h3>
 
-												{{#imageinfo.0.mime}}
-													<h4 class="wbmi-video-result__meta">
+												<h4 class="wbmi-video-result__meta">
+													<span class="wbmi-video-result__duration">
+														<span class="wbmi-icon">
+															<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 20 20" aria-hidden="true">
+																<g fill="currentColor">
+																	<path d="M4.55 19A1 1 0 013 18.13V1.87A1 1 0 014.55 1l12.2 8.13a1 1 0 010 1.7z"></path>
+																</g>
+															</svg>
+														</span>
 														{{! note: duration formatting is implemented in JS - not worth reimplementing here }}
+													</span>
+													{{#imageinfo.0.mime}}
 														<span class="wbmi-video-result__mime">{{.}}</span>
-													</h4>
-												{{/imageinfo.0.mime}}
+													{{/imageinfo.0.mime}}
+												</h4>
 											</div>
 										</a>
 									{{/results}}

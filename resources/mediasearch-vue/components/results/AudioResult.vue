@@ -10,13 +10,12 @@
 			</a>
 		</h3>
 
-		<h4 v-if="formattedDuration && mime"
-			class="wbmi-audio-result__meta">
+		<h4 class="wbmi-audio-result__meta">
 			<span class="wbmi-audio-result__duration">
 				<wbmi-icon :icon="icon"></wbmi-icon>
-				<span class="wbmi-audio-result__duration__text">{{ formattedDuration }}</span>
+				<span v-if="formattedDuration" class="wbmi-audio-result__duration__text">{{ formattedDuration }}</span>
 			</span>
-			<span class="wbmi-audio-result__mime">{{ mime }}</span>
+			<span v-if="mime" class="wbmi-audio-result__mime">{{ mime }}</span>
 		</h4>
 
 		<p v-if="label">

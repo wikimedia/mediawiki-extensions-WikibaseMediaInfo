@@ -18,10 +18,10 @@
 				{{ displayName }}
 			</h3>
 
-			<h4 v-if="formattedDuration || mime" class="wbmi-video-result__meta">
-				<span v-if="formattedDuration" class="wbmi-video-result__duration">
+			<h4 class="wbmi-video-result__meta">
+				<span class="wbmi-video-result__duration">
 					<wbmi-icon :icon="icon"></wbmi-icon>
-					<span class="wbmi-video-result__duration__text">{{ formattedDuration }}</span>
+					<span v-if="formattedDuration" class="wbmi-video-result__duration__text">{{ formattedDuration }}</span>
 				</span>
 				<span v-if="mime" class="wbmi-video-result__mime">
 					{{ mime }}

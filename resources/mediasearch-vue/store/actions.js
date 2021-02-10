@@ -47,6 +47,19 @@ function getMediaFilters( mediaType, filterValues ) {
 	return raw;
 }
 
+/**
+ * @param {string} suggestion
+ * @param {string} filters
+ * @return {string}
+ */
+function extractSuggestedTerm( suggestion, filters ) {
+	if ( filters ) {
+		return suggestion.substring( filters.length ).trim();
+	} else {
+		return suggestion;
+	}
+}
+
 module.exports = {
 	/**
 	 * Perform a search via API request. Should return a promise.
@@ -79,7 +92,7 @@ module.exports = {
 				gsrsearch: options.term,
 				gsrlimit: LIMIT,
 				gsroffset: context.state.continue[ options.type ] || 0,
-				gsrinfo: 'totalhits',
+				gsrinfo: 'totalhits|suggestion',
 				gsrprop: 'size|wordcount',
 				prop: options.type === 'page' ? 'info|categoryinfo' : 'info|imageinfo|entityterms',
 				inprop: 'url'
@@ -189,6 +202,12 @@ module.exports = {
 				}
 			}
 
+			if ( response.query.searchinfo && response.query.searchinfo.suggestion ) {
+				context.commit( 'setDidYouMean',
+					extractSuggestedTerm( response.query.searchinfo.suggestion, filters )
+				);
+			}
+
 			// Set whether or not the query can be continued
 			if ( response.continue ) {
 				// Store the "continue" property of the request so we can pick up where we left off
@@ -271,6 +290,7 @@ module.exports = {
 		context.commit( 'clearRelatedConcepts' );
 		context.commit( 'resetFilters' );
 		context.commit( 'resetResults' );
+		context.commit( 'clearDidYouMean' );
 	},
 
 	/**

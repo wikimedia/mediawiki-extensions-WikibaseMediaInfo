@@ -145,6 +145,21 @@ module.exports = {
 	},
 
 	/**
+	 * @param {Object} state
+	 * @param {string} suggestion
+	 */
+	setDidYouMean: function ( state, suggestion ) {
+		state.didYouMean = suggestion;
+	},
+
+	/**
+	 * @param {Object} state
+	 */
+	clearDidYouMean: function ( state ) {
+		state.didYouMean = null;
+	},
+
+	/**
 	 * Let the entire app know that the UI is fully initialized.
 	 *
 	 * Useful for things like taking measurements of DOM elements.

@@ -2,6 +2,7 @@
 
 var initialResults = mw.config.get( 'wbmiInitialSearchResults' ),
 	initialFilters = JSON.parse( mw.config.get( 'wbmiInitialFilters' ) ),
+	didYouMean = mw.config.get( 'wbmiDidYouMean' ),
 	// TODO: Remove this, it's just a workaround for now
 	// while we use data from Production commons to test features locally
 	ensureArray = function ( obj ) {
@@ -28,6 +29,11 @@ module.exports = {
 	term: initialTerm,
 
 	relatedConcepts: [],
+
+	/**
+	 * Suggested alternate search term, if any
+	 */
+	didYouMean: didYouMean,
 
 	/**
 	 * Arrays of objects broken down by type

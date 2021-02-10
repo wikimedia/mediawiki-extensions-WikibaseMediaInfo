@@ -340,7 +340,8 @@
 				"resources/mediasearch-vue/components/NoResults.less",
 				"resources/mediasearch-vue/components/EndOfResults.less",
 				"resources/mediasearch-vue/components/SearchFilters.less",
-				"resources/mediasearch-vue/components/ConceptChips.less"
+				"resources/mediasearch-vue/components/ConceptChips.less",
+				"resources/mediasearch-vue/components/DidYouMean.less"
 			],
 			"targets": [
 				"desktop",
@@ -376,6 +377,7 @@
 				"resources/mediasearch-vue/components/EmptyState.vue",
 				"resources/mediasearch-vue/components/NoResults.vue",
 				"resources/mediasearch-vue/components/EndOfResults.vue",
+				"resources/mediasearch-vue/components/DidYouMean.vue",
 				"resources/mediasearch-vue/components/SearchFilters.vue",
 				"resources/mediasearch-vue/components/ConceptChips.vue",
 				"resources/mediasearch-vue/data/filterItems.json",
@@ -436,6 +438,7 @@
 				"wikibasemediainfo-special-mediasearch-results-count",
 				"wikibasemediainfo-special-mediasearch-wordcount",
 				"wikibasemediainfo-special-mediasearch-image-size",
+				"wikibasemediainfo-special-mediasearch-did-you-mean",
 				"size-bytes",
 				"size-kilobytes",
 				"size-megabytes",

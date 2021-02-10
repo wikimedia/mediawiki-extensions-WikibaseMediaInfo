@@ -30,6 +30,8 @@
 				>
 				</search-filters>
 
+				<did-you-mean></did-you-mean>
+
 				<transition-group
 					name="wbmi-concept-chips-transition"
 					class="wbmi-concept-chips-transition"
@@ -96,6 +98,7 @@ var AUTOLOAD_COUNT = 2,
 	SearchResults = require( './SearchResults.vue' ),
 	SearchFilters = require( './SearchFilters.vue' ),
 	ConceptChips = require( './ConceptChips.vue' ),
+	DidYouMean = require( './DidYouMean.vue' ),
 	Observer = require( './base/Observer.vue' ),
 	autocompleteLookupHandler = require( './../mixins/autocompleteLookupHandler.js' ),
 	url = new mw.Uri();
@@ -111,6 +114,7 @@ module.exports = {
 		'search-results': SearchResults,
 		'search-filters': SearchFilters,
 		'concept-chips': ConceptChips,
+		'did-you-mean': DidYouMean,
 		observer: Observer
 	},
 
@@ -175,6 +179,7 @@ module.exports = {
 		'resetFilters',
 		'resetResults',
 		'clearRelatedConcepts',
+		'clearDidYouMean',
 		'setTerm',
 		'setPending',
 		'resetFilters',
@@ -383,6 +388,7 @@ module.exports = {
 		performNewSearch: function ( mediaType ) {
 			this.resetResults( mediaType );
 			this.clearRelatedConcepts();
+			this.clearDidYouMean();
 			this.autoloadCounter = this.setInitialAutoloadCountForTabs();
 
 			// Abort in-flight lookup promises to ensure the results provided

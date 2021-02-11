@@ -1,7 +1,7 @@
 'use strict';
 
 var ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
-	wbTermsLanguages = require( '../config/wbTermsLanguages.json' ),
+	wbMonolingualTextLanguages = require( '../config/wbMonolingualTextLanguages.json' ),
 	UlsWidget = require( 'wikibase.mediainfo.uls' ),
 	AbstractInputWidget = require( './AbstractInputWidget.js' ),
 	MonolingualTextInputWidget;
@@ -30,7 +30,7 @@ MonolingualTextInputWidget = function MediaInfoStatementsMonolingualTextInputWid
 
 	this.language = new UlsWidget( {
 		language: this.state.language,
-		languages: wbTermsLanguages,
+		languages: wbMonolingualTextLanguages,
 		label: mw.message( 'wikibasemediainfo-monolingualtext-language-label' ).text()
 	} );
 	this.language.connect( this, { select: 'onChangeLanguage' } );

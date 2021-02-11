@@ -52,7 +52,17 @@ UlsWidget.prototype.initialiseUls = function ( languages ) {
 			ulsWidget.setValue( language );
 			ulsWidget.dropdown.$handle.focus();
 		},
-		languages: languages,
+		onReady: function () {
+			// ULS throws away languages for which it doesn't have any data,
+			// but we still want to allow/accept them when users input that
+			// language code manually
+			// this hacky little bit will repopulate the language list
+			this.languages = ulsWidget.languages;
+			this.recreateLanguageFilter();
+		},
+		// clone languages list: uls will mess with it internally,
+		// removing languages it doesn't know
+		languages: $.extend( {}, languages ),
 		onVisible: function () {
 			// Re-position the ULS *after* the widget has been rendered, so that we can be
 			// sure it's in the right place

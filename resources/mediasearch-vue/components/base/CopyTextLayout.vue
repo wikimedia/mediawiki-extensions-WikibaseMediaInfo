@@ -135,6 +135,7 @@ module.exports = {
 			// Show a success or failure message.
 			if ( copied ) {
 				mw.notify( this.successMessage );
+				this.$emit( 'copy' );
 			} else {
 				mw.notify( this.failMessage, { type: 'error' } );
 			}

@@ -129,16 +129,16 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 					'isVideo' => true,
 				],
 				[
-					'type' => 'page',
-					'label' => $this->msg( 'wikibasemediainfo-special-mediasearch-tab-page' )->text(),
-					'isActive' => $type === 'page',
-					'isPage' => true,
-				],
-				[
 					'type' => 'other',
 					'label' => $this->msg( 'wikibasemediainfo-special-mediasearch-tab-other' )->text(),
 					'isActive' => $type === 'other',
 					'isOther' => true,
+				],
+				[
+					'type' => 'page',
+					'label' => $this->msg( 'wikibasemediainfo-special-mediasearch-tab-page' )->text(),
+					'isActive' => $type === 'page',
+					'isPage' => true,
 				],
 			],
 			'results' => array_map( function ( $result ) use ( $thumbLimits, $userLanguage, $type, $results ) {

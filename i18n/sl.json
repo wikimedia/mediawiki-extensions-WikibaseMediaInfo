@@ -58,5 +58,6 @@
 	"wikibasemediainfo-statements-remove": "Odstrani vse",
 	"wikibasemediainfo-statements-title-depicts": "Predmeti, prikazani v tej datoteki",
 	"wikibasemediainfo-statements-unsupported-property-title": "Nepodprta lastnost",
-	"wikibasemediainfo-statements-link-notice-text": "Oznake strukturiranih podatkov se povezujejo z ustreznimi stranmi v projektu {{WBREPONAME}} in se odprejo v novem oknu."
+	"wikibasemediainfo-statements-link-notice-text": "Oznake strukturiranih podatkov se povezujejo z ustreznimi stranmi v projektu {{WBREPONAME}} in se bodo odprle v novem oknu.",
+	"wikibasemediainfo-special-mediasearch-tab-audio": "Zvok"
 }

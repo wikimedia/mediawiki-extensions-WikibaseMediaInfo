@@ -93,7 +93,16 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 
 		$totalSiteImages = $userLanguage->formatNum( SiteStats::images() );
 		$thumbLimits = $this->getThumbLimits();
+
+		// Handle optional searchinfo that may be present in the API response:
 		$totalHits = $searchinfo['totalhits'] ?? 0;
+		$didYouMean = null;
+		$didYouMeanLink = null;
+
+		if ( isset( $searchinfo[ 'suggestion' ] ) ) {
+			$didYouMean = $this->extractSuggestedTerm( $searchinfo[ 'suggestion' ] );
+			$didYouMeanLink = $this->generateDidYouMeanLink( $querystring, $didYouMean );
+		}
 
 		$data = [
 			'querystring' => array_map( function ( $key, $value ) {
@@ -271,6 +280,9 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 				->text(),
 			'noResultsMessage' => $this->msg( 'wikibasemediainfo-special-mediasearch-no-results' )->text(),
 			'noResultsMessageExtra' => $this->msg( 'wikibasemediainfo-special-mediasearch-no-results-tips' )->text(),
+			'didYouMean' => $didYouMean,
+			// phpcs:ignore Generic.Files.LineLength.TooLong
+			'didYouMeanMessage' => $this->msg( 'wikibasemediainfo-special-mediasearch-did-you-mean', $didYouMean, $didYouMeanLink )->text(),
 			'totalHits' => $totalHits,
 			'showResultsCount' => $totalHits > 0,
 			'resultsCount' => $this->msg(
@@ -288,7 +300,8 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 			'wbmiThumbLimits' => $thumbLimits,
 			'wbmiLocalDev' => $this->getConfig()->get( 'MediaInfoLocalDev' ),
 			'wbmiMediaSearchPageNamespaces' => $wgMediaInfoMediaSearchPageNamespaces,
-			'wbmiInitialFilters' => json_encode( (object)$activeFilters )
+			'wbmiInitialFilters' => json_encode( (object)$activeFilters ),
+			'wbmiDidYouMean' => $didYouMean
 		] );
 
 		$this->addHelpLink( 'Help:MediaSearch' );
@@ -335,7 +348,7 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 				'gsrlimit' => $limit,
 				'gsroffset' => $continue ?: 0,
 				'gsrsort' => $sort,
-				'gsrinfo' => 'totalhits',
+				'gsrinfo' => 'totalhits|suggestion',
 				'gsrprop' => 'size|wordcount',
 				'prop' => 'info|categoryinfo',
 				'inprop' => 'url',
@@ -372,7 +385,7 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 				'gsrlimit' => $limit,
 				'gsroffset' => $continue ?: 0,
 				'gsrsort' => $sort,
-				'gsrinfo' => 'totalhits',
+				'gsrinfo' => 'totalhits|suggestion',
 				'gsrprop' => 'size|wordcount',
 				'prop' => 'info|imageinfo|entityterms',
 				'inprop' => 'url',
@@ -538,4 +551,31 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 		return $thumbLimits;
 	}
 
+	/**
+	 * @param string $suggestion
+	 * @return string
+	 */
+	protected function extractSuggestedTerm( $suggestion ) {
+		$filters = [ 'filetype', 'fileres', 'filemime', 'haslicense' ];
+		$suggestion = preg_replace(
+			'/(?<=^|\s)(' . implode( '|', $filters ) . '):.+?(?=$|\s)/',
+			' ',
+			$suggestion
+		);
+		return trim( $suggestion );
+	}
+
+	/**
+	 * If the search API returns a suggested search, generate a clickable link
+	 * that allows the user to run the suggested query immediately.
+	 *
+	 * @param array $queryParams
+	 * @param string $suggestion
+	 * @return string
+	 */
+	protected function generateDidYouMeanLink( $queryParams, $suggestion ) {
+		unset( $queryParams[ 'title' ] );
+		$queryParams[ 'q' ] = $suggestion;
+		return $this->getPageTitle()->getLinkURL( $queryParams );
+	}
 }

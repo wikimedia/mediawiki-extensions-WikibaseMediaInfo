@@ -115,6 +115,12 @@
 						{{/showResultsCount}}
 					</div>
 
+					{{#didYouMean}}
+					<div class="wbmi-media-search-did-you-mean">
+						{{{ didYouMeanMessage }}}
+					</div>
+					{{/didYouMean}}
+
 					<div class="wbmi-media-search-results">
 						<div class="wbmi-media-search-results__list-wrapper">
 							<div class="wbmi-media-search-results__list wbmi-media-search-results__list--{{type}}">

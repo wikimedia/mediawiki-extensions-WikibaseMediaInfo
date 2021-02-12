@@ -50,7 +50,7 @@ module.exports = {
 		}
 
 		this.observer = new IntersectionObserver(
-			intersectionCallback.bind( this ), // what to do when intersection occurrs
+			intersectionCallback.bind( this ), // what to do when intersection occurs
 			options // additional options can be provided as props to this component
 		);
 

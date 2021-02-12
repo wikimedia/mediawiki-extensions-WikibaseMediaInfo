@@ -35,6 +35,13 @@ module.exports = {
 		}
 	},
 
+	data: function () {
+		return {
+			isIntersecting: false,
+			debounceTimeoutId: null
+		};
+	},
+
 	computed: {
 		/**
 		 * @return {boolean}
@@ -73,6 +80,17 @@ module.exports = {
 	 * viewport, then add the src attribute.
 	 */
 	mounted: function () {
+		function loadImageIfIntersecting() {
+			if ( this.isIntersecting ) {
+				// set the "src" attribute so the image loads
+				this.$el.src = this.$el.dataset.src;
+
+				// remove the element from the observer's watch list so it
+				// doesn't keep getting called
+				this.observer.unobserve( this.$el );
+			}
+		}
+
 		/**
 		 * Callback function which is given to the Observer object; this is
 		 * what gets executed when the element enters the viewport
@@ -80,17 +98,17 @@ module.exports = {
 		 * @param {Array} entries array of elements watched by the observer
 		 */
 		function intersectionCallback( entries ) {
-			var entry = entries[ 0 ],
-				image = entry.target;
+			var entry = entries[ 0 ];
 
-			if ( entry && entry.isIntersecting ) {
-				// set the "src" attribute so the image loads
-				image.src = image.dataset.src;
+			this.isIntersecting = entry && entry.isIntersecting;
 
-				// remove the element from the observer's watch list so it
-				// doesn't keep getting called
-				this.observer.unobserve( image );
-			}
+			// debounce to avoid loading images that are rapidly scrolled
+			// out of screen anyway
+			clearTimeout( this.debounceTimeoutId );
+			this.debounceTimeoutId = setTimeout(
+				loadImageIfIntersecting.bind( this ),
+				250
+			);
 		}
 
 		if ( this.supportsObserver ) {

@@ -240,7 +240,7 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 							$displayWidth += 60;
 						}
 						// Set max initial width of 350px.
-						$result['wrapperStyle'] = 'width: ' . min( [ $imageInfo['thumbwidth'], 350 ] ) . 'px;';
+						$result['wrapperStyle'] = 'width: ' . min( [ $displayWidth, 350 ] ) . 'px;';
 					}
 
 					if ( count( $results ) <= 3 ) {

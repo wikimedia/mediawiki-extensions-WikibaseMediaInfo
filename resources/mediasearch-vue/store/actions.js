@@ -132,7 +132,11 @@ module.exports = {
 					break;
 
 				case 'other':
-					urlWidth = 120;
+					// generating thumbnails from many of these file types is very
+					// expensive and slow, enough so that we're better off using a
+					// larger (takes longer to transfer) pre-generated (but readily
+					// available) size
+					urlWidth = Math.min.apply( Math, mw.config.get( 'wbmiThumbRenderMap' ) );
 					break;
 			}
 

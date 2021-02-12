@@ -256,7 +256,7 @@
 											<a class="wbmi-other-result__thumbnail-wrapper"
 												href="{{canonicalurl}}"
 												title="{{title}}"
-												style="width: {{imageinfo.0.thumbwidth}}px; height: {{imageinfo.0.thumbheight}}px;"
+												style="width: 120px; height: calc({{imageinfo.0.thumbheight}} / {{imageinfo.0.thumbwidth}} * 120px);"
 												target="_blank"
 											>
 												<img

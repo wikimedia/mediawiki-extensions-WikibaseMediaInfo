@@ -298,6 +298,7 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 			'wbmiInitialSearchResults' => $data,
 			'wbmiTotalSiteImages' => $totalSiteImages,
 			'wbmiThumbLimits' => $thumbLimits,
+			'wbmiThumbRenderMap' => $this->getConfig()->get( 'UploadThumbnailRenderMap' ),
 			'wbmiLocalDev' => $this->getConfig()->get( 'MediaInfoLocalDev' ),
 			'wbmiMediaSearchPageNamespaces' => $wgMediaInfoMediaSearchPageNamespaces,
 			'wbmiInitialFilters' => json_encode( (object)$activeFilters ),
@@ -368,7 +369,11 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 				break;
 
 				case 'other':
-					$width = 120;
+					// generating thumbnails from many of these file types is very
+					// expensive and slow, enough so that we're better off using a
+					// larger (takes longer to transfer) pre-generated (but readily
+					// available) size
+					$width = min( $this->getConfig()->get( 'UploadThumbnailRenderMap' ) );
 				break;
 
 				default:

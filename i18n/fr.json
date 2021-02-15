@@ -136,7 +136,7 @@
 	"wikibasemediainfo-special-mediasearch-tab-audio": "Audio",
 	"wikibasemediainfo-special-mediasearch-tab-video": "Vidéo",
 	"wikibasemediainfo-special-mediasearch-tab-page": "Catégories et pages",
-	"wikibasemediainfo-special-mediasearch-tab-other": "Autre",
+	"wikibasemediainfo-special-mediasearch-tab-other": "Autre média",
 	"wikibasemediainfo-special-mediasearch-filter-size": "Taille de l’image",
 	"wikibasemediainfo-special-mediasearch-filter-size-any": "Toutes les tailles d’image",
 	"wikibasemediainfo-special-mediasearch-filter-size-small": "Petite",
@@ -172,5 +172,6 @@
 	"wikibasemediainfo-copytextlayout-copy-success": "Copié dans le presse-papier.",
 	"wikibasemediainfo-special-mediasearch-clear-filters": "Effacer les filtres",
 	"wikibasemediainfo-special-mediasearch-results-count": "$1 {{PLURAL:$1|résultat|résultats}}",
-	"wikibasemediainfo-special-mediasearch-wordcount": "($1 {{PLURAL:$1|mot|mots}})"
+	"wikibasemediainfo-special-mediasearch-wordcount": "($1 {{PLURAL:$1|mot|mots}})",
+	"wikibasemediainfo-special-mediasearch-did-you-mean": "Vouliez-vous dire : <a href=\"$2\">$1</a>"
 }

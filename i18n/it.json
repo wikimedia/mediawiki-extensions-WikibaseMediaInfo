@@ -120,5 +120,6 @@
 	"wikibasemediainfo-copytextlayout-copy-fail": "Copia negli appunti non riuscita.",
 	"wikibasemediainfo-copytextlayout-copy-success": "Copiato negli appunti.",
 	"wikibasemediainfo-special-mediasearch-clear-filters": "Cancella filtri",
-	"wikibasemediainfo-special-mediasearch-results-count": "$1 {{PLURAL:$1|risultato|risultati}}"
+	"wikibasemediainfo-special-mediasearch-results-count": "$1 {{PLURAL:$1|risultato|risultati}}",
+	"wikibasemediainfo-special-mediasearch-did-you-mean": "Forse cercavi: <a href=\"$2\">$1</a>"
 }

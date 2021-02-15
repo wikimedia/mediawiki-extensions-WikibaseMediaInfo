@@ -128,7 +128,7 @@
 	"wikibasemediainfo-special-mediasearch-tab-audio": "Áudio",
 	"wikibasemediainfo-special-mediasearch-tab-video": "Vídeo",
 	"wikibasemediainfo-special-mediasearch-tab-page": "Categorias e páginas",
-	"wikibasemediainfo-special-mediasearch-tab-other": "Outro",
+	"wikibasemediainfo-special-mediasearch-tab-other": "Outras mídias",
 	"wikibasemediainfo-special-mediasearch-filter-size": "Tamanho da imagem",
 	"wikibasemediainfo-special-mediasearch-filter-size-any": "Todos os tamanhos de imagem",
 	"wikibasemediainfo-special-mediasearch-filter-size-small": "Pequeno",
@@ -164,5 +164,6 @@
 	"wikibasemediainfo-copytextlayout-copy-success": "Copiado para a área de transferência.",
 	"wikibasemediainfo-special-mediasearch-clear-filters": "Limpar filtros",
 	"wikibasemediainfo-special-mediasearch-results-count": "$1 {{PLURAL:$1|resultado|resultados}}",
-	"wikibasemediainfo-special-mediasearch-wordcount": "($1 {{PLURAL:$1|palavara|palavaras}})"
+	"wikibasemediainfo-special-mediasearch-wordcount": "($1 {{PLURAL:$1|palavara|palavaras}})",
+	"wikibasemediainfo-special-mediasearch-did-you-mean": "Você quis dizer: <a href=\"$2\">$1</a>"
 }

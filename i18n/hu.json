@@ -116,7 +116,7 @@
 	"wikibasemediainfo-special-mediasearch-tab-audio": "Hangfájlok",
 	"wikibasemediainfo-special-mediasearch-tab-video": "Videók",
 	"wikibasemediainfo-special-mediasearch-tab-page": "Kategóriák és Oldalak",
-	"wikibasemediainfo-special-mediasearch-tab-other": "Egyéb",
+	"wikibasemediainfo-special-mediasearch-tab-other": "Egyéb média",
 	"wikibasemediainfo-special-mediasearch-filter-size": "Média mérete",
 	"wikibasemediainfo-special-mediasearch-filter-size-any": "Bármilyen méret",
 	"wikibasemediainfo-special-mediasearch-filter-size-small": "Kicsi",
@@ -133,5 +133,6 @@
 	"wikibasemediainfo-copytextlayout-copy": "Másolás",
 	"wikibasemediainfo-copytextlayout-copy-fail": "A vágólapra másolás nem sikerült.",
 	"wikibasemediainfo-copytextlayout-copy-success": "Vágólapra másolva.",
-	"wikibasemediainfo-special-mediasearch-results-count": "$1 találat"
+	"wikibasemediainfo-special-mediasearch-results-count": "$1 találat",
+	"wikibasemediainfo-special-mediasearch-did-you-mean": "Erre gondoltál: <a href=\"$2\">$1</a> ?"
 }

@@ -125,7 +125,7 @@
 	"wikibasemediainfo-special-mediasearch-tab-audio": "Звук",
 	"wikibasemediainfo-special-mediasearch-tab-video": "Видео",
 	"wikibasemediainfo-special-mediasearch-tab-page": "Категории и страници",
-	"wikibasemediainfo-special-mediasearch-tab-other": "Други",
+	"wikibasemediainfo-special-mediasearch-tab-other": "Други медиумски податот.",
 	"wikibasemediainfo-special-mediasearch-filter-size": "Големина на сликата",
 	"wikibasemediainfo-special-mediasearch-filter-size-any": "Сите големини на слики",
 	"wikibasemediainfo-special-mediasearch-filter-size-small": "Мала",
@@ -161,5 +161,6 @@
 	"wikibasemediainfo-copytextlayout-copy-success": "Ископирано во меѓускладот.",
 	"wikibasemediainfo-special-mediasearch-clear-filters": "Исчисти филтри",
 	"wikibasemediainfo-special-mediasearch-results-count": "$1 {{PLURAL:$1|ставка|ставки}}",
-	"wikibasemediainfo-special-mediasearch-wordcount": "($1 {{PLURAL:$1|збор|збора}})"
+	"wikibasemediainfo-special-mediasearch-wordcount": "($1 {{PLURAL:$1|збор|збора}})",
+	"wikibasemediainfo-special-mediasearch-did-you-mean": "Дали мислевте на: <a href=\"$2\">$1</a>"
 }

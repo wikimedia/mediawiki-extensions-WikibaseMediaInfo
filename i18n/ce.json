@@ -25,5 +25,9 @@
 	"wikibasemediainfo-statements-item-input-placeholder": "ТӀетоха элементаш лахар",
 	"wikibasemediainfo-statements-item-mark-as-prominent": "Билгалъе къаьсташ санна",
 	"wikibasemediainfo-statements-learn-more": "Цул совнаха хаа",
-	"wikibasemediainfo-statements-title-depicts": "ХӀокху файл тӀера элементаш"
+	"wikibasemediainfo-statements-title-depicts": "ХӀокху файл тӀера элементаш",
+	"wikibasemediainfo-precision-input-label": "Нийсалла",
+	"wikibasemediainfo-select-precision-label": "Харжа нийсалла",
+	"wikibasemediainfo-time-timestamp-formatted": "Гуш хира ю иштта: $1",
+	"wikibasemediainfo-time-precision-label": "Нийсалла"
 }

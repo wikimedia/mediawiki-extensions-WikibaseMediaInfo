@@ -173,5 +173,5 @@
 	"wikibasemediainfo-special-mediasearch-clear-filters": "Effacer les filtres",
 	"wikibasemediainfo-special-mediasearch-results-count": "$1 {{PLURAL:$1|résultat|résultats}}",
 	"wikibasemediainfo-special-mediasearch-wordcount": "($1 {{PLURAL:$1|mot|mots}})",
-	"wikibasemediainfo-special-mediasearch-did-you-mean": "Vouliez-vous dire : <a href=\"$2\">$1</a>"
+	"wikibasemediainfo-special-mediasearch-did-you-mean": "Vouliez-vous dire : <a href=\"$2\">$1</a>"
 }

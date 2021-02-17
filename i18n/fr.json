@@ -53,7 +53,7 @@
 	"wikibasemediainfo-filepage-caption-approaching-limit": "{{PLURAL:$1|0=aucun caractère restant|$1 caractère restant|$1 caractères restants}}",
 	"wikibasemediainfo-filepage-statement-value-type-dropdown-title": "Choisir un type de valeur.",
 	"wikibasemediainfo-filepage-statement-custom-value-option": "Valeur personnalisée",
-	"wikibasemediainfo-filepage-statement-invalid-value": "Valeur non valide",
+	"wikibasemediainfo-filepage-statement-invalid-value": "Valeur incorrecte",
 	"wikibasemediainfo-filepage-statement-no-value-option": "Aucune valeur",
 	"wikibasemediainfo-filepage-statement-no-value": "Aucune valeur n’existe pour cette propriété",
 	"wikibasemediainfo-filepage-statement-no-data": "Aucune donnée disponible",
@@ -171,7 +171,7 @@
 	"wikibasemediainfo-copytextlayout-copy-fail": "Échec de copie vers le presse-papiers.",
 	"wikibasemediainfo-copytextlayout-copy-success": "Copié dans le presse-papier.",
 	"wikibasemediainfo-special-mediasearch-clear-filters": "Effacer les filtres",
-	"wikibasemediainfo-special-mediasearch-results-count": "$1 {{PLURAL:$1|résultat|résultats}}",
-	"wikibasemediainfo-special-mediasearch-wordcount": "($1 {{PLURAL:$1|mot|mots}})",
+	"wikibasemediainfo-special-mediasearch-results-count": "$1 résultat{{PLURAL:$1||s}}",
+	"wikibasemediainfo-special-mediasearch-wordcount": "($1 mot{{PLURAL:$1||s}})",
 	"wikibasemediainfo-special-mediasearch-did-you-mean": "Vouliez-vous dire : <a href=\"$2\">$1</a>"
 }

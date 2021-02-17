@@ -13,7 +13,7 @@ use Elastica\Query\MultiMatch;
 use Elastica\Script\Script;
 use Wikibase\MediaInfo\Search\MatchExplorerQuery;
 
-class WordsQueryNodeHandler extends AbstractTextNodeHandler {
+class WordsQueryNodeHandler implements ParsedNodeHandlerInterface {
 	/** @var WordsQueryNode */
 	private $node;
 
@@ -22,6 +22,9 @@ class WordsQueryNodeHandler extends AbstractTextNodeHandler {
 
 	/** @var bool */
 	private $hasLtrPlugin;
+
+	/** @var FieldIterator */
+	private $termScoringFieldIterator;
 
 	public function __construct(
 		WordsQueryNode $node,
@@ -32,53 +35,82 @@ class WordsQueryNodeHandler extends AbstractTextNodeHandler {
 		array $decays,
 		bool $hasLtrPlugin = false
 	) {
-		parent::__construct(
+		$this->node = $node;
+		$this->entitiesHandler = $entitiesHandler;
+		$this->hasLtrPlugin = $hasLtrPlugin;
+
+		$this->termScoringFieldIterator = new FieldIterator(
+			$this->getTermScoringFieldQueryBuilder( $node->getWords() ),
+			array_keys( $boosts ),
 			$languages,
 			$stemmingSettings,
 			$boosts,
 			$decays
 		);
-		$this->entitiesHandler = $entitiesHandler;
-		$this->node = $node;
-		$this->hasLtrPlugin = $hasLtrPlugin;
-	}
-
-	protected function buildQueryForField( $field, $boost = 0 ): AbstractQuery {
-		return ( new Match() )
-			->setFieldQuery( $field, $this->node->getWords() )
-			->setFieldBoost( $field, $boost );
 	}
 
 	public function transform(): AbstractQuery {
-		$query = new BoolQuery();
-
-		$query->addShould(
-			// we'll wrap the fulltext part to normalize the scores, which
-			// otherwise increase when the token count increases
-			$this->normalizeFulltextScores(
-				parent::transform(),
-				$this->node->getWords()
-			)
-		);
-		$query->addShould( $this->entitiesHandler->transform() );
+		$query = $this->getScoringQuery();
 
 		// at this point, $query contains an awful lot of logic to contribute
 		// to a score, including every occurrence of any of the words;
 		// however, unless a result actually contains *all* words (or a statement),
 		// it shouldn't even show up in the results (no matter how often some of the
 		// words are repeated)
-		$query->addFilter(
-			( new BoolQuery() )
-				->addShould(
-					( new MultiMatch() )
-						->setQuery( $this->node->getWords() )
-						->setFields( [ 'all', 'all.plain' ] )
-						->setOperator( MultiMatch::OPERATOR_AND )
-				)
-				->addShould( $this->entitiesHandler->transform() )
-		);
+		$query->addFilter( $this->getFilterQuery() );
 
 		return $query;
+	}
+
+	private function getFilterQuery(): BoolQuery {
+		return ( new BoolQuery() )
+			->addShould(
+				( new MultiMatch() )
+					->setQuery( $this->node->getWords() )
+					->setFields( [ 'all', 'all.plain' ] )
+					->setOperator( MultiMatch::OPERATOR_AND )
+			)
+			->addShould( $this->entitiesHandler->transform() );
+	}
+
+	private function getScoringQuery(): BoolQuery {
+		// build a query that iterates over all fields to match the given term
+		$fieldsQuery = new BoolQuery();
+		foreach ( $this->termScoringFieldIterator as $fieldQuery ) {
+			$fieldsQuery->addShould( $fieldQuery );
+		}
+
+		return ( new BoolQuery() )
+			->addShould(
+				// we'll wrap the fulltext part to normalize the scores, which
+				// otherwise increase when the token count increases
+				$this->normalizeFulltextScores(
+					$fieldsQuery,
+					$this->node->getWords()
+				)
+			)
+			->addShould( $this->entitiesHandler->transform() );
+	}
+
+	/**
+	 * @param string $term
+	 * @return FieldQueryBuilderInterface
+	 */
+	private function getTermScoringFieldQueryBuilder( $term ): FieldQueryBuilderInterface {
+		return new class( $term ) implements FieldQueryBuilderInterface {
+			/** @var string */
+			private $term;
+
+			public function __construct( $term ) {
+				$this->term = $term;
+			}
+
+			public function getQuery( $field, $boost ): AbstractQuery {
+				return ( new Match() )
+					->setFieldQuery( $field, $this->term )
+					->setFieldBoost( $field, $boost );
+			}
+		};
 	}
 
 	/**

@@ -142,11 +142,18 @@ class WordsQueryNodeHandler extends AbstractTextNodeHandler {
 						( new FunctionScore() )
 							->setQuery( $termsCountQuery )
 							->addScriptScoreFunction(
-								new Script( 'ln(1 / max(1, min(1.25, _score)))', [], 'expression' )
+							// a dividend of `2` is another hack - ES6.5+ will not permit returning
+							// negative scores (which could be produced when the dividend is
+							// smaller than the divisor (min(1.25, _score))
+							// let's chose a dividend that's guaranteed to be larger than the
+							// dividend (which in our case is capped at 1.25) to guarantee
+							// that no negative value will be returned, and we'll later divide
+							// that value again from the combined score
+								new Script( 'ln(2 / max(1, min(1.25, _score)))', [], 'expression' )
 							)
 					)
 			)
-			->addScriptScoreFunction( new Script( 'exp(_score)', [], 'expression' ) )
+			->addScriptScoreFunction( new Script( 'exp(_score) / 2', [], 'expression' ) )
 			// setting a minimum score simply prevents documents from being dropped
 			// when used inside a must_not clause
 			->setMinScore( 0 );

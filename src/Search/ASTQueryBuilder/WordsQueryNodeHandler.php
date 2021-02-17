@@ -137,18 +137,24 @@ class WordsQueryNodeHandler extends AbstractTextNodeHandler {
 								// too small to make any meaningful impact anyway...
 								new Script( 'max(0, ln(_score))', [], 'expression' )
 							)
+							// $originalQuery may include documents with a score of 0 - that's
+							// perfectly acceptable, but due to the nature of this hacky workaround
+							// (being based on a sum with another non-zero value), they'd end up
+							// with a non-zero result; we should simply exclude zero values from
+							// this calculation & leave them, untouched, at 0
+							->setMinScore( 0.00000001 )
 					)
 					->addShould(
 						( new FunctionScore() )
 							->setQuery( $termsCountQuery )
 							->addScriptScoreFunction(
-							// a dividend of `2` is another hack - ES6.5+ will not permit returning
-							// negative scores (which could be produced when the dividend is
-							// smaller than the divisor (min(1.25, _score))
-							// let's chose a dividend that's guaranteed to be larger than the
-							// dividend (which in our case is capped at 1.25) to guarantee
-							// that no negative value will be returned, and we'll later divide
-							// that value again from the combined score
+								// a dividend of `2` is another hack - ES6.5+ will not permit returning
+								// negative scores (which could be produced when the dividend is
+								// smaller than the divisor (min(1.25, _score))
+								// let's chose a dividend that's guaranteed to be larger than the
+								// dividend (which in our case is capped at 1.25) to guarantee
+								// that no negative value will be returned, and we'll later divide
+								// that value again from the combined score
 								new Script( 'ln(2 / max(1, min(1.25, _score)))', [], 'expression' )
 							)
 					)

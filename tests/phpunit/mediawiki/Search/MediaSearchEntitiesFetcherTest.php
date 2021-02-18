@@ -15,7 +15,7 @@ class MediaSearchEntitiesFetcherTest extends MediaWikiTestCase {
 		$mockMultiHttpClient->method( 'runMulti' )
 			->willReturnCallback( static function ( array $requests ) {
 				foreach ( $requests as $i => $request ) {
-					preg_match( '/&srsearch=(.*?)&/', $request['url'], $matches );
+					preg_match( '/&gsrsearch=(.*?)&/', $request['url'], $matches );
 					$term = $matches[1];
 					$filename = __DIR__ . "/../../data/entities_search/$term.json";
 					$requests[$i]['response']['body'] = file_exists( $filename ) ? file_get_contents( $filename ) : '';
@@ -27,6 +27,7 @@ class MediaSearchEntitiesFetcherTest extends MediaWikiTestCase {
 		return new MediaSearchEntitiesFetcher(
 			$mockMultiHttpClient,
 			'url-not-required-for-mock',
+			'en',
 			'en'
 		);
 	}
@@ -43,6 +44,7 @@ class MediaSearchEntitiesFetcherTest extends MediaWikiTestCase {
 			foreach ( $results[$term] as $result ) {
 				$this->assertArrayHasKey( 'entityId', $result );
 				$this->assertArrayHasKey( 'score', $result );
+				$this->assertArrayHasKey( 'synonyms', $result );
 			}
 		}
 	}
@@ -61,6 +63,7 @@ class MediaSearchEntitiesFetcherTest extends MediaWikiTestCase {
 				foreach ( $results[$term] as $result ) {
 					$this->assertArrayHasKey( 'entityId', $result );
 					$this->assertArrayHasKey( 'score', $result );
+					$this->assertArrayHasKey( 'synonyms', $result );
 				}
 			}
 		}

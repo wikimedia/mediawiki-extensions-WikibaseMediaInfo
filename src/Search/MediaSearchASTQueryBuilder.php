@@ -47,6 +47,9 @@ class MediaSearchASTQueryBuilder implements Visitor {
 	/** @var string[] */
 	private $languages;
 
+	/** @var string */
+	private $contentLanguage;
+
 	/** @var float[] */
 	private $boosts;
 
@@ -61,6 +64,7 @@ class MediaSearchASTQueryBuilder implements Visitor {
 	 * @param float[] $searchProperties Properties to search statements in ([ propertyId => weight ])
 	 * @param array[] $stemmingSettings Stemming settings (see $wgWBCSUseStemming)
 	 * @param string[] $languages Languages to search text in
+	 * @param string $contentLanguage Content language code
 	 * @param array[] $settings Optional weight/decay overrides, plus some options
 	 */
 	public function __construct(
@@ -68,12 +72,14 @@ class MediaSearchASTQueryBuilder implements Visitor {
 		array $searchProperties,
 		array $stemmingSettings,
 		array $languages,
+		string $contentLanguage,
 		array $settings = []
 	) {
 		$this->entitiesExtractor = $entitiesExtractor;
 		$this->searchProperties = $searchProperties;
 		$this->stemmingSettings = $stemmingSettings;
 		$this->languages = $languages;
+		$this->contentLanguage = $contentLanguage;
 		$this->boosts = ( $settings['boost'] ?? [] ) + [
 			'statement' => 1.0,
 			'descriptions.$language' => 1.0,
@@ -97,6 +103,7 @@ class MediaSearchASTQueryBuilder implements Visitor {
 		$this->decays = ( $settings['decay'] ?? [] ) + [
 			'descriptions.$language' => 1.0,
 			'descriptions.$language.plain' => 1.0,
+			'synonyms' => 1.0,
 		];
 		$this->options = [
 			'normalizeFulltextScores' => (bool)( $settings['normalizeFulltextScores'] ?? true ),
@@ -104,6 +111,7 @@ class MediaSearchASTQueryBuilder implements Visitor {
 			'hasLtrPlugin' => (bool)( $settings['hasLtrPlugin'] ?? false ),
 			'entitiesVariableBoost' => (bool)( $settings['entitiesVariableBoost'] ?? true ),
 			'applyLogisticFunction' => (bool)( $settings['applyLogisticFunction'] ?? false ),
+			'useSynonyms' => (bool)( $settings['useSynonyms'] ?? false ),
 			'logisticRegressionIntercept' => (float)( $settings['logisticRegressionIntercept'] ?? 0 ),
 		];
 	}
@@ -206,10 +214,24 @@ class MediaSearchASTQueryBuilder implements Visitor {
 	}
 
 	public function visitWordsQueryNode( WordsQueryNode $node ) {
+		$synonyms = $this->getSynonyms( $node );
+
+		// remove case variations, preserving the highest value in case of duplicates
+		$synonyms = array_reduce( array_keys( $synonyms ), static function ( $result, $key ) use (
+			$synonyms ) {
+			$lowercase = strtolower( $key );
+			$result[$lowercase] = max( $synonyms[$key], $result[$lowercase] ?? 0 );
+			return $result;
+		}, [] );
+		// remove duplicate of original term
+		unset( $synonyms[strtolower( $node->getWords() )] );
+
 		$nodeHandler = new WordsQueryNodeHandler(
 			$node,
 			$this->getWikibaseEntitiesHandler( $node ),
 			$this->languages,
+			$synonyms,
+			array_fill_keys( $synonyms, [ $this->contentLanguage ] ),
 			$this->stemmingSettings,
 			$this->boosts,
 			$this->decays,
@@ -276,5 +298,33 @@ class MediaSearchASTQueryBuilder implements Visitor {
 			$this->boosts,
 			$this->options['entitiesVariableBoost']
 		);
+	}
+
+	/**
+	 * @param WordsQueryNode $node
+	 * @param float $threshold relevance percentage below which not to include synonyms
+	 * @return array [synonym => score]
+	 */
+	private function getSynonyms( WordsQueryNode $node, $threshold = 0.5 ): array {
+		if ( !$this->options[ 'useSynonyms' ] ) {
+			return [];
+		}
+
+		$entities = $this->entitiesExtractor->getEntities( $this->parsedQuery, $node );
+
+		$synonyms = [];
+		foreach ( $entities as $entity ) {
+			if ( $entity['score'] < $threshold ) {
+				// skip entities that don't pass relevance threshold
+				continue;
+			}
+
+			$synonyms = array_merge(
+				$synonyms,
+				array_fill_keys( $entity['synonyms'] ?? [], $entity['score'] )
+			);
+		}
+
+		return $synonyms;
 	}
 }

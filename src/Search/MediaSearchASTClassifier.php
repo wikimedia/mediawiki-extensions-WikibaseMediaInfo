@@ -19,6 +19,7 @@ class MediaSearchASTClassifier extends LeafVisitor implements ParsedQueryClassif
 	private $profiles = [
 		MediaSearchQueryBuilder::FULLTEXT_PROFILE_NAME,
 		'mediasearch_logistic_regression',
+		MediaSearchQueryBuilder::SYNONYMS_PROFILE_NAME,
 	];
 
 	/** @var string[] */

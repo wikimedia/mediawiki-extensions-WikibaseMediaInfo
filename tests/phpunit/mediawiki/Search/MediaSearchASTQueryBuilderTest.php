@@ -47,6 +47,7 @@ class MediaSearchASTQueryBuilderTest extends MediaWikiIntegrationTestCase {
 			[],
 			[],
 			[],
+			'',
 			[]
 		);
 

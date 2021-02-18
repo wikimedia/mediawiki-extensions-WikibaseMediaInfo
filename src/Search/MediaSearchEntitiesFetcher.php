@@ -12,16 +12,21 @@ class MediaSearchEntitiesFetcher {
 	protected $externalEntitySearchBaseUri;
 
 	/** @var string */
-	protected $language;
+	protected $inputLanguage;
+
+	/** @var string */
+	protected $outputLanguage;
 
 	public function __construct(
 		MultiHttpClient $multiHttpClient,
 		string $externalEntitySearchBaseUri,
-		string $language
+		string $inputLanguage,
+		string $outputLanguage
 	) {
 		$this->multiHttpClient = $multiHttpClient;
 		$this->externalEntitySearchBaseUri = $externalEntitySearchBaseUri;
-		$this->language = $language;
+		$this->inputLanguage = $inputLanguage;
+		$this->outputLanguage = $outputLanguage;
 	}
 
 	/**
@@ -42,12 +47,15 @@ class MediaSearchEntitiesFetcher {
 				$params = [
 					'format' => 'json',
 					'action' => 'query',
-					'list' => 'search',
-					'srsearch' => $query,
-					'srnamespace' => 0,
-					'srlimit' => 50,
-					'srprop' => 'snippet|titlesnippet|extensiondata',
-					'uselang' => $this->language,
+					'generator' => 'search',
+					'gsrsearch' => $query,
+					'gsrnamespace' => 0,
+					'gsrlimit' => 50,
+					'gsrprop' => 'snippet|titlesnippet|extensiondata',
+					'uselang' => $this->inputLanguage,
+					'prop' => 'entityterms',
+					'wbetterms' => 'alias|label',
+					'wbetlanguage' => $this->outputLanguage,
 				];
 
 				return [
@@ -63,9 +71,15 @@ class MediaSearchEntitiesFetcher {
 			$transformedResponses[$term] = [];
 			$response = $responses[$i];
 			// iterate each result
-			foreach ( $response['query']['search'] ?? [] as $index => $result ) {
-				$transformedResponses[$term][] = $this->transformResult( $result, $index );
+			foreach ( $response['query']['pages'] ?? [] as $result ) {
+				$transformedResponses[$term][] = $this->transformResult( $result );
 			}
+		}
+
+		// Sort items by score.
+		foreach ( $transformedResponses as $i => $term ) {
+			$scores = array_column( $term, 'score' );
+			array_multisort( $scores, SORT_DESC, $transformedResponses[$i] );
 		}
 
 		return $transformedResponses;
@@ -73,10 +87,9 @@ class MediaSearchEntitiesFetcher {
 
 	/**
 	 * @param array $result
-	 * @param int $index
 	 * @return array
 	 */
-	protected function transformResult( array $result, $index ): array {
+	protected function transformResult( array $result ): array {
 		// unfortunately, the search API doesn't return an actual score
 		// (for relevancy of the match), which means that we have no way
 		// of telling which results are awesome matches and which are only
@@ -110,11 +123,21 @@ class MediaSearchEntitiesFetcher {
 		// takes into account additional factors such as popularity of
 		// the page) and the naive term frequency to calculate how relevant
 		// the results are relative to one another
-		$relativeOrder = 1 / ( $index + 1 );
+		$relativeOrder = 1 / $result['index'];
+
+		$synonyms = [];
+		if ( isset( $result['entityterms'] ) ) {
+			$synonyms = array_merge(
+				$synonyms,
+				$result['entityterms']['label'] ?? [],
+				$result['entityterms']['alias'] ?? []
+			 );
+		}
 
 		return [
 			'entityId' => $result['title'],
 			'score' => ( $relativeOrder + $maxTermFrequency ) / 2,
+			'synonyms' => $synonyms,
 		];
 	}
 

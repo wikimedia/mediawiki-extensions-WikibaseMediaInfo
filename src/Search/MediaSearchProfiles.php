@@ -74,10 +74,12 @@ return [
 					new MediaSearchEntitiesFetcher(
 						$mwServices->getHttpRequestFactory()->createMultiClient(),
 						$config->get( 'MediaInfoExternalEntitySearchBaseUri' ),
-						$languageCode
+						$languageCode,
+						$config->get( 'LanguageCode' )
 					),
 					$mwServices->getMainWANObjectCache(),
-					$languageCode
+					$languageCode,
+					$config->get( 'LanguageCode' )
 				)
 			);
 
@@ -109,6 +111,7 @@ return [
 					$searchProperties,
 					$configFactory->makeConfig( 'WikibaseCirrusSearch' )->get( 'UseStemming' ),
 					$languages,
+					$config->get( 'LanguageCode' ),
 					$settings
 				)
 			);
@@ -137,11 +140,14 @@ return [
 			'decay' => [
 				'descriptions.$language' => 0.9,
 				'descriptions.$language.plain' => 0.9,
+				// below is not actually a field
+				'synonyms' => 0,
 			],
 			'normalizeFulltextScores' => true,
 			'normalizeMultiClauseScores' => false,
 			'entitiesVariableBoost' => true,
 			'applyLogisticFunction' => false,
+			'useSynonyms' => false,
 			'logisticRegressionIntercept' => 0,
 		],
 	],
@@ -173,10 +179,12 @@ return [
 					new MediaSearchEntitiesFetcher(
 						$mwServices->getHttpRequestFactory()->createMultiClient(),
 						$config->get( 'MediaInfoExternalEntitySearchBaseUri' ),
-						$languageCode
+						$languageCode,
+						$config->get( 'LanguageCode' )
 					),
 					$mwServices->getMainWANObjectCache(),
-					$languageCode
+					$languageCode,
+					$config->get( 'LanguageCode' )
 				)
 			);
 
@@ -208,6 +216,7 @@ return [
 					$searchProperties,
 					$configFactory->makeConfig( 'WikibaseCirrusSearch' )->get( 'UseStemming' ),
 					$languages,
+					$config->get( 'LanguageCode' ),
 					$settings
 				)
 			);
@@ -238,11 +247,121 @@ return [
 			'decay' => [
 				'descriptions.$language' => 0.9,
 				'descriptions.$language.plain' => 0.9,
+				// below is not actually a field
+				'synonyms' => 0,
 			],
 			'normalizeFulltextScores' => true,
 			'normalizeMultiClauseScores' => true,
 			'entitiesVariableBoost' => true,
 			'applyLogisticFunction' => true,
+			'useSynonyms' => false,
+			'logisticRegressionIntercept' => -1.1975600089068401,
+		],
+	],
+	MediaSearchQueryBuilder::SYNONYMS_PROFILE_NAME => [
+		'builder_factory' => closureToAnonymousClass( static function ( array $settings ) {
+			$languageCode = WikibaseRepo::getUserLanguage()->getCode();
+			$languageFallbackChain = WikibaseRepo::getLanguageFallbackChainFactory()
+				->newFromLanguageCode( $languageCode );
+
+			$mwServices = MediaWikiServices::getInstance();
+			$config = $mwServices->getMainConfig();
+			$configFactory = $mwServices->getConfigFactory();
+			$searchConfig = $configFactory->makeConfig( 'CirrusSearch' );
+			if ( !$searchConfig instanceof SearchConfig ) {
+				throw new MWException( 'CirrusSearch config must be instanceof SearchConfig' );
+			}
+			$features = ( new FullTextKeywordRegistry( $searchConfig ) )->getKeywords();
+
+			$searchProperties = $config->get( 'MediaInfoMediaSearchProperties' );
+			if ( $searchProperties === null ) {
+				$searchProperties = array_fill_keys( array_values( $config->get( 'MediaInfoProperties' ) ), 1 );
+			}
+
+			$languages = array_merge( [ $languageCode ], $languageFallbackChain->getFetchLanguageCodes() );
+			$languages = array_unique( $languages );
+
+			$entitiesFetcher = new MediaSearchMemoryEntitiesFetcher(
+				new MediaSearchCachingEntitiesFetcher(
+					new MediaSearchEntitiesFetcher(
+						$mwServices->getHttpRequestFactory()->createMultiClient(),
+						$config->get( 'MediaInfoExternalEntitySearchBaseUri' ),
+						$languageCode,
+						$config->get( 'LanguageCode' )
+					),
+					$mwServices->getMainWANObjectCache(),
+					$languageCode,
+					$config->get( 'LanguageCode' )
+				)
+			);
+
+			// allow settings (boost etc.) to be customized from URL query params
+			foreach ( RequestContext::getMain()->getRequest()->getQueryValues() as $key => $value ) {
+				// convert [ 'one:two' => 'three' ] into ['one']['two'] = 'three'
+				$flat = array_merge( explode( ':', $key ), [ floatval( $value ) ] );
+				$result = array_reduce(
+					array_reverse( $flat ),
+					static function ( $previous, $key ) {
+						return $previous !== null ? [ $key => $previous ] : $key;
+					},
+					null
+				);
+				$settings = array_replace_recursive( $settings, $result );
+			}
+			// work around '.' being replaced by '_'
+			if ( isset( $settings['boost']['redirect_title'] ) ) {
+				$settings['boost']['redirect.title'] = $settings['boost']['redirect_title'];
+				unset( $settings['boost']['redirect_title'] );
+			}
+
+			$settings['hasLtrPlugin'] = $config->get( 'MediaInfoMediaSearchHasLtrPlugin' );
+
+			return new MediaSearchQueryBuilder(
+				$features,
+				new MediaSearchASTQueryBuilder(
+					new MediaSearchASTEntitiesExtractor( $entitiesFetcher ),
+					$searchProperties,
+					$configFactory->makeConfig( 'WikibaseCirrusSearch' )->get( 'UseStemming' ),
+					$languages,
+					$config->get( 'LanguageCode' ),
+					$settings
+				)
+			);
+		} ),
+		'settings' => [
+			'boost' => [
+				'statement' => 0.11098311564161133,
+				'descriptions.$language' => 0.019320230186222098,
+				'descriptions.$language.plain' => 0,
+				'title' => 0.0702949038300864,
+				'title.plain' => 0,
+				'category' => 0.05158078808882278,
+				'category.plain' => 0,
+				'heading' => 0,
+				'heading.plain' => 0,
+				// Arbitrary small value to preserve ordering if we ONLY have a match in this field
+				'auxiliary_text' => 0.0001,
+				'auxiliary_text.plain' => 0,
+				'file_text' => 0,
+				'file_text.plain' => 0,
+				'redirect.title' => 0.01060150471482338,
+				'redirect.title.plain' => 0,
+				// Arbitrary small value to preserve ordering if we ONLY have a match in this field
+				'text' => 0.0001,
+				'text.plain' => 0,
+				'suggest' => 0,
+			],
+			'decay' => [
+				'descriptions.$language' => 0.9,
+				'descriptions.$language.plain' => 0.9,
+				// below is not actually a field
+				'synonyms' => 0.5,
+			],
+			'normalizeFulltextScores' => true,
+			'normalizeMultiClauseScores' => true,
+			'entitiesVariableBoost' => true,
+			'applyLogisticFunction' => true,
+			'useSynonyms' => true,
 			'logisticRegressionIntercept' => -1.1975600089068401,
 		],
 	],

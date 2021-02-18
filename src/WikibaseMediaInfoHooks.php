@@ -8,7 +8,6 @@ use CirrusSearch\Connection;
 use CirrusSearch\Parser\ParsedQueryClassifiersRepository;
 use CirrusSearch\Profile\SearchProfileService;
 use CirrusSearch\Search\CirrusIndexField;
-use Config;
 use ContentHandler;
 use Elastica\Document;
 use Language;
@@ -24,7 +23,6 @@ use OOUI\TabPanelLayout;
 use OutputPage;
 use ParserOutput;
 use RequestContext;
-use ResourceLoaderContext;
 use Skin;
 use Title;
 use Wikibase\Client\WikibaseClient;
@@ -34,6 +32,7 @@ use Wikibase\DataModel\Statement\StatementGuid;
 use Wikibase\Lib\LanguageFallbackChainFactory;
 use Wikibase\Lib\Store\EntityByLinkedTitleLookup;
 use Wikibase\Lib\UserLanguageLookup;
+use Wikibase\Lib\WikibaseContentLanguages;
 use Wikibase\MediaInfo\Content\MediaInfoContent;
 use Wikibase\MediaInfo\Content\MediaInfoHandler;
 use Wikibase\MediaInfo\DataAccess\Scribunto\Scribunto_LuaWikibaseMediaInfoEntityLibrary;
@@ -339,18 +338,37 @@ class WikibaseMediaInfoHooks {
 	 * Generate the list of languages that can be used in terms.
 	 * This will be exposed as part of a ResourceLoader package module.
 	 *
-	 * @param ResourceLoaderContext $context
-	 * @param Config $config
 	 * @return string[] language codes as keys, autonyms as values
 	 */
-	public static function generateWbTermsLanguages( ResourceLoaderContext $context, Config $config ) {
+	public static function generateWbTermsLanguages() {
 		$wbRepo = WikibaseRepo::getDefaultInstance();
 		$allLanguages = Language::fetchLanguageNames();
 		$termsLanguages = $wbRepo->getTermsLanguages()->getLanguages();
-		return array_intersect_key(
-			$allLanguages,
-			array_flip( $termsLanguages )
-		);
+
+		// use <code> => <name> for known languages; and add
+		// <code> => <code> for all additional acceptable language
+		// (that are not known to mediawiki)
+		return $allLanguages + array_combine( $termsLanguages, $termsLanguages );
+	}
+
+	/**
+	 * Generate the list of languages that can be used in monolingual text.
+	 * This will be exposed as part of a ResourceLoader package module.
+	 *
+	 * @return string[] language codes as keys, autonyms as values
+	 */
+	public static function generateWbMonolingualTextLanguages() {
+		$wbRepo = WikibaseRepo::getDefaultInstance();
+		$allLanguages = Language::fetchLanguageNames();
+		$monolingualTextLanguages = $wbRepo
+			->getWikibaseContentLanguages()
+			->getContentLanguages( WikibaseContentLanguages::CONTEXT_MONOLINGUAL_TEXT )
+			->getLanguages();
+
+		// use <code> => <name> for known languages; and add
+		// <code> => <code> for all additional acceptable language
+		// (that are not known to mediawiki)
+		return $allLanguages + array_combine( $monolingualTextLanguages, $monolingualTextLanguages );
 	}
 
 	/**

@@ -14,8 +14,8 @@
 			@click="onClick"
 			@blur="toggleMenu( false )"
 			@keyup.enter="onEnter"
-			@keyup.up="onArrowUp"
-			@keyup.down="onArrowDown"
+			@keydown.up.prevent="onArrowUp"
+			@keydown.down.prevent="onArrowDown"
 		>
 			<span
 				:id="textboxId"
@@ -124,7 +124,7 @@ module.exports = {
 		return {
 			showMenu: false,
 			icons: icons,
-			activeItemIndex: -1,
+			activeItemIndex: this.initialSelectedItemIndex,
 			selectedItemIndex: this.initialSelectedItemIndex
 		};
 	},
@@ -373,7 +373,7 @@ module.exports = {
 		 */
 		reset: function () {
 			this.selectedItemIndex = this.initialSelectedItemIndex;
-			this.activeItemIndex = -1;
+			this.activeItemIndex = this.initialSelectedItemIndex;
 		}
 	}
 };

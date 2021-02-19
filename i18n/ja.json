@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"A2y4",
 			"Afaz",
 			"Linuxmetel",
 			"Marine-Blue",
@@ -149,5 +150,6 @@
 	"wikibasemediainfo-copytextlayout-copy": "コピー",
 	"wikibasemediainfo-copytextlayout-copy-fail": "クリップボードにコピーできませんでした。",
 	"wikibasemediainfo-copytextlayout-copy-success": "クリップボードにコピーされました。",
-	"wikibasemediainfo-special-mediasearch-clear-filters": "フィルターをクリア"
+	"wikibasemediainfo-special-mediasearch-clear-filters": "フィルターをクリア",
+	"wikibasemediainfo-special-mediasearch-did-you-mean": "もしかして: <a href=\"$2\">$1</a>"
 }

@@ -11,21 +11,7 @@ var WbmiSearchFilter = function (
 	items
 ) {
 	this.type = type;
-	this.items = this.getProcessedItems( items );
-};
-
-WbmiSearchFilter.prototype.getProcessedItems = function ( items ) {
-	var processedItems = [];
-
-	items.forEach( function ( item ) {
-		processedItems.push( {
-			// eslint-disable-next-line mediawiki/msg-doc
-			label: 'labelMessage' in item ? mw.msg( item.labelMessage ) : item.label,
-			value: item.value
-		} );
-	} );
-
-	return processedItems;
+	this.items = items;
 };
 
 module.exports = WbmiSearchFilter;

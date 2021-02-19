@@ -14,6 +14,7 @@ use TemplateParser;
 use Title;
 use UnlistedSpecialPage;
 use Wikibase\MediaInfo\MustacheDomTemplateParser;
+use Wikibase\MediaInfo\Services\MediaSearchOptions;
 use Wikimedia\Assert\Assert;
 
 /**
@@ -470,26 +471,13 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 	 */
 	protected function getFiltersForDisplay( $activeFilters, $mediaType ) : array {
 		$display = [];
-		$allFilters = file_get_contents( __DIR__ . '/../../resources/mediasearch-vue/data/filterItems.json' );
-		$allSorts = file_get_contents( __DIR__ . '/../../resources/mediasearch-vue/data/sortFilterItems.json' );
-		$filterData = json_decode( $allFilters, true );
-		$sortData = json_decode( $allSorts, true );
+		$searchOptions = MediaSearchOptions::getSearchOptions( $this->getContext() );
 
-		// Sort options are handled differently from filters. Possible values
-		// will be defined by the relevant JSON file, but they will always live
-		// under the "sort" key and will not be specific to a particular media
-		// type. Manually adding a "sort" key with the values from the JSON file
-		// to the current media type's set of potential filters seemed like one
-		// way to handle this.
-		$filterData[ $mediaType ][ 'sort' ] = $sortData;
-
-		foreach ( $filterData[ $mediaType ] as $filterType => $possibleValues ) {
+		foreach ( $searchOptions[ $mediaType ] as $filterType => $possibleValues ) {
 			if ( array_key_exists( $filterType, $activeFilters ) ) {
 				foreach ( $possibleValues as $item ) {
 					if ( $activeFilters[ $filterType ] === $item[ 'value' ] ) {
-						$display[ $filterType ] = array_key_exists( 'labelMessage', $item ) ?
-							$this->msg( $item[ 'labelMessage' ] )->text() :
-							$item[ 'label' ];
+						$display[ $filterType ] = $item[ 'label' ];
 					}
 				}
 			}

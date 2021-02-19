@@ -380,8 +380,6 @@
 				"resources/mediasearch-vue/components/DidYouMean.vue",
 				"resources/mediasearch-vue/components/SearchFilters.vue",
 				"resources/mediasearch-vue/components/ConceptChips.vue",
-				"resources/mediasearch-vue/data/filterItems.json",
-				"resources/mediasearch-vue/data/sortFilterItems.json",
 				"resources/mediasearch-vue/models/SearchFilter.js",
 				"resources/mediasearch-vue/store/index.js",
 				"resources/mediasearch-vue/store/state.js",
@@ -393,24 +391,14 @@
 				"resources/mediasearch-vue/mixins/searchResultTimeBased.js",
 				"resources/mediasearch-vue/plugins/eventLogger.js",
 				"resources/polyfills/Array.prototype.find.js",
-				"resources/polyfills/Array.prototype.findIndex.js"
+				"resources/polyfills/Array.prototype.findIndex.js",
+				{
+					"name": "resources/mediasearch-vue/data/searchOptions.json",
+					"callback": "Wikibase\\MediaInfo\\Services\\MediaSearchOptions::getSearchOptions"
+				}
 			],
 			"messages": [
-				"wikibasemediainfo-special-mediasearch-filter-size",
-				"wikibasemediainfo-special-mediasearch-filter-size-any",
-				"wikibasemediainfo-special-mediasearch-filter-size-small",
-				"wikibasemediainfo-special-mediasearch-filter-size-medium",
-				"wikibasemediainfo-special-mediasearch-filter-size-large",
-				"wikibasemediainfo-special-mediasearch-filter-file-type-any",
 				"wikibasemediainfo-special-mediasearch-filter-sort-label",
-				"wikibasemediainfo-special-mediasearch-filter-sort-default",
-				"wikibasemediainfo-special-mediasearch-filter-sort-recency",
-				"wikibasemediainfo-special-mediasearch-filter-sort-popularity",
-				"wikibasemediainfo-special-mediasearch-filter-license-any",
-				"wikibasemediainfo-special-mediasearch-filter-license-cc-by",
-				"wikibasemediainfo-special-mediasearch-filter-license-cc-by-sa",
-				"wikibasemediainfo-special-mediasearch-filter-license-unrestricted",
-				"wikibasemediainfo-special-mediasearch-filter-license-other",
 				"wikibasemediainfo-special-mediasearch-no-results",
 				"wikibasemediainfo-special-mediasearch-end-of-results",
 				"wikibasemediainfo-special-mediasearch-no-results-tips",
@@ -438,10 +426,6 @@
 				"wikibasemediainfo-special-mediasearch-wordcount",
 				"wikibasemediainfo-special-mediasearch-image-size",
 				"wikibasemediainfo-special-mediasearch-did-you-mean",
-				"size-bytes",
-				"size-kilobytes",
-				"size-megabytes",
-				"size-gigabytes",
 				"blanknamespace"
 			],
 			"dependencies": [

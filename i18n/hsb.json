@@ -40,6 +40,7 @@
 	"wikibasemediainfo-filepage-caption-approaching-limit": "hišće $1 {{PLURAL:$1|pismik|pismikaj|pismiki|pismikow}}",
 	"wikibasemediainfo-filepage-statement-value-type-dropdown-title": "Wubjer typ hódnoty.",
 	"wikibasemediainfo-filepage-statement-custom-value-option": "Sam definowana hódnota",
+	"wikibasemediainfo-filepage-statement-invalid-value": "Njepłaćiwa hódnota",
 	"wikibasemediainfo-filepage-statement-no-value-option": "Žana hódnota",
 	"wikibasemediainfo-filepage-statement-no-value": "Za tutu kajkosć žana hódnota njeeksistuje",
 	"wikibasemediainfo-filepage-statement-no-data": "Žane daty k dispoziciji",
@@ -122,7 +123,7 @@
 	"wikibasemediainfo-special-mediasearch-tab-audio": "Awdio",
 	"wikibasemediainfo-special-mediasearch-tab-video": "Widejo",
 	"wikibasemediainfo-special-mediasearch-tab-page": "Kategorije a strony",
-	"wikibasemediainfo-special-mediasearch-tab-other": "Druhe",
+	"wikibasemediainfo-special-mediasearch-tab-other": "Dalše medije",
 	"wikibasemediainfo-special-mediasearch-filter-size": "Wulkosć wobraza",
 	"wikibasemediainfo-special-mediasearch-filter-size-any": "Wšě wulkosće wobrazow",
 	"wikibasemediainfo-special-mediasearch-filter-size-small": "małe",
@@ -156,5 +157,9 @@
 	"wikibasemediainfo-copytextlayout-copy": "Kopěrować",
 	"wikibasemediainfo-copytextlayout-copy-fail": "Tekst njeje so do mjezyskłada kopěrować dał.",
 	"wikibasemediainfo-copytextlayout-copy-success": "Do mjezyskłada kopěrowane.",
-	"wikibasemediainfo-special-mediasearch-clear-filters": "Filtry wotstronić"
+	"wikibasemediainfo-special-mediasearch-clear-filters": "Filtry wotstronić",
+	"wikibasemediainfo-special-mediasearch-results-count": "$1 {{PLURAL:$1|wuslědk|wuslědkaj|wuslědki|wuslědkow}}",
+	"wikibasemediainfo-special-mediasearch-wordcount": "($1 {{PLURAL:$1|słowo|słowje|słowa|słowow}})",
+	"wikibasemediainfo-special-mediasearch-image-size": "($1)",
+	"wikibasemediainfo-special-mediasearch-did-you-mean": "Měniš ty: <a href=\"$2\">$1</a>"
 }

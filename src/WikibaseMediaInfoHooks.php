@@ -808,8 +808,7 @@ class WikibaseMediaInfoHooks {
 	 * @param string[] &$extraLibraries
 	 */
 	public static function onScribuntoExternalLibraries( $engine, array &$extraLibraries ) {
-		$wbClient = WikibaseClient::getDefaultInstance();
-		$allowDataTransclusion = $wbClient->getSettings()->getSetting( 'allowDataTransclusion' );
+		$allowDataTransclusion = WikibaseClient::getSettings()->getSetting( 'allowDataTransclusion' );
 		if ( $engine === 'lua' && $allowDataTransclusion === true ) {
 			$extraLibraries['mw.wikibase.mediainfo'] = Scribunto_LuaWikibaseMediaInfoLibrary::class;
 			$extraLibraries['mw.wikibase.mediainfo.entity'] = [

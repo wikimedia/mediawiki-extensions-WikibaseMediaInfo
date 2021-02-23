@@ -125,7 +125,7 @@
 	"wikibasemediainfo-special-mediasearch-tab-audio": "Ljud",
 	"wikibasemediainfo-special-mediasearch-tab-video": "Video",
 	"wikibasemediainfo-special-mediasearch-tab-page": "Kategorier och sidor",
-	"wikibasemediainfo-special-mediasearch-tab-other": "Övrigt",
+	"wikibasemediainfo-special-mediasearch-tab-other": "Annan media",
 	"wikibasemediainfo-special-mediasearch-filter-size": "Bildstorlek",
 	"wikibasemediainfo-special-mediasearch-filter-size-any": "Alla bildstorlekar",
 	"wikibasemediainfo-special-mediasearch-filter-size-small": "Liten",
@@ -156,5 +156,6 @@
 	"wikibasemediainfo-copytextlayout-copy-success": "Kopierades till urklipp.",
 	"wikibasemediainfo-special-mediasearch-clear-filters": "Rensa filter",
 	"wikibasemediainfo-special-mediasearch-results-count": "$1 {{PLURAL:$1|resultat}}",
-	"wikibasemediainfo-special-mediasearch-wordcount": "($1 {{PLURAL:$1|ord}})"
+	"wikibasemediainfo-special-mediasearch-wordcount": "($1 {{PLURAL:$1|ord}})",
+	"wikibasemediainfo-special-mediasearch-did-you-mean": "Menade du: <a href=\"$2\">$1</a>"
 }

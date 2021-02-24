@@ -225,14 +225,24 @@
 								{{#isPage}}
 									{{#results}}
 										<div class="wbmi-page-result">
-											<h3>
-												<a href="{{canonicalurl}}"
-													title="{{title}}"
-													target="_blank"
-												>
-													{{name}}
-												</a>
-											</h3>
+											<div class="wbmi-page-result__title">
+												<span class="wbmi-page-result__namespace">
+													{{ namespacePrefix }}
+												</span>
+												<h3>
+													<a href="{{canonicalurl}}"
+														title="{{title}}"
+														target="_blank"
+													>
+														{{name}}
+													</a>
+												</h3>
+											</div>
+
+											{{#snippet}}
+												<div>{{{.}}}</div>
+											{{/snippet}}
+
 											{{#categoryInfoText}}
 												<p>{{.}}</p>
 											{{/categoryInfoText}}
@@ -246,6 +256,10 @@
 													<p>{{.}}</p>
 												{{/wordcountMessage}}
 											{{/categoryInfoText}}
+
+											{{#lastEdited}}
+												<p>- {{.}}</p>
+											{{/lastEdited}}
 										</div>
 									{{/results}}
 								{{/isPage}}

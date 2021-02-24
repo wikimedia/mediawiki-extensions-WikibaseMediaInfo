@@ -442,7 +442,8 @@
 				"size-bytes",
 				"size-kilobytes",
 				"size-megabytes",
-				"size-gigabytes"
+				"size-gigabytes",
+				"blanknamespace"
 			],
 			"dependencies": [
 				"wikibase.mediainfo.mediasearch.vue.styles",

@@ -259,7 +259,10 @@ return [
 			);
 
 			return new FilePageRedirectHandlingRevisionLookup(
-				new EntityIdFixingRevisionLookup( $defaultLookup, $wbRepo->getLogger() ),
+				new EntityIdFixingRevisionLookup(
+					$defaultLookup,
+					WikibaseRepo::getLogger( $services )
+				),
 				$revisionStoreFactory->getRevisionStore( $databaseName ),
 				new WikiPageEntityDataLoader(
 					$contentCodec,

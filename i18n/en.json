@@ -142,7 +142,6 @@
 	"wikibasemediainfo-special-mediasearch-no-results": "We didn't find any results",
 	"wikibasemediainfo-special-mediasearch-no-results-tips": "Try more general terms or check your spelling",
 	"wikibasemediainfo-special-mediasearch-end-of-results": "No more results found",
-	"wikibasemediainfo-special-mediasearch-end-of-results-tips": "Try adjusting your search term or filter settings",
 	"wikibasemediainfo-special-mediasearch-empty-state": "Search more than $1 free to re-use media {{PLURAL:$1|file|files}}",
 	"wikibasemediainfo-special-mediasearch-clear-title": "Remove",
 	"wikibasemediainfo-special-mediasearch-input-label": "Search media",

@@ -69,16 +69,17 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 		global $wgMediaInfoMediaSearchPageNamespaces;
 		OutputPage::setupOOUI();
 
-		$userLanguage = $this->getContext()->getLanguage();
+		$userLanguage = $this->getLanguage();
 
 		// url & querystring params of this page
-		$url = $this->getContext()->getRequest()->getRequestURL();
+		$url = $this->getRequest()->getRequestURL();
 		parse_str( parse_url( $url, PHP_URL_QUERY ), $querystring );
 
 		$term = str_replace( "\n", " ", $this->getRequest()->getText( 'q' ) );
 		$activeFilters = $this->getActiveFilters( $querystring );
 
-		$type = $querystring['type'] ?? 'bitmap';
+		$type = $querystring['type'] ?? MediaSearchOptions::TYPE_BITMAP;
+
 		$filtersForDisplay = $this->getFiltersForDisplay( $activeFilters, $type );
 		$limit = $this->getRequest()->getText( 'limit' ) ? (int)$this->getRequest()->getText( 'limit' ) : 40;
 		$termWithFilters = $this->getTermWithFilters( $term, $activeFilters );
@@ -121,158 +122,42 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 			'activeType' => $type,
 			'tabs' => [
 				[
-					'type' => 'bitmap',
+					'type' => MediaSearchOptions::TYPE_BITMAP,
 					'label' => $this->msg( 'wikibasemediainfo-special-mediasearch-tab-bitmap' )->text(),
-					'isActive' => $type === 'bitmap',
+					'isActive' => $type === MediaSearchOptions::TYPE_BITMAP,
 					'isBitmap' => true,
 				],
 				[
-					'type' => 'audio',
+					'type' => MediaSearchOptions::TYPE_AUDIO,
 					'label' => $this->msg( 'wikibasemediainfo-special-mediasearch-tab-audio' )->text(),
-					'isActive' => $type === 'audio',
+					'isActive' => $type === MediaSearchOptions::TYPE_AUDIO,
 					'isAudio' => true,
 				],
 				[
-					'type' => 'video',
+					'type' => MediaSearchOptions::TYPE_VIDEO,
 					'label' => $this->msg( 'wikibasemediainfo-special-mediasearch-tab-video' )->text(),
-					'isActive' => $type === 'video',
+					'isActive' => $type === MediaSearchOptions::TYPE_VIDEO,
 					'isVideo' => true,
 				],
 				[
-					'type' => 'other',
+					'type' => MediaSearchOptions::TYPE_OTHER,
 					'label' => $this->msg( 'wikibasemediainfo-special-mediasearch-tab-other' )->text(),
-					'isActive' => $type === 'other',
+					'isActive' => $type === MediaSearchOptions::TYPE_OTHER,
 					'isOther' => true,
 				],
 				[
-					'type' => 'page',
+					'type' => MediaSearchOptions::TYPE_PAGE,
 					'label' => $this->msg( 'wikibasemediainfo-special-mediasearch-tab-page' )->text(),
-					'isActive' => $type === 'page',
+					'isActive' => $type === MediaSearchOptions::TYPE_PAGE,
 					'isPage' => true,
 				],
 			],
-			'results' => array_map( function ( $result ) use ( $thumbLimits, $userLanguage, $type, $results ) {
-				$title = Title::newFromDBkey( $result['title'] );
-				$filename = $title ? $title->getText() : $result['title'];
-				$result += [ 'name' => $filename ];
-
-				// Category info.
-				if ( isset( $result['categoryinfo'] ) ) {
-					$categoryInfoParams = [
-						$userLanguage->formatNum( $result['categoryinfo']['size'] ),
-						$userLanguage->formatNum( $result['categoryinfo']['subcats'] ),
-						$userLanguage->formatNum( $result['categoryinfo']['files'] )
-					];
-					$result += [
-						'categoryInfoText' => $this->msg(
-							'wikibasemediainfo-special-mediasearch-category-info',
-							$categoryInfoParams
-						)->parse()
-					];
-				}
-
-				// Namespace prefix.
-				$namespaceId = $title->getNamespace();
-				$mainNsPrefix = preg_replace( '/^[(]?|[)]?$/', '', $this->msg( 'blanknamespace' ) );
-				$result['namespacePrefix'] = $namespaceId === NS_MAIN ?
-					$mainNsPrefix :
-					$this->getContentLanguage()->getFormattedNsText( $namespaceId );
-
-				// Last edited date.
-				$result['lastEdited'] = $userLanguage->timeanddate( $result['timestamp'] );
-
-				// Formatted page size.
-				if ( isset( $result['size'] ) ) {
-					$result['formattedPageSize'] = $userLanguage->formatSize( $result['size'] );
-				}
-
-				// Word count.
-				if ( isset( $result['wordcount'] ) ) {
-					$result['wordcountMessage'] = $this->msg(
-						'wikibasemediainfo-special-mediasearch-wordcount',
-						$userLanguage->formatNum( $result['wordcount'] )
-					)->text();
-				}
-
-				// Formatted image size.
-				if ( isset( $result['imageinfo'] ) && isset( $result['imageinfo'][0]['size'] ) ) {
-					$result['imageSizeMessage'] = $this->msg(
-						'wikibasemediainfo-special-mediasearch-image-size',
-						$userLanguage->formatSize( $result['imageinfo'][0]['size'] )
-					)->text();
-				}
-
-				if (
-					$type === 'other' &&
-					isset( $result['imageinfo'] ) &&
-					isset( $result['imageinfo'][0]['width'] ) &&
-					isset( $result['imageinfo'][0]['height'] )
-				) {
-					$result['resolution'] = $userLanguage->formatNum( $result['imageinfo'][0]['width'] ) .
-					' × ' . $userLanguage->formatNum( $result['imageinfo'][0]['height'] );
-				}
-
-				if ( isset( $result['imageinfo'] ) && isset( $result['imageinfo'][0]['thumburl'] ) ) {
-					$imageInfo = $result['imageinfo'][0];
-					$oldWidth = $imageInfo['thumbwidth'];
-					$newWidth = $oldWidth;
-
-					// find the closest (larger) width that is more common, it is (much) more
-					// likely to have a thumbnail cached
-					foreach ( $thumbLimits as $commonWidth ) {
-						if ( $commonWidth >= $oldWidth ) {
-							$newWidth = $commonWidth;
-							break;
-						}
-					}
-
-					$imageInfo['thumburl'] = str_replace(
-						'/' . $oldWidth . 'px-',
-						'/' . $newWidth . 'px-',
-						$imageInfo['thumburl']
-					);
-
-					$result['imageResultClass'] = 'wbmi-image-result';
-
-					if (
-						$imageInfo['thumbwidth'] && $imageInfo['thumbheight'] &&
-						is_numeric( $imageInfo['thumbwidth'] ) && is_numeric( $imageInfo['thumbheight'] ) &&
-						$imageInfo['thumbheight'] > 0
-					) {
-						if ( $imageInfo['thumbwidth'] / $imageInfo['thumbheight'] < 1 ) {
-							$result['imageResultClass'] .= ' wbmi-image-result--portrait';
-						}
-
-						// Generate style attribute for image wrapper.
-						$displayWidth = $imageInfo['thumbwidth'];
-						if ( $imageInfo['thumbheight'] < 180 ) {
-							// For small images, set the wrapper width to the
-							// thumbnail width plus a little extra to simulate
-							// left/right padding.
-							$displayWidth += 60;
-						}
-						// Set max initial width of 350px.
-						$result['wrapperStyle'] = 'width: ' . min( [ $displayWidth, 350 ] ) . 'px;';
-					}
-
-					if ( count( $results ) <= 3 ) {
-						$result['imageResultClass'] .= ' wbmi-image-result--limit-size';
-					}
-
-					// Generate style attribute for the image itself.
-					// There are height and max-width rules with the important
-					// keyword for .content a > img in Minerva Neue, and they
-					// have to be overridden.
-					if ( $imageInfo['width'] && $imageInfo['height'] ) {
-						$result['imageStyle'] =
-						'height: 100% !important; ' .
-						'max-width: ' . $imageInfo['width'] . 'px !important; ' .
-						'max-height: ' . $imageInfo['height'] . 'px;';
-					}
-				}
-
-				return $result;
-			}, $results ),
+			'results' => array_map(
+				function ( $result ) use ( $results, $type ) {
+					return $this->getResultData( $result, $results, $type );
+				},
+				$results
+			),
 			'continue' => $continue,
 			'hasFilters' => count( $activeFilters ) > 0,
 			'activeFilters' => array_values( $activeFilters ),
@@ -322,7 +207,7 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 
 	/**
 	 * @param string $term
-	 * @param string|null $type
+	 * @param string $type
 	 * @param int|null $limit
 	 * @param string|null $continue
 	 * @param string|null $sort
@@ -330,13 +215,14 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 	 * @throws \MWException
 	 */
 	protected function search(
-		$term, $type = null,
+		$term,
+		$type,
 		$limit = null,
 		$continue = null,
 		$sort = 'relevance'
 	): array {
 		Assert::parameterType( 'string', $term, '$term' );
-		Assert::parameterType( 'string|null', $type, '$type' );
+		Assert::parameterType( 'string', $type, '$type' );
 		Assert::parameterType( 'integer|null', $limit, '$limit' );
 		Assert::parameterType( 'string|null', $continue, '$continue' );
 		Assert::parameterType( 'string|null', $sort, '$sort' );
@@ -345,9 +231,9 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 			return [ [], [], null ];
 		}
 
-		$langCode = $this->getContext()->getLanguage()->getCode();
+		$langCode = $this->getLanguage()->getCode();
 
-		if ( $type === 'page' ) {
+		if ( $type === MediaSearchOptions::TYPE_PAGE ) {
 			$namespaces = array_diff( $this->namespaceInfo->getValidNamespaces(), [ NS_FILE ] );
 			$request = new FauxRequest( [
 				'format' => 'json',
@@ -366,19 +252,18 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 			] );
 		} else {
 			$filetype = $type;
-			if ( $type === 'bitmap' ) {
+			if ( $type === MediaSearchOptions::TYPE_BITMAP ) {
 				$filetype .= '|drawing';
-			}
-			if ( $type === 'other' ) {
+			} elseif ( $type === MediaSearchOptions::TYPE_OTHER ) {
 				$filetype = 'multimedia|office|archive|3d';
 			}
 
 			switch ( $type ) {
-				case 'video':
+				case MediaSearchOptions::TYPE_VIDEO:
 					$width = 200;
 				break;
 
-				case 'other':
+				case MediaSearchOptions::TYPE_OTHER:
 					// generating thumbnails from many of these file types is very
 					// expensive and slow, enough so that we're better off using a
 					// larger (takes longer to transfer) pre-generated (but readily
@@ -405,7 +290,7 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 				'prop' => 'info|imageinfo|entityterms',
 				'inprop' => 'url',
 				'iiprop' => 'url|size|mime',
-				'iiurlheight' => $type === 'bitmap' ? 180 : null,
+				'iiurlheight' => $type === MediaSearchOptions::TYPE_BITMAP ? 180 : null,
 				'iiurlwidth' => $width,
 				'wbetterms' => 'label',
 			] );
@@ -466,14 +351,14 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 	 * nested for loop...
 	 *
 	 * @param array $activeFilters
-	 * @param string $mediaType
+	 * @param string $type
 	 * @return array
 	 */
-	protected function getFiltersForDisplay( $activeFilters, $mediaType ) : array {
+	protected function getFiltersForDisplay( $activeFilters, $type ) : array {
 		$display = [];
 		$searchOptions = MediaSearchOptions::getSearchOptions( $this->getContext() );
 
-		foreach ( $searchOptions[ $mediaType ] as $filterType => $possibleValues ) {
+		foreach ( $searchOptions[ $type ] as $filterType => $possibleValues ) {
 			if ( array_key_exists( $filterType, $activeFilters ) ) {
 				foreach ( $possibleValues as $item ) {
 					if ( $activeFilters[ $filterType ] === $item[ 'value' ] ) {
@@ -579,5 +464,144 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 		unset( $queryParams[ 'title' ] );
 		$queryParams[ 'q' ] = $suggestion;
 		return $this->getPageTitle()->getLinkURL( $queryParams );
+	}
+
+	/**
+	 * Return formatted data for an individual search result
+	 *
+	 * @param array $result
+	 * @param array $allResults
+	 * @param string $type
+	 * @return array
+	 */
+	protected function getResultData( array $result, array $allResults, $type ) : array {
+		// Required context for formatting
+		$thumbLimits = $this->getThumbLimits();
+		$userLanguage = $this->getLanguage();
+
+		// Title
+		$title = Title::newFromDBkey( $result['title'] );
+		$filename = $title ? $title->getText() : $result['title'];
+		$result += [ 'name' => $filename ];
+
+		// Category info.
+		if ( isset( $result['categoryinfo'] ) ) {
+			$categoryInfoParams = [
+				$userLanguage->formatNum( $result['categoryinfo']['size'] ),
+				$userLanguage->formatNum( $result['categoryinfo']['subcats'] ),
+				$userLanguage->formatNum( $result['categoryinfo']['files'] )
+			];
+			$result += [
+				'categoryInfoText' => $this->msg(
+					'wikibasemediainfo-special-mediasearch-category-info',
+					$categoryInfoParams
+				)->parse()
+			];
+		}
+
+		// Namespace prefix.
+		$namespaceId = $title->getNamespace();
+		$mainNsPrefix = preg_replace( '/^[(]?|[)]?$/', '', $this->msg( 'blanknamespace' ) );
+		$result['namespacePrefix'] = $namespaceId === NS_MAIN ?
+			$mainNsPrefix :
+			$this->getContentLanguage()->getFormattedNsText( $namespaceId );
+
+		// Last edited date.
+		$result['lastEdited'] = $userLanguage->timeanddate( $result['timestamp'] );
+
+		// Formatted page size.
+		if ( isset( $result['size'] ) ) {
+			$result['formattedPageSize'] = $userLanguage->formatSize( $result['size'] );
+		}
+
+		// Word count.
+		if ( isset( $result['wordcount'] ) ) {
+			$result['wordcountMessage'] = $this->msg(
+				'wikibasemediainfo-special-mediasearch-wordcount',
+				$userLanguage->formatNum( $result['wordcount'] )
+			)->text();
+		}
+
+		// Formatted image size.
+		if ( isset( $result['imageinfo'] ) && isset( $result['imageinfo'][0]['size'] ) ) {
+			$result['imageSizeMessage'] = $this->msg(
+				'wikibasemediainfo-special-mediasearch-image-size',
+				$userLanguage->formatSize( $result['imageinfo'][0]['size'] )
+			)->text();
+		}
+
+		if (
+			$type === MediaSearchOptions::TYPE_OTHER &&
+			isset( $result['imageinfo'] ) &&
+			isset( $result['imageinfo'][0]['width'] ) &&
+			isset( $result['imageinfo'][0]['height'] )
+		) {
+			$result['resolution'] = $userLanguage->formatNum( $result['imageinfo'][0]['width'] ) .
+			' × ' . $userLanguage->formatNum( $result['imageinfo'][0]['height'] );
+		}
+
+		if (
+			isset( $result['imageinfo'] ) &&
+			isset( $result['imageinfo'][0]['thumburl'] )
+		) {
+			$imageInfo = $result['imageinfo'][0];
+			$oldWidth = $imageInfo['thumbwidth'];
+			$newWidth = $oldWidth;
+
+			// find the closest (larger) width that is more common, it is (much) more
+			// likely to have a thumbnail cached
+			foreach ( $thumbLimits as $commonWidth ) {
+				if ( $commonWidth >= $oldWidth ) {
+					$newWidth = $commonWidth;
+					break;
+				}
+			}
+
+			$imageInfo['thumburl'] = str_replace(
+				'/' . $oldWidth . 'px-',
+				'/' . $newWidth . 'px-',
+				$imageInfo['thumburl']
+			);
+
+			$result['imageResultClass'] = 'wbmi-image-result';
+
+			if (
+				$imageInfo['thumbwidth'] && $imageInfo['thumbheight'] &&
+				is_numeric( $imageInfo['thumbwidth'] ) && is_numeric( $imageInfo['thumbheight'] ) &&
+				$imageInfo['thumbheight'] > 0
+			) {
+				if ( $imageInfo['thumbwidth'] / $imageInfo['thumbheight'] < 1 ) {
+					$result['imageResultClass'] .= ' wbmi-image-result--portrait';
+				}
+
+				// Generate style attribute for image wrapper.
+				$displayWidth = $imageInfo['thumbwidth'];
+				if ( $imageInfo['thumbheight'] < 180 ) {
+					// For small images, set the wrapper width to the
+					// thumbnail width plus a little extra to simulate
+					// left/right padding.
+					$displayWidth += 60;
+				}
+				// Set max initial width of 350px.
+				$result['wrapperStyle'] = 'width: ' . min( [ $displayWidth, 350 ] ) . 'px;';
+			}
+
+			if ( count( $allResults ) <= 3 ) {
+				$result['imageResultClass'] .= ' wbmi-image-result--limit-size';
+			}
+
+			// Generate style attribute for the image itself.
+			// There are height and max-width rules with the important
+			// keyword for .content a > img in Minerva Neue, and they
+			// have to be overridden.
+			if ( $imageInfo['width'] && $imageInfo['height'] ) {
+				$result['imageStyle'] =
+				'height: 100% !important; ' .
+				'max-width: ' . $imageInfo['width'] . 'px !important; ' .
+				'max-height: ' . $imageInfo['height'] . 'px;';
+			}
+		}
+
+		return $result;
 	}
 }

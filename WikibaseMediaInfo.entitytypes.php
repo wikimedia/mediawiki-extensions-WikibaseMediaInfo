@@ -123,7 +123,7 @@ return [
 				$textProvider,
 				$defaultPropertyIdsForView,
 				$wbRepo->getSnakFormatterFactory(),
-				$wbRepo->getValueFormatterFactory(),
+				WikibaseRepo::getValueFormatterFactory(),
 				$wbRepo->getCompactBaseDataModelSerializerFactory(),
 				$languageCode,
 				$properties

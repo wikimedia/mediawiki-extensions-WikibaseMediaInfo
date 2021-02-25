@@ -13,14 +13,22 @@
 	],
 	"userLanguage": "en",
 	"settings": {
-		"statement": 20.0,
-		"descriptions": 10.0,
-		"all": 0.9,
-		"category": 0.7,
-		"title": 0.6,
-		"redirect.title": 0.5,
-		"text": 0.4,
-		"auxiliary_text": 0.3,
-		"file_text": 0.2
+		"boosts": {
+			"statement": 20.0,
+			"descriptions.$language": 7.5,
+			"descriptions.$language.plain": 2.5,
+			"category": 0.525,
+			"category.plain": 0.175,
+			"title": 0.45,
+			"title.plain": 0.15,
+			"redirect.title": 0.375,
+			"redirect.title.plain": 0.125,
+			"text": 0.3,
+			"text.plain": 0.1,
+			"auxiliary_text": 0.225,
+			"auxiliary_text.plain": 0.075,
+			"file_text": 0.15,
+			"file_text.plain": 0.05
+		}
 	}
 }

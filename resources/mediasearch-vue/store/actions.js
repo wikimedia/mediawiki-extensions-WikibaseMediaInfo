@@ -184,19 +184,30 @@ module.exports = {
 		activeSearchRequest = request;
 
 		return request.then( function ( response ) {
-			var results, pageIDs, sortedResults;
+			var existingPageIds = context.state.results[ options.type ].map( function ( result ) {
+					return result.pageid;
+				} ),
+				results, pageIDs, sortedResults;
 
 			if ( response.query && response.query.pages ) {
 				results = response.query.pages;
 				pageIDs = Object.keys( results );
 
 				// Sort the results within each batch prior to committing them
-				// to the store
-				sortedResults = pageIDs.map( function ( id ) {
-					return results[ id ];
-				} ).sort( function ( a, b ) {
-					return a.index - b.index;
-				} );
+				// to the store. Also, ensure that there is no duplication of
+				// results between batches (see https://phabricator.wikimedia.org/T272923);
+				// if a new result's pageId already exists in the set of
+				// previously-loaded results, filter it out.
+				sortedResults = pageIDs
+					.map( function ( id ) {
+						return results[ id ];
+					} )
+					.filter( function ( result ) {
+						return existingPageIds.indexOf( result.pageid ) < 0;
+					} )
+					.sort( function ( a, b ) {
+						return a.index - b.index;
+					} );
 
 				sortedResults.forEach( function ( result ) {
 					context.commit( 'addResult', {

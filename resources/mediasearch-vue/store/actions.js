@@ -102,6 +102,18 @@ module.exports = {
 			urlWidth,
 			request;
 
+		// If a search request is already in-flight, abort it
+		if ( activeSearchRequest ) {
+			activeSearchRequest.abort();
+		}
+
+		if ( context.state.continue[ options.type ] === null ) {
+			// prevent API requests when they're already known not to have results
+			// (because there was no continuation offset)
+			activeSearchRequest = $.Deferred().resolve().promise( { abort: function () {} } );
+			return activeSearchRequest;
+		}
+
 		if ( options.type === 'page' ) {
 			// Page/category-specific params.
 			params.gsrnamespace = Object.keys( namespaces )
@@ -151,11 +163,6 @@ module.exports = {
 		if ( 'sort' in context.state.filterValues[ options.type ] &&
 			context.state.filterValues[ options.type ].sort === 'recency' ) {
 			params.gsrsort = 'create_timestamp_desc';
-		}
-
-		// If a search request is already in-flight, abort it
-		if ( activeSearchRequest ) {
-			activeSearchRequest.abort();
 		}
 
 		// Set the pending state for the given queue
@@ -213,7 +220,7 @@ module.exports = {
 			}
 
 			// Set whether or not the query can be continued
-			if ( response.continue ) {
+			if ( response.continue && response.continue.gsroffset ) {
 				// Store the "continue" property of the request so we can pick up where we left off
 				context.commit( 'setContinue', {
 					type: options.type,

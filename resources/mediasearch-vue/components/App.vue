@@ -238,7 +238,9 @@ module.exports = {
 		 * @param {string} [data.value]
 		 */
 		onFilterChange: function ( data ) {
-			this.resetCountAndLoadMore( data.mediaType );
+			// the new search (with updated filter params) is handled
+			// by the allActiveFilters watcher
+
 			this.$refs[ data.mediaType ][ 0 ].hideDetails();
 
 			if ( data.value ) {
@@ -472,7 +474,6 @@ module.exports = {
 					this.getRelatedConcepts( this.term );
 				}
 			}
-
 		},
 
 		/**

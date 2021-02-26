@@ -146,7 +146,6 @@
 	"wikibasemediainfo-special-mediasearch-no-results": "Не знайдено результатів",
 	"wikibasemediainfo-special-mediasearch-no-results-tips": "Спробуйте більш загальні терміни, або ж перевірте своє написання",
 	"wikibasemediainfo-special-mediasearch-end-of-results": "Не знайдено більше результатів",
-	"wikibasemediainfo-special-mediasearch-end-of-results-tips": "Спробуйте відкорегувати Ваші пошукові терміни або налаштування фільтру",
 	"wikibasemediainfo-special-mediasearch-empty-state": "Пошук по понад $1 {{PLURAL:вільному для використання файлу|вільних для використання файлах}}",
 	"wikibasemediainfo-special-mediasearch-clear-title": "Вилучити",
 	"wikibasemediainfo-special-mediasearch-input-label": "Пошук медіа",

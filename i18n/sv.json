@@ -144,7 +144,6 @@
 	"wikibasemediainfo-special-mediasearch-no-results": "Vi hittade inga resultat",
 	"wikibasemediainfo-special-mediasearch-no-results-tips": "Försök med allmännare söktermer eller kontrollera stavningen",
 	"wikibasemediainfo-special-mediasearch-end-of-results": "Inga fler resultat hittades",
-	"wikibasemediainfo-special-mediasearch-end-of-results-tips": "Försök justera dina söktermer eller filterinställningar",
 	"wikibasemediainfo-special-mediasearch-empty-state": "Sök fler än $1 {{PLURAL:$1|mediefil|mediefiler}} som är fria att använda.",
 	"wikibasemediainfo-special-mediasearch-clear-title": "Ta bort",
 	"wikibasemediainfo-special-mediasearch-input-label": "Sök media",

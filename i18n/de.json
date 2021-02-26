@@ -147,7 +147,6 @@
 	"wikibasemediainfo-special-mediasearch-no-results": "Wir haben keine Ergebnisse gefunden",
 	"wikibasemediainfo-special-mediasearch-no-results-tips": "Probiere allgemeinere Begriffe aus oder überprüfe deine Rechtschreibung",
 	"wikibasemediainfo-special-mediasearch-end-of-results": "Keine weiteren Ergebnisse gefunden",
-	"wikibasemediainfo-special-mediasearch-end-of-results-tips": "Versuche die Suchbegriffs- oder Filtereinstellungen anzupassen",
 	"wikibasemediainfo-special-mediasearch-empty-state": "Suche nach mehr als $1 {{PLURAL:$1|Mediendatei|Mediendateien}}, {{PLURAL:$1|die frei wiederverwendet werden kann|die frei wiederverwendet werden können}}",
 	"wikibasemediainfo-special-mediasearch-clear-title": "Entfernen",
 	"wikibasemediainfo-special-mediasearch-input-label": "Nach Medien suchen",

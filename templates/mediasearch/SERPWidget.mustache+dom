@@ -306,9 +306,6 @@
 						<div class="wbmi-media-search-end-of-results">
 							<p>
 								{{endOfResultsMessage}}
-								<span class="wbmi-media-search-no-results__tips">
-									{{{endOfResultsMessageExtra}}}
-								</span>
 							</p>
 						</div>
 					{{/endOfResults}}

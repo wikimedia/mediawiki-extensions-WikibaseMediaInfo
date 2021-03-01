@@ -203,7 +203,7 @@ class MediaInfoHandler extends EntityHandler {
 	 * Returns the Title of the page in which this MediaInfoId is a slot
 	 *
 	 * @param EntityId $id
-	 * @return Title
+	 * @return Title|null
 	 */
 	public function getTitleForId( EntityId $id ) {
 		'@phan-var MediaInfoId $id';

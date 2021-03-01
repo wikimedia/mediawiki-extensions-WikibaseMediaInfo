@@ -83,7 +83,6 @@ class MediaInfoRdfBuilderTest extends TestCase {
 				],
 				new EntityTypeDefinitions( [] )
 			),
-			'test',
 			[ 'test' => '' ],
 			[ 'test' => '' ],
 			[],

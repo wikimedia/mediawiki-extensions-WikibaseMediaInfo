@@ -112,7 +112,7 @@
 	"wikibasemediainfo-special-mediasearch-tab-bitmap": "Pildid",
 	"wikibasemediainfo-special-mediasearch-tab-audio": "Heli",
 	"wikibasemediainfo-special-mediasearch-tab-page": "Kategooriad ja leheküljed",
-	"wikibasemediainfo-special-mediasearch-tab-other": "Muu",
+	"wikibasemediainfo-special-mediasearch-tab-other": "Muud failid",
 	"wikibasemediainfo-special-mediasearch-filter-size-any": "Kõik pildisuurused",
 	"wikibasemediainfo-special-mediasearch-filter-size-small": "Väike",
 	"wikibasemediainfo-special-mediasearch-filter-size-medium": "Keskmine",
@@ -128,6 +128,7 @@
 	"wikibasemediainfo-special-mediasearch-filter-license-other": "Muu",
 	"wikibasemediainfo-special-mediasearch-no-results": "Tulemusi ei leitud.",
 	"wikibasemediainfo-special-mediasearch-no-results-tips": "Proovi üldisemaid otsisõnu või kontrolli kirjapilti.",
+	"wikibasemediainfo-special-mediasearch-end-of-results": "Rohkem tulemusi ei leitud.",
 	"wikibasemediainfo-special-mediasearch-empty-state": "Otsi rohkem kui $1 vabaks kasutamiseks mõeldud {{PLURAL:$1|meediumifaili}} seast.",
 	"wikibasemediainfo-special-mediasearch-clear-title": "Eemalda",
 	"wikibasemediainfo-special-mediasearch-input-label": "Otsi meediumifaile",
@@ -140,5 +141,8 @@
 	"wikibasemediainfo-special-mediasearch-category-info": "$1 {{PLURAL:$1|liige|liiget}} – $2 {{PLURAL:$2|alamkategooria|alamkategooriat}}, $3 {{PLURAL:$3|fail|faili}}",
 	"wikibasemediainfo-copytextlayout-copy": "Kopeeri",
 	"wikibasemediainfo-copytextlayout-copy-fail": "Ei õnnestunud lõikelauale kopeerida.",
-	"wikibasemediainfo-copytextlayout-copy-success": "Kopeeritud lõikelauale."
+	"wikibasemediainfo-copytextlayout-copy-success": "Kopeeritud lõikelauale.",
+	"wikibasemediainfo-special-mediasearch-results-count": "$1 {{PLURAL:$1|tulemus|tulemust}}",
+	"wikibasemediainfo-special-mediasearch-wordcount": "($1 {{PLURAL:$1|sõna}})",
+	"wikibasemediainfo-special-mediasearch-did-you-mean": "Kas mõtlesid: <a href=\"$2\">$1</a>"
 }

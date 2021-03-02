@@ -45,6 +45,7 @@
 	"wikibasemediainfo-filepage-caption-approaching-limit": "還剩$1個{{PLURAL:$1|字元}}",
 	"wikibasemediainfo-filepage-statement-value-type-dropdown-title": "請挑選數值類型。",
 	"wikibasemediainfo-filepage-statement-custom-value-option": "自訂值",
+	"wikibasemediainfo-filepage-statement-invalid-value": "無效的值",
 	"wikibasemediainfo-filepage-statement-no-value-option": "沒有值",
 	"wikibasemediainfo-filepage-statement-no-value": "此屬性沒有值",
 	"wikibasemediainfo-filepage-statement-no-data": "沒有資料可用",
@@ -127,7 +128,7 @@
 	"wikibasemediainfo-special-mediasearch-tab-audio": "音訊",
 	"wikibasemediainfo-special-mediasearch-tab-video": "影片",
 	"wikibasemediainfo-special-mediasearch-tab-page": "分類與頁面",
-	"wikibasemediainfo-special-mediasearch-tab-other": "其它",
+	"wikibasemediainfo-special-mediasearch-tab-other": "其它媒體",
 	"wikibasemediainfo-special-mediasearch-filter-size": "圖片大小",
 	"wikibasemediainfo-special-mediasearch-filter-size-any": "任何圖片大小",
 	"wikibasemediainfo-special-mediasearch-filter-size-small": "小",
@@ -160,5 +161,8 @@
 	"wikibasemediainfo-copytextlayout-copy": "複製",
 	"wikibasemediainfo-copytextlayout-copy-fail": "複製到剪貼簿上失敗。",
 	"wikibasemediainfo-copytextlayout-copy-success": "已複製到剪貼簿",
-	"wikibasemediainfo-special-mediasearch-clear-filters": "清除篩選"
+	"wikibasemediainfo-special-mediasearch-clear-filters": "清除篩選",
+	"wikibasemediainfo-special-mediasearch-results-count": "$1 {{PLURAL:$1|個結果}}",
+	"wikibasemediainfo-special-mediasearch-wordcount": "（$1 {{PLURAL:$1|個字}}）",
+	"wikibasemediainfo-special-mediasearch-did-you-mean": "您是不是指：<a href=\"$2\">$1</a>"
 }

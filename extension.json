@@ -426,6 +426,10 @@
 				"wikibasemediainfo-special-mediasearch-wordcount",
 				"wikibasemediainfo-special-mediasearch-image-size",
 				"wikibasemediainfo-special-mediasearch-did-you-mean",
+				"size-bytes",
+				"size-kilobytes",
+				"size-megabytes",
+				"size-gigabytes",
 				"blanknamespace"
 			],
 			"dependencies": [

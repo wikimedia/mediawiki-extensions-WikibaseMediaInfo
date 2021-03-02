@@ -93,7 +93,7 @@ module.exports = {
 				gsrlimit: LIMIT,
 				gsroffset: context.state.continue[ options.type ] || 0,
 				gsrinfo: 'totalhits|suggestion',
-				gsrprop: 'size|wordcount',
+				gsrprop: 'size|wordcount|timestamp|snippet',
 				prop: options.type === 'page' ? 'info|categoryinfo' : 'info|imageinfo|entityterms',
 				inprop: 'url'
 			},

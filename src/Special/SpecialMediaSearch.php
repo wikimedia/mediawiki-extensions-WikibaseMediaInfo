@@ -155,6 +155,7 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 				$filename = $title ? $title->getText() : $result['title'];
 				$result += [ 'name' => $filename ];
 
+				// Category info.
 				if ( isset( $result['categoryinfo'] ) ) {
 					$categoryInfoParams = [
 						$userLanguage->formatNum( $result['categoryinfo']['size'] ),
@@ -168,6 +169,16 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 						)->parse()
 					];
 				}
+
+				// Namespace prefix.
+				$namespaceId = $title->getNamespace();
+				$mainNsPrefix = preg_replace( '/^[(]?|[)]?$/', '', $this->msg( 'blanknamespace' ) );
+				$result['namespacePrefix'] = $namespaceId === NS_MAIN ?
+					$mainNsPrefix :
+					$this->getContentLanguage()->getFormattedNsText( $namespaceId );
+
+				// Last edited date.
+				$result['lastEdited'] = $userLanguage->timeanddate( $result['timestamp'] );
 
 				// Formatted page size.
 				if ( isset( $result['size'] ) ) {
@@ -348,7 +359,7 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 				'gsroffset' => $continue ?: 0,
 				'gsrsort' => $sort,
 				'gsrinfo' => 'totalhits|suggestion',
-				'gsrprop' => 'size|wordcount',
+				'gsrprop' => 'size|wordcount|timestamp|snippet',
 				'prop' => 'info|categoryinfo',
 				'inprop' => 'url',
 			] );

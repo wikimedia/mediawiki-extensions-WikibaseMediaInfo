@@ -181,7 +181,7 @@ class StatementsTest extends WBMIApiTestCase {
 		);
 
 		$pageId = $testFilePage->getId();
-		$entityIdComposer = WikibaseRepo::getDefaultInstance()->getEntityIdComposer();
+		$entityIdComposer = WikibaseRepo::getEntityIdComposer();
 		$entityId = $entityIdComposer->composeEntityId(
 			'',
 			MediaInfo::ENTITY_TYPE,

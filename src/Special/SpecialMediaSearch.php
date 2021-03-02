@@ -400,7 +400,7 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 				'gsroffset' => $continue ?: 0,
 				'gsrsort' => $sort,
 				'gsrinfo' => 'totalhits|suggestion',
-				'gsrprop' => 'size|wordcount',
+				'gsrprop' => 'size|wordcount|timestamp|snippet',
 				'prop' => 'info|imageinfo|entityterms',
 				'inprop' => 'url',
 				'iiprop' => 'url|size|mime',

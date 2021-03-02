@@ -5,12 +5,12 @@ namespace Wikibase\MediaInfo\Search\ASTQueryBuilder;
 use ArrayIterator;
 
 class FieldIterator extends ArrayIterator {
-	private const LANGUAGE_AWARE_FIELDS = [
+	public const LANGUAGE_AWARE_FIELDS = [
 		'descriptions.$language',
 		'descriptions.$language.plain',
 	];
 
-	private const LANGUAGE_AGNOSTIC_FIELDS = [
+	public const LANGUAGE_AGNOSTIC_FIELDS = [
 		'title',
 		'title.plain',
 		'category',
@@ -28,7 +28,7 @@ class FieldIterator extends ArrayIterator {
 		'suggest',
 	];
 
-	private const STEMMED_FIELDS = [
+	public const STEMMED_FIELDS = [
 		'descriptions.$language',
 		'title',
 		'category',
@@ -39,7 +39,7 @@ class FieldIterator extends ArrayIterator {
 		'file_text',
 	];
 
-	private const PLAIN_FIELDS = [
+	public const PLAIN_FIELDS = [
 		'descriptions.$language.plain',
 		'title.plain',
 		'category.plain',

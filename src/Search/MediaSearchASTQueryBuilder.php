@@ -23,6 +23,7 @@ use Elastica\Query\FunctionScore;
 use Elastica\Query\MatchNone;
 use Elastica\Script\Script;
 use SplObjectStorage;
+use Wikibase\MediaInfo\Search\ASTQueryBuilder\PhraseQueryNodeHandler;
 use Wikibase\MediaInfo\Search\ASTQueryBuilder\WikibaseEntitiesHandler;
 use Wikibase\MediaInfo\Search\ASTQueryBuilder\WordsQueryNodeHandler;
 use Wikimedia\Assert\Assert;
@@ -218,8 +219,15 @@ class MediaSearchASTQueryBuilder implements Visitor {
 	}
 
 	public function visitPhraseQueryNode( PhraseQueryNode $node ) {
-		// @phan-suppress-next-line PhanImpossibleCondition
-		Assert::invariant( false, 'PhraseQueryNode not (yet) supported.' );
+		$nodeHandler = new PhraseQueryNodeHandler(
+			$node,
+			$this->getWikibaseEntitiesHandler( $node ),
+			$this->languages,
+			$this->stemmingSettings,
+			$this->boosts,
+			$this->decays
+		);
+		$this->map[$node] = $nodeHandler->transform();
 	}
 
 	public function visitPhrasePrefixNode( PhrasePrefixNode $node ) {

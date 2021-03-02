@@ -7,8 +7,8 @@ use Elastica\Query\AbstractQuery;
 use Elastica\Query\BoolQuery;
 use Elastica\Query\ConstantScore;
 use Elastica\Query\FunctionScore;
-use Elastica\Query\Match;
 use Elastica\Query\MatchAll;
+use Elastica\Query\MatchQuery;
 use Elastica\Query\MultiMatch;
 use Elastica\Script\Script;
 use Wikibase\MediaInfo\Search\MatchExplorerQuery;
@@ -117,7 +117,7 @@ class WordsQueryNodeHandler implements ParsedNodeHandlerInterface {
 			}
 
 			public function getQuery( $field, $boost ): AbstractQuery {
-				return ( new Match() )
+				return ( new MatchQuery() )
 					->setFieldQuery( $field, $this->term )
 					->setFieldBoost( $field, $boost );
 			}
@@ -230,7 +230,7 @@ class WordsQueryNodeHandler implements ParsedNodeHandlerInterface {
 			// is likely to be most relevant to how search term is interpreted
 			// in terms of stripping stopwords etc; text.plain, for example,
 			// doesn't exclude those
-			( new Match() )->setFieldQuery( 'text', $term )
+			( new MatchQuery() )->setFieldQuery( 'text', $term )
 		);
 	}
 }

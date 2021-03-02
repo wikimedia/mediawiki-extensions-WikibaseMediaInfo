@@ -94,8 +94,7 @@ class MediaSearchASTEntitiesExtractor extends LeafVisitor {
 	 * @inheritDoc
 	 */
 	public function visitPhraseQueryNode( PhraseQueryNode $node ) {
-		// @todo implement this
-		// $this->terms[$node] = $this->getTerm( $node );
+		$this->terms[$node] = $this->getTerm( $node );
 	}
 
 	/**

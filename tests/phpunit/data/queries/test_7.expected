@@ -1,0 +1,104 @@
+{
+    "bool": {
+        "must": [
+            {
+                "bool": {
+                    "should": [
+                        {
+                            "bool": {
+                                "filter": [
+                                    {
+                                        "match_phrase": {
+                                            "all.plain": {
+                                                "query": "phrase search",
+                                                "slop": 0
+                                            }
+                                        }
+                                    }
+                                ],
+                                "should": [
+                                    {
+                                        "match": {
+                                            "title.plain": {
+                                                "query": "phrase search",
+                                                "boost": 1
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "match": {
+                                            "category.plain": {
+                                                "query": "phrase search",
+                                                "boost": 1
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "match": {
+                                            "redirect.title.plain": {
+                                                "query": "phrase search",
+                                                "boost": 1
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "match": {
+                                            "heading.plain": {
+                                                "query": "phrase search",
+                                                "boost": 1
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "match": {
+                                            "auxiliary_text.plain": {
+                                                "query": "phrase search",
+                                                "boost": 1
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "match": {
+                                            "text.plain": {
+                                                "query": "phrase search",
+                                                "boost": 1
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "match": {
+                                            "file_text.plain": {
+                                                "query": "phrase search",
+                                                "boost": 1
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "match": {
+                                            "descriptions.de.plain": {
+                                                "query": "phrase search",
+                                                "boost": 1
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "match_none": {}
+                        }
+                    ]
+                }
+            }
+        ],
+        "filter": [
+            {
+                "terms": {
+                    "namespace": [
+                        0
+                    ]
+                }
+            }
+        ]
+    }
+}

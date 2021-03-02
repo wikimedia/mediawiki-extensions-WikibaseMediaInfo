@@ -53,7 +53,7 @@ class MediaSearchASTClassifier extends LeafVisitor implements ParsedQueryClassif
 	 * @inheritDoc
 	 */
 	public function visitPhraseQueryNode( PhraseQueryNode $node ) {
-		$this->unsupported = array_unique( array_merge( $this->unsupported, $this->profiles ) );
+		$this->supported = array_unique( array_merge( $this->supported, $this->profiles ) );
 	}
 
 	/**

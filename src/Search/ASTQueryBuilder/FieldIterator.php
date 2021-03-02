@@ -6,18 +6,49 @@ use ArrayIterator;
 
 class FieldIterator extends ArrayIterator {
 	private const LANGUAGE_AWARE_FIELDS = [
-		'descriptions'
+		'descriptions.$language',
+		'descriptions.$language.plain',
 	];
 
 	private const LANGUAGE_AGNOSTIC_FIELDS = [
 		'title',
+		'title.plain',
+		'category',
+		'category.plain',
+		'redirect.title',
+		'redirect.title.plain',
+		'heading',
+		'heading.plain',
+		'auxiliary_text',
+		'auxiliary_text.plain',
+		'text',
+		'text.plain',
+		'file_text',
+		'file_text.plain',
+		'suggest',
+	];
+
+	private const STEMMED_FIELDS = [
+		'descriptions.$language',
+		'title',
 		'category',
 		'redirect.title',
-		'suggest',
 		'heading',
 		'auxiliary_text',
 		'text',
 		'file_text',
+	];
+
+	private const PLAIN_FIELDS = [
+		'descriptions.$language.plain',
+		'title.plain',
+		'category.plain',
+		'redirect.title.plain',
+		'heading.plain',
+		'auxiliary_text.plain',
+		'text.plain',
+		'file_text.plain',
+		'suggest',
 	];
 
 	/** @var fieldQueryBuilderInterface */
@@ -67,26 +98,34 @@ class FieldIterator extends ArrayIterator {
 		$queries = [];
 		foreach ( $fields as $field ) {
 			$boost = $this->boosts[$field] ?: 0;
-			$queries[] = $this->fieldQueryBuilder->getQuery( $field, $boost * 3 );
-			$queries[] = $this->fieldQueryBuilder->getQuery( "$field.plain", $boost );
+			if ( $boost > 0 ) {
+				$queries[] = $this->fieldQueryBuilder->getQuery( $field, $boost );
+			}
 		}
 		return $queries;
 	}
 
 	private function getLanguageAwareQueries(): array {
-		$fields = array_intersect( static::LANGUAGE_AWARE_FIELDS, $this->fields );
-
 		$queries = [];
-		foreach ( $fields as $field ) {
-			foreach ( $this->languages as $index => $language ) {
+
+		$fields = array_intersect( static::LANGUAGE_AWARE_FIELDS, $this->fields );
+		foreach ( $this->languages as $index => $language ) {
+			foreach ( $fields as $field ) {
+				// check whether stemmed field can be used
+				if (
+					in_array( $field, static::STEMMED_FIELDS ) &&
+					!( $this->stemmingSettings[$language]['query'] ?? false )
+				) {
+					continue;
+				}
+
 				// decay x% for each fallback language
 				$boost = ( $this->boosts[$field] ?? 0 ) * ( ( $this->decays[$field] ?? 1 ) ** $index );
 
-				if ( $this->stemmingSettings[$language]['query'] ?? false ) {
-					$queries[] = $this->fieldQueryBuilder->getQuery( "$field.$language", $boost * 3 );
-				}
+				// parse the language into the field name
+				$field = str_replace( '$language', $language, $field );
 
-				$queries[] = $this->fieldQueryBuilder->getQuery( "$field.$language.plain", $boost );
+				$queries[] = $this->fieldQueryBuilder->getQuery( $field, $boost );
 			}
 		}
 		return $queries;

@@ -21,7 +21,7 @@
                                                                                 "match": {
                                                                                     "title": {
                                                                                         "query": "some search term",
-                                                                                        "boost": 3
+                                                                                        "boost": 1
                                                                                     }
                                                                                 }
                                                                             },
@@ -37,7 +37,7 @@
                                                                                 "match": {
                                                                                     "category": {
                                                                                         "query": "some search term",
-                                                                                        "boost": 3
+                                                                                        "boost": 1
                                                                                     }
                                                                                 }
                                                                             },
@@ -53,7 +53,7 @@
                                                                                 "match": {
                                                                                     "redirect.title": {
                                                                                         "query": "some search term",
-                                                                                        "boost": 3
+                                                                                        "boost": 1
                                                                                     }
                                                                                 }
                                                                             },
@@ -67,25 +67,9 @@
                                                                             },
                                                                             {
                                                                                 "match": {
-                                                                                    "suggest": {
-                                                                                        "query": "some search term",
-                                                                                        "boost": 3
-                                                                                    }
-                                                                                }
-                                                                            },
-                                                                            {
-                                                                                "match": {
-                                                                                    "suggest.plain": {
-                                                                                        "query": "some search term",
-                                                                                        "boost": 1
-                                                                                    }
-                                                                                }
-                                                                            },
-                                                                            {
-                                                                                "match": {
                                                                                     "heading": {
                                                                                         "query": "some search term",
-                                                                                        "boost": 3
+                                                                                        "boost": 1
                                                                                     }
                                                                                 }
                                                                             },
@@ -101,7 +85,7 @@
                                                                                 "match": {
                                                                                     "auxiliary_text": {
                                                                                         "query": "some search term",
-                                                                                        "boost": 3
+                                                                                        "boost": 1
                                                                                     }
                                                                                 }
                                                                             },
@@ -117,7 +101,7 @@
                                                                                 "match": {
                                                                                     "text": {
                                                                                         "query": "some search term",
-                                                                                        "boost": 3
+                                                                                        "boost": 1
                                                                                     }
                                                                                 }
                                                                             },
@@ -133,13 +117,21 @@
                                                                                 "match": {
                                                                                     "file_text": {
                                                                                         "query": "some search term",
-                                                                                        "boost": 3
+                                                                                        "boost": 1
                                                                                     }
                                                                                 }
                                                                             },
                                                                             {
                                                                                 "match": {
                                                                                     "file_text.plain": {
+                                                                                        "query": "some search term",
+                                                                                        "boost": 1
+                                                                                    }
+                                                                                }
+                                                                            },
+                                                                            {
+                                                                                "match": {
+                                                                                    "suggest": {
                                                                                         "query": "some search term",
                                                                                         "boost": 1
                                                                                     }

@@ -21,7 +21,7 @@
                                                                                 "match": {
                                                                                     "title": {
                                                                                         "query": "cat",
-                                                                                        "boost": 3
+                                                                                        "boost": 1
                                                                                     }
                                                                                 }
                                                                             },
@@ -37,7 +37,7 @@
                                                                                 "match": {
                                                                                     "category": {
                                                                                         "query": "cat",
-                                                                                        "boost": 3
+                                                                                        "boost": 1
                                                                                     }
                                                                                 }
                                                                             },
@@ -53,7 +53,7 @@
                                                                                 "match": {
                                                                                     "redirect.title": {
                                                                                         "query": "cat",
-                                                                                        "boost": 3
+                                                                                        "boost": 1
                                                                                     }
                                                                                 }
                                                                             },
@@ -67,25 +67,9 @@
                                                                             },
                                                                             {
                                                                                 "match": {
-                                                                                    "suggest": {
-                                                                                        "query": "cat",
-                                                                                        "boost": 3
-                                                                                    }
-                                                                                }
-                                                                            },
-                                                                            {
-                                                                                "match": {
-                                                                                    "suggest.plain": {
-                                                                                        "query": "cat",
-                                                                                        "boost": 1
-                                                                                    }
-                                                                                }
-                                                                            },
-                                                                            {
-                                                                                "match": {
                                                                                     "heading": {
                                                                                         "query": "cat",
-                                                                                        "boost": 3
+                                                                                        "boost": 1
                                                                                     }
                                                                                 }
                                                                             },
@@ -101,7 +85,7 @@
                                                                                 "match": {
                                                                                     "auxiliary_text": {
                                                                                         "query": "cat",
-                                                                                        "boost": 3
+                                                                                        "boost": 1
                                                                                     }
                                                                                 }
                                                                             },
@@ -117,7 +101,7 @@
                                                                                 "match": {
                                                                                     "text": {
                                                                                         "query": "cat",
-                                                                                        "boost": 3
+                                                                                        "boost": 1
                                                                                     }
                                                                                 }
                                                                             },
@@ -133,13 +117,21 @@
                                                                                 "match": {
                                                                                     "file_text": {
                                                                                         "query": "cat",
-                                                                                        "boost": 3
+                                                                                        "boost": 1
                                                                                     }
                                                                                 }
                                                                             },
                                                                             {
                                                                                 "match": {
                                                                                     "file_text.plain": {
+                                                                                        "query": "cat",
+                                                                                        "boost": 1
+                                                                                    }
+                                                                                }
+                                                                            },
+                                                                            {
+                                                                                "match": {
+                                                                                    "suggest": {
                                                                                         "query": "cat",
                                                                                         "boost": 1
                                                                                     }
@@ -279,7 +271,7 @@
                                                                                 "match": {
                                                                                     "title": {
                                                                                         "query": "dog",
-                                                                                        "boost": 3
+                                                                                        "boost": 1
                                                                                     }
                                                                                 }
                                                                             },
@@ -295,7 +287,7 @@
                                                                                 "match": {
                                                                                     "category": {
                                                                                         "query": "dog",
-                                                                                        "boost": 3
+                                                                                        "boost": 1
                                                                                     }
                                                                                 }
                                                                             },
@@ -311,7 +303,7 @@
                                                                                 "match": {
                                                                                     "redirect.title": {
                                                                                         "query": "dog",
-                                                                                        "boost": 3
+                                                                                        "boost": 1
                                                                                     }
                                                                                 }
                                                                             },
@@ -325,25 +317,9 @@
                                                                             },
                                                                             {
                                                                                 "match": {
-                                                                                    "suggest": {
-                                                                                        "query": "dog",
-                                                                                        "boost": 3
-                                                                                    }
-                                                                                }
-                                                                            },
-                                                                            {
-                                                                                "match": {
-                                                                                    "suggest.plain": {
-                                                                                        "query": "dog",
-                                                                                        "boost": 1
-                                                                                    }
-                                                                                }
-                                                                            },
-                                                                            {
-                                                                                "match": {
                                                                                     "heading": {
                                                                                         "query": "dog",
-                                                                                        "boost": 3
+                                                                                        "boost": 1
                                                                                     }
                                                                                 }
                                                                             },
@@ -359,7 +335,7 @@
                                                                                 "match": {
                                                                                     "auxiliary_text": {
                                                                                         "query": "dog",
-                                                                                        "boost": 3
+                                                                                        "boost": 1
                                                                                     }
                                                                                 }
                                                                             },
@@ -375,7 +351,7 @@
                                                                                 "match": {
                                                                                     "text": {
                                                                                         "query": "dog",
-                                                                                        "boost": 3
+                                                                                        "boost": 1
                                                                                     }
                                                                                 }
                                                                             },
@@ -391,13 +367,21 @@
                                                                                 "match": {
                                                                                     "file_text": {
                                                                                         "query": "dog",
-                                                                                        "boost": 3
+                                                                                        "boost": 1
                                                                                     }
                                                                                 }
                                                                             },
                                                                             {
                                                                                 "match": {
                                                                                     "file_text.plain": {
+                                                                                        "query": "dog",
+                                                                                        "boost": 1
+                                                                                    }
+                                                                                }
+                                                                            },
+                                                                            {
+                                                                                "match": {
+                                                                                    "suggest": {
                                                                                         "query": "dog",
                                                                                         "boost": 1
                                                                                     }
@@ -517,7 +501,7 @@
                                                                                 "match": {
                                                                                     "title": {
                                                                                         "query": "donkey",
-                                                                                        "boost": 3
+                                                                                        "boost": 1
                                                                                     }
                                                                                 }
                                                                             },
@@ -533,7 +517,7 @@
                                                                                 "match": {
                                                                                     "category": {
                                                                                         "query": "donkey",
-                                                                                        "boost": 3
+                                                                                        "boost": 1
                                                                                     }
                                                                                 }
                                                                             },
@@ -549,7 +533,7 @@
                                                                                 "match": {
                                                                                     "redirect.title": {
                                                                                         "query": "donkey",
-                                                                                        "boost": 3
+                                                                                        "boost": 1
                                                                                     }
                                                                                 }
                                                                             },
@@ -563,25 +547,9 @@
                                                                             },
                                                                             {
                                                                                 "match": {
-                                                                                    "suggest": {
-                                                                                        "query": "donkey",
-                                                                                        "boost": 3
-                                                                                    }
-                                                                                }
-                                                                            },
-                                                                            {
-                                                                                "match": {
-                                                                                    "suggest.plain": {
-                                                                                        "query": "donkey",
-                                                                                        "boost": 1
-                                                                                    }
-                                                                                }
-                                                                            },
-                                                                            {
-                                                                                "match": {
                                                                                     "heading": {
                                                                                         "query": "donkey",
-                                                                                        "boost": 3
+                                                                                        "boost": 1
                                                                                     }
                                                                                 }
                                                                             },
@@ -597,7 +565,7 @@
                                                                                 "match": {
                                                                                     "auxiliary_text": {
                                                                                         "query": "donkey",
-                                                                                        "boost": 3
+                                                                                        "boost": 1
                                                                                     }
                                                                                 }
                                                                             },
@@ -613,7 +581,7 @@
                                                                                 "match": {
                                                                                     "text": {
                                                                                         "query": "donkey",
-                                                                                        "boost": 3
+                                                                                        "boost": 1
                                                                                     }
                                                                                 }
                                                                             },
@@ -629,13 +597,21 @@
                                                                                 "match": {
                                                                                     "file_text": {
                                                                                         "query": "donkey",
-                                                                                        "boost": 3
+                                                                                        "boost": 1
                                                                                     }
                                                                                 }
                                                                             },
                                                                             {
                                                                                 "match": {
                                                                                     "file_text.plain": {
+                                                                                        "query": "donkey",
+                                                                                        "boost": 1
+                                                                                    }
+                                                                                }
+                                                                            },
+                                                                            {
+                                                                                "match": {
+                                                                                    "suggest": {
                                                                                         "query": "donkey",
                                                                                         "boost": 1
                                                                                     }

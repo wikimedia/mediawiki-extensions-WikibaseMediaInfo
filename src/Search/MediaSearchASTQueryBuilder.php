@@ -78,18 +78,27 @@ class MediaSearchASTQueryBuilder implements Visitor {
 		$this->languages = $languages;
 		$this->boosts = ( $settings['boost'] ?? [] ) + [
 			'statement' => 1.0,
-			'descriptions' => 1.0,
+			'descriptions.$language' => 1.0,
+			'descriptions.$language.plain' => 1.0,
 			'title' => 1.0,
+			'title.plain' => 1.0,
 			'category' => 1.0,
+			'category.plain' => 1.0,
 			'heading' => 1.0,
+			'heading.plain' => 1.0,
 			'auxiliary_text' => 1.0,
+			'auxiliary_text.plain' => 1.0,
 			'file_text' => 1.0,
+			'file_text.plain' => 1.0,
 			'redirect.title' => 1.0,
-			'suggest' => 1.0,
+			'redirect.title.plain' => 1.0,
 			'text' => 1.0,
+			'text.plain' => 1.0,
+			'suggest' => 1.0,
 		];
 		$this->decays = ( $settings['decay'] ?? [] ) + [
-			'descriptions' => 1.0,
+			'descriptions.$language' => 1.0,
+			'descriptions.$language.plain' => 1.0,
 		];
 		$this->normalizeFulltextScores = (bool)( $settings['normalizeFulltextScores'] ?? true );
 		$this->hasLtrPlugin = $hasLtrPlugin;

@@ -341,7 +341,8 @@
 				"resources/mediasearch-vue/components/EndOfResults.less",
 				"resources/mediasearch-vue/components/SearchFilters.less",
 				"resources/mediasearch-vue/components/ConceptChips.less",
-				"resources/mediasearch-vue/components/DidYouMean.less"
+				"resources/mediasearch-vue/components/DidYouMean.less",
+				"resources/mediasearch-vue/widgets/SearchErrorWidget.less"
 			],
 			"targets": [
 				"desktop",

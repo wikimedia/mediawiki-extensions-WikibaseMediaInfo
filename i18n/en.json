@@ -162,5 +162,7 @@
 	"wikibasemediainfo-special-mediasearch-results-count": "$1 {{PLURAL:$1|result|results}}",
 	"wikibasemediainfo-special-mediasearch-wordcount": "($1 {{PLURAL:$1|word|words}})",
 	"wikibasemediainfo-special-mediasearch-image-size": "($1)",
-	"wikibasemediainfo-special-mediasearch-did-you-mean": "Did you mean: <a href=\"$2\">$1</a>"
+	"wikibasemediainfo-special-mediasearch-did-you-mean": "Did you mean: <a href=\"$2\">$1</a>",
+	"wikibasemediainfo-special-mediasearch-error-message": "Invalid search",
+	"wikibasemediainfo-special-mediasearch-retry-link": "<a href=\"$1\">Enter a new search</a> and try again"
 }

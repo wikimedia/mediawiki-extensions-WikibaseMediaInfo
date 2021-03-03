@@ -8,6 +8,7 @@ use CirrusSearch\Parser\FullTextKeywordRegistry;
 use CirrusSearch\SearchConfig;
 use DerivativeContext;
 use FauxRequest;
+use InvalidArgumentException;
 use MediaWiki\MediaWikiServices;
 use NamespaceInfo;
 use OutputPage;
@@ -46,6 +47,11 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 	protected $searchConfig;
 
 	/**
+	 * @var array
+	 */
+	private $searchOptions;
+
+	/**
 	 * @inheritDoc
 	 */
 	public function __construct(
@@ -65,6 +71,8 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 		$this->searchConfig = $searchConfig ?? MediaWikiServices::getInstance()
 			->getConfigFactory()
 			->makeConfig( 'CirrusSearch' );
+
+		$this->searchOptions = MediaSearchOptions::getSearchOptions( $this->getContext() );
 	}
 
 	/**
@@ -88,9 +96,24 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 		parse_str( parse_url( $url, PHP_URL_QUERY ), $querystring );
 
 		$term = str_replace( "\n", ' ', $this->getRequest()->getText( 'q' ) );
-		$activeFilters = $this->getActiveFilters( $querystring );
-
 		$type = $querystring['type'] ?? MediaSearchOptions::TYPE_BITMAP;
+
+		// Attempt to validate filters; return early and display an error
+		// message if invalid filter settings are detected
+		try {
+			$activeFilters = $this->getActiveFilters( $querystring, $type );
+		} catch ( InvalidArgumentException $e ) {
+			$retryLink = $this->getPageTitle()->getLinkURL();
+
+			$this->getOutput()->addModuleStyles( [ 'wikibase.mediainfo.mediasearch.vue.styles' ] );
+			$this->getOutput()->addHTML( $this->templateParser->processTemplate( 'SearchErrorWidget', [
+				'errorMessage' => $this->msg( 'wikibasemediainfo-special-mediasearch-error-message' ),
+				// phpcs:ignore Generic.Files.LineLength.TooLong
+				'retryLinkMessage' => $this->msg( 'wikibasemediainfo-special-mediasearch-retry-link', $retryLink )->text(),
+			] ) );
+			$this->addHelpLink( 'Help:MediaSearch' );
+			return parent::execute( $subPage );
+		}
 
 		$filtersForDisplay = $this->getFiltersForDisplay( $activeFilters, $type );
 		$limit = $this->getRequest()->getText( 'limit' ) ? (int)$this->getRequest()->getText( 'limit' ) : 40;
@@ -338,19 +361,52 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 
 	/**
 	 * @param array $queryParams
+	 * @param string $type
 	 * @return array
+	 * @throws InvalidArgumentException
 	 */
-	protected function getActiveFilters( $queryParams ) : array {
-		$enabledParams = $this->getConfig()->get( 'MediaInfoMediaSearchSupportedFilterParams' );
+	protected function getActiveFilters( array $queryParams, string $type ) : array {
+		$enabledParams = $this->getConfig()->get( 'MediaInfoMediaSearchSupportedFilterParams' ) ?? [];
+		$activeFilters = array_intersect_key( $queryParams, array_flip( $enabledParams ) );
 
-		if ( $enabledParams ) {
-			return array_intersect_key(
-				$queryParams,
-				array_flip( $enabledParams )
-			);
+		// If values are present in the URL parameters for any supported
+		// search filters, run them through the validation method.
+		// If validation is not successful, throw an exception
+		if ( $this->validateFilters( $activeFilters, $type ) ) {
+			return $activeFilters;
 		} else {
-			return [];
+			throw new InvalidArgumentException( 'Invalid filter value specified', 1 );
 		}
+	}
+
+	/**
+	 * Take an associative array of user-specified, supported filter settings
+	 * (originally based on their incoming URL params) and ensure that all
+	 * provided filters and values are appropriate for the current mediaType.
+	 * If all filters pass validation, returns true. Otherwise, returns false.
+	 *
+	 * @param array $activeFilters
+	 * @param string $type
+	 * @return bool
+	 */
+	protected function validateFilters( array $activeFilters, string $type ) : bool {
+		// Gather a [ key => allowed values ] map of all allowed values for the
+		// given filter and media type
+		$searchOptions = $this->searchOptions;
+		$allowedFilterValues = array_map( function ( $options ) {
+			return array_column( $options, 'value' );
+		}, $searchOptions[ $type ] ?? [] );
+
+		// Filter the list of active filters, throwing out all invalid ones
+		$validFilters = array_filter(
+			$activeFilters,
+			function ( $value, $key ) use ( $allowedFilterValues ) {
+				return isset( $allowedFilterValues[ $key ] ) && in_array( $value, $allowedFilterValues[ $key ] );
+			},
+			ARRAY_FILTER_USE_BOTH
+		);
+
+		return count( $activeFilters ) === count( $validFilters );
 	}
 
 	/**
@@ -364,7 +420,7 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 	 * @return array
 	 */
 	protected function getFiltersForDisplay( $activeFilters, $type ) : array {
-		$searchOptions = MediaSearchOptions::getSearchOptions( $this->getContext() );
+		$searchOptions = $this->searchOptions;
 
 		// reshape data array into a multi-dimensional [ value => label ] format
 		// per type, so that we can more easily grab the relevant data without

@@ -265,4 +265,34 @@ class StatementsTest extends WBMIApiTestCase {
 		$this->restoreFederation();
 	}
 
+	public function testCanAddStatementToEmptyMediainfoRecordWhenSpecifyingBaseRevId() {
+		$this->turnOffFederation();
+
+		$filePage = \WikiPage::factory( \Title::newFromText( $this->uploadRandomImage() ) );
+
+		$pageId = $filePage->getId();
+		$revId = $filePage->getRevisionRecord()->getId();
+		$mediainfoId = 'M' . $pageId;
+
+		$propertyId = $this->createTestEntity( 'property' );
+		$itemId = $this->createTestEntity( 'item' );
+
+		$statement = $this->createTestClaim( $mediainfoId, $propertyId, $itemId );
+
+		$this->doApiRequestWithToken(
+			[
+				'action' => 'wbsetclaim',
+				'baserevid' => $revId,
+				'claim' => json_encode( $statement ),
+				'format' => 'json',
+			],
+			null,
+			self::$users['wbeditor']->getUser()
+		);
+
+		$this->assertTrue( $this->entityHasStatement( $mediainfoId, $statement ) );
+
+		$this->restoreFederation();
+	}
+
 }

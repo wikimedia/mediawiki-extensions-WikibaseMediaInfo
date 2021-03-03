@@ -3,6 +3,7 @@
 namespace Wikibase\MediaInfo\Services;
 
 use Config;
+use InvalidArgumentException;
 use MediaWiki\MediaWikiServices;
 use MessageLocalizer;
 use Wikibase\Search\Elastic\Query\HasLicenseFeature;
@@ -12,6 +13,20 @@ use Wikibase\Search\Elastic\Query\HasLicenseFeature;
  * @author Eric Gardner
  */
 class MediaSearchOptions {
+
+	public const TYPE_BITMAP = 'bitmap';
+	public const TYPE_AUDIO = 'audio';
+	public const TYPE_VIDEO = 'video';
+	public const TYPE_PAGE = 'page';
+	public const TYPE_OTHER = 'other';
+
+	public const ALL_TYPES = [
+		self::TYPE_BITMAP,
+		self::TYPE_AUDIO,
+		self::TYPE_VIDEO,
+		self::TYPE_PAGE,
+		self::TYPE_OTHER,
+	];
 
 	/** @var MessageLocalizer */
 	private $context;
@@ -44,7 +59,6 @@ class MediaSearchOptions {
 				->makeConfig( 'WikibaseCirrusSearch' )
 		);
 
-		$types = [ 'bitmap', 'audio', 'video', 'page', 'other' ];
 		$searchOptions = [];
 
 		// Some options are only present for certain media types.
@@ -56,12 +70,12 @@ class MediaSearchOptions {
 		// because getSearchOptions can be called both as a ResourceLoader callback
 		// as well as during SpecialMediaSearch->execute(); we need to make sure
 		// the messages can be internationalized in the same way regardless
-		foreach ( $types as $type ) {
+		foreach ( static::ALL_TYPES as $type ) {
 			$searchOptions[ $type ] = array_filter( [
 				'license' => $instance->getLicenseGroups( $type ),
 				'mimeType' => $instance->getMimeTypes( $type ),
 				'imageSize' => $instance->getImageSizes( $type ),
-				'sort' => $instance->getSorts()
+				'sort' => $instance->getSorts( $type )
 			] );
 		}
 
@@ -71,11 +85,16 @@ class MediaSearchOptions {
 	/**
 	 * Get the size options. Only supported by "bitmap" type.
 	 *
-	 * @param string $mediaType
+	 * @param string $type
 	 * @return array
+	 * @throws InvalidArgumentException
 	 */
-	private function getImageSizes( string $mediaType ) : array {
-		if ( $mediaType === 'bitmap' ) {
+	public function getImageSizes( string $type ) : array {
+		if ( !in_array( $type, static::ALL_TYPES, true ) ) {
+			throw new InvalidArgumentException( "$type is not a valid type" );
+		}
+
+		if ( $type === static::TYPE_BITMAP ) {
 			return [
 				[
 					'label' => $this->context->msg( 'wikibasemediainfo-special-mediasearch-filter-size-any' )->text(),
@@ -104,12 +123,16 @@ class MediaSearchOptions {
 	 * Get the mimetype options for a given mediatype. All types except "page"
 	 * support this option.
 	 *
-	 * @param string $mediaType
+	 * @param string $type
 	 * @return array
 	 */
-	private function getMimeTypes( string $mediaType ) : array {
-		switch ( $mediaType ) {
-			case 'bitmap':
+	public function getMimeTypes( string $type ) : array {
+		if ( !in_array( $type, static::ALL_TYPES, true ) ) {
+			throw new InvalidArgumentException( "$type is not a valid type" );
+		}
+
+		switch ( $type ) {
+			case static::TYPE_BITMAP:
 				return [
 					[
 						// phpcs:ignore Generic.Files.LineLength.TooLong
@@ -145,7 +168,7 @@ class MediaSearchOptions {
 						'value' => 'svg'
 					]
 				];
-			case 'audio':
+			case static::TYPE_AUDIO:
 				return [
 					[
 						// phpcs:ignore Generic.Files.LineLength.TooLong
@@ -173,7 +196,7 @@ class MediaSearchOptions {
 						'value' => 'ogg'
 					]
 				];
-			case 'video' :
+			case static::TYPE_VIDEO :
 				return [
 					[
 						// phpcs:ignore Generic.Files.LineLength.TooLong
@@ -193,7 +216,7 @@ class MediaSearchOptions {
 						'value' => 'ogg'
 					]
 				];
-			case 'other':
+			case static::TYPE_OTHER:
 				return [
 					[
 						// phpcs:ignore Generic.Files.LineLength.TooLong
@@ -213,7 +236,7 @@ class MediaSearchOptions {
 						'value' => 'sla'
 					]
 				];
-			case 'page':
+			case static::TYPE_PAGE:
 			default:
 				return [];
 		}
@@ -222,9 +245,14 @@ class MediaSearchOptions {
 	/**
 	 * Get the sort options for each media type. Supported by all types.
 	 *
+	 * @param string $type
 	 * @return array
 	 */
-	private function getSorts() : array {
+	public function getSorts( string $type ) : array {
+		if ( !in_array( $type, static::ALL_TYPES, true ) ) {
+			throw new InvalidArgumentException( "$type is not a valid type" );
+		}
+
 		return [
 			[
 				'label' => $this->context->msg( 'wikibasemediainfo-special-mediasearch-filter-sort-default' )->text(),
@@ -245,12 +273,16 @@ class MediaSearchOptions {
 	 *
 	 * Supported by all types except "page" type.
 	 *
-	 * @param string $mediaType
+	 * @param string $type
 	 * @return array
 	 */
-	private function getLicenseGroups( string $mediaType ) : array {
+	public function getLicenseGroups( string $type ) : array {
+		if ( !in_array( $type, static::ALL_TYPES, true ) ) {
+			throw new InvalidArgumentException( "$type is not a valid type" );
+		}
+
 		// Category & page searches do not have license filters
-		if ( $mediaType === 'page' ) {
+		if ( $type === static::TYPE_PAGE ) {
 			return [];
 		}
 

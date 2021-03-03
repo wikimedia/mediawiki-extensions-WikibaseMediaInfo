@@ -5,184 +5,245 @@
                 "bool": {
                     "must": [
                         {
-                            "bool": {
-                                "should": [
-                                    {
-                                        "function_score": {
-                                            "query": {
-                                                "bool": {
-                                                    "must": [
-                                                        {
-                                                            "function_score": {
-                                                                "query": {
-                                                                    "bool": {
-                                                                        "should": [
-                                                                            {
-                                                                                "match": {
-                                                                                    "title": {
-                                                                                        "query": "cat",
-                                                                                        "boost": 1
+                            "function_score": {
+                                "query": {
+                                    "bool": {
+                                        "should": [
+                                            {
+                                                "function_score": {
+                                                    "query": {
+                                                        "bool": {
+                                                            "must": [
+                                                                {
+                                                                    "function_score": {
+                                                                        "query": {
+                                                                            "bool": {
+                                                                                "should": [
+                                                                                    {
+                                                                                        "match": {
+                                                                                            "title": {
+                                                                                                "query": "cat",
+                                                                                                "boost": 1
+                                                                                            }
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "match": {
+                                                                                            "title.plain": {
+                                                                                                "query": "cat",
+                                                                                                "boost": 1
+                                                                                            }
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "match": {
+                                                                                            "category": {
+                                                                                                "query": "cat",
+                                                                                                "boost": 1
+                                                                                            }
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "match": {
+                                                                                            "category.plain": {
+                                                                                                "query": "cat",
+                                                                                                "boost": 1
+                                                                                            }
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "match": {
+                                                                                            "redirect.title": {
+                                                                                                "query": "cat",
+                                                                                                "boost": 1
+                                                                                            }
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "match": {
+                                                                                            "redirect.title.plain": {
+                                                                                                "query": "cat",
+                                                                                                "boost": 1
+                                                                                            }
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "match": {
+                                                                                            "heading": {
+                                                                                                "query": "cat",
+                                                                                                "boost": 1
+                                                                                            }
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "match": {
+                                                                                            "heading.plain": {
+                                                                                                "query": "cat",
+                                                                                                "boost": 1
+                                                                                            }
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "match": {
+                                                                                            "auxiliary_text": {
+                                                                                                "query": "cat",
+                                                                                                "boost": 1
+                                                                                            }
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "match": {
+                                                                                            "auxiliary_text.plain": {
+                                                                                                "query": "cat",
+                                                                                                "boost": 1
+                                                                                            }
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "match": {
+                                                                                            "text": {
+                                                                                                "query": "cat",
+                                                                                                "boost": 1
+                                                                                            }
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "match": {
+                                                                                            "text.plain": {
+                                                                                                "query": "cat",
+                                                                                                "boost": 1
+                                                                                            }
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "match": {
+                                                                                            "file_text": {
+                                                                                                "query": "cat",
+                                                                                                "boost": 1
+                                                                                            }
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "match": {
+                                                                                            "file_text.plain": {
+                                                                                                "query": "cat",
+                                                                                                "boost": 1
+                                                                                            }
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "match": {
+                                                                                            "suggest": {
+                                                                                                "query": "cat",
+                                                                                                "boost": 1
+                                                                                            }
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "match": {
+                                                                                            "descriptions.de.plain": {
+                                                                                                "query": "cat",
+                                                                                                "boost": 1
+                                                                                            }
+                                                                                        }
                                                                                     }
-                                                                                }
-                                                                            },
+                                                                                ]
+                                                                            }
+                                                                        },
+                                                                        "min_score": 1.0e-8,
+                                                                        "functions": [
                                                                             {
-                                                                                "match": {
-                                                                                    "title.plain": {
-                                                                                        "query": "cat",
-                                                                                        "boost": 1
-                                                                                    }
-                                                                                }
-                                                                            },
-                                                                            {
-                                                                                "match": {
-                                                                                    "category": {
-                                                                                        "query": "cat",
-                                                                                        "boost": 1
-                                                                                    }
-                                                                                }
-                                                                            },
-                                                                            {
-                                                                                "match": {
-                                                                                    "category.plain": {
-                                                                                        "query": "cat",
-                                                                                        "boost": 1
-                                                                                    }
-                                                                                }
-                                                                            },
-                                                                            {
-                                                                                "match": {
-                                                                                    "redirect.title": {
-                                                                                        "query": "cat",
-                                                                                        "boost": 1
-                                                                                    }
-                                                                                }
-                                                                            },
-                                                                            {
-                                                                                "match": {
-                                                                                    "redirect.title.plain": {
-                                                                                        "query": "cat",
-                                                                                        "boost": 1
-                                                                                    }
-                                                                                }
-                                                                            },
-                                                                            {
-                                                                                "match": {
-                                                                                    "heading": {
-                                                                                        "query": "cat",
-                                                                                        "boost": 1
-                                                                                    }
-                                                                                }
-                                                                            },
-                                                                            {
-                                                                                "match": {
-                                                                                    "heading.plain": {
-                                                                                        "query": "cat",
-                                                                                        "boost": 1
-                                                                                    }
-                                                                                }
-                                                                            },
-                                                                            {
-                                                                                "match": {
-                                                                                    "auxiliary_text": {
-                                                                                        "query": "cat",
-                                                                                        "boost": 1
-                                                                                    }
-                                                                                }
-                                                                            },
-                                                                            {
-                                                                                "match": {
-                                                                                    "auxiliary_text.plain": {
-                                                                                        "query": "cat",
-                                                                                        "boost": 1
-                                                                                    }
-                                                                                }
-                                                                            },
-                                                                            {
-                                                                                "match": {
-                                                                                    "text": {
-                                                                                        "query": "cat",
-                                                                                        "boost": 1
-                                                                                    }
-                                                                                }
-                                                                            },
-                                                                            {
-                                                                                "match": {
-                                                                                    "text.plain": {
-                                                                                        "query": "cat",
-                                                                                        "boost": 1
-                                                                                    }
-                                                                                }
-                                                                            },
-                                                                            {
-                                                                                "match": {
-                                                                                    "file_text": {
-                                                                                        "query": "cat",
-                                                                                        "boost": 1
-                                                                                    }
-                                                                                }
-                                                                            },
-                                                                            {
-                                                                                "match": {
-                                                                                    "file_text.plain": {
-                                                                                        "query": "cat",
-                                                                                        "boost": 1
-                                                                                    }
-                                                                                }
-                                                                            },
-                                                                            {
-                                                                                "match": {
-                                                                                    "suggest": {
-                                                                                        "query": "cat",
-                                                                                        "boost": 1
-                                                                                    }
-                                                                                }
-                                                                            },
-                                                                            {
-                                                                                "match": {
-                                                                                    "descriptions.de.plain": {
-                                                                                        "query": "cat",
-                                                                                        "boost": 1
+                                                                                "script_score": {
+                                                                                    "script": {
+                                                                                        "source": "max(0, ln(_score))",
+                                                                                        "lang": "expression"
                                                                                     }
                                                                                 }
                                                                             }
                                                                         ]
                                                                     }
-                                                                },
-                                                                "min_score": 1.0e-8,
-                                                                "functions": [
-                                                                    {
-                                                                        "script_score": {
-                                                                            "script": {
-                                                                                "source": "max(0, ln(_score))",
-                                                                                "lang": "expression"
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                ]
-                                                            }
-                                                        }
-                                                    ],
-                                                    "should": [
-                                                        {
-                                                            "function_score": {
-                                                                "query": {
-                                                                    "match_explorer": {
-                                                                        "type": "unique_terms_count",
+                                                                }
+                                                            ],
+                                                            "should": [
+                                                                {
+                                                                    "function_score": {
                                                                         "query": {
-                                                                            "match": {
-                                                                                "text": {
-                                                                                    "query": "cat"
+                                                                            "match_explorer": {
+                                                                                "type": "unique_terms_count",
+                                                                                "query": {
+                                                                                    "match": {
+                                                                                        "text": {
+                                                                                            "query": "cat"
+                                                                                        }
+                                                                                    }
                                                                                 }
                                                                             }
-                                                                        }
+                                                                        },
+                                                                        "functions": [
+                                                                            {
+                                                                                "script_score": {
+                                                                                    "script": {
+                                                                                        "source": "ln(2 \/ max(1, min(1.25, _score)))",
+                                                                                        "lang": "expression"
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        ]
                                                                     }
-                                                                },
-                                                                "functions": [
+                                                                }
+                                                            ]
+                                                        }
+                                                    },
+                                                    "min_score": 0,
+                                                    "functions": [
+                                                        {
+                                                            "script_score": {
+                                                                "script": {
+                                                                    "source": "exp(_score) \/ 2",
+                                                                    "lang": "expression"
+                                                                }
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            {
+                                                "dis_max": {
+                                                    "queries": [
+                                                        {
+                                                            "match": {
+                                                                "statement_keywords": {
+                                                                    "query": "P999=P1",
+                                                                    "boost": 1
+                                                                }
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ],
+                                        "filter": [
+                                            {
+                                                "bool": {
+                                                    "should": [
+                                                        {
+                                                            "multi_match": {
+                                                                "query": "cat",
+                                                                "fields": [
+                                                                    "all",
+                                                                    "all.plain"
+                                                                ],
+                                                                "operator": "and"
+                                                            }
+                                                        },
+                                                        {
+                                                            "dis_max": {
+                                                                "queries": [
                                                                     {
-                                                                        "script_score": {
-                                                                            "script": {
-                                                                                "source": "ln(2 \/ max(1, min(1.25, _score)))",
-                                                                                "lang": "expression"
+                                                                        "match": {
+                                                                            "statement_keywords": {
+                                                                                "query": "P999=P1",
+                                                                                "boost": 1
                                                                             }
                                                                         }
                                                                     }
@@ -191,292 +252,265 @@
                                                         }
                                                     ]
                                                 }
-                                            },
-                                            "min_score": 0,
-                                            "functions": [
-                                                {
-                                                    "script_score": {
-                                                        "script": {
-                                                            "source": "exp(_score) \/ 2",
-                                                            "lang": "expression"
-                                                        }
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "dis_max": {
-                                            "queries": [
-                                                {
-                                                    "match": {
-                                                        "statement_keywords": {
-                                                            "query": "P999=P1",
-                                                            "boost": 1
-                                                        }
-                                                    }
-                                                }
-                                            ]
-                                        }
+                                            }
+                                        ]
                                     }
-                                ],
-                                "filter": [
+                                },
+                                "functions": [
                                     {
-                                        "bool": {
-                                            "should": [
-                                                {
-                                                    "multi_match": {
-                                                        "query": "cat",
-                                                        "fields": [
-                                                            "all",
-                                                            "all.plain"
-                                                        ],
-                                                        "operator": "and"
-                                                    }
+                                        "script_score": {
+                                            "script": {
+                                                "source": "100 \/ ( 1 + exp( -1 * ( _score + intercept ) ) )",
+                                                "params": {
+                                                    "intercept": 1
                                                 },
-                                                {
-                                                    "dis_max": {
-                                                        "queries": [
-                                                            {
-                                                                "match": {
-                                                                    "statement_keywords": {
-                                                                        "query": "P999=P1",
-                                                                        "boost": 1
-                                                                    }
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
+                                                "lang": "expression"
+                                            }
                                         }
                                     }
                                 ]
                             }
                         },
                         {
-                            "bool": {
-                                "should": [
-                                    {
-                                        "function_score": {
-                                            "query": {
-                                                "bool": {
-                                                    "must": [
-                                                        {
-                                                            "function_score": {
-                                                                "query": {
-                                                                    "bool": {
-                                                                        "should": [
-                                                                            {
-                                                                                "match": {
-                                                                                    "title": {
-                                                                                        "query": "dog",
-                                                                                        "boost": 1
+                            "function_score": {
+                                "query": {
+                                    "bool": {
+                                        "should": [
+                                            {
+                                                "function_score": {
+                                                    "query": {
+                                                        "bool": {
+                                                            "must": [
+                                                                {
+                                                                    "function_score": {
+                                                                        "query": {
+                                                                            "bool": {
+                                                                                "should": [
+                                                                                    {
+                                                                                        "match": {
+                                                                                            "title": {
+                                                                                                "query": "dog",
+                                                                                                "boost": 1
+                                                                                            }
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "match": {
+                                                                                            "title.plain": {
+                                                                                                "query": "dog",
+                                                                                                "boost": 1
+                                                                                            }
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "match": {
+                                                                                            "category": {
+                                                                                                "query": "dog",
+                                                                                                "boost": 1
+                                                                                            }
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "match": {
+                                                                                            "category.plain": {
+                                                                                                "query": "dog",
+                                                                                                "boost": 1
+                                                                                            }
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "match": {
+                                                                                            "redirect.title": {
+                                                                                                "query": "dog",
+                                                                                                "boost": 1
+                                                                                            }
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "match": {
+                                                                                            "redirect.title.plain": {
+                                                                                                "query": "dog",
+                                                                                                "boost": 1
+                                                                                            }
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "match": {
+                                                                                            "heading": {
+                                                                                                "query": "dog",
+                                                                                                "boost": 1
+                                                                                            }
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "match": {
+                                                                                            "heading.plain": {
+                                                                                                "query": "dog",
+                                                                                                "boost": 1
+                                                                                            }
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "match": {
+                                                                                            "auxiliary_text": {
+                                                                                                "query": "dog",
+                                                                                                "boost": 1
+                                                                                            }
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "match": {
+                                                                                            "auxiliary_text.plain": {
+                                                                                                "query": "dog",
+                                                                                                "boost": 1
+                                                                                            }
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "match": {
+                                                                                            "text": {
+                                                                                                "query": "dog",
+                                                                                                "boost": 1
+                                                                                            }
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "match": {
+                                                                                            "text.plain": {
+                                                                                                "query": "dog",
+                                                                                                "boost": 1
+                                                                                            }
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "match": {
+                                                                                            "file_text": {
+                                                                                                "query": "dog",
+                                                                                                "boost": 1
+                                                                                            }
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "match": {
+                                                                                            "file_text.plain": {
+                                                                                                "query": "dog",
+                                                                                                "boost": 1
+                                                                                            }
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "match": {
+                                                                                            "suggest": {
+                                                                                                "query": "dog",
+                                                                                                "boost": 1
+                                                                                            }
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "match": {
+                                                                                            "descriptions.de.plain": {
+                                                                                                "query": "dog",
+                                                                                                "boost": 1
+                                                                                            }
+                                                                                        }
                                                                                     }
-                                                                                }
-                                                                            },
+                                                                                ]
+                                                                            }
+                                                                        },
+                                                                        "min_score": 1.0e-8,
+                                                                        "functions": [
                                                                             {
-                                                                                "match": {
-                                                                                    "title.plain": {
-                                                                                        "query": "dog",
-                                                                                        "boost": 1
-                                                                                    }
-                                                                                }
-                                                                            },
-                                                                            {
-                                                                                "match": {
-                                                                                    "category": {
-                                                                                        "query": "dog",
-                                                                                        "boost": 1
-                                                                                    }
-                                                                                }
-                                                                            },
-                                                                            {
-                                                                                "match": {
-                                                                                    "category.plain": {
-                                                                                        "query": "dog",
-                                                                                        "boost": 1
-                                                                                    }
-                                                                                }
-                                                                            },
-                                                                            {
-                                                                                "match": {
-                                                                                    "redirect.title": {
-                                                                                        "query": "dog",
-                                                                                        "boost": 1
-                                                                                    }
-                                                                                }
-                                                                            },
-                                                                            {
-                                                                                "match": {
-                                                                                    "redirect.title.plain": {
-                                                                                        "query": "dog",
-                                                                                        "boost": 1
-                                                                                    }
-                                                                                }
-                                                                            },
-                                                                            {
-                                                                                "match": {
-                                                                                    "heading": {
-                                                                                        "query": "dog",
-                                                                                        "boost": 1
-                                                                                    }
-                                                                                }
-                                                                            },
-                                                                            {
-                                                                                "match": {
-                                                                                    "heading.plain": {
-                                                                                        "query": "dog",
-                                                                                        "boost": 1
-                                                                                    }
-                                                                                }
-                                                                            },
-                                                                            {
-                                                                                "match": {
-                                                                                    "auxiliary_text": {
-                                                                                        "query": "dog",
-                                                                                        "boost": 1
-                                                                                    }
-                                                                                }
-                                                                            },
-                                                                            {
-                                                                                "match": {
-                                                                                    "auxiliary_text.plain": {
-                                                                                        "query": "dog",
-                                                                                        "boost": 1
-                                                                                    }
-                                                                                }
-                                                                            },
-                                                                            {
-                                                                                "match": {
-                                                                                    "text": {
-                                                                                        "query": "dog",
-                                                                                        "boost": 1
-                                                                                    }
-                                                                                }
-                                                                            },
-                                                                            {
-                                                                                "match": {
-                                                                                    "text.plain": {
-                                                                                        "query": "dog",
-                                                                                        "boost": 1
-                                                                                    }
-                                                                                }
-                                                                            },
-                                                                            {
-                                                                                "match": {
-                                                                                    "file_text": {
-                                                                                        "query": "dog",
-                                                                                        "boost": 1
-                                                                                    }
-                                                                                }
-                                                                            },
-                                                                            {
-                                                                                "match": {
-                                                                                    "file_text.plain": {
-                                                                                        "query": "dog",
-                                                                                        "boost": 1
-                                                                                    }
-                                                                                }
-                                                                            },
-                                                                            {
-                                                                                "match": {
-                                                                                    "suggest": {
-                                                                                        "query": "dog",
-                                                                                        "boost": 1
-                                                                                    }
-                                                                                }
-                                                                            },
-                                                                            {
-                                                                                "match": {
-                                                                                    "descriptions.de.plain": {
-                                                                                        "query": "dog",
-                                                                                        "boost": 1
+                                                                                "script_score": {
+                                                                                    "script": {
+                                                                                        "source": "max(0, ln(_score))",
+                                                                                        "lang": "expression"
                                                                                     }
                                                                                 }
                                                                             }
                                                                         ]
                                                                     }
-                                                                },
-                                                                "min_score": 1.0e-8,
-                                                                "functions": [
-                                                                    {
-                                                                        "script_score": {
-                                                                            "script": {
-                                                                                "source": "max(0, ln(_score))",
-                                                                                "lang": "expression"
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                ]
-                                                            }
-                                                        }
-                                                    ],
-                                                    "should": [
-                                                        {
-                                                            "function_score": {
-                                                                "query": {
-                                                                    "match_explorer": {
-                                                                        "type": "unique_terms_count",
+                                                                }
+                                                            ],
+                                                            "should": [
+                                                                {
+                                                                    "function_score": {
                                                                         "query": {
-                                                                            "match": {
-                                                                                "text": {
-                                                                                    "query": "dog"
+                                                                            "match_explorer": {
+                                                                                "type": "unique_terms_count",
+                                                                                "query": {
+                                                                                    "match": {
+                                                                                        "text": {
+                                                                                            "query": "dog"
+                                                                                        }
+                                                                                    }
                                                                                 }
                                                                             }
-                                                                        }
-                                                                    }
-                                                                },
-                                                                "functions": [
-                                                                    {
-                                                                        "script_score": {
-                                                                            "script": {
-                                                                                "source": "ln(2 \/ max(1, min(1.25, _score)))",
-                                                                                "lang": "expression"
+                                                                        },
+                                                                        "functions": [
+                                                                            {
+                                                                                "script_score": {
+                                                                                    "script": {
+                                                                                        "source": "ln(2 \/ max(1, min(1.25, _score)))",
+                                                                                        "lang": "expression"
+                                                                                    }
+                                                                                }
                                                                             }
-                                                                        }
+                                                                        ]
                                                                     }
-                                                                ]
+                                                                }
+                                                            ]
+                                                        }
+                                                    },
+                                                    "min_score": 0,
+                                                    "functions": [
+                                                        {
+                                                            "script_score": {
+                                                                "script": {
+                                                                    "source": "exp(_score) \/ 2",
+                                                                    "lang": "expression"
+                                                                }
                                                             }
                                                         }
                                                     ]
                                                 }
                                             },
-                                            "min_score": 0,
-                                            "functions": [
-                                                {
-                                                    "script_score": {
-                                                        "script": {
-                                                            "source": "exp(_score) \/ 2",
-                                                            "lang": "expression"
+                                            {
+                                                "match_none": {}
+                                            }
+                                        ],
+                                        "filter": [
+                                            {
+                                                "bool": {
+                                                    "should": [
+                                                        {
+                                                            "multi_match": {
+                                                                "query": "dog",
+                                                                "fields": [
+                                                                    "all",
+                                                                    "all.plain"
+                                                                ],
+                                                                "operator": "and"
+                                                            }
+                                                        },
+                                                        {
+                                                            "match_none": {}
                                                         }
-                                                    }
+                                                    ]
                                                 }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "match_none": {}
+                                            }
+                                        ]
                                     }
-                                ],
-                                "filter": [
+                                },
+                                "functions": [
                                     {
-                                        "bool": {
-                                            "should": [
-                                                {
-                                                    "multi_match": {
-                                                        "query": "dog",
-                                                        "fields": [
-                                                            "all",
-                                                            "all.plain"
-                                                        ],
-                                                        "operator": "and"
-                                                    }
+                                        "script_score": {
+                                            "script": {
+                                                "source": "100 \/ ( 1 + exp( -1 * ( _score + intercept ) ) )",
+                                                "params": {
+                                                    "intercept": 1
                                                 },
-                                                {
-                                                    "match_none": {}
-                                                }
-                                            ]
+                                                "lang": "expression"
+                                            }
                                         }
                                     }
                                 ]
@@ -485,184 +519,245 @@
                     ],
                     "must_not": [
                         {
-                            "bool": {
-                                "should": [
-                                    {
-                                        "function_score": {
-                                            "query": {
-                                                "bool": {
-                                                    "must": [
-                                                        {
-                                                            "function_score": {
-                                                                "query": {
-                                                                    "bool": {
-                                                                        "should": [
-                                                                            {
-                                                                                "match": {
-                                                                                    "title": {
-                                                                                        "query": "donkey",
-                                                                                        "boost": 1
+                            "function_score": {
+                                "query": {
+                                    "bool": {
+                                        "should": [
+                                            {
+                                                "function_score": {
+                                                    "query": {
+                                                        "bool": {
+                                                            "must": [
+                                                                {
+                                                                    "function_score": {
+                                                                        "query": {
+                                                                            "bool": {
+                                                                                "should": [
+                                                                                    {
+                                                                                        "match": {
+                                                                                            "title": {
+                                                                                                "query": "donkey",
+                                                                                                "boost": 1
+                                                                                            }
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "match": {
+                                                                                            "title.plain": {
+                                                                                                "query": "donkey",
+                                                                                                "boost": 1
+                                                                                            }
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "match": {
+                                                                                            "category": {
+                                                                                                "query": "donkey",
+                                                                                                "boost": 1
+                                                                                            }
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "match": {
+                                                                                            "category.plain": {
+                                                                                                "query": "donkey",
+                                                                                                "boost": 1
+                                                                                            }
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "match": {
+                                                                                            "redirect.title": {
+                                                                                                "query": "donkey",
+                                                                                                "boost": 1
+                                                                                            }
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "match": {
+                                                                                            "redirect.title.plain": {
+                                                                                                "query": "donkey",
+                                                                                                "boost": 1
+                                                                                            }
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "match": {
+                                                                                            "heading": {
+                                                                                                "query": "donkey",
+                                                                                                "boost": 1
+                                                                                            }
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "match": {
+                                                                                            "heading.plain": {
+                                                                                                "query": "donkey",
+                                                                                                "boost": 1
+                                                                                            }
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "match": {
+                                                                                            "auxiliary_text": {
+                                                                                                "query": "donkey",
+                                                                                                "boost": 1
+                                                                                            }
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "match": {
+                                                                                            "auxiliary_text.plain": {
+                                                                                                "query": "donkey",
+                                                                                                "boost": 1
+                                                                                            }
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "match": {
+                                                                                            "text": {
+                                                                                                "query": "donkey",
+                                                                                                "boost": 1
+                                                                                            }
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "match": {
+                                                                                            "text.plain": {
+                                                                                                "query": "donkey",
+                                                                                                "boost": 1
+                                                                                            }
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "match": {
+                                                                                            "file_text": {
+                                                                                                "query": "donkey",
+                                                                                                "boost": 1
+                                                                                            }
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "match": {
+                                                                                            "file_text.plain": {
+                                                                                                "query": "donkey",
+                                                                                                "boost": 1
+                                                                                            }
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "match": {
+                                                                                            "suggest": {
+                                                                                                "query": "donkey",
+                                                                                                "boost": 1
+                                                                                            }
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "match": {
+                                                                                            "descriptions.de.plain": {
+                                                                                                "query": "donkey",
+                                                                                                "boost": 1
+                                                                                            }
+                                                                                        }
                                                                                     }
-                                                                                }
-                                                                            },
+                                                                                ]
+                                                                            }
+                                                                        },
+                                                                        "min_score": 1.0e-8,
+                                                                        "functions": [
                                                                             {
-                                                                                "match": {
-                                                                                    "title.plain": {
-                                                                                        "query": "donkey",
-                                                                                        "boost": 1
-                                                                                    }
-                                                                                }
-                                                                            },
-                                                                            {
-                                                                                "match": {
-                                                                                    "category": {
-                                                                                        "query": "donkey",
-                                                                                        "boost": 1
-                                                                                    }
-                                                                                }
-                                                                            },
-                                                                            {
-                                                                                "match": {
-                                                                                    "category.plain": {
-                                                                                        "query": "donkey",
-                                                                                        "boost": 1
-                                                                                    }
-                                                                                }
-                                                                            },
-                                                                            {
-                                                                                "match": {
-                                                                                    "redirect.title": {
-                                                                                        "query": "donkey",
-                                                                                        "boost": 1
-                                                                                    }
-                                                                                }
-                                                                            },
-                                                                            {
-                                                                                "match": {
-                                                                                    "redirect.title.plain": {
-                                                                                        "query": "donkey",
-                                                                                        "boost": 1
-                                                                                    }
-                                                                                }
-                                                                            },
-                                                                            {
-                                                                                "match": {
-                                                                                    "heading": {
-                                                                                        "query": "donkey",
-                                                                                        "boost": 1
-                                                                                    }
-                                                                                }
-                                                                            },
-                                                                            {
-                                                                                "match": {
-                                                                                    "heading.plain": {
-                                                                                        "query": "donkey",
-                                                                                        "boost": 1
-                                                                                    }
-                                                                                }
-                                                                            },
-                                                                            {
-                                                                                "match": {
-                                                                                    "auxiliary_text": {
-                                                                                        "query": "donkey",
-                                                                                        "boost": 1
-                                                                                    }
-                                                                                }
-                                                                            },
-                                                                            {
-                                                                                "match": {
-                                                                                    "auxiliary_text.plain": {
-                                                                                        "query": "donkey",
-                                                                                        "boost": 1
-                                                                                    }
-                                                                                }
-                                                                            },
-                                                                            {
-                                                                                "match": {
-                                                                                    "text": {
-                                                                                        "query": "donkey",
-                                                                                        "boost": 1
-                                                                                    }
-                                                                                }
-                                                                            },
-                                                                            {
-                                                                                "match": {
-                                                                                    "text.plain": {
-                                                                                        "query": "donkey",
-                                                                                        "boost": 1
-                                                                                    }
-                                                                                }
-                                                                            },
-                                                                            {
-                                                                                "match": {
-                                                                                    "file_text": {
-                                                                                        "query": "donkey",
-                                                                                        "boost": 1
-                                                                                    }
-                                                                                }
-                                                                            },
-                                                                            {
-                                                                                "match": {
-                                                                                    "file_text.plain": {
-                                                                                        "query": "donkey",
-                                                                                        "boost": 1
-                                                                                    }
-                                                                                }
-                                                                            },
-                                                                            {
-                                                                                "match": {
-                                                                                    "suggest": {
-                                                                                        "query": "donkey",
-                                                                                        "boost": 1
-                                                                                    }
-                                                                                }
-                                                                            },
-                                                                            {
-                                                                                "match": {
-                                                                                    "descriptions.de.plain": {
-                                                                                        "query": "donkey",
-                                                                                        "boost": 1
+                                                                                "script_score": {
+                                                                                    "script": {
+                                                                                        "source": "max(0, ln(_score))",
+                                                                                        "lang": "expression"
                                                                                     }
                                                                                 }
                                                                             }
                                                                         ]
                                                                     }
-                                                                },
-                                                                "min_score": 1.0e-8,
-                                                                "functions": [
-                                                                    {
-                                                                        "script_score": {
-                                                                            "script": {
-                                                                                "source": "max(0, ln(_score))",
-                                                                                "lang": "expression"
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                ]
-                                                            }
-                                                        }
-                                                    ],
-                                                    "should": [
-                                                        {
-                                                            "function_score": {
-                                                                "query": {
-                                                                    "match_explorer": {
-                                                                        "type": "unique_terms_count",
+                                                                }
+                                                            ],
+                                                            "should": [
+                                                                {
+                                                                    "function_score": {
                                                                         "query": {
-                                                                            "match": {
-                                                                                "text": {
-                                                                                    "query": "donkey"
+                                                                            "match_explorer": {
+                                                                                "type": "unique_terms_count",
+                                                                                "query": {
+                                                                                    "match": {
+                                                                                        "text": {
+                                                                                            "query": "donkey"
+                                                                                        }
+                                                                                    }
                                                                                 }
                                                                             }
-                                                                        }
+                                                                        },
+                                                                        "functions": [
+                                                                            {
+                                                                                "script_score": {
+                                                                                    "script": {
+                                                                                        "source": "ln(2 \/ max(1, min(1.25, _score)))",
+                                                                                        "lang": "expression"
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        ]
                                                                     }
-                                                                },
-                                                                "functions": [
+                                                                }
+                                                            ]
+                                                        }
+                                                    },
+                                                    "min_score": 0,
+                                                    "functions": [
+                                                        {
+                                                            "script_score": {
+                                                                "script": {
+                                                                    "source": "exp(_score) \/ 2",
+                                                                    "lang": "expression"
+                                                                }
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            {
+                                                "dis_max": {
+                                                    "queries": [
+                                                        {
+                                                            "match": {
+                                                                "statement_keywords": {
+                                                                    "query": "P999=P2",
+                                                                    "boost": 1
+                                                                }
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ],
+                                        "filter": [
+                                            {
+                                                "bool": {
+                                                    "should": [
+                                                        {
+                                                            "multi_match": {
+                                                                "query": "donkey",
+                                                                "fields": [
+                                                                    "all",
+                                                                    "all.plain"
+                                                                ],
+                                                                "operator": "and"
+                                                            }
+                                                        },
+                                                        {
+                                                            "dis_max": {
+                                                                "queries": [
                                                                     {
-                                                                        "script_score": {
-                                                                            "script": {
-                                                                                "source": "ln(2 \/ max(1, min(1.25, _score)))",
-                                                                                "lang": "expression"
+                                                                        "match": {
+                                                                            "statement_keywords": {
+                                                                                "query": "P999=P2",
+                                                                                "boost": 1
                                                                             }
                                                                         }
                                                                     }
@@ -671,64 +766,20 @@
                                                         }
                                                     ]
                                                 }
-                                            },
-                                            "min_score": 0,
-                                            "functions": [
-                                                {
-                                                    "script_score": {
-                                                        "script": {
-                                                            "source": "exp(_score) \/ 2",
-                                                            "lang": "expression"
-                                                        }
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "dis_max": {
-                                            "queries": [
-                                                {
-                                                    "match": {
-                                                        "statement_keywords": {
-                                                            "query": "P999=P2",
-                                                            "boost": 1
-                                                        }
-                                                    }
-                                                }
-                                            ]
-                                        }
+                                            }
+                                        ]
                                     }
-                                ],
-                                "filter": [
+                                },
+                                "functions": [
                                     {
-                                        "bool": {
-                                            "should": [
-                                                {
-                                                    "multi_match": {
-                                                        "query": "donkey",
-                                                        "fields": [
-                                                            "all",
-                                                            "all.plain"
-                                                        ],
-                                                        "operator": "and"
-                                                    }
+                                        "script_score": {
+                                            "script": {
+                                                "source": "100 \/ ( 1 + exp( -1 * ( _score + intercept ) ) )",
+                                                "params": {
+                                                    "intercept": 1
                                                 },
-                                                {
-                                                    "dis_max": {
-                                                        "queries": [
-                                                            {
-                                                                "match": {
-                                                                    "statement_keywords": {
-                                                                        "query": "P999=P2",
-                                                                        "boost": 1
-                                                                    }
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
+                                                "lang": "expression"
+                                            }
                                         }
                                     }
                                 ]

@@ -38,8 +38,11 @@ class MediaSearchQueryBuilderTest extends MediaWikiIntegrationTestCase {
 				array_fill_keys( $defaultProperties, 1 ),
 				$stemmingSettings,
 				array_merge( [ $userLanguage ], $fallbackLangs ),
-				$settings,
-				true
+				$settings + [
+					'hasLtrPlugin' => true,
+					'applyLogisticFunction' => true,
+					'logisticRegressionIntercept' => 1,
+				]
 			)
 		);
 	}

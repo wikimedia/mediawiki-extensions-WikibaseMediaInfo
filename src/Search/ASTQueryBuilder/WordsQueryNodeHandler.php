@@ -20,8 +20,8 @@ class WordsQueryNodeHandler implements ParsedNodeHandlerInterface {
 	/** @var WikibaseEntitiesHandler */
 	private $entitiesHandler;
 
-	/** @var bool */
-	private $hasLtrPlugin;
+	/** @var array */
+	private $options;
 
 	/** @var FieldIterator */
 	private $termScoringFieldIterator;
@@ -33,11 +33,17 @@ class WordsQueryNodeHandler implements ParsedNodeHandlerInterface {
 		array $stemmingSettings,
 		array $boosts,
 		array $decays,
-		bool $hasLtrPlugin = false
+		array $options = []
 	) {
 		$this->node = $node;
 		$this->entitiesHandler = $entitiesHandler;
-		$this->hasLtrPlugin = $hasLtrPlugin;
+		$this->options = array_merge(
+			[
+				'hasLtrPlugin' => false,
+				'normalizeFulltextScores' => true,
+			],
+			$options
+		);
 
 		$this->termScoringFieldIterator = new FieldIterator(
 			$this->getTermScoringFieldQueryBuilder( $node->getWords() ),
@@ -80,16 +86,21 @@ class WordsQueryNodeHandler implements ParsedNodeHandlerInterface {
 			$fieldsQuery->addShould( $fieldQuery );
 		}
 
-		return ( new BoolQuery() )
-			->addShould(
-				// we'll wrap the fulltext part to normalize the scores, which
-				// otherwise increase when the token count increases
-				$this->normalizeFulltextScores(
-					$fieldsQuery,
-					$this->node->getWords()
-				)
-			)
-			->addShould( $this->entitiesHandler->transform() );
+		if ( $this->options['normalizeFulltextScores'] ) {
+			$fieldsQuery = ( new BoolQuery() )
+				->addShould(
+					// we'll wrap the fulltext part to normalize the scores, which
+					// otherwise increase when the token count increases
+					$this->normalizeFulltextScores(
+						$fieldsQuery,
+						$this->node->getWords()
+					)
+				);
+		}
+
+		$fieldsQuery->addShould( $this->entitiesHandler->transform() );
+
+		return $fieldsQuery;
 	}
 
 	/**
@@ -202,7 +213,7 @@ class WordsQueryNodeHandler implements ParsedNodeHandlerInterface {
 	 * @return AbstractQuery
 	 */
 	private function getTermsCountQuery( string $term ): AbstractQuery {
-		if ( !$this->hasLtrPlugin ) {
+		if ( !$this->options['hasLtrPlugin'] ) {
 			// if the LTR plugin (required for this feature) is not implemented,
 			// we'll fall back to a very simple & naive token count based on PHP's
 			// word count - it won't take stemming config & stopwords into account,

@@ -13,7 +13,7 @@ return [
 	'MediaInfoIdLookup' => function ( MediaWikiServices $services ) {
 		$wbRepo = WikibaseRepo::getDefaultInstance();
 		$nsLookup = $wbRepo->getEntityNamespaceLookup();
-		$entityIdComposer = $wbRepo->getEntityIdComposer();
+		$entityIdComposer = WikibaseRepo::getEntityIdComposer( $services );
 		$mediaInfoNamespace = $nsLookup->getEntityNamespace( MediaInfo::ENTITY_TYPE );
 
 		if ( !is_int( $mediaInfoNamespace ) ) {

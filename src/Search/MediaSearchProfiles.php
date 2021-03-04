@@ -51,7 +51,8 @@ return [
 		'builder_factory' => closureToAnonymousClass( function ( array $settings ) {
 			$repo = WikibaseRepo::getDefaultInstance();
 			$languageCode = $repo->getUserLanguage()->getCode();
-			$languageFallbackChain = $repo->getLanguageFallbackChainFactory()->newFromLanguageCode( $languageCode );
+			$languageFallbackChain = WikibaseRepo::getLanguageFallbackChainFactory()
+				->newFromLanguageCode( $languageCode );
 
 			$mwServices = MediaWikiServices::getInstance();
 			$config = $mwServices->getMainConfig();
@@ -143,7 +144,8 @@ return [
 		'builder_factory' => closureToAnonymousClass( function ( array $settings ) {
 			$repo = WikibaseRepo::getDefaultInstance();
 			$languageCode = $repo->getUserLanguage()->getCode();
-			$languageFallbackChain = $repo->getLanguageFallbackChainFactory()->newFromLanguageCode( $languageCode );
+			$languageFallbackChain = WikibaseRepo::getLanguageFallbackChainFactory()
+				->newFromLanguageCode( $languageCode );
 
 			$mwServices = MediaWikiServices::getInstance();
 			$httpRequestFactory = $mwServices->getHttpRequestFactory();

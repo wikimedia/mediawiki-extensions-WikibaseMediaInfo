@@ -9,7 +9,7 @@
 	>
 		<header ref="header" class="wbmi-quick-view__header">
 			<div
-				v-if="isBitmap"
+				v-if="isImage"
 				class="wbmi-quick-view__thumbnail-wrapper"
 				:style="thumbnailWrapperStyle"
 			>
@@ -218,7 +218,7 @@ module.exports = {
 		mediaType: {
 			type: String,
 			required: false,
-			default: 'bitmap'
+			default: 'image'
 		},
 
 		isDialog: {
@@ -241,7 +241,7 @@ module.exports = {
 	computed: {
 		rootClasses: function () {
 			return {
-				'wbmi-quick-view--bitmap': this.isBitmap,
+				'wbmi-quick-view--image': this.isImage,
 				'wbmi-quick-view--audio': this.isAudio,
 				'wbmi-quick-view--video': this.isVideo,
 				'wbmi-quick-view--dialog': this.isDialog
@@ -255,8 +255,8 @@ module.exports = {
 			};
 		},
 
-		isBitmap: function () {
-			return this.mediaType === 'bitmap';
+		isImage: function () {
+			return this.mediaType === 'image';
 		},
 
 		isVideo: function () {

@@ -11,7 +11,7 @@ module.exports = {
 	 */
 	checkForMore: function ( state ) {
 		return {
-			bitmap: state.continue.bitmap !== null,
+			image: state.continue.image !== null,
 			audio: state.continue.audio !== null,
 			video: state.continue.video !== null,
 			page: state.continue.page !== null,

@@ -13,7 +13,7 @@ require( '../polyfills/Array.prototype.findIndex.js' );
 
 	Vue.use( logger, {
 		stream: 'mediawiki.mediasearch_interaction',
-		schema: '/analytics/mediawiki/mediasearch_interaction/1.1.0'
+		schema: '/analytics/mediawiki/mediasearch_interaction/1.3.0'
 	} );
 
 	/* eslint-disable no-jquery/no-global-selector */

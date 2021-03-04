@@ -33,14 +33,14 @@ class MediaSearchOptionsTest extends MediaWikiIntegrationTestCase {
 		}
 	}
 
-	public function testGetImageSizesForBitmap() {
+	public function testGetImageSizesForImage() {
 		$options = new MediaSearchOptions(
 			new MockMessageLocalizer(),
 			new HashConfig()
 		);
 
-		// verify that there are image sizes for bitmap
-		$sizes = $options->getImageSizes( MediaSearchOptions::TYPE_BITMAP );
+		// verify that there are image sizes for image
+		$sizes = $options->getImageSizes( MediaSearchOptions::TYPE_IMAGE );
 		$this->assertNotEmpty( $sizes );
 	}
 
@@ -79,14 +79,14 @@ class MediaSearchOptionsTest extends MediaWikiIntegrationTestCase {
 		}
 	}
 
-	public function testGetMimeTypesForBitmap() {
+	public function testGetMimeTypesForImage() {
 		$options = new MediaSearchOptions(
 			new MockMessageLocalizer(),
 			new HashConfig()
 		);
 
-		// verify that there are mime types for bitmap
-		$mimes = $options->getMimeTypes( MediaSearchOptions::TYPE_BITMAP );
+		// verify that there are mime types for image
+		$mimes = $options->getMimeTypes( MediaSearchOptions::TYPE_IMAGE );
 		$this->assertNotEmpty( $mimes );
 	}
 
@@ -168,7 +168,7 @@ class MediaSearchOptionsTest extends MediaWikiIntegrationTestCase {
 		}
 	}
 
-	public function testGetLicenseGroupsForBitmap() {
+	public function testGetLicenseGroupsForImage() {
 		$licenseMapping = [
 			'attribution' => [ 'P275=Q98755364', 'P275=Q98755344' ],
 			'attribution-same-license' => [ 'P275=Q19125117' ],
@@ -180,8 +180,8 @@ class MediaSearchOptionsTest extends MediaWikiIntegrationTestCase {
 			new HashConfig( [ 'LicenseMapping' => $licenseMapping ] )
 		);
 
-		// verify that there are licenses for bitmap
-		$licenses = $options->getLicenseGroups( MediaSearchOptions::TYPE_BITMAP );
+		// verify that there are licenses for image
+		$licenses = $options->getLicenseGroups( MediaSearchOptions::TYPE_IMAGE );
 		$this->assertNotEmpty( $licenses );
 	}
 

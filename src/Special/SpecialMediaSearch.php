@@ -4,8 +4,11 @@ namespace Wikibase\MediaInfo\Special;
 
 use ApiBase;
 use ApiMain;
+use CirrusSearch\Parser\FullTextKeywordRegistry;
+use CirrusSearch\SearchConfig;
 use DerivativeContext;
 use FauxRequest;
+use MediaWiki\MediaWikiServices;
 use NamespaceInfo;
 use OutputPage;
 use RequestContext;
@@ -38,13 +41,19 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 	protected $templateParser;
 
 	/**
+	 * @var SearchConfig
+	 */
+	protected $searchConfig;
+
+	/**
 	 * @inheritDoc
 	 */
 	public function __construct(
 		NamespaceInfo $namespaceInfo,
 		$name = 'MediaSearch',
 		ApiBase $api = null,
-		TemplateParser $templateParser = null
+		TemplateParser $templateParser = null,
+		SearchConfig $searchConfig = null
 	) {
 		parent::__construct( $name, 'mediasearch' );
 
@@ -53,6 +62,9 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 		$this->templateParser = $templateParser ?: new MustacheDomTemplateParser(
 			__DIR__ . '/../../templates/mediasearch'
 		);
+		$this->searchConfig = $searchConfig ?? MediaWikiServices::getInstance()
+			->getConfigFactory()
+			->makeConfig( 'CirrusSearch' );
 	}
 
 	/**
@@ -75,7 +87,7 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 		$url = $this->getRequest()->getRequestURL();
 		parse_str( parse_url( $url, PHP_URL_QUERY ), $querystring );
 
-		$term = str_replace( "\n", " ", $this->getRequest()->getText( 'q' ) );
+		$term = str_replace( "\n", ' ', $this->getRequest()->getText( 'q' ) );
 		$activeFilters = $this->getActiveFilters( $querystring );
 
 		$type = $querystring['type'] ?? MediaSearchOptions::TYPE_BITMAP;
@@ -345,29 +357,30 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 	 * We need to see if the values for each active filter as specified by URL
 	 * params match any of the pre-defined possible values for a given filter
 	 * type. For example, an imageSize setting determined by url params like
-	 * &imageSize=500,1000 should be presented to the user as "Medium".
-	 *
-	 * @todo There is probably a cleaner way to do this in PHP than this ugly
-	 * nested for loop...
+	 * &fileres=500,1000 should be presented to the user as "Medium".
 	 *
 	 * @param array $activeFilters
 	 * @param string $type
 	 * @return array
 	 */
 	protected function getFiltersForDisplay( $activeFilters, $type ) : array {
-		$display = [];
 		$searchOptions = MediaSearchOptions::getSearchOptions( $this->getContext() );
 
-		foreach ( $searchOptions[ $type ] as $filterType => $possibleValues ) {
-			if ( array_key_exists( $filterType, $activeFilters ) ) {
-				foreach ( $possibleValues as $item ) {
-					if ( $activeFilters[ $filterType ] === $item[ 'value' ] ) {
-						$display[ $filterType ] = $item[ 'label' ];
-					}
-				}
-			}
-		}
+		// reshape data array into a multi-dimensional [ value => label ] format
+		// per type, so that we can more easily grab the relevant data without
+		// having to loop it every time, for each filter
+		$labels = array_map(
+			function ( $data ) {
+				return array_column( $data, 'label', 'value' );
+			},
+			$searchOptions[$type]
+		);
 
+		$display = [];
+		foreach ( $activeFilters as $filter => $value ) {
+			// use label (if found) or fall back to the given value
+			$display[$filter] = $labels[$filter][$value] ?? $value;
+		}
 		return $display;
 	}
 
@@ -377,7 +390,7 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 	 * provided, the original term is returned.
 	 *
 	 * @param string $term
-	 * @param array $filters [ "mimeType" => "tiff", "imageSize" => ">500" ]
+	 * @param array $filters [ "filemime" => "tiff", "fileres" => ">500" ]
 	 * @return string "kittens filemime:tiff fileres:>500"
 	 */
 	protected function getTermWithFilters( $term, $filters ) : string {
@@ -385,23 +398,31 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 			return $term;
 		}
 
+		// remove filters that aren't supported as search term keyword features;
+		// those will need to be handled elsewhere, differently
+		$validFilters = array_intersect_key( $filters, array_flip( $this->getSearchKeywords() ) );
+
 		$withFilters = $term;
-
-		foreach ( $filters as $key => $value ) {
-			if ( $key === 'mimeType' ) {
-				$withFilters = "filemime:$value " . $withFilters;
-			}
-
-			if ( $key === 'imageSize' ) {
-				$withFilters = "fileres:$value " . $withFilters;
-			}
-
-			if ( $key === 'license' ) {
-				$withFilters = "haslicense:$value " . $withFilters;
-			}
+		foreach ( $validFilters as $key => $value ) {
+			$withFilters .= " $key:$value";
 		}
 
 		return $withFilters;
+	}
+
+	/**
+	 * Returns a list of supported search keyword prefixes.
+	 *
+	 * @return array
+	 */
+	protected function getSearchKeywords() : array {
+		$features = ( new FullTextKeywordRegistry( $this->searchConfig ) )->getKeywords();
+
+		$keywords = [];
+		foreach ( $features as $feature ) {
+			$keywords = array_merge( $keywords, $feature->getKeywordPrefixes() );
+		}
+		return $keywords;
 	}
 
 	/**
@@ -443,7 +464,7 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 	 * @return string
 	 */
 	protected function extractSuggestedTerm( $suggestion ) {
-		$filters = [ 'filetype', 'fileres', 'filemime', 'haslicense' ];
+		$filters = $this->getSearchKeywords();
 		$suggestion = preg_replace(
 			'/(?<=^|\s)(' . implode( '|', $filters ) . '):.+?(?=$|\s)/',
 			' ',

@@ -28,6 +28,18 @@ class MediaSearchOptions {
 		self::TYPE_OTHER,
 	];
 
+	public const FILTER_MIME = 'filemime';
+	public const FILTER_SIZE = 'fileres';
+	public const FILTER_LICENSE = 'haslicense';
+	public const FILTER_SORT = 'sort';
+
+	public const ALL_FILTERS = [
+		self::FILTER_MIME,
+		self::FILTER_SIZE,
+		self::FILTER_LICENSE,
+		self::FILTER_SORT,
+	];
+
 	/** @var MessageLocalizer */
 	private $context;
 
@@ -72,10 +84,10 @@ class MediaSearchOptions {
 		// the messages can be internationalized in the same way regardless
 		foreach ( static::ALL_TYPES as $type ) {
 			$searchOptions[ $type ] = array_filter( [
-				'license' => $instance->getLicenseGroups( $type ),
-				'mimeType' => $instance->getMimeTypes( $type ),
-				'imageSize' => $instance->getImageSizes( $type ),
-				'sort' => $instance->getSorts( $type )
+				static::FILTER_LICENSE => $instance->getLicenseGroups( $type ),
+				static::FILTER_MIME => $instance->getMimeTypes( $type ),
+				static::FILTER_SIZE => $instance->getImageSizes( $type ),
+				static::FILTER_SORT => $instance->getSorts( $type )
 			] );
 		}
 

@@ -98,7 +98,7 @@ module.exports = {
 		 * Having a shorthand computed property for this makes it easier to
 		 * watch for changes.
 		 *
-		 * @return {Array} Empty array or [ "imageSize", "mimeType" ], etc
+		 * @return {Array} Empty array or [ "imageres", "filemime" ], etc
 		 */
 		currentActiveFilters: function () {
 			return Object.keys( this.filterValues[ this.mediaType ] );

@@ -30,19 +30,18 @@ function getMediaFilters( mediaType, filterValues ) {
 			break;
 	}
 
-	function addFilter( filterType, paramKey ) {
-		var value = filterType in filterValues ?
-			filterValues[ filterType ] : null;
+	function addFilter( filter ) {
+		var value = filter in filterValues ? filterValues[ filter ] : null;
 		if ( value ) {
-			return ' ' + paramKey + ':' + value;
+			return ' ' + filter + ':' + value;
 		}
 
 		return '';
 	}
 
-	raw += addFilter( 'mimeType', 'filemime' );
-	raw += addFilter( 'imageSize', 'fileres' );
-	raw += addFilter( 'license', 'haslicense' );
+	raw += addFilter( 'filemime' );
+	raw += addFilter( 'fileres' );
+	raw += addFilter( 'haslicense' );
 
 	return raw;
 }

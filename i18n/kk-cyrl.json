@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"Hedeyohu22"
+		]
+	},
+	"wikibasemediainfo-special-mediasearch-filter-license-attribution": "Атрибуциямен қолдану",
+	"wikibasemediainfo-special-mediasearch-filter-license-attribution-same-license": "Атрибуциямен және бірдей лицензиямен қолдану",
+	"wikibasemediainfo-special-mediasearch-category-info": "$1 {{PLURAL:$1|қатысушы|қатысушы}} ($2 {{PLURAL:$2|ішкі санатша|ішкі санатша}}, $3 {{PLURAL:$3|файл|файл}})"
+}

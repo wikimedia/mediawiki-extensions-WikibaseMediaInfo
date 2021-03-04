@@ -153,7 +153,7 @@
 	"wikibasemediainfo-special-mediasearch-quickview-close-button-text": "Stäng fildetaljer",
 	"wikibasemediainfo-special-mediasearch-quickview-previous-button-text": "Visa tidigare resultat",
 	"wikibasemediainfo-special-mediasearch-quickview-next-button-text": "Visa nästa resultat",
-	"wikibasemediainfo-special-mediasearch-category-info": "$1 {{PLURAL:$1|medlem|medlemmar}} – $2 {{PLURAL:$2|underkategori|underkategorier}}, $3 {{PLURAL:$3|fil|filer}}",
+	"wikibasemediainfo-special-mediasearch-category-info": "$1 {{PLURAL:$1|medlem|medlemmar}} ($2 {{PLURAL:$2|underkategori|underkategorier}}, $3 {{PLURAL:$3|fil|filer}})",
 	"wikibasemediainfo-copytextlayout-copy": "Kopiera",
 	"wikibasemediainfo-copytextlayout-copy-fail": "Misslyckades att kopiera till urklipp.",
 	"wikibasemediainfo-copytextlayout-copy-success": "Kopierades till urklipp.",

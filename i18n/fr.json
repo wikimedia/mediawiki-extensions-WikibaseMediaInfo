@@ -149,7 +149,9 @@
 	"wikibasemediainfo-special-mediasearch-filter-sort-popularity": "Popularité",
 	"wikibasemediainfo-special-mediasearch-filter-license-any": "Toutes les licences",
 	"wikibasemediainfo-special-mediasearch-filter-license-cc-by": "Utiliser avec l’attribution",
+	"wikibasemediainfo-special-mediasearch-filter-license-attribution": "Utiliser avec attribution",
 	"wikibasemediainfo-special-mediasearch-filter-license-cc-by-sa": "Utiliser avec l’attribution et la même licence",
+	"wikibasemediainfo-special-mediasearch-filter-license-attribution-same-license": "Utiliser avec attribution et la même licence",
 	"wikibasemediainfo-special-mediasearch-filter-license-unrestricted": "Aucune restriction",
 	"wikibasemediainfo-special-mediasearch-filter-license-other": "Autre",
 	"wikibasemediainfo-special-mediasearch-no-results": "Aucun résultat trouvé",
@@ -164,7 +166,7 @@
 	"wikibasemediainfo-special-mediasearch-quickview-close-button-text": "Fermer les détails du fichier",
 	"wikibasemediainfo-special-mediasearch-quickview-previous-button-text": "Afficher le résultat précédent",
 	"wikibasemediainfo-special-mediasearch-quickview-next-button-text": "Voir le résultat suivant",
-	"wikibasemediainfo-special-mediasearch-category-info": "$1 {{PLURAL:$1|membre|membres}} – $2 {{PLURAL:$2|sous-catégorie|sous-catégories}}, $3 {{PLURAL:$3|fichier|fichiers}}",
+	"wikibasemediainfo-special-mediasearch-category-info": "$1 {{PLURAL:$1|membre|membres}} ($2 {{PLURAL:$2|sous-catégorie|sous-catégories}}, $3 {{PLURAL:$3|fichier|fichiers}})",
 	"wikibasemediainfo-rescore-profile-classic-noboostlinks-max-boost-template": "Classement basé sur le meilleur modèle, la langue de la page et l’ancienneté, quand cela est activé sur ce wiki.",
 	"wikibasemediainfo-copytextlayout-copy": "Copier",
 	"wikibasemediainfo-copytextlayout-copy-fail": "Échec de copie vers le presse-papiers.",
@@ -172,5 +174,6 @@
 	"wikibasemediainfo-special-mediasearch-clear-filters": "Effacer les filtres",
 	"wikibasemediainfo-special-mediasearch-results-count": "$1 résultat{{PLURAL:$1||s}}",
 	"wikibasemediainfo-special-mediasearch-wordcount": "($1 mot{{PLURAL:$1||s}})",
+	"wikibasemediainfo-special-mediasearch-image-size": "($1)",
 	"wikibasemediainfo-special-mediasearch-did-you-mean": "Vouliez-vous dire : <a href=\"$2\">$1</a>"
 }

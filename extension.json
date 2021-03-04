@@ -76,10 +76,10 @@
 		"MediaInfoMediaSearchSupportedFilterParams": {
 			"description": "List of valid URL query parameters for search filters",
 			"value": [
-				"mimeType",
-				"imageSize",
-				"sort",
-				"license"
+				"filemime",
+				"fileres",
+				"haslicense",
+				"sort"
 			]
 		},
 		"MediaInfoMediaSearchHasLtrPlugin": {

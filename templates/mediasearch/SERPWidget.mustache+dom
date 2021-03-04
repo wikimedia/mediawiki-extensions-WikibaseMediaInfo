@@ -25,11 +25,15 @@
 				placeholder="{{searchPlaceholder}}"
 			>
 
-			{{!
-				JS version will have 'search' indicator & 'clear' action, both of which are an icon...
-				the way these are implemented in JS is quite annoying to replicate here, and since
-				they're just a visual gimmick rather than an essential feature, we'll skip them
-			}}
+			<span class="wbmi-input__icon">
+				<span class="wbmi-icon">
+					<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 20 20" aria-hidden="true">
+						<g fill="currentColor">
+							<path d="M7.5 13c3.04 0 5.5-2.46 5.5-5.5S10.54 2 7.5 2 2 4.46 2 7.5 4.46 13 7.5 13zm4.55.46A7.432 7.432 0 017.5 15C3.36 15 0 11.64 0 7.5S3.36 0 7.5 0C11.64 0 15 3.36 15 7.5c0 1.71-.57 3.29-1.54 4.55l6.49 6.49-1.41 1.41-6.49-6.49z"></path>
+						</g>
+					</svg>
+				</span>
+			</span>
 		</div>
 
 		<button type="submit" class="wbmi-button wbmi-input__button wbmi-button--framed wbmi-button--progressive wbmi-button--primary">

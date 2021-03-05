@@ -164,6 +164,9 @@ module.exports = {
 			params.gsrsort = 'create_timestamp_desc';
 		}
 
+		// Reset current error state
+		context.commit( 'setHasError', false );
+
 		// Set the pending state for the given queue
 		context.commit( 'setPending', {
 			type: options.type,
@@ -198,21 +201,12 @@ module.exports = {
 				// if a new result's pageId already exists in the set of
 				// previously-loaded results, filter it out.
 				sortedResults = pageIDs
-					.map( function ( id ) {
-						return results[ id ];
-					} )
-					.filter( function ( result ) {
-						return existingPageIds.indexOf( result.pageid ) < 0;
-					} )
-					.sort( function ( a, b ) {
-						return a.index - b.index;
-					} );
+					.map( function ( id ) { return results[ id ]; } )
+					.filter( function ( result ) { return existingPageIds.indexOf( result.pageid ) < 0; } )
+					.sort( function ( a, b ) { return a.index - b.index; } );
 
 				sortedResults.forEach( function ( result ) {
-					context.commit( 'addResult', {
-						type: options.type,
-						item: result
-					} );
+					context.commit( 'addResult', { type: options.type, item: result } );
 				} );
 
 				if ( response.query.searchinfo && response.query.searchinfo.totalhits ) {
@@ -232,23 +226,21 @@ module.exports = {
 			// Set whether or not the query can be continued
 			if ( response.continue && response.continue.gsroffset ) {
 				// Store the "continue" property of the request so we can pick up where we left off
-				context.commit( 'setContinue', {
-					type: options.type,
-					continue: response.continue.gsroffset
-				} );
+				context.commit( 'setContinue', { type: options.type, continue: response.continue.gsroffset } );
 			} else {
-				context.commit( 'setContinue', {
-					type: options.type,
-					continue: null
-				} );
+				context.commit( 'setContinue', { type: options.type, continue: null } );
 			}
 		} ).done( function () {
-			activeSearchRequest = null;
 			// Set pending back to false when request is complete
-			context.commit( 'setPending', {
-				type: options.type,
-				pending: false
-			} );
+			activeSearchRequest = null;
+			context.commit( 'setPending', { type: options.type, pending: false } );
+		} ).catch( function ( e ) {
+			// Set pending to false and throw the error back to the App component
+			// to display a suitable message to the user
+			activeSearchRequest = null;
+			context.commit( 'setPending', { type: options.type, pending: false } );
+			context.commit( 'setHasError', true );
+			throw e;
 		} );
 	},
 

@@ -26,11 +26,11 @@
 				<!-- Display search filters for each tab. -->
 				<search-filters
 					:media-type="tab"
-					@filter-change="onFilterChange"
-				>
+					@filter-change="onFilterChange">
 				</search-filters>
 
-				<did-you-mean></did-you-mean>
+				<did-you-mean>
+				</did-you-mean>
 
 				<transition-group
 					name="wbmi-concept-chips-transition"
@@ -50,8 +50,8 @@
 						<search-results
 							:ref="tab"
 							:media-type="tab"
-							@load-more="resetCountAndLoadMore( tab )"
-						></search-results>
+							@load-more="resetCountAndLoadMore( tab )">
+						</search-results>
 					</div>
 				</transition-group>
 
@@ -136,6 +136,7 @@ module.exports = {
 
 	computed: $.extend( {}, mapState( [
 		'term',
+		'hasError',
 		'results',
 		'pending',
 		'relatedConcepts',
@@ -191,6 +192,7 @@ module.exports = {
 		'clearRelatedConcepts',
 		'clearDidYouMean',
 		'setTerm',
+		'setHasError',
 		'setPending',
 		'resetFilters',
 		'addFilterValue'
@@ -274,6 +276,7 @@ module.exports = {
 			this.clear( this.currentTab );
 			this.clearLookupResults();
 			this.setPending( { type: this.currentTab, pending: false } );
+			this.setHasError( false );
 
 			url.query.q = '';
 			this.clearFilterQueryParams();
@@ -329,8 +332,9 @@ module.exports = {
 		 * @param {string} tab bitmap, audio, etc.
 		 */
 		getMoreResultsForTabIfAvailable: function ( tab ) {
-			// Don't make API requests if the search term is empty
-			if ( this.term === '' ) {
+			// Don't make API requests if the search term is empty, or
+			// the search is in an error state
+			if ( this.term === '' || this.hasError ) {
 				return;
 			}
 

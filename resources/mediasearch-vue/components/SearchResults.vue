@@ -35,6 +35,10 @@
 				{{ $i18n( 'wikibasemediainfo-special-mediasearch-load-more-results' ) }}
 			</wbmi-button>
 
+			<!-- If an invalid search has been detected, don't display
+			anything else until it has been cleared -->
+			<search-error v-if="hasError"></search-error>
+
 			<!-- No results message if search has completed and come back empty -->
 			<no-results v-else-if="hasNoResults"></no-results>
 
@@ -113,6 +117,7 @@ var mapState = require( 'vuex' ).mapState,
 	NoResults = require( './NoResults.vue' ),
 	EndOfResults = require( './EndOfResults.vue' ),
 	EmptyState = require( './EmptyState.vue' ),
+	SearchError = require( './SearchError.vue' ),
 	api = new mw.Api();
 
 // @vue/component
@@ -131,7 +136,8 @@ module.exports = {
 		spinner: Spinner,
 		'empty-state': EmptyState,
 		'no-results': NoResults,
-		'end-of-results': EndOfResults
+		'end-of-results': EndOfResults,
+		'search-error': SearchError
 	},
 
 	props: {
@@ -152,6 +158,7 @@ module.exports = {
 
 	computed: $.extend( {}, mapState( [
 		'term',
+		'hasError',
 		'results',
 		'pending',
 		'continue',

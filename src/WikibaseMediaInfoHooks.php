@@ -357,10 +357,9 @@ class WikibaseMediaInfoHooks {
 	 * @return string[] language codes as keys, autonyms as values
 	 */
 	public static function generateWbMonolingualTextLanguages() {
-		$wbRepo = WikibaseRepo::getDefaultInstance();
-		$allLanguages = Language::fetchLanguageNames();
-		$monolingualTextLanguages = $wbRepo
-			->getWikibaseContentLanguages()
+		$services = MediaWikiServices::getInstance();
+		$allLanguages = $services->getLanguageNameUtils()->getLanguageNames();
+		$monolingualTextLanguages = WikibaseRepo::getWikibaseContentLanguages( $services )
 			->getContentLanguages( WikibaseContentLanguages::CONTEXT_MONOLINGUAL_TEXT )
 			->getLanguages();
 

@@ -124,7 +124,7 @@ return [
 				$defaultPropertyIdsForView,
 				$wbRepo->getSnakFormatterFactory(),
 				WikibaseRepo::getValueFormatterFactory(),
-				$wbRepo->getCompactBaseDataModelSerializerFactory(),
+				WikibaseRepo::getCompactBaseDataModelSerializerFactory(),
 				$languageCode,
 				$properties
 			);

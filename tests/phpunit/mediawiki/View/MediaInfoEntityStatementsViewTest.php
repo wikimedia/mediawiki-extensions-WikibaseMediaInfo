@@ -62,7 +62,7 @@ class MediaInfoEntityStatementsViewTest extends \PHPUnit\Framework\TestCase {
 		}
 		$this->textProvider = new MediaWikiLocalizedTextProvider( $languages[0]->getLanguage() );
 
-		$this->serializerFactory = $wbRepo->getCompactBaseDataModelSerializerFactory();
+		$this->serializerFactory = WikibaseRepo::getCompactBaseDataModelSerializerFactory();
 
 		$snakFormatter = $this->getMockBuilder( SnakFormatter::class )
 			->disableOriginalConstructor()

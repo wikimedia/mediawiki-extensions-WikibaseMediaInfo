@@ -255,7 +255,7 @@ return [
 				WikibaseRepo::getEntityIdParser( $services ),
 				$wbRepo->getStorageEntitySerializer(),
 				$wbRepo->getInternalFormatEntityDeserializer(),
-				$wbRepo->getDataAccessSettings()->maxSerializedEntitySizeInBytes()
+				WikibaseRepo::getDataAccessSettings( $services )->maxSerializedEntitySizeInBytes()
 			);
 
 			return new FilePageRedirectHandlingRevisionLookup(

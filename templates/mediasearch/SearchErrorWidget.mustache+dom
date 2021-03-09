@@ -1,9 +1,0 @@
-<div class="wbmi-media-search">
-	<div class="wbmi-media-search-error">
-		<div class="wbmi-media-search-error__icon">
-		</div>
-
-		<h3>{{ errorMessage }}</h3>
-		<p>{{{ retryLinkMessage }}}</p>
-	</div>
-</div>

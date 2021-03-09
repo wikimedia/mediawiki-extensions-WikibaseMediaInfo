@@ -303,52 +303,66 @@
 									{{/results}}
 								{{/isOther}}
 							</div>
+
+							{{#hasMore}}
+								<form method="get" action="{{page}}">
+									{{#querystring}}
+										{{^isContinue}}
+											<input type="hidden" name="{{key}}" value="{{value}}" />
+										{{/isContinue}}
+									{{/querystring}}
+									<input type="hidden" name="continue" value="{{continue}}" />
+									<button type="submit" class="wbmi-button wbmi-media-search-load-more wbmi-button--framed wbmi-button--progressive">
+										<span class="wbmi-button__content">{{continueMessage}}</span>
+									</button>
+								</form>
+							{{/hasMore}}
+
+							{{#endOfResults}}
+								<div class="wbmi-media-search-end-of-results">
+									<p>
+										{{endOfResultsMessage}}
+									</p>
+								</div>
+							{{/endOfResults}}
+
+							{{^results}}
+								{{#error}}
+									<div class="wbmi-media-search-error">
+										<div class="wbmi-media-search-error__icon"></div>
+										<p>
+											{{error.title}}
+											<span class="wbmi-media-search-error__message">
+												{{error.text}}
+											</span>
+										</p
+									</div>
+								{{/error}}
+
+								{{^error}}
+									{{#hasTerm}}
+										<div class="wbmi-media-search-no-results">
+											<div class="wbmi-media-search-no-results__icon"></div>
+											<p>
+												{{{noResultsMessage}}}
+												<span class="wbmi-media-search-no-results__tips">
+													{{{noResultsMessageExtra}}}
+												</span>
+											</p>
+										</div>
+									{{/hasTerm}}
+									{{^hasTerm}}
+										<div class="wbmi-media-search-empty-state">
+											<div class="wbmi-media-search-empty-state__icon"></div>
+											<p>
+												{{{emptyMessage}}}
+											</p>
+										</div>
+									{{/hasTerm}}
+								{{/error}}
+							{{/results}}
 						</div>
 					</div>
-
-					{{#hasMore}}
-						<form method="get" action="{{page}}">
-							{{#querystring}}
-								{{^isContinue}}
-									<input type="hidden" name="{{key}}" value="{{value}}" />
-								{{/isContinue}}
-							{{/querystring}}
-							<input type="hidden" name="continue" value="{{continue}}" />
-							<button type="submit" class="wbmi-button wbmi-media-search-load-more wbmi-button--framed wbmi-button--progressive">
-								<span class="wbmi-button__content">{{continueMessage}}</span>
-							</button>
-						</form>
-					{{/hasMore}}
-
-					{{#endOfResults}}
-						<div class="wbmi-media-search-end-of-results">
-							<p>
-								{{endOfResultsMessage}}
-							</p>
-						</div>
-					{{/endOfResults}}
-
-					{{^results}}
-						{{#hasTerm}}
-							<div class="wbmi-media-search-no-results">
-								<div class="wbmi-media-search-no-results__icon"></div>
-								<p>
-									{{{noResultsMessage}}}
-									<span class="wbmi-media-search-no-results__tips">
-										{{{noResultsMessageExtra}}}
-									</span>
-								</p>
-							</div>
-						{{/hasTerm}}
-						{{^hasTerm}}
-							<div class="wbmi-media-search-empty-state">
-								<div class="wbmi-media-search-empty-state__icon"></div>
-								<p>
-									{{{emptyMessage}}}
-								</p>
-							</div>
-						{{/hasTerm}}
-					{{/results}}
 				</div>
 			{{/isActive}}
 		{{/tabs}}

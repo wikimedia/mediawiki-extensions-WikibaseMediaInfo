@@ -7,9 +7,11 @@ use ApiMain;
 use CirrusSearch\Parser\FullTextKeywordRegistry;
 use CirrusSearch\SearchConfig;
 use DerivativeContext;
+use Exception;
 use FauxRequest;
 use InvalidArgumentException;
 use MediaWiki\MediaWikiServices;
+use MWException;
 use NamespaceInfo;
 use OutputPage;
 use RequestContext;
@@ -98,35 +100,39 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 		$term = str_replace( "\n", ' ', $this->getRequest()->getText( 'q' ) );
 		$type = $querystring['type'] ?? MediaSearchOptions::TYPE_BITMAP;
 
-		// Attempt to validate filters; return early and display an error
-		// message if invalid filter settings are detected
-		try {
-			$activeFilters = $this->getActiveFilters( $querystring, $type );
-		} catch ( InvalidArgumentException $e ) {
-			$retryLink = $this->getPageTitle()->getLinkURL();
-
-			$this->getOutput()->addModuleStyles( [ 'wikibase.mediainfo.mediasearch.vue.styles' ] );
-			$this->getOutput()->addHTML( $this->templateParser->processTemplate( 'SearchErrorWidget', [
-				'errorMessage' => $this->msg( 'wikibasemediainfo-special-mediasearch-error-message' ),
-				// phpcs:ignore Generic.Files.LineLength.TooLong
-				'retryLinkMessage' => $this->msg( 'wikibasemediainfo-special-mediasearch-retry-link', $retryLink )->text(),
-			] ) );
-			$this->addHelpLink( 'Help:MediaSearch' );
-			return parent::execute( $subPage );
-		}
-
-		$filtersForDisplay = $this->getFiltersForDisplay( $activeFilters, $type );
 		$limit = $this->getRequest()->getText( 'limit' ) ? (int)$this->getRequest()->getText( 'limit' ) : 40;
-		$termWithFilters = $this->getTermWithFilters( $term, $activeFilters );
-		$clearFiltersUrl = $this->getPageTitle()->getLinkURL( array_diff( $querystring, $activeFilters ) );
 
-		list( $results, $searchinfo, $continue ) = $this->search(
-			$termWithFilters,
-			$type,
-			$limit,
-			$this->getRequest()->getText( 'continue' ),
-			$this->getSort( $activeFilters )
-		);
+		$error = [];
+		$results = [];
+		$searchinfo = [];
+		$continue = null;
+		$activeFilters = [];
+		$filtersForDisplay = [];
+		try {
+			// Attempt to validate filters
+			$activeFilters = $this->getActiveFilters( $querystring, $type );
+			$filtersForDisplay = $this->getFiltersForDisplay( $activeFilters, $type );
+			$termWithFilters = $this->getTermWithFilters( $term, $activeFilters );
+
+			// Actually perform the search. This method will throw an error if the
+			// user enters a bad query (illegal characters, etc)
+			list( $results, $searchinfo, $continue ) = $this->search(
+				$termWithFilters,
+				$type,
+				$limit,
+				$this->getRequest()->getText( 'continue' ),
+				$this->getSort( $activeFilters )
+			);
+		} catch ( Exception $e ) {
+			// Display an error message if invalid filter settings are detected
+			// (InvalidArgumentException) or search failed for any other reason,
+			// like a bad query with illegal characters, an elastic failure, ...
+			// (MWException)
+			$error = [
+				'title' => $this->msg( 'wikibasemediainfo-special-mediasearch-error-message' )->text(),
+				'text' => $this->msg( 'wikibasemediainfo-special-mediasearch-error-text' )->text(),
+			];
+		}
 
 		$totalSiteImages = $userLanguage->formatNum( SiteStats::images() );
 		$thumbLimits = $this->getThumbLimits();
@@ -187,6 +193,7 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 					'isPage' => true,
 				],
 			],
+			'error' => $error,
 			'results' => array_map(
 				function ( $result ) use ( $results, $type ) {
 					return $this->getResultData( $result, $results, $type );
@@ -197,7 +204,7 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 			'hasFilters' => count( $activeFilters ) > 0,
 			'activeFilters' => array_values( $activeFilters ),
 			'filtersForDisplay' => array_values( $filtersForDisplay ),
-			'clearFiltersUrl' => $clearFiltersUrl,
+			'clearFiltersUrl' => $this->getPageTitle()->getLinkURL( array_diff( $querystring, $activeFilters ) ),
 			'clearFiltersText' => $this->msg( 'wikibasemediainfo-special-mediasearch-clear-filters' )->text(),
 			'hasMore' => $continue !== null,
 			'endOfResults' => count( $results ) > 0 && $continue === null,
@@ -218,7 +225,7 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 			'resultsCount' => $this->msg(
 				'wikibasemediainfo-special-mediasearch-results-count',
 				$userLanguage->formatNum( $totalHits )
-			)->text()
+			)->text(),
 		];
 
 		$this->getOutput()->addHTML( $this->templateParser->processTemplate( 'SERPWidget', $data ) );
@@ -232,7 +239,8 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 			'wbmiLocalDev' => $this->getConfig()->get( 'MediaInfoLocalDev' ),
 			'wbmiMediaSearchPageNamespaces' => $wgMediaInfoMediaSearchPageNamespaces,
 			'wbmiInitialFilters' => json_encode( (object)$activeFilters ),
-			'wbmiDidYouMean' => $didYouMean
+			'wbmiDidYouMean' => $didYouMean,
+			'wbmiHasError' => (bool)$error
 		] );
 
 		$this->addHelpLink( 'Help:MediaSearch' );
@@ -247,7 +255,7 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 	 * @param string|null $continue
 	 * @param string|null $sort
 	 * @return array [ search results, searchinfo data, continuation value ]
-	 * @throws \MWException
+	 * @throws MWException
 	 */
 	protected function search(
 		$term,
@@ -334,7 +342,7 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 		if ( $this->getConfig()->get( 'MediaInfoLocalDev' ) ) {
 			// Pull data from Commons: for use in testing
 			$url = 'https://commons.wikimedia.org/w/api.php?' . http_build_query( $request->getQueryValues() );
-			$request = \MediaWiki\MediaWikiServices::getInstance()->getHttpRequestFactory()
+			$request = MediaWikiServices::getInstance()->getHttpRequestFactory()
 				->create( $url, [], __METHOD__ );
 			$request->execute();
 			$data = $request->getContent();
@@ -344,7 +352,9 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 			$context = new DerivativeContext( RequestContext::getMain() );
 			$context->setRequest( $request );
 			$this->api->setContext( $context );
+
 			$this->api->execute();
+
 			$response = $this->api->getResult()->getResultData( [], [ 'Strip' => 'all' ] );
 		}
 
@@ -372,11 +382,11 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 		// If values are present in the URL parameters for any supported
 		// search filters, run them through the validation method.
 		// If validation is not successful, throw an exception
-		if ( $this->validateFilters( $activeFilters, $type ) ) {
-			return $activeFilters;
-		} else {
+		if ( !$this->validateFilters( $activeFilters, $type ) ) {
 			throw new InvalidArgumentException( 'Invalid filter value specified', 1 );
 		}
+
+		return $activeFilters;
 	}
 
 	/**

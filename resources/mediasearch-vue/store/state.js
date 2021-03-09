@@ -36,6 +36,11 @@ module.exports = {
 	didYouMean: didYouMean,
 
 	/**
+	 * Boolean flag indicating whether the search has errored
+	 */
+	hasError: mw.config.get( 'wbmiHasError' ),
+
+	/**
 	 * Arrays of objects broken down by type
 	 */
 	results: {

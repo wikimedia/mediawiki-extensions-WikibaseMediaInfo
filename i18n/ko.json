@@ -152,5 +152,7 @@
 	"wikibasemediainfo-copytextlayout-copy-success": "클립보드에 복사했습니다.",
 	"wikibasemediainfo-special-mediasearch-clear-filters": "필터 지우기",
 	"wikibasemediainfo-special-mediasearch-results-count": "$1개 {{PLURAL:$1|결과}}",
-	"wikibasemediainfo-special-mediasearch-did-you-mean": "이것을 찾으셨나요: <a href=\"$2\">$1</a>"
+	"wikibasemediainfo-special-mediasearch-did-you-mean": "이것을 찾으셨나요: <a href=\"$2\">$1</a>",
+	"wikibasemediainfo-special-mediasearch-error-message": "잘못된 검색",
+	"wikibasemediainfo-special-mediasearch-error-text": "위에 새 검색을 입력하고 다시 시도하십시오"
 }

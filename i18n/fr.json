@@ -175,5 +175,7 @@
 	"wikibasemediainfo-special-mediasearch-results-count": "$1 résultat{{PLURAL:$1||s}}",
 	"wikibasemediainfo-special-mediasearch-wordcount": "($1 mot{{PLURAL:$1||s}})",
 	"wikibasemediainfo-special-mediasearch-image-size": "($1)",
-	"wikibasemediainfo-special-mediasearch-did-you-mean": "Vouliez-vous dire : <a href=\"$2\">$1</a>"
+	"wikibasemediainfo-special-mediasearch-did-you-mean": "Vouliez-vous dire : <a href=\"$2\">$1</a>",
+	"wikibasemediainfo-special-mediasearch-error-message": "Recherche incorrecte",
+	"wikibasemediainfo-special-mediasearch-error-text": "Entrez une nouvelle recherche ci-dessus et essayez à nouveau"
 }

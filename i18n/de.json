@@ -166,5 +166,7 @@
 	"wikibasemediainfo-special-mediasearch-clear-filters": "Filter aufheben",
 	"wikibasemediainfo-special-mediasearch-results-count": "$1 {{PLURAL:$1|Ergebnis|Ergebnisse}}",
 	"wikibasemediainfo-special-mediasearch-wordcount": "($1 {{PLURAL:$1|Wort|$1 Wörter}})",
-	"wikibasemediainfo-special-mediasearch-did-you-mean": "Meinst du: <a href=\"$2\">$1</a>"
+	"wikibasemediainfo-special-mediasearch-did-you-mean": "Meinst du: <a href=\"$2\">$1</a>",
+	"wikibasemediainfo-special-mediasearch-error-message": "Ungültige Suche",
+	"wikibasemediainfo-special-mediasearch-error-text": "Gib oben eine neue Suche ein und versuche es erneut"
 }

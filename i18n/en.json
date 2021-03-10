@@ -164,5 +164,7 @@
 	"wikibasemediainfo-special-mediasearch-image-size": "($1)",
 	"wikibasemediainfo-special-mediasearch-did-you-mean": "Did you mean: <a href=\"$2\">$1</a>",
 	"wikibasemediainfo-special-mediasearch-error-message": "Invalid search",
-	"wikibasemediainfo-special-mediasearch-error-text": "Enter a new search above and try again"
+	"wikibasemediainfo-special-mediasearch-error-text": "Enter a new search above and try again",
+	"wikibasemediainfo-specialsearch-default": "Show search results in the Special:Search interface",
+	"wikibasemediainfo-specialsearch-default-help": "Select to show search results from the main search bar in the older Special:Search interface instead of Special:MediaSearch"
 }

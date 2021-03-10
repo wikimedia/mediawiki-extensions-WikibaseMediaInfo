@@ -25,7 +25,7 @@ module.exports = {
 		 */
 		didYouMeanLink: function () {
 			var url = new mw.Uri();
-			url.query.q = this.didYouMean;
+			url.query.search = this.didYouMean;
 
 			return url.toString();
 		},

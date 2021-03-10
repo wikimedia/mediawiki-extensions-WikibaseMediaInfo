@@ -1,8 +1,10 @@
 <form method="get" action="{{page}}">
 	{{#querystring}}
-		{{^isQ}}
-			<input type="hidden" name="{{key}}" value="{{value}}" />
-		{{/isQ}}
+		{{^isSearch}}
+			{{^isType}}
+				<input type="hidden" name="{{key}}" value="{{value}}" />
+			{{/isType}}
+		{{/isSearch}}
 	{{/querystring}}
 
 	<div class="wbmi-input wbmi-media-search-input wbmi-input--button">
@@ -15,9 +17,10 @@
 				{{searchLabel}}
 			</label>
 
+			<input type="hidden" name="type" value="{{activeType}}" />
 			<input
 				value="{{term}}"
-				name="q"
+				name="search"
 				id="wbmi-media-search-input__input"
 				dir="auto"
 				class="wbmi-input__input"
@@ -56,13 +59,15 @@
 					{{! below form is a bit of a hack to mimick tabs without JS, where tab label is submit button }}
 					<form method="get" action="{{page}}">
 						{{#querystring}}
-							{{^isType}}
-								{{^isContinue}}
-									<input type="hidden" name="{{key}}" value="{{value}}" />
-								{{/isContinue}}
-							{{/isType}}
+							{{^isSearch}}
+								{{^isType}}
+									{{^isContinue}}
+										<input type="hidden" name="{{key}}" value="{{value}}" />
+									{{/isContinue}}
+								{{/isType}}
+							{{/isSearch}}
 						{{/querystring}}
-						<input type="hidden" name="q" value="{{term}}" />
+						<input type="hidden" name="search" value="{{term}}" />
 
 						<label>
 							<input
@@ -307,10 +312,13 @@
 							{{#hasMore}}
 								<form method="get" action="{{page}}">
 									{{#querystring}}
-										{{^isContinue}}
-											<input type="hidden" name="{{key}}" value="{{value}}" />
-										{{/isContinue}}
+										{{^isType}}
+											{{^isContinue}}
+												<input type="hidden" name="{{key}}" value="{{value}}" />
+											{{/isContinue}}
+										{{/isType}}
 									{{/querystring}}
+									<input type="hidden" name="type" value="{{activeType}}" />
 									<input type="hidden" name="continue" value="{{continue}}" />
 									<button type="submit" class="wbmi-button wbmi-media-search-load-more wbmi-button--framed wbmi-button--progressive">
 										<span class="wbmi-button__content">{{continueMessage}}</span>

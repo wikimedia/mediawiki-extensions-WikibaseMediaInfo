@@ -210,6 +210,7 @@ class WikibaseMediaInfoHooks {
 		$hooksObject = new self();
 		$hooksObject->doBeforePageDisplay(
 			$out,
+			$skin,
 			$isMediaInfoPage,
 			new BabelUserLanguageLookup(),
 			$wbRepo->getEntityViewFactory(),
@@ -227,8 +228,22 @@ class WikibaseMediaInfoHooks {
 		);
 	}
 
+	private function getDefaultSearchPage( \User $user ) {
+		global $wgMediaInfoMediaSearchDefaultForAnon;
+		$userOptionsManager = MediaWikiServices::getInstance()->getUserOptionsManager();
+		if (
+			( $wgMediaInfoMediaSearchDefaultForAnon && ( $user->isAnon() ) )
+			||
+			!$userOptionsManager->getOption( $user, 'wbmi-specialsearch-default' )
+		) {
+			return \SpecialPage::getTitleFor( 'MediaSearch' );
+		}
+		return \SpecialPage::getTitleFor( 'Search' );
+	}
+
 	/**
 	 * @param \OutputPage $out
+	 * @param \Skin $skin
 	 * @param bool $isMediaInfoPage
 	 * @param UserLanguageLookup $userLanguageLookup
 	 * @param DispatchingEntityViewFactory $entityViewFactory
@@ -237,11 +252,15 @@ class WikibaseMediaInfoHooks {
 	 */
 	public function doBeforePageDisplay(
 		$out,
+		$skin,
 		$isMediaInfoPage,
 		UserLanguageLookup $userLanguageLookup,
 		DispatchingEntityViewFactory $entityViewFactory,
 		array $jsConfigVars = []
 	) {
+		// change search bar destination
+		$skin->setSearchPageTitle( $this->getDefaultSearchPage( $out->getUser() ) );
+
 		// Site-wide config
 		$modules = [ 'wikibase.mediainfo.search' ];
 		$moduleStyles = [];
@@ -786,8 +805,15 @@ class WikibaseMediaInfoHooks {
 
 		$preferences['wbmi-search-suggestions'] = [
 			'type' => 'toggle',
-			'section' => 'searchoptions',
+			'section' => 'searchoptions/searchmisc',
 			'label-message' => 'wikibasemediainfo-search-suggestions-preference-label'
+		];
+
+		$preferences['wbmi-specialsearch-default'] = [
+			'type' => 'toggle',
+			'section' => 'searchoptions/searchmisc',
+			'label-message' => 'wikibasemediainfo-specialsearch-default',
+			'help-message' => 'wikibasemediainfo-specialsearch-default-help',
 		];
 	}
 
@@ -937,5 +963,4 @@ class WikibaseMediaInfoHooks {
 			'title' => $skin->msg( 'wikibase-concept-uri-tooltip' )->text()
 		];
 	}
-
 }

@@ -170,5 +170,7 @@
 	"wikibasemediainfo-special-mediasearch-image-size": "{{optional}}\nSize of an image, wrapped in parentheses. Parameters:\n* $1 - Image size",
 	"wikibasemediainfo-special-mediasearch-did-you-mean": "Text prompting the user to search for an alternate search term if they entered a likely typo. Parameters:\n* $1 - Suggested term\n* $2 - Link to search results for suggested term",
 	"wikibasemediainfo-special-mediasearch-error-message": "Error message informing the user of an invalid search",
-	"wikibasemediainfo-special-mediasearch-error-text": "Text prompting the user to retry their search query"
+	"wikibasemediainfo-special-mediasearch-error-text": "Text prompting the user to retry their search query",
+	"wikibasemediainfo-specialsearch-default": "Title of preference to use Special:Search as the default search (instead of Special:MediaSearch)",
+	"wikibasemediainfo-specialsearch-default-help": "Help text for preference to use Special:Search as the default search (instead of Special:MediaSearch)"
 }

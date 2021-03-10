@@ -11,10 +11,13 @@ use Exception;
 use FauxRequest;
 use InvalidArgumentException;
 use MediaWiki\MediaWikiServices;
+use MediaWiki\User\UserOptionsManager;
 use MWException;
 use NamespaceInfo;
 use OutputPage;
 use RequestContext;
+use SearchEngine;
+use SearchEngineFactory;
 use SiteStats;
 use TemplateParser;
 use Title;
@@ -54,10 +57,22 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 	private $searchOptions;
 
 	/**
+	 * @var UserOptionsManager
+	 */
+	private $userOptionsManager;
+
+	/**
+	 * @var SearchEngine
+	 */
+	private $searchEngine;
+
+	/**
 	 * @inheritDoc
 	 */
 	public function __construct(
+		SearchEngineFactory $searchEngineFactory,
 		NamespaceInfo $namespaceInfo,
+		UserOptionsManager $userOptionsManager,
 		$name = 'MediaSearch',
 		ApiBase $api = null,
 		TemplateParser $templateParser = null,
@@ -73,6 +88,10 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 		$this->searchConfig = $searchConfig ?? MediaWikiServices::getInstance()
 			->getConfigFactory()
 			->makeConfig( 'CirrusSearch' );
+
+		$this->userOptionsManager = $userOptionsManager;
+
+		$this->searchEngine = $searchEngineFactory->create();
 
 		$this->searchOptions = MediaSearchOptions::getSearchOptions( $this->getContext() );
 	}
@@ -96,8 +115,14 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 		$url = $this->getRequest()->getRequestURL();
 		parse_str( parse_url( $url, PHP_URL_QUERY ), $querystring );
 
-		$term = str_replace( "\n", ' ', $this->getRequest()->getText( 'q' ) );
-		$type = $querystring['type'] ?? MediaSearchOptions::TYPE_IMAGE;
+		$term = str_replace( "\n", ' ', $this->getRequest()->getText( 'search' ) );
+		$url = $this->findExactMatchRedirectUrl( $term );
+		if ( $url !== null ) {
+			$this->getOutput()->redirect( $url );
+			return;
+		}
+
+		$type = $this->getType( $term, $querystring );
 
 		$limit = $this->getRequest()->getText( 'limit' ) ? (int)$this->getRequest()->getText( 'limit' ) : 40;
 
@@ -244,6 +269,74 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 		$this->addHelpLink( 'Help:MediaSearch' );
 
 		return parent::execute( $subPage );
+	}
+
+	/**
+	 * Find an exact title match if there is one, and if we ought to redirect to it then
+	 * return its url
+	 *
+	 * @see SpecialSearch.php
+	 * @param string $term
+	 * @return string|null The url to redirect to, or null if no redirect.
+	 */
+	private function findExactMatchRedirectUrl( $term ) {
+		$request = $this->getRequest();
+		if ( $request->getCheck( 'type' ) ) {
+			// If type is set, then the user is searching directly on Special:MediaSearch,
+			// so do not redirect (the redirect should only happen when the user searches
+			// from the site-wide searchbox)
+			return null;
+		}
+		// If the term cannot be used to create a title then there is no match
+		if ( Title::newFromText( $term ) === null ) {
+			return null;
+		}
+		// Find an exact (or very near) match
+		$title = $this->searchEngine
+			->getNearMatcher( $this->getConfig() )->getNearMatch( $term );
+		if ( $title === null ) {
+			return null;
+		}
+		$url = null;
+		if ( !$this->getHookRunner()->onSpecialSearchGoResult( $term, $title, $url ) ) {
+			return null;
+		}
+
+		if (
+			// If there is a preference set to NOT redirect on exact page match
+			// then return null (which prevents direction)
+			!$this->redirectOnExactMatch()
+			// BUT ...
+			// ... ignore no-redirect preference if the exact page match is an interwiki link
+			&& !$title->isExternal()
+			// ... ignore no-redirect preference if the exact page match is NOT in the main
+			// namespace AND there's a namespace in the search string
+			&& !( $title->getNamespace() !== NS_MAIN && strpos( $term, ':' ) > 0 )
+		) {
+			return null;
+		}
+
+		return $url ?? $title->getFullUrlForRedirect();
+	}
+
+	private function redirectOnExactMatch() {
+		global $wgSearchMatchRedirectPreference;
+		if ( !$wgSearchMatchRedirectPreference ) {
+			// If the preference for whether to redirect is disabled, use the default setting
+			$defaultOptions = $this->userOptionsManager->getDefaultOptions();
+			return $defaultOptions['search-match-redirect'];
+		} else {
+			// Otherwise use the user's preference
+			return $this->userOptionsManager->getOption( $this->getUser(), 'search-match-redirect' );
+		}
+	}
+
+	private function getType( string $term, array $querystring ) : string {
+		$title = Title::newFromText( $term );
+		if ( $title !== null && !in_array( $title->getNamespace(), [ NS_FILE, NS_MAIN ] ) ) {
+			return MediaSearchOptions::TYPE_PAGE;
+		}
+		return $querystring['type'] ?? MediaSearchOptions::TYPE_IMAGE;
 	}
 
 	/**
@@ -547,7 +640,7 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 	 */
 	protected function generateDidYouMeanLink( $queryParams, $suggestion ) {
 		unset( $queryParams[ 'title' ] );
-		$queryParams[ 'q' ] = $suggestion;
+		$queryParams[ 'search' ] = $suggestion;
 		return $this->getPageTitle()->getLinkURL( $queryParams );
 	}
 

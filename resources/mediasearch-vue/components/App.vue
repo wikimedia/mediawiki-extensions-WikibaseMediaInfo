@@ -262,7 +262,7 @@ module.exports = {
 		 */
 		onUpdateTerm: function ( newTerm ) {
 			this.setTerm( newTerm );
-			url.query.q = newTerm;
+			url.query.search = newTerm;
 			window.history.pushState( url.query, null, '?' + url.getQueryString() );
 		},
 
@@ -278,7 +278,7 @@ module.exports = {
 			this.setPending( { type: this.currentTab, pending: false } );
 			this.setHasError( false );
 
-			url.query.q = '';
+			url.query.search = '';
 			this.clearFilterQueryParams();
 			window.history.pushState( url.query, null, '?' + url.getQueryString() );
 			this.autoloadCounter = this.setInitialAutoloadCountForTabs();
@@ -294,7 +294,7 @@ module.exports = {
 			// If the newly-active history entry includes a state object, use it
 			// to reset the URL query params and the UI state
 			if ( e.state ) {
-				this.setTerm( e.state.q || '' );
+				this.setTerm( e.state.search || '' );
 				this.currentTab = e.state.type;
 
 				// if the newly-active history entry includes a "null" query
@@ -311,7 +311,7 @@ module.exports = {
 				// the URL object to match the previously-stored values
 				this.resetFilters();
 				this.clearFilterQueryParams();
-				url.query.q = this.term;
+				url.query.search = this.term;
 				url.query.type = this.currentTab;
 
 				Object.keys( e.state ).forEach( function ( key ) {
@@ -505,13 +505,14 @@ module.exports = {
 	},
 
 	created: function () {
+		var activeType = mw.config.get( 'wbmiInitialSearchResults' ).activeType;
 		// If user arrives on the page without URL params to specify initial search
-		// type / active tab, default to image. This is done in created hook
+		// type / active tab, set to default. This is done in created hook
 		// because some computed properties assume that a currentTab will always be
 		// specified; the created hook runs before computed properties are evaluated.
 		if ( this.currentTab === '' ) {
-			this.currentTab = 'image';
-			url.query.type = 'image';
+			this.currentTab = activeType;
+			url.query.type = activeType;
 		}
 
 		// Record whatever the initial query params are that the user arrived on

@@ -31,7 +31,6 @@ use Wikibase\DataModel\Statement\StatementGuid;
 use Wikibase\Lib\LanguageFallbackChainFactory;
 use Wikibase\Lib\Store\EntityByLinkedTitleLookup;
 use Wikibase\Lib\UserLanguageLookup;
-use Wikibase\Lib\WikibaseContentLanguages;
 use Wikibase\MediaInfo\Content\MediaInfoContent;
 use Wikibase\MediaInfo\Content\MediaInfoHandler;
 use Wikibase\MediaInfo\DataAccess\Scribunto\Scribunto_LuaWikibaseMediaInfoEntityLibrary;
@@ -359,8 +358,7 @@ class WikibaseMediaInfoHooks {
 	public static function generateWbMonolingualTextLanguages() {
 		$services = MediaWikiServices::getInstance();
 		$allLanguages = $services->getLanguageNameUtils()->getLanguageNames();
-		$monolingualTextLanguages = WikibaseRepo::getWikibaseContentLanguages( $services )
-			->getContentLanguages( WikibaseContentLanguages::CONTEXT_MONOLINGUAL_TEXT )
+		$monolingualTextLanguages = WikibaseRepo::getMonolingualTextLanguages( $services )
 			->getLanguages();
 
 		// use <code> => <name> for known languages; and add

@@ -88,7 +88,6 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 	 * @inheritDoc
 	 */
 	public function execute( $subPage ) {
-		global $wgMediaInfoMediaSearchPageNamespaces;
 		OutputPage::setupOOUI();
 
 		$userLanguage = $this->getLanguage();
@@ -237,7 +236,6 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 			'wbmiThumbLimits' => $thumbLimits,
 			'wbmiThumbRenderMap' => $this->getConfig()->get( 'UploadThumbnailRenderMap' ),
 			'wbmiLocalDev' => $this->getConfig()->get( 'MediaInfoLocalDev' ),
-			'wbmiMediaSearchPageNamespaces' => $wgMediaInfoMediaSearchPageNamespaces,
 			'wbmiInitialFilters' => json_encode( (object)$activeFilters ),
 			'wbmiDidYouMean' => $didYouMean,
 			'wbmiHasError' => (bool)$error

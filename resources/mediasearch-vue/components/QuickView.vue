@@ -32,6 +32,7 @@
 				v-else-if="isVideo || isAudio"
 				:options="playerOptions"
 				:fallback-url="videoinfo[ 0 ].url"
+				@play.once="onPlay"
 			></wbmi-player>
 
 			<button ref="close"
@@ -609,6 +610,15 @@ module.exports = {
 			this.$log( {
 				action: 'quickview_more_details_click',
 				search_result_page_id: this.pageid
+			} );
+			/* eslint-enable camelcase */
+		},
+
+		onPlay: function () {
+			/* eslint-disable camelcase */
+			this.$log( {
+				action: 'quickview_media_play',
+				search_media_type: this.mediaType
 			} );
 			/* eslint-enable camelcase */
 		},

@@ -10,7 +10,8 @@
 			"Marcelo9987",
 			"MarcoAurelio",
 			"Mpayansilva",
-			"Rodney Araujo"
+			"Rodney Araujo",
+			"ZealousBlaze"
 		]
 	},
 	"action-mediainfo-term": "Cambiar términos de información de medios (leyendas, resúmenes…)",
@@ -142,5 +143,7 @@
 	"wikibasemediainfo-copytextlayout-copy": "Copiar",
 	"wikibasemediainfo-copytextlayout-copy-fail": "No se pudo copiar en el portapapeles.",
 	"wikibasemediainfo-copytextlayout-copy-success": "Se copió en el portapapeles.",
-	"wikibasemediainfo-special-mediasearch-clear-filters": "Quitar filtros"
+	"wikibasemediainfo-special-mediasearch-clear-filters": "Quitar filtros",
+	"wikibasemediainfo-special-mediasearch-error-message": "Búsqueda inválida",
+	"wikibasemediainfo-special-mediasearch-error-text": "Ingresa arriba una nueva búsqueda e intenta de nuevo"
 }

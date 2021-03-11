@@ -160,5 +160,7 @@
 	"wikibasemediainfo-special-mediasearch-clear-filters": "Rensa filter",
 	"wikibasemediainfo-special-mediasearch-results-count": "$1 {{PLURAL:$1|resultat}}",
 	"wikibasemediainfo-special-mediasearch-wordcount": "($1 {{PLURAL:$1|ord}})",
-	"wikibasemediainfo-special-mediasearch-did-you-mean": "Menade du: <a href=\"$2\">$1</a>"
+	"wikibasemediainfo-special-mediasearch-did-you-mean": "Menade du: <a href=\"$2\">$1</a>",
+	"wikibasemediainfo-special-mediasearch-error-message": "Ogiltig sökning",
+	"wikibasemediainfo-special-mediasearch-error-text": "Skriv en ny sökning och försök igen"
 }

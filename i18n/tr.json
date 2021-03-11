@@ -171,5 +171,7 @@
 	"wikibasemediainfo-special-mediasearch-clear-filters": "Filtreleri temizle",
 	"wikibasemediainfo-special-mediasearch-results-count": "$1 {{PLURAL:$1|sonuç|sonuç}}",
 	"wikibasemediainfo-special-mediasearch-wordcount": "($1 {{PLURAL:$1|kelime|kelime}})",
-	"wikibasemediainfo-special-mediasearch-did-you-mean": "<a href=\"$2\">$1</a> demek mi istediniz"
+	"wikibasemediainfo-special-mediasearch-did-you-mean": "<a href=\"$2\">$1</a> demek mi istediniz",
+	"wikibasemediainfo-special-mediasearch-error-message": "Geçersiz arama",
+	"wikibasemediainfo-special-mediasearch-error-text": "Yukarıya yeni bir arama girin ve tekrar deneyin"
 }

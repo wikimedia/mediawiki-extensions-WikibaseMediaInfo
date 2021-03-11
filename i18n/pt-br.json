@@ -166,5 +166,7 @@
 	"wikibasemediainfo-special-mediasearch-clear-filters": "Limpar filtros",
 	"wikibasemediainfo-special-mediasearch-results-count": "$1 {{PLURAL:$1|resultado|resultados}}",
 	"wikibasemediainfo-special-mediasearch-wordcount": "($1 {{PLURAL:$1|palavara|palavaras}})",
-	"wikibasemediainfo-special-mediasearch-did-you-mean": "Você quis dizer: <a href=\"$2\">$1</a>"
+	"wikibasemediainfo-special-mediasearch-did-you-mean": "Você quis dizer: <a href=\"$2\">$1</a>",
+	"wikibasemediainfo-special-mediasearch-error-message": "Pesquisa inválida",
+	"wikibasemediainfo-special-mediasearch-error-text": "Insira uma nova pesquisa acima e tente novamente"
 }

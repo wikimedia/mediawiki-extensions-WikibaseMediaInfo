@@ -69,9 +69,15 @@ class ApiRelatedConcepts extends ApiBase {
 	 * @param ApiMain $main
 	 * @param string $moduleName
 	 * @param HttpRequestFactory $httpRequestFactory
+	 * @param DeserializerFactory $deserializerFactory
 	 * @return self
 	 */
-	public static function factory( ApiMain $main, $moduleName, HttpRequestFactory $httpRequestFactory ) {
+	public static function factory(
+		ApiMain $main,
+		$moduleName,
+		HttpRequestFactory $httpRequestFactory,
+		DeserializerFactory $deserializerFactory
+	) {
 		$config = $main->getConfig();
 		$wbRepo = WikibaseRepo::getDefaultInstance();
 
@@ -79,7 +85,7 @@ class ApiRelatedConcepts extends ApiBase {
 			$main,
 			$moduleName,
 			$httpRequestFactory,
-			$wbRepo->getBaseDataModelDeserializerFactory(),
+			$deserializerFactory,
 			$wbRepo->getSnakFormatterFactory(),
 			$config->get( 'MediaInfoExternalEntitySearchBaseUri' ),
 			$config->get( 'MediaInfoMediaSearchConceptChipsSimpleHeuristics' )

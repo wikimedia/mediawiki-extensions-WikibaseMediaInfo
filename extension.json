@@ -627,7 +627,10 @@
 		"relatedconcepts": {
 			"class": "Wikibase\\MediaInfo\\Api\\ApiRelatedConcepts",
 			"factory": "Wikibase\\MediaInfo\\Api\\ApiRelatedConcepts::factory",
-			"services": ["HttpRequestFactory", "LanguageFallback"]
+			"services": [
+				"HttpRequestFactory",
+				"WikibaseRepo.BaseDataModelDeserializerFactory"
+			]
 		}
 	},
 	"SpecialPages": {

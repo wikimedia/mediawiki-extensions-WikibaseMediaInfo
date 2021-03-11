@@ -97,7 +97,7 @@ class ApiRelatedConceptsTest extends MediaWikiTestCase {
 			new ApiMain(),
 			'relatedconcepts',
 			$httpRequestFactory,
-			WikibaseRepo::getDefaultInstance()->getBaseDataModelDeserializerFactory(),
+			WikibaseRepo::getBaseDataModelDeserializerFactory(),
 			$this->createMockSnakFormatterFactory(),
 			'api.php',
 			[]
@@ -117,7 +117,7 @@ class ApiRelatedConceptsTest extends MediaWikiTestCase {
 			new ApiMain(),
 			'relatedconcepts',
 			$httpRequestFactory,
-			WikibaseRepo::getDefaultInstance()->getBaseDataModelDeserializerFactory(),
+			WikibaseRepo::getBaseDataModelDeserializerFactory(),
 			$this->createMockSnakFormatterFactory(),
 			'api.php',
 			[]
@@ -370,7 +370,7 @@ class ApiRelatedConceptsTest extends MediaWikiTestCase {
 	 * @param array $expect
 	 */
 	public function testEvaluateHeuristics( $heuristic, $expect ) {
-		$deserializerFactory = WikibaseRepo::getDefaultInstance()->getBaseDataModelDeserializerFactory();
+		$deserializerFactory = WikibaseRepo::getBaseDataModelDeserializerFactory();
 		$api = new ApiRelatedConcepts(
 			new ApiMain(),
 			'relatedconcepts',
@@ -401,7 +401,7 @@ class ApiRelatedConceptsTest extends MediaWikiTestCase {
 			new ApiMain( new FauxRequest( [ 'term' => 'cat' ] ) ),
 			'relatedconcepts',
 			$httpRequestFactory,
-			WikibaseRepo::getDefaultInstance()->getBaseDataModelDeserializerFactory(),
+			WikibaseRepo::getBaseDataModelDeserializerFactory(),
 			$this->createMockSnakFormatterFactory(),
 			'api.php',
 			[ [

@@ -128,7 +128,7 @@
 					<div class="wbmi-media-search-results">
 						<div class="wbmi-media-search-results__list-wrapper">
 							<div class="wbmi-media-search-results__list wbmi-media-search-results__list--{{type}}">
-								{{#isBitmap}}
+								{{#isImage}}
 									{{#results}}
 										<a
 											ref="link"
@@ -148,7 +148,7 @@
 											>
 										</a>
 									{{/results}}
-								{{/isBitmap}}
+								{{/isImage}}
 
 								{{#isAudio}}
 									{{#results}}

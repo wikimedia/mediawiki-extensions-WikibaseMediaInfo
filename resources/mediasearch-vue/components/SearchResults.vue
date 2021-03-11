@@ -170,7 +170,7 @@ module.exports = {
 		 * @return {string} image-result|video-result|page-result
 		 */
 		resultComponent: function () {
-			if ( this.mediaType === 'bitmap' ) {
+			if ( this.mediaType === 'image' ) {
 				return 'image-result';
 			} else {
 				return this.mediaType + '-result';
@@ -399,7 +399,7 @@ module.exports = {
 			} else {
 				params.prop = 'info|imageinfo|entityterms';
 				params.iiprop = 'url|size|mime|extmetadata';
-				params.iiurlheight = this.mediaType === 'bitmap' ? 180 : undefined;
+				params.iiurlheight = this.mediaType === 'image' ? 180 : undefined;
 			}
 
 			return mw.config.get( 'wbmiLocalDev' ) ?
@@ -417,7 +417,7 @@ module.exports = {
 				'wbmi-media-search-result--highlighted': this.details && this.details.pageid === pageid,
 				// If there are 3 or fewer image results, we'll limit their
 				// growth to avoid having one overly-stretched image in the grid.
-				'wbmi-image-result--limit-size': this.mediaType === 'bitmap' && this.results[ this.mediaType ].length <= 3
+				'wbmi-image-result--limit-size': this.mediaType === 'image' && this.results[ this.mediaType ].length <= 3
 			};
 		},
 

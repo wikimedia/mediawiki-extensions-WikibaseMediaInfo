@@ -45,7 +45,7 @@ var WbmiImage = require( './../base/Image.vue' );
 /**
  * @file OtherResult.vue
  *
- * Represents mediatypes other than bitmap, audio, and video.
+ * Represents mediatypes other than image, audio, and video.
  */
 var searchResult = require( '../../mixins/searchResult.js' );
 

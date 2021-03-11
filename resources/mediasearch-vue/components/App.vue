@@ -38,7 +38,7 @@
 					tag="div"
 				>
 					<concept-chips
-						v-if="enableConceptChips && tab === 'bitmap' && relatedConcepts.length > 0"
+						v-if="enableConceptChips && tab === 'image' && relatedConcepts.length > 0"
 						:key="'concept-chips-' + tab"
 						:media-type="tab"
 						:concepts="relatedConcepts"
@@ -151,11 +151,11 @@ module.exports = {
 		 * (which originate in Vuex store), but the order here matters
 		 * for visual presentation so they have been manually sorted.
 		 *
-		 * @return {string[]} [ 'bitmap', 'video', 'audio', 'page', 'other' ]
+		 * @return {string[]} [ 'image', 'video', 'audio', 'page', 'other' ]
 		 */
 		tabs: function () {
 			return [
-				'bitmap',
+				'image',
 				'audio',
 				'video',
 				'other',
@@ -164,7 +164,7 @@ module.exports = {
 		},
 
 		/**
-		 * @return {Object} { bitmap: 'Images', video: 'Video', page: 'Categories and Pages'... }
+		 * @return {Object} { image: 'Images', video: 'Video', page: 'Categories and Pages'... }
 		 */
 		tabNames: function () {
 			var names = {},
@@ -329,7 +329,7 @@ module.exports = {
 		},
 
 		/**
-		 * @param {string} tab bitmap, audio, etc.
+		 * @param {string} tab image, audio, etc.
 		 */
 		getMoreResultsForTabIfAvailable: function ( tab ) {
 			// Don't make API requests if the search term is empty, or
@@ -467,14 +467,14 @@ module.exports = {
 		 * When the currentTab changes, fetch more results for the new tab if
 		 * available
 		 *
-		 * @param {string} newTab bitmap, audio, etc.
-		 * @param {string} oldTab bitmap, audio, etc.
+		 * @param {string} newTab image, audio, etc.
+		 * @param {string} oldTab image, audio, etc.
 		 */
 		currentTab: function ( newTab, oldTab ) {
 			if ( newTab && newTab !== oldTab ) {
 				this.getMoreResultsForTabIfAvailable( newTab );
 
-				if ( this.enableConceptChips && newTab === 'bitmap' && this.relatedConcepts.length < 1 ) {
+				if ( this.enableConceptChips && newTab === 'image' && this.relatedConcepts.length < 1 ) {
 					this.getRelatedConcepts( this.term );
 				}
 			}
@@ -491,7 +491,7 @@ module.exports = {
 			if ( newTerm && newTerm !== oldTerm ) {
 				this.performNewSearch();
 
-				if ( this.enableConceptChips && this.currentTab === 'bitmap' ) {
+				if ( this.enableConceptChips && this.currentTab === 'image' ) {
 					this.getRelatedConcepts( newTerm );
 				}
 			}
@@ -506,12 +506,12 @@ module.exports = {
 
 	created: function () {
 		// If user arrives on the page without URL params to specify initial search
-		// type / active tab, default to bitmap. This is done in created hook
+		// type / active tab, default to image. This is done in created hook
 		// because some computed properties assume that a currentTab will always be
 		// specified; the created hook runs before computed properties are evaluated.
 		if ( this.currentTab === '' ) {
-			this.currentTab = 'bitmap';
-			url.query.type = 'bitmap';
+			this.currentTab = 'image';
+			url.query.type = 'image';
 		}
 
 		// Record whatever the initial query params are that the user arrived on
@@ -537,7 +537,7 @@ module.exports = {
 
 		// If a search term exists on page load, fetch related concepts for
 		// concept chips.
-		if ( this.enableConceptChips && this.term && this.currentTab === 'bitmap' ) {
+		if ( this.enableConceptChips && this.term && this.currentTab === 'image' ) {
 			this.getRelatedConcepts( this.term );
 		}
 

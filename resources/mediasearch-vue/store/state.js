@@ -44,7 +44,7 @@ module.exports = {
 	 * Arrays of objects broken down by type
 	 */
 	results: {
-		bitmap: initialResults.activeType === 'bitmap' ? sortedResults : [],
+		image: initialResults.activeType === 'image' ? sortedResults : [],
 		audio: initialResults.activeType === 'audio' ? sortedResults : [],
 		video: initialResults.activeType === 'video' ? sortedResults : [],
 		page: initialResults.activeType === 'page' ? sortedResults : [],
@@ -59,7 +59,7 @@ module.exports = {
 	 * 3. null (representing that there are no more results)
 	 */
 	continue: {
-		bitmap: initialResults.activeType === 'bitmap' ? initialResults.continue : undefined,
+		image: initialResults.activeType === 'image' ? initialResults.continue : undefined,
 		audio: initialResults.activeType === 'audio' ? initialResults.continue : undefined,
 		video: initialResults.activeType === 'video' ? initialResults.continue : undefined,
 		page: initialResults.activeType === 'page' ? initialResults.continue : undefined,
@@ -67,7 +67,7 @@ module.exports = {
 	},
 
 	pending: {
-		bitmap: false,
+		image: false,
 		audio: false,
 		video: false,
 		page: false,
@@ -78,7 +78,7 @@ module.exports = {
 	 * Total number of search results.
 	 */
 	totalHits: {
-		bitmap: initialResults.activeType === 'bitmap' ? initialResults.totalHits : 0,
+		image: initialResults.activeType === 'image' ? initialResults.totalHits : 0,
 		audio: initialResults.activeType === 'audio' ? initialResults.totalHits : 0,
 		video: initialResults.activeType === 'video' ? initialResults.totalHits : 0,
 		page: initialResults.activeType === 'page' ? initialResults.totalHits : 0,
@@ -86,7 +86,7 @@ module.exports = {
 	},
 
 	filterValues: {
-		bitmap: initialResults.activeType === 'bitmap' ? initialFilters : {},
+		image: initialResults.activeType === 'image' ? initialFilters : {},
 		audio: initialResults.activeType === 'audio' ? initialFilters : {},
 		video: initialResults.activeType === 'video' ? initialFilters : {},
 		page: initialResults.activeType === 'page' ? initialFilters : {},

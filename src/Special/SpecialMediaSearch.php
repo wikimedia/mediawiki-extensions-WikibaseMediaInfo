@@ -97,7 +97,7 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 		parse_str( parse_url( $url, PHP_URL_QUERY ), $querystring );
 
 		$term = str_replace( "\n", ' ', $this->getRequest()->getText( 'q' ) );
-		$type = $querystring['type'] ?? MediaSearchOptions::TYPE_BITMAP;
+		$type = $querystring['type'] ?? MediaSearchOptions::TYPE_IMAGE;
 
 		$limit = $this->getRequest()->getText( 'limit' ) ? (int)$this->getRequest()->getText( 'limit' ) : 40;
 
@@ -162,10 +162,10 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 			'activeType' => $type,
 			'tabs' => [
 				[
-					'type' => MediaSearchOptions::TYPE_BITMAP,
-					'label' => $this->msg( 'wikibasemediainfo-special-mediasearch-tab-bitmap' )->text(),
-					'isActive' => $type === MediaSearchOptions::TYPE_BITMAP,
-					'isBitmap' => true,
+					'type' => MediaSearchOptions::TYPE_IMAGE,
+					'label' => $this->msg( 'wikibasemediainfo-special-mediasearch-tab-image' )->text(),
+					'isActive' => $type === MediaSearchOptions::TYPE_IMAGE,
+					'isImage' => true,
 				],
 				[
 					'type' => MediaSearchOptions::TYPE_AUDIO,
@@ -293,8 +293,8 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 			] );
 		} else {
 			$filetype = $type;
-			if ( $type === MediaSearchOptions::TYPE_BITMAP ) {
-				$filetype .= '|drawing';
+			if ( $type === MediaSearchOptions::TYPE_IMAGE ) {
+				$filetype = 'bitmap|drawing';
 			} elseif ( $type === MediaSearchOptions::TYPE_OTHER ) {
 				$filetype = 'multimedia|office|archive|3d';
 			}
@@ -331,7 +331,7 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 				'prop' => 'info|imageinfo|entityterms',
 				'inprop' => 'url',
 				'iiprop' => 'url|size|mime',
-				'iiurlheight' => $type === MediaSearchOptions::TYPE_BITMAP ? 180 : null,
+				'iiurlheight' => $type === MediaSearchOptions::TYPE_IMAGE ? 180 : null,
 				'iiurlwidth' => $width,
 				'wbetterms' => 'label',
 			] );
@@ -437,7 +437,7 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 			function ( $data ) {
 				return array_column( $data, 'label', 'value' );
 			},
-			$searchOptions[$type]
+			$searchOptions[$type] ?? []
 		);
 
 		$display = [];

@@ -119,7 +119,7 @@
 	"wikibasemediainfo-search-suggestions-preference-disable-confirm": "Are you sure you want to remove autocomplete suggestions based on structured data? (This setting can be changed in [[Special:Preferences#mw-prefsection-searchoptions|Preferences]].)",
 	"wikibasemediainfo-special-mediasearch-title": "Search media",
 	"wikibasemediainfo-special-mediasearch-continue": "Next",
-	"wikibasemediainfo-special-mediasearch-tab-bitmap": "Images",
+	"wikibasemediainfo-special-mediasearch-tab-image": "Images",
 	"wikibasemediainfo-special-mediasearch-tab-audio": "Audio",
 	"wikibasemediainfo-special-mediasearch-tab-video": "Video",
 	"wikibasemediainfo-special-mediasearch-tab-page": "Categories and Pages",

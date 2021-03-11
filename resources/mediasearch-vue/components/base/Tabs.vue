@@ -183,7 +183,7 @@ module.exports = {
 		},
 
 		/**
-		 * @param {string} mediaType bitmap, audio, video, etc.
+		 * @param {string} mediaType image, audio, video, etc.
 		 * @return {boolean}
 		 */
 		isLastTab: function ( mediaType ) {

@@ -17,7 +17,7 @@ function getMediaFilters( mediaType, filterValues ) {
 
 	// Start with a filter based on media type(s).
 	switch ( mediaType ) {
-		case 'bitmap':
+		case 'image':
 			raw = 'filetype:bitmap|drawing';
 			break;
 
@@ -77,7 +77,7 @@ module.exports = {
 	 *
 	 * @param {Object} context
 	 * @param {Object} options
-	 * @param {string} options.type bitmap / page / audio / video / other
+	 * @param {string} options.type image / page / audio / video / other
 	 * @param {string} options.term search term
 	 * @return {jQuery.Deferred}
 	 */
@@ -153,7 +153,7 @@ module.exports = {
 
 			params.gsrnamespace = 6; // NS_FILE
 			params.iiprop = 'url|size|mime';
-			params.iiurlheight = options.type === 'bitmap' ? 180 : undefined;
+			params.iiurlheight = options.type === 'image' ? 180 : undefined;
 			params.iiurlwidth = urlWidth;
 			params.wbetterms = 'label';
 		}

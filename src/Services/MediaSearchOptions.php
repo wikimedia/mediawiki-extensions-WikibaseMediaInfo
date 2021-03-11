@@ -14,14 +14,14 @@ use Wikibase\Search\Elastic\Query\HasLicenseFeature;
  */
 class MediaSearchOptions {
 
-	public const TYPE_BITMAP = 'bitmap';
+	public const TYPE_IMAGE = 'image';
 	public const TYPE_AUDIO = 'audio';
 	public const TYPE_VIDEO = 'video';
 	public const TYPE_PAGE = 'page';
 	public const TYPE_OTHER = 'other';
 
 	public const ALL_TYPES = [
-		self::TYPE_BITMAP,
+		self::TYPE_IMAGE,
 		self::TYPE_AUDIO,
 		self::TYPE_VIDEO,
 		self::TYPE_PAGE,
@@ -95,7 +95,7 @@ class MediaSearchOptions {
 	}
 
 	/**
-	 * Get the size options. Only supported by "bitmap" type.
+	 * Get the size options. Only supported by "image" type.
 	 *
 	 * @param string $type
 	 * @return array
@@ -106,7 +106,7 @@ class MediaSearchOptions {
 			throw new InvalidArgumentException( "$type is not a valid type" );
 		}
 
-		if ( $type === static::TYPE_BITMAP ) {
+		if ( $type === static::TYPE_IMAGE ) {
 			return [
 				[
 					'label' => $this->context->msg( 'wikibasemediainfo-special-mediasearch-filter-size-any' )->text(),
@@ -144,7 +144,7 @@ class MediaSearchOptions {
 		}
 
 		switch ( $type ) {
-			case static::TYPE_BITMAP:
+			case static::TYPE_IMAGE:
 				return [
 					[
 						// phpcs:ignore Generic.Files.LineLength.TooLong

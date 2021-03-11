@@ -260,7 +260,7 @@ class WikibaseMediaInfoHooks {
 			$entityLookup = $wbRepo->getEntityLookup();
 			$entityRevisionId = $entityLookup->hasEntity( $entityId ) ? $revRecord->getId() : null;
 			$entity = $entityLookup->getEntity( $entityId );
-			$serializer = $wbRepo->getAllTypesEntitySerializer();
+			$serializer = WikibaseRepo::getAllTypesEntitySerializer();
 			$entityData = ( $entity ? $serializer->serialize( $entity ) : null );
 
 			$existingPropertyTypes = [];

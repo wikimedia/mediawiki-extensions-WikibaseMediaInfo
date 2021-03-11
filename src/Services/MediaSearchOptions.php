@@ -6,6 +6,7 @@ use Config;
 use InvalidArgumentException;
 use MediaWiki\MediaWikiServices;
 use MessageLocalizer;
+use RequestContext;
 use Wikibase\Search\Elastic\Query\HasLicenseFeature;
 
 /**
@@ -43,16 +44,25 @@ class MediaSearchOptions {
 	/** @var MessageLocalizer */
 	private $context;
 
+	/** @var string[] */
+	private $enabledFilters;
+
 	/** @var Config */
-	private $config;
+	private $searchConfig;
 
 	/**
 	 * @param MessageLocalizer $context
-	 * @param Config $config
+	 * @param string[] $enabledFilters
+	 * @param Config $searchConfig
 	 */
-	public function __construct( MessageLocalizer $context, Config $config ) {
+	public function __construct(
+		MessageLocalizer $context,
+		array $enabledFilters,
+		Config $searchConfig
+	) {
 		$this->context = $context;
-		$this->config = $config;
+		$this->enabledFilters = $enabledFilters;
+		$this->searchConfig = $searchConfig;
 	}
 
 	/**
@@ -66,6 +76,9 @@ class MediaSearchOptions {
 	public static function getSearchOptions( MessageLocalizer $context ) : array {
 		$instance = new static(
 			$context,
+			RequestContext::getMain()
+				->getConfig()
+				->get( 'MediaInfoMediaSearchSupportedFilterParams' ),
 			MediaWikiServices::getInstance()
 				->getConfigFactory()
 				->makeConfig( 'WikibaseCirrusSearch' )
@@ -106,6 +119,10 @@ class MediaSearchOptions {
 			throw new InvalidArgumentException( "$type is not a valid type" );
 		}
 
+		if ( !in_array( static::FILTER_SIZE, $this->enabledFilters ) ) {
+			return [];
+		}
+
 		if ( $type === static::TYPE_IMAGE ) {
 			return [
 				[
@@ -141,6 +158,10 @@ class MediaSearchOptions {
 	public function getMimeTypes( string $type ) : array {
 		if ( !in_array( $type, static::ALL_TYPES, true ) ) {
 			throw new InvalidArgumentException( "$type is not a valid type" );
+		}
+
+		if ( !in_array( static::FILTER_MIME, $this->enabledFilters ) ) {
+			return [];
 		}
 
 		switch ( $type ) {
@@ -265,6 +286,10 @@ class MediaSearchOptions {
 			throw new InvalidArgumentException( "$type is not a valid type" );
 		}
 
+		if ( !in_array( static::FILTER_SORT, $this->enabledFilters ) ) {
+			return [];
+		}
+
 		return [
 			[
 				'label' => $this->context->msg( 'wikibasemediainfo-special-mediasearch-filter-sort-default' )->text(),
@@ -293,12 +318,21 @@ class MediaSearchOptions {
 			throw new InvalidArgumentException( "$type is not a valid type" );
 		}
 
+		if ( !method_exists( HasLicenseFeature::class, 'getConfiguredLicenseMap' ) ) {
+			// This feature requires a dependency: not installed = feature not supported
+			return [];
+		}
+
+		if ( !in_array( static::FILTER_LICENSE, $this->enabledFilters ) ) {
+			return [];
+		}
+
 		// Category & page searches do not have license filters
 		if ( $type === static::TYPE_PAGE ) {
 			return [];
 		}
 
-		$licenseMappings = HasLicenseFeature::getConfiguredLicenseMap( $this->config );
+		$licenseMappings = HasLicenseFeature::getConfiguredLicenseMap( $this->searchConfig );
 		if ( !$licenseMappings ) {
 			return [];
 		}

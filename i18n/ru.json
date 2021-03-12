@@ -134,7 +134,7 @@
 	"wikibasemediainfo-search-suggestions-preference-disable-confirm": "Вы уверены, что хотите удалить предложения для автодополнения, основанные на структурированных данных? (этот параметр можно изменить в [[Special:Preferences#mw-prefsection-searchoptions|настройках]])",
 	"wikibasemediainfo-special-mediasearch-title": "Поиск мультимедиа",
 	"wikibasemediainfo-special-mediasearch-continue": "Далее",
-	"wikibasemediainfo-special-mediasearch-tab-bitmap": "Изображения",
+	"wikibasemediainfo-special-mediasearch-tab-image": "Изображения",
 	"wikibasemediainfo-special-mediasearch-tab-audio": "Аудио",
 	"wikibasemediainfo-special-mediasearch-tab-video": "Видео",
 	"wikibasemediainfo-special-mediasearch-filter-size": "Размер медиафайла",

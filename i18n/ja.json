@@ -118,7 +118,7 @@
 	"wikibasemediainfo-search-suggestions-preference-disable-confirm": "構造化データに従って、自動補完の候補をほんとうに削除しますか？ (この設定は[[Special:Preferences#mw-prefsection-searchoptions|個人設定]]で変更が可能です。)",
 	"wikibasemediainfo-special-mediasearch-title": "メディアを検索",
 	"wikibasemediainfo-special-mediasearch-continue": "次へ",
-	"wikibasemediainfo-special-mediasearch-tab-bitmap": "画像",
+	"wikibasemediainfo-special-mediasearch-tab-image": "画像",
 	"wikibasemediainfo-special-mediasearch-tab-audio": "音声",
 	"wikibasemediainfo-special-mediasearch-tab-video": "動画",
 	"wikibasemediainfo-special-mediasearch-tab-page": "カテゴリとページ",

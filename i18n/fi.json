@@ -119,7 +119,7 @@
 	"wikibasemediainfo-search-suggestions-preference-disable-confirm": "Haluatko varmasti poistaa jäsenneltyihin tietoihin perustuvat automaattisen täydennyksen ehdotukset? (Tätä asetusta voidaan muuttaa kohdassa [[Special:Preferences#mw-prefsection-searchoptions|Asetukset]].)",
 	"wikibasemediainfo-special-mediasearch-title": "Etsi mediaa",
 	"wikibasemediainfo-special-mediasearch-continue": "Seuraava",
-	"wikibasemediainfo-special-mediasearch-tab-bitmap": "Kuvat",
+	"wikibasemediainfo-special-mediasearch-tab-image": "Kuvat",
 	"wikibasemediainfo-special-mediasearch-tab-audio": "Ääni",
 	"wikibasemediainfo-special-mediasearch-tab-video": "Video",
 	"wikibasemediainfo-special-mediasearch-tab-page": "Luokat ja sivut",

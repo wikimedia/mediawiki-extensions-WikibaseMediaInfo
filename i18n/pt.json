@@ -82,7 +82,7 @@
 	"wikibasemediainfo-search-suggestions-title-depicts": "ficheiros que retratam…",
 	"wikibasemediainfo-search-suggestions-preference-label": "Sugestões de preenchimento de pesquisa baseadas em dados estruturados",
 	"wikibasemediainfo-search-suggestions-preference-disable-confirm": "Tem a certeza de que pretende remover as sugestões de preenchimento de pesquisa baseadas em dados estruturados (esta configuração pode ser alterada nas [[Special:Preferences#mw-prefsection-searchoptions|preferências]])?",
-	"wikibasemediainfo-special-mediasearch-tab-bitmap": "Imagens",
+	"wikibasemediainfo-special-mediasearch-tab-image": "Imagens",
 	"wikibasemediainfo-special-mediasearch-tab-audio": "Áudio",
 	"wikibasemediainfo-special-mediasearch-tab-video": "Vídeo"
 }

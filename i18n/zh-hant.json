@@ -124,7 +124,7 @@
 	"wikibasemediainfo-search-suggestions-preference-disable-confirm": "您確定您要移除基於結構化資料的自動完成建議嗎？（這能在[[Special:Preferences#mw-prefsection-searchoptions|偏好設定]]裡更改。）",
 	"wikibasemediainfo-special-mediasearch-title": "搜尋多媒體",
 	"wikibasemediainfo-special-mediasearch-continue": "下一頁",
-	"wikibasemediainfo-special-mediasearch-tab-bitmap": "圖片",
+	"wikibasemediainfo-special-mediasearch-tab-image": "圖片",
 	"wikibasemediainfo-special-mediasearch-tab-audio": "音訊",
 	"wikibasemediainfo-special-mediasearch-tab-video": "影片",
 	"wikibasemediainfo-special-mediasearch-tab-page": "分類與頁面",

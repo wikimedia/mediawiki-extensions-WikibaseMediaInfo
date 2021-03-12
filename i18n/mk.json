@@ -121,7 +121,7 @@
 	"wikibasemediainfo-search-suggestions-preference-disable-confirm": "Дали сигурно сакате да го тргнете самодополнувањето според структурирани податоци? (Оваа поставка може да се измени во [[Special:Preferences#mw-prefsection-searchoptions|Нагодувањата]].)",
 	"wikibasemediainfo-special-mediasearch-title": "Пребарување на слики и снимки",
 	"wikibasemediainfo-special-mediasearch-continue": "Следно",
-	"wikibasemediainfo-special-mediasearch-tab-bitmap": "Слики",
+	"wikibasemediainfo-special-mediasearch-tab-image": "Слики",
 	"wikibasemediainfo-special-mediasearch-tab-audio": "Звук",
 	"wikibasemediainfo-special-mediasearch-tab-video": "Видео",
 	"wikibasemediainfo-special-mediasearch-tab-page": "Категории и страници",

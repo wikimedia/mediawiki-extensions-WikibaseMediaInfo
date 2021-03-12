@@ -120,7 +120,7 @@
 	"wikibasemediainfo-search-suggestions-preference-disable-confirm": "Er du sikker på at du vil fjerne autofullføring av søk basert på strukturerte data? (Denne innstillingen kan endres i [[Special:Preferences#mw-prefsection-searchoptions|innstillingene]].)",
 	"wikibasemediainfo-special-mediasearch-title": "Mediesøk",
 	"wikibasemediainfo-special-mediasearch-continue": "Neste",
-	"wikibasemediainfo-special-mediasearch-tab-bitmap": "Bilder",
+	"wikibasemediainfo-special-mediasearch-tab-image": "Bilder",
 	"wikibasemediainfo-special-mediasearch-tab-audio": "Lyd",
 	"wikibasemediainfo-special-mediasearch-tab-video": "Video",
 	"wikibasemediainfo-special-mediasearch-tab-page": "Kategorier og sider",

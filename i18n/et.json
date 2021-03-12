@@ -109,7 +109,7 @@
 	"wikibasemediainfo-search-suggestions-preference-label": "Näita automaatseid otsisoovitusi struktuurandmete põhjal",
 	"wikibasemediainfo-search-suggestions-preference-disable-confirm": "Kas oled kindel, et soovid eemaldada struktuurandmetel põhinevad otsisoovitused? (Saad seda sätet [[Special:Preferences#mw-prefsection-searchoptions|eelistustes]] muuta.)",
 	"wikibasemediainfo-special-mediasearch-title": "Failiotsing",
-	"wikibasemediainfo-special-mediasearch-tab-bitmap": "Pildid",
+	"wikibasemediainfo-special-mediasearch-tab-image": "Pildid",
 	"wikibasemediainfo-special-mediasearch-tab-audio": "Heli",
 	"wikibasemediainfo-special-mediasearch-tab-page": "Kategooriad ja leheküljed",
 	"wikibasemediainfo-special-mediasearch-tab-other": "Muud failid",

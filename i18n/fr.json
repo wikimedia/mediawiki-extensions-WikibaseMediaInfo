@@ -132,7 +132,7 @@
 	"wikibasemediainfo-search-suggestions-preference-disable-confirm": "Êtes-vous sûr{{GENDER:||e}} de vouloir supprimer les suggestions de complétion automatique basées sur les données structurées ? (Ce paramètre peut être changé dans [[Special:Preferences#mw-prefsection-searchoptions|vos préférences]].)",
 	"wikibasemediainfo-special-mediasearch-title": "Rechercher un média",
 	"wikibasemediainfo-special-mediasearch-continue": "Suivant",
-	"wikibasemediainfo-special-mediasearch-tab-bitmap": "Images",
+	"wikibasemediainfo-special-mediasearch-tab-image": "Images",
 	"wikibasemediainfo-special-mediasearch-tab-audio": "Audio",
 	"wikibasemediainfo-special-mediasearch-tab-video": "Vidéo",
 	"wikibasemediainfo-special-mediasearch-tab-page": "Catégories et pages",

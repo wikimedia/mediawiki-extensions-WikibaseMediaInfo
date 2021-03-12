@@ -123,7 +123,7 @@
 	"wikibasemediainfo-search-suggestions-preference-disable-confirm": "هل تريد بالتأكيد إزالة اقتراحات الإكمال التلقائي استنادا إلى بيانات منظمة؟ (يمكن تغيير هذا الإعداد في [[Special:Preferences#mw-prefsection-searchoptions|التفضيلات]].)",
 	"wikibasemediainfo-special-mediasearch-title": "بحث في الملفات",
 	"wikibasemediainfo-special-mediasearch-continue": "التالية",
-	"wikibasemediainfo-special-mediasearch-tab-bitmap": "صور",
+	"wikibasemediainfo-special-mediasearch-tab-image": "صور",
 	"wikibasemediainfo-special-mediasearch-tab-audio": "صوت",
 	"wikibasemediainfo-special-mediasearch-tab-page": "التصنيفات والصفحات",
 	"wikibasemediainfo-special-mediasearch-filter-size": "حجم وسائل الإعلام",

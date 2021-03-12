@@ -112,7 +112,7 @@
 	"wikibasemediainfo-search-suggestions-preference-disable-confirm": "Biztosan kikapcsolod a strukturált adatok segítségével való automatikus kiegészítést? (Ezt a beállítást később a [[Special:Preferences#mw-prefsection-searchoptions|beállításaidban]] kapcsolhatod vissza.)",
 	"wikibasemediainfo-special-mediasearch-title": "Médiakeresés",
 	"wikibasemediainfo-special-mediasearch-continue": "Következő",
-	"wikibasemediainfo-special-mediasearch-tab-bitmap": "Képek",
+	"wikibasemediainfo-special-mediasearch-tab-image": "Képek",
 	"wikibasemediainfo-special-mediasearch-tab-audio": "Hangfájlok",
 	"wikibasemediainfo-special-mediasearch-tab-video": "Videók",
 	"wikibasemediainfo-special-mediasearch-tab-page": "Kategóriák és Oldalak",

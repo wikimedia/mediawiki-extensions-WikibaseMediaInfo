@@ -140,7 +140,8 @@ module.exports = {
 		 */
 		formatSize: function ( size ) {
 			var decimalPlace = 1,
-				sizeMsgs = [ 'size-bytes', 'size-kilobytes', 'size-megabytes', 'size-gigabytes' ];
+				sizeMsgs = [ 'size-bytes', 'size-kilobytes', 'size-megabytes', 'size-gigabytes' ],
+				sizeDigitsInLanguage;
 
 			while ( size >= 1024 && sizeMsgs.length > 1 ) {
 				size /= 1024;
@@ -153,12 +154,19 @@ module.exports = {
 				decimalPlace = 100;
 			}
 
+			// Ensure that the rounded numerical digits fed to the size messages
+			// are provided in the appropriate language; Bangle and Farsi must
+			// not use Arabic numbers for example. https://phabricator.wikimedia.org/T274614
+			sizeDigitsInLanguage = mw.language.convertNumber(
+				Math.round( size * decimalPlace ) / decimalPlace
+			);
+
 			// The following messages are used here:
 			// * size-bytes
 			// * size-kilobytes
 			// * size-megabytes
 			// * size-gigabytes
-			return mw.msg( sizeMsgs[ 0 ], Math.round( size * decimalPlace ) / decimalPlace );
+			return mw.msg( sizeMsgs[ 0 ], sizeDigitsInLanguage );
 		},
 
 		/**

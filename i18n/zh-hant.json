@@ -166,5 +166,7 @@
 	"wikibasemediainfo-special-mediasearch-clear-filters": "清除篩選",
 	"wikibasemediainfo-special-mediasearch-results-count": "$1 {{PLURAL:$1|個結果}}",
 	"wikibasemediainfo-special-mediasearch-wordcount": "（$1 {{PLURAL:$1|個字}}）",
-	"wikibasemediainfo-special-mediasearch-did-you-mean": "您是不是指：<a href=\"$2\">$1</a>"
+	"wikibasemediainfo-special-mediasearch-did-you-mean": "您是不是指：<a href=\"$2\">$1</a>",
+	"wikibasemediainfo-special-mediasearch-error-message": "無效搜尋",
+	"wikibasemediainfo-special-mediasearch-error-text": "在上方輸入新搜尋並重試"
 }

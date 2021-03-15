@@ -3,6 +3,7 @@
 		"authors": [
 			"A2y4",
 			"Afaz",
+			"Kkairri",
 			"Linuxmetel",
 			"Marine-Blue",
 			"Object＊tofu",
@@ -151,5 +152,6 @@
 	"wikibasemediainfo-copytextlayout-copy-fail": "クリップボードにコピーできませんでした。",
 	"wikibasemediainfo-copytextlayout-copy-success": "クリップボードにコピーされました。",
 	"wikibasemediainfo-special-mediasearch-clear-filters": "フィルターをクリア",
-	"wikibasemediainfo-special-mediasearch-did-you-mean": "もしかして: <a href=\"$2\">$1</a>"
+	"wikibasemediainfo-special-mediasearch-did-you-mean": "もしかして: <a href=\"$2\">$1</a>",
+	"wikibasemediainfo-special-mediasearch-error-message": "不正な検索"
 }

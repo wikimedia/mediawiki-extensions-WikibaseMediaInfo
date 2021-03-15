@@ -132,6 +132,8 @@
 	"wikibasemediainfo-special-mediasearch-filter-sort-recency": "최신",
 	"wikibasemediainfo-special-mediasearch-filter-sort-popularity": "인기",
 	"wikibasemediainfo-special-mediasearch-filter-license-any": "모든 라이선스",
+	"wikibasemediainfo-special-mediasearch-filter-license-cc-by": "저작자표시하여 이용",
+	"wikibasemediainfo-special-mediasearch-filter-license-attribution": "저작자표시하여 이용",
 	"wikibasemediainfo-special-mediasearch-filter-license-unrestricted": "제한 없음",
 	"wikibasemediainfo-special-mediasearch-filter-license-other": "기타",
 	"wikibasemediainfo-special-mediasearch-no-results": "결과를 찾지 못했습니다",

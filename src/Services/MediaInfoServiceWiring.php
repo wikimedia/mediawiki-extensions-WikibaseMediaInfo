@@ -11,8 +11,7 @@ use Wikibase\Repo\WikibaseRepo;
 
 return [
 	'MediaInfoIdLookup' => function ( MediaWikiServices $services ) {
-		$wbRepo = WikibaseRepo::getDefaultInstance();
-		$nsLookup = $wbRepo->getEntityNamespaceLookup();
+		$nsLookup = WikibaseRepo::getEntityNamespaceLookup( $services );
 		$entityIdComposer = WikibaseRepo::getEntityIdComposer( $services );
 		$mediaInfoNamespace = $nsLookup->getEntityNamespace( MediaInfo::ENTITY_TYPE );
 

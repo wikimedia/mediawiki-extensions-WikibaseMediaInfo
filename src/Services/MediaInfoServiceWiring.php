@@ -24,7 +24,7 @@ return [
 	},
 
 	'MediaInfoFilePageLookup' => function ( MediaWikiServices $services ) {
-		return new FilePageLookup( new TitleFactory() );
+		return new FilePageLookup( $services->getTitleFactory() );
 	},
 
 	'MediaInfoHandler' => function ( MediaWikiServices $services ) {

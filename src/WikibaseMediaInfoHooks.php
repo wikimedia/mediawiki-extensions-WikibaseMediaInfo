@@ -10,7 +10,6 @@ use CirrusSearch\Profile\SearchProfileService;
 use CirrusSearch\Search\CirrusIndexField;
 use ContentHandler;
 use Elastica\Document;
-use Language;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\Revision\RevisionRecord;
 use MediaWiki\Revision\SlotRecord;
@@ -339,9 +338,10 @@ class WikibaseMediaInfoHooks {
 	 * @return string[] language codes as keys, autonyms as values
 	 */
 	public static function generateWbTermsLanguages() {
-		$wbRepo = WikibaseRepo::getDefaultInstance();
-		$allLanguages = Language::fetchLanguageNames();
-		$termsLanguages = $wbRepo->getTermsLanguages()->getLanguages();
+		$services = MediaWikiServices::getInstance();
+		$allLanguages = $services->getLanguageNameUtils()->getLanguageNames();
+		$termsLanguages = WikibaseRepo::getTermsLanguages( $services )
+			->getLanguages();
 
 		// use <code> => <name> for known languages; and add
 		// <code> => <code> for all additional acceptable language

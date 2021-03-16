@@ -91,6 +91,31 @@
 		}
 	}
 
+	&__namespace {
+		.transition( color 100ms );
+		font-weight: normal;
+		margin-left: @wbmi-margin-horizontal-mobile;
+		padding: 0;
+
+		@media screen and ( min-width: @width-breakpoint-tablet ) {
+			font-size: 0.9em;
+		}
+
+		&--selected {
+			color: @color-primary;
+			font-weight: bold;
+		}
+
+		&:hover,
+		&:focus {
+			background-color: transparent;
+			border-color: transparent;
+			box-shadow: none;
+			color: @color-primary--hover;
+			outline: 0;
+		}
+	}
+
 	.wbmi-media-search-results-count {
 		flex-shrink: 0;
 		// Send this element all the way to the right in the flex container.

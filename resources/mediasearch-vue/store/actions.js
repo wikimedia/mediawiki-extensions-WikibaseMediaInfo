@@ -96,7 +96,9 @@ module.exports = {
 				prop: options.type === 'page' ? 'info|categoryinfo' : 'info|imageinfo|entityterms',
 				inprop: 'url'
 			},
-			namespaces = mw.config.get( 'wgNamespaceIds' ),
+			namespaceGroups = mw.config.get( 'wbmiNamespaceGroups' ),
+			namespaceFilter,
+			namespaceGroup,
 			filters,
 			urlWidth,
 			request;
@@ -115,21 +117,16 @@ module.exports = {
 
 		if ( options.type === 'page' ) {
 			// Page/category-specific params.
-			params.gsrnamespace = Object.keys( namespaces )
-				.map( function ( key ) {
-					return namespaces[ key ];
-				} )
-				.filter( function ( id, i, ids ) {
-					return (
-						// exclude virtual namespaces
-						id >= 0 &&
-						// exclude file namespace
-						( !( 'file' in namespaces ) || id !== namespaces.file ) &&
-						// exclude duplicates (namespace ids known under multiple aliases)
-						ids.indexOf( id ) === i
-					);
-				} )
-				.join( '|' );
+			// Namespace: if there is a value for the namespace filter, use
+			// that namespace group, or respect the custom value provided by
+			// the user. Otherwise, search all non-file namespaces.
+			namespaceFilter = context.state.filterValues[ options.type ].namespace;
+			namespaceGroup = namespaceFilter ?
+				context.state.filterValues[ options.type ].namespace.value :
+				'all';
+			params.gsrnamespace = namespaceFilter && namespaceGroup === 'custom' ?
+				context.state.filterValues[ options.type ].namespace.custom.join( '|' ) :
+				Object.keys( namespaceGroups[ namespaceGroup ] ).join( '|' );
 		} else {
 			// Params used in all non-page/category searches.
 			filters = getMediaFilters( options.type, context.state.filterValues[ options.type ] );

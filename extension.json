@@ -82,7 +82,8 @@
 				"filemime",
 				"fileres",
 				"haslicense",
-				"sort"
+				"sort",
+				"namespace"
 			]
 		},
 		"MediaInfoMediaSearchHasLtrPlugin": {
@@ -348,6 +349,7 @@
 				"resources/mediasearch-vue/components/SearchFilters.less",
 				"resources/mediasearch-vue/components/ConceptChips.less",
 				"resources/mediasearch-vue/components/DidYouMean.less",
+				"resources/mediasearch-vue/components/NamespaceFilterDialog.less",
 				"resources/mediasearch-vue/widgets/SearchErrorWidget.less"
 			],
 			"targets": [
@@ -391,6 +393,7 @@
 				"resources/mediasearch-vue/components/SearchError.vue",
 				"resources/mediasearch-vue/components/SearchFilters.vue",
 				"resources/mediasearch-vue/components/ConceptChips.vue",
+				"resources/mediasearch-vue/components/NamespaceFilterDialog.vue",
 				"resources/mediasearch-vue/models/SearchFilter.js",
 				"resources/mediasearch-vue/store/index.js",
 				"resources/mediasearch-vue/store/state.js",
@@ -439,6 +442,13 @@
 				"wikibasemediainfo-special-mediasearch-did-you-mean",
 				"wikibasemediainfo-special-mediasearch-error-message",
 				"wikibasemediainfo-special-mediasearch-error-text",
+				"wikibasemediainfo-special-mediasearch-filter-namespace-label",
+				"wikibasemediainfo-special-mediasearch-filter-namespace-dialog-title",
+				"wikibasemediainfo-special-mediasearch-filter-namespace-dialog-progressive-action",
+				"wikibasemediainfo-special-mediasearch-filter-namespace-all",
+				"wikibasemediainfo-special-mediasearch-filter-namespace-discussion",
+				"wikibasemediainfo-special-mediasearch-filter-namespace-help",
+				"wikibasemediainfo-special-mediasearch-filter-namespace-custom",
 				"size-bytes",
 				"size-kilobytes",
 				"size-megabytes",

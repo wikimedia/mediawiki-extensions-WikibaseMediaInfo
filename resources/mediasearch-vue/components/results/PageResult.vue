@@ -108,8 +108,10 @@ module.exports = {
 			// Otherwise, return the namespace prefix with the trailing
 			// colon stripped off.
 			return title.getNamespaceId() === 0 ?
+				// Main namespace, Gallery, without the parentheses
 				mw.msg( 'blanknamespace' ).replace( /^[(]?/, '' ).replace( /[)]?$/, '' ) :
-				title.getNamespacePrefix().replace( /[:]?$/, '' );
+				// Namespace prefix, with no colon and space instead of underscore
+				title.getNamespacePrefix().replace( /[:]?$/, '' ).replace( /_/g, ' ' );
 		},
 
 		/**

@@ -4,7 +4,6 @@
 .wbmi-dialog {
 	.flex-display();
 	align-items: center;
-	display: flex;
 	height: 100%;
 	justify-content: center;
 	left: 0;
@@ -27,19 +26,68 @@
 		background-color: @background-color-base;
 		border: @border-base;
 		border-radius: @border-radius-base;
-		flex-direction: column;
-		max-width: calc( ~'100vw - 100px' );
-		min-width: 300px;
-		max-height: calc( ~'100vh - 100px' );
+		max-width: 75%;
+		min-width: 35%;
+		max-height: 90vh;
 		min-height: 200px;
-		// Add scroll when necessary.
-		overflow-y: auto;
 		position: relative;
 	}
 
-	&--fullscreen {
-		z-index: 101;
+	&__header {
+		.flex-display();
+		align-items: center;
+		border-bottom: @border-width-base @border-style-base @wbmi-border-color-dialog;
+		padding: @wbmi-padding-dialog;
 
+		.wbmi-dialog__header-title {
+			font-weight: bold;
+			max-width: 100%;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+
+		.wbmi-dialog__header-action--safe {
+			// Negative margins will negate the padding so things stay
+			// properly aligned. The auto margin-left will send this element
+			// all the way over to the right side of the flex container.
+			margin: -0.25em -0.25em -0.25em auto;
+			// Make the button square with breathing room for focus outline.
+			padding: 0.75em;
+		}
+	}
+
+	&__body {
+		bottom: @wbmi-spacing-dialog-body;
+		left: 0;
+		overflow: auto;
+		-webkit-overflow-scrolling: touch;
+		padding: 0 @wbmi-padding-dialog;
+		position: absolute;
+		right: 0;
+		top: @wbmi-spacing-dialog-body;
+
+		&--headless {
+			top: 0;
+		}
+
+		&__content {
+			padding-bottom: @wbmi-padding-dialog / 2;
+		}
+	}
+
+	&__footer:not( :empty ) {
+		.flex-display();
+		border-top: @border-width-base @border-style-base @wbmi-border-color-dialog;
+		bottom: 0;
+		box-sizing: border-box;
+		justify-content: flex-end;
+		padding: @wbmi-padding-dialog / 2 @wbmi-padding-dialog;
+		position: absolute;
+		width: 100%;
+	}
+
+	&--fullscreen {
 		.wbmi-dialog__shell {
 			left: 0;
 			max-height: 100vh;
@@ -49,48 +97,31 @@
 			position: absolute;
 			top: 0;
 		}
-	}
 
-	&__header {
-		border-bottom: @border-base;
-		// In case there's no title.
-		min-height: 1.6em;
-		padding: 0.5em 0;
-		position: relative;
-		text-align: center;
+		.wbmi-dialog__header {
+			padding: 0 0 0 @wbmi-padding-dialog;
+		}
 
 		.wbmi-dialog__header-title {
-			font-weight: bold;
-			max-height: 2em;
-			max-width: 100%;
-			overflow: hidden;
-			text-overflow: ellipsis;
-			white-space: nowrap;
+			order: 1;
 		}
 
 		.wbmi-dialog__header-action--safe {
-			left: 0;
-			position: absolute;
-			top: 50%;
-			transform: translateY( -50% );
+			margin-left: -0.25em;
+			margin-right: 0.75em;
+			order: 0;
 		}
-	}
 
-	&__divider {
-		border: @border-width-base @border-style-base @border-color-base;
-		margin: 0;
-		padding: 0;
-	}
+		.wbmi-dialog__header-action--progressive {
+			border-radius: 0;
+			order: 2;
+			margin-left: auto;
+			padding: 12px;
+		}
 
-	&__body {
-		flex: 1;
-		height: 100%;
-		overflow: auto;
-	}
-
-	&__footer:not( :empty ) {
-		border-top: @border-width-base @border-style-base @border-color-base;
-		max-height: 2em;
+		.wbmi-dialog__body {
+			bottom: 0;
+		}
 	}
 }
 

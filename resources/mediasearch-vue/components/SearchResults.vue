@@ -49,17 +49,16 @@
 			<empty-state v-else-if="shouldShowEmptyState"></empty-state>
 		</div>
 
-		<!-- QuickView dialog for mobile skin. -->
 		<template v-if="isMobileSkin">
 			<wbmi-dialog
-				v-if="details"
 				class="wbmi-media-search-results__details-dialog"
-				:no-header="true"
-				:fullscreen="true"
+				:active="!!details"
+				:headless="true"
 				@close="hideDetails"
 				@key="onDialogKeyup"
 			>
 				<quick-view
+					v-if="details"
 					ref="quickview"
 					:key="details.pageid"
 					v-bind="details"

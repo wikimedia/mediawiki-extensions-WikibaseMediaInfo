@@ -14,9 +14,12 @@ use Wikibase\MediaInfo\Services\MediaSearchOptions;
 class MediaSearchOptionsTest extends MediaWikiIntegrationTestCase {
 	public function assertIsValidConfigArray( array $data ) {
 		$this->assertIsArray( $data );
-		foreach ( $data as $entry ) {
-			$this->assertArrayHasKey( 'label', $entry );
-			$this->assertArrayHasKey( 'value', $entry );
+
+		if ( isset( $data['items'] ) ) {
+			foreach ( $data['items'] as $entry ) {
+				$this->assertArrayHasKey( 'label', $entry );
+				$this->assertArrayHasKey( 'value', $entry );
+			}
 		}
 	}
 
@@ -122,7 +125,7 @@ class MediaSearchOptionsTest extends MediaWikiIntegrationTestCase {
 		$this->assertEmpty( $mimes );
 	}
 
-	public function testGetMimeTypesFNotEnabled() {
+	public function testGetMimeTypesNotEnabled() {
 		$options = new MediaSearchOptions(
 			new MockMessageLocalizer(),
 			[ MediaSearchOptions::FILTER_MIME ],
@@ -206,15 +209,15 @@ class MediaSearchOptionsTest extends MediaWikiIntegrationTestCase {
 			$licenses = $options->getLicenseGroups( $type );
 			$this->assertIsValidConfigArray( $licenses );
 
-			if ( count( $licenses ) > 0 ) {
+			if ( isset( $licenses['items'] ) && count( $licenses['items'] ) > 0 ) {
 				// assert that the license map contains all configured licenses,
 				// plus "" (= all) & "other"
 				$expectedLicenses = array_merge(
 					array_keys( $licenseMapping ),
 					[ '', 'other' ]
 				);
-				$this->assertCount( count( $expectedLicenses ), $licenses );
-				foreach ( $licenses as $license ) {
+				$this->assertCount( count( $expectedLicenses ), $licenses['items'] );
+				foreach ( $licenses['items'] as $license ) {
 					$this->assertContains( $license['value'], $expectedLicenses );
 				}
 			}
@@ -287,5 +290,73 @@ class MediaSearchOptionsTest extends MediaWikiIntegrationTestCase {
 		// verify that invalid types throw an exception
 		$this->expectException( InvalidArgumentException::class );
 		$options->getLicenseGroups( 'i-am-an-invalid-type' );
+	}
+
+	public function testGetNamespacesForValidTypes() {
+		$options = new MediaSearchOptions(
+			new MockMessageLocalizer(),
+			[ MediaSearchOptions::FILTER_NAMESPACE ],
+			new HashConfig()
+		);
+
+		// verify that all valid types have a valid namespace return value
+		foreach ( MediaSearchOptions::ALL_TYPES as $type ) {
+			$namespaceData = $options->getNamespaces( $type );
+			$this->assertIsValidConfigArray( $namespaceData );
+		}
+	}
+
+	public function testGetNamespacesForImage() {
+		$options = new MediaSearchOptions(
+			new MockMessageLocalizer(),
+			[ MediaSearchOptions::FILTER_NAMESPACE ],
+			new HashConfig()
+		);
+
+		// verify that there are no namespaces for image
+		$namespaceData = $options->getNamespaces( MediaSearchOptions::TYPE_IMAGE );
+		$this->assertEmpty( $namespaceData );
+	}
+
+	public function testGetNamespacesForPage() {
+		$options = new MediaSearchOptions(
+			new MockMessageLocalizer(),
+			[ MediaSearchOptions::FILTER_NAMESPACE ],
+			new HashConfig()
+		);
+
+		// verify that there are namespaces for page
+		$namespaceData = $options->getNamespaces( MediaSearchOptions::TYPE_PAGE );
+
+		$this->assertNotEmpty( $namespaceData );
+
+		// verify that there is extra data for this filter
+		$this->assertNotEmpty( $namespaceData['data'] );
+	}
+
+	public function testGetNamespacesNotEnabled() {
+		$options = new MediaSearchOptions(
+			new MockMessageLocalizer(),
+			[ MediaSearchOptions::FILTER_NAMESPACE ],
+			new HashConfig()
+		);
+
+		// verify that none of the valid types return a value
+		foreach ( MediaSearchOptions::ALL_TYPES as $type ) {
+			$namespaceData = $options->getSorts( $type );
+			$this->assertEmpty( $namespaceData );
+		}
+	}
+
+	public function testGetNamespacesForInvalidTypesThrows() {
+		$options = new MediaSearchOptions(
+			new MockMessageLocalizer(),
+			[ MediaSearchOptions::FILTER_NAMESPACE ],
+			new HashConfig()
+		);
+
+		// verify that invalid types throw an exception
+		$this->expectException( InvalidArgumentException::class );
+		$options->getNamespaces( 'i-am-an-invalid-type' );
 	}
 }

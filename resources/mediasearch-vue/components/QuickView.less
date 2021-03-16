@@ -44,11 +44,14 @@
 			color: @wbmi-icon-color--subtle;
 			margin-right: 4px;
 		}
-	}
 
-	& &__title {
-		padding-top: 0;
-		margin-top: 0;
+		h3 {
+			padding: 0;
+		}
+
+		p {
+			margin: 0.5em 0;
+		}
 	}
 
 	&__description {
@@ -159,7 +162,18 @@
 	}
 
 	&--dialog {
+		// Undo dialog boddy padding.
+		margin: 0 -@wbmi-spacing-base-px;
 		padding: 0;
+
+		h3 {
+			margin: 0;
+			padding: 0 0 0.5em;
+		}
+
+		p {
+			margin: 0.5em 0 1em;
+		}
 
 		.wbmi-quick-view__body {
 			padding: 0 @wbmi-spacing-base-px * 1.5 @wbmi-spacing-base-px * 1.5;

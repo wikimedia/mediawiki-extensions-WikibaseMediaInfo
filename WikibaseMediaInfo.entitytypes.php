@@ -205,8 +205,7 @@ return [
 			);
 		},
 		Def::ENTITY_METADATA_ACCESSOR_CALLBACK => function ( $dbName, $repoName ) {
-			$wikibaseRepo = WikibaseRepo::getDefaultInstance();
-			$entityNamespaceLookup = $wikibaseRepo->getEntityNamespaceLookup();
+			$entityNamespaceLookup = WikibaseRepo::getEntityNamespaceLookup();
 			$entityQuery = new MediaInfoEntityQuery(
 				$entityNamespaceLookup,
 				MediaWikiServices::getInstance()->getSlotRoleStore()

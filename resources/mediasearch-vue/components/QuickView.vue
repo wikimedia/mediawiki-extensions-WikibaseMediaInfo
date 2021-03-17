@@ -379,6 +379,8 @@ module.exports = {
 		licenseText: function () {
 			if ( this.metadata && this.metadata.UsageTerms ) {
 				return this.metadata.UsageTerms.value;
+			} else if ( this.metadata && this.metadata.LicenseShortName ) {
+				return this.metadata.LicenseShortName.value;
 			} else {
 				return null;
 			}
@@ -387,6 +389,8 @@ module.exports = {
 		licenseIcon: function () {
 			if ( this.metadata && this.metadata.License ) {
 				return this.getLicenseIcon( this.metadata.License.value );
+			} else if ( this.metadata && this.metadata.LicenseShortName ) {
+				return this.getLicenseIcon( this.metadata.LicenseShortName.value );
 			} else {
 				return null;
 			}
@@ -523,9 +527,9 @@ module.exports = {
 		},
 
 		getLicenseIcon: function ( valueString ) {
-			if ( /^cc/i.test( valueString ) ) {
+			if ( /^cc|attribution/i.test( valueString ) ) {
 				return icons.wbmiIconLogoCC;
-			} else if ( /^pd/i.test( valueString ) ) {
+			} else if ( /^pd|no restrictions/i.test( valueString ) ) {
 				return icons.wbmiIconUnLock;
 			} else {
 				return null;

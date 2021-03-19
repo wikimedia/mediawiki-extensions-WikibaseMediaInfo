@@ -156,5 +156,6 @@
 	"wikibasemediainfo-special-mediasearch-results-count": "$1개 {{PLURAL:$1|결과}}",
 	"wikibasemediainfo-special-mediasearch-did-you-mean": "이것을 찾으셨나요: <a href=\"$2\">$1</a>",
 	"wikibasemediainfo-special-mediasearch-error-message": "잘못된 검색",
-	"wikibasemediainfo-special-mediasearch-error-text": "위에 새 검색을 입력하고 다시 시도하십시오"
+	"wikibasemediainfo-special-mediasearch-error-text": "위에 새 검색을 입력하고 다시 시도하십시오",
+	"wikibasemediainfo-specialsearch-default": "특수:검색 인터페이스에 검색 결과 표시"
 }

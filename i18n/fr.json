@@ -177,5 +177,7 @@
 	"wikibasemediainfo-special-mediasearch-image-size": "($1)",
 	"wikibasemediainfo-special-mediasearch-did-you-mean": "Vouliez-vous dire : <a href=\"$2\">$1</a>",
 	"wikibasemediainfo-special-mediasearch-error-message": "Recherche incorrecte",
-	"wikibasemediainfo-special-mediasearch-error-text": "Entrez une nouvelle recherche ci-dessus et essayez à nouveau"
+	"wikibasemediainfo-special-mediasearch-error-text": "Entrez une nouvelle recherche ci-dessus et essayez à nouveau",
+	"wikibasemediainfo-specialsearch-default": "Afficher les résultats de recherche dans l’interface Spécial:Recherche",
+	"wikibasemediainfo-specialsearch-default-help": "Sélectionner ceci pour afficher les résultats de recherche depuis la barre principale de recherche dans l’ancienne interface Spécial:Recherche au lieu de Spécial:RechercheMédia"
 }

@@ -173,5 +173,7 @@
 	"wikibasemediainfo-special-mediasearch-wordcount": "($1 {{PLURAL:$1|kelime|kelime}})",
 	"wikibasemediainfo-special-mediasearch-did-you-mean": "<a href=\"$2\">$1</a> demek mi istediniz",
 	"wikibasemediainfo-special-mediasearch-error-message": "Geçersiz arama",
-	"wikibasemediainfo-special-mediasearch-error-text": "Yukarıya yeni bir arama girin ve tekrar deneyin"
+	"wikibasemediainfo-special-mediasearch-error-text": "Yukarıya yeni bir arama girin ve tekrar deneyin",
+	"wikibasemediainfo-specialsearch-default": "Arama sonuçlarını Special:Search arayüzünde göster",
+	"wikibasemediainfo-specialsearch-default-help": "Ana arama çubuğundaki arama sonuçlarını Special:MediaSearch yerine eski Special:Search arayüzünde göstermek için seçin"
 }

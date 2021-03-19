@@ -165,5 +165,7 @@
 	"wikibasemediainfo-special-mediasearch-wordcount": "($1 {{PLURAL:$1|збор|збора}})",
 	"wikibasemediainfo-special-mediasearch-did-you-mean": "Дали мислевте на: <a href=\"$2\">$1</a>",
 	"wikibasemediainfo-special-mediasearch-error-message": "Неважечко пребарување",
-	"wikibasemediainfo-special-mediasearch-error-text": "Погоре внесете ново пребарување и обидете се пак"
+	"wikibasemediainfo-special-mediasearch-error-text": "Погоре внесете ново пребарување и обидете се пак",
+	"wikibasemediainfo-specialsearch-default": "Прикажувај исход од пребарување во посредникот Special:Search interface",
+	"wikibasemediainfo-specialsearch-default-help": "Изберете зад а се прикажува исходот од пребарувањата во главната пребарувачка лента во постариот посредник Special:Search наместо во Special:MediaSearch"
 }

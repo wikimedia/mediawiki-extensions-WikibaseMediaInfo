@@ -168,5 +168,7 @@
 	"wikibasemediainfo-special-mediasearch-wordcount": "({{PLURAL:$1|מילה אחת|$1 מילים}})",
 	"wikibasemediainfo-special-mediasearch-did-you-mean": "האם התכוונת לכתוב: <a href=\"$2\">$1</a>",
 	"wikibasemediainfo-special-mediasearch-error-message": "חיפוש בלתי־תקין",
-	"wikibasemediainfo-special-mediasearch-error-text": "נא להזין חיפוש חדש לעיל ולנסות שוב"
+	"wikibasemediainfo-special-mediasearch-error-text": "נא להזין חיפוש חדש לעיל ולנסות שוב",
+	"wikibasemediainfo-specialsearch-default": "להציג את תוצאות החיפוש בממשק Special:Search",
+	"wikibasemediainfo-specialsearch-default-help": "יש לבחור את זה כדי להציג תוצאות מסרגל החיפוש הראשי בממשק Special:Search  הישן ולא ב־Special:MediaSearch"
 }

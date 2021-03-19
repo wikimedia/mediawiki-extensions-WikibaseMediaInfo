@@ -168,5 +168,7 @@
 	"wikibasemediainfo-special-mediasearch-wordcount": "($1 {{PLURAL:$1|Wort|$1 Wörter}})",
 	"wikibasemediainfo-special-mediasearch-did-you-mean": "Meinst du: <a href=\"$2\">$1</a>",
 	"wikibasemediainfo-special-mediasearch-error-message": "Ungültige Suche",
-	"wikibasemediainfo-special-mediasearch-error-text": "Gib oben eine neue Suche ein und versuche es erneut"
+	"wikibasemediainfo-special-mediasearch-error-text": "Gib oben eine neue Suche ein und versuche es erneut",
+	"wikibasemediainfo-specialsearch-default": "Suchergebnisse in der Special:Search-Oberfläche anzeigen",
+	"wikibasemediainfo-specialsearch-default-help": "Wähle diese Option, um Suchergebnisse aus der Hauptsuchleiste in der älteren Special:Search-Oberfläche anstelle von Special:MediaSearch anzuzeigen"
 }

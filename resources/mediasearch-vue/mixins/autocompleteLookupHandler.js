@@ -43,10 +43,7 @@ module.exports = {
 		 * @param {string} input
 		 */
 		getLookupResults: function ( input ) {
-			// String.prototype.trim doesn't have quite the browser support that
-			// we need, so just do it the long way. Regex taken from
-			// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/trim.
-			var trimmedInput = input.replace( /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '' ),
+			var trimmedInput = input.trim(),
 				words,
 				inputRegex;
 
@@ -56,21 +53,35 @@ module.exports = {
 				return;
 			}
 
-			if ( 'unicode' in RegExp.prototype ) {
+			try {
 				// below could be a regex literal, but eslint fails to parse the `u` flag...
 				// eslint-disable-next-line prefer-regex-literals
-				words = trimmedInput.match( new RegExp( '[\\p{L}\\p{M}\\p{N}\\p{S}]+', 'gu' ) ).length;
-				inputRegex = new RegExp( '^' + new Array( words + 1 ).join( '[\\p{L}\\p{M}\\p{N}\\p{S}]+.*?' ), 'iu' );
-			} else {
+				words = trimmedInput.match( new RegExp( '[\\p{L}\\p{M}\\p{N}\\p{S}]+', 'gu' ) ) || [];
+				inputRegex = new RegExp( '^' + new Array( words.length + 1 ).join( '[\\p{L}\\p{M}\\p{N}\\p{S}]+.*?' ), 'iu' );
+			} catch ( e ) {
 				// if browser doesn't support unicode regexes, fall back to simple
 				// space/punctuation-based word detection
-				words = trimmedInput.match( /[^\s\-.:;,]+/g ).length;
-				inputRegex = new RegExp( '^' + new Array( words + 1 ).join( '[^\\s\\-]+[\\s\\-.:;,]*' ), 'i' );
+				words = trimmedInput.match( /[^\s\-.:;,"]+/g ) || [];
+				inputRegex = new RegExp( '^' + new Array( words.length + 1 ).join( '[^\\s\\-]+[\\s\\-.:;,"]*' ), 'i' );
+			}
+
+			if ( words.length === 0 ) {
+				return;
 			}
 
 			this.doLookupRequest( trimmedInput )
 				.then( function ( results ) {
-					this.lookupResults = this.getFilteredLookupResults( results, inputRegex );
+					try {
+						this.lookupResults = this.getFilteredLookupResults( results, inputRegex );
+					} catch ( e ) {
+						// If there is an error in attempting to match & process
+						// autocomplete results, swallow it (don't spam the logs)
+						// and reset lookup results to an empty array,
+						// dismissing the pending state in the input element.
+						// strings wrapped in quotes will trigger this behavior,
+						// for example.
+						this.clearLookupResults();
+					}
 				}.bind( this ) );
 		},
 
@@ -81,12 +92,20 @@ module.exports = {
 		 * @return {Array}
 		 */
 		doLookupRequest: function ( input ) {
-			// eslint-disable-next-line prefer-regex-literals
-			var lastWordRegex = 'unicode' in RegExp.prototype ? new RegExp( '[\\p{L}\\p{M}\\p{N}\\p{S}]+$', 'u' ) : /[^\s\-.:;,]+$/,
-				lastWord = input.match( lastWordRegex ),
+			var lastWordRegex,
+				lastWord,
 				inputPromise,
 				promises = [],
 				lastWordPromise;
+
+			try {
+				// eslint-disable-next-line prefer-regex-literals
+				lastWordRegex = new RegExp( '[\\p{L}\\p{M}\\p{N}\\p{S}]+$', 'u' );
+				lastWord = input.match( lastWordRegex );
+			} catch ( e ) {
+				lastWordRegex = /[^\s\-.:;,]+$/;
+				lastWord = input.match( lastWordRegex );
+			}
 
 			// Abort in-flight lookup promises to ensure the results provided
 			// are for the most recent search input.
@@ -173,10 +192,12 @@ module.exports = {
 		 * @return {Array}
 		 */
 		getFilteredLookupResults: function ( lookupResults, inputRegex ) {
-			return lookupResults.map( function ( result ) {
-				// Only suggest completion for the word currently being typed.
-				return result.match( inputRegex )[ 0 ];
-			} )
+			return lookupResults
+				.map( function ( result ) {
+					// Only suggest completion for the word currently being typed.
+					var match = result.match( inputRegex );
+					return match.length > 0 ? match[ 0 ] : '';
+				} )
 				// Filter for unique values.
 				// Could do a simple `indexOf` to see if a value already exists
 				// but that'd be case-sensitive, and since case doesn't matter

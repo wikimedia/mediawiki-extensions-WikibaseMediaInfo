@@ -78,7 +78,7 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 		TemplateParser $templateParser = null,
 		SearchConfig $searchConfig = null
 	) {
-		parent::__construct( $name, 'mediasearch' );
+		parent::__construct( $name );
 
 		$this->namespaceInfo = $namespaceInfo;
 		$this->api = $api ?: new ApiMain( new FauxRequest() );

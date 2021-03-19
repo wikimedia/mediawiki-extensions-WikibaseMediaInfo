@@ -654,11 +654,7 @@
 	},
 	"manifest_version": 2,
 	"GroupPermissions": {
-		"mediasearch-tester": {
-			"mediasearch": true
-		},
 		"*": {
-			"mediasearch": true,
 			"mediainfo-term": true
 		}
 	},
@@ -668,7 +664,6 @@
 		}
 	},
 	"AvailableRights": [
-		"mediainfo-term",
-		"mediasearch"
+		"mediainfo-term"
 	]
 }

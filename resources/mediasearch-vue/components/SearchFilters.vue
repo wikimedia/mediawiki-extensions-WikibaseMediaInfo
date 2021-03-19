@@ -3,6 +3,7 @@
 		<div class="wbmi-media-search-filters">
 			<template v-for="( filter, index ) in searchFilters">
 				<wbmi-select
+					v-if="filter.type !== 'namespace'"
 					:ref="filter.type"
 					:key="'filter-' + index"
 					:class="getFilterClasses( filter.type )"
@@ -13,6 +14,18 @@
 					@select="onSelect( $event, filter.type )"
 				>
 				</wbmi-select>
+
+				<wvui-button
+					v-else
+					:key="'filter-namespace-' + index"
+					class="wbmi-media-search-filters__namespace"
+					:class="namespaceFilterClasses"
+					:frameless="true"
+					@click="namespaceFilterDialogActive = true"
+				>
+					{{ namespaceFilterLabel }}
+				</wvui-button>
+
 				<wbmi-observer
 					v-if="index === searchFilters.length - 1 && supportsObserver"
 					:key="'filter-observer-' + index"
@@ -24,6 +37,17 @@
 				{{ resultsCount }}
 			</span>
 		</div>
+
+		<namespace-filter-dialog
+			v-if="namespaceFilter"
+			ref="namespace"
+			:items="namespaceFilter.items"
+			:namespaces="namespaceFilter.data.namespaceGroups.all"
+			:active="namespaceFilterDialogActive"
+			@submit="onSelect( $event, 'namespace' )"
+			@close="namespaceFilterDialogActive = false"
+		>
+		</namespace-filter-dialog>
 	</div>
 </template>
 
@@ -40,6 +64,8 @@ var mapState = require( 'vuex' ).mapState,
 	mapMutations = require( 'vuex' ).mapMutations,
 	WbmiSelect = require( './base/Select.vue' ),
 	WbmiObserver = require( './base/Observer.vue' ),
+	WbmiButton = require( './base/Button.vue' ),
+	NamespaceFilterDialog = require( './NamespaceFilterDialog.vue' ),
 	SearchFilter = require( '../models/SearchFilter.js' ),
 	searchOptions = require( './../data/searchOptions.json' );
 
@@ -49,7 +75,9 @@ module.exports = {
 
 	components: {
 		'wbmi-select': WbmiSelect,
-		'wbmi-observer': WbmiObserver
+		'wbmi-observer': WbmiObserver,
+		'wvui-button': WbmiButton,
+		'namespace-filter-dialog': NamespaceFilterDialog
 	},
 
 	props: {
@@ -61,7 +89,8 @@ module.exports = {
 
 	data: function () {
 		return {
-			hasGradient: false
+			hasGradient: false,
+			namespaceFilterDialogActive: false
 		};
 	},
 
@@ -78,6 +107,13 @@ module.exports = {
 			};
 		},
 
+		namespaceFilterClasses: function () {
+			var selected = ( 'namespace' in this.filterValues[ this.mediaType ] );
+			return {
+				'wbmi-media-search-filters__namespace--selected': selected
+			};
+		},
+
 		/**
 		 * @return {Array} SearchFilter objects for this media type.
 		 */
@@ -85,11 +121,15 @@ module.exports = {
 			var optionsForType = searchOptions[ this.mediaType ],
 				filters = [];
 
-			Object.keys( optionsForType ).forEach( function ( option ) {
-				var filter = new SearchFilter( option, optionsForType[ option ] );
+			Object.keys( optionsForType ).forEach( function ( filterName ) {
+				var filterData = optionsForType[ filterName ],
+					filter = new SearchFilter(
+						filterName,
+						filterData.items,
+						filterData.data
+					);
 				filters.push( filter );
 			} );
-
 			return filters;
 		},
 
@@ -129,6 +169,47 @@ module.exports = {
 				'wikibasemediainfo-special-mediasearch-results-count',
 				this.totalHits[ this.mediaType ].toLocaleString( mw.config.get( 'wgUserLanguage' ) )
 			);
+		},
+
+		/**
+		 * Get a human-readable label for the namespace filter button.
+		 *
+		 * @return {Object}
+		 */
+		namespaceFilterLabel: function () {
+			// If there's a value for the namespace filter, use it. Otherwise,
+			// use 'all'.
+			var filterValue = 'namespace' in this.filterValues[ this.mediaType ] ?
+					this.filterValues[ this.mediaType ].namespace.value : 'all',
+				// Get the message key of the human-readable name of the filter value.
+				messageKey = 'wikibasemediainfo-special-mediasearch-filter-namespace-' + filterValue;
+
+			// Return the label message, which takes the filter value as a
+			// param and will return something like "Namespace: Discussion".
+			// The following messages are used here:
+			// * wikibasemediainfo-special-mediasearch-filter-namespace-all
+			// * wikibasemediainfo-special-mediasearch-filter-namespace-discussion
+			// * wikibasemediainfo-special-mediasearch-filter-namespace-help
+			// * wikibasemediainfo-special-mediasearch-filter-namespace-custom
+			return this.$i18n(
+				'wikibasemediainfo-special-mediasearch-filter-namespace-label',
+				this.$i18n( messageKey )
+			);
+		},
+
+		/**
+		 * Get the namespace search filter, if it exists.
+		 *
+		 * @return {Object|undefined}
+		 */
+		namespaceFilter: function () {
+			// Array.prototype.find is polyfilled so we can use this
+			// ES6 array method here
+
+			// eslint-disable-next-line no-restricted-syntax
+			return this.searchFilters.find( function ( filter ) {
+				return filter.type === 'namespace';
+			} );
 		}
 	} ),
 
@@ -139,12 +220,13 @@ module.exports = {
 		/**
 		 * Handle filter change.
 		 *
-		 * @param {string} value The new filter value
+		 * @param {string|Object} value The new filter value; namespace filter values are objects
 		 * @param {string} filterType
 		 * @fires filter-change
 		 */
 		onSelect: function ( value, filterType ) {
-			var oldValue = this.filterValues[ this.mediaType ][ filterType ] || '';
+			var oldValue = this.filterValues[ this.mediaType ][ filterType ] || '',
+				normalizedLoggerValue = value.value ? value.value : value;
 
 			if ( value ) {
 				this.addFilterValue( {
@@ -157,7 +239,8 @@ module.exports = {
 					action: 'filter_change',
 					search_media_type: this.mediaType,
 					search_filter_type: filterType,
-					search_filter_value: value,
+					// for logging purposes, we only want a simple string value
+					search_filter_value: normalizedLoggerValue,
 					prior_search_filter_type: filterType,
 					prior_search_filter_value: oldValue
 				} );
@@ -230,9 +313,25 @@ module.exports = {
 			this.hasGradient = false;
 		},
 
+		/**
+		 * Get the ref for a filter.
+		 *
+		 * Because the namespace filter is handled outside the v-for loop that
+		 * creates the other filter elements, we need to access its ref a little
+		 * differently.
+		 *
+		 * @param {Object} filter A search filter object
+		 * @return {Object}
+		 */
+		getRef: function ( filter ) {
+			return filter.type === 'namespace' ?
+				this.$refs[ filter.type ] :
+				this.$refs[ filter.type ][ 0 ];
+		},
+
 		resetAllFilters: function () {
 			this.searchFilters.forEach( function ( filter ) {
-				this.$refs[ filter.type ][ 0 ].reset();
+				this.getRef( filter ).reset();
 			}.bind( this ) );
 		},
 
@@ -242,12 +341,13 @@ module.exports = {
 		 */
 		synchronizeFilters: function () {
 			this.searchFilters.forEach( function ( filter ) {
-				var currentValue = this.filterValues[ this.mediaType ][ filter.type ];
+				var currentValue = this.filterValues[ this.mediaType ][ filter.type ],
+					ref = this.getRef( filter );
 
 				if ( currentValue ) {
-					this.$refs[ filter.type ][ 0 ].select( currentValue );
+					ref.select( currentValue );
 				} else {
-					this.$refs[ filter.type ][ 0 ].reset();
+					ref.reset();
 				}
 			}.bind( this ) );
 		}

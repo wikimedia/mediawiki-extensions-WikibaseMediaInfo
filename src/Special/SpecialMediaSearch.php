@@ -263,7 +263,8 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 			'wbmiLocalDev' => $this->getConfig()->get( 'MediaInfoLocalDev' ),
 			'wbmiInitialFilters' => json_encode( (object)$activeFilters ),
 			'wbmiDidYouMean' => $didYouMean,
-			'wbmiHasError' => (bool)$error
+			'wbmiHasError' => (bool)$error,
+			'wbmiNamespaceGroups' => $this->searchOptions['page']['namespace']['data']['namespaceGroups'],
 		] );
 
 		$this->addHelpLink( 'Help:MediaSearch' );

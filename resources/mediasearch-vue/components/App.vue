@@ -245,7 +245,8 @@ module.exports = {
 
 			this.$refs[ data.mediaType ][ 0 ].hideDetails();
 
-			if ( data.value ) {
+			// Namespace filter to be implemented as part of T276262.
+			if ( data.value && data.filterType !== 'namespace' ) {
 				url.query[ data.filterType ] = data.value;
 			} else {
 				delete url.query[ data.filterType ];

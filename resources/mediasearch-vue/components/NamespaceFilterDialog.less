@@ -1,0 +1,14 @@
+@import '../../mediainfo-variables.less';
+
+.wbmi-media-search-namespace-dialog {
+	// This is a hacky way of getting the dialog to look a natural height.
+	// Ideally, a future dialog base component would handle sizing the dialog
+	// for you.
+	:not( .wbmi-dialog--fullscreen ) .wbmi-dialog__shell {
+		min-height: 400px;
+	}
+
+	&__custom {
+		padding-left: ~'calc( @{wbmi-size-input-binary} + @{wbmi-padding-horizontal-input-text} )';
+	}
+}

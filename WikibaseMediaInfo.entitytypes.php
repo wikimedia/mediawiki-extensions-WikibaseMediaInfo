@@ -253,7 +253,7 @@ return [
 			$contentCodec = new EntityContentDataCodec(
 				WikibaseRepo::getEntityIdParser( $services ),
 				WikibaseRepo::getStorageEntitySerializer( $services ),
-				$wbRepo->getInternalFormatEntityDeserializer(),
+				WikibaseRepo::getInternalFormatEntityDeserializer(),
 				WikibaseRepo::getDataAccessSettings( $services )->maxSerializedEntitySizeInBytes()
 			);
 

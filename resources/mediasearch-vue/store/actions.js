@@ -232,10 +232,18 @@ module.exports = {
 			activeSearchRequest = null;
 			context.commit( 'setPending', { type: options.type, pending: false } );
 		} ).catch( function ( e ) {
-			// Set pending to false and throw the error back to the App component
-			// to display a suitable message to the user
+			// Set pending to false and clear the stashed request
 			activeSearchRequest = null;
 			context.commit( 'setPending', { type: options.type, pending: false } );
+
+			// No other error handling is required if the request has been
+			// aborted by the client
+			if ( e.statusText && e.statusText === 'abort' ) {
+				return;
+			}
+
+			// In the case of a real failure, throw the error back to the App
+			// component to display a suitable message to the user
 			context.commit( 'setHasError', true );
 			throw e;
 		} );

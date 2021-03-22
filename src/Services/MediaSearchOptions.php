@@ -436,22 +436,17 @@ class MediaSearchOptions {
 	private function getNamespaceGroups() : array {
 		$namespaceInfo = MediaWikiServices::getInstance()->getNamespaceInfo();
 		$allNamespaces = $namespaceInfo->getCanonicalNamespaces();
-		$nonFileNamespaces = array_filter( $allNamespaces, function ( $namespaceId ) use ( $allNamespaces ) {
-			return (
-				// Exclude virtual namespaces.
-				$namespaceId >= 0 &&
-
-				// Exclude file namespace.
-				$allNamespaces[ $namespaceId ] !== 'File'
-			);
+		$nonFileNamespaces = array_filter( $allNamespaces, function ( $namespaceId ) {
+			// Exclude virtual namespaces & file namespace.
+			return $namespaceId >= 0 && $namespaceId !== NS_FILE;
 		}, ARRAY_FILTER_USE_KEY );
 
 		return [
 			static::NAMESPACES_ALL => $nonFileNamespaces,
 			static::NAMESPACES_DISCUSSION => $namespaceInfo->getTalkNamespaces(),
 			static::NAMESPACES_HELP => [
-				'4' => 'Commons',
-				'12' => 'Help',
+				NS_PROJECT => $namespaceInfo->getCanonicalName( NS_PROJECT ),
+				NS_HELP => $namespaceInfo->getCanonicalName( NS_HELP ),
 			]
 		];
 	}

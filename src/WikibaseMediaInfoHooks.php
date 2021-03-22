@@ -218,14 +218,6 @@ class WikibaseMediaInfoHooks {
 		);
 	}
 
-	private function getDefaultSearchPage( \User $user ) {
-		$userOptionsManager = MediaWikiServices::getInstance()->getUserOptionsManager();
-		if ( !$userOptionsManager->getOption( $user, 'sdms-specialsearch-default' ) ) {
-			return \SpecialPage::getTitleFor( 'OldMediaSearch' );
-		}
-		return \SpecialPage::getTitleFor( 'Search' );
-	}
-
 	/**
 	 * @param \OutputPage $out
 	 * @param \Skin $skin
@@ -243,9 +235,6 @@ class WikibaseMediaInfoHooks {
 		DispatchingEntityViewFactory $entityViewFactory,
 		array $jsConfigVars = []
 	) {
-		// change search bar destination
-		$skin->setSearchPageTitle( $this->getDefaultSearchPage( $out->getUser() ) );
-
 		// Site-wide config
 		$modules = [];
 		$moduleStyles = [];
@@ -786,17 +775,6 @@ class WikibaseMediaInfoHooks {
 
 		$preferences['wbmi-wikidata-link-notice-dismissed'] = [
 			'type' => 'api'
-		];
-
-		$preferences['sdms-search-user-notice-dismissed'] = [
-			'type' => 'api',
-		];
-
-		$preferences['sdms-specialsearch-default'] = [
-			'type' => 'toggle',
-			'section' => 'searchoptions/searchmisc',
-			'label-message' => 'wikibasemediainfo-special-mediasearch-specialsearch-default',
-			'help-message' => 'wikibasemediainfo-special-mediasearch-specialsearch-default-help',
 		];
 	}
 

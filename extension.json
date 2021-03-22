@@ -641,7 +641,7 @@
 		"wbmi-cc0-confirmed": 0,
 		"wbmi-wikidata-link-notice-dismissed": 0,
 		"wbmi-search-suggestions": 1,
-		"wbmi-specialsearch-default": 1
+		"sdms-specialsearch-default": 1
 	},
 	"APIModules": {
 		"relatedconcepts": {

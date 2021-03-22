@@ -234,7 +234,7 @@ class WikibaseMediaInfoHooks {
 		if (
 			( $wgMediaInfoMediaSearchDefaultForAnon && ( $user->isAnon() ) )
 			||
-			!$userOptionsManager->getOption( $user, 'wbmi-specialsearch-default' )
+			!$userOptionsManager->getOption( $user, 'sdms-specialsearch-default' )
 		) {
 			return \SpecialPage::getTitleFor( 'MediaSearch' );
 		}
@@ -809,7 +809,7 @@ class WikibaseMediaInfoHooks {
 			'label-message' => 'wikibasemediainfo-search-suggestions-preference-label'
 		];
 
-		$preferences['wbmi-specialsearch-default'] = [
+		$preferences['sdms-specialsearch-default'] = [
 			'type' => 'toggle',
 			'section' => 'searchoptions/searchmisc',
 			'label-message' => 'wikibasemediainfo-specialsearch-default',

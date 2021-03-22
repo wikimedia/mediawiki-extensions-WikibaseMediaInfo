@@ -116,9 +116,9 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 		parse_str( parse_url( $url, PHP_URL_QUERY ), $querystring );
 
 		$term = str_replace( "\n", ' ', $this->getRequest()->getText( 'search' ) );
-		$url = $this->findExactMatchRedirectUrl( $term );
-		if ( $url !== null ) {
-			$this->getOutput()->redirect( $url );
+		$redirectUrl = $this->findExactMatchRedirectUrl( $term );
+		if ( $redirectUrl !== null ) {
+			$this->getOutput()->redirect( $redirectUrl );
 			return;
 		}
 

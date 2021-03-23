@@ -15,10 +15,6 @@
 		]
 	},
 	"right-mediainfo-term": "Pas de media-informatietermen aan (onderschriften, samenvattingen)",
-	"action-mediasearch": "test media search",
-	"right-mediasearch": "Test media search",
-	"group-mediasearch-tester": "Media search testers",
-	"group-mediasearch-tester-member": "{{GENDER:$1|media search tester}}",
 	"slot-name-mediainfo": "Gestructureerde media-informatie",
 	"wikibase-entity-mediainfo": "media-informatie",
 	"wikibase-mediainfo-summary-wbsetlabel-add": "[$2] bijschrift toegevoegd",

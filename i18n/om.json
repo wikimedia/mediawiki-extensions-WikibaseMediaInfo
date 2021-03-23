@@ -5,5 +5,8 @@
 		]
 	},
 	"wikibasemediainfo-special-mediasearch-tab-other": "Midiyaa Biraa",
-	"wikibasemediainfo-special-mediasearch-did-you-mean": "<a href=\"$2\">$1</a>:Jechuu beektaa"
+	"wikibasemediainfo-special-mediasearch-filter-namespace-all": "Hunda",
+	"wikibasemediainfo-special-mediasearch-filter-namespace-help": "Gargaarsa Waliigalaa",
+	"wikibasemediainfo-special-mediasearch-did-you-mean": "<a href=\"$2\">$1</a>:Jechuu beektaa",
+	"wikibasemediainfo-specialsearch-default": "Addatti bu'aa barbaachaa argisiisi:Qunnama barbaadi"
 }

@@ -13,8 +13,6 @@
 	},
 	"action-mediainfo-term": "تغيير مصطلحات معلومات الوسائط (التسميات التوضيحية والملخصات)",
 	"right-mediainfo-term": "تغيير مصطلحات معلومات الوسائط (التسميات التوضيحية والملخصات)",
-	"action-mediasearch": "اختبار بحث الوسائط",
-	"group-mediasearch-tester": "مختبرين بحث الوسائط",
 	"slot-name-mediainfo": "معلومات الوسائط الهيكلية",
 	"wikibase-entity-mediainfo": "معلومات الوسائط",
 	"wikibase-mediainfo-summary-wbsetlabel-add": "تمت إضافة التسمية التوضيحية [$2]",
@@ -132,6 +130,7 @@
 	"wikibasemediainfo-special-mediasearch-filter-size-medium": "متوسط",
 	"wikibasemediainfo-special-mediasearch-filter-size-large": "كبير",
 	"wikibasemediainfo-special-mediasearch-filter-license-any": "كل التراخيص",
+	"wikibasemediainfo-special-mediasearch-filter-namespace-discussion": "نقاش",
 	"wikibasemediainfo-special-mediasearch-no-results": "لا توجد نتائج",
 	"wikibasemediainfo-special-mediasearch-load-more-results": "حمل المزيد"
 }

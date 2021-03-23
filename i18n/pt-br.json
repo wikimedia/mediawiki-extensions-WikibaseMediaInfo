@@ -11,10 +11,6 @@
 	},
 	"action-mediainfo-term": "alterar termos de informação de mídia (legendas, resumos)",
 	"right-mediainfo-term": "Alterar os termos da informação de arquivos multimídia (legendas, resumos)",
-	"action-mediasearch": "pesquisa de mídia de teste",
-	"right-mediasearch": "Teste a pesquisa de mídia",
-	"group-mediasearch-tester": "Testadores de pesquisa de mídia",
-	"group-mediasearch-tester-member": "{{GENDER:$1|testador de pesquisa de mídia|testadora de pesquisa de mídia}}",
 	"slot-name-mediainfo": "Informação estruturada de multimídia",
 	"wikibase-entity-mediainfo": "informação multimídia",
 	"wikibase-mediainfo-summary-wbsetlabel-add": "Adicionada legenda em [$2]",
@@ -146,6 +142,13 @@
 	"wikibasemediainfo-special-mediasearch-filter-license-attribution-same-license": "Usar com atribuição e mesma licença",
 	"wikibasemediainfo-special-mediasearch-filter-license-unrestricted": "Sem restrições",
 	"wikibasemediainfo-special-mediasearch-filter-license-other": "Outro",
+	"wikibasemediainfo-special-mediasearch-filter-namespace-all": "Todos",
+	"wikibasemediainfo-special-mediasearch-filter-namespace-discussion": "Discussão",
+	"wikibasemediainfo-special-mediasearch-filter-namespace-help": "Ajuda geral",
+	"wikibasemediainfo-special-mediasearch-filter-namespace-custom": "Personalizado",
+	"wikibasemediainfo-special-mediasearch-filter-namespace-label": "Espaço nominal: $1",
+	"wikibasemediainfo-special-mediasearch-filter-namespace-dialog-title": "Seletor de espaço nominl",
+	"wikibasemediainfo-special-mediasearch-filter-namespace-dialog-progressive-action": "Enviar",
 	"wikibasemediainfo-special-mediasearch-no-results": "Não encontramos nenhum resultado",
 	"wikibasemediainfo-special-mediasearch-no-results-tips": "Experimente termos mais gerais ou verifique a ortografia",
 	"wikibasemediainfo-special-mediasearch-end-of-results": "Não foram encontrados mais resultados",
@@ -168,5 +171,6 @@
 	"wikibasemediainfo-special-mediasearch-wordcount": "($1 {{PLURAL:$1|palavara|palavaras}})",
 	"wikibasemediainfo-special-mediasearch-did-you-mean": "Você quis dizer: <a href=\"$2\">$1</a>",
 	"wikibasemediainfo-special-mediasearch-error-message": "Pesquisa inválida",
-	"wikibasemediainfo-special-mediasearch-error-text": "Insira uma nova pesquisa acima e tente novamente"
+	"wikibasemediainfo-special-mediasearch-error-text": "Insira uma nova pesquisa acima e tente novamente",
+	"wikibasemediainfo-specialsearch-default": "Mostre os resultados da pesquisa na interface Especial:Pesquisa"
 }

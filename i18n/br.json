@@ -4,10 +4,6 @@
 			"Fulup"
 		]
 	},
-	"action-mediasearch": "amprouadenn klask mediaoù",
-	"right-mediasearch": "Amprouadenn klask mediaoù",
-	"group-mediasearch-tester": "Amprouerien klask mediaoù",
-	"group-mediasearch-tester-member": "{{GENDER:$1|amprouer|amprouerez}} klask mediaoù",
 	"wikibase-entity-mediainfo": "Keleier media",
 	"wikibasemediainfo-desc": "Astenn eus Wikibase evit merañ metaroadennoù frammet eus restroù media",
 	"wikibasemediainfo-filepage-statement-value-type-dropdown-title": "Dibab ur seurt talvoud.",

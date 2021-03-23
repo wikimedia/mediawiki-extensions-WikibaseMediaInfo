@@ -4,6 +4,7 @@
 			"Aftabuzzaman",
 			"Tahmid02016",
 			"Titodutta",
+			"WikiAbuHuraira",
 			"Yahya",
 			"আফতাবুজ্জামান"
 		]
@@ -71,6 +72,11 @@
 	"wikibasemediainfo-special-mediasearch-filter-size-medium": "মাঝারি",
 	"wikibasemediainfo-special-mediasearch-filter-size-large": "বড়",
 	"wikibasemediainfo-special-mediasearch-filter-sort-popularity": "জনপ্রিয়তা",
+	"wikibasemediainfo-special-mediasearch-filter-namespace-all": "সব",
+	"wikibasemediainfo-special-mediasearch-filter-namespace-discussion": "আলোচনা",
+	"wikibasemediainfo-special-mediasearch-filter-namespace-help": "সাধারণ সাহায্য",
+	"wikibasemediainfo-special-mediasearch-filter-namespace-dialog-title": "নামস্থান নির্বাচনকারী",
+	"wikibasemediainfo-special-mediasearch-filter-namespace-dialog-progressive-action": "জমা দিন",
 	"wikibasemediainfo-special-mediasearch-input-label": "মিডিয়া অনুসন্ধান",
 	"wikibasemediainfo-special-mediasearch-load-more-results": "আরও লোড করুন",
 	"wikibasemediainfo-special-mediasearch-quickview-button-text": "আরো তথ্য"

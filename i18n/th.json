@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"B20180"
+			"B20180",
+			"Bebiezaza"
 		]
 	},
 	"wikibase-mediainfo-summary-wbsetlabel-add": "เพิ่มคำบรรยาย [$2]",
@@ -9,5 +10,9 @@
 	"wikibase-mediainfo-summary-wbsetlabel-set": "แก้ไขคำบรรยาย [$2]",
 	"wikibasemediainfo-diffview-label": "คำอธิบาย",
 	"wikibasemediainfo-filepage-license-title": "คำบรรยายภาพและการมีส่วนร่วมของข้อมูลที่มีโครงสร้างอื่น ๆ",
-	"wikibasemediainfo-filepage-license-content-acceptance": "ฉันยอมรับข้อกำหนดเหล่านี้สำหรับการแก้ไขในอนาคตของฉัน อย่าแสดงข้อความนี้อีก"
+	"wikibasemediainfo-filepage-license-content-acceptance": "ฉันยอมรับข้อกำหนดเหล่านี้สำหรับการแก้ไขในอนาคตของฉัน อย่าแสดงข้อความนี้อีก",
+	"wikibasemediainfo-special-mediasearch-filter-namespace-help": "วิธีใช้ทั่วไป",
+	"wikibasemediainfo-special-mediasearch-filter-namespace-custom": "ปรับแต่ง",
+	"wikibasemediainfo-special-mediasearch-filter-namespace-label": "เนมสเปซ: $1",
+	"wikibasemediainfo-special-mediasearch-filter-namespace-dialog-progressive-action": "บันทึก"
 }

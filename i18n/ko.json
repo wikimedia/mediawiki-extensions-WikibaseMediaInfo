@@ -2,6 +2,7 @@
 	"@metadata": {
 		"authors": [
 			"Codenstory",
+			"Ellif",
 			"Jonghaya",
 			"Kwj2772",
 			"Songhee",
@@ -9,7 +10,6 @@
 		]
 	},
 	"right-mediainfo-term": "미디어 정보 용어(설명, 요약) 변경",
-	"action-mediasearch": "미디어 검색을 시험할",
 	"slot-name-mediainfo": "구조화된 미디어 정보",
 	"wikibase-entity-mediainfo": "미디어 정보",
 	"wikibase-mediainfo-summary-wbsetlabel-add": "[$2] 캡션을 추가함",
@@ -136,6 +136,13 @@
 	"wikibasemediainfo-special-mediasearch-filter-license-attribution": "저작자표시하여 이용",
 	"wikibasemediainfo-special-mediasearch-filter-license-unrestricted": "제한 없음",
 	"wikibasemediainfo-special-mediasearch-filter-license-other": "기타",
+	"wikibasemediainfo-special-mediasearch-filter-namespace-all": "모두",
+	"wikibasemediainfo-special-mediasearch-filter-namespace-discussion": "토론",
+	"wikibasemediainfo-special-mediasearch-filter-namespace-help": "일반 도움말",
+	"wikibasemediainfo-special-mediasearch-filter-namespace-custom": "사용자 지정",
+	"wikibasemediainfo-special-mediasearch-filter-namespace-label": "이름공간 $1",
+	"wikibasemediainfo-special-mediasearch-filter-namespace-dialog-title": "이름공간 선택기",
+	"wikibasemediainfo-special-mediasearch-filter-namespace-dialog-progressive-action": "제출",
 	"wikibasemediainfo-special-mediasearch-no-results": "결과를 찾지 못했습니다",
 	"wikibasemediainfo-special-mediasearch-no-results-tips": "보다 일반적인 용어를 쓰거나 맞춤법을 점검해보십시오",
 	"wikibasemediainfo-special-mediasearch-end-of-results": "더 이상 결과가 없습니다",

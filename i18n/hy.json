@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"23artashes",
 			"Kareyac"
 		]
 	},
@@ -51,5 +52,8 @@
 	"wikibasemediainfo-special-mediasearch-filter-size-medium": "Միջին",
 	"wikibasemediainfo-special-mediasearch-filter-size-large": "Մեծ",
 	"wikibasemediainfo-special-mediasearch-filter-license-other": "Այլ",
+	"wikibasemediainfo-special-mediasearch-filter-namespace-all": "Բոլորը",
+	"wikibasemediainfo-special-mediasearch-filter-namespace-discussion": "Քննարկում",
+	"wikibasemediainfo-special-mediasearch-filter-namespace-dialog-progressive-action": "Հաստատել",
 	"wikibasemediainfo-special-mediasearch-no-results": "Ոչինչ չի գտնվել"
 }

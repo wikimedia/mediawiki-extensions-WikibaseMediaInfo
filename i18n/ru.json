@@ -21,10 +21,6 @@
 	},
 	"action-mediainfo-term": "изменение значений метаданных медиафайлов (краткие подписи, опсиания)",
 	"right-mediainfo-term": "изменять термины информации о медиафайлах (краткие подписи, описания)",
-	"action-mediasearch": "тестировать поиск медиафайлов",
-	"right-mediasearch": "Тестирование поиска медиафайлов",
-	"group-mediasearch-tester": "Тестировщики поиска медиафайлов",
-	"group-mediasearch-tester-member": "{{GENDER:$1|тестировщик|тестировщица}} поиска медиафайлов",
 	"slot-name-mediainfo": "Структурированная информация о медиафайлах",
 	"wikibase-entity-mediainfo": "информация о медиафайлах",
 	"wikibase-mediainfo-summary-wbsetlabel-add": "Добавлена подпись [$2]",
@@ -145,6 +141,7 @@
 	"wikibasemediainfo-special-mediasearch-filter-sort-label": "Сортировать по:",
 	"wikibasemediainfo-special-mediasearch-filter-sort-default": "Релевантность",
 	"wikibasemediainfo-special-mediasearch-filter-license-other": "Другие",
+	"wikibasemediainfo-special-mediasearch-filter-namespace-discussion": "Обсуждение",
 	"wikibasemediainfo-special-mediasearch-no-results": "Мы не нашли результатов",
 	"wikibasemediainfo-special-mediasearch-clear-filters": "Очистить фильтры"
 }

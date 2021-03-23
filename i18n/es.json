@@ -16,7 +16,6 @@
 	},
 	"action-mediainfo-term": "Cambiar términos de información de medios (leyendas, resúmenes…)",
 	"right-mediainfo-term": "Cambiar términos de información de medios (leyendas, resúmenes…)",
-	"action-mediasearch": "Búsqueda de medios de prueba",
 	"slot-name-mediainfo": "Infomación estructurada de multimedia",
 	"wikibase-entity-mediainfo": "información multimedia",
 	"wikibase-mediainfo-summary-wbsetlabel-add": "Se añade la descripción [$2]",

@@ -6,7 +6,8 @@
 			"Luca.favorido",
 			"Sakretsu",
 			"Selven",
-			"TheRukk"
+			"TheRukk",
+			"Toa"
 		]
 	},
 	"right-mediainfo-term": "Modifica le informazioni del file (didascalie, riassunti)",
@@ -111,6 +112,11 @@
 	"wikibasemediainfo-special-mediasearch-filter-license-cc-by-sa": "Usa con attribuzione e stessa licenza",
 	"wikibasemediainfo-special-mediasearch-filter-license-unrestricted": "Nessuna restrizione",
 	"wikibasemediainfo-special-mediasearch-filter-license-other": "Altro",
+	"wikibasemediainfo-special-mediasearch-filter-namespace-all": "Tutti",
+	"wikibasemediainfo-special-mediasearch-filter-namespace-discussion": "Discussione",
+	"wikibasemediainfo-special-mediasearch-filter-namespace-custom": "Personalizzato",
+	"wikibasemediainfo-special-mediasearch-filter-namespace-label": "Namespace: $1",
+	"wikibasemediainfo-special-mediasearch-filter-namespace-dialog-progressive-action": "Invia",
 	"wikibasemediainfo-special-mediasearch-no-results": "Nessun risultato trovato",
 	"wikibasemediainfo-special-mediasearch-end-of-results": "Nessun altro risultato trovato",
 	"wikibasemediainfo-special-mediasearch-quickview-button-text": "Ulteriori dettagli",

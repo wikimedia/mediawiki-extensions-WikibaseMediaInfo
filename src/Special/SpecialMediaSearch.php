@@ -19,9 +19,9 @@ use RequestContext;
 use SearchEngine;
 use SearchEngineFactory;
 use SiteStats;
+use SpecialPage;
 use TemplateParser;
 use Title;
-use UnlistedSpecialPage;
 use Wikibase\MediaInfo\MustacheDomTemplateParser;
 use Wikibase\MediaInfo\Services\MediaSearchOptions;
 use Wikimedia\Assert\Assert;
@@ -29,7 +29,7 @@ use Wikimedia\Assert\Assert;
 /**
  * Special page specifically for searching multimedia pages.
  */
-class SpecialMediaSearch extends UnlistedSpecialPage {
+class SpecialMediaSearch extends SpecialPage {
 
 	/**
 	 * @var NamespaceInfo
@@ -101,6 +101,10 @@ class SpecialMediaSearch extends UnlistedSpecialPage {
 	 */
 	public function getDescription() {
 		return $this->msg( 'wikibasemediainfo-special-mediasearch-title' )->parse();
+	}
+
+	protected function getGroupName() {
+		return 'pages';
 	}
 
 	/**

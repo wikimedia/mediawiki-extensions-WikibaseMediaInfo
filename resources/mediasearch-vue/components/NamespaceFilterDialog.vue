@@ -78,6 +78,15 @@ module.exports = {
 		},
 
 		/**
+		 * A list of all supported namespace groups as well as the namespace
+		 * IDs they contain
+		 */
+		namespaceGroups: {
+			type: Object,
+			required: true
+		},
+
+		/**
 		 * Whether or not the dialog should appear.
 		 */
 		active: {
@@ -150,13 +159,26 @@ module.exports = {
 		/**
 		 * Select a value (and custom namespaces, if provided).
 		 *
-		 * @param {Object} filterValue
-		 * @param {string} filterValue.value The selected keyword
-		 * @param {Array} filterValue.custom Custom list of selected namespaces
+		 * @param {Object|string} selection
 		 */
-		select: function ( filterValue ) {
-			this.selectedRadio = filterValue.value;
-			this.selectedCustom = filterValue.custom || checkboxDefault;
+		select: function ( selection ) {
+			if ( typeof selection === 'object' ) {
+				// Selection is an object (provided from JS UI)
+				this.selectedRadio = selection.value;
+				this.selectedCustom = selection.custom || checkboxDefault;
+			} else if ( typeof selection === 'string' ) {
+				// selection is a string (provided from PHP UI);
+				if ( this.namespaceGroups[ selection ] ) {
+					// selection matches one of the pre-defined namespace groups
+					this.selectedRadio = selection;
+					this.selectedCustom = checkboxDefault;
+				} else {
+					// selection is a string of arbitrary namespace IDs and
+					// needs to be parsed
+					this.selectedRadio = 'custom';
+					this.selectedCustom = selection.split( '|' );
+				}
+			}
 		},
 
 		/**

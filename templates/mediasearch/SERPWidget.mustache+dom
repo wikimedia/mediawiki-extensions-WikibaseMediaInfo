@@ -59,13 +59,9 @@
 					{{! below form is a bit of a hack to mimick tabs without JS, where tab label is submit button }}
 					<form method="get" action="{{page}}">
 						{{#querystring}}
-							{{^isSearch}}
-								{{^isType}}
-									{{^isContinue}}
-										<input type="hidden" name="{{key}}" value="{{value}}" />
-									{{/isContinue}}
-								{{/isType}}
-							{{/isSearch}}
+							{{#isSort}}
+								<input type="hidden" name="{{key}}" value="{{value}}" />
+							{{/isSort}}
 						{{/querystring}}
 						<input type="hidden" name="search" value="{{term}}" />
 

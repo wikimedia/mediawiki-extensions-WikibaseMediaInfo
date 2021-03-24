@@ -17,7 +17,7 @@
 					>
 					</wbmi-select>
 
-					<wvui-button
+					<wbmi-button
 						v-else
 						:key="'filter-namespace-' + index"
 						class="wbmi-media-search-filters__namespace"
@@ -26,7 +26,7 @@
 						@click="namespaceFilterDialogActive = true"
 					>
 						{{ namespaceFilterLabel }}
-					</wvui-button>
+					</wbmi-button>
 
 					<wbmi-observer
 						v-if="index === searchFilters.length - 1 && supportsObserver"
@@ -79,7 +79,7 @@ module.exports = {
 	components: {
 		'wbmi-select': WbmiSelect,
 		'wbmi-observer': WbmiObserver,
-		'wvui-button': WbmiButton,
+		'wbmi-button': WbmiButton,
 		'namespace-filter-dialog': NamespaceFilterDialog
 	},
 

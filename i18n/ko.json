@@ -140,7 +140,7 @@
 	"wikibasemediainfo-special-mediasearch-filter-namespace-discussion": "토론",
 	"wikibasemediainfo-special-mediasearch-filter-namespace-help": "일반 도움말",
 	"wikibasemediainfo-special-mediasearch-filter-namespace-custom": "사용자 지정",
-	"wikibasemediainfo-special-mediasearch-filter-namespace-label": "이름공간 $1",
+	"wikibasemediainfo-special-mediasearch-filter-namespace-label": "이름공간: $1",
 	"wikibasemediainfo-special-mediasearch-filter-namespace-dialog-title": "이름공간 선택기",
 	"wikibasemediainfo-special-mediasearch-filter-namespace-dialog-progressive-action": "제출",
 	"wikibasemediainfo-special-mediasearch-no-results": "결과를 찾지 못했습니다",

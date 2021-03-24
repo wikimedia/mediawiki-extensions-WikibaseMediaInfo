@@ -2,36 +2,39 @@
 	<div class="wbmi-media-search-filters-wrapper" :class="rootClasses">
 		<div class="wbmi-media-search-filters">
 			<template v-for="( filter, index ) in searchFilters">
-				<wbmi-select
-					v-if="filter.type !== 'namespace'"
-					:ref="filter.type"
+				<div
 					:key="'filter-' + index"
-					:class="getFilterClasses( filter.type )"
-					:name="filter.type"
-					:items="filter.items"
-					:initial-selected-item-index="0"
-					:prefix="getFilterPrefix( filter.type )"
-					@select="onSelect( $event, filter.type )"
 				>
-				</wbmi-select>
+					<wbmi-select
+						v-if="filter.type !== 'namespace'"
+						:ref="filter.type"
+						:class="getFilterClasses( filter.type )"
+						:name="filter.type"
+						:items="filter.items"
+						:initial-selected-item-index="0"
+						:prefix="getFilterPrefix( filter.type )"
+						@select="onSelect( $event, filter.type )"
+					>
+					</wbmi-select>
 
-				<wvui-button
-					v-else
-					:key="'filter-namespace-' + index"
-					class="wbmi-media-search-filters__namespace"
-					:class="namespaceFilterClasses"
-					:frameless="true"
-					@click="namespaceFilterDialogActive = true"
-				>
-					{{ namespaceFilterLabel }}
-				</wvui-button>
+					<wvui-button
+						v-else
+						:key="'filter-namespace-' + index"
+						class="wbmi-media-search-filters__namespace"
+						:class="namespaceFilterClasses"
+						:frameless="true"
+						@click="namespaceFilterDialogActive = true"
+					>
+						{{ namespaceFilterLabel }}
+					</wvui-button>
 
-				<wbmi-observer
-					v-if="index === searchFilters.length - 1 && supportsObserver"
-					:key="'filter-observer-' + index"
-					@intersect="removeGradientClass"
-					@hide="addGradientClass"
-				></wbmi-observer>
+					<wbmi-observer
+						v-if="index === searchFilters.length - 1 && supportsObserver"
+						:key="'filter-observer-' + index"
+						@intersect="removeGradientClass"
+						@hide="addGradientClass"
+					></wbmi-observer>
+				</div>
 			</template>
 			<span v-if="showResultsCount" class="wbmi-media-search-results-count">
 				{{ resultsCount }}

@@ -21,7 +21,14 @@
 
 @wbmi-background-color-pending-stripe: #ddd;
 
+@wbmi-background-color-tool--hover: @wmui-color-base90;
+@wbmi-background-color-tool--focus: @wmui-color-base80;
+@wbmi-background-color-tool--active: @wmui-color-base80;
+@wbmi-background-color-tool--selected: @background-color-primary;
+
 @wbmi-color-taboption: @color-base--hover;
+
+@wbmi-color-tool: @wmui-color-base0;
 
 @wbmi-background-color-namespace-label: @background-color-tabs;
 
@@ -33,6 +40,9 @@
 @wbmi-border-color-base--focus: @color-primary--focus;
 @wbmi-border-color-input--hover: @border-color-base--active;
 @wbmi-border-color-result: @background-color-tabs;
+
+@wbmi-border-color-tool:               transparent;
+@wbmi-border-color-tool--hover:        @wmui-color-base30;
 
 // Sizes
 // ---------------------------------------------------------
@@ -54,6 +64,7 @@
 
 @wbmi-padding-horizontal-base: 12px;
 @wbmi-padding-vertical-base: 6px;
+@wbmi-padding-vertical-tool: 5px;
 @wbmi-padding-vertical-mobile: 11px;
 
 @wbmi-margin-horizontal-base: 6px;
@@ -67,7 +78,7 @@
 	@wbmi-padding-vertical-base
 	@wbmi-padding-horizontal-input-text * 2 + @size-icon;
 
-@wbmi-padding-end-dropdown: @size-indicator + ( 2 * @wbmi-padding-horizontal-base );
+@wbmi-padding-end-dropdown: @size-indicator + ( 1.5 * @wbmi-padding-horizontal-base );
 
 // Typography
 // ---------------------------------------------------------

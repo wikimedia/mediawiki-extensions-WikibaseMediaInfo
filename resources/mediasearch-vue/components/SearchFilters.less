@@ -18,7 +18,7 @@
 		display: none;
 	}
 
-	// Unset scroll on larger screens. We shouldn't need to bother resetting
+	// Unset scroll on larger screens. We should not need to bother resetting
 	// all the scrollbar rules.
 	@media screen and ( min-width: @width-breakpoint-tablet ) {
 		overflow-x: visible;
@@ -31,12 +31,6 @@
 	align-items: center;
 
 	.wbmi-select {
-		// Using margin-left instead of margin-right here is a little weird, but
-		// we need the observer element to come right after the last filter. If
-		// that last filter has a margin-right applied, the observer will never
-		// intersect, and we can't target the last filter with last-child
-		// anymore since the observer is the last-child.
-		margin-left: @wbmi-margin-horizontal-mobile;
 		position: static;
 
 		@media screen and ( min-width: @width-breakpoint-tablet ) {
@@ -46,31 +40,35 @@
 
 		&__content {
 			background-color: transparent;
-			border: 0;
-			border-radius: 0;
+			color: @wbmi-color-tool;
+			border-style: @border-style-base;
+			border-width: @border-width-base;
+			border-radius: @border-radius-base;
+			border-color: @wbmi-border-color-tool;
 			box-shadow: none;
 
 			@media screen and ( min-width: @width-breakpoint-tablet ) {
 				font-size: 0.9em;
+				padding: @wbmi-padding-vertical-tool
+					@wbmi-padding-end-dropdown
+					@wbmi-padding-vertical-tool
+					@wbmi-padding-horizontal-base;
 			}
 
-			&:hover,
+			&:hover {
+				background: @wbmi-background-color-tool--hover;
+			}
+
 			&:focus {
-				border-color: transparent;
-				color: @color-primary--hover;
+				.box-shadow( inset 0 0 0 1px @color-primary );
+				border-color: @wbmi-border-color-base--focus;
 				outline: 0;
-
-				.wbmi-select__handle {
-					color: @color-primary--hover;
-				}
 			}
-		}
 
-		&:first-child {
-			margin-left: 0;
-
-			.wbmi-select__content {
-				padding-left: 0;
+			&:active {
+				background-color: @wbmi-background-color-tool--active;
+				border-color: @wbmi-border-color-tool--hover;
+				box-shadow: none;
 			}
 		}
 

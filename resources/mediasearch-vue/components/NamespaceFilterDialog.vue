@@ -147,11 +147,14 @@ module.exports = {
 			this.$emit( 'close' );
 		},
 
+		/**
+		 * Submit the namespace group to be stored in state, or, if a custom
+		 * list of namespaces is selected, submit a pipe-separated list of
+		 * namespace IDs.
+		 */
 		onProgress: function () {
-			this.$emit( 'submit', {
-				value: this.selectedRadio,
-				custom: this.isCustom ? this.selectedCustom : null
-			} );
+			var value = this.isCustom ? this.selectedCustom.join( '|' ) : this.selectedRadio;
+			this.$emit( 'submit', value );
 
 			this.close();
 		},
@@ -159,25 +162,18 @@ module.exports = {
 		/**
 		 * Select a value (and custom namespaces, if provided).
 		 *
-		 * @param {Object|string} selection
+		 * @param {string} selection
 		 */
 		select: function ( selection ) {
-			if ( typeof selection === 'object' ) {
-				// Selection is an object (provided from JS UI)
-				this.selectedRadio = selection.value;
-				this.selectedCustom = selection.custom || checkboxDefault;
-			} else if ( typeof selection === 'string' ) {
-				// selection is a string (provided from PHP UI);
-				if ( this.namespaceGroups[ selection ] ) {
-					// selection matches one of the pre-defined namespace groups
-					this.selectedRadio = selection;
-					this.selectedCustom = checkboxDefault;
-				} else {
-					// selection is a string of arbitrary namespace IDs and
-					// needs to be parsed
-					this.selectedRadio = 'custom';
-					this.selectedCustom = selection.split( '|' );
-				}
+			if ( this.namespaceGroups[ selection ] ) {
+				// selection matches one of the pre-defined namespace groups
+				this.selectedRadio = selection;
+				this.selectedCustom = checkboxDefault;
+			} else {
+				// selection is a string of arbitrary namespace IDs and
+				// needs to be parsed
+				this.selectedRadio = 'custom';
+				this.selectedCustom = selection.split( '|' );
 			}
 		},
 

@@ -183,7 +183,6 @@ class WikibaseMediaInfoHooks {
 
 		$propertyTypes = [];
 		$propertyTitles = [];
-		$searchTitles = [];
 		foreach ( $wgMediaInfoProperties as $name => $property ) {
 			try {
 				// some properties/statements may have custom titles, in addition to their property
@@ -193,11 +192,6 @@ class WikibaseMediaInfoHooks {
 				$message = wfMessage( 'wikibasemediainfo-statements-title-' . ( $name ?: '' ) );
 				if ( $message->exists() ) {
 					$propertyTitles[$property] = $message->text();
-				}
-
-				$message = wfMessage( 'wikibasemediainfo-search-suggestions-title-' . ( $name ?: '' ) );
-				if ( $message->exists() ) {
-					$searchTitles[$property] = $message->text();
 				}
 
 				// get data type for values associated with this property
@@ -218,7 +212,6 @@ class WikibaseMediaInfoHooks {
 				'wbmiDefaultProperties' => array_values( $wgMediaInfoProperties ),
 				'wbmiPropertyTitles' => $propertyTitles,
 				'wbmiPropertyTypes' => $propertyTypes,
-				'wbmiSearchTitles' => $searchTitles,
 				'wbmiHelpUrls' => $wgMediaInfoHelpUrls,
 				'wbmiExternalEntitySearchBaseUri' => $wgMediaInfoExternalEntitySearchBaseUri,
 				'wbmiMediaInfoEnableSearch' => $wgMediaInfoEnableSearch,
@@ -262,7 +255,7 @@ class WikibaseMediaInfoHooks {
 		$skin->setSearchPageTitle( $this->getDefaultSearchPage( $out->getUser() ) );
 
 		// Site-wide config
-		$modules = [ 'wikibase.mediainfo.search' ];
+		$modules = [];
 		$moduleStyles = [];
 
 		if ( $isMediaInfoPage ) {
@@ -801,12 +794,6 @@ class WikibaseMediaInfoHooks {
 
 		$preferences['wbmi-wikidata-link-notice-dismissed'] = [
 			'type' => 'api'
-		];
-
-		$preferences['wbmi-search-suggestions'] = [
-			'type' => 'toggle',
-			'section' => 'searchoptions/searchmisc',
-			'label-message' => 'wikibasemediainfo-search-suggestions-preference-label'
 		];
 
 		$preferences['sdms-specialsearch-default'] = [

@@ -39,7 +39,7 @@
 			"value": false
 		},
 		"MediaInfoProperties": {
-			"description": "Map of { indicative name: property id }. E.g. { depicts: 'P1' }. The key doesn't really matter, except to construct a title (grep for wikibasemediainfo-statements-title- and wikibasemediainfo-search-suggestions-title-)",
+			"description": "Map of { indicative name: property id }. E.g. { depicts: 'P1' }. The key doesn't really matter, except to construct a title (grep for wikibasemediainfo-statements-title-)",
 			"value": {}
 		},
 		"MediaInfoHelpUrls": {
@@ -278,39 +278,6 @@
 				"resources/filepage/styles/mediainfo-filepage-captionspanel.less",
 				"resources/filepage/styles/mediainfo-filepage-protectionmsgwidget.less",
 				"resources/filepage/styles/mediainfo-filepage-statementpanel.less"
-			],
-			"targets": [
-				"desktop",
-				"mobile"
-			]
-		},
-		"wikibase.mediainfo.search": {
-			"packageFiles": [
-				"resources/search/index.js",
-				"resources/search/PropertySuggestionsWidget.js"
-			],
-			"styles": [
-				"resources/search/PropertySuggestionsWidget.less"
-			],
-			"dependencies": [
-				"wikibase.mediainfo.base",
-				"mediawiki.template.mustache+dom",
-				"oojs",
-				"oojs-ui-core",
-				"oojs-ui-widgets",
-				"oojs-ui-windows",
-				"wikibase.datamodel",
-				"wikibase.api.RepoApi"
-			],
-			"messages": [
-				"wikibasemediainfo-search-suggestions-preference-disable-confirm",
-				"ooui-dialog-message-accept",
-				"ooui-dialog-message-reject",
-				"word-separator",
-				"parentheses"
-			],
-			"templates": [
-				"templates/search/PropertySuggestionsWidget.mustache+dom"
 			],
 			"targets": [
 				"desktop",
@@ -640,7 +607,6 @@
 	"DefaultUserOptions": {
 		"wbmi-cc0-confirmed": 0,
 		"wbmi-wikidata-link-notice-dismissed": 0,
-		"wbmi-search-suggestions": 1,
 		"sdms-specialsearch-default": 1
 	},
 	"APIModules": {

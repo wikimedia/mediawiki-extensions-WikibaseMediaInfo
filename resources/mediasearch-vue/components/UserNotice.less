@@ -1,0 +1,35 @@
+@import 'mediawiki.mixins';
+
+.wbmi-search-user-notice__message {
+	max-width: 100%;
+	margin-bottom: 1.65em;
+
+	.flex-display();
+	align-items: center;
+
+	.wbmi-message__content {
+		.flex-display();
+		margin-left: 3em;
+	}
+}
+
+.wbmi-search-user-notice__title {
+	font-weight: bold;
+}
+
+.wbmi-search-user-notice__dismiss-button {
+	margin-left: 32px;
+
+	&:hover {
+		background-color: transparent;
+	}
+}
+
+// Transitions
+.wbmi-fade-out-leave-active {
+	.transition( opacity 0.5s );
+}
+
+.wbmi-fade-out-leave-to {
+	opacity: 0;
+}

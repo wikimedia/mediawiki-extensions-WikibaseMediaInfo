@@ -796,6 +796,10 @@ class WikibaseMediaInfoHooks {
 			'type' => 'api'
 		];
 
+		$preferences['sdms-search-user-notice-dismissed'] = [
+			'type' => 'api',
+		];
+
 		$preferences['sdms-specialsearch-default'] = [
 			'type' => 'toggle',
 			'section' => 'searchoptions/searchmisc',

@@ -1,5 +1,7 @@
 <template>
 	<div id="app">
+		<wbmi-search-user-notice>
+		</wbmi-search-user-notice>
 		<wbmi-autocomplete-search-input
 			class="wbmi-media-search-input"
 			name="wbmi-media-search-input"
@@ -99,6 +101,7 @@ var AUTOLOAD_COUNT = 2,
 	ConceptChips = require( './ConceptChips.vue' ),
 	DidYouMean = require( './DidYouMean.vue' ),
 	Observer = require( './base/Observer.vue' ),
+	UserNotice = require( './UserNotice.vue' ),
 	autocompleteLookupHandler = require( './../mixins/autocompleteLookupHandler.js' ),
 	searchOptions = require( './../data/searchOptions.json' ),
 	url = new mw.Uri();
@@ -115,6 +118,7 @@ module.exports = {
 		'search-filters': SearchFilters,
 		'concept-chips': ConceptChips,
 		'did-you-mean': DidYouMean,
+		'wbmi-search-user-notice': UserNotice,
 		observer: Observer
 	},
 

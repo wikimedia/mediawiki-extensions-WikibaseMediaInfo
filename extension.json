@@ -314,6 +314,7 @@
 				"resources/mediasearch-vue/components/ConceptChips.less",
 				"resources/mediasearch-vue/components/DidYouMean.less",
 				"resources/mediasearch-vue/components/NamespaceFilterDialog.less",
+				"resources/mediasearch-vue/components/UserNotice.less",
 				"resources/mediasearch-vue/widgets/SearchErrorWidget.less"
 			],
 			"targets": [
@@ -358,6 +359,7 @@
 				"resources/mediasearch-vue/components/SearchFilters.vue",
 				"resources/mediasearch-vue/components/ConceptChips.vue",
 				"resources/mediasearch-vue/components/NamespaceFilterDialog.vue",
+				"resources/mediasearch-vue/components/UserNotice.vue",
 				"resources/mediasearch-vue/models/SearchFilter.js",
 				"resources/mediasearch-vue/store/index.js",
 				"resources/mediasearch-vue/store/state.js",
@@ -413,6 +415,9 @@
 				"wikibasemediainfo-special-mediasearch-filter-namespace-discussion",
 				"wikibasemediainfo-special-mediasearch-filter-namespace-help",
 				"wikibasemediainfo-special-mediasearch-filter-namespace-custom",
+				"wikibasemediainfo-special-mediasearch-user-notice-title",
+				"wikibasemediainfo-special-mediasearch-user-notice-body",
+				"wikibasemediainfo-special-mediasearch-user-notice-dismiss",
 				"size-bytes",
 				"size-kilobytes",
 				"size-megabytes",
@@ -604,6 +609,7 @@
 	"DefaultUserOptions": {
 		"wbmi-cc0-confirmed": 0,
 		"wbmi-wikidata-link-notice-dismissed": 0,
+		"sdms-search-user-notice-dismissed": 0,
 		"sdms-specialsearch-default": 1
 	},
 	"APIModules": {

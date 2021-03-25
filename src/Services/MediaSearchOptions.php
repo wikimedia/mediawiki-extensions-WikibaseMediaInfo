@@ -79,16 +79,8 @@ class MediaSearchOptions {
 		$this->searchConfig = $searchConfig;
 	}
 
-	/**
-	 * Generate an associative array that combines all options for filter,
-	 * sort, and licenses for all media types, with labels in the appropriate
-	 * language.
-	 *
-	 * @param MessageLocalizer $context
-	 * @return array
-	 */
-	public static function getSearchOptions( MessageLocalizer $context ) : array {
-		$instance = new static(
+	public static function getInstanceFromContext( MessageLocalizer $context ) {
+		return new static(
 			$context,
 			RequestContext::getMain()
 				->getConfig()
@@ -97,7 +89,21 @@ class MediaSearchOptions {
 				->getConfigFactory()
 				->makeConfig( 'WikibaseCirrusSearch' )
 		);
+	}
 
+	public static function getSearchOptions( MessageLocalizer $context ) : array {
+		$instance = static::getInstanceFromContext( $context );
+		return $instance->getOptions();
+	}
+
+	/**
+	 * Generate an associative array that combines all options for filter,
+	 * sort, and licenses for all media types, with labels in the appropriate
+	 * language.
+	 *
+	 * @return array
+	 */
+	public function getOptions() : array {
 		$searchOptions = [];
 
 		// Some options are only present for certain media types.
@@ -111,11 +117,11 @@ class MediaSearchOptions {
 		// the messages can be internationalized in the same way regardless
 		foreach ( static::ALL_TYPES as $type ) {
 			$searchOptions[ $type ] = array_filter( [
-				static::FILTER_LICENSE => $instance->getLicenseGroups( $type ),
-				static::FILTER_MIME => $instance->getMimeTypes( $type ),
-				static::FILTER_SIZE => $instance->getImageSizes( $type ),
-				static::FILTER_SORT => $instance->getSorts( $type ),
-				static::FILTER_NAMESPACE => $instance->getNamespaces( $type )
+				static::FILTER_LICENSE => $this->getLicenseGroups( $type ),
+				static::FILTER_MIME => $this->getMimeTypes( $type ),
+				static::FILTER_SIZE => $this->getImageSizes( $type ),
+				static::FILTER_SORT => $this->getSorts( $type ),
+				static::FILTER_NAMESPACE => $this->getNamespaces( $type )
 			] );
 		}
 
@@ -433,7 +439,7 @@ class MediaSearchOptions {
 	 *
 	 * @return array
 	 */
-	private function getNamespaceGroups() : array {
+	public function getNamespaceGroups() : array {
 		$namespaceInfo = MediaWikiServices::getInstance()->getNamespaceInfo();
 		$allNamespaces = $namespaceInfo->getCanonicalNamespaces();
 
@@ -457,5 +463,29 @@ class MediaSearchOptions {
 				NS_HELP => $namespaceInfo->getCanonicalName( NS_HELP ),
 			]
 		];
+	}
+
+	/**
+	 * @param string $input
+	 * @return int[]
+	 * @throws InvalidArgumentException
+	 */
+	public function getNamespaceIdsFromInput( $input ): array {
+		$namespaceGroups = $this->getNamespaceGroups();
+
+		if ( isset( $namespaceGroups[$input] ) ) {
+			// namespace is one of the predefined namespace categories
+			// for which we have a list of namespace ids handy
+			return array_keys( $namespaceGroups[$input] );
+		}
+
+		$inputIds = explode( '|', $input );
+		$allowedIds = array_keys( $namespaceGroups[ static::NAMESPACES_ALL ] );
+		$verifiedIds = array_intersect( $allowedIds, $inputIds );
+		if ( count( $verifiedIds ) === count( $inputIds ) ) {
+			return $verifiedIds;
+		}
+
+		throw new InvalidArgumentException( "$input is no valid namespace input" );
 	}
 }

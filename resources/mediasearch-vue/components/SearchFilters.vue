@@ -46,6 +46,7 @@
 			ref="namespace"
 			:items="namespaceFilter.items"
 			:namespaces="namespaceFilter.data.namespaceGroups.all"
+			:namespace-groups="namespaceFilter.data.namespaceGroups"
 			:active="namespaceFilterDialogActive"
 			@submit="onSelect( $event, 'namespace' )"
 			@close="namespaceFilterDialogActive = false"
@@ -180,12 +181,39 @@ module.exports = {
 		 * @return {Object}
 		 */
 		namespaceFilterLabel: function () {
-			// If there's a value for the namespace filter, use it. Otherwise,
-			// use 'all'.
-			var filterValue = 'namespace' in this.filterValues[ this.mediaType ] ?
-					this.filterValues[ this.mediaType ].namespace.value : 'all',
-				// Get the message key of the human-readable name of the filter value.
-				messageKey = 'wikibasemediainfo-special-mediasearch-filter-namespace-' + filterValue;
+			var namespaceGroups = this.namespaceFilter.data.namespaceGroups,
+				messageKey,
+				filterValue;
+
+			// The namespace data could have been set in a number of different ways
+			// and can contain both pre-defined and custom values. To ensure that
+			// the user sees the appropriate label, we need to determine what kind
+			// of namespace value we are dealing with.
+			if (
+				'namespace' in this.filterValues[ this.mediaType ] &&
+				this.filterValues[ this.mediaType ].namespace.value
+			) {
+				// Namespace filter has been set from the JS UI
+				filterValue = this.filterValues[ this.mediaType ].namespace.value;
+			} else if (
+				'namespace' in this.filterValues[ this.mediaType ] &&
+				namespaceGroups[ this.filterValues[ this.mediaType ].namespace ]
+			) {
+				// Namespace filter has been set from the PHP UI
+				// and value matches a pre-defined namespace group
+				filterValue = this.filterValues[ this.mediaType ].namespace;
+			} else if (
+				'namespace' in this.filterValues[ this.mediaType ] &&
+				typeof this.filterValues[ this.mediaType ].namespace === 'string'
+			) {
+				// Namespace filter has been set to a custom value from the PHP UI
+				filterValue = 'custom';
+			} else {
+				// Namespace filter has not been set
+				filterValue = 'all';
+			}
+
+			messageKey = 'wikibasemediainfo-special-mediasearch-filter-namespace-' + filterValue;
 
 			// Return the label message, which takes the filter value as a
 			// param and will return something like "Namespace: Discussion".
@@ -228,8 +256,12 @@ module.exports = {
 		 * @fires filter-change
 		 */
 		onSelect: function ( value, filterType ) {
-			var oldValue = this.filterValues[ this.mediaType ][ filterType ] || '',
-				normalizedLoggerValue = value.value ? value.value : value;
+			var oldValue = this.filterValues[ this.mediaType ][ filterType ] || '';
+
+			// for logging purposes, we only want a simple string value
+			function normalizedValue( v ) {
+				return v.value ? v.value : v;
+			}
 
 			if ( value ) {
 				this.addFilterValue( {
@@ -242,10 +274,9 @@ module.exports = {
 					action: 'filter_change',
 					search_media_type: this.mediaType,
 					search_filter_type: filterType,
-					// for logging purposes, we only want a simple string value
-					search_filter_value: normalizedLoggerValue,
+					search_filter_value: normalizedValue( value ),
 					prior_search_filter_type: filterType,
-					prior_search_filter_value: oldValue
+					prior_search_filter_value: normalizedValue( oldValue )
 				} );
 				/* eslint-enable camelcase */
 			} else {
@@ -261,7 +292,7 @@ module.exports = {
 					search_filter_type: filterType,
 					search_filter_value: '',
 					prior_search_filter_type: filterType,
-					prior_search_filter_value: oldValue
+					prior_search_filter_value: normalizedValue( oldValue )
 				} );
 				/* eslint-enable camelcase */
 			}

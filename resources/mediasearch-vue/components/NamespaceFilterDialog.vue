@@ -6,7 +6,7 @@
 		:progressive-action="dialogAction"
 		:progressive-action-disabled="disableDialogAction"
 		@progress="onProgress"
-		@close="close"
+		@close="cancel"
 	>
 		<div>
 			<div class="wbmi-media-search-namespace-dialog__radios">
@@ -39,9 +39,7 @@
 <script>
 var WbmiDialog = require( './base/Dialog.vue' ),
 	WbmiRadio = require( './base/Radio.vue' ),
-	WbmiCheckbox = require( './base/Checkbox.vue' ),
-	radioDefault = 'all',
-	checkboxDefault = [ '0' ];
+	WbmiCheckbox = require( './base/Checkbox.vue' );
 
 /**
  * @file NamespaceFilterDialog.vue
@@ -91,19 +89,47 @@ module.exports = {
 		 */
 		active: {
 			type: Boolean
+		},
+
+		/**
+		 * Initial value of the filter (defaults to 'all' in the parent).
+		 */
+		initialValue: {
+			type: String,
+			required: true
 		}
 	},
 
 	data: function () {
 		return {
-			selectedRadio: radioDefault,
-			selectedCustom: checkboxDefault,
+			selectedRadio: this.initialRadio,
+			selectedCustom: this.initialCustom,
 			dialogTitle: this.$i18n( 'wikibasemediainfo-special-mediasearch-filter-namespace-dialog-title' ),
 			dialogAction: this.$i18n( 'wikibasemediainfo-special-mediasearch-filter-namespace-dialog-progressive-action' )
 		};
 	},
 
 	computed: {
+		/**
+		 * The initially selected namespace keyword.
+		 *
+		 * @return {string}
+		 */
+		initialRadio: function () {
+			return this.initialValue in this.namespaceGroups ?
+				this.initialValue : 'custom';
+		},
+
+		/**
+		 * The initially selected custom namespace(s).
+		 *
+		 * @return {Array}
+		 */
+		initialCustom: function () {
+			return this.initialValue in this.namespaceGroups ?
+				[ '0' ] : this.initialValue.split( '|' );
+		},
+
 		/**
 		 * An array of objects with namespace data for display, including a
 		 * label (human-readable namespace prefix) and a value (namespace id).
@@ -143,8 +169,16 @@ module.exports = {
 	},
 
 	methods: {
-		close: function () {
+		/**
+		 * When the user closes the dialog without submitting.
+		 */
+		cancel: function () {
+			// Close the dialog.
 			this.$emit( 'close' );
+
+			// Reset to the last submitted values (or default).
+			this.selectedRadio = this.initialRadio;
+			this.selectedCustom = this.initialCustom;
 		},
 
 		/**
@@ -154,9 +188,9 @@ module.exports = {
 		 */
 		onProgress: function () {
 			var value = this.isCustom ? this.selectedCustom.join( '|' ) : this.selectedRadio;
-			this.$emit( 'submit', value );
 
-			this.close();
+			this.$emit( 'submit', value );
+			this.$emit( 'close' );
 		},
 
 		/**
@@ -168,12 +202,12 @@ module.exports = {
 			if ( this.namespaceGroups[ selection ] ) {
 				// selection matches one of the pre-defined namespace groups
 				this.selectedRadio = selection;
-				this.selectedCustom = checkboxDefault;
+				this.selectedCustom = this.initialCustom;
 			} else {
 				// selection is a string of arbitrary namespace IDs and
 				// needs to be parsed
-				this.selectedRadio = 'custom';
-				this.selectedCustom = selection.split( '|' );
+				this.selectedRadio = this.activeRadio = 'custom';
+				this.selectedCustom = this.activeCustom = selection.split( '|' );
 			}
 		},
 
@@ -181,8 +215,8 @@ module.exports = {
 		 * Reset to the default values.
 		 */
 		reset: function () {
-			this.selectedRadio = radioDefault;
-			this.selectedCustom = checkboxDefault;
+			this.selectedRadio = this.initialRadio;
+			this.selectedCustom = this.initialCustom;
 		}
 	}
 };

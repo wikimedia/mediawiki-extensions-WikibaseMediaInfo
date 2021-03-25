@@ -9,6 +9,7 @@
 			"Object＊tofu",
 			"Omotecho",
 			"Shirayuki",
+			"Tamaki Wakita",
 			"Tmv",
 			"おはぐろ蜻蛉"
 		]
@@ -135,6 +136,12 @@
 	"wikibasemediainfo-special-mediasearch-filter-license-cc-by-sa": "帰属表示とライセンスの継承で利用可",
 	"wikibasemediainfo-special-mediasearch-filter-license-unrestricted": "制限なし",
 	"wikibasemediainfo-special-mediasearch-filter-license-other": "その他",
+	"wikibasemediainfo-special-mediasearch-filter-namespace-all": "すべて",
+	"wikibasemediainfo-special-mediasearch-filter-namespace-discussion": "議論",
+	"wikibasemediainfo-special-mediasearch-filter-namespace-help": "一般的なヘルプ",
+	"wikibasemediainfo-special-mediasearch-filter-namespace-custom": "カスタム",
+	"wikibasemediainfo-special-mediasearch-filter-namespace-label": "名前空間:$1",
+	"wikibasemediainfo-special-mediasearch-filter-namespace-dialog-progressive-action": "送信",
 	"wikibasemediainfo-special-mediasearch-no-results": "検索しましたが見つかりませんでした",
 	"wikibasemediainfo-special-mediasearch-end-of-results": "該当するものはありません",
 	"wikibasemediainfo-special-mediasearch-empty-state": "$1件以上のフリーな{{PLURAL:$1|メディアファイル}}を検索",

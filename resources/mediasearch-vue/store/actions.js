@@ -98,7 +98,7 @@ module.exports = {
 			},
 			namespaceGroups = mw.config.get( 'wbmiNamespaceGroups' ),
 			namespaceFilter,
-			namespaceGroup,
+			namespaces,
 			filters,
 			urlWidth,
 			request;
@@ -117,16 +117,21 @@ module.exports = {
 
 		if ( options.type === 'page' ) {
 			// Page/category-specific params.
-			// Namespace: if there is a value for the namespace filter, use
-			// that namespace group, or respect the custom value provided by
-			// the user. Otherwise, search all non-file namespaces.
 			namespaceFilter = context.state.filterValues[ options.type ].namespace;
-			namespaceGroup = namespaceFilter ?
-				context.state.filterValues[ options.type ].namespace.value :
-				'all';
-			params.gsrnamespace = namespaceFilter && namespaceGroup === 'custom' ?
-				context.state.filterValues[ options.type ].namespace.custom.join( '|' ) :
-				Object.keys( namespaceGroups[ namespaceGroup ] ).join( '|' );
+			// Default to all namespaces.
+			namespaces = Object.keys( namespaceGroups.all ).join( '|' );
+
+			if ( namespaceFilter ) {
+				// If the namespace filter value is one of the pre-defined
+				// namespace groups, get the list of values from the namespace
+				// group data. Otherwise, we're getting a custom list of
+				// namespaces - use that.
+				namespaces = namespaceFilter in namespaceGroups ?
+					Object.keys( namespaceGroups[ namespaceFilter ] ).join( '|' ) :
+					namespaceFilter;
+			}
+
+			params.gsrnamespace = namespaces;
 		} else {
 			// Params used in all non-page/category searches.
 			filters = getMediaFilters( options.type, context.state.filterValues[ options.type ] );

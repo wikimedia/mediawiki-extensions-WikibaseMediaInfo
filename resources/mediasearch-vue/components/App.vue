@@ -101,8 +101,7 @@ var AUTOLOAD_COUNT = 2,
 	Observer = require( './base/Observer.vue' ),
 	autocompleteLookupHandler = require( './../mixins/autocompleteLookupHandler.js' ),
 	searchOptions = require( './../data/searchOptions.json' ),
-	url = new mw.Uri(),
-	namespaceGroups = mw.config.get( 'wbmiNamespaceGroups' );
+	url = new mw.Uri();
 
 // @vue/component
 module.exports = {
@@ -245,11 +244,7 @@ module.exports = {
 			// by the allActiveFilters watcher
 			this.$refs[ data.mediaType ][ 0 ].hideDetails();
 
-			if ( data.value && data.filterType === 'namespace' ) {
-				// special treatment for namespace filter
-				url.query[ data.filterType ] = data.value.custom ?
-					data.value.custom.join( '|' ) : data.value.value;
-			} else if ( data.value ) {
+			if ( data.value ) {
 				url.query[ data.filterType ] = data.value;
 			} else {
 				delete url.query[ data.filterType ];
@@ -320,40 +315,12 @@ module.exports = {
 
 				Object.keys( e.state ).forEach( function ( key ) {
 					if ( key in searchOptions[ this.currentTab ] ) {
-						if ( key === 'namespace' ) {
-							// Special treatment for namespace filter
-							if ( e.state[ key ] in namespaceGroups ) {
-								// Handle pre-defined namespace group
-								url.query[ key ] = e.state[ key ];
-								this.addFilterValue( {
-									mediaType: this.currentTab,
-									filterType: key,
-									value: {
-										value: e.state[ key ],
-										custom: null
-									}
-								} );
-							} else {
-								// Handle custom namespace value
-								url.query[ key ] = e.state[ key ];
-								this.addFilterValue( {
-									mediaType: this.currentTab,
-									filterType: key,
-									value: {
-										value: 'custom',
-										custom: e.state[ key ].split( '|' )
-									}
-								} );
-							}
-						} else {
-							// All other filters
-							url.query[ key ] = e.state[ key ];
-							this.addFilterValue( {
-								mediaType: this.currentTab,
-								filterType: key,
-								value: e.state[ key ]
-							} );
-						}
+						url.query[ key ] = e.state[ key ];
+						this.addFilterValue( {
+							mediaType: this.currentTab,
+							filterType: key,
+							value: e.state[ key ]
+						} );
 					}
 				}.bind( this ) );
 			}

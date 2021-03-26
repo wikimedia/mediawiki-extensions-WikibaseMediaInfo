@@ -5,6 +5,5 @@
 		]
 	},
 	"wikibasemediainfo-statements-unsupported-property-title": "Proprietate non supportate",
-	"wikibasemediainfo-statements-unsupported-property-content": "Le proprietates altere que $1 non es ancora supportate completemente, ma lo essera in le futuro. Pro le momento, le functionalitate pro le proprietates non supportate pote non functionar correctemente.",
-	"wikibasemediainfo-search-suggestions-preference-disable-confirm": "Es tu secur de voler remover le suggestiones de autocompletion a base de datos structurate? (Iste configuration pote esser cambiate in le [[Special:Preferences#mw-prefsection-searchoptions|Preferentias]].)"
+	"wikibasemediainfo-statements-unsupported-property-content": "Le proprietates altere que $1 non es ancora supportate completemente, ma lo essera in le futuro. Pro le momento, le functionalitate pro le proprietates non supportate pote non functionar correctemente."
 }

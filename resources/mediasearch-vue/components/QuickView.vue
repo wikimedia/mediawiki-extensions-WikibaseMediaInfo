@@ -532,7 +532,7 @@ module.exports = {
 			} else if ( /^pd|no restrictions/i.test( valueString ) ) {
 				return icons.wbmiIconUnLock;
 			} else {
-				return null;
+				return icons.wbmiIconReference;
 			}
 		},
 

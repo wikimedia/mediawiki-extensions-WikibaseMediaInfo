@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"Joquliina",
 			"Kyykaarme",
 			"MITO",
 			"Nike",
@@ -133,6 +134,8 @@
 	"wikibasemediainfo-special-mediasearch-filter-license-cc-by-sa": "Käytä attribuution ja saman lisenssin kanssa",
 	"wikibasemediainfo-special-mediasearch-filter-license-unrestricted": "Ei rajoituksia",
 	"wikibasemediainfo-special-mediasearch-filter-license-other": "Muu",
+	"wikibasemediainfo-special-mediasearch-filter-namespace-all": "Kaikki",
+	"wikibasemediainfo-special-mediasearch-filter-namespace-discussion": "Keskustelu",
 	"wikibasemediainfo-special-mediasearch-no-results": "Emme löytäneet yhtään tulosta",
 	"wikibasemediainfo-special-mediasearch-no-results-tips": "Kokeile yleisempiä termejä tai tarkista oikeinkirjoitus",
 	"wikibasemediainfo-special-mediasearch-empty-state": "Hae yli $1 ilmaiseksi median uudelleenkäyttöä varten {{PLURAL:$1|file| files}}",

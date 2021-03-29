@@ -6,7 +6,10 @@
 	},
 	"wikibasemediainfo-special-mediasearch-tab-other": "Midiyaa Biraa",
 	"wikibasemediainfo-special-mediasearch-filter-namespace-all": "Hunda",
+	"wikibasemediainfo-special-mediasearch-filter-namespace-discussion": "Marii",
 	"wikibasemediainfo-special-mediasearch-filter-namespace-help": "Gargaarsa Waliigalaa",
+	"wikibasemediainfo-special-mediasearch-filter-namespace-custom": "Duudhaa",
+	"wikibasemediainfo-special-mediasearch-filter-namespace-dialog-progressive-action": "Dabarsii",
 	"wikibasemediainfo-special-mediasearch-did-you-mean": "<a href=\"$2\">$1</a>:Jechuu beektaa",
 	"wikibasemediainfo-specialsearch-default": "Addatti bu'aa barbaachaa argisiisi:Qunnama barbaadi"
 }

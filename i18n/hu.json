@@ -3,6 +3,7 @@
 		"authors": [
 			"Csega",
 			"Hanna Tardos",
+			"Luckylukee81",
 			"Tacsipacsi",
 			"Worrida"
 		]
@@ -126,7 +127,7 @@
 	"wikibasemediainfo-special-mediasearch-filter-namespace-help": "Általános segítségnyújtás",
 	"wikibasemediainfo-special-mediasearch-filter-namespace-custom": "Egyedi",
 	"wikibasemediainfo-special-mediasearch-filter-namespace-label": "Névtér: $1",
-	"wikibasemediainfo-special-mediasearch-filter-namespace-dialog-progressive-action": "Küldés",
+	"wikibasemediainfo-special-mediasearch-filter-namespace-dialog-progressive-action": "Küldés -pl. be küldés",
 	"wikibasemediainfo-special-mediasearch-no-results": "Nincs találat",
 	"wikibasemediainfo-special-mediasearch-quickview-previous-button-text": "Korábbi eredmények megtekintése",
 	"wikibasemediainfo-special-mediasearch-quickview-next-button-text": "Következő eredmények megtekintése",

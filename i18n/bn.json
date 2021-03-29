@@ -2,6 +2,7 @@
 	"@metadata": {
 		"authors": [
 			"Aftabuzzaman",
+			"R4356th",
 			"Tahmid02016",
 			"Titodutta",
 			"WikiAbuHuraira",
@@ -75,6 +76,7 @@
 	"wikibasemediainfo-special-mediasearch-filter-namespace-all": "সব",
 	"wikibasemediainfo-special-mediasearch-filter-namespace-discussion": "আলোচনা",
 	"wikibasemediainfo-special-mediasearch-filter-namespace-help": "সাধারণ সাহায্য",
+	"wikibasemediainfo-special-mediasearch-filter-namespace-label": "নামস্থান: $1",
 	"wikibasemediainfo-special-mediasearch-filter-namespace-dialog-title": "নামস্থান নির্বাচনকারী",
 	"wikibasemediainfo-special-mediasearch-filter-namespace-dialog-progressive-action": "জমা দিন",
 	"wikibasemediainfo-special-mediasearch-input-label": "মিডিয়া অনুসন্ধান",

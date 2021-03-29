@@ -27,18 +27,23 @@ class WikibaseEntitiesHandler implements ParsedNodeHandlerInterface {
 	/** @var float[] */
 	private $boosts;
 
+	/** @var bool */
+	private $variableBoost;
+
 	public function __construct(
 		ParsedNode $node,
 		ParsedQuery $query,
 		MediaSearchASTEntitiesExtractor $entitiesExtractor,
 		array $searchProperties,
-		array $boosts
+		array $boosts,
+		bool $variableBoost = true
 	) {
 		$this->node = $node;
 		$this->query = $query;
 		$this->entitiesExtractor = $entitiesExtractor;
 		$this->searchProperties = $searchProperties;
 		$this->boosts = $boosts;
+		$this->variableBoost = $variableBoost;
 	}
 
 	public function transform(): AbstractQuery {
@@ -55,9 +60,15 @@ class WikibaseEntitiesHandler implements ParsedNodeHandlerInterface {
 					StatementsField::NAME,
 					$propertyId . StatementsField::STATEMENT_SEPARATOR . $entity['entityId']
 				);
+
+				$fieldBoost = $this->boosts['statement'] * $propertyWeight;
+				if ( $this->variableBoost ) {
+					$fieldBoost *= $entity['score'];
+				}
+
 				$match->setFieldBoost(
 					StatementsField::NAME,
-					$propertyWeight * $this->boosts['statement'] * $entity['score']
+					$fieldBoost
 				);
 
 				$query->addQuery( $match );

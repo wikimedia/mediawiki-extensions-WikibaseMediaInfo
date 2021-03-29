@@ -1,5 +1,5 @@
 {
-	"title": "fallback to cirrus",
+	"title": "multiple clauses",
 	"term": "cat AND dog NOT donkey",
 	"entityIdsForTerm": {
 		"cat": [ "P1" ],

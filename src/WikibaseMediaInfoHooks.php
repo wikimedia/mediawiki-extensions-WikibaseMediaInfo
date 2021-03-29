@@ -21,6 +21,7 @@ use OOUI\PanelLayout;
 use OOUI\TabPanelLayout;
 use OutputPage;
 use ParserOutput;
+use RequestContext;
 use Skin;
 use Title;
 use Wikibase\Client\WikibaseClient;
@@ -756,13 +757,20 @@ class WikibaseMediaInfoHooks {
 		$searchProfileContextName = MediaSearchQueryBuilder::SEARCH_PROFILE_CONTEXT_NAME;
 		// array key in MediaSearchProfiles.php
 		$fulltextProfileName = MediaSearchQueryBuilder::FULLTEXT_PROFILE_NAME;
+		$rescoreProfileName = 'classic_noboostlinks_max_boost_template';
+
+		$request = RequestContext::getMain()->getRequest();
+		if ( $request->getCheck( 'mediasearch_logistic_regression' ) ) {
+			// switch to experimental implementation (only) when explicitly requested
+			$fulltextProfileName = 'mediasearch_logistic_regression';
+		}
 
 		$service->registerDefaultProfile( SearchProfileService::FT_QUERY_BUILDER,
 			$searchProfileContextName, $fulltextProfileName );
 
 		// Need to register a rescore profile for the profile context
 		$service->registerDefaultProfile( SearchProfileService::RESCORE,
-			$searchProfileContextName, 'classic_noboostlinks_max_boost_template' );
+			$searchProfileContextName, $rescoreProfileName );
 
 		$service->registerFTSearchQueryRoute(
 			$searchProfileContextName,

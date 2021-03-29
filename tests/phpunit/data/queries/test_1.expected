@@ -2,184 +2,293 @@
     "bool": {
         "must": [
             {
-                "bool": {
-                    "should": [
-                        {
-                            "function_score": {
-                                "query": {
-                                    "bool": {
-                                        "must": [
-                                            {
-                                                "function_score": {
-                                                    "query": {
-                                                        "bool": {
-                                                            "should": [
-                                                                {
-                                                                    "match": {
-                                                                        "title": {
-                                                                            "query": "some search term",
-                                                                            "boost": 1
+                "function_score": {
+                    "query": {
+                        "bool": {
+                            "should": [
+                                {
+                                    "function_score": {
+                                        "query": {
+                                            "bool": {
+                                                "must": [
+                                                    {
+                                                        "function_score": {
+                                                            "query": {
+                                                                "bool": {
+                                                                    "should": [
+                                                                        {
+                                                                            "match": {
+                                                                                "title": {
+                                                                                    "query": "some search term",
+                                                                                    "boost": 1
+                                                                                }
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "match": {
+                                                                                "title.plain": {
+                                                                                    "query": "some search term",
+                                                                                    "boost": 1
+                                                                                }
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "match": {
+                                                                                "category": {
+                                                                                    "query": "some search term",
+                                                                                    "boost": 1
+                                                                                }
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "match": {
+                                                                                "category.plain": {
+                                                                                    "query": "some search term",
+                                                                                    "boost": 1
+                                                                                }
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "match": {
+                                                                                "redirect.title": {
+                                                                                    "query": "some search term",
+                                                                                    "boost": 1
+                                                                                }
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "match": {
+                                                                                "redirect.title.plain": {
+                                                                                    "query": "some search term",
+                                                                                    "boost": 1
+                                                                                }
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "match": {
+                                                                                "heading": {
+                                                                                    "query": "some search term",
+                                                                                    "boost": 1
+                                                                                }
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "match": {
+                                                                                "heading.plain": {
+                                                                                    "query": "some search term",
+                                                                                    "boost": 1
+                                                                                }
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "match": {
+                                                                                "auxiliary_text": {
+                                                                                    "query": "some search term",
+                                                                                    "boost": 1
+                                                                                }
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "match": {
+                                                                                "auxiliary_text.plain": {
+                                                                                    "query": "some search term",
+                                                                                    "boost": 1
+                                                                                }
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "match": {
+                                                                                "text": {
+                                                                                    "query": "some search term",
+                                                                                    "boost": 1
+                                                                                }
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "match": {
+                                                                                "text.plain": {
+                                                                                    "query": "some search term",
+                                                                                    "boost": 1
+                                                                                }
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "match": {
+                                                                                "file_text": {
+                                                                                    "query": "some search term",
+                                                                                    "boost": 1
+                                                                                }
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "match": {
+                                                                                "file_text.plain": {
+                                                                                    "query": "some search term",
+                                                                                    "boost": 1
+                                                                                }
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "match": {
+                                                                                "suggest": {
+                                                                                    "query": "some search term",
+                                                                                    "boost": 1
+                                                                                }
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "match": {
+                                                                                "descriptions.en.plain": {
+                                                                                    "query": "some search term",
+                                                                                    "boost": 1
+                                                                                }
+                                                                            }
                                                                         }
-                                                                    }
-                                                                },
+                                                                    ]
+                                                                }
+                                                            },
+                                                            "min_score": 1.0e-8,
+                                                            "functions": [
                                                                 {
-                                                                    "match": {
-                                                                        "title.plain": {
-                                                                            "query": "some search term",
-                                                                            "boost": 1
-                                                                        }
-                                                                    }
-                                                                },
-                                                                {
-                                                                    "match": {
-                                                                        "category": {
-                                                                            "query": "some search term",
-                                                                            "boost": 1
-                                                                        }
-                                                                    }
-                                                                },
-                                                                {
-                                                                    "match": {
-                                                                        "category.plain": {
-                                                                            "query": "some search term",
-                                                                            "boost": 1
-                                                                        }
-                                                                    }
-                                                                },
-                                                                {
-                                                                    "match": {
-                                                                        "redirect.title": {
-                                                                            "query": "some search term",
-                                                                            "boost": 1
-                                                                        }
-                                                                    }
-                                                                },
-                                                                {
-                                                                    "match": {
-                                                                        "redirect.title.plain": {
-                                                                            "query": "some search term",
-                                                                            "boost": 1
-                                                                        }
-                                                                    }
-                                                                },
-                                                                {
-                                                                    "match": {
-                                                                        "heading": {
-                                                                            "query": "some search term",
-                                                                            "boost": 1
-                                                                        }
-                                                                    }
-                                                                },
-                                                                {
-                                                                    "match": {
-                                                                        "heading.plain": {
-                                                                            "query": "some search term",
-                                                                            "boost": 1
-                                                                        }
-                                                                    }
-                                                                },
-                                                                {
-                                                                    "match": {
-                                                                        "auxiliary_text": {
-                                                                            "query": "some search term",
-                                                                            "boost": 1
-                                                                        }
-                                                                    }
-                                                                },
-                                                                {
-                                                                    "match": {
-                                                                        "auxiliary_text.plain": {
-                                                                            "query": "some search term",
-                                                                            "boost": 1
-                                                                        }
-                                                                    }
-                                                                },
-                                                                {
-                                                                    "match": {
-                                                                        "text": {
-                                                                            "query": "some search term",
-                                                                            "boost": 1
-                                                                        }
-                                                                    }
-                                                                },
-                                                                {
-                                                                    "match": {
-                                                                        "text.plain": {
-                                                                            "query": "some search term",
-                                                                            "boost": 1
-                                                                        }
-                                                                    }
-                                                                },
-                                                                {
-                                                                    "match": {
-                                                                        "file_text": {
-                                                                            "query": "some search term",
-                                                                            "boost": 1
-                                                                        }
-                                                                    }
-                                                                },
-                                                                {
-                                                                    "match": {
-                                                                        "file_text.plain": {
-                                                                            "query": "some search term",
-                                                                            "boost": 1
-                                                                        }
-                                                                    }
-                                                                },
-                                                                {
-                                                                    "match": {
-                                                                        "suggest": {
-                                                                            "query": "some search term",
-                                                                            "boost": 1
-                                                                        }
-                                                                    }
-                                                                },
-                                                                {
-                                                                    "match": {
-                                                                        "descriptions.en.plain": {
-                                                                            "query": "some search term",
-                                                                            "boost": 1
+                                                                    "script_score": {
+                                                                        "script": {
+                                                                            "source": "max(0, ln(_score))",
+                                                                            "lang": "expression"
                                                                         }
                                                                     }
                                                                 }
                                                             ]
                                                         }
-                                                    },
-                                                    "min_score": 1.0e-8,
-                                                    "functions": [
-                                                        {
-                                                            "script_score": {
-                                                                "script": {
-                                                                    "source": "max(0, ln(_score))",
-                                                                    "lang": "expression"
-                                                                }
-                                                            }
-                                                        }
-                                                    ]
-                                                }
-                                            }
-                                        ],
-                                        "should": [
-                                            {
-                                                "function_score": {
-                                                    "query": {
-                                                        "match_explorer": {
-                                                            "type": "unique_terms_count",
+                                                    }
+                                                ],
+                                                "should": [
+                                                    {
+                                                        "function_score": {
                                                             "query": {
-                                                                "match": {
-                                                                    "text": {
-                                                                        "query": "some search term"
+                                                                "match_explorer": {
+                                                                    "type": "unique_terms_count",
+                                                                    "query": {
+                                                                        "match": {
+                                                                            "text": {
+                                                                                "query": "some search term"
+                                                                            }
+                                                                        }
                                                                     }
                                                                 }
-                                                            }
+                                                            },
+                                                            "functions": [
+                                                                {
+                                                                    "script_score": {
+                                                                        "script": {
+                                                                            "source": "ln(2 \/ max(1, min(1.25, _score)))",
+                                                                            "lang": "expression"
+                                                                        }
+                                                                    }
+                                                                }
+                                                            ]
                                                         }
-                                                    },
-                                                    "functions": [
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        "min_score": 0,
+                                        "functions": [
+                                            {
+                                                "script_score": {
+                                                    "script": {
+                                                        "source": "exp(_score) \/ 2",
+                                                        "lang": "expression"
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "dis_max": {
+                                        "queries": [
+                                            {
+                                                "match": {
+                                                    "statement_keywords": {
+                                                        "query": "P1=Q1",
+                                                        "boost": 1
+                                                    }
+                                                }
+                                            },
+                                            {
+                                                "match": {
+                                                    "statement_keywords": {
+                                                        "query": "P2=Q1",
+                                                        "boost": 1
+                                                    }
+                                                }
+                                            },
+                                            {
+                                                "match": {
+                                                    "statement_keywords": {
+                                                        "query": "P1=Q2",
+                                                        "boost": 0.5
+                                                    }
+                                                }
+                                            },
+                                            {
+                                                "match": {
+                                                    "statement_keywords": {
+                                                        "query": "P2=Q2",
+                                                        "boost": 0.5
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            ],
+                            "filter": [
+                                {
+                                    "bool": {
+                                        "should": [
+                                            {
+                                                "multi_match": {
+                                                    "query": "some search term",
+                                                    "fields": [
+                                                        "all",
+                                                        "all.plain"
+                                                    ],
+                                                    "operator": "and"
+                                                }
+                                            },
+                                            {
+                                                "dis_max": {
+                                                    "queries": [
                                                         {
-                                                            "script_score": {
-                                                                "script": {
-                                                                    "source": "ln(2 \/ max(1, min(1.25, _score)))",
-                                                                    "lang": "expression"
+                                                            "match": {
+                                                                "statement_keywords": {
+                                                                    "query": "P1=Q1",
+                                                                    "boost": 1
+                                                                }
+                                                            }
+                                                        },
+                                                        {
+                                                            "match": {
+                                                                "statement_keywords": {
+                                                                    "query": "P2=Q1",
+                                                                    "boost": 1
+                                                                }
+                                                            }
+                                                        },
+                                                        {
+                                                            "match": {
+                                                                "statement_keywords": {
+                                                                    "query": "P1=Q2",
+                                                                    "boost": 0.5
+                                                                }
+                                                            }
+                                                        },
+                                                        {
+                                                            "match": {
+                                                                "statement_keywords": {
+                                                                    "query": "P2=Q2",
+                                                                    "boost": 0.5
                                                                 }
                                                             }
                                                         }
@@ -188,112 +297,20 @@
                                             }
                                         ]
                                     }
-                                },
-                                "min_score": 0,
-                                "functions": [
-                                    {
-                                        "script_score": {
-                                            "script": {
-                                                "source": "exp(_score) \/ 2",
-                                                "lang": "expression"
-                                            }
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        {
-                            "dis_max": {
-                                "queries": [
-                                    {
-                                        "match": {
-                                            "statement_keywords": {
-                                                "query": "P1=Q1",
-                                                "boost": 1
-                                            }
-                                        }
-                                    },
-                                    {
-                                        "match": {
-                                            "statement_keywords": {
-                                                "query": "P2=Q1",
-                                                "boost": 1
-                                            }
-                                        }
-                                    },
-                                    {
-                                        "match": {
-                                            "statement_keywords": {
-                                                "query": "P1=Q2",
-                                                "boost": 0.5
-                                            }
-                                        }
-                                    },
-                                    {
-                                        "match": {
-                                            "statement_keywords": {
-                                                "query": "P2=Q2",
-                                                "boost": 0.5
-                                            }
-                                        }
-                                    }
-                                ]
-                            }
+                                }
+                            ]
                         }
-                    ],
-                    "filter": [
+                    },
+                    "functions": [
                         {
-                            "bool": {
-                                "should": [
-                                    {
-                                        "multi_match": {
-                                            "query": "some search term",
-                                            "fields": [
-                                                "all",
-                                                "all.plain"
-                                            ],
-                                            "operator": "and"
-                                        }
+                            "script_score": {
+                                "script": {
+                                    "source": "100 \/ ( 1 + exp( -1 * ( _score + intercept ) ) )",
+                                    "params": {
+                                        "intercept": 1
                                     },
-                                    {
-                                        "dis_max": {
-                                            "queries": [
-                                                {
-                                                    "match": {
-                                                        "statement_keywords": {
-                                                            "query": "P1=Q1",
-                                                            "boost": 1
-                                                        }
-                                                    }
-                                                },
-                                                {
-                                                    "match": {
-                                                        "statement_keywords": {
-                                                            "query": "P2=Q1",
-                                                            "boost": 1
-                                                        }
-                                                    }
-                                                },
-                                                {
-                                                    "match": {
-                                                        "statement_keywords": {
-                                                            "query": "P1=Q2",
-                                                            "boost": 0.5
-                                                        }
-                                                    }
-                                                },
-                                                {
-                                                    "match": {
-                                                        "statement_keywords": {
-                                                            "query": "P2=Q2",
-                                                            "boost": 0.5
-                                                        }
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
+                                    "lang": "expression"
+                                }
                             }
                         }
                     ]

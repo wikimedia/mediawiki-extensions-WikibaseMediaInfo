@@ -19,7 +19,9 @@ use CirrusSearch\Parser\AST\WildcardNode;
 use CirrusSearch\Parser\AST\WordsQueryNode;
 use Elastica\Query\AbstractQuery;
 use Elastica\Query\BoolQuery;
+use Elastica\Query\FunctionScore;
 use Elastica\Query\MatchNone;
+use Elastica\Script\Script;
 use SplObjectStorage;
 use Wikibase\MediaInfo\Search\ASTQueryBuilder\WikibaseEntitiesHandler;
 use Wikibase\MediaInfo\Search\ASTQueryBuilder\WordsQueryNodeHandler;
@@ -50,27 +52,22 @@ class MediaSearchASTQueryBuilder implements Visitor {
 	/** @var float[] */
 	private $decays;
 
-	/** @var bool */
-	private $normalizeFulltextScores;
-
-	/** @var bool */
-	private $hasLtrPlugin;
+	/** @var array */
+	private $options;
 
 	/**
 	 * @param MediaSearchASTEntitiesExtractor $entitiesExtractor
 	 * @param float[] $searchProperties Properties to search statements in ([ propertyId => weight ])
 	 * @param array[] $stemmingSettings Stemming settings (see $wgWBCSUseStemming)
 	 * @param string[] $languages Languages to search text in
-	 * @param array[] $settings Optional weight/decay overrides
-	 * @param bool $hasLtrPlugin Optional weight/decay overrides
+	 * @param array[] $settings Optional weight/decay overrides, plus some options
 	 */
 	public function __construct(
 		MediaSearchASTEntitiesExtractor $entitiesExtractor,
 		array $searchProperties,
 		array $stemmingSettings,
 		array $languages,
-		array $settings = [],
-		bool $hasLtrPlugin = false
+		array $settings = []
 	) {
 		$this->entitiesExtractor = $entitiesExtractor;
 		$this->searchProperties = $searchProperties;
@@ -100,8 +97,14 @@ class MediaSearchASTQueryBuilder implements Visitor {
 			'descriptions.$language' => 1.0,
 			'descriptions.$language.plain' => 1.0,
 		];
-		$this->normalizeFulltextScores = (bool)( $settings['normalizeFulltextScores'] ?? true );
-		$this->hasLtrPlugin = $hasLtrPlugin;
+		$this->options = [
+			'normalizeFulltextScores' => (bool)( $settings['normalizeFulltextScores'] ?? true ),
+			'normalizeMultiClauseScores' => (bool)( $settings['normalizeMultiClauseScores'] ?? false ),
+			'hasLtrPlugin' => (bool)( $settings['hasLtrPlugin'] ?? false ),
+			'entitiesVariableBoost' => (bool)( $settings['entitiesVariableBoost'] ?? true ),
+			'applyLogisticFunction' => (bool)( $settings['applyLogisticFunction'] ?? false ),
+			'logisticRegressionIntercept' => (float)( $settings['logisticRegressionIntercept'] ?? 0 ),
+		];
 	}
 
 	public function getQuery( ParsedQuery $parsedQuery ): AbstractQuery {
@@ -109,7 +112,64 @@ class MediaSearchASTQueryBuilder implements Visitor {
 		$this->parsedQuery = $parsedQuery;
 		$root = $parsedQuery->getRoot();
 		$root->accept( $this );
+
 		return $this->map[$root] ?? new MatchNone();
+	}
+
+	/**
+	 * Applies a logistic function to the sum of the scores minus a constant
+	 *
+	 * @see https://phabricator.wikimedia.org/T271799
+	 * @param AbstractQuery $query
+	 * @return AbstractQuery
+	 */
+	private function applyLogisticFunction( AbstractQuery $query ): AbstractQuery {
+		if ( !$this->options[ 'applyLogisticFunction' ] ) {
+			return $query;
+		}
+
+		return ( new FunctionScore() )
+			->setQuery( $query )
+			->addScriptScoreFunction(
+				new Script(
+					// this will produce scores in the 0-100 range
+					'100 / ( 1 + exp( -1 * ( _score + intercept ) ) )',
+					[ 'intercept' => $this->options['logisticRegressionIntercept'] ],
+					'expression'
+				)
+			);
+	}
+
+	/**
+	 * If we've applied a logistic function to the scores, then we expect the score to be
+	 * between 0 and 100, HOWEVER if we have >1 text nodes we get a score of 0-1 for each,
+	 * and therefore end up with a final score between 0 and 100*(number of nodes)
+	 * Wrap the root node inside a function that divides the score by the number of nodes
+	 *
+	 * @param BoolQuery $query
+	 * @return AbstractQuery
+	 */
+	private function normalizeMultiClauseScores( BoolQuery $query ): AbstractQuery {
+		if (
+			!$this->options[ 'applyLogisticFunction' ]
+			 || !$this->options[ 'normalizeMultiClauseScores' ]
+		) {
+			return $query;
+		}
+
+		if ( $query->count() <= 1 ) {
+			return $query;
+		}
+
+		return ( new FunctionScore() )
+			->setQuery( $query )
+			->addScriptScoreFunction(
+				new Script(
+					'_score / count',
+					[ 'count' => $query->count() ],
+					'expression'
+				)
+			);
 	}
 
 	public function visitParsedBooleanNode( ParsedBooleanNode $node ) {
@@ -134,6 +194,7 @@ class MediaSearchASTQueryBuilder implements Visitor {
 		}
 
 		if ( $query->count() > 0 ) {
+			$query = $this->normalizeMultiClauseScores( $query );
 			$this->map[$node] = $query;
 		}
 	}
@@ -151,9 +212,9 @@ class MediaSearchASTQueryBuilder implements Visitor {
 			$this->stemmingSettings,
 			$this->boosts,
 			$this->decays,
-			$this->hasLtrPlugin
+			$this->options
 		);
-		$this->map[$node] = $nodeHandler->transform();
+		$this->map[$node] = $this->applyLogisticFunction( $nodeHandler->transform() );
 	}
 
 	public function visitPhraseQueryNode( PhraseQueryNode $node ) {
@@ -204,7 +265,8 @@ class MediaSearchASTQueryBuilder implements Visitor {
 			$this->parsedQuery,
 			$this->entitiesExtractor,
 			$this->searchProperties,
-			$this->boosts
+			$this->boosts,
+			$this->options['entitiesVariableBoost']
 		);
 	}
 }

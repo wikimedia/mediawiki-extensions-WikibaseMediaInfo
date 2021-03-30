@@ -48,6 +48,7 @@
 			:namespaces="namespaceFilter.data.namespaceGroups.all"
 			:namespace-groups="namespaceFilter.data.namespaceGroups"
 			:active="namespaceFilterDialogActive"
+			:initial-value="namespaceFilterValue"
 			@submit="onSelect( $event, 'namespace' )"
 			@close="namespaceFilterDialogActive = false"
 		>
@@ -207,6 +208,16 @@ module.exports = {
 				'wikibasemediainfo-special-mediasearch-filter-namespace-label',
 				this.$i18n( messageKey )
 			);
+		},
+
+		/**
+		 * Current value of the namespace filter (defaults to 'all').
+		 *
+		 * @return {string}
+		 */
+		namespaceFilterValue: function () {
+			return 'namespace' in this.filterValues[ this.mediaType ] ?
+				this.filterValues[ this.mediaType ].namespace : 'all';
 		},
 
 		/**

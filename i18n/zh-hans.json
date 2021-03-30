@@ -8,6 +8,7 @@
 			"Angrydog001",
 			"Func",
 			"Hmgrmb",
+			"Lakejason0",
 			"Liuxinyu970226",
 			"Nadine Siak",
 			"Phenolla",
@@ -106,6 +107,9 @@
 	"wikibasemediainfo-special-mediasearch-end-of-results": "没有找到更多结果",
 	"wikibasemediainfo-special-mediasearch-clear-title": "移除",
 	"wikibasemediainfo-special-mediasearch-load-more-results": "加载更多",
+	"wikibasemediainfo-special-mediasearch-user-notice-title": "正在寻找[[Special:Search]]？",
+	"wikibasemediainfo-special-mediasearch-user-notice-body": "您可以在[[Special:Preferences#mw-prefsection-searchoptions|参数设置]]里选择您偏好的搜索体验。",
+	"wikibasemediainfo-special-mediasearch-user-notice-dismiss": "关闭此通知",
 	"wikibasemediainfo-special-mediasearch-clear-filters": "清除过滤器",
 	"wikibasemediainfo-special-mediasearch-did-you-mean": "你的意思是不是：<a href=\"$2\">$1</a>"
 }

@@ -217,7 +217,8 @@ return [
 			return new WikiPageEntityMetaDataLookup(
 				$entityNamespaceLookup,
 				$entityQuery,
-				$entitySource
+				$entitySource,
+				WikibaseRepo::getLogger()
 			);
 		},
 		Def::RDF_BUILDER_FACTORY_CALLBACK => function (

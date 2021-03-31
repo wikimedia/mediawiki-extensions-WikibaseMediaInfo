@@ -3,6 +3,7 @@
 		"authors": [
 			"Aftabuzzaman",
 			"R4356th",
+			"Tahmid",
 			"Tahmid02016",
 			"Titodutta",
 			"WikiAbuHuraira",
@@ -81,5 +82,7 @@
 	"wikibasemediainfo-special-mediasearch-filter-namespace-dialog-progressive-action": "জমা দিন",
 	"wikibasemediainfo-special-mediasearch-input-label": "মিডিয়া অনুসন্ধান",
 	"wikibasemediainfo-special-mediasearch-load-more-results": "আরও লোড করুন",
-	"wikibasemediainfo-special-mediasearch-quickview-button-text": "আরো তথ্য"
+	"wikibasemediainfo-special-mediasearch-quickview-button-text": "আরো তথ্য",
+	"wikibasemediainfo-special-mediasearch-user-notice-title": "[[Special:Search]] খুঁজছেন?",
+	"wikibasemediainfo-special-mediasearch-user-notice-dismiss": "এই বিজ্ঞপ্তিটি বাদ দিন"
 }

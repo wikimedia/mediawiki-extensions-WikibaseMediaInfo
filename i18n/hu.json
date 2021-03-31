@@ -137,5 +137,7 @@
 	"wikibasemediainfo-copytextlayout-copy-fail": "A vágólapra másolás nem sikerült.",
 	"wikibasemediainfo-copytextlayout-copy-success": "Vágólapra másolva.",
 	"wikibasemediainfo-special-mediasearch-results-count": "$1 találat",
-	"wikibasemediainfo-special-mediasearch-did-you-mean": "Erre gondoltál: <a href=\"$2\">$1</a> ?"
+	"wikibasemediainfo-special-mediasearch-did-you-mean": "Erre gondoltál: <a href=\"$2\">$1</a> ?",
+	"wikibasemediainfo-special-mediasearch-error-message": "Érvénytelen keresés",
+	"wikibasemediainfo-special-mediasearch-error-text": "Írj be egy új keresést és próbáld ismét"
 }

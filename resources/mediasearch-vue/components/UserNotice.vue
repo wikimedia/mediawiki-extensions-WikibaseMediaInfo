@@ -51,8 +51,12 @@ module.exports = {
 			return Boolean( numVal );
 		},
 
+		isMobileSkin: function () {
+			return mw.config.get( 'skin' ) === 'minerva';
+		},
+
 		showNotice: function () {
-			if ( mw.user.isAnon() ) {
+			if ( mw.user.isAnon() || this.isMobileSkin ) {
 				return false;
 			} else {
 				return !this.previouslyDismissed && !this.dismissed;

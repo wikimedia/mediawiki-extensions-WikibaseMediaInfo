@@ -31,7 +31,7 @@ return [
 
 		return new MediaInfoHandler(
 			$wikibaseRepo->getEntityContentDataCodec(),
-			$wikibaseRepo->getEntityConstraintProvider(),
+			WikibaseRepo::getEntityConstraintProvider( $services ),
 			$wikibaseRepo->getValidatorErrorLocalizer(),
 			WikibaseRepo::getEntityIdParser( $services ),
 			new MissingMediaInfoHandler(

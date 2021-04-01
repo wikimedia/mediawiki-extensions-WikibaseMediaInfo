@@ -141,7 +141,7 @@
 	"wikibasemediainfo-special-mediasearch-filter-license-unrestricted": "Label text for option to filter media search results by CC-0 license or public domain media",
 	"wikibasemediainfo-special-mediasearch-filter-license-other": "Label text for option to filter media search results by other licenses",
 	"wikibasemediainfo-special-mediasearch-filter-namespace-all": "Label text for option to filter by all namespaces",
-	"wikibasemediainfo-special-mediasearch-filter-namespace-discussion": "Label text for option to filter by discussion namespaces",
+	"wikibasemediainfo-special-mediasearch-filter-namespace-discussion": "Label text for option to filter by discussion namespaces\n{{identical|Discussion}}",
 	"wikibasemediainfo-special-mediasearch-filter-namespace-help": "Label text for option to filter by general help namespaces",
 	"wikibasemediainfo-special-mediasearch-filter-namespace-custom": "Label text for option to filter by a custom list of namespaces",
 	"wikibasemediainfo-special-mediasearch-filter-namespace-label": "Label for the button that triggers the namespace filter dialog. Parameters:\n* $1 - Current selected filter value message",

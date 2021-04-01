@@ -164,6 +164,7 @@
 	"wikibasemediainfo-special-mediasearch-quickview-previous-button-text": "Önceki sonucu görüntüle",
 	"wikibasemediainfo-special-mediasearch-quickview-next-button-text": "Sonraki sonucu görüntüle",
 	"wikibasemediainfo-special-mediasearch-user-notice-title": "[[Special:Search]] için mi arıyorsunuz?",
+	"wikibasemediainfo-special-mediasearch-user-notice-body": "Artık, tercih ettiğiniz arama deneyimi için [[Special:Preferences#mw-prefsection-searchoptions|tercihlerinizi]] ayarlayabilirsiniz.",
 	"wikibasemediainfo-special-mediasearch-user-notice-dismiss": "Bu bildirimi kapat",
 	"wikibasemediainfo-special-mediasearch-switch-special-search": "Special:Search ile değiştir",
 	"wikibasemediainfo-special-mediasearch-category-info": "$1 üye ($2 alt kategori, $3 dosya)",

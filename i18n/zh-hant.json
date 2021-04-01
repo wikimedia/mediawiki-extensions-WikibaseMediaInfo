@@ -139,6 +139,13 @@
 	"wikibasemediainfo-special-mediasearch-filter-license-attribution-same-license": "以姓名標示與相同授權條款使用",
 	"wikibasemediainfo-special-mediasearch-filter-license-unrestricted": "沒有限制",
 	"wikibasemediainfo-special-mediasearch-filter-license-other": "其它",
+	"wikibasemediainfo-special-mediasearch-filter-namespace-all": "全部",
+	"wikibasemediainfo-special-mediasearch-filter-namespace-discussion": "討論",
+	"wikibasemediainfo-special-mediasearch-filter-namespace-help": "一般說明",
+	"wikibasemediainfo-special-mediasearch-filter-namespace-custom": "自訂",
+	"wikibasemediainfo-special-mediasearch-filter-namespace-label": "命名空間：$1",
+	"wikibasemediainfo-special-mediasearch-filter-namespace-dialog-title": "命名空間選擇器",
+	"wikibasemediainfo-special-mediasearch-filter-namespace-dialog-progressive-action": "提交",
 	"wikibasemediainfo-special-mediasearch-no-results": "我們找不到任何結果",
 	"wikibasemediainfo-special-mediasearch-no-results-tips": "嘗試更多一般項目或是檢查您的拼寫",
 	"wikibasemediainfo-special-mediasearch-end-of-results": "查無更多結果",
@@ -151,6 +158,10 @@
 	"wikibasemediainfo-special-mediasearch-quickview-close-button-text": "關閉檔案詳情",
 	"wikibasemediainfo-special-mediasearch-quickview-previous-button-text": "查看上一個結果",
 	"wikibasemediainfo-special-mediasearch-quickview-next-button-text": "查看下一個結果",
+	"wikibasemediainfo-special-mediasearch-user-notice-title": "在找 [[Special:Search]]？",
+	"wikibasemediainfo-special-mediasearch-user-notice-body": "您現在可以調整您的[[Special:Preferences#mw-prefsection-searchoptions|偏好設定]]，來選擇您偏好的搜尋體驗。",
+	"wikibasemediainfo-special-mediasearch-user-notice-dismiss": "關閉此通知",
+	"wikibasemediainfo-special-mediasearch-switch-special-search": "切換成 Special:Search",
 	"wikibasemediainfo-special-mediasearch-category-info": "$1 {{PLURAL:$1|個成員}}（$2 {{PLURAL:$2|個子分類}}，$3 {{PLURAL:$3|個檔案}}）",
 	"wikibasemediainfo-rescore-profile-classic-noboostlinks-max-boost-template": "在此 wiki 上啟用時，基於最佳模板、頁面語言，以及新近事物的排名。",
 	"wikibasemediainfo-copytextlayout-copy": "複製",
@@ -161,5 +172,7 @@
 	"wikibasemediainfo-special-mediasearch-wordcount": "（$1 {{PLURAL:$1|個字}}）",
 	"wikibasemediainfo-special-mediasearch-did-you-mean": "您是不是指：<a href=\"$2\">$1</a>",
 	"wikibasemediainfo-special-mediasearch-error-message": "無效搜尋",
-	"wikibasemediainfo-special-mediasearch-error-text": "在上方輸入新搜尋並重試"
+	"wikibasemediainfo-special-mediasearch-error-text": "在上方輸入新搜尋並重試",
+	"wikibasemediainfo-specialsearch-default": "顯示在 Special:Search 介面的搜尋結果",
+	"wikibasemediainfo-specialsearch-default-help": "選擇顯示來自舊版 Special:Search 介面（而非 Special:MediaSearch）之主搜尋欄的搜尋結果"
 }

@@ -96,6 +96,8 @@
 	"wikibasemediainfo-special-mediasearch-filter-license-any": "All Lizenzen",
 	"wikibasemediainfo-special-mediasearch-filter-license-unrestricted": "Keng Restriktiounen",
 	"wikibasemediainfo-special-mediasearch-filter-license-other": "Anerer",
+	"wikibasemediainfo-special-mediasearch-filter-namespace-discussion": "Diskussioun",
+	"wikibasemediainfo-special-mediasearch-filter-namespace-label": "Nummraum: $1",
 	"wikibasemediainfo-special-mediasearch-no-results": "Mir hunn näischt fonnt",
 	"wikibasemediainfo-special-mediasearch-clear-title": "Ewechhuelen",
 	"wikibasemediainfo-special-mediasearch-load-more-results": "Méi lueden",

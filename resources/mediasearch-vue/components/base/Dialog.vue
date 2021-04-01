@@ -220,7 +220,7 @@ module.exports = {
 
 	mounted: function () {
 		// Add this component to the end of the body element.
-		document.body.append( this.$el );
+		document.body.appendChild( this.$el );
 	},
 
 	beforeDestroy: function () {

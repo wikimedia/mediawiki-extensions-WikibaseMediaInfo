@@ -4,5 +4,5 @@ $specialPageAliases = [];
 
 /* English */
 $specialPageAliases['en'] = [
-	'MediaSearch' => [ 'MediaSearch' ],
+	'OldMediaSearch' => [ 'OldMediaSearch' ],
 ];

@@ -74,7 +74,7 @@ class SpecialMediaSearch extends SpecialPage {
 		SearchEngineFactory $searchEngineFactory,
 		NamespaceInfo $namespaceInfo,
 		UserOptionsManager $userOptionsManager,
-		$name = 'MediaSearch',
+		$name = 'OldMediaSearch',
 		ApiBase $api = null,
 		TemplateParser $templateParser = null,
 		SearchConfig $searchConfig = null

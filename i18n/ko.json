@@ -154,7 +154,7 @@
 	"wikibasemediainfo-special-mediasearch-quickview-close-button-text": "파일 정보 닫기",
 	"wikibasemediainfo-special-mediasearch-quickview-previous-button-text": "이전 결과 보기",
 	"wikibasemediainfo-special-mediasearch-quickview-next-button-text": "다음 결과 보기",
-	"wikibasemediainfo-special-mediasearch-user-notice-title": "[[특수:검색]]을 찾고 계십니까?",
+	"wikibasemediainfo-special-mediasearch-user-notice-title": "[[Special:Search|특수:검색]]을 찾고 계십니까?",
 	"wikibasemediainfo-special-mediasearch-user-notice-dismiss": "이 알림을 숨기기",
 	"wikibasemediainfo-special-mediasearch-switch-special-search": "특수:검색으로 전환",
 	"wikibasemediainfo-special-mediasearch-category-info": "문서 $1{{PLURAL:$1|개}} – 하위 분류 $2{{PLURAL:$2|개}}, 파일 $3{{PLURAL:$3|개}}",

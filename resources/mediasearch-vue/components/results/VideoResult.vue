@@ -14,14 +14,19 @@
 		>
 
 		<div class="wbmi-video-result__body">
-			<h3 class="wbmi-video-result__title">
+			<h3 v-if="displayName" class="wbmi-video-result__title">
 				{{ displayName }}
 			</h3>
 
 			<h4 class="wbmi-video-result__meta">
 				<span class="wbmi-video-result__duration">
 					<wbmi-icon :icon="icon"></wbmi-icon>
-					<span v-if="formattedDuration" class="wbmi-video-result__duration__text">{{ formattedDuration }}</span>
+					<span
+						v-if="formattedDuration"
+						class="wbmi-video-result__duration__text"
+					>
+						{{ formattedDuration }}
+					</span>
 				</span>
 				<span v-if="mime" class="wbmi-video-result__mime">
 					{{ mime }}

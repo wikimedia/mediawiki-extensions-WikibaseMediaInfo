@@ -1,6 +1,6 @@
 <template>
 	<div class="wbmi-audio-result">
-		<h3 class="wbmi-audio-result__title">
+		<h3 v-if="displayName" class="wbmi-audio-result__title">
 			<a ref="link"
 				:href="canonicalurl"
 				target="_blank"
@@ -13,7 +13,12 @@
 		<h4 class="wbmi-audio-result__meta">
 			<span class="wbmi-audio-result__duration">
 				<wbmi-icon :icon="icon"></wbmi-icon>
-				<span v-if="formattedDuration" class="wbmi-audio-result__duration__text">{{ formattedDuration }}</span>
+				<span
+					v-if="formattedDuration"
+					class="wbmi-audio-result__duration__text"
+				>
+					{{ formattedDuration }}
+				</span>
 			</span>
 			<span v-if="mime" class="wbmi-audio-result__mime">{{ mime }}</span>
 		</h4>

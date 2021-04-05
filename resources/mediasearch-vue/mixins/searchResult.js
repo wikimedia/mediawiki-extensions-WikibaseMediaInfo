@@ -90,10 +90,11 @@ module.exports = {
 		/**
 		 * Use mw.Title to get a normalized title without File, Category, etc. prepending
 		 *
-		 * @return {string}
+		 * @return {string|null}
 		 */
 		displayName: function () {
-			return new mw.Title( this.title ).getMainText();
+			var title = mw.Title.newFromText( this.title );
+			return title ? title.getMainText() : null;
 		}
 	},
 

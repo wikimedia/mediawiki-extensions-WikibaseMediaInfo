@@ -1,10 +1,10 @@
 <template>
 	<div class="wbmi-page-result">
 		<div class="wbmi-page-result__title">
-			<span class="wbmi-page-result__namespace">
+			<span v-if="namespacePrefix" class="wbmi-page-result__namespace">
 				{{ namespacePrefix }}
 			</span>
-			<h3>
+			<h3 v-if="displayName">
 				<a :href="canonicalurl"
 					target="_blank"
 					:title="title"
@@ -97,10 +97,14 @@ module.exports = {
 		},
 
 		/**
-		 * @return {string}
+		 * @return {string|null}
 		 */
 		namespacePrefix: function () {
-			var title = new mw.Title( this.title );
+			var title = mw.Title.newFromText( this.title );
+
+			if ( !title ) {
+				return null;
+			}
 
 			// If this is the default namespace (gallery), getNamespacePrefix()
 			// won't return anything, so we need to use this system message

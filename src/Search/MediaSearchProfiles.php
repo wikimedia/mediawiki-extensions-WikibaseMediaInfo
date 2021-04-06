@@ -49,7 +49,7 @@ return [
 	MediaSearchQueryBuilder::FULLTEXT_PROFILE_NAME => [
 		'builder_factory' => closureToAnonymousClass( function ( array $settings ) {
 			$repo = WikibaseRepo::getDefaultInstance();
-			$languageCode = $repo->getUserLanguage()->getCode();
+			$languageCode = WikibaseRepo::getUserLanguage()->getCode();
 			$languageFallbackChain = WikibaseRepo::getLanguageFallbackChainFactory()
 				->newFromLanguageCode( $languageCode );
 
@@ -148,7 +148,7 @@ return [
 	'mediasearch_logistic_regression' => [
 		'builder_factory' => closureToAnonymousClass( function ( array $settings ) {
 			$repo = WikibaseRepo::getDefaultInstance();
-			$languageCode = $repo->getUserLanguage()->getCode();
+			$languageCode = WikibaseRepo::getUserLanguage()->getCode();
 			$languageFallbackChain = $repo->getLanguageFallbackChainFactory()->newFromLanguageCode( $languageCode );
 
 			$mwServices = MediaWikiServices::getInstance();

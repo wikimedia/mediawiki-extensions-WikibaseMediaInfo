@@ -73,16 +73,6 @@
 			"description": "Map of { property id: weight } for which statements should be included in media search. When not set, this defaults to default properties (see $wgMediaInfoProperties values) with a weight of 1.",
 			"value": null
 		},
-		"MediaInfoMediaSearchSupportedFilterParams": {
-			"description": "List of valid URL query parameters for search filters",
-			"value": [
-				"filemime",
-				"fileres",
-				"haslicense",
-				"sort",
-				"namespace"
-			]
-		},
 		"MediaInfoMediaSearchHasLtrPlugin": {
 			"description": "Boolean indicating whether the o19s/elasticsearch-learning-to-rank plugin is installed (in which case move advanced search features can be used)",
 			"value": false

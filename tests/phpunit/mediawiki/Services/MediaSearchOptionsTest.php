@@ -26,7 +26,6 @@ class MediaSearchOptionsTest extends MediaWikiIntegrationTestCase {
 	public function testGetImageSizesForValidTypes() {
 		$options = new MediaSearchOptions(
 			new MockMessageLocalizer(),
-			[ MediaSearchOptions::FILTER_SIZE ],
 			new HashConfig()
 		);
 
@@ -40,7 +39,6 @@ class MediaSearchOptionsTest extends MediaWikiIntegrationTestCase {
 	public function testGetImageSizesForImage() {
 		$options = new MediaSearchOptions(
 			new MockMessageLocalizer(),
-			[ MediaSearchOptions::FILTER_SIZE ],
 			new HashConfig()
 		);
 
@@ -52,7 +50,6 @@ class MediaSearchOptionsTest extends MediaWikiIntegrationTestCase {
 	public function testGetImageSizesForPage() {
 		$options = new MediaSearchOptions(
 			new MockMessageLocalizer(),
-			[ MediaSearchOptions::FILTER_SIZE ],
 			new HashConfig()
 		);
 
@@ -61,24 +58,9 @@ class MediaSearchOptionsTest extends MediaWikiIntegrationTestCase {
 		$this->assertEmpty( $sizes );
 	}
 
-	public function testGetImageSizesNotEnabled() {
-		$options = new MediaSearchOptions(
-			new MockMessageLocalizer(),
-			[],
-			new HashConfig()
-		);
-
-		// verify that none of the valid types return a value
-		foreach ( MediaSearchOptions::ALL_TYPES as $type ) {
-			$sizes = $options->getSorts( $type );
-			$this->assertEmpty( $sizes );
-		}
-	}
-
 	public function testGetImageSizesForInvalidTypesThrows() {
 		$options = new MediaSearchOptions(
 			new MockMessageLocalizer(),
-			[ MediaSearchOptions::FILTER_SIZE ],
 			new HashConfig()
 		);
 
@@ -90,7 +72,6 @@ class MediaSearchOptionsTest extends MediaWikiIntegrationTestCase {
 	public function testGetMimeTypesForValidTypes() {
 		$options = new MediaSearchOptions(
 			new MockMessageLocalizer(),
-			[ MediaSearchOptions::FILTER_MIME ],
 			new HashConfig()
 		);
 
@@ -104,7 +85,6 @@ class MediaSearchOptionsTest extends MediaWikiIntegrationTestCase {
 	public function testGetMimeTypesForImage() {
 		$options = new MediaSearchOptions(
 			new MockMessageLocalizer(),
-			[ MediaSearchOptions::FILTER_MIME ],
 			new HashConfig()
 		);
 
@@ -116,7 +96,6 @@ class MediaSearchOptionsTest extends MediaWikiIntegrationTestCase {
 	public function testGetMimeTypesForPage() {
 		$options = new MediaSearchOptions(
 			new MockMessageLocalizer(),
-			[ MediaSearchOptions::FILTER_MIME ],
 			new HashConfig()
 		);
 
@@ -125,24 +104,9 @@ class MediaSearchOptionsTest extends MediaWikiIntegrationTestCase {
 		$this->assertEmpty( $mimes );
 	}
 
-	public function testGetMimeTypesNotEnabled() {
-		$options = new MediaSearchOptions(
-			new MockMessageLocalizer(),
-			[ MediaSearchOptions::FILTER_MIME ],
-			new HashConfig()
-		);
-
-		// verify that none of the valid types return a value
-		foreach ( MediaSearchOptions::ALL_TYPES as $type ) {
-			$mimes = $options->getSorts( $type );
-			$this->assertEmpty( $mimes );
-		}
-	}
-
 	public function testGetMimeTypesForInvalidTypesThrows() {
 		$options = new MediaSearchOptions(
 			new MockMessageLocalizer(),
-			[ MediaSearchOptions::FILTER_MIME ],
 			new HashConfig()
 		);
 
@@ -154,7 +118,6 @@ class MediaSearchOptionsTest extends MediaWikiIntegrationTestCase {
 	public function testGetSortsForValidTypes() {
 		$options = new MediaSearchOptions(
 			new MockMessageLocalizer(),
-			[ MediaSearchOptions::FILTER_SORT ],
 			new HashConfig()
 		);
 
@@ -165,24 +128,9 @@ class MediaSearchOptionsTest extends MediaWikiIntegrationTestCase {
 		}
 	}
 
-	public function testGetSortsNotEnabled() {
-		$options = new MediaSearchOptions(
-			new MockMessageLocalizer(),
-			[],
-			new HashConfig()
-		);
-
-		// verify that none of the valid types return a value
-		foreach ( MediaSearchOptions::ALL_TYPES as $type ) {
-			$sorts = $options->getSorts( $type );
-			$this->assertEmpty( $sorts );
-		}
-	}
-
 	public function testGetSortsForInvalidTypesThrows() {
 		$options = new MediaSearchOptions(
 			new MockMessageLocalizer(),
-			[ MediaSearchOptions::FILTER_SORT ],
 			new HashConfig()
 		);
 
@@ -200,7 +148,6 @@ class MediaSearchOptionsTest extends MediaWikiIntegrationTestCase {
 
 		$options = new MediaSearchOptions(
 			new MockMessageLocalizer(),
-			[ MediaSearchOptions::FILTER_LICENSE ],
 			new HashConfig( [ 'LicenseMapping' => $licenseMapping ] )
 		);
 
@@ -233,7 +180,6 @@ class MediaSearchOptionsTest extends MediaWikiIntegrationTestCase {
 
 		$options = new MediaSearchOptions(
 			new MockMessageLocalizer(),
-			[ MediaSearchOptions::FILTER_LICENSE ],
 			new HashConfig( [ 'LicenseMapping' => $licenseMapping ] )
 		);
 
@@ -251,7 +197,6 @@ class MediaSearchOptionsTest extends MediaWikiIntegrationTestCase {
 
 		$options = new MediaSearchOptions(
 			new MockMessageLocalizer(),
-			[ MediaSearchOptions::FILTER_LICENSE ],
 			new HashConfig( [ 'LicenseMapping' => $licenseMapping ] )
 		);
 
@@ -260,30 +205,9 @@ class MediaSearchOptionsTest extends MediaWikiIntegrationTestCase {
 		$this->assertEmpty( $licenses );
 	}
 
-	public function testGetLicenseGroupsNotEnabled() {
-		$licenseMapping = [
-			'attribution' => [ 'P275=Q98755364', 'P275=Q98755344' ],
-			'attribution-same-license' => [ 'P275=Q19125117' ],
-			'unrestricted' => [],
-		];
-
-		$options = new MediaSearchOptions(
-			new MockMessageLocalizer(),
-			[],
-			new HashConfig( [ 'LicenseMapping' => $licenseMapping ] )
-		);
-
-		// verify that none of the valid types return a value
-		foreach ( MediaSearchOptions::ALL_TYPES as $type ) {
-			$licenses = $options->getSorts( $type );
-			$this->assertEmpty( $licenses );
-		}
-	}
-
 	public function testGetLicenseGroupsForInvalidTypesThrows() {
 		$options = new MediaSearchOptions(
 			new MockMessageLocalizer(),
-			[ MediaSearchOptions::FILTER_LICENSE ],
 			new HashConfig()
 		);
 
@@ -295,7 +219,6 @@ class MediaSearchOptionsTest extends MediaWikiIntegrationTestCase {
 	public function testGetNamespacesForValidTypes() {
 		$options = new MediaSearchOptions(
 			new MockMessageLocalizer(),
-			[ MediaSearchOptions::FILTER_NAMESPACE ],
 			new HashConfig()
 		);
 
@@ -309,7 +232,6 @@ class MediaSearchOptionsTest extends MediaWikiIntegrationTestCase {
 	public function testGetNamespacesForImage() {
 		$options = new MediaSearchOptions(
 			new MockMessageLocalizer(),
-			[ MediaSearchOptions::FILTER_NAMESPACE ],
 			new HashConfig()
 		);
 
@@ -321,7 +243,6 @@ class MediaSearchOptionsTest extends MediaWikiIntegrationTestCase {
 	public function testGetNamespacesForPage() {
 		$options = new MediaSearchOptions(
 			new MockMessageLocalizer(),
-			[ MediaSearchOptions::FILTER_NAMESPACE ],
 			new HashConfig()
 		);
 
@@ -334,24 +255,9 @@ class MediaSearchOptionsTest extends MediaWikiIntegrationTestCase {
 		$this->assertNotEmpty( $namespaceData['data'] );
 	}
 
-	public function testGetNamespacesNotEnabled() {
-		$options = new MediaSearchOptions(
-			new MockMessageLocalizer(),
-			[ MediaSearchOptions::FILTER_NAMESPACE ],
-			new HashConfig()
-		);
-
-		// verify that none of the valid types return a value
-		foreach ( MediaSearchOptions::ALL_TYPES as $type ) {
-			$namespaceData = $options->getSorts( $type );
-			$this->assertEmpty( $namespaceData );
-		}
-	}
-
 	public function testGetNamespacesForInvalidTypesThrows() {
 		$options = new MediaSearchOptions(
 			new MockMessageLocalizer(),
-			[ MediaSearchOptions::FILTER_NAMESPACE ],
 			new HashConfig()
 		);
 

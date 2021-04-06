@@ -1,13 +1,28 @@
 {
 	"@metadata": {
 		"authors": [
+			"Achiri Bitamsimli",
+			"Alhassan Mohammed Awal",
+			"Alhassan Peter",
+			"Din-nani1",
 			"Dnshitobu",
 			"Masssly",
 			"Musahfm",
+			"Sir Amugi",
 			"Yakubu Fadilatu"
 		]
 	},
 	"wikibasemediainfo-special-mediasearch-tab-other": "Media sheli dabam",
+	"wikibasemediainfo-special-mediasearch-filter-namespace-all": "Zaa",
 	"wikibasemediainfo-special-mediasearch-filter-namespace-discussion": "Zambu",
+	"wikibasemediainfo-special-mediasearch-filter-namespace-help": "Zaa sɔŋsim",
+	"wikibasemediainfo-special-mediasearch-filter-namespace-custom": "Kali",
+	"wikibasemediainfo-special-mediasearch-filter-namespace-label": "Yuli sambu shee $1",
+	"wikibasemediainfo-special-mediasearch-filter-namespace-dialog-title": "Yuli polo din piira",
+	"wikibasemediainfo-special-mediasearch-filter-namespace-dialog-progressive-action": "Zaŋ ti",
+	"wikibasemediainfo-special-mediasearch-user-notice-title": "N-lihiri bɔra[[Zaɤ'gahindili:Vihigu]]?",
+	"wikibasemediainfo-special-mediasearch-user-notice-body": "A ni tooi mali  niŋ",
+	"wikibasemediainfo-special-mediasearch-user-notice-dismiss": "Yimi lahibaliŋɔ yalani",
+	"wikibasemediainfo-special-mediasearch-switch-special-search": "Labimi zaɤ'gahindili palo: Vihi ma",
 	"wikibasemediainfo-special-mediasearch-error-message": "Vihigu shɛli diŋ kani"
 }

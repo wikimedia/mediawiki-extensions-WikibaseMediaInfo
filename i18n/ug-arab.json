@@ -1,8 +1,15 @@
 {
 	"@metadata": {
 		"authors": [
-			"AlimOmar"
+			"AlimOmar",
+			"Sahran"
 		]
 	},
+	"wikibasemediainfo-special-mediasearch-filter-namespace-all": "ھەممىسى",
+	"wikibasemediainfo-special-mediasearch-filter-namespace-help": "ئادەتتىكى ياردەم",
+	"wikibasemediainfo-special-mediasearch-filter-namespace-custom": "ئىختىيارىچە",
+	"wikibasemediainfo-special-mediasearch-filter-namespace-label": "ئات بوشلۇقى: $1",
+	"wikibasemediainfo-special-mediasearch-filter-namespace-dialog-title": "ئات بوشلۇقى تاللىغۇچ",
+	"wikibasemediainfo-special-mediasearch-filter-namespace-dialog-progressive-action": "تاپشۇر",
 	"wikibasemediainfo-special-mediasearch-no-results": "نەتىجە تېپىلمىدى"
 }

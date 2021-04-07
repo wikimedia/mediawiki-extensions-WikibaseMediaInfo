@@ -268,8 +268,7 @@ class WikibaseMediaInfoHooks {
 			$revRecord = $out->getWikiPage()->getRevisionRecord();
 			$entityId = MediaInfoServices::getMediaInfoIdLookup()->getEntityIdForTitle( $imgTitle );
 
-			$wbRepo = WikibaseRepo::getDefaultInstance();
-			$entityLookup = $wbRepo->getEntityLookup();
+			$entityLookup = WikibaseRepo::getEntityLookup();
 			$entityRevisionId = $entityLookup->hasEntity( $entityId ) ? $revRecord->getId() : null;
 			$entity = $entityLookup->getEntity( $entityId );
 			$serializer = WikibaseRepo::getAllTypesEntitySerializer();

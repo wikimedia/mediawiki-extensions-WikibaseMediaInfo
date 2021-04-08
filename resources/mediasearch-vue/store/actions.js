@@ -236,21 +236,21 @@ module.exports = {
 			// Set pending back to false when request is complete
 			activeSearchRequest = null;
 			context.commit( 'setPending', { type: options.type, pending: false } );
-		} ).catch( function ( e ) {
+		} ).catch( function ( errorCode, details ) {
 			// Set pending to false and clear the stashed request
 			activeSearchRequest = null;
 			context.commit( 'setPending', { type: options.type, pending: false } );
 
 			// No other error handling is required if the request has been
 			// aborted by the client
-			if ( e.statusText && e.statusText === 'abort' ) {
+			if ( details && details.textStatus === 'abort' ) {
 				return;
 			}
 
 			// In the case of a real failure, throw the error back to the App
 			// component to display a suitable message to the user
 			context.commit( 'setHasError', true );
-			throw e;
+			throw details;
 		} );
 	},
 

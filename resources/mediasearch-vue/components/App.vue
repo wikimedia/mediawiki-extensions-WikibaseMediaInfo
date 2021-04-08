@@ -409,6 +409,14 @@ module.exports = {
 			this.clearDidYouMean();
 			this.autoloadCounter = this.setInitialAutoloadCountForTabs();
 
+			// Clear any delayed/debounced lookup requests that may still be
+			// pending once a new search is submitted, ex. if the user rapidly
+			// types a result and hits enter; timeout ID is set by the
+			// autocompleteLookupHandler mixin
+			if ( this.debounceTimeoutId ) {
+				clearTimeout( this.debounceTimeoutId );
+			}
+
 			// Abort in-flight lookup promises to ensure the results provided
 			// are for the most recent search input.
 			if ( this.lookupPromises ) {

@@ -9,7 +9,10 @@
 	// The "list" part of search results should always fill all available space.
 	&__list-wrapper {
 		.flex( 1, 1, auto );
-		max-width: 100%;
+
+		// Without this, the &__list flex container will render as one long row
+		// rather than a grid layout.
+		width: 100%;
 
 		// When QuickView is open...
 		&--collapsed {

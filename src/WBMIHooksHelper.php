@@ -23,8 +23,7 @@ class WBMIHooksHelper {
 	 * @throws PropertyDataTypeLookupException
 	 */
 	public static function getPropertyType( PropertyId $id ) {
-		$wbRepo = WikibaseRepo::getDefaultInstance();
-		$propertyDataTypeLookup = $wbRepo->getPropertyDataTypeLookup();
+		$propertyDataTypeLookup = WikibaseRepo::getPropertyDataTypeLookup();
 		return $propertyDataTypeLookup->getDataTypeIdForProperty( $id );
 	}
 

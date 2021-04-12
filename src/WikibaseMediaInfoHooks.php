@@ -175,7 +175,6 @@ class WikibaseMediaInfoHooks {
 			return;
 		}
 
-		$wbRepo = WikibaseRepo::getDefaultInstance();
 		$imgTitle = $out->getTitle();
 
 		$isMediaInfoPage = static::isMediaInfoPage( $imgTitle ) &&
@@ -208,7 +207,7 @@ class WikibaseMediaInfoHooks {
 			$skin,
 			$isMediaInfoPage,
 			new BabelUserLanguageLookup(),
-			$wbRepo->getEntityViewFactory(),
+			WikibaseRepo::getEntityViewFactory(),
 			[
 				'wbmiDefaultProperties' => array_values( $wgMediaInfoProperties ),
 				'wbmiPropertyTitles' => $propertyTitles,

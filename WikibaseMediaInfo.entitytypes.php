@@ -104,7 +104,6 @@ return [
 			);
 
 			// Use a MediaInfo-specific EntityStatementView class
-			$wbRepo = WikibaseRepo::getDefaultInstance();
 			$propertyOrderProvider = new CachingPropertyOrderProvider(
 				new WikiPagePropertyOrderProvider(
 					Title::newFromText( 'MediaWiki:Wikibase-SortedProperties' )
@@ -122,7 +121,7 @@ return [
 				$propertyOrderProvider,
 				$textProvider,
 				$defaultPropertyIdsForView,
-				$wbRepo->getSnakFormatterFactory(),
+				WikibaseRepo::getSnakFormatterFactory(),
 				WikibaseRepo::getValueFormatterFactory(),
 				WikibaseRepo::getCompactBaseDataModelSerializerFactory(),
 				$languageCode,

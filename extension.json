@@ -609,7 +609,8 @@
 			"factory": "Wikibase\\MediaInfo\\Api\\ApiRelatedConcepts::factory",
 			"services": [
 				"HttpRequestFactory",
-				"WikibaseRepo.BaseDataModelDeserializerFactory"
+				"WikibaseRepo.BaseDataModelDeserializerFactory",
+				"WikibaseRepo.SnakFormatterFactory"
 			]
 		}
 	},

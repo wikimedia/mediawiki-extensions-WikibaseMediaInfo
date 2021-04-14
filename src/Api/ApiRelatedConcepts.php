@@ -15,7 +15,6 @@ use Wikibase\DataModel\Entity\PropertyId;
 use Wikibase\DataModel\Snak\PropertyValueSnak;
 use Wikibase\Lib\Formatters\OutputFormatSnakFormatterFactory;
 use Wikibase\Lib\Formatters\SnakFormatter;
-use Wikibase\Repo\WikibaseRepo;
 use Wikimedia\ParamValidator\ParamValidator;
 use Wikimedia\ParamValidator\TypeDef\IntegerDef;
 
@@ -70,23 +69,24 @@ class ApiRelatedConcepts extends ApiBase {
 	 * @param string $moduleName
 	 * @param HttpRequestFactory $httpRequestFactory
 	 * @param DeserializerFactory $deserializerFactory
+	 * @param OutputFormatSnakFormatterFactory $snakFormatterFactory
 	 * @return self
 	 */
 	public static function factory(
 		ApiMain $main,
 		$moduleName,
 		HttpRequestFactory $httpRequestFactory,
-		DeserializerFactory $deserializerFactory
+		DeserializerFactory $deserializerFactory,
+		OutputFormatSnakFormatterFactory $snakFormatterFactory
 	) {
 		$config = $main->getConfig();
-		$wbRepo = WikibaseRepo::getDefaultInstance();
 
 		return new self(
 			$main,
 			$moduleName,
 			$httpRequestFactory,
 			$deserializerFactory,
-			$wbRepo->getSnakFormatterFactory(),
+			$snakFormatterFactory,
 			$config->get( 'MediaInfoExternalEntitySearchBaseUri' ),
 			$config->get( 'MediaInfoMediaSearchConceptChipsSimpleHeuristics' )
 		);

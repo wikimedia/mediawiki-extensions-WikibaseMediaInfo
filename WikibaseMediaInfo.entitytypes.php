@@ -179,8 +179,7 @@ return [
 		// returning a deserializer
 		Def::JS_DESERIALIZER_FACTORY_FUNCTION => 'wikibase.mediainfo.getDeserializer',
 		Def::CHANGEOP_DESERIALIZER_CALLBACK => function () {
-			$changeOpDeserializerFactory = WikibaseRepo::getDefaultInstance()
-				->getChangeOpDeserializerFactory();
+			$changeOpDeserializerFactory = WikibaseRepo::getChangeOpDeserializerFactory();
 
 			return new MediaInfoChangeOpDeserializer(
 				$changeOpDeserializerFactory->getLabelsChangeOpDeserializer(),

@@ -27,8 +27,6 @@ return [
 	},
 
 	'MediaInfoHandler' => function ( MediaWikiServices $services ) {
-		$wikibaseRepo = WikibaseRepo::getDefaultInstance();
-
 		return new MediaInfoHandler(
 			WikibaseRepo::getEntityContentDataCodec( $services ),
 			WikibaseRepo::getEntityConstraintProvider( $services ),
@@ -37,7 +35,7 @@ return [
 			new MissingMediaInfoHandler(
 				MediaInfoServices::getMediaInfoIdLookup(),
 				MediaInfoServices::getFilePageLookup(),
-				$wikibaseRepo->getEntityParserOutputGeneratorFactory()
+				WikibaseRepo::getEntityParserOutputGeneratorFactory( $services )
 			),
 			MediaInfoServices::getMediaInfoIdLookup(),
 			MediaInfoServices::getFilePageLookup(),

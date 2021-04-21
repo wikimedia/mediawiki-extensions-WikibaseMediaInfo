@@ -93,7 +93,7 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 		$wikiPage = $this->getMockBuilder( \WikiPage::class )
 			->disableOriginalConstructor()
 			->getMock();
-		$wikiPage->method( 'getRevision' )
+		$wikiPage->method( 'getRevisionRecord' )
 			->willReturn( $revision );
 
 		$out = $this->getMockBuilder( \OutputPage::class )

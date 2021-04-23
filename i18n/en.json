@@ -110,6 +110,7 @@
 	"wikibasemediainfo-quantity-unit-button-text": "Set unit",
 	"wikibasemediainfo-globecoordinate-input-button-text": "Add",
 	"wikibasemediainfo-globecoordinate-map-button-text": "Select on map",
+	"wikibasemediainfo-rescore-profile-classic-noboostlinks-max-boost-template": "Ranking based on best template, page language and recency when activated on this wiki.",
 	"wikibasemediainfo-special-mediasearch-title": "Search media",
 	"wikibasemediainfo-special-mediasearch-continue": "Next",
 	"wikibasemediainfo-special-mediasearch-tab-image": "Images",
@@ -158,10 +159,9 @@
 	"wikibasemediainfo-special-mediasearch-user-notice-dismiss" : "Dismiss this notification",
 	"wikibasemediainfo-special-mediasearch-switch-special-search": "Switch to Special:Search",
 	"wikibasemediainfo-special-mediasearch-category-info": "$1 {{PLURAL:$1|member|members}} ($2 {{PLURAL:$2|subcategory|subcategories}}, $3 {{PLURAL:$3|file|files}})",
-	"wikibasemediainfo-rescore-profile-classic-noboostlinks-max-boost-template": "Ranking based on best template, page language and recency when activated on this wiki.",
-	"wikibasemediainfo-copytextlayout-copy": "Copy",
-	"wikibasemediainfo-copytextlayout-copy-fail": "Failed to copy to clipboard.",
-	"wikibasemediainfo-copytextlayout-copy-success": "Copied to clipboard.",
+	"wikibasemediainfo-special-mediasearch-copytextlayout-copy": "Copy",
+	"wikibasemediainfo-special-mediasearch-copytextlayout-copy-fail": "Failed to copy to clipboard.",
+	"wikibasemediainfo-special-mediasearch-copytextlayout-copy-success": "Copied to clipboard.",
 	"wikibasemediainfo-special-mediasearch-clear-filters": "Clear filters",
 	"wikibasemediainfo-special-mediasearch-results-count": "$1 {{PLURAL:$1|result|results}}",
 	"wikibasemediainfo-special-mediasearch-wordcount": "($1 {{PLURAL:$1|word|words}})",
@@ -169,6 +169,6 @@
 	"wikibasemediainfo-special-mediasearch-did-you-mean": "Did you mean: <a href=\"$2\">$1</a>",
 	"wikibasemediainfo-special-mediasearch-error-message": "Invalid search",
 	"wikibasemediainfo-special-mediasearch-error-text": "Enter a new search above and try again",
-	"wikibasemediainfo-specialsearch-default": "Show search results in the Special:Search interface",
-	"wikibasemediainfo-specialsearch-default-help": "Select to show search results from the main search bar in the older Special:Search interface instead of Special:MediaSearch"
+	"wikibasemediainfo-special-mediasearch-specialsearch-default": "Show search results in the Special:Search interface",
+	"wikibasemediainfo-special-mediasearch-specialsearch-default-help": "Select to show search results from the main search bar in the older Special:Search interface instead of Special:MediaSearch"
 }

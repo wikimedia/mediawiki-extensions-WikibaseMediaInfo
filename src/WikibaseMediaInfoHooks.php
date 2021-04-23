@@ -802,8 +802,8 @@ class WikibaseMediaInfoHooks {
 		$preferences['sdms-specialsearch-default'] = [
 			'type' => 'toggle',
 			'section' => 'searchoptions/searchmisc',
-			'label-message' => 'wikibasemediainfo-specialsearch-default',
-			'help-message' => 'wikibasemediainfo-specialsearch-default-help',
+			'label-message' => 'wikibasemediainfo-special-mediasearch-specialsearch-default',
+			'help-message' => 'wikibasemediainfo-special-mediasearch-specialsearch-default-help',
 		];
 	}
 

@@ -40,7 +40,7 @@ module.exports = {
 		buttonText: {
 			type: [ String, Object ],
 			default: function () {
-				return this.$i18n( 'wikibasemediainfo-copytextlayout-copy' );
+				return this.$i18n( 'wikibasemediainfo-special-mediasearch-copytextlayout-copy' );
 			}
 		},
 
@@ -62,14 +62,14 @@ module.exports = {
 		successMessage: {
 			type: [ String, Object ],
 			default: function () {
-				return this.$i18n( 'wikibasemediainfo-copytextlayout-copy-success' );
+				return this.$i18n( 'wikibasemediainfo-special-mediasearch-copytextlayout-copy-success' );
 			}
 		},
 
 		failMessage: {
 			type: [ String, Object ],
 			default: function () {
-				return this.$i18n( 'wikibasemediainfo-copytextlayout-copy-fail' );
+				return this.$i18n( 'wikibasemediainfo-special-mediasearch-copytextlayout-copy-fail' );
 			}
 		}
 	},

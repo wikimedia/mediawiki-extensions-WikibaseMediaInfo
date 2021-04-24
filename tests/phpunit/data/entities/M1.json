@@ -1,79 +1,79 @@
 {
-  "pageid": 42,
-  "ns": 6,
-  "title": "File:Giant's Causeway (14).JPG",
-  "lastrevid": 4242,
-  "modified": "2019-05-01T16:52:54Z",
-  "type": "mediainfo",
-  "id": "M1",
-  "labels": {
-    "de": {
-      "language": "de",
-      "value": "Stadtansicht von Trier, von Georg Braun & Frans Hogenberg, 1572."
-    },
-    "en": {
-      "language": "en",
-      "value": "Historical view of Trier, Germany, by Georg Braun & Frans Hogenberg, 1572."
-    }
-  },
-  "descriptions": {
-    "pt": {
-      "language": "pt",
-      "value": "Hohllay (\"pedra oca\") em Berdorf, Luxemburgo"
-    },
-    "es": {
-      "language": "es",
-      "value": "Hohllay (\"roca hueca\") en Berdorf, Luxemburgo"
-    },
-    "ru": {
-      "language": "ru",
-      "value": "Хохллай (\"полые скалы\") в городе Бердорф, Люксембург"
-    },
-    "de": {
-      "language": "de",
-      "value": "Hohllay („hohler Felsen“) bei Berdorf, Luxemburg"
-    },
-    "en": {
-      "language": "en",
-      "value": "Hohllay (“hollow rock”) in Berdorf, Luxembourg"
-    }
-  },
-  "statements": {
-    "P180": [
-      {
-        "mainsnak": {
-          "snaktype": "value",
-          "property": "P180",
-          "datavalue": {
-            "value": {
-              "entity-type": "item",
-              "numeric-id": 83043,
-              "id": "Q83043"
-            },
-            "type": "wikibase-entityid"
-          }
-        },
-        "type": "statement",
-        "id": "M1$ef654d2b-46d5-139b-6033-ba0d4a1c78d1",
-        "rank": "normal"
-      },
-      {
-        "mainsnak": {
-          "snaktype": "value",
-          "property": "P180",
-          "datavalue": {
-            "value": {
-              "entity-type": "item",
-              "numeric-id": 468756,
-              "id": "Q468756"
-            },
-            "type": "wikibase-entityid"
-          }
-        },
-        "type": "statement",
-        "id": "M1$c243df94-4cdd-58de-708c-243191831595",
-        "rank": "preferred"
-      }
-    ]
-  }
+	"pageid": 42,
+	"ns": 6,
+	"title": "File:Giant's Causeway (14).JPG",
+	"lastrevid": 4242,
+	"modified": "2019-05-01T16:52:54Z",
+	"type": "mediainfo",
+	"id": "M1",
+	"labels": {
+		"de": {
+			"language": "de",
+			"value": "Stadtansicht von Trier, von Georg Braun & Frans Hogenberg, 1572."
+		},
+		"en": {
+			"language": "en",
+			"value": "Historical view of Trier, Germany, by Georg Braun & Frans Hogenberg, 1572."
+		}
+	},
+	"descriptions": {
+		"pt": {
+			"language": "pt",
+			"value": "Hohllay (\"pedra oca\") em Berdorf, Luxemburgo"
+		},
+		"es": {
+			"language": "es",
+			"value": "Hohllay (\"roca hueca\") en Berdorf, Luxemburgo"
+		},
+		"ru": {
+			"language": "ru",
+			"value": "Хохллай (\"полые скалы\") в городе Бердорф, Люксембург"
+		},
+		"de": {
+			"language": "de",
+			"value": "Hohllay („hohler Felsen“) bei Berdorf, Luxemburg"
+		},
+		"en": {
+			"language": "en",
+			"value": "Hohllay (“hollow rock”) in Berdorf, Luxembourg"
+		}
+	},
+	"statements": {
+		"P180": [
+			{
+				"mainsnak": {
+					"snaktype": "value",
+					"property": "P180",
+					"datavalue": {
+						"value": {
+							"entity-type": "item",
+							"numeric-id": 83043,
+							"id": "Q83043"
+						},
+						"type": "wikibase-entityid"
+					}
+				},
+				"type": "statement",
+				"id": "M1$ef654d2b-46d5-139b-6033-ba0d4a1c78d1",
+				"rank": "normal"
+			},
+			{
+				"mainsnak": {
+					"snaktype": "value",
+					"property": "P180",
+					"datavalue": {
+						"value": {
+							"entity-type": "item",
+							"numeric-id": 468756,
+							"id": "Q468756"
+						},
+						"type": "wikibase-entityid"
+					}
+				},
+				"type": "statement",
+				"id": "M1$c243df94-4cdd-58de-708c-243191831595",
+				"rank": "preferred"
+			}
+		]
+	}
 }

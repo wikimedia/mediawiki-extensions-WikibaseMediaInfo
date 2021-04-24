@@ -44,7 +44,7 @@
 		},
 		"MediaInfoHelpUrls": {
 			"description": "Links to pages to learn more about wikibase properties. E.g. { P1: 'https://commons.wikimedia.org/wiki/Special:MyLanguage/Commons:Depicts' }",
-			"value":  {}
+			"value": {}
 		},
 		"MediaInfoLocalDev": {
 			"description": "Set to true when developing in a local environment to pull data from production for things like Media Search",
@@ -617,7 +617,7 @@
 	"SpecialPages": {
 		"MediaSearch": {
 			"class": "Wikibase\\MediaInfo\\Special\\SpecialMediaSearch",
-			"services": ["SearchEngineFactory", "NamespaceInfo", "UserOptionsManager"]
+			"services": [ "SearchEngineFactory", "NamespaceInfo", "UserOptionsManager" ]
 		}
 	},
 	"ExtensionMessagesFiles": {

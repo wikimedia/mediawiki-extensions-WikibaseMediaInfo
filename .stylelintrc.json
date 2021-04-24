@@ -2,6 +2,6 @@
 	"extends": "stylelint-config-wikimedia",
 	"rules": {
 		"selector-class-pattern": "^(wbmi|wb|wikibase)-",
-		"unit-blacklist": null
+		"unit-disallowed-list": null
 	}
 }

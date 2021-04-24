@@ -16,7 +16,8 @@ module.exports = function ( grunt ) {
 			},
 			all: [
 				'**/*.{js,json,vue}',
-				'!{vendor,node_modules}/**'
+				'!{vendor,node_modules}/**',
+				'!tests/node-qunit/**'
 			]
 		},
 		banana: conf.MessagesDirs,

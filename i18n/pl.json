@@ -128,8 +128,8 @@
 	"wikibasemediainfo-special-mediasearch-load-more-results": "Załaduj więcej",
 	"wikibasemediainfo-special-mediasearch-quickview-button-text": "Więcej szczegółów",
 	"wikibasemediainfo-special-mediasearch-quickview-close-button-text": "Zamknij szczegóły pliku",
-	"wikibasemediainfo-copytextlayout-copy": "Kopiuj",
-	"wikibasemediainfo-copytextlayout-copy-fail": "Kopiowanie do schowka nie powiodło się.",
-	"wikibasemediainfo-copytextlayout-copy-success": "Skopiowano do schowka.",
+	"wikibasemediainfo-special-mediasearch-copytextlayout-copy": "Kopiuj",
+	"wikibasemediainfo-special-mediasearch-copytextlayout-copy-fail": "Kopiowanie do schowka nie powiodło się.",
+	"wikibasemediainfo-special-mediasearch-copytextlayout-copy-success": "Skopiowano do schowka.",
 	"wikibasemediainfo-special-mediasearch-clear-filters": "Wyczyść filtry"
 }

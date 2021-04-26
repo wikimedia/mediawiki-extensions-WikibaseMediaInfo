@@ -115,6 +115,7 @@
 	"wikibasemediainfo-quantity-unit-button-text": "Definir unidade",
 	"wikibasemediainfo-globecoordinate-input-button-text": "Adicionar",
 	"wikibasemediainfo-globecoordinate-map-button-text": "Selecionar no mapa",
+	"wikibasemediainfo-rescore-profile-classic-noboostlinks-max-boost-template": "Classificação com base no melhor modelo, idioma da página e tempo para retorno quando ativado nessa wiki.",
 	"wikibasemediainfo-special-mediasearch-title": "Pesquisar mídia",
 	"wikibasemediainfo-special-mediasearch-continue": "Próximo",
 	"wikibasemediainfo-special-mediasearch-tab-image": "Imagens",
@@ -163,15 +164,14 @@
 	"wikibasemediainfo-special-mediasearch-user-notice-dismiss": "Dispensar esta notificação",
 	"wikibasemediainfo-special-mediasearch-switch-special-search": "Alternar para Special:Search",
 	"wikibasemediainfo-special-mediasearch-category-info": "$1 {{PLURAL:$1|membro|membros}} ($2 {{PLURAL:$2|subcategoria|subcategorias}}, $3 {{PLURAL:$3|arquivo|arquivos}})",
-	"wikibasemediainfo-rescore-profile-classic-noboostlinks-max-boost-template": "Classificação com base no melhor modelo, idioma da página e tempo para retorno quando ativado nessa wiki.",
-	"wikibasemediainfo-copytextlayout-copy": "Copiar",
-	"wikibasemediainfo-copytextlayout-copy-fail": "Falha ao copiar para a área de transferência.",
-	"wikibasemediainfo-copytextlayout-copy-success": "Copiado para a área de transferência.",
+	"wikibasemediainfo-special-mediasearch-copytextlayout-copy": "Copiar",
+	"wikibasemediainfo-special-mediasearch-copytextlayout-copy-fail": "Falha ao copiar para a área de transferência.",
+	"wikibasemediainfo-special-mediasearch-copytextlayout-copy-success": "Copiado para a área de transferência.",
 	"wikibasemediainfo-special-mediasearch-clear-filters": "Limpar filtros",
 	"wikibasemediainfo-special-mediasearch-results-count": "$1 {{PLURAL:$1|resultado|resultados}}",
 	"wikibasemediainfo-special-mediasearch-wordcount": "($1 {{PLURAL:$1|palavara|palavaras}})",
 	"wikibasemediainfo-special-mediasearch-did-you-mean": "Você quis dizer: <a href=\"$2\">$1</a>",
 	"wikibasemediainfo-special-mediasearch-error-message": "Pesquisa inválida",
 	"wikibasemediainfo-special-mediasearch-error-text": "Insira uma nova pesquisa acima e tente novamente",
-	"wikibasemediainfo-specialsearch-default": "Mostre os resultados da pesquisa na interface Especial:Pesquisa"
+	"wikibasemediainfo-special-mediasearch-specialsearch-default": "Mostre os resultados da pesquisa na interface Especial:Pesquisa"
 }

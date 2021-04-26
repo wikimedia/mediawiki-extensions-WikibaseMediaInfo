@@ -148,12 +148,12 @@
 	"wikibasemediainfo-special-mediasearch-user-notice-body": "Saad nüüd [[Special:Preferences#mw-prefsection-searchoptions|eelistustes]] valida, millist lehekülge otsimisel eelistad.",
 	"wikibasemediainfo-special-mediasearch-switch-special-search": "Lülitu ümber leheküljele Special:Search",
 	"wikibasemediainfo-special-mediasearch-category-info": "$1 {{PLURAL:$1|liige|liiget}} ($2 {{PLURAL:$2|alamkategooria|alamkategooriat}}, $3 {{PLURAL:$3|fail|faili}})",
-	"wikibasemediainfo-copytextlayout-copy": "Kopeeri",
-	"wikibasemediainfo-copytextlayout-copy-fail": "Ei õnnestunud lõikelauale kopeerida.",
-	"wikibasemediainfo-copytextlayout-copy-success": "Kopeeritud lõikelauale.",
+	"wikibasemediainfo-special-mediasearch-copytextlayout-copy": "Kopeeri",
+	"wikibasemediainfo-special-mediasearch-copytextlayout-copy-fail": "Ei õnnestunud lõikelauale kopeerida.",
+	"wikibasemediainfo-special-mediasearch-copytextlayout-copy-success": "Kopeeritud lõikelauale.",
 	"wikibasemediainfo-special-mediasearch-results-count": "$1 {{PLURAL:$1|tulemus|tulemust}}",
 	"wikibasemediainfo-special-mediasearch-wordcount": "($1 {{PLURAL:$1|sõna}})",
 	"wikibasemediainfo-special-mediasearch-did-you-mean": "Kas mõtlesid: <a href=\"$2\">$1</a>",
-	"wikibasemediainfo-specialsearch-default": "Näita otsitulemusi leheküljel Special:Search",
-	"wikibasemediainfo-specialsearch-default-help": "Selle valikuga näidatakse peamise otsiriba tulemusi vanema lehekülje Special:Search vahendusel, lehekülje Special:MediaSearch asemel."
+	"wikibasemediainfo-special-mediasearch-specialsearch-default": "Näita otsitulemusi leheküljel Special:Search",
+	"wikibasemediainfo-special-mediasearch-specialsearch-default-help": "Selle valikuga näidatakse peamise otsiriba tulemusi vanema lehekülje Special:Search vahendusel, lehekülje Special:MediaSearch asemel."
 }

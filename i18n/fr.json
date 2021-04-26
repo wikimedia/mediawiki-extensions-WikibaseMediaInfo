@@ -124,6 +124,7 @@
 	"wikibasemediainfo-quantity-unit-button-text": "Définir l’unité",
 	"wikibasemediainfo-globecoordinate-input-button-text": "Ajouter",
 	"wikibasemediainfo-globecoordinate-map-button-text": "Sélectionner sur la carte",
+	"wikibasemediainfo-rescore-profile-classic-noboostlinks-max-boost-template": "Classement basé sur le meilleur modèle, la langue de la page et l’ancienneté, quand cela est activé sur ce wiki.",
 	"wikibasemediainfo-special-mediasearch-title": "Rechercher un média",
 	"wikibasemediainfo-special-mediasearch-continue": "Suivant",
 	"wikibasemediainfo-special-mediasearch-tab-image": "Images",
@@ -172,10 +173,9 @@
 	"wikibasemediainfo-special-mediasearch-user-notice-dismiss": "Fermer cette notification",
 	"wikibasemediainfo-special-mediasearch-switch-special-search": "Basculer vers Spéciale:Recherche",
 	"wikibasemediainfo-special-mediasearch-category-info": "$1 membre{{PLURAL:$1||s}} ($2 sous-catégorie{{PLURAL:$2||s}}, $3 fichier{{PLURAL:$3||s}})",
-	"wikibasemediainfo-rescore-profile-classic-noboostlinks-max-boost-template": "Classement basé sur le meilleur modèle, la langue de la page et l’ancienneté, quand cela est activé sur ce wiki.",
-	"wikibasemediainfo-copytextlayout-copy": "Copier",
-	"wikibasemediainfo-copytextlayout-copy-fail": "Échec de copie vers le presse-papiers.",
-	"wikibasemediainfo-copytextlayout-copy-success": "Copié dans le presse-papier.",
+	"wikibasemediainfo-special-mediasearch-copytextlayout-copy": "Copier",
+	"wikibasemediainfo-special-mediasearch-copytextlayout-copy-fail": "Échec de copie vers le presse-papiers.",
+	"wikibasemediainfo-special-mediasearch-copytextlayout-copy-success": "Copié dans le presse-papier.",
 	"wikibasemediainfo-special-mediasearch-clear-filters": "Effacer les filtres",
 	"wikibasemediainfo-special-mediasearch-results-count": "$1 résultat{{PLURAL:$1||s}}",
 	"wikibasemediainfo-special-mediasearch-wordcount": "($1 mot{{PLURAL:$1||s}})",
@@ -183,6 +183,6 @@
 	"wikibasemediainfo-special-mediasearch-did-you-mean": "Vouliez-vous dire : <a href=\"$2\">$1</a>",
 	"wikibasemediainfo-special-mediasearch-error-message": "Recherche incorrecte",
 	"wikibasemediainfo-special-mediasearch-error-text": "Entrez une nouvelle recherche ci-dessus et essayez à nouveau",
-	"wikibasemediainfo-specialsearch-default": "Afficher les résultats de recherche dans l’interface Spécial:Recherche",
-	"wikibasemediainfo-specialsearch-default-help": "Sélectionner ceci pour afficher les résultats de recherche depuis la barre principale de recherche dans l’ancienne interface Spécial:Recherche au lieu de Spécial:RechercheMédia"
+	"wikibasemediainfo-special-mediasearch-specialsearch-default": "Afficher les résultats de recherche dans l’interface Spécial:Recherche",
+	"wikibasemediainfo-special-mediasearch-specialsearch-default-help": "Sélectionner ceci pour afficher les résultats de recherche depuis la barre principale de recherche dans l’ancienne interface Spécial:Recherche au lieu de Spécial:RechercheMédia"
 }

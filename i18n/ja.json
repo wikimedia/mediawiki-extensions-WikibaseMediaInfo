@@ -149,9 +149,9 @@
 	"wikibasemediainfo-special-mediasearch-load-more-results": "続きを表示",
 	"wikibasemediainfo-special-mediasearch-quickview-button-text": "詳細",
 	"wikibasemediainfo-special-mediasearch-quickview-close-button-text": "閉じる",
-	"wikibasemediainfo-copytextlayout-copy": "コピー",
-	"wikibasemediainfo-copytextlayout-copy-fail": "クリップボードにコピーできませんでした。",
-	"wikibasemediainfo-copytextlayout-copy-success": "クリップボードにコピーされました。",
+	"wikibasemediainfo-special-mediasearch-copytextlayout-copy": "コピー",
+	"wikibasemediainfo-special-mediasearch-copytextlayout-copy-fail": "クリップボードにコピーできませんでした。",
+	"wikibasemediainfo-special-mediasearch-copytextlayout-copy-success": "クリップボードにコピーされました。",
 	"wikibasemediainfo-special-mediasearch-clear-filters": "フィルターをクリア",
 	"wikibasemediainfo-special-mediasearch-did-you-mean": "もしかして: <a href=\"$2\">$1</a>",
 	"wikibasemediainfo-special-mediasearch-error-message": "不正な検索"

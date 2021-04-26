@@ -148,7 +148,7 @@
 	"wikibasemediainfo-special-mediasearch-quickview-close-button-text": "Закрити деталі файлу",
 	"wikibasemediainfo-special-mediasearch-quickview-previous-button-text": "Переглянути попередній результат",
 	"wikibasemediainfo-special-mediasearch-quickview-next-button-text": "Переглянути наступний результат",
-	"wikibasemediainfo-copytextlayout-copy": "Скопіювати",
-	"wikibasemediainfo-copytextlayout-copy-fail": "Помилка копіювання до буферу обміну.",
-	"wikibasemediainfo-copytextlayout-copy-success": "Скопійовано до буферу обміну."
+	"wikibasemediainfo-special-mediasearch-copytextlayout-copy": "Скопіювати",
+	"wikibasemediainfo-special-mediasearch-copytextlayout-copy-fail": "Помилка копіювання до буферу обміну.",
+	"wikibasemediainfo-special-mediasearch-copytextlayout-copy-success": "Скопійовано до буферу обміну."
 }

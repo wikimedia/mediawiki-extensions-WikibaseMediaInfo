@@ -98,7 +98,7 @@ module.exports = {
 				copied;
 
 			// Set the value of the textarea to our copytext.
-			textarea.value = this.copyText;
+			textarea.textContent = this.copyText;
 
 			// Earlier iOS versions need contenteditable to be true.
 			textarea.contentEditable = true;

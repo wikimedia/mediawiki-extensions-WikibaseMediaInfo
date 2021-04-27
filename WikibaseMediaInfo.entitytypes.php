@@ -216,6 +216,7 @@ return [
 				$entityNamespaceLookup,
 				$entityQuery,
 				$entitySource,
+				MediaWikiServices::getInstance()->getDBLoadBalancerFactory(),
 				WikibaseRepo::getLogger()
 			);
 		},

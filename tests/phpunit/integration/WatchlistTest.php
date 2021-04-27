@@ -60,16 +60,18 @@ class WatchlistTest extends WBMIApiTestCase {
 			$pageId
 		)->getSerialization();
 
+		$watchlistManager = $this->getServiceContainer()->getWatchlistManager();
+
 		$this->addCaption( $entityId, 'en', 'a caption' );
 		$this->assertFalse(
-			$this->editor->isWatched( $testFileTitle ),
+			$watchlistManager->isWatched( $this->editor, $testFileTitle ),
 			'page should not be watched because no new page was created'
 		);
 
 		$userOptionsManager->setOption( $this->editor, 'watchdefault', 1 );
 		$this->addCaption( $entityId, 'de', 'eine Kurzbeschreibung' );
 		$this->assertTrue(
-			$this->editor->isWatched( $testFileTitle ),
+			$watchlistManager->isWatched( $this->editor, $testFileTitle ),
 			'page should be watched because an edit was made'
 		);
 	}

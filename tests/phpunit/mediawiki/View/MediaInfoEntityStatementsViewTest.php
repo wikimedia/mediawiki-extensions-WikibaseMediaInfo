@@ -55,7 +55,6 @@ class MediaInfoEntityStatementsViewTest extends \PHPUnit\Framework\TestCase {
 	private $serializerFactory;
 
 	private function createDependencies( array $langCodes = [ 'en' ] ) {
-		$wbRepo = WikibaseRepo::getDefaultInstance();
 		$languages = [];
 		foreach ( $langCodes as $langCode ) {
 			$languages[] = LanguageWithConversion::factory( $langCode );

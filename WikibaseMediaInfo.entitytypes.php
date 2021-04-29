@@ -245,7 +245,6 @@ return [
 			$revisionStoreFactory = $services->getRevisionStoreFactory();
 			$blobStoreFactory = $services->getBlobStoreFactory();
 
-			$wbRepo = WikibaseRepo::getDefaultInstance();
 			// TODO: this all scaffolding should probably be somehow moved to Wikibase Repo or so?
 			$databaseName = WikibaseRepo::getEntitySourceDefinitions()
 				->getSourceForEntityType( MediaInfo::ENTITY_TYPE )->getDatabaseName();

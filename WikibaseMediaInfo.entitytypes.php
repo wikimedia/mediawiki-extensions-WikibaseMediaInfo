@@ -14,7 +14,7 @@
  */
 
 use MediaWiki\MediaWikiServices;
-use Wikibase\DataAccess\SingleEntitySourceServices;
+use Wikibase\DataAccess\EntitySource;
 use Wikibase\DataModel\DeserializerFactory;
 use Wikibase\DataModel\Entity\EntityDocument;
 use Wikibase\DataModel\Entity\EntityId;
@@ -269,11 +269,9 @@ return [
 				)
 			);
 		},
-		Def::PREFETCHING_TERM_LOOKUP_CALLBACK => function ( $servicesOrEntitySource ) {
-			$services = $servicesOrEntitySource instanceof SingleEntitySourceServices
-				? $servicesOrEntitySource
-				: WikibaseRepo::getSingleEntitySourceServicesFactory()
-					->getServicesForSource( $servicesOrEntitySource );
+		Def::PREFETCHING_TERM_LOOKUP_CALLBACK => function ( EntitySource $entitySource ) {
+			$services = WikibaseRepo::getSingleEntitySourceServicesFactory()
+					->getServicesForSource( $entitySource );
 
 			return new MediaInfoPrefetchingTermLookup( $services->getEntityRevisionLookup() );
 		},

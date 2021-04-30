@@ -269,7 +269,12 @@ return [
 				)
 			);
 		},
-		Def::PREFETCHING_TERM_LOOKUP_CALLBACK => function ( SingleEntitySourceServices $services ) {
+		Def::PREFETCHING_TERM_LOOKUP_CALLBACK => function ( $servicesOrEntitySource ) {
+			$services = $servicesOrEntitySource instanceof SingleEntitySourceServices
+				? $servicesOrEntitySource
+				: WikibaseRepo::getSingleEntitySourceServicesFactory()
+					->getServicesForSource( $servicesOrEntitySource );
+
 			return new MediaInfoPrefetchingTermLookup( $services->getEntityRevisionLookup() );
 		},
 		Def::ENTITY_ID_LOOKUP_CALLBACK => function () {

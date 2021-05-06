@@ -179,8 +179,20 @@
 			$statements = $content.find( '.wbmi-entityview-statementsGroup' ),
 			existingProperties = defaultProperties.concat( Object.keys( mediaInfoEntity.statements || {} ) ),
 			deserializer = new StatementListDeserializer(),
-			tabs = infuseTabs( $content ),
+			tabs,
 			existingStatementPanels;
+
+		// Try to infuse the mediainfo tabs.
+		// https://phabricator.wikimedia.org/T262470.
+		try {
+			tabs = infuseTabs( $content );
+		} catch ( e ) {
+			// The mediainfo tabs are not in the DOM for some reason. Maybe a
+			// gadget or user script has modified something?  Log an error to
+			// the console and bail early.
+			mw.log.error( e.message );
+			return;
+		}
 
 		// Create AddPropertyWidget and provide it with all the IDs we know about
 		addPropertyWidget = new AddPropertyWidget( { propertyIds: existingProperties } );

@@ -221,13 +221,8 @@ class WikibaseMediaInfoHooks {
 	}
 
 	private function getDefaultSearchPage( \User $user ) {
-		global $wgMediaInfoMediaSearchDefaultForAnon;
 		$userOptionsManager = MediaWikiServices::getInstance()->getUserOptionsManager();
-		if (
-			( $wgMediaInfoMediaSearchDefaultForAnon && ( $user->isAnon() ) )
-			||
-			!$userOptionsManager->getOption( $user, 'sdms-specialsearch-default' )
-		) {
+		if ( !$userOptionsManager->getOption( $user, 'sdms-specialsearch-default' ) ) {
 			return \SpecialPage::getTitleFor( 'MediaSearch' );
 		}
 		return \SpecialPage::getTitleFor( 'Search' );

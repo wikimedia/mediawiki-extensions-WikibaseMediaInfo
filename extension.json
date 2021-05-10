@@ -32,9 +32,6 @@
 		"WikibaseMediaInfo": "GlobalVarConfig::newInstance"
 	},
 	"config": {
-		"MediaInfoMediaSearchDefaultForAnon": {
-			"value": false
-		},
 		"MediaInfoEnableSearch": {
 			"value": false
 		},
@@ -601,7 +598,7 @@
 		"wbmi-cc0-confirmed": 0,
 		"wbmi-wikidata-link-notice-dismissed": 0,
 		"sdms-search-user-notice-dismissed": 0,
-		"sdms-specialsearch-default": 1
+		"sdms-specialsearch-default": 0
 	},
 	"APIModules": {
 		"relatedconcepts": {

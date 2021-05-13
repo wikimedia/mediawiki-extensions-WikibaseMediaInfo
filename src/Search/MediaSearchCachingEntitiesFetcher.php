@@ -17,10 +17,12 @@ class MediaSearchCachingEntitiesFetcher extends MediaSearchEntitiesFetcher {
 	public function __construct(
 		MediaSearchEntitiesFetcher $fetcher,
 		WANObjectCache $objectCache,
+		string $language,
 		int $ttl = WANObjectCache::TTL_DAY
 	) {
 		$this->fetcher = $fetcher;
 		$this->objectCache = $objectCache;
+		$this->language = $language;
 		$this->ttl = $ttl;
 	}
 
@@ -41,7 +43,7 @@ class MediaSearchCachingEntitiesFetcher extends MediaSearchEntitiesFetcher {
 		$cacheKeys = $this->objectCache->makeMultiKeys(
 			$searchQueries,
 			function ( $query ) {
-				return $this->objectCache->makeKey( 'wbmi-mediasearch-entities', $query );
+				return $this->objectCache->makeKey( 'wbmi-mediasearch-entities', $query, $this->language );
 			}
 		);
 

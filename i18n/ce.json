@@ -36,10 +36,10 @@
 	"wikibasemediainfo-statements-item-mark-as-prominent": "Билгалъе къаьсташ санна",
 	"wikibasemediainfo-statements-item-remove": "ДӀайаккха",
 	"wikibasemediainfo-statements-learn-more": "Цул совнаха хаа",
-	"wikibasemediainfo-statements-remove": "ДӀаяха ерриге",
+	"wikibasemediainfo-statements-remove": "ДӀайаха йерриге",
 	"wikibasemediainfo-statements-title-depicts": "ХӀокху файл тӀера элементаш",
 	"wikibasemediainfo-statements-link-notice-dismiss": "Йухадаккха",
-	"wikibasemediainfo-remove-all-statements-confirm-title": "ДӀаяха ерриге?",
+	"wikibasemediainfo-remove-all-statements-confirm-title": "ДӀайаха йерриге?",
 	"wikibasemediainfo-remove-all-statements-confirm-accept": "ДӀайаккха",
 	"wikibasemediainfo-coordinate-input-label": "Координаташ",
 	"wikibasemediainfo-coordinate-input-placeholder": "Шоралла, дохалла",
@@ -77,6 +77,6 @@
 	"wikibasemediainfo-special-mediasearch-filter-license-other": "Кхиерш",
 	"wikibasemediainfo-special-mediasearch-clear-title": "ДӀайаккха",
 	"wikibasemediainfo-special-mediasearch-copytextlayout-copy": "Копиян",
-	"wikibasemediainfo-special-mediasearch-clear-filters": "Литтарш цӀанъян",
+	"wikibasemediainfo-special-mediasearch-clear-filters": "Литтарш цӀанйан",
 	"wikibasemediainfo-special-mediasearch-image-size": "($1)"
 }

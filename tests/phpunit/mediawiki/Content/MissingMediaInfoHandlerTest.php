@@ -33,8 +33,7 @@ class MissingMediaInfoHandlerTest extends \PHPUnit\Framework\TestCase {
 	private function getTitleFactory() {
 		$titleFactory = $this->createMock( TitleFactory::class );
 
-		$titleFactory->expects( $this->any() )
-			->method( 'newFromID' )
+		$titleFactory->method( 'newFromID' )
 			->will( $this->returnCallback( function ( $pageId ) {
 				switch ( $pageId ) {
 					case 1:
@@ -89,18 +88,16 @@ class MissingMediaInfoHandlerTest extends \PHPUnit\Framework\TestCase {
 			->disableOriginalConstructor()
 			->getMock();
 
-		$outputGenerator->expects( $this->any() )
-			->method( 'getParserOutput' )
-			->will( $this->returnValue( new ParserOutput( $text ) ) );
+		$outputGenerator->method( 'getParserOutput' )
+			->willReturn( new ParserOutput( $text ) );
 
 		/** @var EntityParserOutputGeneratorFactory $outputGeneratorFactory */
 		$outputGeneratorFactory = $this->getMockBuilder( EntityParserOutputGeneratorFactory::class )
 			->disableOriginalConstructor()
 			->getMock();
 
-		$outputGeneratorFactory->expects( $this->any() )
-			->method( 'getEntityParserOutputGenerator' )
-			->will( $this->returnValue( $outputGenerator ) );
+		$outputGeneratorFactory->method( 'getEntityParserOutputGenerator' )
+			->willReturn( $outputGenerator );
 
 		$handler = new MissingMediaInfoHandler(
 			$idLookup,

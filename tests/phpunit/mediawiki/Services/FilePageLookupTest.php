@@ -23,8 +23,7 @@ class FilePageLookupTest extends \PHPUnit\Framework\TestCase {
 	private function getTitleFactory() {
 		$titleFactory = $this->createMock( TitleFactory::class );
 
-		$titleFactory->expects( $this->any() )
-			->method( 'newFromId' )
+		$titleFactory->method( 'newFromId' )
 			->will( $this->returnCallback( function ( $pageId ) {
 				switch ( $pageId ) {
 					case 1:

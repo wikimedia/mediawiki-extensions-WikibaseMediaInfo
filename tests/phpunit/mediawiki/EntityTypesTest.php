@@ -50,11 +50,11 @@ class EntityTypesTest extends \PHPUnit\Framework\TestCase {
 
 		$serializerFactory->expects( $this->once() )
 			->method( 'newTermListSerializer' )
-			->will( $this->returnValue( $this->createMock( Serializer::class ) ) );
+			->willReturn( $this->createMock( Serializer::class ) );
 
 		$serializerFactory->expects( $this->once() )
 			->method( 'newStatementListSerializer' )
-			->will( $this->returnValue( $this->createMock( Serializer::class ) ) );
+			->willReturn( $this->createMock( Serializer::class ) );
 
 		return $serializerFactory;
 	}
@@ -79,15 +79,15 @@ class EntityTypesTest extends \PHPUnit\Framework\TestCase {
 
 		$deserializerFactory->expects( $this->once() )
 			->method( 'newEntityIdDeserializer' )
-			->will( $this->returnValue( $this->createMock( Deserializer::class ) ) );
+			->willReturn( $this->createMock( Deserializer::class ) );
 
 		$deserializerFactory->expects( $this->once() )
 			->method( 'newTermListDeserializer' )
-			->will( $this->returnValue( $this->createMock( Deserializer::class ) ) );
+			->willReturn( $this->createMock( Deserializer::class ) );
 
 		$deserializerFactory->expects( $this->once() )
 			->method( 'newStatementListDeserializer' )
-			->will( $this->returnValue( $this->createMock( Deserializer::class ) ) );
+			->willReturn( $this->createMock( Deserializer::class ) );
 
 		return $deserializerFactory;
 	}

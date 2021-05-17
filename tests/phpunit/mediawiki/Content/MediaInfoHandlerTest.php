@@ -45,25 +45,21 @@ class MediaInfoHandlerTest extends \PHPUnit\Framework\TestCase {
 		$m17 = new MediaInfoId( 'M17' );
 
 		$propertyLookup = $this->createMock( PropertyDataTypeLookup::class );
-		$propertyLookup->expects( $this->any() )
-			->method( 'getDataTypeIdForProperty' )
+		$propertyLookup->method( 'getDataTypeIdForProperty' )
 			->willReturn( 'string' );
 
 		$missingMediaInfoHandler = $this->getMockWithoutConstructor(
 			MissingMediaInfoHandler::class
 		);
-		$missingMediaInfoHandler->expects( $this->any() )
-			->method( 'getMediaInfoId' )
+		$missingMediaInfoHandler->method( 'getMediaInfoId' )
 			->willReturn( $m17 );
-		$missingMediaInfoHandler->expects( $this->any() )
-			->method( 'showVirtualMediaInfo' )
+		$missingMediaInfoHandler->method( 'showVirtualMediaInfo' )
 			->willReturnCallback( function ( MediaInfoId $id, IContextSource $context ) {
 				$context->getOutput()->addHTML( 'MISSING!' );
 			} );
 
 		$idLookup = $this->getMockWithoutConstructor( MediaInfoIdLookup::class );
-		$idLookup->expects( $this->any() )
-			->method( 'getEntityIdForTitle' )
+		$idLookup->method( 'getEntityIdForTitle' )
 			->willReturnCallback( function ( Title $title ) {
 				if ( $title->getPrefixedDBkey() !== 'Test-M1.png' ) {
 					return null;
@@ -73,8 +69,7 @@ class MediaInfoHandlerTest extends \PHPUnit\Framework\TestCase {
 			} );
 
 		$filePageLookup = $this->getMockWithoutConstructor( FilePageLookup::class );
-		$filePageLookup->expects( $this->any() )
-			->method( 'getFilePage' )
+		$filePageLookup->method( 'getFilePage' )
 			->willReturnCallback( function ( MediaInfoId $id ) {
 				if ( $id->getSerialization() !== 'M1' ) {
 					return null;

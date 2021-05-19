@@ -34,7 +34,7 @@ class MissingMediaInfoHandlerTest extends \PHPUnit\Framework\TestCase {
 		$titleFactory = $this->createMock( TitleFactory::class );
 
 		$titleFactory->method( 'newFromID' )
-			->will( $this->returnCallback( function ( $pageId ) {
+			->will( $this->returnCallback( static function ( $pageId ) {
 				switch ( $pageId ) {
 					case 1:
 						$title = Title::makeTitle( NS_FILE, 'Test-' . $pageId . '.png' );
@@ -73,7 +73,7 @@ class MissingMediaInfoHandlerTest extends \PHPUnit\Framework\TestCase {
 	 */
 	private function newHandler( Title $title, $text = '' ) {
 		$entityIdComposer = new EntityIdComposer( [
-			'mediainfo' => function ( $repositoryName, $uniquePart ) {
+			'mediainfo' => static function ( $repositoryName, $uniquePart ) {
 				return new MediaInfoId( EntityId::joinSerialization( [
 					$repositoryName,
 					'',

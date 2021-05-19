@@ -10,7 +10,7 @@ use Wikibase\MediaInfo\Services\MediaInfoServices;
 use Wikibase\Repo\WikibaseRepo;
 
 return [
-	'MediaInfoIdLookup' => function ( MediaWikiServices $services ) {
+	'MediaInfoIdLookup' => static function ( MediaWikiServices $services ) {
 		$nsLookup = WikibaseRepo::getEntityNamespaceLookup( $services );
 		$entityIdComposer = WikibaseRepo::getEntityIdComposer( $services );
 		$mediaInfoNamespace = $nsLookup->getEntityNamespace( MediaInfo::ENTITY_TYPE );
@@ -22,11 +22,11 @@ return [
 		return new MediaInfoIdLookup( $entityIdComposer, $mediaInfoNamespace );
 	},
 
-	'MediaInfoFilePageLookup' => function ( MediaWikiServices $services ) {
+	'MediaInfoFilePageLookup' => static function ( MediaWikiServices $services ) {
 		return new FilePageLookup( $services->getTitleFactory() );
 	},
 
-	'MediaInfoHandler' => function ( MediaWikiServices $services ) {
+	'MediaInfoHandler' => static function ( MediaWikiServices $services ) {
 		return new MediaInfoHandler(
 			WikibaseRepo::getEntityContentDataCodec( $services ),
 			WikibaseRepo::getEntityConstraintProvider( $services ),

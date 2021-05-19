@@ -66,26 +66,26 @@ use Wikimedia\Purtle\RdfWriter;
 
 return [
 	MediaInfo::ENTITY_TYPE => [
-		Def::STORAGE_SERIALIZER_FACTORY_CALLBACK => function ( SerializerFactory $serializerFactory ) {
+		Def::STORAGE_SERIALIZER_FACTORY_CALLBACK => static function ( SerializerFactory $serializerFactory ) {
 			return new MediaInfoSerializer(
 				$serializerFactory->newTermListSerializer(),
 				$serializerFactory->newStatementListSerializer()
 			);
 		},
-		Def::SERIALIZER_FACTORY_CALLBACK => function ( SerializerFactory $serializerFactory ) {
+		Def::SERIALIZER_FACTORY_CALLBACK => static function ( SerializerFactory $serializerFactory ) {
 			return new MediaInfoSerializer(
 				$serializerFactory->newTermListSerializer(),
 				$serializerFactory->newStatementListSerializer()
 			);
 		},
-		Def::DESERIALIZER_FACTORY_CALLBACK => function ( DeserializerFactory $deserializerFactory ) {
+		Def::DESERIALIZER_FACTORY_CALLBACK => static function ( DeserializerFactory $deserializerFactory ) {
 			return new MediaInfoDeserializer(
 				$deserializerFactory->newEntityIdDeserializer(),
 				$deserializerFactory->newTermListDeserializer(),
 				$deserializerFactory->newStatementListDeserializer()
 			);
 		},
-		Def::VIEW_FACTORY_CALLBACK => function (
+		Def::VIEW_FACTORY_CALLBACK => static function (
 			Language $language,
 			TermLanguageFallbackChain $termFallbackChain,
 			EntityDocument $entity
@@ -135,7 +135,7 @@ return [
 			);
 		},
 		Def::CONTENT_MODEL_ID => MediaInfoContent::CONTENT_MODEL_ID,
-		Def::SEARCH_FIELD_DEFINITIONS => function ( array $languageCodes, SettingsArray $searchSettings ) {
+		Def::SEARCH_FIELD_DEFINITIONS => static function ( array $languageCodes, SettingsArray $searchSettings ) {
 			$services = MediaWikiServices::getInstance();
 			$config = $services->getConfigFactory()->makeConfig( 'WikibaseCirrusSearch' );
 			return new MediaInfoFieldDefinitions(
@@ -151,34 +151,34 @@ return [
 				)
 			);
 		},
-		Def::CONTENT_HANDLER_FACTORY_CALLBACK => function () {
+		Def::CONTENT_HANDLER_FACTORY_CALLBACK => static function () {
 			return MediaInfoServices::getMediaInfoHandler();
 		},
 		Def::ENTITY_ID_PATTERN => MediaInfoId::PATTERN,
-		Def::ENTITY_ID_BUILDER => function ( $serialization ) {
+		Def::ENTITY_ID_BUILDER => static function ( $serialization ) {
 			return new MediaInfoId( $serialization );
 		},
-		Def::ENTITY_ID_COMPOSER_CALLBACK => function ( $repositoryName, $uniquePart ) {
+		Def::ENTITY_ID_COMPOSER_CALLBACK => static function ( $repositoryName, $uniquePart ) {
 			return new MediaInfoId( EntityId::joinSerialization( [
 				$repositoryName,
 				'',
 				'M' . $uniquePart
 			] ) );
 		},
-		Def::ENTITY_DIFFER_STRATEGY_BUILDER => function () {
+		Def::ENTITY_DIFFER_STRATEGY_BUILDER => static function () {
 			return new MediaInfoDiffer();
 		},
-		Def::ENTITY_PATCHER_STRATEGY_BUILDER => function () {
+		Def::ENTITY_PATCHER_STRATEGY_BUILDER => static function () {
 			return new MediaInfoPatcher();
 		},
-		Def::ENTITY_FACTORY_CALLBACK => function () {
+		Def::ENTITY_FACTORY_CALLBACK => static function () {
 			return new MediaInfo();
 		},
 
 		// Identifier of a resource loader module that, when `require`d, returns a function
 		// returning a deserializer
 		Def::JS_DESERIALIZER_FACTORY_FUNCTION => 'wikibase.mediainfo.getDeserializer',
-		Def::CHANGEOP_DESERIALIZER_CALLBACK => function () {
+		Def::CHANGEOP_DESERIALIZER_CALLBACK => static function () {
 			$changeOpDeserializerFactory = WikibaseRepo::getChangeOpDeserializerFactory();
 
 			return new MediaInfoChangeOpDeserializer(
@@ -187,7 +187,7 @@ return [
 				$changeOpDeserializerFactory->getClaimsChangeOpDeserializer()
 			);
 		},
-		Def::ENTITY_DIFF_VISUALIZER_CALLBACK => function (
+		Def::ENTITY_DIFF_VISUALIZER_CALLBACK => static function (
 			MessageLocalizer $messageLocalizer,
 			ClaimDiffer $claimDiffer,
 			ClaimDifferenceVisualizer $claimDiffView,
@@ -202,7 +202,7 @@ return [
 				$entityIdFormatter
 			);
 		},
-		Def::ENTITY_METADATA_ACCESSOR_CALLBACK => function ( $dbName, $repoName ) {
+		Def::ENTITY_METADATA_ACCESSOR_CALLBACK => static function ( $dbName, $repoName ) {
 			$entityNamespaceLookup = WikibaseRepo::getEntityNamespaceLookup();
 			$entityQuery = new MediaInfoEntityQuery(
 				$entityNamespaceLookup,
@@ -220,7 +220,7 @@ return [
 				WikibaseRepo::getLogger()
 			);
 		},
-		Def::RDF_BUILDER_FACTORY_CALLBACK => function (
+		Def::RDF_BUILDER_FACTORY_CALLBACK => static function (
 			$flavorFlags,
 			RdfVocabulary $vocabulary,
 			RdfWriter $writer,
@@ -238,7 +238,7 @@ return [
 			[ RdfVocabulary::NS_SCHEMA_ORG, 'caption' ],
 			[ 'rdfs', 'label' ],
 		],
-		Def::ENTITY_REVISION_LOOKUP_FACTORY_CALLBACK => function (
+		Def::ENTITY_REVISION_LOOKUP_FACTORY_CALLBACK => static function (
 			EntityRevisionLookup $defaultLookup
 		) {
 			$services = MediaWikiServices::getInstance();
@@ -269,13 +269,13 @@ return [
 				)
 			);
 		},
-		Def::PREFETCHING_TERM_LOOKUP_CALLBACK => function ( EntitySource $entitySource ) {
+		Def::PREFETCHING_TERM_LOOKUP_CALLBACK => static function ( EntitySource $entitySource ) {
 			$services = WikibaseRepo::getSingleEntitySourceServicesFactory()
 					->getServicesForSource( $entitySource );
 
 			return new MediaInfoPrefetchingTermLookup( $services->getEntityRevisionLookup() );
 		},
-		Def::ENTITY_ID_LOOKUP_CALLBACK => function () {
+		Def::ENTITY_ID_LOOKUP_CALLBACK => static function () {
 			return MediaInfoServices::getMediaInfoIdLookup();
 		},
 		Def::LUA_ENTITY_MODULE => 'mw.wikibase.mediainfo.entity',

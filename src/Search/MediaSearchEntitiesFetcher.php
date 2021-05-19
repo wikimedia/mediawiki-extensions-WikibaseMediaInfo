@@ -121,7 +121,7 @@ class MediaSearchEntitiesFetcher {
 
 	protected function executeApiRequest( array $requests ): array {
 		$responses = $this->multiHttpClient->runMulti( $requests );
-		return array_map( function ( $response ) {
+		return array_map( static function ( $response ) {
 			return json_decode( $response['response']['body'], true ) ?: [];
 		}, $responses );
 	}

@@ -54,13 +54,13 @@ class MediaInfoHandlerTest extends \PHPUnit\Framework\TestCase {
 		$missingMediaInfoHandler->method( 'getMediaInfoId' )
 			->willReturn( $m17 );
 		$missingMediaInfoHandler->method( 'showVirtualMediaInfo' )
-			->willReturnCallback( function ( MediaInfoId $id, IContextSource $context ) {
+			->willReturnCallback( static function ( MediaInfoId $id, IContextSource $context ) {
 				$context->getOutput()->addHTML( 'MISSING!' );
 			} );
 
 		$idLookup = $this->getMockWithoutConstructor( MediaInfoIdLookup::class );
 		$idLookup->method( 'getEntityIdForTitle' )
-			->willReturnCallback( function ( Title $title ) {
+			->willReturnCallback( static function ( Title $title ) {
 				if ( $title->getPrefixedDBkey() !== 'Test-M1.png' ) {
 					return null;
 				}
@@ -70,7 +70,7 @@ class MediaInfoHandlerTest extends \PHPUnit\Framework\TestCase {
 
 		$filePageLookup = $this->getMockWithoutConstructor( FilePageLookup::class );
 		$filePageLookup->method( 'getFilePage' )
-			->willReturnCallback( function ( MediaInfoId $id ) {
+			->willReturnCallback( static function ( MediaInfoId $id ) {
 				if ( $id->getSerialization() !== 'M1' ) {
 					return null;
 				}

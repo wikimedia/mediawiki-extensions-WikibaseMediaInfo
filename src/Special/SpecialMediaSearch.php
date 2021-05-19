@@ -179,7 +179,7 @@ class SpecialMediaSearch extends SpecialPage {
 		}
 
 		$data = [
-			'querystring' => array_map( function ( $key, $value ) {
+			'querystring' => array_map( static function ( $key, $value ) {
 				return [
 					'key' => $key,
 					'value' => $value,
@@ -417,7 +417,7 @@ class SpecialMediaSearch extends SpecialPage {
 			switch ( $type ) {
 				case MediaSearchOptions::TYPE_VIDEO:
 					$width = 200;
-				break;
+					break;
 
 				case MediaSearchOptions::TYPE_OTHER:
 					// generating thumbnails from many of these file types is very
@@ -425,7 +425,7 @@ class SpecialMediaSearch extends SpecialPage {
 					// larger (takes longer to transfer) pre-generated (but readily
 					// available) size
 					$width = min( $this->getConfig()->get( 'UploadThumbnailRenderMap' ) );
-				break;
+					break;
 
 				default:
 					$width = null;
@@ -475,7 +475,7 @@ class SpecialMediaSearch extends SpecialPage {
 		$searchinfo = $response['query']['searchinfo'] ?? [];
 		$continue = $response['continue']['gsroffset'] ?? null;
 
-		uasort( $results, function ( $a, $b ) {
+		uasort( $results, static function ( $a, $b ) {
 			return $a['index'] <=> $b['index'];
 		} );
 
@@ -504,14 +504,14 @@ class SpecialMediaSearch extends SpecialPage {
 		// Gather a [ key => allowed values ] map of all allowed values for the
 		// given filter and media type
 		$searchOptions = $this->searchOptions->getOptions();
-		$allowedFilterValues = array_map( function ( $options ) {
+		$allowedFilterValues = array_map( static function ( $options ) {
 			return array_column( $options['items'], 'value' );
 		}, $searchOptions[ $type ] ?? [] );
 
 		// Filter the list of active filters, throwing out all invalid ones
 		$validFilters = array_filter(
 			$activeFilters,
-			function ( $value, $key ) use ( $allowedFilterValues ) {
+			static function ( $value, $key ) use ( $allowedFilterValues ) {
 				return isset( $allowedFilterValues[ $key ] ) && in_array( $value, $allowedFilterValues[ $key ] );
 			},
 			ARRAY_FILTER_USE_BOTH
@@ -556,7 +556,7 @@ class SpecialMediaSearch extends SpecialPage {
 		// per type, so that we can more easily grab the relevant data without
 		// having to loop it every time, for each filter
 		$labels = array_map(
-			function ( $data ) {
+			static function ( $data ) {
 				return array_column( $data['items'], 'label', 'value' );
 			},
 			$searchOptions[$type] ?? []

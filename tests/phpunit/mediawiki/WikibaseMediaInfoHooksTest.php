@@ -98,7 +98,7 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 
 		$out = $this->getMockBuilder( \OutputPage::class )
 			->disableOriginalConstructor()
-			->setMethods( [
+			->onlyMethods( [
 				'getTitle',
 				'getLanguage',
 				'getUser',

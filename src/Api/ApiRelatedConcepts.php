@@ -106,7 +106,7 @@ class ApiRelatedConcepts extends ApiBase {
 		}
 
 		$related = $this->getTermsRelatedToWikibaseItems( $matchingWikibaseItems, $params['limit'] );
-		$related = array_filter( $related, function ( $term ) use ( $params ) {
+		$related = array_filter( $related, static function ( $term ) use ( $params ) {
 			return strtolower( $term ) !== strtolower( $params['term'] );
 		} );
 

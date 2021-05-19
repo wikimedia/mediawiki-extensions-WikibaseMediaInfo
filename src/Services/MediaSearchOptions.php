@@ -232,7 +232,7 @@ class MediaSearchOptions {
 						'value' => 'ogg'
 					]
 				] ];
-			case static::TYPE_VIDEO :
+			case static::TYPE_VIDEO:
 				return [ 'items' => [
 					[
 						// phpcs:ignore Generic.Files.LineLength.TooLong
@@ -413,14 +413,14 @@ class MediaSearchOptions {
 		$namespaceInfo = MediaWikiServices::getInstance()->getNamespaceInfo();
 		$allNamespaces = $namespaceInfo->getCanonicalNamespaces();
 
-		$nonFileNamespaces = array_filter( $allNamespaces, function ( $namespaceId ) {
+		$nonFileNamespaces = array_filter( $allNamespaces, static function ( $namespaceId ) {
 			// Exclude virtual namespaces & file namespace.
 			return $namespaceId >= 0 && $namespaceId !== NS_FILE;
 		}, ARRAY_FILTER_USE_KEY );
 
 		$talkNamespaces = array_combine(
 			$namespaceInfo->getTalkNamespaces(),
-			array_map( function ( $namespaceId ) use ( $allNamespaces ) {
+			array_map( static function ( $namespaceId ) use ( $allNamespaces ) {
 				return $allNamespaces[$namespaceId];
 			}, $namespaceInfo->getTalkNamespaces() )
 		);

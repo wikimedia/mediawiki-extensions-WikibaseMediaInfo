@@ -63,7 +63,7 @@ class WikibaseMediaInfoHooks {
 	 * @param MediaWikiServices $services
 	 */
 	public static function onMediaWikiServices( MediaWikiServices $services ) {
-		$services->addServiceManipulator( 'SlotRoleRegistry', function ( SlotRoleRegistry $registry ) {
+		$services->addServiceManipulator( 'SlotRoleRegistry', static function ( SlotRoleRegistry $registry ) {
 			if ( !$registry->isDefinedRole( 'mediainfo' ) ) {
 				// Sanity check
 				$registry->defineRoleWithModel(
@@ -835,7 +835,7 @@ class WikibaseMediaInfoHooks {
 		}
 
 		$mwServices = MediaWikiServices::getInstance();
-		$dbw = wfGetDB( DB_MASTER );
+		$dbw = wfGetDB( DB_PRIMARY );
 		$blobStore = $mwServices->getBlobStoreFactory()->newSqlBlobStore();
 		$statementGuidParser = WikibaseRepo::getStatementGuidParser( $mwServices );
 

@@ -21,7 +21,7 @@ class ApiRelatedConceptsTest extends MediaWikiTestCase {
 	private function mockSearchResponse( array $ids ) {
 		return [
 			'query' => [
-				'search' => array_map( function ( $id ) {
+				'search' => array_map( static function ( $id ) {
 					return [ 'title' => $id ];
 				}, $ids ),
 			],
@@ -30,7 +30,7 @@ class ApiRelatedConceptsTest extends MediaWikiTestCase {
 
 	private function mockEntityResponse( array $ids ) {
 		return [
-			'entities' => array_combine( $ids, array_map( function ( $id ) {
+			'entities' => array_combine( $ids, array_map( static function ( $id ) {
 				return [
 					'pageid' => (int)preg_replace( '/[^0-9]/', '', $id ),
 					'ns' => 0,
@@ -452,7 +452,7 @@ class ApiRelatedConceptsTest extends MediaWikiTestCase {
 			->willReturnCallback( function () {
 				$snakFormatter = $this->createMock( SnakFormatter::class );
 				$snakFormatter->method( 'formatSnak' )
-					->willReturnCallback( function ( PropertyValueSnak $snak ) {
+					->willReturnCallback( static function ( PropertyValueSnak $snak ) {
 						return $snak->getDataValue()->getValue()->getEntityId()->getSerialization();
 					} );
 

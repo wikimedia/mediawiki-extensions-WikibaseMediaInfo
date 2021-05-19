@@ -13,7 +13,7 @@ class MediaSearchEntitiesFetcherTest extends MediaWikiTestCase {
 	protected function createMediaSearchEntitiesFetcher(): MediaSearchEntitiesFetcher {
 		$mockMultiHttpClient = $this->createMock( MultiHttpClient::class );
 		$mockMultiHttpClient->method( 'runMulti' )
-			->willReturnCallback( function ( array $requests ) {
+			->willReturnCallback( static function ( array $requests ) {
 				foreach ( $requests as $i => $request ) {
 					preg_match( '/&srsearch=(.*?)&/', $request['url'], $matches );
 					$term = $matches[1];

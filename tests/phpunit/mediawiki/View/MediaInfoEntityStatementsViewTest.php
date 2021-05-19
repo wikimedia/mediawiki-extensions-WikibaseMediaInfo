@@ -106,7 +106,7 @@ class MediaInfoEntityStatementsViewTest extends \PHPUnit\Framework\TestCase {
 			->getMock();
 		$valueFormatter->method( 'formatValue' )
 			->will(
-				$this->returnCallback( function ( DataValue $value ) {
+				$this->returnCallback( static function ( DataValue $value ) {
 					$map = [
 						'P333' => 'PROPERTY P333 LABEL',
 						'P444' => 'PROPERTY P444 LABEL',

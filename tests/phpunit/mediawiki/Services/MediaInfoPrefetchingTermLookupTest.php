@@ -46,7 +46,7 @@ class MediaInfoPrefetchingTermLookupTest extends \PHPUnit\Framework\TestCase {
 
 		$mock = $this->createMock( EntityRevisionLookup::class );
 		$mock->method( 'getEntityRevision' )->willReturnCallback(
-			function ( EntityId $entityId ) use ( $map ) {
+			static function ( EntityId $entityId ) use ( $map ) {
 				return $map[$entityId->getSerialization()] ?? null;
 			}
 		);

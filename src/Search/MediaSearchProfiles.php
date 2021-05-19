@@ -47,7 +47,7 @@ if ( !function_exists( 'Wikibase\MediaInfo\Search\closureToAnonymousClass' ) ) {
 // so prefixing with 'mediainfo' is recommended.
 return [
 	MediaSearchQueryBuilder::FULLTEXT_PROFILE_NAME => [
-		'builder_factory' => closureToAnonymousClass( function ( array $settings ) {
+		'builder_factory' => closureToAnonymousClass( static function ( array $settings ) {
 			$languageCode = WikibaseRepo::getUserLanguage()->getCode();
 			$languageFallbackChain = WikibaseRepo::getLanguageFallbackChainFactory()
 				->newFromLanguageCode( $languageCode );
@@ -86,7 +86,7 @@ return [
 				$flat = array_merge( explode( ':', $key ), [ floatval( $value ) ] );
 				$result = array_reduce(
 					array_reverse( $flat ),
-					function ( $previous, $key ) {
+					static function ( $previous, $key ) {
 						return $previous !== null ? [ $key => $previous ] : $key;
 					},
 					null
@@ -145,7 +145,7 @@ return [
 		],
 	],
 	'mediasearch_logistic_regression' => [
-		'builder_factory' => closureToAnonymousClass( function ( array $settings ) {
+		'builder_factory' => closureToAnonymousClass( static function ( array $settings ) {
 			$languageCode = WikibaseRepo::getUserLanguage()->getCode();
 			$languageFallbackChain = WikibaseRepo::getLanguageFallbackChainFactory()
 				->newFromLanguageCode( $languageCode );
@@ -184,7 +184,7 @@ return [
 				$flat = array_merge( explode( ':', $key ), [ floatval( $value ) ] );
 				$result = array_reduce(
 					array_reverse( $flat ),
-					function ( $previous, $key ) {
+					static function ( $previous, $key ) {
 						return $previous !== null ? [ $key => $previous ] : $key;
 					},
 					null

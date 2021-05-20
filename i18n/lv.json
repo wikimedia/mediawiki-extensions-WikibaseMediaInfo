@@ -107,5 +107,8 @@
 	"wikibasemediainfo-special-mediasearch-no-results": "Nav atrasts neviens rezultāts",
 	"wikibasemediainfo-special-mediasearch-clear-title": "Noņemt",
 	"wikibasemediainfo-special-mediasearch-load-more-results": "Ielādēt vairāk",
-	"wikibasemediainfo-special-mediasearch-quickview-button-text": "Vairāk informācijas"
+	"wikibasemediainfo-special-mediasearch-quickview-button-text": "Vairāk informācijas",
+	"wikibasemediainfo-special-mediasearch-copytextlayout-copy": "Kopēt",
+	"wikibasemediainfo-special-mediasearch-clear-filters": "Notīrīt filtrus",
+	"wikibasemediainfo-special-mediasearch-did-you-mean": "Vai tu domāji: <a href=\"$2\">$1</a>"
 }

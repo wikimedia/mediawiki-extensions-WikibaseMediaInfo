@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"Agent",
 			"Dgstranz",
 			"Fitoschido",
 			"Ihojose",
@@ -140,7 +141,7 @@
 	"wikibasemediainfo-special-mediasearch-filter-namespace-dialog-title": "Selector de espacios de nombres",
 	"wikibasemediainfo-special-mediasearch-filter-namespace-dialog-progressive-action": "Enviar",
 	"wikibasemediainfo-special-mediasearch-no-results": "No se encontró ningún resultado",
-	"wikibasemediainfo-special-mediasearch-no-results-tips": "Prueba más términos generales o comprueba tu ortografía",
+	"wikibasemediainfo-special-mediasearch-no-results-tips": "Pruebe más términos generales o compruebe su ortografía",
 	"wikibasemediainfo-special-mediasearch-end-of-results": "No se encontró ningún otro resultado",
 	"wikibasemediainfo-special-mediasearch-empty-state": "Buscar entre más de $1 {{PLURAL:$1|archivo|archivos}} multimedia de uso libre",
 	"wikibasemediainfo-special-mediasearch-clear-title": "Quitar",
@@ -152,7 +153,7 @@
 	"wikibasemediainfo-special-mediasearch-quickview-previous-button-text": "Ver el resultado anterior",
 	"wikibasemediainfo-special-mediasearch-quickview-next-button-text": "Ver el siguiente resultado",
 	"wikibasemediainfo-special-mediasearch-user-notice-title": "¿Estás buscando [[Special:Search]]?",
-	"wikibasemediainfo-special-mediasearch-user-notice-body": "Ahora puedes ajustar tus [[Special:Preferences#mw-prefsection-searchoptions|preferencias]] para seleccionar tu experiencia de búsqueda preferida.",
+	"wikibasemediainfo-special-mediasearch-user-notice-body": "Ahora puede ajustar sus [[Special:Preferences#mw-prefsection-searchoptions|preferencias]] para seleccionar su experiencia de búsqueda preferida.",
 	"wikibasemediainfo-special-mediasearch-user-notice-dismiss": "Descartar esta notificación",
 	"wikibasemediainfo-special-mediasearch-switch-special-search": "Cambiar a Special:Search",
 	"wikibasemediainfo-special-mediasearch-category-info": "{{PLURAL:$1|1 miembro|$1 miembros}} ({{PLURAL:$2|1 subcategoría|$2 subcategorías}}, {{PLURAL:$3|1 archivo|$3 archivos}})",
@@ -162,7 +163,7 @@
 	"wikibasemediainfo-special-mediasearch-clear-filters": "Quitar filtros",
 	"wikibasemediainfo-special-mediasearch-results-count": "$1 {{PLURAL:$1|resultado|resultados}}",
 	"wikibasemediainfo-special-mediasearch-wordcount": "($1 {{PLURAL:$1|palabra|palabras}})",
-	"wikibasemediainfo-special-mediasearch-did-you-mean": "Quizás quisiste decir: <a href=\"$2\">$1</a>",
+	"wikibasemediainfo-special-mediasearch-did-you-mean": "Quizás quiso decir: <a href=\"$2\">$1</a>",
 	"wikibasemediainfo-special-mediasearch-error-message": "Búsqueda inválida",
 	"wikibasemediainfo-special-mediasearch-error-text": "Ingresa arriba una nueva búsqueda e intenta de nuevo",
 	"wikibasemediainfo-special-mediasearch-specialsearch-default": "Mostrar resultados de búsqueda en la interfaz de Special:Search",

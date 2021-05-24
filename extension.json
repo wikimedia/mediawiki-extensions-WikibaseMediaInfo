@@ -32,9 +32,6 @@
 		"WikibaseMediaInfo": "GlobalVarConfig::newInstance"
 	},
 	"config": {
-		"MediaInfoEnableSearch": {
-			"value": false
-		},
 		"MediaInfoProperties": {
 			"description": "Map of { indicative name: property id }. E.g. { depicts: 'P1' }. The key doesn't really matter, except to construct a title (grep for wikibasemediainfo-statements-title-)",
 			"value": {}

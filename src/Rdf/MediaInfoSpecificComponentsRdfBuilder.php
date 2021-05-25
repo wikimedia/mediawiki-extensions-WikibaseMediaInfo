@@ -15,7 +15,7 @@ use Wikimedia\Purtle\RdfWriter;
 /**
  * RDF builder for MediaInfo
  */
-class MediaInfoRdfBuilder implements EntityRdfBuilder {
+class MediaInfoSpecificComponentsRdfBuilder implements EntityRdfBuilder {
 
 	/**
 	 * @var RdfVocabulary

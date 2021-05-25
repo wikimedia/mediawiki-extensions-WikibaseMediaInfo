@@ -43,7 +43,7 @@ use Wikibase\MediaInfo\DataModel\Serialization\MediaInfoSerializer;
 use Wikibase\MediaInfo\DataModel\Services\Diff\MediaInfoDiffer;
 use Wikibase\MediaInfo\DataModel\Services\Diff\MediaInfoPatcher;
 use Wikibase\MediaInfo\Diff\BasicMediaInfoDiffVisualizer;
-use Wikibase\MediaInfo\Rdf\MediaInfoRdfBuilder;
+use Wikibase\MediaInfo\Rdf\MediaInfoSpecificComponentsRdfBuilder;
 use Wikibase\MediaInfo\Search\MediaInfoFieldDefinitions;
 use Wikibase\MediaInfo\Services\MediaInfoEntityQuery;
 use Wikibase\MediaInfo\Services\MediaInfoPrefetchingTermLookup;
@@ -227,7 +227,7 @@ return [
 			EntityMentionListener $tracker,
 			DedupeBag $dedupe
 		) {
-			return new MediaInfoRdfBuilder(
+			return new MediaInfoSpecificComponentsRdfBuilder(
 				$vocabulary,
 				$writer,
 				MediaInfoServices::getMediaInfoHandler(),

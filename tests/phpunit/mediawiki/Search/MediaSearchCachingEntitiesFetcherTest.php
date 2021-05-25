@@ -14,7 +14,8 @@ class MediaSearchCachingEntitiesFetcherTest extends MediaSearchEntitiesFetcherTe
 	protected function createMediaSearchEntitiesFetcher(): MediaSearchEntitiesFetcher {
 		return new MediaSearchCachingEntitiesFetcher(
 			parent::createMediaSearchEntitiesFetcher(),
-			new WANObjectCache( [ 'cache' => new HashBagOStuff() ] )
+			new WANObjectCache( [ 'cache' => new HashBagOStuff() ] ),
+			'en'
 		);
 	}
 }

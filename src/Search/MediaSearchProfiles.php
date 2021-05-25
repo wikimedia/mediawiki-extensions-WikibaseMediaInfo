@@ -76,7 +76,8 @@ return [
 						$config->get( 'MediaInfoExternalEntitySearchBaseUri' ),
 						$languageCode
 					),
-					$mwServices->getMainWANObjectCache()
+					$mwServices->getMainWANObjectCache(),
+					$languageCode
 				)
 			);
 
@@ -174,7 +175,8 @@ return [
 						$config->get( 'MediaInfoExternalEntitySearchBaseUri' ),
 						$languageCode
 					),
-					$mwServices->getMainWANObjectCache()
+					$mwServices->getMainWANObjectCache(),
+					$languageCode
 				)
 			);
 

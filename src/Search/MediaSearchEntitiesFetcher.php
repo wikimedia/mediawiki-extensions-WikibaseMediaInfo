@@ -46,7 +46,6 @@ class MediaSearchEntitiesFetcher {
 					'srsearch' => $query,
 					'srnamespace' => 0,
 					'srlimit' => 50,
-					'srqiprofile' => 'wikibase',
 					'srprop' => 'snippet|titlesnippet|extensiondata',
 					'uselang' => $this->language,
 				];

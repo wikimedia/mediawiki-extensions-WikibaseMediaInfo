@@ -221,7 +221,7 @@ class WikibaseMediaInfoHooks {
 	private function getDefaultSearchPage( \User $user ) {
 		$userOptionsManager = MediaWikiServices::getInstance()->getUserOptionsManager();
 		if ( !$userOptionsManager->getOption( $user, 'sdms-specialsearch-default' ) ) {
-			return \SpecialPage::getTitleFor( 'MediaSearch' );
+			return \SpecialPage::getTitleFor( 'OldMediaSearch' );
 		}
 		return \SpecialPage::getTitleFor( 'Search' );
 	}

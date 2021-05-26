@@ -609,7 +609,7 @@
 		}
 	},
 	"SpecialPages": {
-		"MediaSearch": {
+		"OldMediaSearch": {
 			"class": "Wikibase\\MediaInfo\\Special\\SpecialMediaSearch",
 			"services": [ "SearchEngineFactory", "NamespaceInfo", "UserOptionsManager" ]
 		}

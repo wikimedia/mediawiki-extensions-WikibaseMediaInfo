@@ -10,7 +10,7 @@ use Wikibase\DataAccess\EntitySource;
 use Wikibase\DataAccess\EntitySourceDefinitions;
 use Wikibase\Lib\EntityTypeDefinitions;
 use Wikibase\MediaInfo\Content\MediaInfoHandler;
-use Wikibase\MediaInfo\Rdf\MediaInfoRdfBuilder;
+use Wikibase\MediaInfo\Rdf\MediaInfoSpecificComponentsRdfBuilder;
 use Wikibase\Repo\Content\EntityContentFactory;
 use Wikibase\Repo\Rdf\HashDedupeBag;
 use Wikibase\Repo\Rdf\RdfBuilder;
@@ -22,13 +22,13 @@ use Wikibase\Repo\WikibaseRepo;
 use Wikimedia\Purtle\RdfWriter;
 
 /**
- * @covers \Wikibase\MediaInfo\Rdf\MediaInfoRdfBuilder
+ * @covers \Wikibase\MediaInfo\Rdf\MediaInfoSpecificComponentsRdfBuilder
  *
  * @group WikibaseRdf
  *
  * @license GPL-2.0-or-later
  */
-class MediaInfoRdfBuilderTest extends TestCase {
+class MediaInfoSpecificComponentsRdfBuilderTest extends TestCase {
 
 	/**
 	 * @var NTriplesRdfTestHelper
@@ -54,7 +54,7 @@ class MediaInfoRdfBuilderTest extends TestCase {
 		if ( $this->testData === null ) {
 			$this->testData = new RdfBuilderTestData(
 				__DIR__ . '/../../data/entities',
-				__DIR__ . '/../../data/MediaInfoRdfBuilder'
+				__DIR__ . '/../../data/MediaInfoSpecificComponentsRdfBuilder'
 			);
 		}
 
@@ -96,11 +96,11 @@ class MediaInfoRdfBuilderTest extends TestCase {
 	 * @param RdfWriter $writer
 	 * @param MediaInfoHandler $handler
 	 * @param RepoGroup $repoGroup
-	 * @return MediaInfoRdfBuilder
+	 * @return MediaInfoSpecificComponentsRdfBuilder
 	 */
 	private function newBuilderWithFile( RdfWriter $writer, MediaInfoHandler $handler, RepoGroup $repoGroup ) {
 		$vocabulary = $this->getVocabulary();
-		$builder = new MediaInfoRdfBuilder( $vocabulary, $writer, $handler, $repoGroup );
+		$builder = new MediaInfoSpecificComponentsRdfBuilder( $vocabulary, $writer, $handler, $repoGroup );
 		$writer->start();
 		return $builder;
 	}

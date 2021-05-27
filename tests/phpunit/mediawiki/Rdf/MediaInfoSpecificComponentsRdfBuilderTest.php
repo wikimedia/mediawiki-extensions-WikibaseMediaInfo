@@ -14,7 +14,6 @@ use Wikibase\MediaInfo\Rdf\MediaInfoSpecificComponentsRdfBuilder;
 use Wikibase\Repo\Content\EntityContentFactory;
 use Wikibase\Repo\Rdf\HashDedupeBag;
 use Wikibase\Repo\Rdf\RdfBuilder;
-use Wikibase\Repo\Rdf\RdfProducer;
 use Wikibase\Repo\Rdf\RdfVocabulary;
 use Wikibase\Repo\Tests\Rdf\NTriplesRdfTestHelper;
 use Wikibase\Repo\Tests\Rdf\RdfBuilderTestData;
@@ -198,24 +197,6 @@ class MediaInfoSpecificComponentsRdfBuilderTest extends TestCase {
 		);
 		$builder->startDocument();
 		return $builder;
-	}
-
-	public function provideMediaInfoFullRDF() {
-		return [
-			[ 'M1', 'M1_full' ],
-		];
-	}
-
-	/**
-	 * @dataProvider provideMediaInfoFullRDF
-	 */
-	public function testMediaInfoFullRDF( $entityName, $dataSetName ) {
-		$entity = $this->getTestData()->getEntity( $entityName );
-		$writer = $this->getTestData()->getNTriplesWriter( false );
-
-		$builder = $this->newFullBuilder( $writer, RdfProducer::PRODUCE_ALL );
-		$builder->addEntity( $entity );
-		$this->assertOrCreateNTriples( $dataSetName, $writer );
 	}
 
 	private function assertOrCreateNTriples( $dataSetName, RdfWriter $writer ) {

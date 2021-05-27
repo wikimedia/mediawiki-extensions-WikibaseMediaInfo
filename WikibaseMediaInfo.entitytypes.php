@@ -22,6 +22,8 @@ use Wikibase\DataModel\Entity\PropertyId;
 use Wikibase\DataModel\SerializerFactory;
 use Wikibase\DataModel\Services\EntityId\EntityIdFormatter;
 use Wikibase\DataModel\Services\Lookup\InProcessCachingDataTypeLookup;
+use Wikibase\Lib\DataTypeDefinitions;
+use Wikibase\Lib\EntityTypeDefinitions;
 use Wikibase\Lib\EntityTypeDefinitions as Def;
 use Wikibase\Lib\LanguageNameLookup;
 use Wikibase\Lib\SettingsArray;
@@ -43,6 +45,7 @@ use Wikibase\MediaInfo\DataModel\Serialization\MediaInfoSerializer;
 use Wikibase\MediaInfo\DataModel\Services\Diff\MediaInfoDiffer;
 use Wikibase\MediaInfo\DataModel\Services\Diff\MediaInfoPatcher;
 use Wikibase\MediaInfo\Diff\BasicMediaInfoDiffVisualizer;
+use Wikibase\MediaInfo\Rdf\MediaInfoRdfBuilder;
 use Wikibase\MediaInfo\Rdf\MediaInfoSpecificComponentsRdfBuilder;
 use Wikibase\MediaInfo\Search\MediaInfoFieldDefinitions;
 use Wikibase\MediaInfo\Services\MediaInfoEntityQuery;
@@ -57,7 +60,11 @@ use Wikibase\Repo\MediaWikiLanguageDirectionalityLookup;
 use Wikibase\Repo\MediaWikiLocalizedTextProvider;
 use Wikibase\Repo\Rdf\DedupeBag;
 use Wikibase\Repo\Rdf\EntityMentionListener;
+use Wikibase\Repo\Rdf\FullStatementRdfBuilderFactory;
 use Wikibase\Repo\Rdf\RdfVocabulary;
+use Wikibase\Repo\Rdf\TermsRdfBuilder;
+use Wikibase\Repo\Rdf\TruthyStatementRdfBuilderFactory;
+use Wikibase\Repo\Rdf\ValueSnakRdfBuilderFactory;
 use Wikibase\Repo\WikibaseRepo;
 use Wikibase\Search\Elastic\Fields\DescriptionsProviderFieldDefinitions;
 use Wikibase\Search\Elastic\Fields\LabelsProviderFieldDefinitions;
@@ -227,11 +234,50 @@ return [
 			EntityMentionListener $tracker,
 			DedupeBag $dedupe
 		) {
-			return new MediaInfoSpecificComponentsRdfBuilder(
+			$services = MediaWikiServices::getInstance();
+
+			$entityTypeDefinitions = WikibaseRepo::getEntityTypeDefinitions( $services );
+			$termsRdfBuilder = new TermsRdfBuilder(
+				$vocabulary,
+				$writer,
+				$entityTypeDefinitions->get( EntityTypeDefinitions::RDF_LABEL_PREDICATES )
+			);
+
+			$propertyDataLookup = WikibaseRepo::getPropertyDataTypeLookup();
+			$valueSnakRdfBuilderFactory = new ValueSnakRdfBuilderFactory(
+				WikibaseRepo::getDataTypeDefinitions( $services )
+					->getRdfBuilderFactoryCallbacks( DataTypeDefinitions::PREFIXED_MODE )
+			);
+			$truthyStatementRdfBuilderFactory = new TruthyStatementRdfBuilderFactory(
+				$dedupe,
+				$vocabulary,
+				$writer,
+				$valueSnakRdfBuilderFactory,
+				$tracker,
+				$propertyDataLookup
+			);
+			$fullStatementRdfBuilderFactory = new FullStatementRdfBuilderFactory(
+				$vocabulary,
+				$writer,
+				$valueSnakRdfBuilderFactory,
+				$tracker,
+				$dedupe,
+				$propertyDataLookup
+			);
+
+			$mediaInfoSpecificComponentsRdfBuilder = new MediaInfoSpecificComponentsRdfBuilder(
 				$vocabulary,
 				$writer,
 				MediaInfoServices::getMediaInfoHandler(),
 				MediaWikiServices::getInstance()->getRepoGroup()
+			);
+
+			return new MediaInfoRdfBuilder(
+				$flavorFlags,
+				$termsRdfBuilder,
+				$truthyStatementRdfBuilderFactory,
+				$fullStatementRdfBuilderFactory,
+				$mediaInfoSpecificComponentsRdfBuilder
 			);
 		},
 		Def::RDF_LABEL_PREDICATES => [

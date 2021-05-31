@@ -1,9 +1,11 @@
 {
 	"@metadata": {
 		"authors": [
+			"Anakmalaysia",
 			"Tofeiku"
 		]
 	},
+	"wikibasemediainfo-filepage-more-languages": "Lihat $1 {{PLURAL:$1|bahasa}} lain",
 	"wikibasemediainfo-filepage-statement-invalid-value": "Nilai tidak sah",
 	"wikibasemediainfo-special-mediasearch-tab-other": "Media lain",
 	"wikibasemediainfo-special-mediasearch-filter-size": "Saiz imej",

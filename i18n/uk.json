@@ -4,6 +4,7 @@
 			"Andrew J.Kurbiko",
 			"Base",
 			"Movses",
+			"NickK",
 			"Piramidion",
 			"Vlad5250",
 			"Ата"
@@ -148,6 +149,7 @@
 	"wikibasemediainfo-special-mediasearch-quickview-close-button-text": "Закрити деталі файлу",
 	"wikibasemediainfo-special-mediasearch-quickview-previous-button-text": "Переглянути попередній результат",
 	"wikibasemediainfo-special-mediasearch-quickview-next-button-text": "Переглянути наступний результат",
+	"wikibasemediainfo-special-mediasearch-switch-special-search": "Перемкнутись на Спеціальна:Пошук",
 	"wikibasemediainfo-special-mediasearch-copytextlayout-copy": "Скопіювати",
 	"wikibasemediainfo-special-mediasearch-copytextlayout-copy-fail": "Помилка копіювання до буферу обміну.",
 	"wikibasemediainfo-special-mediasearch-copytextlayout-copy-success": "Скопійовано до буферу обміну."

@@ -78,13 +78,9 @@ class MediaInfoRdfBuilder implements EntityRdfBuilder {
 	/**
 	 * Map some aspect of an Entity to the RDF graph, as it should appear in the stub
 	 * representation of an entity.
-	 *
-	 * The implementation of this method will often be empty, since most aspects of an entity
-	 * should not be included in the stub representation. Typically, the stub only contains
-	 * basic type information and labels, for use by RDF modelling tools.
-	 *
 	 * @param EntityDocument $entity the entity to output.
 	 */
 	public function addEntityStub( EntityDocument $entity ) {
+		$this->termsRdfBuilder->addEntityStub( $entity );
 	}
 }

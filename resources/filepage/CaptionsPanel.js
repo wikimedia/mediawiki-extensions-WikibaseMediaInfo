@@ -60,7 +60,7 @@ CaptionsPanel = function ( config ) {
 
 	this.userLanguages = config.userLanguages || [];
 	this.languageFallbackChain = config.languageFallbackChain || [ 'en' ];
-	this.canEdit = config.canEdit || true;
+	this.canEdit = ( typeof config.canEdit === 'undefined' ) ? true : config.canEdit;
 	this.warnWithinMaxCaptionLength = config.warnWithinMaxCaptionLength;
 	this.savedCaptionsData = this.captionsDataFromMediaInfoEntity( config.mediaInfo );
 

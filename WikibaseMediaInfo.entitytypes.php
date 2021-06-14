@@ -223,7 +223,7 @@ return [
 				$entityNamespaceLookup,
 				$entityQuery,
 				$entitySource,
-				MediaWikiServices::getInstance()->getDBLoadBalancerFactory(),
+				WikibaseRepo::getRepoDomainDbFactory()->newForEntitySource( $entitySource ),
 				WikibaseRepo::getLogger()
 			);
 		},

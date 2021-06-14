@@ -4,7 +4,13 @@
 			"Chinamoonroll"
 		]
 	},
+	"wikibasemediainfo-filepage-statement-no-value-option": "Tanpa aji",
+	"wikibasemediainfo-filepage-statement-no-data": "Nénten wénten data kasedia",
 	"wikibasemediainfo-monolingualtext-language-label": "Pilih basa",
 	"wikibasemediainfo-special-mediasearch-title": "Rereh média",
-	"wikibasemediainfo-special-mediasearch-input-label": "Rereh média"
+	"wikibasemediainfo-special-mediasearch-filter-license-unrestricted": "Tan kawatesin",
+	"wikibasemediainfo-special-mediasearch-end-of-results": "Nénten wénten malih asil sané katemu",
+	"wikibasemediainfo-special-mediasearch-input-label": "Rereh média",
+	"wikibasemediainfo-special-mediasearch-input-placeholder": "Rereh antuk gambar, swara, vidio, miwah liyanan",
+	"wikibasemediainfo-special-mediasearch-user-notice-title": "Ngalihin antuk [[Special:Search]]?"
 }

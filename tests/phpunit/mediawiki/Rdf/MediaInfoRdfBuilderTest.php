@@ -7,6 +7,7 @@ use PHPUnit\Framework\TestCase;
 use Wikibase\DataAccess\EntitySource;
 use Wikibase\DataAccess\EntitySourceDefinitions;
 use Wikibase\Lib\EntityTypeDefinitions;
+use Wikibase\Lib\Store\EntityRevisionLookup;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\MediaInfo\DataModel\MediaInfoId;
 use Wikibase\MediaInfo\Rdf\MediaInfoRdfBuilder;
@@ -14,6 +15,7 @@ use Wikibase\MediaInfo\Rdf\MediaInfoSpecificComponentsRdfBuilder;
 use Wikibase\Repo\Content\EntityContentFactory;
 use Wikibase\Repo\Rdf\DedupeBag;
 use Wikibase\Repo\Rdf\EntityMentionListener;
+use Wikibase\Repo\Rdf\EntityStubRdfBuilderFactory;
 use Wikibase\Repo\Rdf\FullStatementRdfBuilder;
 use Wikibase\Repo\Rdf\FullStatementRdfBuilderFactory;
 use Wikibase\Repo\Rdf\HashDedupeBag;
@@ -216,7 +218,9 @@ class MediaInfoRdfBuilderTest extends TestCase {
 			$produce,
 			$writer,
 			new HashDedupeBag(),
-			$this->createMock( EntityContentFactory::class )
+			$this->createMock( EntityContentFactory::class ),
+			$this->createMock( EntityStubRdfBuilderFactory::class ),
+			$this->createMock( EntityRevisionLookup::class )
 		);
 		$builder->startDocument();
 		return $builder;

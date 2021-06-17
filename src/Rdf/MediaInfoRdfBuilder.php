@@ -81,6 +81,6 @@ class MediaInfoRdfBuilder implements EntityRdfBuilder {
 	 * @param EntityDocument $entity the entity to output.
 	 */
 	public function addEntityStub( EntityDocument $entity ) {
-		$this->termsRdfBuilder->addEntityStub( $entity );
+		// TODO: remove this method once it's no longer part of EntityRdfBuilder
 	}
 }

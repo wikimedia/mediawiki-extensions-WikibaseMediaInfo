@@ -72,15 +72,6 @@ class MediaInfoRdfBuilderTest extends TestCase {
 			$this->createMock( MediaInfoSpecificComponentsRdfBuilder::class );
 	}
 
-	public function testInternalRdfBuilderCallsAddStubEntity(): void {
-		$mediainfo = new MediaInfo( new MediaInfoId( 'M1' ) );
-
-		$this->termsRdfBuilder->expects( $this->atLeastOnce() )->method( 'addEntityStub' )->with( $mediainfo );
-
-		$builder = $this->getBuilder( 0 );
-		$builder->addEntityStub( $mediainfo );
-	}
-
 	/**
 	 * @dataProvider provideAddEntity
 	 */

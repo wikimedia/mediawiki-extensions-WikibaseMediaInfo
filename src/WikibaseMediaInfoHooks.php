@@ -303,14 +303,14 @@ class WikibaseMediaInfoHooks {
 					'{{fullurl:Special:UserLogin/signup|returnto={{FULLPAGENAMEE}}}}'
 				)->parseAsBlock(),
 				'wbmiProtectionMsg' => $this->getProtectionMsg( $out ),
-				'wbmiUserCanEdit' => $this->userCanEdit( $out ),
 				// extend/override wbmiPropertyTypes (which already contains a property type map
 				// for all default properties) with property types for existing statements
 				'wbmiPropertyTypes' => $jsConfigVars['wbmiPropertyTypes'] + $existingPropertyTypes,
 			] );
 
 			if ( \ExtensionRegistry::getInstance()->isLoaded( 'WikibaseQualityConstraints' ) ) {
-				if ( !$out->getUser()->isAnon() && $this->userCanEdit( $out ) ) {
+				// Don't display constraints violations unless the user is logged in and can edit
+				if ( !$out->getUser()->isAnon() && $out->getUser()->probablyCan( 'edit', $imgTitle ) ) {
 					$modules[] = 'wikibase.quality.constraints.ui';
 					$modules[] = 'wikibase.quality.constraints.icon';
 					$jsConfigVars['wbmiDoConstraintCheck'] = true;
@@ -605,33 +605,6 @@ class WikibaseMediaInfoHooks {
 		}
 
 		return $msg;
-	}
-
-	/**
-	 * Return whether or not a user can edit captions and structured data.
-	 *
-	 * @param OutputPage $out
-	 * @return bool
-	 */
-	private function userCanEdit( $out ) {
-		$user = $out->getUser();
-		$groups = $user->getGroups();
-		$isAnon = $user->isAnon();
-		$imgTitle = $out->getTitle();
-
-		// 1. Admins can always edit.
-		// 2. Anyone can edit non-protected pages (isProtected covers full and
-		//    semi-protection).
-		// 3. Authenticated users can edit semi-protected pages.
-		if (
-			in_array( 'sysop', $groups ) ||
-			!$imgTitle->isProtected( 'edit' ) && !$imgTitle->isCascadeProtected() ||
-			$imgTitle->isSemiProtected( 'edit' ) && !$isAnon
-		) {
-			return true;
-		}
-
-		return false;
 	}
 
 	public static function onGetEntityByLinkedTitleLookup( EntityByLinkedTitleLookup &$lookup ) {

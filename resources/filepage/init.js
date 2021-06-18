@@ -49,7 +49,7 @@
 	 */
 	function isEditable() {
 		/* eslint-disable no-jquery/no-global-selector */
-		var userCanEdit = mw.config.get( 'wbmiUserCanEdit' ),
+		var userCanEdit = mw.config.get( 'wgIsProbablyEditable' ),
 			onDiffPage = $( '.diff-currentversion-title' ).length !== 0,
 			onRevisionPage = $( '.mw-revision' ).length !== 0;
 		/* eslint-enable no-jquery/no-global-selector */

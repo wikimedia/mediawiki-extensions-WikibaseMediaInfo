@@ -126,7 +126,8 @@
 			helpUrls: mw.config.get( 'wbmiHelpUrls' ) || {},
 			isDefaultProperty: defaultProperties.indexOf( propId ) >= 0,
 			propertyId: propId,
-			propertyType: propertyType
+			propertyType: propertyType,
+			showControls: isEditable()
 		} );
 
 		sp.on( 'widgetRemoved', onStatementPanelRemoved );
@@ -208,7 +209,7 @@
 			$statements.first().before( linkNoticeWidget.$element );
 		}
 
-		if ( $statements.last().hasClass( 'wbmi-entityview-statementsGroup' ) ) {
+		if ( isEditable() && $statements.last().hasClass( 'wbmi-entityview-statementsGroup' ) ) {
 			$statements.last().after( addPropertyWidget.$element );
 		}
 

@@ -23,6 +23,7 @@ var AnonWarning = require( './AnonWarning.js' ),
  * @param {string} config.entityId Entity ID (e.g. M123 id of the file you just uploaded)
  * @param {string} config.propertyId Property ID (e.g. P123 id of `depicts` property)
  * @param {string} config.propertyType Property datatype (e.g. 'wikibase-item', 'url', 'string', ...)
+ * @param {string} config.showControls Whether or not to display editing controls
  * @param {Object} [config.helpUrls]  An object with property id as members and help urls for
  *  the property as values
  *  e.g. { P1: "https://commons.wikimedia.org/wiki/Special:MyLanguage/Commons:Depicts" }
@@ -46,7 +47,7 @@ StatementPanel = function StatementPanelConstructor( config ) {
 	this.licenseDialogWidget = new LicenseDialogWidget();
 
 	this.statementWidget = new StatementWidget( $.extend( {
-		showControls: true,
+		showControls: this.config.showControls,
 		valueType: this.config.propertyType in dataTypesMap ? dataTypesMap[ this.config.propertyType ].dataValueType : undefined
 	}, this.config ) );
 

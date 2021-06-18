@@ -20,24 +20,46 @@
 				</div>
 			</div>
 
-			<a class="wbmi-entity-primary
-					{{#prominent}}wbmi-entity-is-prominent{{/prominent}}
-					{{^prominent}}wbmi-entity-mark-as-prominent{{/prominent}}"
-				href="#"
-				onclick="{{prominenceToggleHandler}}">
+			{{^disabled}}
+				<a class="wbmi-entity-primary
+						{{#prominent}}wbmi-entity-is-prominent{{/prominent}}
+						{{^prominent}}wbmi-entity-mark-as-prominent{{/prominent}}"
+					href="#"
+					onclick="{{prominenceToggleHandler}}">
+					{{#prominent}}
+					<span class="oo-ui-widget
+								oo-ui-widget-enabled
+								oo-ui-iconElement
+								oo-ui-iconElement-icon
+								oo-ui-icon-check
+								oo-ui-labelElement-invisible
+								oo-ui-iconWidget"
+						aria-disabled="false">
+					</span>
+					{{/prominent}}
+					{{prominenceMessage}}
+				</a>
+			{{/disabled}}
+
+			{{!-- when disabled, only show the "prominent" text, not "mark as prominent" --}}
+			{{#disabled}}
 				{{#prominent}}
-				<span class="oo-ui-widget
-							oo-ui-widget-enabled
-							oo-ui-iconElement
-							oo-ui-iconElement-icon
-							oo-ui-icon-check
-							oo-ui-labelElement-invisible
-							oo-ui-iconWidget"
-					aria-disabled="false">
-				</span>
+					<span class="wbmi-entity-primary
+							{{#prominent}}wbmi-entity-is-prominent{{/prominent}}
+							{{^prominent}}wbmi-entity-mark-as-prominent{{/prominent}}">
+						<span class="oo-ui-widget
+									oo-ui-widget-enabled
+									oo-ui-iconElement
+									oo-ui-iconElement-icon
+									oo-ui-icon-check
+									oo-ui-labelElement-invisible
+									oo-ui-iconWidget"
+							aria-disabled="false">
+						</span>
+						{{prominenceMessage}}
+					</span>
 				{{/prominent}}
-				{{prominenceMessage}}
-			</a>
+			{{/disabled}}
 		</div>
 
 		{{#isGlobecoordinate}}

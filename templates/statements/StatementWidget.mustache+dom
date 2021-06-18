@@ -25,9 +25,11 @@
 	{{/errors}}
 
 	<!-- statement widget input: only display in edit mode, or for default properties, or for empty (new) statements -->
+	{{#showControls}}
 	{{#editing}}{{{input}}}{{/editing}}
 	{{^editing}}{{#isDefaultProperty}}{{{input}}}{{/isDefaultProperty}}{{/editing}}
 	{{^editing}}{{^isDefaultProperty}}{{^items}}{{{input}}}{{/items}}{{/isDefaultProperty}}{{/editing}}
+	{{/showControls}}
 
 	<!-- statement widget items -->
 	<div class="wbmi-content-items-group">

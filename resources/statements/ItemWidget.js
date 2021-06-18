@@ -156,6 +156,7 @@ ItemWidget.prototype.getTemplateData = function () {
 			qualifiers: self.getItems(),
 			label: formatResponse( label ),
 			id: id.replace( /^.+:/, '' ),
+			disabled: self.isDisabled(),
 			prominent: prominent,
 			prominenceMessage: prominent ?
 				mw.message( 'wikibasemediainfo-statements-item-is-prominent' ).text() :

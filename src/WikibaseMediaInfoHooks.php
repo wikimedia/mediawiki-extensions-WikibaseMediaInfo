@@ -10,6 +10,7 @@ use CirrusSearch\Profile\SearchProfileService;
 use CirrusSearch\Search\CirrusIndexField;
 use ContentHandler;
 use Elastica\Document;
+use ExtensionRegistry;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\Revision\RevisionRecord;
 use MediaWiki\Revision\SlotRecord;
@@ -40,7 +41,6 @@ use Wikibase\MediaInfo\Search\MediaSearchQueryBuilder;
 use Wikibase\MediaInfo\Services\MediaInfoByLinkedTitleLookup;
 use Wikibase\MediaInfo\Services\MediaInfoServices;
 use Wikibase\Repo\BabelUserLanguageLookup;
-use Wikibase\Repo\Content\EntityContent;
 use Wikibase\Repo\Content\EntityInstanceHolder;
 use Wikibase\Repo\MediaWikiLocalizedTextProvider;
 use Wikibase\Repo\ParserOutput\DispatchingEntityViewFactory;
@@ -131,9 +131,9 @@ class WikibaseMediaInfoHooks {
 	}
 
 	public static function onRegistration() {
-		if ( !class_exists( EntityContent::class ) ) {
+		if ( !ExtensionRegistry::getInstance()->isLoaded( 'WikibaseRepository' ) ) {
 			// HACK: Declaring a dependency on Wikibase in extension.json
-			// requires Wikibase to have its own extension.json
+			// requires more work. See T258822.
 			throw new \ExtensionDependencyError( [ [
 				'msg' => 'WikibaseMediaInfo requires Wikibase to be installed.',
 				'type' => 'missing-phpExtension',
@@ -308,7 +308,7 @@ class WikibaseMediaInfoHooks {
 				'wbmiPropertyTypes' => $jsConfigVars['wbmiPropertyTypes'] + $existingPropertyTypes,
 			] );
 
-			if ( \ExtensionRegistry::getInstance()->isLoaded( 'WikibaseQualityConstraints' ) ) {
+			if ( ExtensionRegistry::getInstance()->isLoaded( 'WikibaseQualityConstraints' ) ) {
 				// Don't display constraints violations unless the user is logged in and can edit
 				if ( !$out->getUser()->isAnon() && $out->getUser()->probablyCan( 'edit', $imgTitle ) ) {
 					$modules[] = 'wikibase.quality.constraints.ui';

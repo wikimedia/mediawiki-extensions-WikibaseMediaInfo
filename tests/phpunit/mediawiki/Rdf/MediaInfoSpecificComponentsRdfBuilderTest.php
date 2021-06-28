@@ -11,13 +11,9 @@ use Wikibase\DataAccess\EntitySourceDefinitions;
 use Wikibase\Lib\EntityTypeDefinitions;
 use Wikibase\MediaInfo\Content\MediaInfoHandler;
 use Wikibase\MediaInfo\Rdf\MediaInfoSpecificComponentsRdfBuilder;
-use Wikibase\Repo\Content\EntityContentFactory;
-use Wikibase\Repo\Rdf\HashDedupeBag;
-use Wikibase\Repo\Rdf\RdfBuilder;
 use Wikibase\Repo\Rdf\RdfVocabulary;
 use Wikibase\Repo\Tests\Rdf\NTriplesRdfTestHelper;
 use Wikibase\Repo\Tests\Rdf\RdfBuilderTestData;
-use Wikibase\Repo\WikibaseRepo;
 use Wikimedia\Purtle\RdfWriter;
 
 /**
@@ -40,9 +36,6 @@ class MediaInfoSpecificComponentsRdfBuilderTest extends TestCase {
 	private $testData = null;
 
 	protected function setUp() : void {
-		$this->markTestSkipped(
-			'Skipped while refactoring RdfBuilder. See: T282689'
-		);
 		parent::setUp();
 		$this->helper = new NTriplesRdfTestHelper();
 	}
@@ -177,29 +170,6 @@ class MediaInfoSpecificComponentsRdfBuilderTest extends TestCase {
 		$builder = $this->newBuilderWithFile( $writer, $handler, $repoGroup );
 		$builder->addEntity( $entity );
 		$this->assertOrCreateNTriples( $dataSetName, $writer );
-	}
-
-	/**
-	 * @param RdfWriter $writer
-	 * @param int $produce One of the RdfProducer::PRODUCE_... constants.
-	 *
-	 * @return RdfBuilder
-	 */
-	private function newFullBuilder(
-		RdfWriter $writer, $produce
-	) {
-		$builder = new RdfBuilder(
-			$this->getVocabulary(),
-			WikibaseRepo::getValueSnakRdfBuilderFactory(),
-			$this->getTestData()->getMockRepository(),
-			WikibaseRepo::getEntityRdfBuilderFactory(),
-			$produce,
-			$writer,
-			new HashDedupeBag(),
-			$this->createMock( EntityContentFactory::class )
-		);
-		$builder->startDocument();
-		return $builder;
 	}
 
 	private function assertOrCreateNTriples( $dataSetName, RdfWriter $writer ) {

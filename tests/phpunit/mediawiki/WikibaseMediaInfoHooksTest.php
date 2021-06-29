@@ -90,19 +90,12 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 		$revision->method( 'getId' )
 			->willReturn( 999 );
 
-		$wikiPage = $this->getMockBuilder( \WikiPage::class )
-			->disableOriginalConstructor()
-			->getMock();
-		$wikiPage->method( 'getRevisionRecord' )
-			->willReturn( $revision );
-
 		$out = $this->getMockBuilder( \OutputPage::class )
 			->disableOriginalConstructor()
 			->onlyMethods( [
 				'getTitle',
 				'getLanguage',
 				'getUser',
-				'getWikiPage',
 				'getContext',
 				'addJsConfigVars',
 				'addModuleStyles',
@@ -116,8 +109,6 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
 			->willReturn( Language::factory( 'en' ) );
 		$out->method( 'getUser' )
 			->willReturn( new User() );
-		$out->method( 'getWikiPage' )
-			->willReturn( $wikiPage );
 
 		// TODO: Test that this doesn't appear on action=history etc. contexts
 		$out->method( 'getContext' )

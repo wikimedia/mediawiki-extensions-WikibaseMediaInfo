@@ -24,7 +24,7 @@ var dataTypesMap = mw.config.get( 'wbDataTypes' ),
  * @param {Object} [config.helpUrls]  An object with property id as members and help urls for
  *  the property as values
  *  e.g. { P1: "https://commons.wikimedia.org/wiki/Special:MyLanguage/Commons:Depicts" }
- * @param {boolean} [config.showControls] Whether or not to display editing controls
+ * @param {boolean} [config.showControls] Whether or not to display editing controls (default to false)
  * @param {string} [config.summary] Summary for edits
  * @param {string[]} [config.tags] Change tags to apply to edits
  */
@@ -36,6 +36,7 @@ StatementWidget = function ( config ) {
 		valueType = dataTypesMap[ config.propertyType ].dataValueType;
 	}
 
+	config.showControls = !!config.showControls;
 	config.helpUrls = config.helpUrls || {};
 	config.isDefaultProperty = !!config.isDefaultProperty;
 	this.config = config;
@@ -158,6 +159,7 @@ StatementWidget.prototype.getTemplateData = function () {
 			label: formatResponse( html ),
 			isDefaultProperty: self.config.isDefaultProperty,
 			showControls: self.config.showControls,
+			disabled: self.isDisabled(),
 			editing: self.isEditing(),
 			items: self.getItems(),
 			input: self.input,

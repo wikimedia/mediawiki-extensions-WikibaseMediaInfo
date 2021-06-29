@@ -24,7 +24,8 @@ var AnonWarning = require( './AnonWarning.js' ),
  * @param {string} config.propertyId Property ID (e.g. P123 id of `depicts` property)
  * @param {string} config.propertyType Property datatype (e.g. 'wikibase-item', 'url', 'string', ...)
  * @param {string} config.showControls Whether or not to display editing controls
- * @param {Object} [config.helpUrls]  An object with property id as members and help urls for
+ * @param {Object} [config.helpUrls] An object with property id as members and help urls for
+ * @param {Object} [config.disabled] True/false to indicate whether the statement is disabled/enabled
  *  the property as values
  *  e.g. { P1: "https://commons.wikimedia.org/wiki/Special:MyLanguage/Commons:Depicts" }
  * @fires dataLoadedReadOnly
@@ -47,9 +48,10 @@ StatementPanel = function StatementPanelConstructor( config ) {
 	this.licenseDialogWidget = new LicenseDialogWidget();
 
 	this.statementWidget = new StatementWidget( $.extend( {
-		showControls: this.config.showControls,
+		showControls: !this.disabled && this.config.showControls,
 		valueType: this.config.propertyType in dataTypesMap ? dataTypesMap[ this.config.propertyType ].dataValueType : undefined
 	}, this.config ) );
+	this.statementWidget.setDisabled( this.disabled );
 
 	this.bindEventHandlers();
 
@@ -271,6 +273,18 @@ StatementPanel.prototype.extractResultsForPropertyId = function ( response ) {
 	} else {
 		return null;
 	}
+};
+
+StatementPanel.prototype.setDisabled = function ( disabled ) {
+	this.disabled = disabled;
+
+	if ( this.statementWidget === undefined ) {
+		// object may not yet have been constructed fully
+		// (ooui calls this from constructor)
+		return;
+	}
+
+	this.statementWidget.setDisabled( disabled );
 };
 
 module.exports = StatementPanel;

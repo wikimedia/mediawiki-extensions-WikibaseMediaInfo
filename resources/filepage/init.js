@@ -118,7 +118,8 @@
 	 * @return {StatementPanel}
 	 */
 	function createStatementsPanel( $el, propId, propertyType ) {
-		var sp;
+		var sp,
+			editable = isEditable();
 
 		sp = new StatementPanel( {
 			$element: $el,
@@ -127,7 +128,8 @@
 			isDefaultProperty: defaultProperties.indexOf( propId ) >= 0,
 			propertyId: propId,
 			propertyType: propertyType,
-			showControls: isEditable()
+			showControls: editable,
+			disabled: !editable
 		} );
 
 		sp.on( 'widgetRemoved', onStatementPanelRemoved );

@@ -244,12 +244,10 @@ class WikibaseMediaInfoHooks {
 			$out = $this->tabifyStructuredData( $out, $entityViewFactory );
 			$out->preventClickjacking();
 			$imgTitle = $out->getTitle();
-
-			$revRecord = $out->getWikiPage()->getRevisionRecord();
 			$entityId = MediaInfoServices::getMediaInfoIdLookup()->getEntityIdForTitle( $imgTitle );
 
 			$entityLookup = WikibaseRepo::getEntityLookup();
-			$entityRevisionId = $entityLookup->hasEntity( $entityId ) ? $revRecord->getId() : null;
+			$entityRevisionId = $entityLookup->hasEntity( $entityId ) ? $imgTitle->getLatestRevID() : null;
 			$entity = $entityLookup->getEntity( $entityId );
 			$serializer = WikibaseRepo::getAllTypesEntitySerializer();
 			$entityData = ( $entity ? $serializer->serialize( $entity ) : null );

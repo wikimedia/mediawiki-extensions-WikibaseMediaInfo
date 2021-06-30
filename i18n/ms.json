@@ -6,12 +6,5 @@
 		]
 	},
 	"wikibasemediainfo-filepage-more-languages": "Lihat $1 {{PLURAL:$1|bahasa}} lain",
-	"wikibasemediainfo-filepage-statement-invalid-value": "Nilai tidak sah",
-	"wikibasemediainfo-special-mediasearch-tab-other": "Media lain",
-	"wikibasemediainfo-special-mediasearch-filter-size": "Saiz imej",
-	"wikibasemediainfo-special-mediasearch-filter-size-any": "Semua saiz imej",
-	"wikibasemediainfo-special-mediasearch-filter-file-type-any": "Semua jenis fail",
-	"wikibasemediainfo-special-mediasearch-end-of-results": "Tiada hasil carian lain dijumpai",
-	"wikibasemediainfo-special-mediasearch-quickview-button-text": "Butiran lanjut",
-	"wikibasemediainfo-special-mediasearch-clear-filters": "Kosongkan penapis"
+	"wikibasemediainfo-filepage-statement-invalid-value": "Nilai tidak sah"
 }

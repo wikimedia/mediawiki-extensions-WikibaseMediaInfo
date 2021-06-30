@@ -6,15 +6,5 @@
 	},
 	"wikibasemediainfo-filepage-cancel": "رد کرو",
 	"wikibasemediainfo-filepage-statement-no-data": "کوئی ڈیٹا دستیاب نئیں",
-	"wikibasemediainfo-statements-learn-more": "ہور سکھو",
-	"wikibasemediainfo-special-mediasearch-tab-image": "تصویراں",
-	"wikibasemediainfo-special-mediasearch-tab-audio": "آڈیو",
-	"wikibasemediainfo-special-mediasearch-tab-video": "ویڈیو",
-	"wikibasemediainfo-special-mediasearch-filter-size": "مورت سائز",
-	"wikibasemediainfo-special-mediasearch-filter-file-type-any": "ساریاں فائل قسماں",
-	"wikibasemediainfo-special-mediasearch-filter-sort-label": "چُنن ترتیب:",
-	"wikibasemediainfo-special-mediasearch-filter-sort-default": "متعلقہ",
-	"wikibasemediainfo-special-mediasearch-filter-license-any": "سارے لائیسنس",
-	"wikibasemediainfo-special-mediasearch-filter-license-other": "ہور",
-	"wikibasemediainfo-special-mediasearch-quickview-button-text": "ہور تفصیل"
+	"wikibasemediainfo-statements-learn-more": "ہور سکھو"
 }

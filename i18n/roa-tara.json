@@ -85,16 +85,5 @@
 	"wikibasemediainfo-time-timestamp-formatted": "Avène fatte 'ndrucà cumme: $1",
 	"wikibasemediainfo-time-precision-label": "Precisione",
 	"wikibasemediainfo-quantity-input-button-text": "Aggiunge",
-	"wikibasemediainfo-globecoordinate-input-button-text": "Aggiunge",
-	"wikibasemediainfo-special-mediasearch-tab-image": "Immaggine",
-	"wikibasemediainfo-special-mediasearch-tab-audio": "Audio",
-	"wikibasemediainfo-special-mediasearch-tab-video": "Video",
-	"wikibasemediainfo-special-mediasearch-filter-size": "Dimenzione d'u medie",
-	"wikibasemediainfo-special-mediasearch-filter-size-any": "Tutte le dimenziune",
-	"wikibasemediainfo-special-mediasearch-filter-size-small": "Piccenne",
-	"wikibasemediainfo-special-mediasearch-filter-size-medium": "Medie",
-	"wikibasemediainfo-special-mediasearch-filter-size-large": "Granne",
-	"wikibasemediainfo-special-mediasearch-filter-file-type-any": "Tutte le tipe de file",
-	"wikibasemediainfo-special-mediasearch-filter-sort-label": "Ordine pe:",
-	"wikibasemediainfo-special-mediasearch-filter-sort-default": "Rilevanze"
+	"wikibasemediainfo-globecoordinate-input-button-text": "Aggiunge"
 }

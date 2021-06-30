@@ -4,12 +4,5 @@
 			"Veeven"
 		]
 	},
-	"wikibasemediainfo-time-precision-year1k": "సహస్రాబ్ది",
-	"wikibasemediainfo-special-mediasearch-tab-image": "బొమ్మలు",
-	"wikibasemediainfo-special-mediasearch-filter-namespace-all": "అన్నీ",
-	"wikibasemediainfo-special-mediasearch-filter-namespace-discussion": "చర్చ",
-	"wikibasemediainfo-special-mediasearch-filter-namespace-help": "సాధారణ సహాయం",
-	"wikibasemediainfo-special-mediasearch-filter-namespace-label": "పేరుబరి: $1",
-	"wikibasemediainfo-special-mediasearch-no-results": "మాకు ఫలితాలేమీ దొరకలేదు",
-	"wikibasemediainfo-special-mediasearch-clear-title": "తొలగించు"
+	"wikibasemediainfo-time-precision-year1k": "సహస్రాబ్ది"
 }

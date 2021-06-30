@@ -108,15 +108,5 @@
 	"wikibasemediainfo-quantity-unit-label": "unitæ",
 	"wikibasemediainfo-quantity-unit-button-text": "Imposta unitæ",
 	"wikibasemediainfo-globecoordinate-input-button-text": "Azonzi",
-	"wikibasemediainfo-globecoordinate-map-button-text": "Selession-a in sciâ mappa",
-	"wikibasemediainfo-special-mediasearch-title": "Serca un file murtimediâ",
-	"wikibasemediainfo-special-mediasearch-continue": "Avanti",
-	"wikibasemediainfo-special-mediasearch-tab-image": "Inmaggine",
-	"wikibasemediainfo-special-mediasearch-tab-audio": "Audio",
-	"wikibasemediainfo-special-mediasearch-tab-video": "Viddeo",
-	"wikibasemediainfo-special-mediasearch-filter-size": "Dimenscion do file murtimediâ",
-	"wikibasemediainfo-special-mediasearch-filter-size-any": "Qualunque dimenscion",
-	"wikibasemediainfo-special-mediasearch-filter-size-small": "Picin",
-	"wikibasemediainfo-special-mediasearch-filter-size-medium": "Mezan",
-	"wikibasemediainfo-special-mediasearch-filter-size-large": "Grande"
+	"wikibasemediainfo-globecoordinate-map-button-text": "Selession-a in sciâ mappa"
 }

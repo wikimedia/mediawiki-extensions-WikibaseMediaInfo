@@ -20,14 +20,5 @@
 	"wikibasemediainfo-monolingualtext-language-label": "Valjii kielâ",
 	"wikibasemediainfo-time-input-button-text": "Lasseet",
 	"wikibasemediainfo-quantity-input-button-text": "Lasseet",
-	"wikibasemediainfo-globecoordinate-input-button-text": "Lasseet",
-	"wikibasemediainfo-special-mediasearch-tab-image": "Koveh",
-	"wikibasemediainfo-special-mediasearch-tab-audio": "Audio",
-	"wikibasemediainfo-special-mediasearch-tab-video": "Video",
-	"wikibasemediainfo-special-mediasearch-tab-page": "Luokah já Siijđoh",
-	"wikibasemediainfo-special-mediasearch-tab-other": "Eres media",
-	"wikibasemediainfo-special-mediasearch-filter-size": "Kove stuárudâh",
-	"wikibasemediainfo-special-mediasearch-filter-license-other": "Eres",
-	"wikibasemediainfo-special-mediasearch-clear-title": "Siho",
-	"wikibasemediainfo-special-mediasearch-copytextlayout-copy": "Kopijist"
+	"wikibasemediainfo-globecoordinate-input-button-text": "Lasseet"
 }

@@ -87,18 +87,5 @@
 	"wikibasemediainfo-quantity-unit-placeholder": "واحد اندازه‌گیری را درج کنید (اختیاری)",
 	"wikibasemediainfo-quantity-unit-label": "واحد اندازه‌گیری",
 	"wikibasemediainfo-quantity-unit-button-text": "تعیین واحد اندازه‌گیری",
-	"wikibasemediainfo-globecoordinate-input-button-text": "افزودن",
-	"wikibasemediainfo-special-mediasearch-title": "جستجوی رسانه‌ها",
-	"wikibasemediainfo-special-mediasearch-continue": "بعدی",
-	"wikibasemediainfo-special-mediasearch-tab-image": "تصویرها",
-	"wikibasemediainfo-special-mediasearch-tab-video": "ویدئو",
-	"wikibasemediainfo-special-mediasearch-filter-size": "اندازهٔ رسانه",
-	"wikibasemediainfo-special-mediasearch-filter-size-any": "هر اندازه‌ای",
-	"wikibasemediainfo-special-mediasearch-filter-size-small": "کوچک",
-	"wikibasemediainfo-special-mediasearch-filter-size-medium": "متوسط",
-	"wikibasemediainfo-special-mediasearch-filter-size-large": "بزرگ",
-	"wikibasemediainfo-special-mediasearch-no-results": "هیچ نتیجه‌ای یافته نشد",
-	"wikibasemediainfo-special-mediasearch-copytextlayout-copy": "رونوشت",
-	"wikibasemediainfo-special-mediasearch-copytextlayout-copy-fail": "رونویسی در کلیپ‌برد انجام نشد.",
-	"wikibasemediainfo-special-mediasearch-copytextlayout-copy-success": "در کلیپ‌برد رونویسی شد."
+	"wikibasemediainfo-globecoordinate-input-button-text": "افزودن"
 }

@@ -43,19 +43,5 @@
 	"wikibasemediainfo-statements-learn-more": "Lær meir",
 	"wikibasemediainfo-statements-remove": "Fjern alle",
 	"wikibasemediainfo-statements-title-depicts": "Element som er med i denne fila",
-	"wikibasemediainfo-statements-link-notice-text": "Merkelappar i strukturerte data lenkjar til sidene sine på Wikidata og vil opna i eit nytt vindauga.",
-	"wikibasemediainfo-special-mediasearch-tab-video": "Video",
-	"wikibasemediainfo-special-mediasearch-tab-page": "Kategoriar og sider",
-	"wikibasemediainfo-special-mediasearch-tab-other": "Andre medium",
-	"wikibasemediainfo-special-mediasearch-filter-size": "Biletstorleik",
-	"wikibasemediainfo-special-mediasearch-filter-size-any": "Alle biletstorleikar",
-	"wikibasemediainfo-special-mediasearch-filter-file-type-any": "Alle filtypar",
-	"wikibasemediainfo-special-mediasearch-filter-sort-default": "Relevans",
-	"wikibasemediainfo-special-mediasearch-filter-sort-recency": "Dato",
-	"wikibasemediainfo-special-mediasearch-filter-sort-popularity": "Popularitet",
-	"wikibasemediainfo-special-mediasearch-filter-license-any": "Alle lisensar",
-	"wikibasemediainfo-special-mediasearch-filter-license-cc-by": "Bruk med namngjeving",
-	"wikibasemediainfo-special-mediasearch-filter-license-cc-by-sa": "Bruk med namngjeving og same lisensen",
-	"wikibasemediainfo-special-mediasearch-filter-license-unrestricted": "Ingen avgrensingar",
-	"wikibasemediainfo-special-mediasearch-filter-license-other": "Andre"
+	"wikibasemediainfo-statements-link-notice-text": "Merkelappar i strukturerte data lenkjar til sidene sine på Wikidata og vil opna i eit nytt vindauga."
 }

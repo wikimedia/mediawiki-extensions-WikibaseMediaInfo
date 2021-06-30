@@ -78,8 +78,5 @@
 	"wikibasemediainfo-time-precision-year1k": "milénio",
 	"wikibasemediainfo-quantity-input-button-text": "Adicionar",
 	"wikibasemediainfo-globecoordinate-input-button-text": "Adicionar",
-	"wikibasemediainfo-globecoordinate-map-button-text": "Selecionar no mapa",
-	"wikibasemediainfo-special-mediasearch-tab-image": "Imagens",
-	"wikibasemediainfo-special-mediasearch-tab-audio": "Áudio",
-	"wikibasemediainfo-special-mediasearch-tab-video": "Vídeo"
+	"wikibasemediainfo-globecoordinate-map-button-text": "Selecionar no mapa"
 }

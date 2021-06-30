@@ -62,9 +62,5 @@
 	"wikibasemediainfo-statements-remove": "นำออกทั้งหมด",
 	"wikibasemediainfo-statements-title-depicts": "ไอเทมที่แสดงอยู่ในไฟล์นี้",
 	"wikibasemediainfo-statements-unsupported-property-title": "คุณสมบัติที่ไม่รองรับ",
-	"wikibasemediainfo-statements-unsupported-property-content": "คุณสมบัติอื่นนอกเหนือจาก $1 ยังไม่รองรับอย่างเต็มที่ แต่จะเรียบร้อยในอนาคต สำหรับในตอนนี้ ฟังก์ขันสำหรับคุณสมบัติที่ไม่รองรับอาจทำงานไม่ตรงตามที่คุณคาดไว้",
-	"wikibasemediainfo-special-mediasearch-filter-namespace-help": "วิธีใช้ทั่วไป",
-	"wikibasemediainfo-special-mediasearch-filter-namespace-custom": "ปรับแต่ง",
-	"wikibasemediainfo-special-mediasearch-filter-namespace-label": "เนมสเปซ: $1",
-	"wikibasemediainfo-special-mediasearch-filter-namespace-dialog-progressive-action": "บันทึก"
+	"wikibasemediainfo-statements-unsupported-property-content": "คุณสมบัติอื่นนอกเหนือจาก $1 ยังไม่รองรับอย่างเต็มที่ แต่จะเรียบร้อยในอนาคต สำหรับในตอนนี้ ฟังก์ขันสำหรับคุณสมบัติที่ไม่รองรับอาจทำงานไม่ตรงตามที่คุณคาดไว้"
 }

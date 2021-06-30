@@ -45,21 +45,5 @@
 	"wikibasemediainfo-filepage-statement-some-value-option": "যিকোনো মান",
 	"wikibasemediainfo-filepage-statement-some-value": "{{WBREPONAME}} আইটেম অবিহনে যিকোনো মান",
 	"wikibasemediainfo-filepage-statement-error": "এই বৈশিষ্ট্যৰ মান প্ৰাপ্ত কৰোঁতে এটা ত্ৰুটি হৈছে",
-	"wikibasemediainfo-filepage-license-title": "কেপ্‌চন আৰু অন্যান্য সংগঠিত তথ্যৰ বৰঙণি",
-	"wikibasemediainfo-special-mediasearch-tab-image": "চিত্ৰ",
-	"wikibasemediainfo-special-mediasearch-tab-audio": "অডিঅ'",
-	"wikibasemediainfo-special-mediasearch-tab-video": "ভিডিঅ'",
-	"wikibasemediainfo-special-mediasearch-tab-page": "শ্ৰেণী আৰু পৃষ্ঠা",
-	"wikibasemediainfo-special-mediasearch-tab-other": "অন্য মিডিয়া",
-	"wikibasemediainfo-special-mediasearch-filter-size": "সকলো আকাৰ",
-	"wikibasemediainfo-special-mediasearch-filter-size-any": "ছবিৰ সকলো আকাৰ",
-	"wikibasemediainfo-special-mediasearch-filter-file-type-any": "সকলো প্ৰকাৰৰ ফাইল",
-	"wikibasemediainfo-special-mediasearch-filter-sort-label": "চিজিল হৈছে:",
-	"wikibasemediainfo-special-mediasearch-filter-sort-default": "প্ৰাসংগিকতা",
-	"wikibasemediainfo-special-mediasearch-filter-sort-recency": "সম্প্ৰতিকতা",
-	"wikibasemediainfo-special-mediasearch-filter-license-any": "সকলো অনুজ্ঞাপত্ৰ",
-	"wikibasemediainfo-special-mediasearch-no-results": "আমি কোনো ফলাফল বিছাৰি নাপালোঁ",
-	"wikibasemediainfo-special-mediasearch-no-results-tips": "অধিক সচৰাচৰ প্ৰচলিত শব্দৰে চেষ্টা কৰক নাইবা আপোনাৰ বানান পৰীক্ষা কৰক",
-	"wikibasemediainfo-special-mediasearch-load-more-results": "আৰু ল'ড কৰক",
-	"wikibasemediainfo-special-mediasearch-quickview-button-text": "অধিক সবিশেষ"
+	"wikibasemediainfo-filepage-license-title": "কেপ্‌চন আৰু অন্যান্য সংগঠিত তথ্যৰ বৰঙণি"
 }

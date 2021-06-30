@@ -30,8 +30,5 @@
 	"wikibasemediainfo-filepage-cancel-confirm-title": "¿Descartar los cambeos?",
 	"wikibasemediainfo-filepage-cancel-confirm-accept": "Descartar",
 	"wikibasemediainfo-filepage-edit": "Editar",
-	"wikibasemediainfo-filepage-publish": "Espublizar los cambeos",
-	"wikibasemediainfo-special-mediasearch-filter-size": "Tamañu d'imaxe",
-	"wikibasemediainfo-special-mediasearch-filter-size-any": "Tolos tamaños d'imaxe",
-	"wikibasemediainfo-special-mediasearch-filter-file-type-any": "Toles tribes de ficheru"
+	"wikibasemediainfo-filepage-publish": "Espublizar los cambeos"
 }

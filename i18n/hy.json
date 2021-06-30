@@ -41,19 +41,5 @@
 	"wikibasemediainfo-quantity-unit-label": "չափման միավոր",
 	"wikibasemediainfo-quantity-unit-button-text": "Սահմանել միավորը",
 	"wikibasemediainfo-globecoordinate-input-button-text": "Ավելացնել",
-	"wikibasemediainfo-globecoordinate-map-button-text": "Ընտրեք քարտեզի վրա",
-	"wikibasemediainfo-special-mediasearch-title": "Որոնել մեդիա",
-	"wikibasemediainfo-special-mediasearch-continue": "Հաջորդ",
-	"wikibasemediainfo-special-mediasearch-tab-image": "Պատկերներ",
-	"wikibasemediainfo-special-mediasearch-tab-audio": "Աուդիո",
-	"wikibasemediainfo-special-mediasearch-tab-video": "Վիդեո",
-	"wikibasemediainfo-special-mediasearch-tab-other": "Այլ",
-	"wikibasemediainfo-special-mediasearch-filter-size-small": "Փոքր",
-	"wikibasemediainfo-special-mediasearch-filter-size-medium": "Միջին",
-	"wikibasemediainfo-special-mediasearch-filter-size-large": "Մեծ",
-	"wikibasemediainfo-special-mediasearch-filter-license-other": "Այլ",
-	"wikibasemediainfo-special-mediasearch-filter-namespace-all": "Բոլորը",
-	"wikibasemediainfo-special-mediasearch-filter-namespace-discussion": "Քննարկում",
-	"wikibasemediainfo-special-mediasearch-filter-namespace-dialog-progressive-action": "Հաստատել",
-	"wikibasemediainfo-special-mediasearch-no-results": "Ոչինչ չի գտնվել"
+	"wikibasemediainfo-globecoordinate-map-button-text": "Ընտրեք քարտեզի վրա"
 }

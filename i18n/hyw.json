@@ -9,9 +9,5 @@
 	},
 	"wikibasemediainfo-statements-link-notice-dismiss": "Հեռացնել",
 	"wikibasemediainfo-remove-all-statements-confirm-accept": "Հանել",
-	"wikibasemediainfo-coordinate-input-placeholder": "Լայնութիւն, երկայնութիւն",
-	"wikibasemediainfo-special-mediasearch-filter-size": "Պատկերի չափ",
-	"wikibasemediainfo-special-mediasearch-filter-size-any": "Բոլոր պատկերներուն չափերը",
-	"wikibasemediainfo-special-mediasearch-clear-title": "Հանել",
-	"wikibasemediainfo-special-mediasearch-quickview-button-text": "Յաւելեալ Մանրամասնութիւններ"
+	"wikibasemediainfo-coordinate-input-placeholder": "Լայնութիւն, երկայնութիւն"
 }

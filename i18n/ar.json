@@ -115,19 +115,5 @@
 	"wikibasemediainfo-quantity-unit-label": "وحدة",
 	"wikibasemediainfo-quantity-unit-button-text": "حدد الوحدة",
 	"wikibasemediainfo-globecoordinate-input-button-text": "إضافة",
-	"wikibasemediainfo-globecoordinate-map-button-text": "اختر على الخريطة",
-	"wikibasemediainfo-special-mediasearch-title": "بحث في الملفات",
-	"wikibasemediainfo-special-mediasearch-continue": "التالية",
-	"wikibasemediainfo-special-mediasearch-tab-image": "صور",
-	"wikibasemediainfo-special-mediasearch-tab-audio": "صوت",
-	"wikibasemediainfo-special-mediasearch-tab-page": "التصنيفات والصفحات",
-	"wikibasemediainfo-special-mediasearch-filter-size": "حجم وسائل الإعلام",
-	"wikibasemediainfo-special-mediasearch-filter-size-any": "أي حجم",
-	"wikibasemediainfo-special-mediasearch-filter-size-small": "صغير",
-	"wikibasemediainfo-special-mediasearch-filter-size-medium": "متوسط",
-	"wikibasemediainfo-special-mediasearch-filter-size-large": "كبير",
-	"wikibasemediainfo-special-mediasearch-filter-license-any": "كل التراخيص",
-	"wikibasemediainfo-special-mediasearch-filter-namespace-discussion": "نقاش",
-	"wikibasemediainfo-special-mediasearch-no-results": "لا توجد نتائج",
-	"wikibasemediainfo-special-mediasearch-load-more-results": "حمل المزيد"
+	"wikibasemediainfo-globecoordinate-map-button-text": "اختر على الخريطة"
 }

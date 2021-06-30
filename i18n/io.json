@@ -6,15 +6,5 @@
 	},
 	"wikibasemediainfo-add-statement": "Adjuntez raporto",
 	"wikibasemediainfo-filepage-more-languages": "Videz $1 plusa {{PLURAL:$1|linguo|lingui}}",
-	"wikibasemediainfo-statements-item-input-placeholder": "Serchez por adjuntar artikli",
-	"wikibasemediainfo-special-mediasearch-title": "Serchar 'media'",
-	"wikibasemediainfo-special-mediasearch-continue": "Sequanta",
-	"wikibasemediainfo-special-mediasearch-tab-image": "Imaji",
-	"wikibasemediainfo-special-mediasearch-tab-audio": "*Audio",
-	"wikibasemediainfo-special-mediasearch-tab-video": "*Video",
-	"wikibasemediainfo-special-mediasearch-filter-size": "Grandeso dil arkivo",
-	"wikibasemediainfo-special-mediasearch-filter-size-small": "Mikra",
-	"wikibasemediainfo-special-mediasearch-filter-size-large": "Larja",
-	"wikibasemediainfo-special-mediasearch-filter-license-unrestricted": "Sen restrikti",
-	"wikibasemediainfo-special-mediasearch-no-results": "Nula rezulti trovita"
+	"wikibasemediainfo-statements-item-input-placeholder": "Serchez por adjuntar artikli"
 }

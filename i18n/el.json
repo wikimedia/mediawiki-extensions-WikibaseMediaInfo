@@ -18,10 +18,5 @@
 	"wikibasemediainfo-filepage-cancel": "Ακύρωση",
 	"wikibasemediainfo-filepage-publish": "Δημοσίευση αλλαγών",
 	"wikibasemediainfo-filepage-caption-empty": "Δεν ορίστηκε λεζάντα",
-	"wikibasemediainfo-statements-unsupported-property-title": "Μη υποστηριζόμενη ιδιότητα",
-	"wikibasemediainfo-special-mediasearch-tab-image": "Εικόνες",
-	"wikibasemediainfo-special-mediasearch-tab-audio": "Ήχος",
-	"wikibasemediainfo-special-mediasearch-tab-video": "Βίντεο",
-	"wikibasemediainfo-special-mediasearch-filter-size": "Μέγεθος εικόνας",
-	"wikibasemediainfo-special-mediasearch-load-more-results": "Φόρτωση περισσότερων"
+	"wikibasemediainfo-statements-unsupported-property-title": "Μη υποστηριζόμενη ιδιότητα"
 }

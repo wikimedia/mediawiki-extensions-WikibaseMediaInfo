@@ -54,19 +54,5 @@
 	"wikibasemediainfo-time-calendar-gregorian": "gregoriansk",
 	"wikibasemediainfo-time-calendar-julian": "juliansk",
 	"wikibasemediainfo-quantity-input-button-text": "Tilføj",
-	"wikibasemediainfo-globecoordinate-input-button-text": "Tilføj",
-	"wikibasemediainfo-special-mediasearch-tab-image": "Billeder",
-	"wikibasemediainfo-special-mediasearch-tab-audio": "Lyd",
-	"wikibasemediainfo-special-mediasearch-tab-video": "Video",
-	"wikibasemediainfo-special-mediasearch-filter-size": "Billedestørrelse",
-	"wikibasemediainfo-special-mediasearch-filter-size-any": "Alle billedestørrelser",
-	"wikibasemediainfo-special-mediasearch-filter-size-small": "Lille",
-	"wikibasemediainfo-special-mediasearch-filter-size-medium": "Mellem",
-	"wikibasemediainfo-special-mediasearch-filter-size-large": "Stor",
-	"wikibasemediainfo-special-mediasearch-filter-file-type-any": "Alle filtyper",
-	"wikibasemediainfo-special-mediasearch-filter-license-any": "Alle licenser",
-	"wikibasemediainfo-special-mediasearch-clear-title": "Fjern",
-	"wikibasemediainfo-special-mediasearch-load-more-results": "Indlæs mere",
-	"wikibasemediainfo-special-mediasearch-quickview-button-text": "Flere detaljer",
-	"wikibasemediainfo-special-mediasearch-quickview-next-button-text": "Vis næste resultat"
+	"wikibasemediainfo-globecoordinate-input-button-text": "Tilføj"
 }

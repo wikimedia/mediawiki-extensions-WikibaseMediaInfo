@@ -2,10 +2,8 @@
 
 namespace Wikibase\MediaInfo\Tests\Integration;
 
-use ApiUsageException;
 use MockSearchEngine;
 use TestUser;
-use User;
 
 /**
  * Base class for test classes
@@ -33,34 +31,6 @@ abstract class WBMIApiTestCase extends \ApiUploadTestCase {
 
 		$this->setupWbEditorUser();
 		$this->setupSearchEngine();
-	}
-
-	/**
-	 * Appends an edit token to a request.
-	 *
-	 * @param array $params
-	 * @param array|null $session
-	 * @param User|null $user
-	 * @param string $tokenType
-	 *
-	 * @throws ApiUsageException
-	 * @return array [ array|null $resultData, WebRequest $request, array $sessionArray ]
-	 */
-	protected function doApiRequestWithToken(
-		array $params,
-		array $session = null,
-		User $user = null,
-		$tokenType = 'csrf'
-	) {
-		if ( !$user ) {
-			$user = $this->getTestUser()->getUser();
-		}
-
-		if ( !array_key_exists( 'token', $params ) ) {
-			$params['token'] = $user->getEditToken();
-		}
-
-		return $this->doApiRequest( $params, $session, false, $user, $tokenType );
 	}
 
 	private function login() {

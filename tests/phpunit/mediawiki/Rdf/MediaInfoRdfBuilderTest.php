@@ -58,6 +58,10 @@ class MediaInfoRdfBuilderTest extends TestCase {
 	private $helper;
 
 	public function setUp(): void {
+		$this->markTestSkipped(
+			'Skipped while refactoring RdfBuilder. See: T282689'
+		);
+
 		parent::setUp();
 		$this->helper = new NTriplesRdfTestHelper();
 		$this->dedupe = $this->createMock( DedupeBag::class );

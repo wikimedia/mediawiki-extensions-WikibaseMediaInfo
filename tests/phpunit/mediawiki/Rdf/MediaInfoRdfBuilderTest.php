@@ -38,11 +38,6 @@ use Wikimedia\Purtle\RdfWriter;
  */
 class MediaInfoRdfBuilderTest extends TestCase {
 
-	private $dedupe;
-	private $vocabulary;
-	private $writer;
-	private $mentionedEntityTracker;
-	private $valueSnakRdfBuilderFactory;
 	private $termsRdfBuilder;
 	private $truthyStatementRdfBuilderFactory;
 	private $fullStatementRdfBuilderFactory;
@@ -56,12 +51,9 @@ class MediaInfoRdfBuilderTest extends TestCase {
 	 * @var NTriplesRdfTestHelper
 	 */
 	private $helper;
+	private $mediaInfoSpecificComponentsRdfBuilder;
 
 	public function setUp(): void {
-		$this->markTestSkipped(
-			'Skipped while refactoring RdfBuilder. See: T282689'
-		);
-
 		parent::setUp();
 		$this->helper = new NTriplesRdfTestHelper();
 		$this->dedupe = $this->createMock( DedupeBag::class );
@@ -207,8 +199,6 @@ class MediaInfoRdfBuilderTest extends TestCase {
 	) {
 		$builder = new RdfBuilder(
 			$this->getVocabulary(),
-			WikibaseRepo::getValueSnakRdfBuilderFactory(),
-			$this->getTestData()->getMockRepository(),
 			WikibaseRepo::getEntityRdfBuilderFactory(),
 			$produce,
 			$writer,

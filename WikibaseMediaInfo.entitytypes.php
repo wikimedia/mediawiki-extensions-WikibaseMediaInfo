@@ -32,6 +32,7 @@ use Wikibase\Lib\Store\EntityContentDataCodec;
 use Wikibase\Lib\Store\EntityRevisionLookup;
 use Wikibase\Lib\Store\Sql\WikiPageEntityDataLoader;
 use Wikibase\Lib\Store\Sql\WikiPageEntityMetaDataLookup;
+use Wikibase\Lib\Store\TitleLookupBasedEntityExistenceChecker;
 use Wikibase\Lib\Store\WikiPagePropertyOrderProvider;
 use Wikibase\Lib\TermLanguageFallbackChain;
 use Wikibase\MediaInfo\ChangeOp\Deserialization\MediaInfoChangeOpDeserializer;
@@ -326,5 +327,12 @@ return [
 			return MediaInfoServices::getMediaInfoIdLookup();
 		},
 		Def::LUA_ENTITY_MODULE => 'mw.wikibase.mediainfo.entity',
+		Def::EXISTENCE_CHECKER_CALLBACK => static function () {
+			$services = MediaWikiServices::getInstance();
+			return new TitleLookupBasedEntityExistenceChecker(
+				WikibaseRepo::getEntityTitleLookup( $services ),
+				$services->getLinkBatchFactory()
+			);
+		}
 	]
 ];

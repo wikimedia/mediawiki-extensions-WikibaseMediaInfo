@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 use RepoGroup;
 use Wikibase\DataAccess\EntitySource;
 use Wikibase\DataAccess\EntitySourceDefinitions;
-use Wikibase\Lib\EntityTypeDefinitions;
+use Wikibase\Lib\SubEntityTypesMapper;
 use Wikibase\MediaInfo\Content\MediaInfoHandler;
 use Wikibase\MediaInfo\Rdf\MediaInfoSpecificComponentsRdfBuilder;
 use Wikibase\Repo\Rdf\RdfVocabulary;
@@ -76,7 +76,7 @@ class MediaInfoSpecificComponentsRdfBuilderTest extends TestCase {
 						''
 					),
 				],
-				new EntityTypeDefinitions( [] )
+				new SubEntityTypesMapper( [] )
 			),
 			[ 'test' => '' ],
 			[ 'test' => '' ],

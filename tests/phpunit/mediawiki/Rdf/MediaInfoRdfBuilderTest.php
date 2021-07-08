@@ -6,8 +6,8 @@ use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Wikibase\DataAccess\EntitySource;
 use Wikibase\DataAccess\EntitySourceDefinitions;
-use Wikibase\Lib\EntityTypeDefinitions;
 use Wikibase\Lib\Store\EntityRevisionLookup;
+use Wikibase\Lib\SubEntityTypesMapper;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\MediaInfo\DataModel\MediaInfoId;
 use Wikibase\MediaInfo\Rdf\MediaInfoRdfBuilder;
@@ -161,7 +161,7 @@ class MediaInfoRdfBuilderTest extends TestCase {
 						''
 					),
 				],
-				new EntityTypeDefinitions( [] )
+				new SubEntityTypesMapper( [] )
 			),
 			[ 'test' => '' ],
 			[ 'test' => '' ],

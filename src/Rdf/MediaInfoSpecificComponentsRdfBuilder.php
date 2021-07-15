@@ -107,6 +107,7 @@ class MediaInfoSpecificComponentsRdfBuilder implements EntityRdfBuilder {
 		$this->addFileSpecificType( $id, $file );
 		$this->addEncodingFormat( $id, $file );
 		$this->addFileUrl( $id, $file );
+		$this->addFileUrlAlt( $id, $file );
 
 		$this->addPositiveIntegerValue( $id, 'contentSize', $file->getSize() );
 		if ( $file->isMultipage() ) {
@@ -151,6 +152,14 @@ class MediaInfoSpecificComponentsRdfBuilder implements EntityRdfBuilder {
 		$this->aboutId( $id )
 			->say( RdfVocabulary::NS_SCHEMA_ORG, 'contentUrl' )
 			->is( $file->getCanonicalUrl() );
+	}
+
+	private function addFileUrlAlt( MediaInfoId $id, File $file ) {
+		$url = $this->vocabulary->getMediaFileURI( $file->getTitle()->getText() );
+
+		$this->aboutId( $id )
+			->say( RdfVocabulary::NS_SCHEMA_ORG, 'url' )
+			->is( $url );
 	}
 
 	private function addDuration( MediaInfoId $id, File $file ) {

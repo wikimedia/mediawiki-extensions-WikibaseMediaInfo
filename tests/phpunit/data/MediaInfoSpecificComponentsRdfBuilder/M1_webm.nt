@@ -1,5 +1,6 @@
 <http://acme.test/M1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/MediaObject> .
 <http://acme.test/M1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/VideoObject> .
 <http://acme.test/M1> <http://schema.org/contentUrl> <http://example.com/Test.webm> .
+<http://acme.test/M1> <http://schema.org/url> <http://commons.wikimedia.org/wiki/Special:FilePath/Test.webm> .
 <http://acme.test/M1> <http://schema.org/encodingFormat> "video/webm" .
 <http://acme.test/M1> <http://schema.org/duration> "PT60.3S"^^<http://www.w3.org/2001/XMLSchema#duration> .

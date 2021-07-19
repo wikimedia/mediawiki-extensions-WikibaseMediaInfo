@@ -65,7 +65,7 @@
 	"wikibasemediainfo-statements-unsupported-property-title": "Thuộc tính không được hỗ trợ",
 	"wikibasemediainfo-statements-unsupported-property-content": "Các thuộc tính ngoài $1 chưa được hỗ trợ. Cho đến khi chúng được hỗ trợ mai mốt, các chức năng sẽ không hoạt động như bạn mong muốn đối với các thuộc tính này.",
 	"wikibasemediainfo-statements-unsupported-property-type-content": "Một số kiểu thuộc tính chưa được hỗ trợ. Cho đến khi chúng được hỗ trợ mai mốt, các chức năng sẽ không hoạt động như bạn mong muốn đối với các thuộc tính này.",
-	"wikibasemediainfo-statements-link-notice-text": "Các nhãn dữ liệu có cấu trúc liên kết đếni các trang {{WBREPONAME}} tương ứng và sẽ mở trong cửa sổ mới.",
+	"wikibasemediainfo-statements-link-notice-text": "Các nhãn dữ liệu có cấu trúc liên kết đến các trang {{WBREPONAME}} tương ứng và sẽ mở trong cửa sổ mới.",
 	"wikibasemediainfo-statements-link-notice-dismiss": "Bỏ qua",
 	"wikibasemediainfo-remove-all-statements-confirm": "Tác vụ này sẽ xóa tất cả các giá trị hiện tại của thuộc tính này. Các thuộc tính không có giá trị sẽ bị loại bỏ sau khi đăng các thay đổi. Bạn có chắc chắn muốn xóa các giá trị?",
 	"wikibasemediainfo-remove-all-statements-confirm-title": "Có muốn loại bỏ tất cả?",

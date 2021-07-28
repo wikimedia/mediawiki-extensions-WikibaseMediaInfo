@@ -888,7 +888,8 @@ class WikibaseMediaInfoHooks {
 			return;
 		}
 
-		$baseConceptUri = WikibaseRepo::getSettings()->getSetting( 'conceptBaseUri' );
+		$baseConceptUri = WikibaseRepo::getLocalEntitySource()
+			->getConceptBaseUri();
 
 		$sidebar['TOOLBOX']['wb-concept-uri'] = [
 			'id' => 't-wb-concept-uri',

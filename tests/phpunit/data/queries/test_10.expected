@@ -1,0 +1,146 @@
+{
+    "bool": {
+        "must": [
+            {
+                "function_score": {
+                    "query": {
+                        "bool": {
+                            "should": [
+                                {
+                                    "dis_max": {
+                                        "tie_breaker": 1,
+                                        "queries": [
+                                            {
+                                                "function_score": {
+                                                    "query": {
+                                                        "bool": {
+                                                            "must": [
+                                                                {
+                                                                    "function_score": {
+                                                                        "query": {
+                                                                            "bool": {
+                                                                                "filter": [
+                                                                                    {
+                                                                                        "multi_match": {
+                                                                                            "query": "yet another search term",
+                                                                                            "fields": [
+                                                                                                "all",
+                                                                                                "all.plain"
+                                                                                            ],
+                                                                                            "operator": "and"
+                                                                                        }
+                                                                                    }
+                                                                                ],
+                                                                                "should": [
+                                                                                    {
+                                                                                        "match": {
+                                                                                            "descriptions.de.plain": {
+                                                                                                "query": "yet another search term",
+                                                                                                "boost": 2
+                                                                                            }
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "match": {
+                                                                                            "descriptions.fr": {
+                                                                                                "query": "yet another search term",
+                                                                                                "boost": 2
+                                                                                            }
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        },
+                                                                        "min_score": 1.0e-8,
+                                                                        "functions": [
+                                                                            {
+                                                                                "script_score": {
+                                                                                    "script": {
+                                                                                        "source": "max(0, ln(_score))",
+                                                                                        "lang": "expression"
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                }
+                                                            ],
+                                                            "should": [
+                                                                {
+                                                                    "function_score": {
+                                                                        "query": {
+                                                                            "match_explorer": {
+                                                                                "type": "unique_terms_count",
+                                                                                "query": {
+                                                                                    "match": {
+                                                                                        "text": {
+                                                                                            "query": "yet another search term"
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        },
+                                                                        "functions": [
+                                                                            {
+                                                                                "script_score": {
+                                                                                    "script": {
+                                                                                        "source": "ln(2 \/ max(1, min(1.25, _score)))",
+                                                                                        "lang": "expression"
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    },
+                                                    "min_score": 0,
+                                                    "functions": [
+                                                        {
+                                                            "script_score": {
+                                                                "script": {
+                                                                    "source": "exp(_score) \/ 2",
+                                                                    "lang": "expression"
+                                                                }
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "match_none": {}
+                                }
+                            ]
+                        }
+                    },
+                    "functions": [
+                        {
+                            "script_score": {
+                                "script": {
+                                    "source": "100 \/ ( 1 + exp( -1 * ( _score + intercept ) ) )",
+                                    "params": {
+                                        "intercept": 1
+                                    },
+                                    "lang": "expression"
+                                }
+                            }
+                        }
+                    ]
+                }
+            }
+        ],
+        "filter": [
+            {
+                "terms": {
+                    "namespace": [
+                        0
+                    ]
+                }
+            }
+        ]
+    }
+}

@@ -28,6 +28,17 @@ class FieldIterator extends ArrayIterator {
 		'suggest',
 	];
 
+	public const STEMMED_TO_PLAIN_FIELDS_MAP = [
+		'descriptions.$language' => 'descriptions.$language.plain',
+		'title' => 'title.plain',
+		'category' => 'category.plain',
+		'redirect.title' => 'redirect.title.plain',
+		'heading' => 'heading.plain',
+		'auxiliary_text' => 'auxiliary_text.plain',
+		'text' => 'text.plain',
+		'file_text' => 'file_text.plain',
+	];
+
 	public const STEMMED_FIELDS = [
 		'descriptions.$language',
 		'title',
@@ -110,22 +121,43 @@ class FieldIterator extends ArrayIterator {
 
 		$fields = array_intersect( static::LANGUAGE_AWARE_FIELDS, $this->fields );
 		foreach ( $this->languages as $index => $language ) {
-			foreach ( $fields as $field ) {
-				// check whether stemmed field can be used
-				if (
-					in_array( $field, static::STEMMED_FIELDS ) &&
-					!( $this->stemmingSettings[$language]['query'] ?? false )
-				) {
-					continue;
-				}
 
+			$stemmingEnabledForLanguage = $this->stemmingSettings[$language]['query'] ?? false;
+
+			foreach ( $fields as $field ) {
 				// decay x% for each fallback language
 				$boost = ( $this->boosts[$field] ?? 0 ) * ( ( $this->decays[$field] ?? 1 ) ** $index );
 
-				// parse the language into the field name
-				$field = str_replace( '$language', $language, $field );
-
-				$queries[] = $this->fieldQueryBuilder->getQuery( $field, $boost );
+				if ( $boost > 0 ) {
+					if (
+						// if stemming is turned on for this language
+						$stemmingEnabledForLanguage ||
+						// or if this field is not a stemmed field
+						!in_array( $field, static::STEMMED_FIELDS )
+					) {
+						// parse the language into the field name
+						$field = str_replace( '$language', $language, $field );
+						$queries[] = $this->fieldQueryBuilder->getQuery( $field, $boost );
+					} else {
+						// Otherwise
+						// - this field IS a stemmed field
+						// - we do NOT have stemming turned on for this language
+						// ... and therefore we cannot query the field.
+						// Deal with this by checking if there's a plain equivalent of the stemmed
+						// field that has no boost of its own, and if there is then query the plain
+						// field instead
+						if ( isset( static::STEMMED_TO_PLAIN_FIELDS_MAP[$field] ) ) {
+							$plainField = static::STEMMED_TO_PLAIN_FIELDS_MAP[$field];
+							$plainBoost =
+								( $this->boosts[$plainField] ?? 0 ) *
+								( ( $this->decays[$plainField] ?? 1 ) ** $index );
+							if ( $plainBoost == 0 ) {
+								$plainField = str_replace( '$language', $language, $plainField );
+								$queries[] = $this->fieldQueryBuilder->getQuery( $plainField, $boost );
+							}
+						}
+					}
+				}
 			}
 		}
 		return $queries;

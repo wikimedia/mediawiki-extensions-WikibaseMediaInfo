@@ -1,0 +1,42 @@
+{
+	"title": "Query plain equivalent when stemming is not available",
+	"term": "yet another search term",
+	"entityIdsForTerm": {
+		"yet another search term": []
+	},
+	"defaultProperties": [
+		"P999"
+	],
+	"userLanguage": "de",
+	"fallbackLangs": [ "fr" ],
+	"stemmingSettings": {
+		"de": {
+			"query": false
+		},
+		"fr": {
+			"query": true
+		}
+	},
+	"settings": {
+		"boost": {
+			"statement": 0,
+			"descriptions.$language": 2,
+			"descriptions.$language.plain": 0,
+			"category": 0,
+			"category.plain": 0,
+			"title": 0,
+			"title.plain": 0,
+			"redirect.title": 0,
+			"redirect.title.plain": 0,
+			"text": 0,
+			"text.plain": 0,
+			"auxiliary_text": 0,
+			"auxiliary_text.plain": 0,
+			"file_text": 0,
+			"file_text.plain": 0,
+			"heading": 0,
+			"heading.plain": 0,
+			"suggest": 0
+		}
+	}
+}

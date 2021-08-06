@@ -221,7 +221,7 @@ return [
 			);
 
 			$entitySource = WikibaseRepo::getEntitySourceDefinitions()
-				->getSourceForEntityType( MediaInfo::ENTITY_TYPE );
+				->getDatabaseSourceForEntityType( MediaInfo::ENTITY_TYPE );
 
 			return new WikiPageEntityMetaDataLookup(
 				$entityNamespaceLookup,
@@ -298,7 +298,7 @@ return [
 
 			// TODO: this all scaffolding should probably be somehow moved to Wikibase Repo or so?
 			$databaseName = WikibaseRepo::getEntitySourceDefinitions()
-				->getSourceForEntityType( MediaInfo::ENTITY_TYPE )->getDatabaseName();
+				->getDatabaseSourceForEntityType( MediaInfo::ENTITY_TYPE )->getDatabaseName();
 
 			$contentCodec = new EntityContentDataCodec(
 				WikibaseRepo::getEntityIdParser( $services ),

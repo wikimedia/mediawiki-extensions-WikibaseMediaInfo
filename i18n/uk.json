@@ -3,6 +3,7 @@
 		"authors": [
 			"Andrew J.Kurbiko",
 			"Base",
+			"DDPAT",
 			"Movses",
 			"NickK",
 			"Piramidion",
@@ -42,6 +43,7 @@
 	"wikibasemediainfo-filepage-caption-approaching-limit": "{{PLURAL:$1|Залишився $1 символ|Залишилося $1 символи|Залишилось $1 символів}}",
 	"wikibasemediainfo-filepage-statement-value-type-dropdown-title": "Виберіть тип значення.",
 	"wikibasemediainfo-filepage-statement-custom-value-option": "Нестандартне значення",
+	"wikibasemediainfo-filepage-statement-invalid-value": "Недійсне значення",
 	"wikibasemediainfo-filepage-statement-no-value-option": "Без значення",
 	"wikibasemediainfo-filepage-statement-no-value": "Для цієї властивості значення відсутнє",
 	"wikibasemediainfo-filepage-statement-no-data": "Немає доступних даних",
@@ -114,5 +116,6 @@
 	"wikibasemediainfo-quantity-unit-label": "одиниці",
 	"wikibasemediainfo-quantity-unit-button-text": "Встановити одиниці",
 	"wikibasemediainfo-globecoordinate-input-button-text": "Додати",
-	"wikibasemediainfo-globecoordinate-map-button-text": "Вибрати на мапі"
+	"wikibasemediainfo-globecoordinate-map-button-text": "Вибрати на мапі",
+	"wikibasemediainfo-rescore-profile-classic-noboostlinks-max-boost-template": "Рейтинг, заснований на найкращому шаблоні, мові сторінки та останнім часом, коли він активований у цій вікі."
 }

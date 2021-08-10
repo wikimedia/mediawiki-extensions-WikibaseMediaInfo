@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"DDPAT"
+		]
+	},
+	"apihelp-relatedconcepts-summary": "Знайдіть поняття, пов’язані з терміном",
+	"apihelp-relatedconcepts-example": "Знайти поняття, пов’язані з <kbd>apple</kbd>.",
+	"apihelp-relatedconcepts-param-term": "Термін для пошуку споріднених понять",
+	"apihelp-relatedconcepts-param-limit": "Максимальна кількість повернутих пов'язаних концепцій"
+}

@@ -1,10 +1,12 @@
 {
 	"@metadata": {
 		"authors": [
+			"Adriendelucca",
 			"Fulup"
 		]
 	},
 	"wikibase-entity-mediainfo": "Keleier media",
 	"wikibasemediainfo-desc": "Astenn eus Wikibase evit merañ metaroadennoù frammet eus restroù media",
+	"wikibasemediainfo-filepage-more-languages": "Diskouez $1 {{PLURAL:$1|yezh}} ouzhpenn",
 	"wikibasemediainfo-filepage-statement-value-type-dropdown-title": "Dibab ur seurt talvoud."
 }

@@ -173,6 +173,10 @@ class StatementsTest extends WBMIApiTestCase {
 		return $statementOk;
 	}
 
+	/**
+	 * @group Broken
+	 * @see https://phabricator.wikimedia.org/T289326
+	 */
 	public function testEditStatements() {
 		$this->turnOffFederation();
 

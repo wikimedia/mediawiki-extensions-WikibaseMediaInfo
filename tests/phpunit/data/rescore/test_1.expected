@@ -1,0 +1,133 @@
+[
+    {
+        "window_size": 100,
+        "query": {
+            "query_weight": 1,
+            "rescore_query_weight": 1,
+            "score_mode": "max",
+            "rescore_query": {
+                "bool": {
+                    "should": [
+                        {
+                            "constant_score": {
+                                "filter": {
+                                    "match_all": {}
+                                },
+                                "boost": 100000
+                            }
+                        },
+                        {
+                            "sltr": {
+                                "model": "MediaSearch_20210826_xgboost_v2_34t_4d",
+                                "params": {
+                                    "language": "de",
+                                    "text_search_term": "some search term",
+                                    "DigRepOf_1": "P6243=Q1",
+                                    "Depicts_1": "P180=Q1",
+                                    "DigRepOf_2": "P6243=Q2",
+                                    "Depicts_2": "P180=Q2",
+                                    "DigRepOf_3": "P6243=NO_ENTITY",
+                                    "Depicts_3": "P180=NO_ENTITY",
+                                    "DigRepOf_4": "P6243=NO_ENTITY",
+                                    "Depicts_4": "P180=NO_ENTITY",
+                                    "DigRepOf_5": "P6243=NO_ENTITY",
+                                    "Depicts_5": "P180=NO_ENTITY",
+                                    "DigRepOf_6": "P6243=NO_ENTITY",
+                                    "Depicts_6": "P180=NO_ENTITY",
+                                    "DigRepOf_7": "P6243=NO_ENTITY",
+                                    "Depicts_7": "P180=NO_ENTITY",
+                                    "DigRepOf_8": "P6243=NO_ENTITY",
+                                    "Depicts_8": "P180=NO_ENTITY",
+                                    "DigRepOf_9": "P6243=NO_ENTITY",
+                                    "Depicts_9": "P180=NO_ENTITY",
+                                    "DigRepOf_10": "P6243=NO_ENTITY",
+                                    "Depicts_10": "P180=NO_ENTITY",
+                                    "DigRepOf_11": "P6243=NO_ENTITY",
+                                    "Depicts_11": "P180=NO_ENTITY",
+                                    "DigRepOf_12": "P6243=NO_ENTITY",
+                                    "Depicts_12": "P180=NO_ENTITY",
+                                    "DigRepOf_13": "P6243=NO_ENTITY",
+                                    "Depicts_13": "P180=NO_ENTITY",
+                                    "DigRepOf_14": "P6243=NO_ENTITY",
+                                    "Depicts_14": "P180=NO_ENTITY",
+                                    "DigRepOf_15": "P6243=NO_ENTITY",
+                                    "Depicts_15": "P180=NO_ENTITY",
+                                    "DigRepOf_16": "P6243=NO_ENTITY",
+                                    "Depicts_16": "P180=NO_ENTITY",
+                                    "DigRepOf_17": "P6243=NO_ENTITY",
+                                    "Depicts_17": "P180=NO_ENTITY",
+                                    "DigRepOf_18": "P6243=NO_ENTITY",
+                                    "Depicts_18": "P180=NO_ENTITY",
+                                    "DigRepOf_19": "P6243=NO_ENTITY",
+                                    "Depicts_19": "P180=NO_ENTITY",
+                                    "DigRepOf_20": "P6243=NO_ENTITY",
+                                    "Depicts_20": "P180=NO_ENTITY",
+                                    "DigRepOf_21": "P6243=NO_ENTITY",
+                                    "Depicts_21": "P180=NO_ENTITY",
+                                    "DigRepOf_22": "P6243=NO_ENTITY",
+                                    "Depicts_22": "P180=NO_ENTITY",
+                                    "DigRepOf_23": "P6243=NO_ENTITY",
+                                    "Depicts_23": "P180=NO_ENTITY",
+                                    "DigRepOf_24": "P6243=NO_ENTITY",
+                                    "Depicts_24": "P180=NO_ENTITY",
+                                    "DigRepOf_25": "P6243=NO_ENTITY",
+                                    "Depicts_25": "P180=NO_ENTITY",
+                                    "DigRepOf_26": "P6243=NO_ENTITY",
+                                    "Depicts_26": "P180=NO_ENTITY",
+                                    "DigRepOf_27": "P6243=NO_ENTITY",
+                                    "Depicts_27": "P180=NO_ENTITY",
+                                    "DigRepOf_28": "P6243=NO_ENTITY",
+                                    "Depicts_28": "P180=NO_ENTITY",
+                                    "DigRepOf_29": "P6243=NO_ENTITY",
+                                    "Depicts_29": "P180=NO_ENTITY",
+                                    "DigRepOf_30": "P6243=NO_ENTITY",
+                                    "Depicts_30": "P180=NO_ENTITY",
+                                    "DigRepOf_31": "P6243=NO_ENTITY",
+                                    "Depicts_31": "P180=NO_ENTITY",
+                                    "DigRepOf_32": "P6243=NO_ENTITY",
+                                    "Depicts_32": "P180=NO_ENTITY",
+                                    "DigRepOf_33": "P6243=NO_ENTITY",
+                                    "Depicts_33": "P180=NO_ENTITY",
+                                    "DigRepOf_34": "P6243=NO_ENTITY",
+                                    "Depicts_34": "P180=NO_ENTITY",
+                                    "DigRepOf_35": "P6243=NO_ENTITY",
+                                    "Depicts_35": "P180=NO_ENTITY",
+                                    "DigRepOf_36": "P6243=NO_ENTITY",
+                                    "Depicts_36": "P180=NO_ENTITY",
+                                    "DigRepOf_37": "P6243=NO_ENTITY",
+                                    "Depicts_37": "P180=NO_ENTITY",
+                                    "DigRepOf_38": "P6243=NO_ENTITY",
+                                    "Depicts_38": "P180=NO_ENTITY",
+                                    "DigRepOf_39": "P6243=NO_ENTITY",
+                                    "Depicts_39": "P180=NO_ENTITY",
+                                    "DigRepOf_40": "P6243=NO_ENTITY",
+                                    "Depicts_40": "P180=NO_ENTITY",
+                                    "DigRepOf_41": "P6243=NO_ENTITY",
+                                    "Depicts_41": "P180=NO_ENTITY",
+                                    "DigRepOf_42": "P6243=NO_ENTITY",
+                                    "Depicts_42": "P180=NO_ENTITY",
+                                    "DigRepOf_43": "P6243=NO_ENTITY",
+                                    "Depicts_43": "P180=NO_ENTITY",
+                                    "DigRepOf_44": "P6243=NO_ENTITY",
+                                    "Depicts_44": "P180=NO_ENTITY",
+                                    "DigRepOf_45": "P6243=NO_ENTITY",
+                                    "Depicts_45": "P180=NO_ENTITY",
+                                    "DigRepOf_46": "P6243=NO_ENTITY",
+                                    "Depicts_46": "P180=NO_ENTITY",
+                                    "DigRepOf_47": "P6243=NO_ENTITY",
+                                    "Depicts_47": "P180=NO_ENTITY",
+                                    "DigRepOf_48": "P6243=NO_ENTITY",
+                                    "Depicts_48": "P180=NO_ENTITY",
+                                    "DigRepOf_49": "P6243=NO_ENTITY",
+                                    "Depicts_49": "P180=NO_ENTITY",
+                                    "DigRepOf_50": "P6243=NO_ENTITY",
+                                    "Depicts_50": "P180=NO_ENTITY"
+                                }
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    }
+]

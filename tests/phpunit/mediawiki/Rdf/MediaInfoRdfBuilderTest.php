@@ -141,7 +141,7 @@ class MediaInfoRdfBuilderTest extends TestCase {
 		);
 	}
 
-	private function getVocabulary() : RdfVocabulary {
+	private function getVocabulary(): RdfVocabulary {
 		return new RdfVocabulary(
 			[ 'test' => 'http://acme.test/' ],
 			[ 'test' => '' ],

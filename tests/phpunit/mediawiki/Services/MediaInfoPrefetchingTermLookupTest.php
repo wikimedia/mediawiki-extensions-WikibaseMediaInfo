@@ -29,7 +29,7 @@ class MediaInfoPrefetchingTermLookupTest extends \PHPUnit\Framework\TestCase {
 	 */
 	protected static $nonExistingRevisionId;
 
-	public static function setUpBeforeClass() : void {
+	public static function setUpBeforeClass(): void {
 		static::$defaultRevisionId = new MediaInfoId( 'M1' );
 		static::$nonExistingRevisionId = new MediaInfoId( 'M99' );
 	}

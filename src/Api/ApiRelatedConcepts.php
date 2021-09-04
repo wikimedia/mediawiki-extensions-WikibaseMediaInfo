@@ -289,7 +289,7 @@ class ApiRelatedConcepts extends ApiBase {
 		return false;
 	}
 
-	private function apiRequest( array $params ) : array {
+	private function apiRequest( array $params ): array {
 		$url = $this->externalEntitySearchBaseUri . '?' . http_build_query( $params );
 		$request = $this->httpRequestFactory->create( $url, [], __METHOD__ );
 		$request->execute();

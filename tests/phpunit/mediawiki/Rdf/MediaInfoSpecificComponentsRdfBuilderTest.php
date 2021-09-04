@@ -35,7 +35,7 @@ class MediaInfoSpecificComponentsRdfBuilderTest extends TestCase {
 	 */
 	private $testData = null;
 
-	protected function setUp() : void {
+	protected function setUp(): void {
 		parent::setUp();
 		$this->helper = new NTriplesRdfTestHelper();
 	}
@@ -56,7 +56,7 @@ class MediaInfoSpecificComponentsRdfBuilderTest extends TestCase {
 		return $this->testData;
 	}
 
-	private function getVocabulary() : RdfVocabulary {
+	private function getVocabulary(): RdfVocabulary {
 		return new RdfVocabulary(
 			[ 'test' => 'http://acme.test/' ],
 			[ 'test' => '' ],

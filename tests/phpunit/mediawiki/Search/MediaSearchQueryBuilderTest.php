@@ -20,7 +20,7 @@ use Wikibase\MediaInfo\Search\MediaSearchQueryBuilder;
  * @covers \Wikibase\MediaInfo\Search\MediaSearchQueryBuilder
  */
 class MediaSearchQueryBuilderTest extends MediaWikiIntegrationTestCase {
-	private function createSUT( array $params = [] ) : MediaSearchQueryBuilder {
+	private function createSUT( array $params = [] ): MediaSearchQueryBuilder {
 		$searchConfig = $this->createMock( SearchConfig::class );
 		$features = ( new FullTextKeywordRegistry( $searchConfig ) )->getKeywords();
 		$settings = $params['settings'] ?? [];
@@ -47,7 +47,7 @@ class MediaSearchQueryBuilderTest extends MediaWikiIntegrationTestCase {
 		);
 	}
 
-	private function createMockMediaSearchEntitiesFetcher( $entityIdsMap ) : MediaSearchEntitiesFetcher {
+	private function createMockMediaSearchEntitiesFetcher( $entityIdsMap ): MediaSearchEntitiesFetcher {
 		$response = [];
 		// transform the simple array of ids into a similar ['entityId' => ..., 'score' => ...]
 		// structure that actual entities fetcher otherwise derives from the API result
@@ -66,7 +66,7 @@ class MediaSearchQueryBuilderTest extends MediaWikiIntegrationTestCase {
 		return $mockEntitiesFetcher;
 	}
 
-	private function createSearchContext( $queryString ) : SearchContext {
+	private function createSearchContext( $queryString ): SearchContext {
 		$searchQueryBuilder = SearchQueryBuilder::newFTSearchQueryBuilder(
 			new SearchConfig(),
 			$queryString,
@@ -86,7 +86,7 @@ class MediaSearchQueryBuilderTest extends MediaWikiIntegrationTestCase {
 	 * @param array $settings
 	 * @param string $expectedFile
 	 */
-	public function testQuery( array $settings, string $expectedFile ) : void {
+	public function testQuery( array $settings, string $expectedFile ): void {
 		$builder = $this->createSUT( $settings );
 		$searchContext = $this->createSearchContext( $settings['term'] );
 		$builder->build( $searchContext, $settings['term'] );

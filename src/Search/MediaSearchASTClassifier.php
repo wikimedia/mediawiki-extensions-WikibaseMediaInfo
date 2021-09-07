@@ -17,9 +17,8 @@ use CirrusSearch\Parser\ParsedQueryClassifier;
 class MediaSearchASTClassifier extends LeafVisitor implements ParsedQueryClassifier {
 	/** @var string[] */
 	private $profiles = [
-		MediaSearchQueryBuilder::FULLTEXT_PROFILE_NAME,
-		'mediasearch_logistic_regression',
 		MediaSearchQueryBuilder::SYNONYMS_PROFILE_NAME,
+		MediaSearchQueryBuilder::LOGREG_PROFILE_NAME,
 	];
 
 	/** @var string[] */

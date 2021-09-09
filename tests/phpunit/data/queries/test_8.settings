@@ -1,9 +1,17 @@
 {
 	"title": "multiple clauses",
 	"term": "cat AND dog NOT donkey",
-	"entityIdsForTerm": {
-		"cat": [ "P1" ],
-		"donkey": [ "P2" ]
+	"entitiesForTerm": {
+		"cat": [
+			{
+				"id": "Q1"
+			}
+		],
+		"donkey": [
+			{
+				"id": "Q2"
+			}
+		]
 	},
 	"defaultProperties": [
 		"P999"

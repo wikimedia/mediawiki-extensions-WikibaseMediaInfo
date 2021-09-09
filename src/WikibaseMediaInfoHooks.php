@@ -22,6 +22,7 @@ use OOUI\PanelLayout;
 use OOUI\TabPanelLayout;
 use OutputPage;
 use ParserOutput;
+use RequestContext;
 use Skin;
 use Title;
 use Wikibase\Client\WikibaseClient;
@@ -708,6 +709,12 @@ class WikibaseMediaInfoHooks {
 		// array key in MediaSearchProfiles.php
 		$fulltextProfileName = MediaSearchQueryBuilder::LOGREG_PROFILE_NAME;
 		$rescoreProfileName = 'classic_noboostlinks_max_boost_template';
+
+		$request = RequestContext::getMain()->getRequest();
+		if ( $request->getCheck( MediaSearchQueryBuilder::SYNONYMS_PROFILE_NAME ) ) {
+			// switch to experimental implementation (only) when explicitly requested
+			$fulltextProfileName = MediaSearchQueryBuilder::SYNONYMS_PROFILE_NAME;
+		}
 
 		$service->registerDefaultProfile( SearchProfileService::FT_QUERY_BUILDER,
 			$searchProfileContextName, $fulltextProfileName );

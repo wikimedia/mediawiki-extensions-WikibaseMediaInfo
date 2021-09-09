@@ -27,9 +27,10 @@ class MediaSearchQueryBuilderTest extends MediaWikiIntegrationTestCase {
 		$stemmingSettings = $params['stemmingSettings'] ?? [];
 		$userLanguage = $params['userLanguage'] ?? 'en';
 		$fallbackLangs = $params['fallbackLangs'] ?? [];
-		$entityIds = $params['entityIdsForTerm'] ?? [];
+		$contentLanguage = 'en';
+		$entities = $params['entitiesForTerm'] ?? [];
 		$defaultProperties = $params['defaultProperties'] ?? [];
-		$mockMediaSearchEntitiesFetcher = $this->createMockMediaSearchEntitiesFetcher( $entityIds );
+		$mockMediaSearchEntitiesFetcher = $this->createMockMediaSearchEntitiesFetcher( $entities );
 
 		return new MediaSearchQueryBuilder(
 			$features,
@@ -38,6 +39,7 @@ class MediaSearchQueryBuilderTest extends MediaWikiIntegrationTestCase {
 				array_fill_keys( $defaultProperties, 1 ),
 				$stemmingSettings,
 				array_merge( [ $userLanguage ], $fallbackLangs ),
+				$contentLanguage,
 				$settings + [
 					'hasLtrPlugin' => true,
 					'applyLogisticFunction' => true,
@@ -47,15 +49,16 @@ class MediaSearchQueryBuilderTest extends MediaWikiIntegrationTestCase {
 		);
 	}
 
-	private function createMockMediaSearchEntitiesFetcher( $entityIdsMap ): MediaSearchEntitiesFetcher {
+	private function createMockMediaSearchEntitiesFetcher( $entitiesMap ): MediaSearchEntitiesFetcher {
 		$response = [];
 		// transform the simple array of ids into a similar ['entityId' => ..., 'score' => ...]
 		// structure that actual entities fetcher otherwise derives from the API result
-		foreach ( $entityIdsMap as $term => $entityIds ) {
-			foreach ( $entityIds as $index => $entityId ) {
+		foreach ( $entitiesMap as $term => $entities ) {
+			foreach ( $entities as $index => $entity ) {
 				$response[$term][] = [
-					'entityId' => $entityId,
+					'entityId' => $entity['id'],
 					'score' => 1 / ( $index + 1 ),
+					'synonyms' => $entity['synonyms'] ?? []
 				];
 			}
 		}

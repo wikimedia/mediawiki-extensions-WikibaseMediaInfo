@@ -1,14 +1,30 @@
 {
-	"title": "keyword only search",
-	"term": "hastemplate:foo",
-	"entitiesForTerm": [],
+	"title": "Entities with synonyms found, no lang fallbacks",
+	"term": "some search term",
+	"entitiesForTerm": {
+		"some search term": [
+			{
+				"id": "Q1",
+				"synonyms": [
+					"Some thing",
+					"Something"
+				]
+			},
+			{
+				"id": "Q2",
+				"synonyms": [
+					"Another thing"
+				]
+			}
+		]
+	},
 	"defaultProperties": [
-		"P999"
+		"P1",
+		"P2"
 	],
-	"userLanguage": "de",
-	"fallbackLangs": [],
-	"stemmingSettings": {},
+	"userLanguage": "en",
 	"settings": {
+		"useSynonyms": true,
 		"boosts": {
 			"statement": 20.0,
 			"descriptions.$language": 7.5,

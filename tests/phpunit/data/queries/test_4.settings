@@ -1,10 +1,14 @@
 {
 	"title": "Entities found, no lang fallbacks, filter applied",
 	"term": "some search term filetype:bitmap",
-	"entityIdsForTerm": {
+	"entitiesForTerm": {
 		"some search term": [
-			"Q1",
-			"Q2"
+			{
+				"id": "Q1"
+			},
+			{
+				"id": "Q2"
+			}
 		]
 	},
 	"defaultProperties": [

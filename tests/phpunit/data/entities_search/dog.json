@@ -1,263 +1,114 @@
 {
 	"batchcomplete": "",
 	"continue": {
-		"sroffset": 50,
-		"continue": "-||"
+		"gsroffset": 50,
+		"continue": "gsroffset||"
 	},
 	"query": {
-		"searchinfo": {
-			"totalhits": 57102
-		},
-		"search": [
-			{
+		"pages": {
+			"100078726": {
+				"pageid": 100078726,
 				"ns": 0,
-				"title": "Q144",
-				"pageid": 280,
-				"snippet": "domestic animal",
-				"titlesnippet": "<span class=\"searchmatch\">dog</span>"
+				"title": "Q104632273",
+				"snippet": "command-line DNS client",
+				"titlesnippet": "<span class=\"searchmatch\">dog</span>",
+				"index": 5,
+				"entityterms": {
+					"label": [
+						"dog"
+					]
+				}
 			},
-			{
+			"100257603": {
+				"pageid": 100257603,
 				"ns": 0,
-				"title": "Q358458",
-				"pageid": 341906,
-				"snippet": "Wikimedia disambiguation page",
-				"titlesnippet": "<span class=\"searchmatch\">Dog</span>"
-			},
-			{
-				"ns": 0,
-				"title": "Q28997",
-				"pageid": 32333,
-				"snippet": "working dog",
-				"titlesnippet": "sled <span class=\"searchmatch\">dog</span>"
-			},
-			{
-				"ns": 0,
-				"title": "Q755126",
-				"pageid": 710360,
-				"snippet": "sign of Chinese zodiac",
-				"titlesnippet": "<span class=\"searchmatch\">Dog</span>"
-			},
-			{
-				"ns": 0,
-				"title": "Q28937935",
-				"pageid": 30598306,
-				"snippet": "programming language",
-				"titlesnippet": "<span class=\"searchmatch\">Dog</span>"
-			},
-			{
-				"ns": 0,
-				"title": "Q1211818",
-				"pageid": 1153669,
-				"snippet": "fictional character in Half-Life",
-				"titlesnippet": "<span class=\"searchmatch\">Dog</span>"
-			},
-			{
-				"ns": 0,
-				"title": "Q99747335",
-				"pageid": 97642594,
+				"title": "Q104843787",
 				"snippet": "",
-				"titlesnippet": "<span class=\"searchmatch\">Dog</span>"
+				"titlesnippet": "<span class=\"searchmatch\">Dog</span>",
+				"index": 21,
+				"entityterms": {
+					"label": [
+						"Dog"
+					]
+				}
 			},
-			{
+			"100280596": {
+				"pageid": 100280596,
 				"ns": 0,
-				"title": "Q5288150",
-				"pageid": 5057058,
-				"snippet": "2010 album by Sow",
-				"titlesnippet": "<span class=\"searchmatch\">Dog</span>"
+				"title": "Q104867888",
+				"snippet": "2001 short film by Andrea Arnold",
+				"titlesnippet": "<span class=\"searchmatch\">Dog</span>",
+				"index": 31,
+				"entityterms": {
+					"label": [
+						"Dog"
+					]
+				}
 			},
-			{
+			"100557766": {
+				"pageid": 100557766,
 				"ns": 0,
-				"title": "Q99799229",
-				"pageid": 97679963,
-				"snippet": "",
-				"titlesnippet": "<span class=\"searchmatch\">Dog</span>"
+				"title": "Q105172024",
+				"snippet": "glazed earthenware dog highlighted in the CCCM Museum (Macau Museum)",
+				"titlesnippet": "<span class=\"searchmatch\">Dog</span>",
+				"index": 12,
+				"entityterms": {
+					"label": [
+						"Dog"
+					]
+				}
 			},
-			{
-				"ns": 0,
-				"title": "Q26592716",
-				"pageid": 28539152,
-				"snippet": "Horsford, Broadland, Norfolk, NR10",
-				"titlesnippet": "The <span class=\"searchmatch\">Dog</span> Public House"
-			},
-			{
-				"ns": 0,
-				"title": "Q29708047",
-				"pageid": 31353557,
-				"snippet": "genetic element in the species Drosophila melanogaster",
-				"titlesnippet": "<span class=\"searchmatch\">dog</span>"
-			},
-			{
-				"ns": 0,
-				"title": "Q5288152",
-				"pageid": 5057060,
-				"snippet": "2001 Animated short by Suzie Templeton",
-				"titlesnippet": "<span class=\"searchmatch\">Dog</span>"
-			},
-			{
-				"ns": 0,
-				"title": "Q38602",
-				"pageid": 41083,
-				"snippet": "dog breed",
-				"titlesnippet": "Canaan <span class=\"searchmatch\">Dog</span>"
-			},
-			{
+			"1015509": {
+				"pageid": 1015509,
 				"ns": 0,
 				"title": "Q1066914",
-				"pageid": 1015509,
 				"snippet": "dog bloodsport",
-				"titlesnippet": "<span class=\"searchmatch\">dog</span> fighting"
+				"titlesnippet": "<span class=\"searchmatch\">dog</span> fighting",
+				"index": 9,
+				"entityterms": {
+					"alias": [
+						"dog fight",
+						"dogfighting"
+					],
+					"label": [
+						"dog fighting"
+					]
+				}
 			},
-			{
-				"ns": 0,
-				"title": "Q37595",
-				"pageid": 40099,
-				"snippet": "dog breed",
-				"titlesnippet": "Australian Cattle <span class=\"searchmatch\">Dog</span>"
-			},
-			{
-				"ns": 0,
-				"title": "Q38706",
-				"pageid": 41175,
-				"snippet": "dog breed",
-				"titlesnippet": "Newfoundland <span class=\"searchmatch\">dog</span>"
-			},
-			{
-				"ns": 0,
-				"title": "Q1806324",
-				"pageid": 1737516,
-				"snippet": "utility dog",
-				"titlesnippet": "working <span class=\"searchmatch\">dog</span>"
-			},
-			{
-				"ns": 0,
-				"title": "Q37699",
-				"pageid": 40199,
-				"snippet": "dog breed",
-				"titlesnippet": "American Eskimo <span class=\"searchmatch\">Dog</span>"
-			},
-			{
-				"ns": 0,
-				"title": "Q56102649",
-				"pageid": 56048281,
-				"snippet": "board game",
-				"titlesnippet": "<span class=\"searchmatch\">DOG</span>"
-			},
-			{
-				"ns": 0,
-				"title": "Q38774",
-				"pageid": 41243,
-				"snippet": "functional type of dog",
-				"titlesnippet": "hunting <span class=\"searchmatch\">dog</span>"
-			},
-			{
-				"ns": 0,
-				"title": "Q7730510",
-				"pageid": 7657698,
-				"snippet": "1992 film by Todd Field",
-				"titlesnippet": "The <span class=\"searchmatch\">Dog</span>"
-			},
-			{
-				"ns": 0,
-				"title": "Q37892",
-				"pageid": 40393,
-				"snippet": "dog breed",
-				"titlesnippet": "Chinese Crested <span class=\"searchmatch\">Dog</span>"
-			},
-			{
-				"ns": 0,
-				"title": "Q5288153",
-				"pageid": 5057061,
-				"snippet": "tool in engineering",
-				"titlesnippet": "<span class=\"searchmatch\">dog</span>"
-			},
-			{
-				"ns": 0,
-				"title": "Q38280",
-				"pageid": 40776,
-				"snippet": "dog breed",
-				"titlesnippet": "German Shepherd <span class=\"searchmatch\">dog</span>"
-			},
-			{
-				"ns": 0,
-				"title": "Q29212",
-				"pageid": 32546,
-				"snippet": "dog breed",
-				"titlesnippet": "Formosan Mountain <span class=\"searchmatch\">Dog</span>"
-			},
-			{
-				"ns": 0,
-				"title": "Q29040",
-				"pageid": 32377,
-				"snippet": "dog breed",
-				"titlesnippet": "Canadian Eskimo <span class=\"searchmatch\">Dog</span>"
-			},
-			{
-				"ns": 0,
-				"title": "Q641561",
-				"pageid": 603647,
-				"snippet": "dog",
-				"titlesnippet": "Red <span class=\"searchmatch\">Dog</span>"
-			},
-			{
-				"ns": 0,
-				"title": "Q393808",
-				"pageid": 374476,
-				"snippet": "Dog sport",
-				"titlesnippet": "<span class=\"searchmatch\">dog</span> agility"
-			},
-			{
-				"ns": 0,
-				"title": "Q37503",
-				"pageid": 40008,
-				"snippet": "dog breed",
-				"titlesnippet": "Australian Stumpy Tail Cattle <span class=\"searchmatch\">Dog</span>"
-			},
-			{
-				"ns": 0,
-				"title": "Q3619184",
-				"pageid": 3447088,
-				"snippet": "",
-				"titlesnippet": "<span class=\"searchmatch\">Dog</span>"
-			},
-			{
-				"ns": 0,
-				"title": "Q500097",
-				"pageid": 470430,
-				"snippet": "<span class=\"searchmatch\">dog</span> musher",
-				"titlesnippet": "musher"
-			},
-			{
+			"12434428": {
+				"pageid": 12434428,
 				"ns": 0,
 				"title": "Q11294205",
-				"pageid": 12434428,
 				"snippet": "dog breed",
-				"titlesnippet": "Catahoula Leopard <span class=\"searchmatch\">Dog</span>"
+				"titlesnippet": "Catahoula Leopard <span class=\"searchmatch\">Dog</span>",
+				"index": 29,
+				"entityterms": {
+					"alias": [
+						"Louisiana Catahoula Leopard Dog",
+						"Catahoula Cur"
+					],
+					"label": [
+						"Catahoula Leopard Dog"
+					]
+				}
 			},
-			{
+			"1153669": {
+				"pageid": 1153669,
 				"ns": 0,
-				"title": "Q37880",
-				"pageid": 40381,
-				"snippet": "dog breed",
-				"titlesnippet": "Thai Bangkaew <span class=\"searchmatch\">Dog</span>"
+				"title": "Q1211818",
+				"snippet": "fictional character in Half-Life",
+				"titlesnippet": "<span class=\"searchmatch\">Dog</span>",
+				"index": 8,
+				"entityterms": {
+					"label": [
+						"Dog"
+					]
+				}
 			},
-			{
-				"ns": 0,
-				"title": "Q37721",
-				"pageid": 40221,
-				"snippet": "dog breed",
-				"titlesnippet": "Carolina <span class=\"searchmatch\">Dog</span>"
-			},
-			{
-				"ns": 0,
-				"title": "Q38547",
-				"pageid": 41030,
-				"snippet": "dog type",
-				"titlesnippet": "crossbred <span class=\"searchmatch\">dog</span>"
-			},
-			{
+			"1201084": {
+				"pageid": 1201084,
 				"ns": 0,
 				"title": "Q1260264",
-				"pageid": 1201084,
 				"snippet": "fictional dog",
 				"titlesnippet": "Droopy",
 				"extensiondata": {
@@ -265,75 +116,265 @@
 						"extrasnippet": "Droopy <span class=\"searchmatch\">Dog</span>",
 						"extrasnippet-language": "en"
 					}
+				},
+				"index": 40,
+				"entityterms": {
+					"alias": [
+						"Droopy Dog"
+					],
+					"label": [
+						"Droopy"
+					]
 				}
 			},
-			{
+			"280": {
+				"pageid": 280,
 				"ns": 0,
-				"title": "Q653",
-				"pageid": 952,
-				"snippet": "<span class=\"searchmatch\">dog</span> breed",
-				"titlesnippet": "Chihuahua"
+				"title": "Q144",
+				"snippet": "domestic animal",
+				"titlesnippet": "<span class=\"searchmatch\">dog</span>",
+				"index": 1,
+				"entityterms": {
+					"alias": [
+						"domestic dog",
+						"Canis lupus familiaris",
+						"Canis familiaris",
+						"dogs"
+					],
+					"label": [
+						"dog"
+					]
+				}
 			},
-			{
+			"1737516": {
+				"pageid": 1737516,
+				"ns": 0,
+				"title": "Q1806324",
+				"snippet": "utility dog",
+				"titlesnippet": "working <span class=\"searchmatch\">dog</span>",
+				"index": 18,
+				"entityterms": {
+					"label": [
+						"working dog"
+					]
+				}
+			},
+			"212766": {
+				"pageid": 212766,
+				"ns": 0,
+				"title": "Q217669",
+				"snippet": "Category 5 Atlantic hurricane in 1950",
+				"titlesnippet": "Hurricane <span class=\"searchmatch\">Dog</span>",
+				"index": 2,
+				"entityterms": {
+					"alias": [
+						"Dog"
+					],
+					"label": [
+						"Hurricane Dog"
+					]
+				}
+			},
+			"27253": {
+				"pageid": 27253,
+				"ns": 0,
+				"title": "Q23853",
+				"snippet": "dog breed",
+				"titlesnippet": "Hokkaido inu",
+				"extensiondata": {
+					"wikibase": {
+						"extrasnippet": "Ainu <span class=\"searchmatch\">Dog</span>",
+						"extrasnippet-language": "en"
+					}
+				},
+				"index": 45,
+				"entityterms": {
+					"alias": [
+						"Ainu Dog",
+						"Ainu Ken"
+					],
+					"label": [
+						"Hokkaido inu"
+					]
+				}
+			},
+			"28539152": {
+				"pageid": 28539152,
+				"ns": 0,
+				"title": "Q26592716",
+				"snippet": "Horsford, Broadland, Norfolk, NR10",
+				"titlesnippet": "The <span class=\"searchmatch\">Dog</span> Public House",
+				"index": 11,
+				"entityterms": {
+					"alias": [
+						"Dog",
+						"The Dog, Norwich"
+					],
+					"label": [
+						"The Dog Public House"
+					]
+				}
+			},
+			"29834759": {
+				"pageid": 29834759,
 				"ns": 0,
 				"title": "Q28136699",
-				"pageid": 29834759,
 				"snippet": "2013 documentary film",
-				"titlesnippet": "The <span class=\"searchmatch\">Dog</span>"
+				"titlesnippet": "The <span class=\"searchmatch\">Dog</span>",
+				"index": 42,
+				"entityterms": {
+					"alias": [
+						"Storyville: The Great Sex Addict Heist",
+						"Dog"
+					],
+					"label": [
+						"The Dog"
+					]
+				}
 			},
-			{
+			"30598306": {
+				"pageid": 30598306,
+				"ns": 0,
+				"title": "Q28937935",
+				"snippet": "programming language",
+				"titlesnippet": "<span class=\"searchmatch\">Dog</span>",
+				"index": 7,
+				"entityterms": {
+					"label": [
+						"Dog"
+					]
+				}
+			},
+			"32333": {
+				"pageid": 32333,
+				"ns": 0,
+				"title": "Q28997",
+				"snippet": "working dog",
+				"titlesnippet": "sled <span class=\"searchmatch\">dog</span>",
+				"index": 4,
+				"entityterms": {
+					"alias": [
+						"racing dog",
+						"sled dogs"
+					],
+					"label": [
+						"sled dog"
+					]
+				}
+			},
+			"32377": {
+				"pageid": 32377,
+				"ns": 0,
+				"title": "Q29040",
+				"snippet": "dog breed",
+				"titlesnippet": "Canadian Eskimo <span class=\"searchmatch\">Dog</span>",
+				"index": 26,
+				"entityterms": {
+					"alias": [
+						"Qinmmik",
+						"Kingmik",
+						"Canadian Inuit Dog"
+					],
+					"label": [
+						"Canadian Eskimo Dog"
+					]
+				}
+			},
+			"32546": {
+				"pageid": 32546,
+				"ns": 0,
+				"title": "Q29212",
+				"snippet": "dog breed",
+				"titlesnippet": "Formosan Mountain <span class=\"searchmatch\">Dog</span>",
+				"index": 24,
+				"entityterms": {
+					"alias": [
+						"Taiwan Dog"
+					],
+					"label": [
+						"Formosan Mountain Dog"
+					]
+				}
+			},
+			"31353557": {
+				"pageid": 31353557,
+				"ns": 0,
+				"title": "Q29708047",
+				"snippet": "genetic element in the species Drosophila melanogaster",
+				"titlesnippet": "<span class=\"searchmatch\">dog</span>",
+				"index": 16,
+				"entityterms": {
+					"alias": [
+						"dog of glass"
+					],
+					"label": [
+						"dog"
+					]
+				}
+			},
+			"31919803": {
+				"pageid": 31919803,
 				"ns": 0,
 				"title": "Q30307328",
-				"pageid": 31919803,
 				"snippet": "dog in mythology",
-				"titlesnippet": "mythological <span class=\"searchmatch\">dog</span>"
+				"titlesnippet": "mythological <span class=\"searchmatch\">dog</span>",
+				"index": 41,
+				"entityterms": {
+					"alias": [
+						"legendary dog",
+						"mythical dog"
+					],
+					"label": [
+						"mythological dog"
+					]
+				}
 			},
-			{
+			"341906": {
+				"pageid": 341906,
 				"ns": 0,
-				"title": "Q37608",
-				"pageid": 40112,
+				"title": "Q358458",
+				"snippet": "Wikimedia disambiguation page",
+				"titlesnippet": "<span class=\"searchmatch\">Dog</span>",
+				"index": 3,
+				"entityterms": {
+					"alias": [
+						"Dog (disambiguation)"
+					],
+					"label": [
+						"Dog"
+					]
+				}
+			},
+			"3447088": {
+				"pageid": 3447088,
+				"ns": 0,
+				"title": "Q3619184",
+				"snippet": "",
+				"titlesnippet": "<span class=\"searchmatch\">Dog</span>",
+				"index": 38,
+				"entityterms": {
+					"label": [
+						"Dog"
+					]
+				}
+			},
+			"40008": {
+				"pageid": 40008,
+				"ns": 0,
+				"title": "Q37503",
 				"snippet": "dog breed",
-				"titlesnippet": "Bernese mountain <span class=\"searchmatch\">dog</span>"
+				"titlesnippet": "Australian Stumpy Tail Cattle <span class=\"searchmatch\">Dog</span>",
+				"index": 35,
+				"entityterms": {
+					"label": [
+						"Australian Stumpy Tail Cattle Dog"
+					]
+				}
 			},
-			{
-				"ns": 0,
-				"title": "Q37909",
-				"pageid": 40412,
-				"snippet": "<span class=\"searchmatch\">dog</span> breed",
-				"titlesnippet": "Dogo Argentino"
-			},
-			{
-				"ns": 0,
-				"title": "Q64877919",
-				"pageid": 64524665,
-				"snippet": "1965 film directed by Karpo Godina",
-				"titlesnippet": "<span class=\"searchmatch\">Dog</span>"
-			},
-			{
-				"ns": 0,
-				"title": "Q584111",
-				"pageid": 549526,
-				"snippet": "dog sport",
-				"titlesnippet": "Disc <span class=\"searchmatch\">dog</span>"
-			},
-			{
-				"ns": 0,
-				"title": "Q38508",
-				"pageid": 40992,
-				"snippet": "dog breed",
-				"titlesnippet": "Kangal <span class=\"searchmatch\">Dog</span>"
-			},
-			{
-				"ns": 0,
-				"title": "Q5414",
-				"pageid": 6363,
-				"snippet": "<span class=\"searchmatch\">dog</span> breed",
-				"titlesnippet": "Great dane"
-			},
-			{
+			"40046": {
+				"pageid": 40046,
 				"ns": 0,
 				"title": "Q37541",
-				"pageid": 40046,
 				"snippet": "dog breed",
 				"titlesnippet": "Anatolian Shepherd",
 				"extensiondata": {
@@ -341,36 +382,411 @@
 						"extrasnippet": "Anatolian Street <span class=\"searchmatch\">Dog</span>",
 						"extrasnippet-language": "en"
 					}
+				},
+				"index": 50,
+				"entityterms": {
+					"alias": [
+						"\u00c7oban k\u00f6pe\u011fi",
+						"Anatolian Street Dog",
+						"Karaba\u015f",
+						"Turkish Shepherd",
+						"Anadolulu karaba\u015f"
+					],
+					"label": [
+						"Anatolian Shepherd"
+					]
 				}
 			},
-			{
+			"40099": {
+				"pageid": 40099,
 				"ns": 0,
-				"title": "Q37673",
-				"pageid": 40175,
+				"title": "Q37595",
 				"snippet": "dog breed",
-				"titlesnippet": "Chinese Chongqing <span class=\"searchmatch\">Dog</span>"
+				"titlesnippet": "Australian Cattle <span class=\"searchmatch\">Dog</span>",
+				"index": 14,
+				"entityterms": {
+					"alias": [
+						"Red Heeler",
+						"Blue Heeler",
+						"ACD",
+						"Cattle Dog"
+					],
+					"label": [
+						"Australian Cattle Dog"
+					]
+				}
 			},
-			{
+			"40112": {
+				"pageid": 40112,
 				"ns": 0,
-				"title": "Q720871",
-				"pageid": 677774,
-				"snippet": "American video game developer",
-				"titlesnippet": "Naughty <span class=\"searchmatch\">Dog</span>"
-			},
-			{
-				"ns": 0,
-				"title": "Q38515",
-				"pageid": 40999,
+				"title": "Q37608",
 				"snippet": "dog breed",
-				"titlesnippet": "Greenland <span class=\"searchmatch\">Dog</span>"
+				"titlesnippet": "Bernese mountain <span class=\"searchmatch\">dog</span>",
+				"index": 43,
+				"entityterms": {
+					"label": [
+						"Bernese mountain dog"
+					]
+				}
 			},
-			{
+			"40199": {
+				"pageid": 40199,
 				"ns": 0,
-				"title": "Q37950",
-				"pageid": 40452,
+				"title": "Q37699",
 				"snippet": "dog breed",
-				"titlesnippet": "Karelian Bear <span class=\"searchmatch\">Dog</span>"
+				"titlesnippet": "American Eskimo <span class=\"searchmatch\">Dog</span>",
+				"index": 19,
+				"entityterms": {
+					"label": [
+						"American Eskimo Dog"
+					]
+				}
+			},
+			"40221": {
+				"pageid": 40221,
+				"ns": 0,
+				"title": "Q37721",
+				"snippet": "dog breed",
+				"titlesnippet": "Carolina <span class=\"searchmatch\">Dog</span>",
+				"index": 34,
+				"entityterms": {
+					"alias": [
+						"North American native dog",
+						"American dingo",
+						"Dixie dingo"
+					],
+					"label": [
+						"Carolina Dog"
+					]
+				}
+			},
+			"40381": {
+				"pageid": 40381,
+				"ns": 0,
+				"title": "Q37880",
+				"snippet": "dog breed",
+				"titlesnippet": "Thai Bangkaew <span class=\"searchmatch\">Dog</span>",
+				"index": 36,
+				"entityterms": {
+					"alias": [
+						"Bangkaew Dog"
+					],
+					"label": [
+						"Thai Bangkaew Dog"
+					]
+				}
+			},
+			"40393": {
+				"pageid": 40393,
+				"ns": 0,
+				"title": "Q37892",
+				"snippet": "dog breed",
+				"titlesnippet": "Chinese Crested <span class=\"searchmatch\">Dog</span>",
+				"index": 25,
+				"entityterms": {
+					"label": [
+						"Chinese Crested Dog"
+					]
+				}
+			},
+			"40412": {
+				"pageid": 40412,
+				"ns": 0,
+				"title": "Q37909",
+				"snippet": "<span class=\"searchmatch\">dog</span> breed",
+				"titlesnippet": "Dogo Argentino",
+				"index": 46,
+				"entityterms": {
+					"alias": [
+						"Argentine Mastiff"
+					],
+					"label": [
+						"Dogo Argentino"
+					]
+				}
+			},
+			"40776": {
+				"pageid": 40776,
+				"ns": 0,
+				"title": "Q38280",
+				"snippet": "dog breed",
+				"titlesnippet": "German Shepherd <span class=\"searchmatch\">dog</span>",
+				"index": 27,
+				"entityterms": {
+					"alias": [
+						"Alsatian",
+						"German Shepherd Dog",
+						"Shepherd",
+						"GSD"
+					],
+					"label": [
+						"German Shepherd dog"
+					]
+				}
+			},
+			"40992": {
+				"pageid": 40992,
+				"ns": 0,
+				"title": "Q38508",
+				"snippet": "dog breed",
+				"titlesnippet": "Kangal <span class=\"searchmatch\">Dog</span>",
+				"index": 49,
+				"entityterms": {
+					"alias": [
+						"Kangal",
+						"Sivas Kangal Dog",
+						"Kangal k\u00f6pe\u011fi",
+						"Kangal \u00e7oban k\u00f6pe\u011fi"
+					],
+					"label": [
+						"Kangal Dog"
+					]
+				}
+			},
+			"41030": {
+				"pageid": 41030,
+				"ns": 0,
+				"title": "Q38547",
+				"snippet": "dog type",
+				"titlesnippet": "<span class=\"searchmatch\">dog</span> crossbreed",
+				"index": 39,
+				"entityterms": {
+					"alias": [
+						"dog hybrid",
+						"designer dog"
+					],
+					"label": [
+						"dog crossbreed"
+					]
+				}
+			},
+			"41083": {
+				"pageid": 41083,
+				"ns": 0,
+				"title": "Q38602",
+				"snippet": "dog breed",
+				"titlesnippet": "Canaan <span class=\"searchmatch\">Dog</span>",
+				"index": 13,
+				"entityterms": {
+					"label": [
+						"Canaan Dog"
+					]
+				}
+			},
+			"41175": {
+				"pageid": 41175,
+				"ns": 0,
+				"title": "Q38706",
+				"snippet": "dog breed",
+				"titlesnippet": "Newfoundland <span class=\"searchmatch\">dog</span>",
+				"index": 17,
+				"entityterms": {
+					"label": [
+						"Newfoundland dog"
+					]
+				}
+			},
+			"41243": {
+				"pageid": 41243,
+				"ns": 0,
+				"title": "Q38774",
+				"snippet": "functional type of dog",
+				"titlesnippet": "hunting <span class=\"searchmatch\">dog</span>",
+				"index": 20,
+				"entityterms": {
+					"label": [
+						"hunting dog"
+					]
+				}
+			},
+			"41348": {
+				"pageid": 41348,
+				"ns": 0,
+				"title": "Q38884",
+				"snippet": "dog breed",
+				"titlesnippet": "New Guinea singing <span class=\"searchmatch\">dog</span>",
+				"index": 44,
+				"entityterms": {
+					"label": [
+						"New Guinea singing dog"
+					]
+				}
+			},
+			"374476": {
+				"pageid": 374476,
+				"ns": 0,
+				"title": "Q393808",
+				"snippet": "Dog sport",
+				"titlesnippet": "<span class=\"searchmatch\">dog</span> agility",
+				"index": 32,
+				"entityterms": {
+					"label": [
+						"dog agility"
+					]
+				}
+			},
+			"470430": {
+				"pageid": 470430,
+				"ns": 0,
+				"title": "Q500097",
+				"snippet": "<span class=\"searchmatch\">dog</span> musher",
+				"titlesnippet": "musher",
+				"index": 33,
+				"entityterms": {
+					"alias": [
+						"mushers"
+					],
+					"label": [
+						"musher"
+					]
+				}
+			},
+			"5057058": {
+				"pageid": 5057058,
+				"ns": 0,
+				"title": "Q5288150",
+				"snippet": "2010 album by Sow",
+				"titlesnippet": "<span class=\"searchmatch\">Dog</span>",
+				"index": 10,
+				"entityterms": {
+					"label": [
+						"Dog"
+					]
+				}
+			},
+			"5057060": {
+				"pageid": 5057060,
+				"ns": 0,
+				"title": "Q5288152",
+				"snippet": "2001 Animated short by Suzie Templeton",
+				"titlesnippet": "<span class=\"searchmatch\">Dog</span>",
+				"index": 15,
+				"entityterms": {
+					"label": [
+						"Dog"
+					]
+				}
+			},
+			"5057061": {
+				"pageid": 5057061,
+				"ns": 0,
+				"title": "Q5288153",
+				"snippet": "tool in engineering",
+				"titlesnippet": "<span class=\"searchmatch\">dog</span>",
+				"index": 30,
+				"entityterms": {
+					"alias": [
+						"shutter dog",
+						"shutter"
+					],
+					"label": [
+						"dog"
+					]
+				}
+			},
+			"6363": {
+				"pageid": 6363,
+				"ns": 0,
+				"title": "Q5414",
+				"snippet": "<span class=\"searchmatch\">dog</span> breed",
+				"titlesnippet": "Great dane",
+				"index": 47,
+				"entityterms": {
+					"alias": [
+						"German Mastiff",
+						"Boarhound",
+						"Ulmer mastiff",
+						"Great Dane"
+					],
+					"label": [
+						"Great dane"
+					]
+				}
+			},
+			"56048281": {
+				"pageid": 56048281,
+				"ns": 0,
+				"title": "Q56102649",
+				"snippet": "board game",
+				"titlesnippet": "<span class=\"searchmatch\">DOG</span>",
+				"index": 22,
+				"entityterms": {
+					"label": [
+						"DOG"
+					]
+				}
+			},
+			"603647": {
+				"pageid": 603647,
+				"ns": 0,
+				"title": "Q641561",
+				"snippet": "dog",
+				"titlesnippet": "Red <span class=\"searchmatch\">Dog</span>",
+				"index": 28,
+				"entityterms": {
+					"alias": [
+						"Red Dog (Pilbara)"
+					],
+					"label": [
+						"Red Dog"
+					]
+				}
+			},
+			"64524665": {
+				"pageid": 64524665,
+				"ns": 0,
+				"title": "Q64877919",
+				"snippet": "1965 film directed by Karpo Godina",
+				"titlesnippet": "<span class=\"searchmatch\">Dog</span>",
+				"index": 48,
+				"entityterms": {
+					"label": [
+						"Dog"
+					]
+				}
+			},
+			"952": {
+				"pageid": 952,
+				"ns": 0,
+				"title": "Q653",
+				"snippet": "<span class=\"searchmatch\">dog</span> breed",
+				"titlesnippet": "Chihuahue\u00f1o",
+				"index": 37,
+				"entityterms": {
+					"label": [
+						"Chihuahue\u00f1o"
+					]
+				}
+			},
+			"710360": {
+				"pageid": 710360,
+				"ns": 0,
+				"title": "Q755126",
+				"snippet": "sign of Chinese zodiac",
+				"titlesnippet": "<span class=\"searchmatch\">Dog</span>",
+				"index": 6,
+				"entityterms": {
+					"label": [
+						"Dog"
+					]
+				}
+			},
+			"7657698": {
+				"pageid": 7657698,
+				"ns": 0,
+				"title": "Q7730510",
+				"snippet": "1992 film by Todd Field",
+				"titlesnippet": "The <span class=\"searchmatch\">Dog</span>",
+				"index": 23,
+				"entityterms": {
+					"alias": [
+						"Dog"
+					],
+					"label": [
+						"The Dog"
+					]
+				}
 			}
-		]
+		}
 	}
 }

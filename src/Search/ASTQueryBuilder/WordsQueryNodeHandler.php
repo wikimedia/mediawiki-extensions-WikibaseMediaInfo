@@ -6,6 +6,7 @@ use CirrusSearch\Parser\AST\WordsQueryNode;
 use Elastica\Query\AbstractQuery;
 use Elastica\Query\BoolQuery;
 use Elastica\Query\ConstantScore;
+use Elastica\Query\DisMax;
 use Elastica\Query\FunctionScore;
 use Elastica\Query\MatchAll;
 use Elastica\Query\MatchQuery;
@@ -23,13 +24,18 @@ class WordsQueryNodeHandler implements ParsedNodeHandlerInterface {
 	/** @var array */
 	private $options;
 
-	/** @var FieldIterator */
-	private $termScoringFieldIterator;
+	/** @var float[] */
+	private $decays;
+
+	/** @var FieldIterator[] */
+	private $termScoringFieldIterators;
 
 	public function __construct(
 		WordsQueryNode $node,
 		WikibaseEntitiesHandler $entitiesHandler,
 		array $languages,
+		array $synonyms,
+		array $synonymsLanguages,
 		array $stemmingSettings,
 		array $boosts,
 		array $decays,
@@ -44,8 +50,9 @@ class WordsQueryNodeHandler implements ParsedNodeHandlerInterface {
 			],
 			$options
 		);
+		$this->decays = $decays;
 
-		$this->termScoringFieldIterator = new FieldIterator(
+		$this->termScoringFieldIterators[$node->getWords()] = new FieldIterator(
 			$this->getTermScoringFieldQueryBuilder( $node->getWords() ),
 			array_keys( $boosts ),
 			$languages,
@@ -53,54 +60,94 @@ class WordsQueryNodeHandler implements ParsedNodeHandlerInterface {
 			$boosts,
 			$decays
 		);
+
+		// create iterators for all synonyms, where the scores are applied to the boost
+		foreach ( $synonyms as $term => $score ) {
+			$termLanguages = $synonymsLanguages[$term] ?? [];
+			$this->termScoringFieldIterators[$term] = new FieldIterator(
+				$this->getTermScoringFieldQueryBuilder( $term ),
+				array_keys( $boosts ),
+				$termLanguages,
+				$stemmingSettings,
+				array_map( static function ( $boost ) use ( $score ) {
+					return $boost * $score;
+				}, $boosts ),
+				$decays
+			);
+		}
 	}
 
 	public function transform(): AbstractQuery {
-		$query = $this->getScoringQuery();
+		// we (may) have multiple terms to match (the original search term,
+		// but also synonyms), which we'll wrap them all in a dis_max to
+		// ensure that the scores don't spiral out of control and grow too
+		// large with too many synonyms
+		// that said, if/when a document matches multiple synonyms, that's
+		// a fairly strong indication that it's a pretty good match for the
+		// subject, so we'll add a tiebreaker to allow some additional boost
+		// (though these additional matches won't be worth as much)
+		$termsDisMax = new DisMax();
+		$termsDisMax->setTieBreaker( $this->decays['synonyms'] ?? 0 );
 
-		// at this point, $query contains an awful lot of logic to contribute
-		// to a score, including every occurrence of any of the words;
-		// however, unless a result actually contains *all* words (or a statement),
-		// it shouldn't even show up in the results (no matter how often some of the
-		// words are repeated)
-		$query->addFilter( $this->getFilterQuery() );
+		// search term
+		$termQuery = new BoolQuery();
+		$termQuery->addFilter(
+			( new MultiMatch() )
+				->setQuery( $this->node->getWords() )
+				->setFields( [ 'all', 'all.plain' ] )
+				->setOperator( MultiMatch::OPERATOR_AND )
+		);
+		// build a boolquery that matches all fields for a given term
+		foreach ( $this->termScoringFieldIterators[$this->node->getWords()] as $fieldQuery ) {
+			$termQuery->addShould( $fieldQuery );
+		}
+		// wrap the fulltext part to normalize the scores, which
+		// otherwise increase when the token count increases
+		if ( $this->options['normalizeFulltextScores'] ) {
+			$termQuery = $this->normalizeFulltextScores( $termQuery, $this->node->getWords() );
+		}
+		// add term query (filter + normalized scoring clause per field) to global boolquery
+		$termsDisMax->addQuery( $termQuery );
+
+		// synonyms for search term
+		// this is very similar as with the original search term above,
+		// except that we'll be more strict in the filter & expect a
+		// phrase match
+		// they'll be wrapped inside another dis_max group to make sure
+		// that only the single best synonym can contribute to the score,
+		// because synonyms are often minor variations of similar text
+		// and could lead to massively inflated text matches in such case
+		$synonyms = array_diff( array_keys( $this->termScoringFieldIterators ), [ $this->node->getWords() ] );
+		if ( count( $synonyms ) > 0 ) {
+			$synonymsDisMax = new DisMax();
+			foreach ( $synonyms as $synonym ) {
+				$synonymQuery = new BoolQuery();
+				$synonymQuery->addFilter(
+					( new MultiMatch() )
+						->setQuery( $synonym )
+						->setFields( [ 'all' ] )
+						// needs to be exact (phrase) match to avoid, as much as
+						// possible, false positives
+						->setType( 'phrase' )
+				);
+				foreach ( $this->termScoringFieldIterators[$synonym] as $fieldQuery ) {
+					$synonymQuery->addShould( $fieldQuery );
+				}
+				if ( $this->options['normalizeFulltextScores'] ) {
+					$synonymQuery = $this->normalizeFulltextScores( $synonymQuery, $synonym );
+				}
+				$synonymsDisMax->addQuery( $synonymQuery );
+			}
+			$termsDisMax->addQuery( $synonymsDisMax );
+		}
+
+		$query = new BoolQuery();
+		// search term + synonyms
+		$query->addShould( $termsDisMax );
+		// wikibase entities
+		$query->addShould( $this->entitiesHandler->transform() );
 
 		return $query;
-	}
-
-	private function getFilterQuery(): BoolQuery {
-		return ( new BoolQuery() )
-			->addShould(
-				( new MultiMatch() )
-					->setQuery( $this->node->getWords() )
-					->setFields( [ 'all', 'all.plain' ] )
-					->setOperator( MultiMatch::OPERATOR_AND )
-			)
-			->addShould( $this->entitiesHandler->transform() );
-	}
-
-	private function getScoringQuery(): BoolQuery {
-		// build a query that iterates over all fields to match the given term
-		$fieldsQuery = new BoolQuery();
-		foreach ( $this->termScoringFieldIterator as $fieldQuery ) {
-			$fieldsQuery->addShould( $fieldQuery );
-		}
-
-		if ( $this->options['normalizeFulltextScores'] ) {
-			$fieldsQuery = ( new BoolQuery() )
-				->addShould(
-					// we'll wrap the fulltext part to normalize the scores, which
-					// otherwise increase when the token count increases
-					$this->normalizeFulltextScores(
-						$fieldsQuery,
-						$this->node->getWords()
-					)
-				);
-		}
-
-		$fieldsQuery->addShould( $this->entitiesHandler->transform() );
-
-		return $fieldsQuery;
 	}
 
 	/**

@@ -4,15 +4,28 @@
 			"Dr Lotus Black"
 		]
 	},
+	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "ပုံစာများ",
 	"wikibasemediainfo-filepage-fileinfo-heading": "ဖိုင်အချက်အလက်",
+	"wikibasemediainfo-filepage-captions-title": "ပုံစာများ",
+	"wikibasemediainfo-filepage-more-languages": "$1 ထက်ပိုသော {{PLURAL:$1|ဘာသာစကား|ဘာသာစကားများ}}ကိုကြည့်ရန်",
+	"wikibasemediainfo-filepage-fewer-languages": "ပိုနည်းသော ဘာသာစကားများကိုကြည့်ရန်",
+	"wikibasemediainfo-filepage-add-caption": "ပုံစာတစ်ခု ပေါင်းထည့်ရန်",
+	"wikibasemediainfo-filepage-edit-captions": "ပုံစာများ ပြင်ဆင်ရန်",
 	"wikibasemediainfo-filepage-cancel": "မလုပ်တော့ပါ",
 	"wikibasemediainfo-filepage-edit": "ပြင်ဆင်ရန်",
 	"wikibasemediainfo-filepage-publish": "ပြောင်းလဲမှုများကို လွှင့်တင်ရန်",
+	"wikibasemediainfo-statements-item-remove": "ဖယ်ရှားရန်",
 	"wikibasemediainfo-statements-learn-more": "ပိုမို လေ့လာရန်",
 	"wikibasemediainfo-statements-remove": "အားလုံးကို ဖယ်ရှား",
 	"wikibasemediainfo-coordinate-input-label": "ကိုဩဒိနိတ်များ",
 	"wikibasemediainfo-coordinate-input-placeholder": "လတ္တီကျု့၊ လောင်ဂျီကျု့",
 	"wikibasemediainfo-precision-input-label": "တိကျမှု",
+	"wikibasemediainfo-string-input-button-text": "ပေါင်းထည့်ရန်",
+	"wikibasemediainfo-monolingualtext-input-button-text": "ပေါင်းထည့်ရန်",
+	"wikibasemediainfo-monolingualtext-input-placeholder": "စာသားရိုက်ထည့်ပါ",
+	"wikibasemediainfo-monolingualtext-language-label": "ဘာသာစကား ရွေးရန်",
+	"wikibasemediainfo-time-input-button-text": "ပေါင်းထည့်ရန်",
+	"wikibasemediainfo-time-input-placeholder": "အချိန်ရိုက်ထည့်ပါ",
 	"wikibasemediainfo-time-precision-year1g": "ဘီလီယံနှစ်",
 	"wikibasemediainfo-time-precision-year10m": "တစ်ဆယ်မီလီယံနှစ်",
 	"wikibasemediainfo-time-precision-year1m": "မီလီယံနှစ်",
@@ -30,5 +43,6 @@
 	"wikibasemediainfo-time-calendar-label": "ပြက္ခဒိန်",
 	"wikibasemediainfo-time-calendar-gregorian": "ဂရီဂေါရီးယန်း",
 	"wikibasemediainfo-time-calendar-julian": "ဂျူလီယန်",
-	"wikibasemediainfo-quantity-input-button-text": "ပေါင်းထည့်ရန်"
+	"wikibasemediainfo-quantity-input-button-text": "ပေါင်းထည့်ရန်",
+	"wikibasemediainfo-globecoordinate-input-button-text": "ပေါင်းထည့်ရန်"
 }

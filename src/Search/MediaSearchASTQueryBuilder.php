@@ -327,10 +327,4 @@ class MediaSearchASTQueryBuilder implements Visitor {
 
 		return $synonyms;
 	}
-
-	public function getPrimaryLanguageCode(): string {
-		// $this->>languages is an array of lang codes in order of preference, so the
-		// first element is the primary one
-		return $this->languages[0];
-	}
 }

@@ -9,7 +9,7 @@ use CirrusSearch\Parser\NamespacePrefixParser;
 use CirrusSearch\Search\SearchContext;
 use CirrusSearch\Search\SearchQueryBuilder;
 use CirrusSearch\SearchConfig;
-use MediaWiki\MediaWikiServices;
+use MediaWiki\HookContainer\HookContainer;
 use MediaWikiIntegrationTestCase;
 use Wikibase\MediaInfo\Search\MediaSearchASTEntitiesExtractor;
 use Wikibase\MediaInfo\Search\MediaSearchASTQueryBuilder;
@@ -69,7 +69,7 @@ class MediaSearchQueryBuilderTest extends MediaWikiIntegrationTestCase {
 		return $mockEntitiesFetcher;
 	}
 
-	private function createSearchContext( $queryString, $rescoreProfile = null ): SearchContext {
+	private function createSearchContext( $queryString ): SearchContext {
 		$searchQueryBuilder = SearchQueryBuilder::newFTSearchQueryBuilder(
 			new SearchConfig(),
 			$queryString,
@@ -78,15 +78,10 @@ class MediaSearchQueryBuilderTest extends MediaWikiIntegrationTestCase {
 					return CirrusSearch::parseNamespacePrefixes( $query, true, true );
 				}
 			},
-			new CirrusSearchHookRunner( MediaWikiServices::getInstance()->getHookContainer() )
+			new CirrusSearchHookRunner( $this->createMock( HookContainer::class ) )
 		);
 		$searchQuery = $searchQueryBuilder->build();
-		$context = SearchContext::fromSearchQuery( $searchQuery );
-		if ( $rescoreProfile ) {
-			$context->setRescoreProfile( $rescoreProfile );
-			$context->setNamespaces( [ NS_FILE ] );
-		}
-		return $context;
+		return SearchContext::fromSearchQuery( $searchQuery );
 	}
 
 	/**
@@ -109,41 +104,6 @@ class MediaSearchQueryBuilderTest extends MediaWikiIntegrationTestCase {
 
 	public function provideTestQuery() {
 		$fixturesDir = __DIR__ . '/../../data/queries/';
-		$tests = [];
-		foreach ( glob( $fixturesDir . '*.settings' ) as $settingsFile ) {
-			$testFileName = substr( $settingsFile, 0, -9 );
-			$settings = json_decode( file_get_contents( $settingsFile ), true );
-			$expectedFile = "$testFileName.expected";
-			$tests[$settings['title']] = [ $settings, $expectedFile ];
-		}
-
-		return $tests;
-	}
-
-	/**
-	 * @dataProvider provideTestRescoreQuery
-	 * @param array $settings
-	 * @param string $expectedFile
-	 */
-	public function testRescore( array $settings, string $expectedFile ): void {
-		$this->setMwGlobals( 'wgWBCSUseCirrus', true );
-		$builder = $this->createSUT( $settings );
-		$searchContext = $this->createSearchContext(
-			$settings['term'],
-			$settings['rescoreProfile'] ?? ''
-		);
-		$builder->build( $searchContext, $settings['term'] );
-
-		$this->assertFileContains(
-			$expectedFile,
-			json_encode( $searchContext->getRescore(), JSON_PRETTY_PRINT ),
-			getenv( 'MEDIAINFO_REBUILD_FIXTURES' ) === 'yes',
-			$settings['title'] . ': failed'
-		);
-	}
-
-	public function provideTestRescoreQuery() {
-		$fixturesDir = __DIR__ . '/../../data/rescore/';
 		$tests = [];
 		foreach ( glob( $fixturesDir . '*.settings' ) as $settingsFile ) {
 			$testFileName = substr( $settingsFile, 0, -9 );

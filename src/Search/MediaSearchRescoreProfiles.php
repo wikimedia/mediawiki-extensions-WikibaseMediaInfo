@@ -40,20 +40,4 @@ return [
 			],
 		]
 	],
-	// use the model trained on a ranklib file generated from the featureset MediaSearch_20210826
-	// against the cloudelastic index in August 2021
-	'ltr_MediaSearch_20210826' => [
-		'i18n_msg' => 'wikibasemediainfo-rescore-profile-ltr-MediaSearch_20210826',
-		'supported_namespaces' => [ NS_FILE ],
-		'rescore' => [
-			[
-				'window' => 100,
-				'query_weight' => 1.0,
-				'rescore_query_weight' => 1.0,
-				'score_mode' => 'max',
-				'type' => 'ltr',
-				'model' => 'MediaSearch_20210826_xgboost_v2_34t_4d',
-			],
-		]
-	],
 ];

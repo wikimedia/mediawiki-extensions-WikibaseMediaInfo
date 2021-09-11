@@ -624,7 +624,7 @@ class WikibaseMediaInfoHooks {
 	 * @param Document $document The modifiable Elastica page
 	 * @param Title $title The Title for the page
 	 * @param AbstractContent $contentObject The Content object for the page
-	 * @param ParserOutput|null $parserOutput The ParserOutput for the page if it exists
+	 * @param ParserOutput $parserOutput The ParserOutput for the page if it exists
 	 * @param Connection $connection
 	 */
 	public static function onCirrusSearchBuildDocumentParse(
@@ -638,7 +638,7 @@ class WikibaseMediaInfoHooks {
 		$hooksObject->doCirrusSearchBuildDocumentParse(
 			$document,
 			WikiPage::factory( $title ),
-			// @phan-suppress-next-line PhanTypeMismatchArgument It is a MediaInfoHandler
+			// @phan-suppress-next-line PhanTypeMismatchArgumentSuperType It is a MediaInfoHandler
 			ContentHandler::getForModelID( MediaInfoContent::CONTENT_MODEL_ID )
 		);
 	}

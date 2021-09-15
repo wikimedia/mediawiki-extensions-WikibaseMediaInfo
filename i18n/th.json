@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"Ans",
 			"B20180",
 			"Bebiezaza",
 			"Patsagorn Y."
@@ -17,7 +18,7 @@
 	"wikibasemediainfo-add-statement": "เพิ่มประพจน์",
 	"wikibasemediainfo-desc": "ส่วนขยายวิกิเบสเพื่อจัดการข้อมูลจำเพาะเชิงโครงสร้างของไฟล์มีเดีย",
 	"wikibasemediainfo-diffview-label": "คำบรรยาย",
-	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "คำบรรยาย",
+	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "คำบรรยายโดยย่อ",
 	"wikibasemediainfo-filepage-fileinfo-heading": "สารสนเทศไฟล์",
 	"wikibasemediainfo-filepage-structured-data-heading": "ข้อมูลเชิงโครงสร้าง",
 	"wikibasemediainfo-filepage-captions-title": "คำบรรยาย",

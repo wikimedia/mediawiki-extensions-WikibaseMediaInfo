@@ -11,7 +11,7 @@ use Wikibase\DataModel\DeserializerFactory;
 use Wikibase\DataModel\Entity\EntityIdValue;
 use Wikibase\DataModel\Entity\Item;
 use Wikibase\DataModel\Entity\ItemId;
-use Wikibase\DataModel\Entity\PropertyId;
+use Wikibase\DataModel\Entity\NumericPropertyId;
 use Wikibase\DataModel\Snak\PropertyValueSnak;
 use Wikibase\Lib\Formatters\OutputFormatSnakFormatterFactory;
 use Wikibase\Lib\Formatters\SnakFormatter;
@@ -164,7 +164,7 @@ class ApiRelatedConcepts extends ApiBase {
 			// PropertyValueSnak for these entities
 			$statements = $entity->getStatements();
 			foreach ( $properties as $property ) {
-				$statement = $statements->getByPropertyId( new PropertyId( $property ) );
+				$statement = $statements->getByPropertyId( new NumericPropertyId( $property ) );
 				foreach ( $statement->getMainSnaks() as $snak ) {
 					if ( $snak instanceof PropertyValueSnak ) {
 						$snaks[] = $snak;
@@ -194,7 +194,7 @@ class ApiRelatedConcepts extends ApiBase {
 	 */
 	public function evaluateHeuristics( Item $entity, array $heuristics ): array {
 		$makeCondition = function ( array $condition ) use ( $entity ) {
-			$propertyId = new PropertyId( $condition['property'] );
+			$propertyId = new NumericPropertyId( $condition['property'] );
 			$itemId = isset( $condition['item'] ) ? new ItemId( $condition['item'] ) : null;
 			return $this->hasStatement( $entity, $propertyId, $itemId );
 		};
@@ -263,7 +263,7 @@ class ApiRelatedConcepts extends ApiBase {
 		return $result;
 	}
 
-	private function hasStatement( Item $entity, PropertyId $propertyId, ItemId $itemId = null ): bool {
+	private function hasStatement( Item $entity, NumericPropertyId $propertyId, ItemId $itemId = null ): bool {
 		$statements = $entity->getStatements();
 		$statementsForProperty = $statements->getByPropertyId( $propertyId );
 		if ( $itemId === null && count( $statementsForProperty ) > 0 ) {

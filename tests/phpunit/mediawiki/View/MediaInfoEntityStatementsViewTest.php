@@ -7,7 +7,7 @@ use DataValues\StringValue;
 use ValueFormatters\FormatterOptions;
 use Wikibase\DataModel\Entity\EntityIdValue;
 use Wikibase\DataModel\Entity\ItemId;
-use Wikibase\DataModel\Entity\PropertyId;
+use Wikibase\DataModel\Entity\NumericPropertyId;
 use Wikibase\DataModel\SerializerFactory;
 use Wikibase\DataModel\Snak\PropertyNoValueSnak;
 use Wikibase\DataModel\Snak\PropertySomeValueSnak;
@@ -157,7 +157,7 @@ class MediaInfoEntityStatementsViewTest extends \PHPUnit\Framework\TestCase {
 		$sut = new MediaInfoEntityStatementsView(
 			$orderProvider,
 			$this->textProvider,
-			[ new PropertyId( 'P1' ) ],
+			[ new NumericPropertyId( 'P1' ) ],
 			$this->snakFormatterFactory,
 			$this->valueFormatterFactory,
 			$this->serializerFactory,
@@ -333,49 +333,49 @@ class MediaInfoEntityStatementsViewTest extends \PHPUnit\Framework\TestCase {
 	}
 
 	public function provideStatementList() {
-		$property999NoValue = new PropertyNoValueSnak( new PropertyId( 'P999' ) );
-		$property999SomeValue = new PropertySomeValueSnak( new PropertyId( 'P999' ) );
+		$property999NoValue = new PropertyNoValueSnak( new NumericPropertyId( 'P999' ) );
+		$property999SomeValue = new PropertySomeValueSnak( new NumericPropertyId( 'P999' ) );
 		$property999Value_1 = new PropertyValueSnak(
-			new PropertyId( 'P999' ),
+			new NumericPropertyId( 'P999' ),
 			new StringValue( uniqid() )
 		);
 		$property999Value_2 = new PropertyValueSnak(
-			new PropertyId( 'P999' ),
+			new NumericPropertyId( 'P999' ),
 			new StringValue( uniqid() )
 		);
 		$statement999Value_2 = new Statement( $property999Value_2 );
 		$statement999Value_2->setRank( Statement::RANK_DEPRECATED );
 		$property999Value_3 = new PropertyValueSnak(
-			new PropertyId( 'P999' ),
+			new NumericPropertyId( 'P999' ),
 			new StringValue( uniqid() )
 		);
 		$statement999Value_3 = new Statement( $property999Value_3 );
 		$statement999Value_3->setRank( Statement::RANK_PREFERRED );
 		$property888Value = new PropertyValueSnak(
-			new PropertyId( 'P888' ),
+			new NumericPropertyId( 'P888' ),
 			new StringValue( uniqid() )
 		);
 		$property777Value = new PropertyValueSnak(
-			new PropertyId( 'P777' ),
+			new NumericPropertyId( 'P777' ),
 			new EntityIdValue( new ItemId( 'Q999' ) )
 		);
 
 		$qualifier333Value_1 = new PropertyValueSnak(
-			new PropertyId( 'P333' ),
+			new NumericPropertyId( 'P333' ),
 			new EntityIdValue( new ItemId( 'Q333' ) )
 		);
 		$qualifier333Value_2 = new PropertyValueSnak(
-			new PropertyId( 'P333' ),
+			new NumericPropertyId( 'P333' ),
 			new EntityIdValue( new ItemId( 'Q3333' ) )
 		);
 		$qualifier444 = new PropertyNoValueSnak(
-			new PropertyId( 'P444' )
+			new NumericPropertyId( 'P444' )
 		);
 		$qualifier555 = new PropertySomeValueSnak(
-			new PropertyId( 'P555' )
+			new NumericPropertyId( 'P555' )
 		);
 		$qualifier666 = new PropertyValueSnak(
-			new PropertyId( 'P666' ),
+			new NumericPropertyId( 'P666' ),
 			new StringValue( uniqid() )
 		);
 		$qualifiers = new SnakList( [

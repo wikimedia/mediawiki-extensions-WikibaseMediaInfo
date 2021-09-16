@@ -26,7 +26,7 @@ use RequestContext;
 use Skin;
 use Title;
 use Wikibase\Client\WikibaseClient;
-use Wikibase\DataModel\Entity\PropertyId;
+use Wikibase\DataModel\Entity\NumericPropertyId;
 use Wikibase\DataModel\Services\Lookup\PropertyDataTypeLookupException;
 use Wikibase\DataModel\Statement\StatementGuid;
 use Wikibase\Lib\LanguageFallbackChainFactory;
@@ -194,7 +194,7 @@ class WikibaseMediaInfoHooks {
 				}
 
 				// get data type for values associated with this property
-				$propertyTypes[$property] = WBMIHooksHelper::getPropertyType( new PropertyId( $property ) );
+				$propertyTypes[$property] = WBMIHooksHelper::getPropertyType( new NumericPropertyId( $property ) );
 			} catch ( PropertyDataTypeLookupException $e ) {
 				// ignore invalid properties...
 			}

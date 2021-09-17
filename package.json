@@ -3,9 +3,6 @@
 	"version": "0.1.0",
 	"private": true,
 	"scripts": {
-		"chromedriver": "npx chromedriver --url-base=/wd/hub --port=4444",
-		"selenium-daily": "npm run selenium-test-betacommons",
-		"selenium-test-betacommons": "wdio tests/selenium/wdio.conf.js",
 		"test": "grunt test && npm run test:unit",
 		"test:unit": "qunit 'tests/node-qunit/**/*.test.js'",
 		"coverage": "nyc --include='resources/**/*.js' --reporter=lcov --reporter=lcovonly --reporter=text --reporter=text-summary qunit 'tests/node-qunit/**/*.test.js'",
@@ -13,13 +10,6 @@
 		"build-lib": ". ./bin/build.sh"
 	},
 	"devDependencies": {
-		"@wdio/cli": "7.4.6",
-		"@wdio/local-runner": "7.4.6",
-		"@wdio/mocha-framework": "7.4.6",
-		"@wdio/dot-reporter": "7.4.2",
-		"@wdio/junit-reporter": "7.4.2",
-		"@wdio/sync": "7.4.6",
-		"chromedriver": "2.46.0",
 		"dotenv": "8.0.0",
 		"eslint-config-wikimedia": "0.20.0",
 		"grunt": "1.4.0",
@@ -40,8 +30,6 @@
 		"stylelint-config-wikimedia": "0.11.1",
 		"tap-mocha-reporter": "5.0.1",
 		"tmp": "0.1.0",
-		"wdio-mediawiki": "1.1.1",
-		"webdriverio": "7.4.6",
 		"wikibase-data-model": "^6.1.0",
 		"wikibase-data-values": "^0.10.0",
 		"wikibase-serialization": "^5.0.0",

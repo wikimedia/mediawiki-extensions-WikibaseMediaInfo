@@ -8,7 +8,6 @@
 .eslintcache
 .DS_Store
 .env
-/tests/selenium/log/
 /.nyc_output/
 /coverage
 /.vscode/

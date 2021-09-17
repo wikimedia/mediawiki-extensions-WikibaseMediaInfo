@@ -8,7 +8,7 @@ use DataValues\StringValue;
 use DataValues\TimeValue;
 use InvalidArgumentException;
 use Wikibase\DataModel\Entity\Item;
-use Wikibase\DataModel\Entity\PropertyId;
+use Wikibase\DataModel\Entity\NumericPropertyId;
 use Wikibase\DataModel\Reference;
 use Wikibase\DataModel\ReferenceList;
 use Wikibase\DataModel\Snak\PropertyNoValueSnak;
@@ -166,16 +166,16 @@ class MediaInfoContentTest extends \PHPUnit\Framework\TestCase {
 			new StatementList(
 				new Statement(
 					new PropertyValueSnak(
-						new PropertyId( 'P6654' ), new StringValue( 'stringvalue' )
+						new NumericPropertyId( 'P6654' ), new StringValue( 'stringvalue' )
 					),
 					new SnakList(
 						[
 							new PropertyValueSnak(
-								new PropertyId( 'P6654' ),
+								new NumericPropertyId( 'P6654' ),
 								new GlobeCoordinateValue( new LatLongValue( 1, 2 ), 1 )
 							),
 							new PropertyValueSnak(
-								new PropertyId( 'P6654' ),
+								new NumericPropertyId( 'P6654' ),
 								new TimeValue(
 									'+2015-11-11T00:00:00Z',
 									0,
@@ -191,8 +191,8 @@ class MediaInfoContentTest extends \PHPUnit\Framework\TestCase {
 						[
 							new Reference(
 								[
-									new PropertySomeValueSnak( new PropertyId( 'P987' ) ),
-									new PropertyNoValueSnak( new PropertyId( 'P986' ) )
+									new PropertySomeValueSnak( new NumericPropertyId( 'P987' ) ),
+									new PropertyNoValueSnak( new NumericPropertyId( 'P986' ) )
 								]
 							)
 						]

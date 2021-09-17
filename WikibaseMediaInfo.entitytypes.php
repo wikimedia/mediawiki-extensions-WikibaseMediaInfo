@@ -18,7 +18,7 @@ use Wikibase\DataAccess\EntitySource;
 use Wikibase\DataModel\DeserializerFactory;
 use Wikibase\DataModel\Entity\EntityDocument;
 use Wikibase\DataModel\Entity\EntityId;
-use Wikibase\DataModel\Entity\PropertyId;
+use Wikibase\DataModel\Entity\NumericPropertyId;
 use Wikibase\DataModel\SerializerFactory;
 use Wikibase\DataModel\Services\EntityId\EntityIdFormatter;
 use Wikibase\DataModel\Services\Lookup\InProcessCachingDataTypeLookup;
@@ -125,7 +125,7 @@ return [
 			$defaultPropertyIdsForView = [];
 			$properties = $mwConfig->get( 'MediaInfoProperties' ) ?? [];
 			foreach ( $properties as $propertyId ) {
-				$defaultPropertyIdsForView[] = new PropertyId( $propertyId );
+				$defaultPropertyIdsForView[] = new NumericPropertyId( $propertyId );
 			}
 
 			$statementsView = new MediaInfoEntityStatementsView(

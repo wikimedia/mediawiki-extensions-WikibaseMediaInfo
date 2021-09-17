@@ -4,8 +4,8 @@ namespace Wikibase\MediaInfo\Tests\MediaWiki\View;
 
 use Html;
 use Wikibase\DataModel\Entity\EntityDocument;
+use Wikibase\DataModel\Entity\NumericPropertyId;
 use Wikibase\DataModel\Entity\Property;
-use Wikibase\DataModel\Entity\PropertyId;
 use Wikibase\DataModel\Term\TermList;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\MediaInfo\View\MediaInfoEntityStatementsView;
@@ -54,7 +54,7 @@ class MediaInfoViewTest extends \PHPUnit\Framework\TestCase {
 		$this->entity->method( 'getType' )
 			->willReturn( $this->values['entityType'] );
 		$this->entity->method( 'getID' )
-			->willReturn( new PropertyId( $this->values['entityId'] ) );
+			->willReturn( new NumericPropertyId( $this->values['entityId'] ) );
 		$this->entity->method( 'getLabels' )
 			->willReturn( new TermList( [] ) );
 		$this->entity->method( 'getDescriptions' )
@@ -97,7 +97,7 @@ class MediaInfoViewTest extends \PHPUnit\Framework\TestCase {
 	public function testGetContentException() {
 		$this->createMocks();
 		try {
-			$this->sut->getContent( new Property( new PropertyId( 'P999' ), null, 'string' ) );
+			$this->sut->getContent( new Property( new NumericPropertyId( 'P999' ), null, 'string' ) );
 			$this->assertFalse(
 				true,
 				'Expected exception not thrown when invalid type passed'

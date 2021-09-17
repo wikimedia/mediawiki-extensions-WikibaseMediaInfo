@@ -14,7 +14,7 @@ use ValueFormatters\FormatterOptions;
 use ValueFormatters\ValueFormatter;
 use Wikibase\DataModel\Entity\EntityId;
 use Wikibase\DataModel\Entity\EntityIdValue;
-use Wikibase\DataModel\Entity\PropertyId;
+use Wikibase\DataModel\Entity\NumericPropertyId;
 use Wikibase\DataModel\SerializerFactory;
 use Wikibase\DataModel\Snak\PropertyNoValueSnak;
 use Wikibase\DataModel\Snak\PropertySomeValueSnak;
@@ -52,7 +52,7 @@ class MediaInfoEntityStatementsView {
 	/**
 	 * @param PropertyOrderProvider $propertyOrderProvider
 	 * @param LocalizedTextProvider $textProvider
-	 * @param PropertyId[] $defaultPropertyIds Default values are displayed for these properties if
+	 * @param NumericPropertyId[] $defaultPropertyIds Default values are displayed for these properties if
 	 * 	we don't have values for them
 	 * @param OutputFormatSnakFormatterFactory $snakFormatterFactory
 	 * @param OutputFormatValueFormatterFactory $valueFormatterFactory
@@ -254,7 +254,7 @@ class MediaInfoEntityStatementsView {
 	}
 
 	private function createPropertyHeader( $propertyIdString ) {
-		$propertyId = new PropertyId( $propertyIdString );
+		$propertyId = new NumericPropertyId( $propertyIdString );
 
 		$propertyTitle = $this->createFormattedDataValue(
 			new HtmlSnippet( $this->formatEntityId( $propertyId, SnakFormatter::FORMAT_HTML ) )

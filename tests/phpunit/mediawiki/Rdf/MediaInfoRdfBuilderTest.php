@@ -4,7 +4,7 @@ namespace Wikibase\Repo\Tests\Rdf;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
-use Wikibase\DataAccess\EntitySource;
+use Wikibase\DataAccess\DatabaseEntitySource;
 use Wikibase\DataAccess\EntitySourceDefinitions;
 use Wikibase\Lib\Store\EntityRevisionLookup;
 use Wikibase\Lib\SubEntityTypesMapper;
@@ -147,7 +147,7 @@ class MediaInfoRdfBuilderTest extends TestCase {
 			[ 'test' => '' ],
 			new EntitySourceDefinitions(
 				[
-					new EntitySource(
+					new DatabaseEntitySource(
 						'test',
 						'testdb',
 						[

@@ -15,9 +15,11 @@
 
 use MediaWiki\MediaWikiServices;
 use Wikibase\DataAccess\EntitySource;
+use Wikibase\DataModel\Deserializers\DeserializerFactory;
 use Wikibase\DataModel\Entity\EntityDocument;
 use Wikibase\DataModel\Entity\EntityId;
 use Wikibase\DataModel\Entity\NumericPropertyId;
+use Wikibase\DataModel\Serializers\SerializerFactory;
 use Wikibase\DataModel\Services\EntityId\EntityIdFormatter;
 use Wikibase\DataModel\Services\Lookup\InProcessCachingDataTypeLookup;
 use Wikibase\Lib\DataTypeDefinitions;
@@ -75,19 +77,19 @@ use Wikimedia\Purtle\RdfWriter;
 
 return [
 	MediaInfo::ENTITY_TYPE => [
-		Def::STORAGE_SERIALIZER_FACTORY_CALLBACK => static function ( $serializerFactory ) {
+		Def::STORAGE_SERIALIZER_FACTORY_CALLBACK => static function ( SerializerFactory $serializerFactory ) {
 			return new MediaInfoSerializer(
 				$serializerFactory->newTermListSerializer(),
 				$serializerFactory->newStatementListSerializer()
 			);
 		},
-		Def::SERIALIZER_FACTORY_CALLBACK => static function ( $serializerFactory ) {
+		Def::SERIALIZER_FACTORY_CALLBACK => static function ( SerializerFactory $serializerFactory ) {
 			return new MediaInfoSerializer(
 				$serializerFactory->newTermListSerializer(),
 				$serializerFactory->newStatementListSerializer()
 			);
 		},
-		Def::DESERIALIZER_FACTORY_CALLBACK => static function ( $deserializerFactory ) {
+		Def::DESERIALIZER_FACTORY_CALLBACK => static function ( DeserializerFactory $deserializerFactory ) {
 			return new MediaInfoDeserializer(
 				$deserializerFactory->newEntityIdDeserializer(),
 				$deserializerFactory->newTermListDeserializer(),

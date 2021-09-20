@@ -6,5 +6,6 @@
 	},
 	"wikibasemediainfo-add-statement": "Adjuntez raporto",
 	"wikibasemediainfo-filepage-more-languages": "Videz $1 plusa {{PLURAL:$1|linguo|lingui}}",
-	"wikibasemediainfo-statements-item-input-placeholder": "Serchez por adjuntar artikli"
+	"wikibasemediainfo-statements-item-input-placeholder": "Serchez por adjuntar artikli",
+	"wikibasemediainfo-statements-title-depicts": "Kozi montrata en ca arkivo"
 }

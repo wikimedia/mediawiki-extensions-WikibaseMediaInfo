@@ -7,7 +7,6 @@ use ApiMain;
 use MediaWiki\Http\HttpRequestFactory;
 use ValueFormatters\FormatterOptions;
 use ValueFormatters\ValueFormatter;
-use Wikibase\DataModel\DeserializerFactory;
 use Wikibase\DataModel\Entity\EntityIdValue;
 use Wikibase\DataModel\Entity\Item;
 use Wikibase\DataModel\Entity\ItemId;
@@ -32,7 +31,6 @@ class ApiRelatedConcepts extends ApiBase {
 	/** @var array */
 	private $heuristics;
 
-	/** @var DeserializerFactory */
 	private $deserializerFactory;
 
 	/** @var OutputFormatSnakFormatterFactory */
@@ -42,16 +40,17 @@ class ApiRelatedConcepts extends ApiBase {
 	 * @param ApiMain $main
 	 * @param string $moduleName
 	 * @param HttpRequestFactory $httpRequestFactory
-	 * @param DeserializerFactory $deserializerFactory
+	 * @param $deserializerFactory
 	 * @param OutputFormatSnakFormatterFactory $snakFormatterFactory
 	 * @param string $externalEntitySearchBaseUri
 	 * @param array $heuristics
 	 */
+	// phpcs:ignore MediaWiki.Commenting.FunctionComment.NoParamType -- For T289040
 	public function __construct(
 		ApiMain $main,
 		$moduleName,
 		HttpRequestFactory $httpRequestFactory,
-		DeserializerFactory $deserializerFactory,
+		$deserializerFactory,
 		OutputFormatSnakFormatterFactory $snakFormatterFactory,
 		$externalEntitySearchBaseUri,
 		array $heuristics = []
@@ -68,15 +67,16 @@ class ApiRelatedConcepts extends ApiBase {
 	 * @param ApiMain $main
 	 * @param string $moduleName
 	 * @param HttpRequestFactory $httpRequestFactory
-	 * @param DeserializerFactory $deserializerFactory
+	 * @param $deserializerFactory
 	 * @param OutputFormatSnakFormatterFactory $snakFormatterFactory
 	 * @return self
 	 */
+	// phpcs:ignore MediaWiki.Commenting.FunctionComment.NoParamType -- For T289040
 	public static function factory(
 		ApiMain $main,
 		$moduleName,
 		HttpRequestFactory $httpRequestFactory,
-		DeserializerFactory $deserializerFactory,
+		$deserializerFactory,
 		OutputFormatSnakFormatterFactory $snakFormatterFactory
 	) {
 		$config = $main->getConfig();

@@ -15,7 +15,6 @@ use ValueFormatters\ValueFormatter;
 use Wikibase\DataModel\Entity\EntityId;
 use Wikibase\DataModel\Entity\EntityIdValue;
 use Wikibase\DataModel\Entity\NumericPropertyId;
-use Wikibase\DataModel\SerializerFactory;
 use Wikibase\DataModel\Snak\PropertyNoValueSnak;
 use Wikibase\DataModel\Snak\PropertySomeValueSnak;
 use Wikibase\DataModel\Snak\PropertyValueSnak;
@@ -56,17 +55,18 @@ class MediaInfoEntityStatementsView {
 	 * 	we don't have values for them
 	 * @param OutputFormatSnakFormatterFactory $snakFormatterFactory
 	 * @param OutputFormatValueFormatterFactory $valueFormatterFactory
-	 * @param SerializerFactory $serializerFactory
+	 * @param  $serializerFactory
 	 * @param string $languageCode
 	 * @param string[] $properties Array of property IDs
 	 */
+	// phpcs:ignore MediaWiki.Commenting.FunctionComment.NoParamType -- For T289040
 	public function __construct(
 		PropertyOrderProvider $propertyOrderProvider,
 		LocalizedTextProvider $textProvider,
 		array $defaultPropertyIds,
 		OutputFormatSnakFormatterFactory $snakFormatterFactory,
 		OutputFormatValueFormatterFactory $valueFormatterFactory,
-		SerializerFactory $serializerFactory,
+		$serializerFactory,
 		$languageCode,
 		$properties
 	) {

@@ -225,7 +225,7 @@ StatementWidget.prototype.addItemFromInput = function () {
  */
 StatementWidget.prototype.createItem = function ( snakType, dataValue ) {
 	var widget = new ItemWidget( {
-		disabled: !this.config.showControls || this.isDisabled(),
+		disabled: this.isDisabled(),
 		editing: this.state.editing,
 		entityId: this.state.entityId,
 		propertyId: this.state.propertyId,

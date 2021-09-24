@@ -17,8 +17,8 @@ use MediaWiki\MediaWikiServices;
 use Wikibase\DataAccess\EntitySource;
 use Wikibase\DataModel\Deserializers\DeserializerFactory;
 use Wikibase\DataModel\Entity\EntityDocument;
-use Wikibase\DataModel\Entity\EntityId;
 use Wikibase\DataModel\Entity\NumericPropertyId;
+use Wikibase\DataModel\Entity\SerializableEntityId;
 use Wikibase\DataModel\Serializers\SerializerFactory;
 use Wikibase\DataModel\Services\EntityId\EntityIdFormatter;
 use Wikibase\DataModel\Services\Lookup\InProcessCachingDataTypeLookup;
@@ -170,7 +170,7 @@ return [
 			return new MediaInfoId( $serialization );
 		},
 		Def::ENTITY_ID_COMPOSER_CALLBACK => static function ( $repositoryName, $uniquePart ) {
-			return new MediaInfoId( EntityId::joinSerialization( [
+			return new MediaInfoId( SerializableEntityId::joinSerialization( [
 				$repositoryName,
 				'',
 				'M' . $uniquePart

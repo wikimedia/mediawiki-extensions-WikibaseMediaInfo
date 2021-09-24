@@ -3,7 +3,7 @@
 namespace Wikibase\MediaInfo\Tests\MediaWiki\Services;
 
 use Title;
-use Wikibase\DataModel\Entity\EntityId;
+use Wikibase\DataModel\Entity\SerializableEntityId;
 use Wikibase\DataModel\Services\EntityId\EntityIdComposer;
 use Wikibase\MediaInfo\DataModel\MediaInfoId;
 use Wikibase\MediaInfo\Services\MediaInfoIdLookup;
@@ -21,7 +21,7 @@ class MediaInfoIdLookupTest extends \PHPUnit\Framework\TestCase {
 	private function getEntityIdComposer() {
 		return new EntityIdComposer( [
 			'mediainfo' => static function ( $repositoryName, $uniquePart ) {
-				return new MediaInfoId( EntityId::joinSerialization( [
+				return new MediaInfoId( SerializableEntityId::joinSerialization( [
 					$repositoryName,
 					'',
 					'M' . $uniquePart

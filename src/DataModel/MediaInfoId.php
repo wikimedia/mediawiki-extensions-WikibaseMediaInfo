@@ -5,6 +5,7 @@ namespace Wikibase\MediaInfo\DataModel;
 use InvalidArgumentException;
 use Wikibase\DataModel\Entity\EntityId;
 use Wikibase\DataModel\Entity\Int32EntityId;
+use Wikibase\DataModel\Entity\SerializableEntityId;
 
 /**
  * Identifier for media info entities, containing a numeric id prefixed by 'M'.
@@ -15,7 +16,7 @@ use Wikibase\DataModel\Entity\Int32EntityId;
  * @author Bene* < benestar.wikimedia@gmail.com >
  * @author Thiemo Kreuz
  */
-class MediaInfoId extends EntityId implements Int32EntityId {
+class MediaInfoId extends SerializableEntityId implements Int32EntityId {
 
 	public const PATTERN = '/^M[1-9]\d{0,9}\z/i';
 

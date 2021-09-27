@@ -175,7 +175,7 @@ class MediaInfoSpecificComponentsRdfBuilder implements EntityRdfBuilder {
 		if ( is_int( $value ) && $value > 0 ) {
 			$this->aboutId( $id )
 				->say( RdfVocabulary::NS_SCHEMA_ORG, $schemaProperty )
-				->value( $value, 'xsd', 'integer' );
+				->value( (string)$value, 'xsd', 'integer' );
 		}
 	}
 }

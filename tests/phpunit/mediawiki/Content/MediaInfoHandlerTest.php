@@ -33,7 +33,7 @@ use Wikibase\Search\Elastic\Fields\StatementProviderFieldDefinitions;
  * @license GPL-2.0-or-later
  * @author Bene* < benestar.wikimedia@gmail.com >
  */
-class MediaInfoHandlerTest extends \PHPUnit\Framework\TestCase {
+class MediaInfoHandlerTest extends \MediaWikiIntegrationTestCase {
 
 	private function getMockWithoutConstructor( $className ) {
 		return $this->getMockBuilder( $className )
@@ -100,6 +100,8 @@ class MediaInfoHandlerTest extends \PHPUnit\Framework\TestCase {
 					[]
 				)
 			),
+			$this->getServiceContainer()->getPageStore(),
+			$this->getServiceContainer()->getTitleFactory(),
 			null
 		);
 	}

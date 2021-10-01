@@ -3,7 +3,10 @@
 namespace Wikibase\MediaInfo\Content;
 
 use IContextSource;
+use MediaWiki\Page\PageRecord;
+use MediaWiki\Page\PageStore;
 use Title;
+use TitleFactory;
 use Wikibase\DataModel\Entity\EntityId;
 use Wikibase\DataModel\Entity\EntityIdParser;
 use Wikibase\Lib\Store\EntityContentDataCodec;
@@ -52,6 +55,16 @@ class MediaInfoHandler extends EntityHandler {
 	private $titleForIdCache = [];
 
 	/**
+	 * @var PageStore
+	 */
+	private $pageStore;
+
+	/**
+	 * @var TitleFactory
+	 */
+	private $titleFactory;
+
+	/**
 	 * @param EntityContentDataCodec $contentCodec
 	 * @param EntityConstraintProvider $constraintProvider
 	 * @param ValidatorErrorLocalizer $errorLocalizer
@@ -60,6 +73,8 @@ class MediaInfoHandler extends EntityHandler {
 	 * @param MediaInfoIdLookup $idLookup
 	 * @param FilePageLookup $filePageLookup
 	 * @param FieldDefinitions $mediaInfoFieldDefinitions
+	 * @param PageStore $pageStore
+	 * @param TitleFactory $titleFactory
 	 * @param callable|null $legacyExportFormatDetector
 	 */
 	public function __construct(
@@ -71,6 +86,8 @@ class MediaInfoHandler extends EntityHandler {
 		MediaInfoIdLookup $idLookup,
 		FilePageLookup $filePageLookup,
 		FieldDefinitions $mediaInfoFieldDefinitions,
+		PageStore $pageStore,
+		TitleFactory $titleFactory,
 		$legacyExportFormatDetector = null
 	) {
 		parent::__construct(
@@ -86,6 +103,8 @@ class MediaInfoHandler extends EntityHandler {
 		$this->missingMediaInfoHandler = $missingMediaInfoHandler;
 		$this->idLookup = $idLookup;
 		$this->filePageLookup = $filePageLookup;
+		$this->pageStore = $pageStore;
+		$this->titleFactory = $titleFactory;
 	}
 
 	/**
@@ -239,9 +258,19 @@ class MediaInfoHandler extends EntityHandler {
 			}
 		}
 
-		$unindexedTitles = Title::newFromIDs( $uncachedNumericIds );
-		foreach ( $unindexedTitles as $title ) {
+		$unindexedTitles = $this->pageStore
+			->newSelectQueryBuilder()
+			->wherePageIds( $uncachedNumericIds )
+			->caller( __METHOD__ )
+			->fetchPageRecords();
+
+		/** @var PageRecord $pageIdentity */
+		foreach ( $unindexedTitles as $pageIdentity ) {
+			$title = $this->titleFactory->castFromPageIdentity( $pageIdentity );
+
+			// @phan-suppress-next-line PhanTypeMismatchArgumentNullable
 			$idString = $this->getIdForTitle( $title )->getSerialization();
+			// @phan-suppress-next-line PhanTypeMismatchProperty
 			$this->titleForIdCache[$idString] = $title;
 			$titles[$idString] = $title;
 		}

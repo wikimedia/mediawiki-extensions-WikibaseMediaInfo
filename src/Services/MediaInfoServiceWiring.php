@@ -41,6 +41,8 @@ return [
 			MediaInfoServices::getFilePageLookup(),
 			WikibaseRepo::getFieldDefinitionsFactory( $services )
 				->getFieldDefinitionsByType( MediaInfo::ENTITY_TYPE ),
+			$services->getPageStore(),
+			$services->getTitleFactory(),
 			null
 		);
 	}

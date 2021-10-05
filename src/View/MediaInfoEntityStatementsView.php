@@ -6,6 +6,7 @@ use DataValues\DataValue;
 use DataValues\Serializers\DataValueSerializer;
 use Exception;
 use Html;
+use MediaWiki\MediaWikiServices;
 use OOUI\HtmlSnippet;
 use OOUI\PanelLayout;
 use OOUI\Tag;
@@ -125,6 +126,15 @@ class MediaInfoEntityStatementsView {
 				$results,
 				$this->getSnakFormatValueCache( $qualifier )
 			);
+		}
+
+		foreach ( $statement->getReferences() as $reference ) {
+			foreach ( $reference->getSnaks() as $snak ) {
+				$results = array_replace_recursive(
+					$results,
+					$this->getSnakFormatValueCache( $snak )
+				);
+			}
 		}
 
 		return $results;
@@ -352,17 +362,51 @@ class MediaInfoEntityStatementsView {
 		);
 
 		$statementDiv->appendContent( $mainSnakDiv );
+
 		$qualifiers = $statement->getQualifiers();
 		if ( count( $qualifiers ) > 0 ) {
-			$statementDiv->appendContent( $this->createQualifiersDiv( $qualifiers ) );
+			$qualifiersContainer = new Tag( 'div' );
+			$qualifiersContainer->addClasses( [ 'wbmi-item-qualifiers' ] );
+			$qualifiersContainer->appendContent( $this->renderSnakList( $qualifiers ) );
+
+			$statementDiv->appendContent( $qualifiersContainer );
 		}
+
+		// TODO: below $config objects should probably be DI into this class, but
+		// it's only needed for a short-lived feature flag that will soon be
+		// removed again - not worth changing this class' signature that much
+		$config = MediaWikiServices::getInstance()->getMainConfig();
+		$searchProperties = $config->get( 'MediaInfoEnableReferences' );
+		$referenceList = $statement->getReferences();
+		if ( $searchProperties && count( $referenceList ) > 0 ) {
+			$referencesContainer = new Tag( 'div' );
+			$referencesContainer->addClasses( [ 'wbmi-item-references' ] );
+
+			foreach ( $referenceList as $reference ) {
+				$snakList = $reference->getSnaks();
+				if ( count( $snakList ) > 0 ) {
+					$referenceSnaklist = new Tag( 'div' );
+					$referenceSnaklist->addClasses( [ 'wbmi-snaklist' ] );
+					$referencesContainer->appendContent( $referenceSnaklist );
+
+					$referenceTitle = new Tag( 'h5' );
+					$referenceTitle->addClasses( [ 'wbmi-snaklist-title' ] );
+					$referenceTitle->appendContent(
+						wfMessage( 'wikibasemediainfo-statements-item-reference' )->escaped()
+					);
+					$referenceSnaklist->appendContent( $referenceTitle );
+
+					$referenceSnaklist->appendContent( $this->renderSnakList( $snakList ) );
+				}
+			}
+
+			$statementDiv->appendContent( $referencesContainer );
+		}
+
 		return $statementDiv;
 	}
 
-	private function createQualifiersDiv( SnakList $snakList ) {
-		$container = new Tag( 'div' );
-		$container->addClasses( [ 'wbmi-item-content' ] );
-
+	private function renderSnakList( SnakList $snakList ) {
 		$propertyOrder = $this->propertyOrderProvider->getPropertyOrder();
 		if ( $propertyOrder === null ) {
 			$snakList->orderByProperty();
@@ -374,7 +418,7 @@ class MediaInfoEntityStatementsView {
 			);
 		}
 
-		$qualifierDivs = [];
+		$snakDivs = [];
 
 		/** @var Snak $snak */
 		foreach ( $snakList as $snak ) {
@@ -385,36 +429,38 @@ class MediaInfoEntityStatementsView {
 
 			$formattedValue = $this->formatSnak( $snak, SnakFormatter::FORMAT_HTML );
 			$formattedValueTag = new Tag( 'span' );
-			$formattedValueTag->addClasses( [ 'wbmi-qualifier-value--value' ] );
+			$formattedValueTag->addClasses( [ 'wbmi-snak-value--value' ] );
 			$formattedValueTag->appendContent( new HtmlSnippet( $formattedValue ) );
 
 			$separator = new Tag( 'span' );
-			$separator->addClasses( [ 'wbmi-qualifier-value-separator' ] );
+			$separator->addClasses( [ 'wbmi-snak-value-separator' ] );
 			$separator->appendContent( $this->textProvider->get( 'colon-separator' ) );
 
-			$qualifierValueDiv = new Tag( 'div' );
-			$qualifierValueDiv->addClasses( [ 'wbmi-qualifier-value' ] );
-			$qualifierValueDiv->appendContent(
+			$snakValueDiv = new Tag( 'div' );
+			$snakValueDiv->addClasses( [ 'wbmi-snak-value' ] );
+			$snakValueDiv->appendContent(
 				new HtmlSnippet( $formattedProperty ),
 				// if we have both a property & a value, add a separator
 				$formattedProperty && $formattedValue ? $separator : '',
 				$formattedValueTag
 			);
 
-			$qualifierDiv = new Tag( 'div' );
-			$qualifierDiv->addClasses( [ 'wbmi-qualifier' ] );
-			$qualifierDiv->appendContent( $qualifierValueDiv );
+			$snakDiv = new Tag( 'div' );
+			$snakDiv->addClasses( [ 'wbmi-snak' ] );
+			$snakDiv->appendContent( $snakValueDiv );
 
-			$qualifierDivs[] = $qualifierDiv;
+			$snakDivs[] = $snakDiv;
 		}
 
-		$innerDiv = new Tag( 'div' );
-		$innerDiv->addClasses( [ 'wbmi-item-content-group' ] );
-		$innerDiv->appendContent( ...$qualifierDivs );
-		$container->appendContent(
-			$innerDiv
-		);
-		return $container;
+		$snakListDiv = new Tag( 'div' );
+		$snakListDiv->addClasses( [ 'wbmi-snaklist-content' ] );
+		$snakListDiv->appendContent( ...$snakDivs );
+
+		$snakListContainer = new Tag( 'div' );
+		$snakListContainer->addClasses( [ 'wbmi-snaklist-container' ] );
+		$snakListContainer->appendContent( $snakListDiv );
+
+		return $snakListContainer;
 	}
 
 	/**

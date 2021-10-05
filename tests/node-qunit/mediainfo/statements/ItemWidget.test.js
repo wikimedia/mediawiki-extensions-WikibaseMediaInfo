@@ -114,7 +114,7 @@ QUnit.module( 'ItemWidget', hooks.mediainfo, function () {
 			} );
 	} );
 
-	QUnit.test( 'Widget updates qualifier widgets with new data', function ( assert ) {
+	QUnit.test( 'Widget updates snak widgets with new data', function ( assert ) {
 		const done = assert.async(),
 			ItemWidget = require( pathToWidget ),
 			widget = new ItemWidget( { propertyId: 'P1' } ),
@@ -162,85 +162,21 @@ QUnit.module( 'ItemWidget', hooks.mediainfo, function () {
 
 		widget.setData( oneQualifier )
 			.then( function () {
-				assert.strictEqual( widget.getItems().length, 1 );
 				assert.strictEqual( oneQualifier.equals( widget.getData() ), true );
 			} )
 			.then( widget.setData.bind( widget, twoQualifiers ) )
 			.then( function () {
-				assert.strictEqual( widget.getItems().length, 2 );
 				assert.strictEqual( twoQualifiers.equals( widget.getData() ), true );
 			} )
 			.then( widget.setData.bind( widget, oneQualifier ) )
 			.then( function () {
-				assert.strictEqual( widget.getItems().length, 1 );
 				assert.strictEqual( oneQualifier.equals( widget.getData() ), true );
 			} )
 			.then( widget.setData.bind( widget, noQualifiers ) )
 			.then( function () {
-				assert.strictEqual( widget.getItems().length, 0 );
 				assert.strictEqual( noQualifiers.equals( widget.getData() ), true );
 				done();
 			} );
-	} );
-
-	QUnit.test( 'createQualifier() returns a new QualifierWidget', function ( assert ) {
-		const done = assert.async(),
-			ItemWidget = require( pathToWidget ),
-			QualifierWidget = require( '../../../../resources/statements/QualifierWidget.js' ),
-			widget = new ItemWidget( { propertyId: 'P1' } );
-
-		widget.createQualifier()
-			.then( function ( qualifier ) {
-				assert.strictEqual( qualifier instanceof QualifierWidget, true );
-				done();
-			} );
-	} );
-
-	QUnit.test( 'createQualifier sets QualifierWidget data when snak is provided', function ( assert ) {
-		const done = assert.async(),
-			ItemWidget = require( pathToWidget ),
-			datamodel = require( 'wikibase.datamodel' ),
-			widget = new ItemWidget( { propertyId: 'P1' } );
-
-		const data = new datamodel.PropertyValueSnak(
-			'P1',
-			new datamodel.EntityId( 'Q1' )
-		);
-
-		widget.createQualifier( data )
-			.then( function ( qualifier ) {
-				assert.strictEqual( data.equals( qualifier.getData() ), true );
-				done();
-			} );
-	} );
-
-	QUnit.test( 'addQualifier creates a new QualifierWidget every time it is called', function ( assert ) {
-		const done = assert.async(),
-			ItemWidget = require( pathToWidget ),
-			widget = new ItemWidget( { propertyId: 'P1' } ),
-			spy = sinon.spy( widget, 'createQualifier' ),
-			datamodel = require( 'wikibase.datamodel' ),
-			data = new datamodel.Statement(
-				new datamodel.Claim(
-					new datamodel.PropertyValueSnak(
-						'P1',
-						new datamodel.EntityId( 'Q1' )
-					)
-				)
-			);
-
-		widget.setData( data );
-		widget.render().then( function () {
-			assert.strictEqual( spy.callCount, 0 );
-
-			widget.addQualifier();
-			assert.strictEqual( spy.callCount, 1 );
-
-			widget.addQualifier();
-			assert.strictEqual( spy.callCount, 2 );
-
-			done();
-		} );
 	} );
 
 	QUnit.test( 'Test enabling edit state', function ( assert ) {
@@ -263,8 +199,8 @@ QUnit.module( 'ItemWidget', hooks.mediainfo, function () {
 				assert.strictEqual( $element.find( '.wbmi-item-read' ).length, 0 );
 				assert.strictEqual( $element.find( '.wbmi-item-edit' ).length, 1 );
 
-				// buttons to add qualifier or remove item are available in edit mode
-				assert.strictEqual( $element.find( '.wbmi-item-qualifier-add' ).length, 1 );
+				// buttons to add snaklists (qualifiers & references) or remove item are available in edit mode
+				assert.strictEqual( $element.find( '.wbmi-snaklist-add-snak' ).length, 2 );
 				assert.strictEqual( $element.find( '.wbmi-item-remove' ).length, 1 );
 				done();
 			} );
@@ -290,8 +226,8 @@ QUnit.module( 'ItemWidget', hooks.mediainfo, function () {
 				assert.strictEqual( $element.find( '.wbmi-item-read' ).length, 1 );
 				assert.strictEqual( $element.find( '.wbmi-item-edit' ).length, 0 );
 
-				// buttons to add qualifier or remove item are not available in read mode
-				assert.strictEqual( $element.find( '.wbmi-item-qualifier-add' ).length, 0 );
+				// buttons to add snak or remove item are not available in read mode
+				assert.strictEqual( $element.find( '.wbmi-snaklist-add-snak' ).length, 0 );
 				assert.strictEqual( $element.find( '.wbmi-item-remove' ).length, 0 );
 				done();
 			} );

@@ -1,0 +1,14 @@
+<div class="wbmi-snaklist">
+	{{#errors}}
+		{{{.}}}
+	{{/errors}}
+
+	<div class="wbmi-snaklist-container">
+		{{#snaks.length}}
+		<div class="wbmi-snaklist-content">
+			{{#snaks}}{{{.}}}{{/snaks}}
+		</div>
+		{{/snaks.length}}
+		{{#editing}}{{{addButton}}}{{/editing}}
+	</div>
+</div>

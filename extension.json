@@ -63,6 +63,10 @@
 		"MediaInfoMediaSearchHasLtrPlugin": {
 			"description": "Boolean indicating whether the o19s/elasticsearch-learning-to-rank plugin is installed (in which case move advanced search features can be used)",
 			"value": false
+		},
+		"MediaInfoEnableReferences": {
+			"description": "Boolean indicating whether references are supported",
+			"value": true
 		}
 	},
 	"ServiceWiringFiles": [
@@ -262,7 +266,8 @@
 				"resources/statements/index.js",
 				"resources/statements/StatementWidget.js",
 				"resources/statements/ItemWidget.js",
-				"resources/statements/QualifierWidget.js",
+				"resources/statements/SnakListWidget.js",
+				"resources/statements/SnakWidget.js",
 				"resources/statements/AddPropertyWidget.js",
 				"resources/statements/LinkNoticeWidget.js",
 				"resources/statements/ConstraintsReportHandlerElement.js",
@@ -325,7 +330,12 @@
 				"wikibasemediainfo-statements-item-is-prominent",
 				"wikibasemediainfo-statements-item-mark-as-prominent",
 				"wikibasemediainfo-statements-item-remove",
+				"wikibasemediainfo-statements-item-qualifiers",
 				"wikibasemediainfo-statements-item-add-qualifier",
+				"wikibasemediainfo-statements-item-reference",
+				"wikibasemediainfo-statements-item-references",
+				"wikibasemediainfo-statements-item-add-reference",
+				"wikibasemediainfo-statements-item-add-reference-snak",
 				"wikibasemediainfo-statements-link-notice-text",
 				"wikibasemediainfo-statements-link-notice-dismiss",
 				"wikibasemediainfo-filepage-statement-no-results",
@@ -388,7 +398,8 @@
 				"templates/statements/AddPropertyWidget.mustache+dom",
 				"templates/statements/ItemWidget.mustache+dom",
 				"templates/statements/LinkNoticeWidget.mustache+dom",
-				"templates/statements/QualifierWidget.mustache+dom",
+				"templates/statements/SnakListWidget.mustache+dom",
+				"templates/statements/SnakWidget.mustache+dom",
 				"templates/statements/StatementWidget.mustache+dom",
 				"templates/statements/inputs/EntityAutocompleteInputWidgetLabel.mustache+dom",
 				"templates/statements/inputs/EntityInputWidget.mustache+dom",
@@ -410,7 +421,8 @@
 				"resources/statements/AddPropertyWidget.less",
 				"resources/statements/StatementWidget.less",
 				"resources/statements/ItemWidget.less",
-				"resources/statements/QualifierWidget.less",
+				"resources/statements/SnakListWidget.less",
+				"resources/statements/SnakWidget.less",
 				"resources/statements/LinkNoticeWidget.less",
 				"resources/statements/ConstraintsReportHandlerElement.less",
 				"resources/statements/inputs/EntityAutocompleteInputWidget.less",

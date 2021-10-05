@@ -3,7 +3,6 @@
 /**
  * @constructor
  * @param {Object} config Configuration options
- * @param {Object} config.qualifiers Qualifiers map: { propertyId: datatype, ...}
  * @param {string} config.entityId Entity ID (e.g. M123)
  * @param {string} config.propertyId Property ID (e.g. P123 id of `depicts` property)
  * @param {string} [config.guid] GUID of existing statement, or null for new
@@ -13,7 +12,7 @@
  * @param {string} [config.editing] True for edit mode, False for read mode
  */
 var DATA_TYPES,
-	QualifierWidget = require( './QualifierWidget.js' ),
+	SnakListWidget = require( './SnakListWidget.js' ),
 	ConstraintsReportHandlerElement = require( './ConstraintsReportHandlerElement.js' ),
 	ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
 	DOMLessGroupWidget = require( 'wikibase.mediainfo.base' ).DOMLessGroupWidget,
@@ -42,20 +41,26 @@ DATA_TYPES = {
  * @param {Object} config Configuration options
  */
 ItemWidget = function MediaInfoStatementsItemWidget( config ) {
-	config = config || {};
+	this.config = $.extend( { editing: false }, config );
 
 	this.guidGenerator = new wikibase.utilities.ClaimGuidGenerator( config.entityId );
+
+	this.qualifiers = this.createSnaklistWidget( {
+		addText: mw.msg( 'wikibasemediainfo-statements-item-add-qualifier' )
+	} );
 
 	// set these first - the parent constructor could call other methods
 	// (e.g. setDisabled) which may cause a re-render, and will need
 	// some of these...
 	this.state = {
-		editing: !!config.editing,
-		propertyId: config.propertyId,
-		guid: config.guid || this.guidGenerator.newGuid(),
-		rank: config.rank || datamodel.Statement.RANK.NORMAL,
-		snakType: config.snakType || valueTypes.NOVALUE,
-		dataValue: config.dataValue || null,
+		editing: this.config.editing,
+		propertyId: this.config.propertyId,
+		guid: this.config.guid || this.guidGenerator.newGuid(),
+		rank: this.config.rank || datamodel.Statement.RANK.NORMAL,
+		snakType: this.config.snakType || valueTypes.NOVALUE,
+		dataValue: this.config.dataValue || null,
+		references: [],
+		referenceHashes: [],
 		kartographer: false,
 		constraintsReport: null
 	};
@@ -121,7 +126,7 @@ ItemWidget.prototype.getTemplateData = function () {
 			prominent = self.state.rank === datamodel.Statement.RANK.PREFERRED,
 			dataValueType = self.state.dataValue ? self.state.dataValue.getType() : undefined,
 			removeButton,
-			addQualifierButton,
+			addReferenceButton,
 			formatResponse;
 
 		formatResponse = function ( html ) {
@@ -142,18 +147,32 @@ ItemWidget.prototype.getTemplateData = function () {
 		} );
 		removeButton.connect( self, { click: [ 'emit', 'delete' ] } );
 
-		addQualifierButton = new OO.ui.ButtonWidget( {
-			classes: [ 'wbmi-item-qualifier-add' ],
-			label: mw.msg( 'wikibasemediainfo-statements-item-add-qualifier' ),
+		addReferenceButton = new OO.ui.ButtonWidget( {
+			classes: [ 'wbmi-snaklist-add-snak' ],
+			label: mw.msg( 'wikibasemediainfo-statements-item-add-reference' ),
 			flags: 'progressive',
 			framed: false
 		} );
-		addQualifierButton.connect( self, { click: [ 'addQualifier' ] } );
+		addReferenceButton.on( 'click', function () {
+			var widget = self.createReferenceWidget();
+			// initialize with an empty snak input
+			widget.addWidget();
+			self.setState( {
+				references: self.state.references.concat( widget ),
+				referenceHashes: self.state.referenceHashes.concat( null )
+			} );
+		} );
 
 		return {
 			errors: errorMessages,
 			editing: self.state.editing,
-			qualifiers: self.getItems(),
+			qualifiersTitle: mw.msg( 'wikibasemediainfo-statements-item-qualifiers' ),
+			qualifiers: self.qualifiers,
+			referencesTitle: mw.msg( 'wikibasemediainfo-statements-item-references' ),
+			referenceTitle: mw.msg( 'wikibasemediainfo-statements-item-reference' ),
+			addReferenceButton: addReferenceButton,
+			references: self.state.references,
+			enableReferences: mw.config.get( 'wbmiEnableReferences' ),
 			label: formatResponse( label ),
 			id: id.replace( /^.+:/, '' ),
 			disabled: self.isDisabled(),
@@ -163,7 +182,6 @@ ItemWidget.prototype.getTemplateData = function () {
 				mw.msg( 'wikibasemediainfo-statements-item-mark-as-prominent' ),
 			prominenceToggleHandler: self.toggleItemProminence.bind( self ),
 			removeButton: removeButton,
-			addQualifierButton: addQualifierButton,
 			isGlobecoordinate: dataValueType === DATA_TYPES.GLOBECOORDINATE,
 			kartographer: self.state.kartographer,
 			map: self.$map,
@@ -235,58 +253,29 @@ ItemWidget.prototype.toggleItemProminence = function ( event ) {
 };
 
 /**
- * @param {datamodel.Snak|undefined} [data]
- * @return {QualifierWidget}
- */
-ItemWidget.prototype.createQualifier = function ( data ) {
-	var widget = new QualifierWidget( { editing: this.state.editing } ),
-		promise = $.Deferred().resolve().promise(),
-		self = this;
-
-	if ( data ) {
-		promise = widget.setData( data );
-	}
-
-	return promise.then(
-		function () {
-			widget.connect( self, { delete: [ 'removeItems', [ widget ] ] } );
-			widget.connect( self, { delete: [ 'emit', 'change' ] } );
-			widget.connect( self, { change: [ 'emit', 'change' ] } );
-
-			return widget;
-		}
-	);
-};
-
-/**
- * @param {datamodel.Snak|undefined} data
- */
-ItemWidget.prototype.addQualifier = function ( data ) {
-	var self = this;
-	this.createQualifier( data ).then( function ( widget ) {
-		self.addItems( [ widget ] );
-		self.emit( 'change' );
-		self.render().then( widget.focus.bind( widget ) );
-	} );
-};
-
-/**
  * @param {boolean} editing
  * @return {jQuery.Promise}
  */
 ItemWidget.prototype.setEditing = function ( editing ) {
-	var promises = this.getItems().map( function ( widget ) {
-		return widget.setEditing( editing );
-	} );
+	var self = this;
 
-	return $.when.apply( $, promises ).then( this.setState.bind( this, { editing: editing } ) );
+	return $.Deferred().resolve().promise()
+		.then( this.qualifiers.setEditing.bind( this.qualifiers, editing ) )
+		.then( function () {
+			var promises = self.state.references.map( function ( reference ) {
+				return reference.setEditing( editing );
+			} );
+			return $.when.apply( $, promises );
+		} )
+		.then( this.setState.bind( this, { editing: editing } ) );
 };
 
 /**
  * @return {datamodel.Statement}
  */
 ItemWidget.prototype.getData = function () {
-	var snak;
+	var self = this,
+		snak;
 
 	switch ( this.state.snakType ) {
 		case valueTypes.SOMEVALUE:
@@ -305,25 +294,62 @@ ItemWidget.prototype.getData = function () {
 	return new datamodel.Statement(
 		new datamodel.Claim(
 			snak,
-			new datamodel.SnakList( this.getItems()
-				.map( function ( item ) {
-					// try to fetch data - if it fails (likely because of incomplete input),
-					// we'll just ignore that qualifier
-					try {
-						return item.getData();
-					} catch ( e ) {
-						return undefined;
-					}
-				} )
-				.filter( function ( data ) {
-					return data instanceof datamodel.Snak;
-				} )
-			),
+			this.qualifiers.getData(),
 			this.state.guid
 		),
-		null,
+		new datamodel.ReferenceList(
+			this.state.references.map( function ( reference, i ) {
+				return new datamodel.Reference(
+					reference.getData(),
+					self.state.referenceHashes[ i ]
+				);
+			} )
+		),
 		this.state.rank
 	);
+};
+
+/**
+ * @param {Object} config
+ * @return {SnakListWidget}
+ */
+ItemWidget.prototype.createSnaklistWidget = function ( config ) {
+	var widget = new SnakListWidget( $.extend( { editing: this.config.editing }, config ) );
+	widget.connect( this, { remove: [ 'emit', 'change' ] } );
+	widget.connect( this, { change: [ 'emit', 'change' ] } );
+	return widget;
+};
+
+/**
+ * @param {Object} [config]
+ * @return {SnakListWidget}
+ */
+ItemWidget.prototype.createReferenceWidget = function ( config ) {
+	var self = this,
+		widget = this.createSnaklistWidget( $.extend( config, {
+			editing: this.state.editing,
+			addText: mw.msg( 'wikibasemediainfo-statements-item-add-reference-snak' )
+		} ) );
+
+	// if a reference snaklist widget is emptied, remove it entirely
+	widget.on( 'empty', function () {
+		var newReferences = [],
+			newReferenceHashes = [];
+
+		self.state.references.forEach( function ( reference, i ) {
+			if ( widget !== reference ) {
+				newReferences.push( reference );
+				newReferenceHashes.push( self.state.referenceHashes[ i ] );
+			}
+		} );
+
+		self.setState( {
+			references: newReferences,
+			referenceHashes: newReferenceHashes
+		} );
+	} );
+
+	return widget;
 };
 
 /**
@@ -331,13 +357,16 @@ ItemWidget.prototype.getData = function () {
  * @return {jQuery.Deferred}
  */
 ItemWidget.prototype.setData = function ( data ) {
-	var self = this,
-		existing = {},
-		promises = [],
-		claim,
+	var claim,
 		mainSnak,
 		qualifiers,
-		type;
+		referencesArray,
+		referencesHashes,
+		type,
+		i,
+		newReferenceHashes = [],
+		newReferenceWidgets = [],
+		newReferenceWidgetPromises = [];
 
 	// Bail early and discard existing data if data argument is not a snak
 	if ( !( data instanceof datamodel.Statement ) ) {
@@ -348,53 +377,46 @@ ItemWidget.prototype.setData = function ( data ) {
 	claim = data.getClaim();
 	mainSnak = claim.getMainSnak();
 	qualifiers = claim.getQualifiers();
+	referencesArray = data.getReferences().toArray();
 	type = mainSnak.getType();
 
-	// get rid of existing widgets that are no longer present in the
-	// new set of data we've been fed (or are in an invalid state)
-	this.removeItems( this.getItems().filter( function ( item ) {
-		var qualifier;
-		try {
-			qualifier = item.getData();
-		} catch ( e ) {
-			// failed to fetch data (likely because of incomplete input),
-			// so we should remove this qualifier...
-			return true;
-		}
-		return !qualifiers.hasItem( qualifier );
-	} ) );
+	// if amount of widgets stayed the same or increased, events will be
+	// emitted once those widgets receive new data (in case it changed);
+	// this may not be the case if we only had removals, so we need to
+	// manually emit a change event for those changes
+	if ( this.state.references.length > referencesArray.length ) {
+		this.emit( 'change' );
+	}
 
-	// figure out which items have an existing widget already
-	// we're doing this outside of the creation below, because
-	// setData is async, and new objects may not immediately
-	// have their data set
-	qualifiers.each( function ( i, qualifier ) {
-		existing[ i ] = self.findItemFromData( qualifier );
+	referencesHashes = referencesArray.map( function ( reference ) {
+		return reference.getHash();
 	} );
 
-	// add new qualifiers that don't already exist
-	qualifiers.each( function ( i, qualifier ) {
-		var widget = existing[ i ], widgetPromise;
-		if ( widget !== null ) {
-			self.moveItem( widget, i );
-			promises.push( widget.setData( qualifier ) );
+	for ( i = 0; i < referencesArray.length; i++ ) {
+		if ( referencesHashes.indexOf( this.state.referenceHashes[ i ] ) >= 0 ) {
+			// salvage existing widgets that are also in the newly received data,
+			newReferenceWidgets[ i ] = this.state.references[ i ];
 		} else {
-			widgetPromise = self.createQualifier()
-				.then( function ( innerWidget ) {
-					self.insertItem( innerWidget, i );
-					return innerWidget.setData( qualifier );
-				} );
-			promises.push( widgetPromise );
+			// or create new ones for data that doesn't match any existing snak
+			newReferenceWidgets[ i ] = this.createReferenceWidget();
 		}
-	} );
 
-	return $.when.apply( $, promises )
+		newReferenceHashes[ i ] = referencesArray[ i ].getHash();
+
+		// now fill those new reference widgets with their relevant new data
+		newReferenceWidgetPromises[ i ] = newReferenceWidgets[ i ].setData( referencesArray[ i ].getSnaks() );
+	}
+
+	return $.when.apply( $, newReferenceWidgetPromises )
+		.then( this.qualifiers.setData.bind( this.qualifiers, qualifiers ) )
 		.then( this.setState.bind( this, {
 			propertyId: mainSnak.getPropertyId(),
 			guid: claim.getGuid() || this.guidGenerator.newGuid(),
 			rank: data.getRank(),
 			snakType: type,
 			dataValue: type === valueTypes.VALUE ? mainSnak.getValue() : null,
+			references: newReferenceWidgets,
+			referenceHashes: newReferenceHashes,
 			// if new data was passed in, error is no longer valid
 			errors: data.equals( this.getData() ) ? this.getErrors() : []
 		} ) )
@@ -469,29 +491,17 @@ ItemWidget.prototype.initializeMap = function () {
  * @return {jQuery.Promise}
  */
 ItemWidget.prototype.setConstraintsReport = function ( results ) {
-	var promises = [];
+	var self = this,
+		promises = [];
 
-	// extract qualifier constraint reports, pass them along to qualifier widget,
-	// and gather promises
-	promises = this.getItems().map( function ( qualifierWidget ) {
-		var data, propertyId, hash, result;
-
-		try {
-			data = qualifierWidget.getData();
-			propertyId = data.getPropertyId();
-			hash = data.getHash();
-
-			result = results.qualifiers[ propertyId ].filter( function ( responseForQualifier ) {
-				return responseForQualifier.hash === hash;
-			} )[ 0 ] || null;
-			return qualifierWidget.setConstraintsReport( result );
-		} catch ( e ) {
-			return qualifierWidget.setConstraintsReport( null );
+	promises.push( this.setState( { constraintsReport: results && results.mainsnak.results } ) );
+	promises.push( this.qualifiers.setConstraintsReport( results.qualifiers || {} ) );
+	( results.references || [] ).forEach( function ( snakListResult ) {
+		var i = self.state.referenceHashes.indexOf( snakListResult.hash );
+		if ( i >= 0 ) {
+			promises.push( self.state.references[ i ].setConstraintsReport( snakListResult.snaks ) );
 		}
 	} );
-
-	// update own constraint report & add to list of promises
-	promises = promises.concat( this.setState( { constraintsReport: results && results.mainsnak.results } ) );
 
 	// return promise that doesn't resolve until all constraints reports have been rendered
 	return $.when.apply( $, promises );

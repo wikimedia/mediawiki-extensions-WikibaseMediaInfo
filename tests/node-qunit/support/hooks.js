@@ -91,7 +91,6 @@ module.exports.wikibase = Object.assign( {}, module.exports.mediawiki, {
 		global.wikibase = helpers.createWikibaseEnv();
 		helpers.registerWbDataModel();
 		global.mw.config.get.withArgs( 'wbDataTypes' ).returns( wbDataTypes );
-		global.mw.config.get.withArgs( 'wbmiPropertyTypes' ).returns( wbmiPropertyTypes );
 
 		helpers.registerWbSerialization();
 	},
@@ -109,6 +108,9 @@ module.exports.mediainfo = Object.assign( {}, module.exports.ooui, module.export
 		module.exports.wikibase.beforeEach();
 
 		sandboxes.mediainfo = sinon.createSandbox();
+
+		global.mw.config.get.withArgs( 'wbmiPropertyTypes' ).returns( wbmiPropertyTypes );
+		global.mw.config.get.withArgs( 'wbmiEnableReferences' ).returns( true );
 
 		// the captions panel needs the ULS
 		helpers.requireULS();

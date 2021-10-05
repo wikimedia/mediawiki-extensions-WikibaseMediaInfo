@@ -163,10 +163,7 @@ class WikibaseMediaInfoHooks {
 	 * @throws \OOUI\Exception
 	 */
 	public static function onBeforePageDisplay( $out, $skin ) {
-		global $wgMediaInfoHelpUrls,
-				$wgMediaInfoProperties,
-				$wgMediaInfoExternalEntitySearchBaseUri,
-				$wgMediaInfoSupportedDataTypes;
+		$config = MediaWikiServices::getInstance()->getMainConfig();
 
 		// Hide any MediaInfo content and UI on a page, if the target page is a redirect.
 		if ( $out->getTitle()->isRedirect() ) {
@@ -180,9 +177,10 @@ class WikibaseMediaInfoHooks {
 			// … the page view is a read
 			\Action::getActionName( $out->getContext() ) === 'view';
 
+		$properties = $config->get( 'MediaInfoProperties' );
 		$propertyTypes = [];
 		$propertyTitles = [];
-		foreach ( $wgMediaInfoProperties as $name => $property ) {
+		foreach ( $properties as $name => $property ) {
 			try {
 				// some properties/statements may have custom titles, in addition to their property
 				// label, to help clarify what data is expected there
@@ -208,13 +206,14 @@ class WikibaseMediaInfoHooks {
 			new BabelUserLanguageLookup(),
 			WikibaseRepo::getEntityViewFactory(),
 			[
-				'wbmiDefaultProperties' => array_values( $wgMediaInfoProperties ),
+				'wbmiDefaultProperties' => array_values( $properties ),
 				'wbmiPropertyTitles' => $propertyTitles,
 				'wbmiPropertyTypes' => $propertyTypes,
-				'wbmiHelpUrls' => $wgMediaInfoHelpUrls,
-				'wbmiExternalEntitySearchBaseUri' => $wgMediaInfoExternalEntitySearchBaseUri,
 				'wbmiRepoApiUrl' => wfScript( 'api' ),
-				'wbmiSupportedDataTypes' => $wgMediaInfoSupportedDataTypes,
+				'wbmiHelpUrls' => $config->get( 'MediaInfoHelpUrls' ),
+				'wbmiExternalEntitySearchBaseUri' => $config->get( 'MediaInfoExternalEntitySearchBaseUri' ),
+				'wbmiSupportedDataTypes' => $config->get( 'MediaInfoSupportedDataTypes' ),
+				'wbmiEnableReferences' => $config->get( 'MediaInfoEnableReferences' ),
 			]
 		);
 	}

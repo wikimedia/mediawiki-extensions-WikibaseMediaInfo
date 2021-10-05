@@ -1,6 +1,6 @@
 'use strict';
 
-var QualifierWidget,
+var SnakWidget,
 	ConstraintsReportHandlerElement = require( './ConstraintsReportHandlerElement.js' ),
 	ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
 	FormatValueElement = require( 'wikibase.mediainfo.base' ).FormatValueElement,
@@ -14,8 +14,7 @@ var QualifierWidget,
 	};
 
 /**
- * QualifierWidget (new version). This widget represents a single row of
- * qualifier-related widgets within a single ItemWidget inside a StatementPanel.
+ * This widget represents a single snak (property-value pair).
  * These widgets handle both the "read" and "edit" UI modes. Actual management
  * of UI state and the showing/hiding of widgets is handled at the level of the
  * ItemWidget.
@@ -30,7 +29,7 @@ var QualifierWidget,
  * @param {boolean} [config.editing] Edit state of the widget when created;
  * defaults to false.
  */
-QualifierWidget = function ( config ) {
+SnakWidget = function ( config ) {
 	config = config || {};
 	this.state = {
 		data: config.data,
@@ -44,14 +43,14 @@ QualifierWidget = function ( config ) {
 	// sub-widgets
 	this.propertyInput = new inputs.EntityInputWidget( {
 		isQualifier: true,
-		classes: [ 'wbmi-qualifier-property' ],
+		classes: [ 'wbmi-snak-property' ],
 		entityType: 'property',
 		filter: this.getFilters(),
 		placeholder: mw.msg( 'wikibasemediainfo-property-placeholder' )
 	} );
 
 	this.valueInput = new inputs.MultiTypeInputWrapperWidget( {
-		classes: [ 'wbmi-qualifier-value-input' ],
+		classes: [ 'wbmi-snak-value-input' ],
 		isQualifier: true
 	} );
 
@@ -62,24 +61,24 @@ QualifierWidget = function ( config ) {
 	this.propertyInput.connect( this, { add: 'onChange' } );
 	this.valueInput.connect( this, { change: 'onChange' } );
 
-	QualifierWidget.parent.call( this, config );
+	SnakWidget.parent.call( this, config );
 	ComponentWidget.call(
 		this,
 		'wikibase.mediainfo.statements',
-		'templates/statements/QualifierWidget.mustache+dom'
+		'templates/statements/SnakWidget.mustache+dom'
 	);
 	FormatValueElement.call( this, $.extend( {}, config ) );
 	ConstraintsReportHandlerElement.call( this, $.extend( {}, config ) );
 };
-OO.inheritClass( QualifierWidget, OO.ui.Widget );
-OO.mixinClass( QualifierWidget, ComponentWidget );
-OO.mixinClass( QualifierWidget, FormatValueElement );
-OO.mixinClass( QualifierWidget, ConstraintsReportHandlerElement );
+OO.inheritClass( SnakWidget, OO.ui.Widget );
+OO.mixinClass( SnakWidget, ComponentWidget );
+OO.mixinClass( SnakWidget, FormatValueElement );
+OO.mixinClass( SnakWidget, ConstraintsReportHandlerElement );
 
 /**
  * @inheritDoc
  */
-QualifierWidget.prototype.getTemplateData = function () {
+SnakWidget.prototype.getTemplateData = function () {
 	var self = this;
 
 	return this.asyncFormatForDisplay().then( function ( propertyHtml, valueHtml ) {
@@ -95,7 +94,7 @@ QualifierWidget.prototype.getTemplateData = function () {
 		};
 
 		removeIcon = new OO.ui.ButtonWidget( {
-			classes: [ 'wbmi-qualifier-remove' ],
+			classes: [ 'wbmi-snak-remove' ],
 			framed: false,
 			icon: 'close'
 		} );
@@ -119,15 +118,15 @@ QualifierWidget.prototype.getTemplateData = function () {
  * @param {Object|null} results
  * @return {jQuery.Promise}
  */
-QualifierWidget.prototype.setConstraintsReport = function ( results ) {
+SnakWidget.prototype.setConstraintsReport = function ( results ) {
 	return this.setState( { constraintsReport: results && results.results } );
 };
 
 /**
  * @chainable
- * @return {QualifierWidget} widget
+ * @return {SnakWidget} widget
  */
-QualifierWidget.prototype.focus = function () {
+SnakWidget.prototype.focus = function () {
 	this.propertyInput.focus();
 	return this;
 };
@@ -139,7 +138,7 @@ QualifierWidget.prototype.focus = function () {
  * @param {boolean} editing
  * @return {jQuery.Promise} Resolves after rerender
  */
-QualifierWidget.prototype.setEditing = function ( editing ) {
+SnakWidget.prototype.setEditing = function ( editing ) {
 	return this.setState( { editing: editing } );
 };
 
@@ -149,7 +148,7 @@ QualifierWidget.prototype.setEditing = function ( editing ) {
  * @param {datamodel.Snak} data
  * @return {jQuery.Promise}
  */
-QualifierWidget.prototype.setData = function ( data ) {
+SnakWidget.prototype.setData = function ( data ) {
 	var self = this,
 		snakType = data.getType(),
 		propertyId = data.getPropertyId(),
@@ -178,17 +177,16 @@ QualifierWidget.prototype.setData = function ( data ) {
 		//      or novalue if applicable
 		this.valueInput.setDataType( dataType )
 			.then( this.valueInput.setData.bind( this.valueInput, dataValue ) )
-			.then( this.valueInput.setSnakType.bind( this.valueInput, snakType ) ),
-		// we want to keep a copy of the data to be able to check
-		// whether there have been changes to the input, but we'll
-		// serialize/deserialze in order to have a clone (in case
-		// this reference gets modified elsewhere)
-		this.setState( { data: this.cloneSnak( data ) } )
+			.then( this.valueInput.setSnakType.bind( this.valueInput, snakType ) )
 	).then( function () {
 		if ( snakType === valueTypes.VALUE ) {
 			self.valueInput.setDisabled( false );
 		}
-		return self.$element;
+		// we want to keep a copy of the data to be able to check
+		// whether there have been changes to the input, but we'll
+		// serialize/deserialze in order to have a clone (in case
+		// this reference gets modified elsewhere)
+		return self.setState( { data: self.cloneSnak( data ) } );
 	} );
 };
 
@@ -197,7 +195,7 @@ QualifierWidget.prototype.setData = function ( data ) {
  *
  * @return {datamodel.Snak} data
  */
-QualifierWidget.prototype.getData = function () {
+SnakWidget.prototype.getData = function () {
 	var property = this.propertyInput.getData(),
 		propertyId = property.toJSON().id,
 		dataValue = this.valueInput.getData(),
@@ -226,13 +224,13 @@ QualifierWidget.prototype.getData = function () {
  * @param {EntityInputWidget} input
  * @param {Object} data
  */
-QualifierWidget.prototype.onChooseProperty = function ( input, data ) {
+SnakWidget.prototype.onChooseProperty = function ( input, data ) {
 	this.propertyTypes[ data.id ] = data.datatype;
 	this.valueInput.setInputType( this.dataTypeMap[ data.datatype ].dataValueType );
 	this.valueInput.setDisabled( false );
 };
 
-QualifierWidget.prototype.onChange = function () {
+SnakWidget.prototype.onChange = function () {
 	// abort in-flight API requests - there's no point in continuing
 	// to fetch the text-to-render when we've already changed it...
 	if ( this.formatDisplayPromise ) {
@@ -251,7 +249,7 @@ QualifierWidget.prototype.onChange = function () {
  * @param {string} [language]
  * @return {jQuery.Promise} promise
  */
-QualifierWidget.prototype.formatProperty = function ( propId, format, language ) {
+SnakWidget.prototype.formatProperty = function ( propId, format, language ) {
 	return this.formatValue( new datamodel.EntityId( propId ), format, language );
 };
 
@@ -260,7 +258,7 @@ QualifierWidget.prototype.formatProperty = function ( propId, format, language )
  *
  * @return {jQuery.Promise}
  */
-QualifierWidget.prototype.asyncFormatForDisplay = function () {
+SnakWidget.prototype.asyncFormatForDisplay = function () {
 	var promises,
 		dataValue,
 		propertyId,
@@ -301,7 +299,7 @@ QualifierWidget.prototype.asyncFormatForDisplay = function () {
  * @param {datamodel.Snak} data
  * @return {datamodel.Snak}
  */
-QualifierWidget.prototype.cloneSnak = function ( data ) {
+SnakWidget.prototype.cloneSnak = function ( data ) {
 	var serializer = new serialization.SnakSerializer(),
 		deserializer = new serialization.SnakDeserializer();
 
@@ -311,7 +309,7 @@ QualifierWidget.prototype.cloneSnak = function ( data ) {
 /**
  * @return {Object[]} filters
  */
-QualifierWidget.prototype.getFilters = function () {
+SnakWidget.prototype.getFilters = function () {
 	var supportedTypes = mw.config.get( 'wbmiSupportedDataTypes' ) || [],
 		uniqueTypes = supportedTypes.filter( function ( item, index, self ) {
 			return self.indexOf( item ) === index;
@@ -322,4 +320,4 @@ QualifierWidget.prototype.getFilters = function () {
 	];
 };
 
-module.exports = QualifierWidget;
+module.exports = SnakWidget;

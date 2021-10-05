@@ -1,15 +1,15 @@
 'use strict';
 
 const sinon = require( 'sinon' ),
-	pathToWidget = '../../../../resources/statements/QualifierWidget.js',
+	pathToWidget = '../../../../resources/statements/SnakWidget.js',
 	hooks = require( '../../support/hooks.js' );
 
-QUnit.module( 'QualifierWidget', hooks.mediainfo, function () {
+QUnit.module( 'SnakWidget', hooks.mediainfo, function () {
 	QUnit.test( 'Valid data roundtrip', function ( assert ) {
 		const done = assert.async(),
 			datamodel = require( 'wikibase.datamodel' ),
-			QualifierWidget = require( pathToWidget ),
-			widget = new QualifierWidget(),
+			SnakWidget = require( pathToWidget ),
+			widget = new SnakWidget(),
 			data = new datamodel.PropertyValueSnak(
 				'P1',
 				new datamodel.EntityId( 'Q1' )
@@ -24,8 +24,8 @@ QUnit.module( 'QualifierWidget', hooks.mediainfo, function () {
 
 	QUnit.test( 'Setting other data triggers a change event', function ( assert ) {
 		const done = assert.async(),
-			QualifierWidget = require( pathToWidget ),
-			widget = new QualifierWidget(),
+			SnakWidget = require( pathToWidget ),
+			widget = new SnakWidget(),
 			datamodel = require( 'wikibase.datamodel' ),
 			data = new datamodel.PropertyValueSnak(
 				'P1',
@@ -48,8 +48,8 @@ QUnit.module( 'QualifierWidget', hooks.mediainfo, function () {
 
 	QUnit.test( 'Setting same data does not trigger a change event', function ( assert ) {
 		const done = assert.async(),
-			QualifierWidget = require( pathToWidget ),
-			widget = new QualifierWidget(),
+			SnakWidget = require( pathToWidget ),
+			widget = new SnakWidget(),
 			datamodel = require( 'wikibase.datamodel' ),
 			data = new datamodel.PropertyValueSnak(
 				'P1',
@@ -72,8 +72,8 @@ QUnit.module( 'QualifierWidget', hooks.mediainfo, function () {
 
 	QUnit.test( 'setData() sets property ID in the PropertyInput widget', function ( assert ) {
 		const done = assert.async(),
-			QualifierWidget = require( pathToWidget ),
-			widget = new QualifierWidget(),
+			SnakWidget = require( pathToWidget ),
+			widget = new SnakWidget(),
 			datamodel = require( 'wikibase.datamodel' ),
 			data = new datamodel.PropertyValueSnak(
 				'P1',
@@ -88,8 +88,8 @@ QUnit.module( 'QualifierWidget', hooks.mediainfo, function () {
 
 	QUnit.test( 'setData() sets value data in the valueInput widget', function ( assert ) {
 		const done = assert.async(),
-			QualifierWidget = require( pathToWidget ),
-			widget = new QualifierWidget(),
+			SnakWidget = require( pathToWidget ),
+			widget = new SnakWidget(),
 			datamodel = require( 'wikibase.datamodel' ),
 			data = new datamodel.PropertyValueSnak(
 				'P1',
@@ -103,8 +103,8 @@ QUnit.module( 'QualifierWidget', hooks.mediainfo, function () {
 	} );
 
 	QUnit.test( 'Property labels are available after API calls complete', function ( assert ) {
-		const QualifierWidget = require( pathToWidget ),
-			widget = new QualifierWidget(),
+		const SnakWidget = require( pathToWidget ),
+			widget = new SnakWidget(),
 			datamodel = require( 'wikibase.datamodel' ),
 			data = new datamodel.PropertyValueSnak(
 				'P1',
@@ -129,9 +129,9 @@ QUnit.module( 'QualifierWidget', hooks.mediainfo, function () {
 
 	QUnit.test( 'Test enabling edit state', function ( assert ) {
 		const done = assert.async(),
-			QualifierWidget = require( pathToWidget ),
+			SnakWidget = require( pathToWidget ),
 			datamodel = require( 'wikibase.datamodel' ),
-			widget = new QualifierWidget( { editing: false } ),
+			widget = new SnakWidget( { editing: false } ),
 			formatPropertyStub = sinon.stub( widget, 'formatProperty' ),
 			formatValueStub = sinon.stub( widget, 'formatValue' ),
 			data = new datamodel.PropertyValueSnak(
@@ -145,10 +145,10 @@ QUnit.module( 'QualifierWidget', hooks.mediainfo, function () {
 
 		// wait for initial render to complete
 		widget.render().then( function ( $element ) {
-			assert.strictEqual( $element.find( '.wbmi-qualifier-value' ).length, 1 );
+			assert.strictEqual( $element.find( '.wbmi-snak-value' ).length, 1 );
 
 			widget.setEditing( true ).then( function ( $innerElement ) {
-				assert.strictEqual( $innerElement.find( '.wbmi-qualifier-value' ).length, 0 );
+				assert.strictEqual( $innerElement.find( '.wbmi-snak-value' ).length, 0 );
 				done();
 			} );
 		} );
@@ -156,8 +156,8 @@ QUnit.module( 'QualifierWidget', hooks.mediainfo, function () {
 
 	QUnit.test( 'Test disabling edit state', function ( assert ) {
 		const done = assert.async(),
-			QualifierWidget = require( pathToWidget ),
-			widget = new QualifierWidget( { editing: true } ),
+			SnakWidget = require( pathToWidget ),
+			widget = new SnakWidget( { editing: true } ),
 			formatPropertyStub = sinon.stub( widget, 'formatProperty' ),
 			formatValueStub = sinon.stub( widget, 'formatValue' ),
 			datamodel = require( 'wikibase.datamodel' ),
@@ -172,10 +172,10 @@ QUnit.module( 'QualifierWidget', hooks.mediainfo, function () {
 
 		// wait for initial render to complete
 		widget.render().then( function ( $element ) {
-			assert.strictEqual( $element.find( '.wbmi-qualifier-value' ).length, 0 );
+			assert.strictEqual( $element.find( '.wbmi-snak-value' ).length, 0 );
 
 			widget.setEditing( false ).then( function ( $innerElement ) {
-				assert.strictEqual( $innerElement.find( '.wbmi-qualifier-value' ).length, 1 );
+				assert.strictEqual( $innerElement.find( '.wbmi-snak-value' ).length, 1 );
 				done();
 			} );
 		} );
@@ -184,8 +184,8 @@ QUnit.module( 'QualifierWidget', hooks.mediainfo, function () {
 	QUnit.test( 'Valid data roundtrip with somevalue snak', function ( assert ) {
 		const done = assert.async(),
 			datamodel = require( 'wikibase.datamodel' ),
-			QualifierWidget = require( pathToWidget ),
-			widget = new QualifierWidget(),
+			SnakWidget = require( pathToWidget ),
+			widget = new SnakWidget(),
 			data = new datamodel.PropertySomeValueSnak( 'P1' );
 
 		widget.setData( data )
@@ -204,8 +204,8 @@ QUnit.module( 'QualifierWidget', hooks.mediainfo, function () {
 	QUnit.test( 'Valid data roundtrip with novalue snak', function ( assert ) {
 		const done = assert.async(),
 			datamodel = require( 'wikibase.datamodel' ),
-			QualifierWidget = require( pathToWidget ),
-			widget = new QualifierWidget(),
+			SnakWidget = require( pathToWidget ),
+			widget = new SnakWidget(),
 			data = new datamodel.PropertyNoValueSnak( 'P1' );
 
 		widget.setData( data )

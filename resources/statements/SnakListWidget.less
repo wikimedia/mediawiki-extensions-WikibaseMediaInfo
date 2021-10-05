@@ -1,0 +1,80 @@
+@import 'mediawiki.mixins';
+@import '../mediainfo-variables.less';
+
+.wbmi-item-edit .wbmi-snaklist-container,
+/* @todo BC: below selector no longer exist; can be removed 30 days after patch that introduced this comment */
+.wbmi-item-edit .wbmi-item-content {
+	padding: @wbmi-spacing-base;
+	background-color: @background-color-framed;
+	border: 1px solid @background-color-base--hover;
+
+	// remove some of the whitespace surrounding this frameless button
+	// to balance out the whitespace on the other end of the container
+	.wbmi-snaklist-add-snak {
+		margin-bottom: -@wbmi-spacing-sm;
+
+		&:first-child {
+			margin-top: -@wbmi-spacing-sm;
+		}
+	}
+}
+
+/* stylelint-disable-next-line selector-class-pattern */
+.wbmi-item-edit .wbmi-snaklist-add-snak.oo-ui-buttonElement {
+	// OOUI override...
+	margin-left: -6px;
+
+	/* stylelint-disable-next-line selector-class-pattern */
+	> .oo-ui-buttonElement-button {
+		// OOUI overrides...
+		font-weight: normal;
+		margin-left: 0;
+	}
+}
+
+.wbmi-item-read .wbmi-snaklist-container,
+/* @todo BC: below selector no longer exist; can be removed 30 days after patch that introduced this comment */
+.wbmi-item-read .wbmi-item-container .wbmi-item-content {
+	margin-left: @wbmi-spacing-base * 2;
+	position: relative;
+
+	&:before {
+		.wbmi-vertical-line();
+	}
+
+	.wbmi-snaklist-content,
+	/* @todo BC: below selector no longer exist; can be removed 30 days after patch that introduced this comment */
+	.wbmi-item-content-group {
+		padding: @wbmi-spacing-sm;
+	}
+
+	/* stylelint-disable-next-line selector-class-pattern */
+	.oo-ui-pendingElement-pending & {
+		display: none;
+	}
+
+	.wbmi-snak:before,
+	/* @todo BC: below selector no longer exist; can be removed 30 days after patch that introduced this comment */
+	.wbmi-qualifier:before {
+		.wbmi-horizontal-line();
+		left: -1.5rem;
+	}
+
+	// override position of horizontal line for last qualifier, to make
+	// sure it lines up perfectly with the height of the vertical line
+	.wbmi-snak:last-child:before,
+	/* @todo BC: below selector no longer exist; can be removed 30 days after patch that introduced this comment */
+	.wbmi-qualifier:last-child:before {
+		bottom: @wbmi-spacing-base;
+	}
+}
+
+.wbmi-snak > .wbmi-snak-value,
+/* @todo BC: below selector no longer exist; can be removed 30 days after patch that introduced this comment */
+.wbmi-qualifier > .wbmi-qualifier-value {
+	// .wbmi-snak-value would automatically get this margin-bottom from
+	// being a `.oo-ui-horizontalLayout > .oo-ui-widget` already, but we're
+	// declaring this once more to make sure it's also applied on the
+	// PHP-rendered version (where said OOUI widget classes are missing)
+	margin-bottom: 0.5em;
+}

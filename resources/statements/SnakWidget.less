@@ -1,6 +1,8 @@
 @import 'mediawiki.mixins';
 @import '../mediainfo-variables.less';
 
+.wbmi-snak,
+/* @todo BC: below selector no longer exist; can be removed 30 days after patch that introduced this comment */
 .wbmi-qualifier {
 	.flex-display();
 	.flex-wrap();
@@ -10,15 +12,19 @@
 	// there will be whitespace between the property, separator and value,
 	// but that whitespace should not be displayed (it's only to keep our
 	// html/template clean)
+	.wbmi-snak-value,
+	/* @todo BC: below selector no longer exist; can be removed 30 days after patch that introduced this comment */
 	.wbmi-qualifier-value {
 		.flex-display();
 	}
 
+	.wbmi-snak-value-separator,
+	/* @todo BC: below selector no longer exist; can be removed 30 days after patch that introduced this comment */
 	.wbmi-qualifier-value-separator {
 		white-space: pre;
 	}
 
-	.wbmi-qualifier-property {
+	.wbmi-snak-property {
 		.flex( 1, 1, 5em, 1 );
 
 		@media screen and ( max-width: @width-breakpoint-tablet ) {
@@ -26,7 +32,7 @@
 		}
 	}
 
-	.wbmi-qualifier-value-input {
+	.wbmi-snak-value-input {
 		.flex( 2, 2, 10em, 2 );
 
 		@media screen and ( max-width: @width-breakpoint-tablet ) {
@@ -34,7 +40,7 @@
 		}
 	}
 
-	.wbmi-qualifier-remove {
+	.wbmi-snak-remove {
 		.flex( 0, 0, auto, 3 );
 	}
 

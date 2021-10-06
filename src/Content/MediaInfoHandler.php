@@ -37,18 +37,19 @@ class MediaInfoHandler extends EntityHandler {
 	private $missingMediaInfoHandler;
 
 	/**
+	 * @var EntityIdLookup
+	 */
+	private $idLookup;
+
+	/**
 	 * @var FilePageLookup
 	 */
 	private $filePageLookup;
 
 	/**
-	 * @var EntityIdLookup
-	 */
-	private $idLookup;
-	/**
 	 * @var Title[]
 	 */
-	private $titleForIdCache;
+	private $titleForIdCache = [];
 
 	/**
 	 * @param EntityContentDataCodec $contentCodec
@@ -207,12 +208,11 @@ class MediaInfoHandler extends EntityHandler {
 	 */
 	public function getTitleForId( EntityId $id ) {
 		'@phan-var MediaInfoId $id';
-		if ( isset( $this->titleForIdCache[ $id->getSerialization() ] ) ) {
-			return $this->titleForIdCache[ $id->getSerialization() ];
+		$idString = $id->getSerialization();
+		if ( !isset( $this->titleForIdCache[$idString] ) ) {
+			$this->titleForIdCache[$idString] = Title::newFromID( $id->getNumericId() );
 		}
-		$title = Title::newFromID( $id->getNumericId() );
-		$this->titleForIdCache[ $id->getSerialization() ] = $title;
-		return $title;
+		return $this->titleForIdCache[$idString];
 	}
 
 	/**
@@ -226,7 +226,8 @@ class MediaInfoHandler extends EntityHandler {
 		'@phan-var MediaInfoId[] $ids';
 		Assert::parameterElementType( 'Wikibase\MediaInfo\DataModel\MediaInfoId', $ids, '$ids' );
 
-		$titles = $uncachedNumericIds = [];
+		$titles = [];
+		$uncachedNumericIds = [];
 		// get whatever cached ids we can first
 		/** @var MediaInfoId $id */
 		foreach ( $ids as $id ) {

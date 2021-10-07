@@ -9,7 +9,7 @@
 	"fallbackLangs": [],
 	"stemmingSettings": {},
 	"settings": {
-		"boosts": {
+		"boost": {
 			"statement": 20.0,
 			"descriptions.$language": 7.5,
 			"descriptions.$language.plain": 2.5,

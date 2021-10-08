@@ -243,7 +243,7 @@ class WikibaseMediaInfoHooks {
 		if ( $isMediaInfoPage ) {
 			OutputPage::setupOOUI();
 			$out = $this->tabifyStructuredData( $out, $entityViewFactory );
-			$out->preventClickjacking();
+			$out->setPreventClickjacking( true );
 			$imgTitle = $out->getTitle();
 			$entityId = MediaInfoServices::getMediaInfoIdLookup()->getEntityIdForTitle( $imgTitle );
 

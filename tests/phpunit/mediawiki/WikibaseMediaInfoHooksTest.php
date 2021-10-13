@@ -31,7 +31,7 @@ use Wikibase\Search\Elastic\Fields\TermIndexField;
  * @license GPL-2.0-or-later
  * @author Bene* < benestar.wikimedia@gmail.com >
  */
-class WikibaseMediaInfoHooksTest extends \MediaWikiTestCase {
+class WikibaseMediaInfoHooksTest extends \MediaWikiIntegrationTestCase {
 
 	public function testOnWikibaseRepoEntityNamespaces() {
 		$entityNamespaces = [];

@@ -2,14 +2,14 @@
 
 namespace Wikibase\MediaInfo\Tests\MediaWiki\Search;
 
-use MediaWikiTestCase;
+use MediaWikiIntegrationTestCase;
 use MultiHttpClient;
 use Wikibase\MediaInfo\Search\MediaSearchEntitiesFetcher;
 
 /**
  * @covers \Wikibase\MediaInfo\Search\MediaSearchEntitiesFetcher
  */
-class MediaSearchEntitiesFetcherTest extends MediaWikiTestCase {
+class MediaSearchEntitiesFetcherTest extends MediaWikiIntegrationTestCase {
 	protected function createMediaSearchEntitiesFetcher(): MediaSearchEntitiesFetcher {
 		$mockMultiHttpClient = $this->createMock( MultiHttpClient::class );
 		$mockMultiHttpClient->method( 'runMulti' )

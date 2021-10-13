@@ -5,7 +5,7 @@ namespace Wikibase\MediaInfo\Tests\MediaWiki\Api;
 use ApiMain;
 use FauxRequest;
 use MediaWiki\Http\HttpRequestFactory;
-use MediaWikiTestCase;
+use MediaWikiIntegrationTestCase;
 use MWHttpRequest;
 use Wikibase\DataModel\Snak\PropertyValueSnak;
 use Wikibase\Lib\Formatters\OutputFormatSnakFormatterFactory;
@@ -16,7 +16,7 @@ use Wikibase\Repo\WikibaseRepo;
 /**
  * @covers \Wikibase\MediaInfo\Api\ApiRelatedConcepts
  */
-class ApiRelatedConceptsTest extends MediaWikiTestCase {
+class ApiRelatedConceptsTest extends MediaWikiIntegrationTestCase {
 
 	private function mockSearchResponse( array $ids ) {
 		return [

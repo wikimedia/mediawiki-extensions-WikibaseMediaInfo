@@ -15,7 +15,7 @@ CaptionsEditActionsWidget = function () {
 	var cancelAndPublishButtons = new CancelPublishWidget(),
 		addCaptionButton = new OO.ui.ButtonWidget( {
 			icon: 'add',
-			label: mw.message( 'wikibasemediainfo-filepage-add-caption' ).text(),
+			label: mw.msg( 'wikibasemediainfo-filepage-add-caption' ),
 			flags: 'progressive',
 			classes: [ 'wbmi-entityview-addCaptionButton' ],
 			framed: false

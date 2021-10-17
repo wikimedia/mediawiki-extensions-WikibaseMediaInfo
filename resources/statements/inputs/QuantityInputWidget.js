@@ -28,9 +28,9 @@ QuantityInputWidget = function MediaInfoStatementsQuantityInputWidget( config ) 
 
 	this.unit = new EntityAutocompleteInputWidget( {
 		classes: [ 'wbmi-input-widget__input', 'wbmi-input-widget--unit' ],
-		placeholder: mw.message( 'wikibasemediainfo-quantity-unit-placeholder' ).text(),
+		placeholder: mw.msg( 'wikibasemediainfo-quantity-unit-placeholder' ),
 		icon: 'search',
-		label: mw.message( 'wikibasemediainfo-quantity-unit-label' ).text()
+		label: mw.msg( 'wikibasemediainfo-quantity-unit-label' )
 	} );
 
 	this.bindEventHandlers();
@@ -76,7 +76,7 @@ QuantityInputWidget.prototype.getTemplateData = function () {
 
 	submitButton = new OO.ui.ButtonWidget( {
 		classes: [ 'wbmi-input-widget__button', 'wbmi-input-widget--submit' ],
-		label: mw.message( 'wikibasemediainfo-quantity-input-button-text' ).text(),
+		label: mw.msg( 'wikibasemediainfo-quantity-input-button-text' ),
 		flags: [ 'progressive' ],
 		disabled: !this.hasValidInput()
 	} );
@@ -84,7 +84,7 @@ QuantityInputWidget.prototype.getTemplateData = function () {
 
 	addUnitButton = new OO.ui.ButtonWidget( {
 		classes: [ 'wbmi-input-widget__button', 'wbmi-input-widget--add-unit' ],
-		label: mw.message( 'wikibasemediainfo-quantity-unit-button-text' ).text(),
+		label: mw.msg( 'wikibasemediainfo-quantity-unit-button-text' ),
 		icon: 'add',
 		flags: [ 'progressive' ]
 	} );

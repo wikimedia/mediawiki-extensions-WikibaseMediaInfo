@@ -41,7 +41,7 @@ OO.mixinClass( StringInputWidget, ComponentWidget );
 StringInputWidget.prototype.getTemplateData = function () {
 	var button = new OO.ui.ButtonWidget( {
 		classes: [ 'wbmi-input-widget__button' ],
-		label: mw.message( 'wikibasemediainfo-string-input-button-text' ).text(),
+		label: mw.msg( 'wikibasemediainfo-string-input-button-text' ),
 		flags: [ 'progressive' ],
 		disabled: !this.hasValidInput()
 	} );

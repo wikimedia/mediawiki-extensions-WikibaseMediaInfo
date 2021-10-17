@@ -90,6 +90,8 @@ module.exports.createMediaWikiEnv = function () {
 			parse: sinon.stub()
 		} ),
 
+		msg: sinon.stub(),
+
 		template: {
 			get: sinon.stub().returns( {
 				render: sinon.stub()

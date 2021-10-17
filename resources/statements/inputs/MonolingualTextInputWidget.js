@@ -23,7 +23,7 @@ MonolingualTextInputWidget = function MediaInfoStatementsMonolingualTextInputWid
 		value: this.state.value,
 		classes: [ 'wbmi-input-widget__input' ],
 		isRequired: true,
-		placeholder: mw.message( 'wikibasemediainfo-monolingualtext-input-placeholder' ).text()
+		placeholder: mw.msg( 'wikibasemediainfo-monolingualtext-input-placeholder' )
 	} );
 	this.input.connect( this, { enter: 'onEnter' } );
 	this.input.connect( this, { change: 'onChange' } );
@@ -31,7 +31,7 @@ MonolingualTextInputWidget = function MediaInfoStatementsMonolingualTextInputWid
 	this.language = new UlsWidget( {
 		language: this.state.language,
 		languages: wbMonolingualTextLanguages,
-		label: mw.message( 'wikibasemediainfo-monolingualtext-language-label' ).text()
+		label: mw.msg( 'wikibasemediainfo-monolingualtext-language-label' )
 	} );
 	this.language.connect( this, { select: 'onChangeLanguage' } );
 
@@ -52,7 +52,7 @@ OO.mixinClass( MonolingualTextInputWidget, ComponentWidget );
 MonolingualTextInputWidget.prototype.getTemplateData = function () {
 	var button = new OO.ui.ButtonWidget( {
 		classes: [ 'wbmi-input-widget__button' ],
-		label: mw.message( 'wikibasemediainfo-monolingualtext-input-button-text' ).text(),
+		label: mw.msg( 'wikibasemediainfo-monolingualtext-input-button-text' ),
 		flags: [ 'progressive' ],
 		disabled: !this.hasValidInput()
 	} );

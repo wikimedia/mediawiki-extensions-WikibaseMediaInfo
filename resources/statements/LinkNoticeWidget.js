@@ -35,7 +35,7 @@ LinkNoticeWidget.prototype.getTemplateData = function () {
 
 	noticeWidget = new OO.ui.MessageWidget( {
 		type: 'warning',
-		label: mw.message( 'wikibasemediainfo-statements-link-notice-text' ).text(),
+		label: mw.msg( 'wikibasemediainfo-statements-link-notice-text' ),
 		classes: [ 'wbmi-link-notice' ]
 	} );
 	noticeWidget.setIcon( 'info' );
@@ -43,9 +43,9 @@ LinkNoticeWidget.prototype.getTemplateData = function () {
 	dismissControl = new OO.ui.ButtonWidget( {
 		framed: false,
 		icon: 'close',
-		label: mw.message( 'wikibasemediainfo-statements-link-notice-dismiss' ).text(),
+		label: mw.msg( 'wikibasemediainfo-statements-link-notice-dismiss' ),
 		invisibleLabel: true,
-		title: mw.message( 'wikibasemediainfo-statements-link-notice-dismiss' ).text(),
+		title: mw.msg( 'wikibasemediainfo-statements-link-notice-dismiss' ),
 		classes: [ 'wbmi-link-notice__dismiss-icon' ]
 	} );
 

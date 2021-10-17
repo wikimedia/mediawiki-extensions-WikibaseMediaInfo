@@ -42,7 +42,7 @@ AddPropertyWidget.prototype.getTemplateData = function () {
 		entityType: 'property',
 		filter: this.getFilters(),
 		maxSuggestions: 7,
-		placeholder: mw.message( 'wikibasemediainfo-add-property' ).text()
+		placeholder: mw.msg( 'wikibasemediainfo-add-property' )
 	} );
 
 	propertyInputWidget.connect( this, { add: 'onChoose' } );
@@ -54,14 +54,14 @@ AddPropertyWidget.prototype.getTemplateData = function () {
 		framed: true,
 		icon: 'add',
 		flags: [ 'progressive' ],
-		label: mw.message( 'wikibasemediainfo-add-statement' ).text()
+		label: mw.msg( 'wikibasemediainfo-add-statement' )
 	} );
 
 	addPropertyButton.connect( this, { click: [ 'setEditing', !this.state.editing ] } );
 
 	removeButton = new OO.ui.ButtonWidget( {
 		classes: [ 'wbmi-item-remove' ],
-		title: mw.message( 'wikibasemediainfo-statements-item-remove' ).text(),
+		title: mw.msg( 'wikibasemediainfo-statements-item-remove' ),
 		flags: 'destructive',
 		icon: 'trash',
 		framed: false

@@ -76,20 +76,20 @@ ConstraintsReportHandlerElement.prototype.buildReportList = function ( reports )
 			statuses: [
 				{
 					status: 'violation',
-					label: mw.message( 'wbqc-issues-short' ).text()
+					label: mw.msg( 'wbqc-issues-short' )
 				},
 				{
 					status: 'warning',
-					label: mw.message( 'wbqc-potentialissues-short' ).text()
+					label: mw.msg( 'wbqc-potentialissues-short' )
 				},
 				{
 					status: 'suggestion',
-					label: mw.message( 'wbqc-suggestions-short' ).text()
+					label: mw.msg( 'wbqc-suggestions-short' )
 				},
 				{
 					status: 'bad-parameters',
-					label: mw.message( 'wbqc-parameterissues-short' ).text(),
-					subheading: mw.message( 'wbqc-parameterissues-long' ).text(),
+					label: mw.msg( 'wbqc-parameterissues-short' ),
+					subheading: mw.msg( 'wbqc-parameterissues-long' ),
 					collapsed: true
 				}
 			],
@@ -123,7 +123,7 @@ ConstraintsReportHandlerElement.prototype.createPopupWidget = function ( $conten
 	var widget = new OO.ui.PopupButtonWidget( {
 		icon: icon,
 		// eslint-disable-next-line mediawiki/msg-doc
-		title: mw.message( titleMessageKey ).text(),
+		title: mw.msg( titleMessageKey ),
 		flags: '',
 		framed: false,
 		classes: [ 'wbqc-reports-button', 'wikibase-snakview-indicator' ].concat( classes || [] ),

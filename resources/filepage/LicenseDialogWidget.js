@@ -52,7 +52,7 @@ LicenseDialogWidget.prototype.getConfirmationIfNecessary = function () {
 
 LicenseDialogWidget.prototype.openDialog = function () {
 	this.windowManager.openWindow( this.dialog, {
-		title: mw.message( 'wikibasemediainfo-filepage-license-title' ).text(),
+		title: mw.msg( 'wikibasemediainfo-filepage-license-title' ),
 		message: $( '<div>' ).append(
 			$( '<p>' ).msg( 'wikibasemediainfo-filepage-license-content' ),
 			$( '<p>' ).msg( 'wikibasemediainfo-filepage-license-content-acceptance' )
@@ -60,7 +60,7 @@ LicenseDialogWidget.prototype.openDialog = function () {
 		actions: [
 			{
 				action: 'accept',
-				label: mw.message( 'wikibasemediainfo-filepage-license-agree' ).text(),
+				label: mw.msg( 'wikibasemediainfo-filepage-license-agree' ),
 				flags: [ 'primary', 'progressive' ]
 			}
 		]

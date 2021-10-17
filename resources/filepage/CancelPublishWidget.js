@@ -10,14 +10,14 @@ var CancelPublishWidget;
 CancelPublishWidget = function () {
 	var cancelButton = new OO.ui.ButtonWidget( {
 			framed: false,
-			label: mw.message( 'wikibasemediainfo-filepage-cancel' ).text()
+			label: mw.msg( 'wikibasemediainfo-filepage-cancel' )
 		} ),
 		publishButton = new OO.ui.ButtonInputWidget( {
 			// disabled by default
 			disabled: true,
 			type: 'submit',
 			useInputTag: true,
-			label: mw.message( 'wikibasemediainfo-filepage-publish' ).text(),
+			label: mw.msg( 'wikibasemediainfo-filepage-publish' ),
 			flags: [
 				'primary',
 				'progressive'

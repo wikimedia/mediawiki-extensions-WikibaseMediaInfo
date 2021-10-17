@@ -273,7 +273,7 @@
 		if ( hasChanges ) {
 			// this message is not usually displayed (browsers have default language)
 			// include a valid message for some versions of IE that display the message
-			return mw.message( 'wikibasemediainfo-filepage-cancel-confirm' ).text();
+			return mw.msg( 'wikibasemediainfo-filepage-cancel-confirm' );
 		}
 	};
 }() );

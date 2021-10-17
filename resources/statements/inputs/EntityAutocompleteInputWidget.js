@@ -237,7 +237,7 @@ EntityAutocompleteInputWidget.prototype.getLookupMenuOptionsFromData = function 
 		return [
 			new OO.ui.MenuOptionWidget( {
 				disabled: true,
-				label: mw.message( 'wikibasemediainfo-filepage-statement-no-results' ).text()
+				label: mw.msg( 'wikibasemediainfo-filepage-statement-no-results' )
 			} )
 		];
 	}
@@ -309,8 +309,8 @@ EntityAutocompleteInputWidget.prototype.createLabelFromSuggestion = function ( e
 
 	if ( entityStub.aliases ) {
 		data.aliases =
-			mw.message( 'word-separator' ).text() +
-			mw.message( 'parentheses', mw.language.listToText( entityStub.aliases ) ).text();
+			mw.msg( 'word-separator' ) +
+			mw.msg( 'parentheses', mw.language.listToText( entityStub.aliases ) );
 	}
 
 	return template.render( data );

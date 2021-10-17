@@ -1,9 +1,5 @@
 'use strict';
 
-/**
- * @external datamodel
- */
-
 var AnonWarning = require( './AnonWarning.js' ),
 	FormatValueElement = require( 'wikibase.mediainfo.base' ).FormatValueElement,
 	LicenseDialogWidget = require( './LicenseDialogWidget.js' ),

@@ -1,8 +1,3 @@
-/**
- * @external CaptionsPanel
- * @external StatementPanel
- */
-
 ( function () {
 
 	'use strict';

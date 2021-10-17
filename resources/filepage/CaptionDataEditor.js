@@ -1,9 +1,5 @@
 'use strict';
 
-/**
- * @external CaptionData
- */
-
 var CaptionDataEditor,
 	wbTermsLanguages = require( 'wikibase.mediainfo.statements' ).config.wbTermsLanguages,
 	UlsWidget = require( 'wikibase.mediainfo.uls' );

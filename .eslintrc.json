@@ -30,5 +30,17 @@
 				"vue/v-slot-style": [ "warn", "shorthand" ]
 			}
 		}
-	]
+	],
+	"settings": {
+		"jsdoc": {
+			"preferredTypes": {
+				"CaptionData": "CaptionData",
+				"CaptionsPanel": "CaptionsPanel",
+				"datamodel": "datamodel",
+				"EntityInputWidget": "EntityInputWidget",
+				"MediaInfo": "MediaInfo",
+				"StatementPanel": "StatementPanel"
+			}
+		}
+	}
 }

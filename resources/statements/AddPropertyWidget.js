@@ -1,9 +1,5 @@
 'use strict';
 
-/**
- * @external EntityInputWidget
- */
-
 var ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
 	inputs = require( './inputs/index.js' ),
 	AddPropertyWidget;

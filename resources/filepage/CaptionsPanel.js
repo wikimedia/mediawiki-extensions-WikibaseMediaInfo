@@ -1,9 +1,5 @@
 'use strict';
 
-/**
- * @external datamodel
- */
-
 var AnonWarning = require( './AnonWarning.js' ),
 	CaptionData = require( './CaptionData.js' ),
 	CaptionDataEditor = require( './CaptionDataEditor.js' ),

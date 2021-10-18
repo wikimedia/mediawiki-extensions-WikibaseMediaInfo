@@ -1,7 +1,3 @@
-/**
- * @external MediaInfo
- */
-
 ( function ( wb, util ) {
 	'use strict';
 

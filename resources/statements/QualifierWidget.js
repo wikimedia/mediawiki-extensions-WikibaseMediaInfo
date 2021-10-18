@@ -1,9 +1,5 @@
 'use strict';
 
-/**
- * @external EntityInputWidget
- */
-
 var QualifierWidget,
 	ConstraintsReportHandlerElement = require( './ConstraintsReportHandlerElement.js' ),
 	ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,

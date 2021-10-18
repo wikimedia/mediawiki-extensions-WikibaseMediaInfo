@@ -1,10 +1,12 @@
 {
 	"@metadata": {
 		"authors": [
+			"JSantos",
 			"Joao Xavier"
 		]
 	},
 	"wikibasemediainfo-add-statement": "Adjuntez raporto",
+	"wikibasemediainfo-filepage-captions-title": "Deskripto-texti",
 	"wikibasemediainfo-filepage-more-languages": "Videz $1 plusa {{PLURAL:$1|linguo|lingui}}",
 	"wikibasemediainfo-filepage-statement-some-value-option": "Kelka valoro",
 	"wikibasemediainfo-statements-item-input-placeholder": "Serchez por adjuntar artikli",

@@ -11,7 +11,7 @@ var AnonWarning = require( './AnonWarning.js' ),
  * Panel for displaying/editing structured data statements
  *
  * @extends OO.ui.Element
- * @mixins OO.ui.mixin.PendingElement
+ * @mixin OO.ui.mixin.PendingElement
  *
  * @constructor
  * @param {Object} config Configuration options

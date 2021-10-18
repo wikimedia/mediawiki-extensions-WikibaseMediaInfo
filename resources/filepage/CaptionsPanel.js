@@ -33,7 +33,7 @@ var AnonWarning = require( './AnonWarning.js' ),
  * is always shown, all user languages are always shown, and everything else may be hidden.
  *
  * @extends OO.ui.Element
- * @mixins OO.ui.mixin.PendingElement
+ * @mixin OO.ui.mixin.PendingElement
  *
  * @constructor
  * @param {Object} [config]

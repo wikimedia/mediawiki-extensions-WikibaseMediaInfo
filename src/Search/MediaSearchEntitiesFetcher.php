@@ -17,6 +17,9 @@ class MediaSearchEntitiesFetcher {
 	/** @var string */
 	protected $outputLanguage;
 
+	/** @var string */
+	protected $titleMatchUrl = null;
+
 	public function __construct(
 		MultiHttpClient $multiHttpClient,
 		string $externalEntitySearchBaseUri,
@@ -27,6 +30,10 @@ class MediaSearchEntitiesFetcher {
 		$this->externalEntitySearchBaseUri = $externalEntitySearchBaseUri;
 		$this->inputLanguage = $inputLanguage;
 		$this->outputLanguage = $outputLanguage;
+	}
+
+	public function setTitleMatchUrl( string $url ) {
+		$this->titleMatchUrl = $url;
 	}
 
 	/**
@@ -42,37 +49,36 @@ class MediaSearchEntitiesFetcher {
 			return [];
 		}
 
-		$responses = $this->executeApiRequest(
-			array_map( function ( $query ) {
-				$params = [
-					'format' => 'json',
-					'action' => 'query',
-					'generator' => 'search',
-					'gsrsearch' => $query,
-					'gsrnamespace' => 0,
-					'gsrlimit' => 50,
-					'gsrprop' => 'snippet|titlesnippet|extensiondata',
-					'uselang' => $this->inputLanguage,
-					'prop' => 'entityterms',
-					'wbetterms' => 'alias|label',
-					'wbetlanguage' => $this->outputLanguage,
-				];
+		$entitySearchRequests = $this->gatherEntitySearchRequests( $searchQueries );
+		$titleMatchRequests = $this->gatherTitleMatchRequests( $searchQueries );
 
-				return [
-					'method' => 'GET',
-					'url' => $this->externalEntitySearchBaseUri . '?' . http_build_query( $params ),
-				];
-			}, $searchQueries )
+		$responses = $this->multiHttpClient->runMulti(
+			array_merge( $entitySearchRequests, $titleMatchRequests )
 		);
 
-		$transformedResponses = [];
-		// iterate all responses, for each search query
-		foreach ( $searchQueries as $i => $term ) {
-			$transformedResponses[$term] = [];
-			$response = $responses[$i];
-			// iterate each result
-			foreach ( $response['query']['pages'] ?? [] as $result ) {
-				$transformedResponses[$term][] = $this->transformResult( $result );
+		$transformedResponses = array_fill_keys(
+			array_values( $searchQueries ),
+			[]
+		);
+		foreach ( $responses as $response ) {
+			$body = json_decode( $response['response']['body'], true ) ?: [];
+			$term = $response['_term'];
+			if ( $response['_type'] === 'entitySearch' ) {
+				// iterate each result
+				foreach ( $body['query']['pages'] ?? [] as $result ) {
+					$transformedResponses[$term] = $this->addToTransformedResponses(
+						$transformedResponses[$term],
+						$this->transformEntitySearchResult( $result )
+					);
+				}
+			} else {
+				$titleMatch = $this->transformTitleMatchResult( $body );
+				if ( $titleMatch ) {
+					$transformedResponses[$term] = $this->addToTransformedResponses(
+						$transformedResponses[$term],
+						$titleMatch
+					);
+				}
 			}
 		}
 
@@ -85,11 +91,110 @@ class MediaSearchEntitiesFetcher {
 		return $transformedResponses;
 	}
 
+	private function gatherEntitySearchRequests( array $searchQueries ): array {
+		return array_map( function ( $query ) {
+			$params = [
+				'format' => 'json',
+				'action' => 'query',
+				'generator' => 'search',
+				'gsrsearch' => $query,
+				'gsrnamespace' => 0,
+				'gsrlimit' => 50,
+				'gsrprop' => 'snippet|titlesnippet|extensiondata',
+				'uselang' => $this->inputLanguage,
+				'prop' => 'entityterms',
+				'wbetterms' => 'alias|label',
+				'wbetlanguage' => $this->outputLanguage,
+			];
+
+			return [
+				'method' => 'GET',
+				'_term' => $query,
+				'_type' => 'entitySearch',
+				'url' => $this->externalEntitySearchBaseUri . '?' . http_build_query( $params ),
+			];
+		}, $searchQueries );
+	}
+
+	private function gatherTitleMatchRequests( array $searchQueries ): array {
+		if ( $this->titleMatchUrl === null ) {
+			return [];
+		}
+		return array_map( function ( $query ) {
+			$params = [
+				'format' => 'json',
+				'action' => 'query',
+				// ucfirst() the string, and strip quotes (in case the query comes from
+				// a phrase query)
+				'titles' => $this->mbUcFirst( trim( $query, " \n\r\t\v\0\"" ) ),
+				'prop' => 'pageprops',
+				'redirects' => 1,
+			];
+
+			return [
+				'method' => 'GET',
+				'_term' => $query,
+				'_type' => 'titleMatch',
+				'url' => sprintf( $this->titleMatchUrl, $this->inputLanguage ) . '?' .
+						 http_build_query( $params ),
+			];
+		}, $searchQueries );
+	}
+
+	/**
+	 * Replicates php's ucfirst() function with multibyte support.
+	 *
+	 * @param string $str The string being converted.
+	 * @param null|string $encoding Optional encoding parameter is the character encoding.
+	 * 	If it is omitted, the internal character encoding value will be used.
+	 *
+	 * @return string The input string with first character uppercased.
+	 * @see https://github.com/cofirazak/phpMissingFunctions/blob/master/src/StringFunc.php
+	 */
+	public function mbUcFirst( string $str, string $encoding = null ): string {
+		if ( $encoding === null ) {
+			$encoding = mb_internal_encoding();
+		}
+
+		return mb_strtoupper( mb_substr( $str, 0, 1, $encoding ), $encoding ) .
+			   mb_substr( $str, 1, null, $encoding );
+	}
+
+	private function transformTitleMatchResult( array $result ): ?array {
+		if ( isset( $result['query']['pages'] ) ) {
+			$page = array_shift( $result['query']['pages'] );
+			if ( isset( $page['pageprops']['wikibase_item'] ) ) {
+				return [
+					'entityId' => $page['pageprops']['wikibase_item'],
+					'score' => 1.0,
+					'synonyms' => array_column( $result['query']['redirects'] ?? [], 'to' ),
+				];
+			}
+		}
+		return null;
+	}
+
+	private function addToTransformedResponses( array $collection, array $item ) {
+		if ( !isset( $collection[ $item['entityId'] ] ) ) {
+			$collection[ $item['entityId'] ] = $item;
+			return $collection;
+		}
+		$collection[ $item['entityId'] ] = [
+			'entityId' => $item['entityId'],
+			'synonyms' => array_merge(
+				$collection[ $item['entityId'] ]['synonyms'] ?? [],
+				$item['synonyms'] ?? []
+			),
+			'score' => max( $collection[ $item['entityId'] ]['score'], $item['score'] ),
+		];
+		return $collection;
+	}
+
 	/**
 	 * @param array $result
 	 * @return array
 	 */
-	protected function transformResult( array $result ): array {
+	protected function transformEntitySearchResult( array $result ): array {
 		// unfortunately, the search API doesn't return an actual score
 		// (for relevancy of the match), which means that we have no way
 		// of telling which results are awesome matches and which are only
@@ -139,12 +244,5 @@ class MediaSearchEntitiesFetcher {
 			'score' => ( $relativeOrder + $maxTermFrequency ) / 2,
 			'synonyms' => $synonyms,
 		];
-	}
-
-	protected function executeApiRequest( array $requests ): array {
-		$responses = $this->multiHttpClient->runMulti( $requests );
-		return array_map( static function ( $response ) {
-			return json_decode( $response['response']['body'], true ) ?: [];
-		}, $responses );
 	}
 }

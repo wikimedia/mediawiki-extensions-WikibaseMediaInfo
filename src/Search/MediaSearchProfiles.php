@@ -79,7 +79,8 @@ return [
 					),
 					$mwServices->getMainWANObjectCache(),
 					$languageCode,
-					$config->get( 'LanguageCode' )
+					$config->get( 'LanguageCode' ),
+					'wbmi-mediasearch-entities'
 				)
 			);
 
@@ -186,7 +187,8 @@ return [
 					),
 					$mwServices->getMainWANObjectCache(),
 					$languageCode,
-					$config->get( 'LanguageCode' )
+					$config->get( 'LanguageCode' ),
+					'wbmi-mediasearch-entities'
 				)
 			);
 
@@ -258,6 +260,115 @@ return [
 			'applyLogisticFunction' => true,
 			'useSynonyms' => true,
 			'logisticRegressionIntercept' => -1.1975600089068401,
+		],
+	],
+	MediaSearchQueryBuilder::WEIGHTED_TAGS_PROFILE_NAME => [
+		'builder_factory' => closureToAnonymousClass( static function ( array $settings ) {
+			$languageCode = WikibaseRepo::getUserLanguage()->getCode();
+			$languageFallbackChain = WikibaseRepo::getLanguageFallbackChainFactory()
+				->newFromLanguageCode( $languageCode );
+
+			$mwServices = MediaWikiServices::getInstance();
+			$config = $mwServices->getMainConfig();
+			$configFactory = $mwServices->getConfigFactory();
+			$searchConfig = $configFactory->makeConfig( 'CirrusSearch' );
+			if ( !$searchConfig instanceof SearchConfig ) {
+				throw new MWException( 'CirrusSearch config must be instanceof SearchConfig' );
+			}
+			$features = ( new FullTextKeywordRegistry( $searchConfig ) )->getKeywords();
+
+			$searchProperties = $config->get( 'MediaInfoMediaSearchProperties' );
+			if ( $searchProperties === null ) {
+				$searchProperties = array_fill_keys( array_values( $config->get( 'MediaInfoProperties' ) ), 1 );
+			}
+
+			$languages = array_merge( [ $languageCode ], $languageFallbackChain->getFetchLanguageCodes() );
+			$languages = array_unique( $languages );
+
+			$httpEntitiesFetcher = new MediaSearchEntitiesFetcher(
+				$mwServices->getHttpRequestFactory()->createMultiClient(),
+				$config->get( 'MediaInfoExternalEntitySearchBaseUri' ),
+				$languageCode,
+				$config->get( 'LanguageCode' )
+			);
+			$titleMatchUrl = $config->get( 'MediaInfoMediaSearchTitleMatchBaseUri' );
+			if ( $titleMatchUrl ) {
+				$httpEntitiesFetcher->setTitleMatchUrl(
+					sprintf( $titleMatchUrl, $languageCode )
+				);
+			}
+
+			$entitiesFetcher = new MediaSearchMemoryEntitiesFetcher(
+				new MediaSearchCachingEntitiesFetcher(
+					$httpEntitiesFetcher,
+					$mwServices->getMainWANObjectCache(),
+					$languageCode,
+					$config->get( 'LanguageCode' ),
+					'wbmi-mediasearch-entities-titles'
+				)
+			);
+
+			$settings['hasLtrPlugin'] = $config->get( 'MediaInfoMediaSearchHasLtrPlugin' );
+
+			$queryBuilder = new MediaSearchQueryBuilder(
+				$features,
+				new MediaSearchASTQueryBuilder(
+					new MediaSearchASTEntitiesExtractor( $entitiesFetcher ),
+					$searchProperties,
+					$configFactory->makeConfig( 'WikibaseCirrusSearch' )->get( 'UseStemming' ),
+					$languages,
+					$config->get( 'LanguageCode' ),
+					$settings
+				)
+			);
+
+			return $queryBuilder;
+		} ),
+		'settings' => [
+			'boost' => [
+				'statement' => 0.07820204273071839,
+				'weighted_tags' => [
+					// NOTE the 1000 * is because we haven't stored a score for this field in the
+					// experimental search index, so it defaults to 1 which is transformed to
+					// 0.001 by cirrussearch code
+					// When we recreate the index on production we'll probably store a score of
+					// 1000 for this field, and can remove the 1000 * here
+					'image.linked.from.wikidata.p18/' => 1000 * 1.5653542537287244,
+					'image.linked.from.wikidata.p373/' => 4.0424359988709435,
+					'image.linked.from.wikidata.sitelink/' => 4.26335835247543,
+				],
+				'descriptions.$language' => 0.0392515093914008,
+				'descriptions.$language.plain' => 0,
+				'title' => 0.04487718624539365,
+				'title.plain' => 0,
+				'category' => 0.04321595766352061,
+				'category.plain' => 0,
+				'heading' => 0,
+				'heading.plain' => 0,
+				// Arbitrary small value to preserve ordering if we ONLY have a match in this field
+				'auxiliary_text' => 0.0001,
+				'auxiliary_text.plain' => 0,
+				'file_text' => 0,
+				'file_text.plain' => 0,
+				'redirect.title' => 0.01997210246565096,
+				'redirect.title.plain' => 0,
+				// Arbitrary small value to preserve ordering if we ONLY have a match in this field
+				'text' => 0.0001,
+				'text.plain' => 0,
+				'suggest' => 0.03278522607586197,
+			],
+			'decay' => [
+				'descriptions.$language' => 0.9,
+				'descriptions.$language.plain' => 0.9,
+				// below is not actually a field
+				'synonyms' => 0,
+			],
+			'normalizeFulltextScores' => true,
+			'normalizeMultiClauseScores' => true,
+			'entitiesVariableBoost' => true,
+			'applyLogisticFunction' => true,
+			'useSynonyms' => false,
+			'logisticRegressionIntercept' => -1.4925851105992378,
 		],
 	],
 ];

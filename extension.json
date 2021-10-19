@@ -41,6 +41,11 @@
 			"value": {}
 		},
 		"MediaInfoExternalEntitySearchBaseUri": {
+			"description": "URI of the api.php endpoint where entities can be searched.",
+			"value": ""
+		},
+		"MediaInfoMediaSearchTitleMatchBaseUri": {
+			"description": "URI of the api.php endpoint where page titles can be searched. The 2-character language code will be sprintf'ed into this value.",
 			"value": ""
 		},
 		"MediaInfoSupportedDataTypes": {

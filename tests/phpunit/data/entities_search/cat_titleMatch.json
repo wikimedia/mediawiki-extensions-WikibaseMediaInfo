@@ -1,0 +1,24 @@
+{
+	"batchcomplete": "",
+	"query": {
+		"normalized": [
+			{
+				"from": "cat",
+				"to": "Cat"
+			}
+		],
+		"pages": {
+			"6678": {
+				"pageid": 6678,
+				"ns": 0,
+				"title": "Cat",
+				"pageprops": {
+					"page_image_free": "Cat_poster_1.jpg",
+					"wikibase-badge-Q17437798": "1",
+					"wikibase-shortdesc": "Domesticated felid species",
+					"wikibase_item": "Q146"
+				}
+			}
+		}
+	}
+}

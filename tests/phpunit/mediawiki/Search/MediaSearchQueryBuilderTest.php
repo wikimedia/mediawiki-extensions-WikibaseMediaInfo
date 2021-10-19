@@ -57,7 +57,7 @@ class MediaSearchQueryBuilderTest extends MediaWikiIntegrationTestCase {
 			foreach ( $entities as $index => $entity ) {
 				$response[$term][] = [
 					'entityId' => $entity['id'],
-					'score' => 1 / ( $index + 1 ),
+					'score' => $entity['score'] ?? 1 / ( $index + 1 ),
 					'synonyms' => $entity['synonyms'] ?? []
 				];
 			}

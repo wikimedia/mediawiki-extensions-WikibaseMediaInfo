@@ -296,7 +296,7 @@ class MediaSearchASTQueryBuilder implements Visitor {
 			$this->entitiesExtractor,
 			$this->searchProperties,
 			$this->boosts,
-			$this->options['entitiesVariableBoost']
+			$this->options
 		);
 	}
 

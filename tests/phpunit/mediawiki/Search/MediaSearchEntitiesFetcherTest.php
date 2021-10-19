@@ -15,21 +15,33 @@ class MediaSearchEntitiesFetcherTest extends MediaWikiIntegrationTestCase {
 		$mockMultiHttpClient->method( 'runMulti' )
 			->willReturnCallback( static function ( array $requests ) {
 				foreach ( $requests as $i => $request ) {
-					preg_match( '/&gsrsearch=(.*?)&/', $request['url'], $matches );
-					$term = $matches[1];
-					$filename = __DIR__ . "/../../data/entities_search/$term.json";
-					$requests[$i]['response']['body'] = file_exists( $filename ) ? file_get_contents( $filename ) : '';
+					if ( preg_match( '/&gsrsearch=(.*?)&/', $request['url'], $matches )
+					) {
+						$term = $matches[1];
+						$filename = __DIR__ . "/../../data/entities_search/$term.json";
+						$requests[$i]['response']['body'] = file_exists( $filename ) ?
+							file_get_contents( $filename ) : '';
+					} elseif ( preg_match( '/&titles=(.*?)&/', $request['url'],
+						$matches ) ) {
+						$term = $matches[1];
+						$filename = __DIR__ . '/../../data/entities_search/' .
+									strtolower( $term ) . '_titleMatch.json';
+						$requests[$i]['response']['body'] = file_exists( $filename ) ?
+							file_get_contents( $filename ) : '';
+					}
 				}
 
 				return $requests;
 			} );
 
-		return new MediaSearchEntitiesFetcher(
+		$entitiesFetcher = new MediaSearchEntitiesFetcher(
 			$mockMultiHttpClient,
 			'url-not-required-for-mock',
 			'en',
 			'en'
 		);
+		$entitiesFetcher->setTitleMatchUrl( 'url-not-required-for-mock' );
+		return $entitiesFetcher;
 	}
 
 	public function testGet() {
@@ -47,6 +59,11 @@ class MediaSearchEntitiesFetcherTest extends MediaWikiIntegrationTestCase {
 				$this->assertArrayHasKey( 'synonyms', $result );
 			}
 		}
+
+		// check that the responses for cat from the entity search and title search have been
+		// merged properly
+		$this->assertSame( 1.0, $results['cat']['Q146']['score'] );
+		$this->assertCount( 6, $results['cat']['Q146']['synonyms'] ?? [] );
 	}
 
 	public function testGetRepeatedly() {

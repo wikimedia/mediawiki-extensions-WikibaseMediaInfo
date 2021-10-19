@@ -41,6 +41,13 @@ class WordsQueryNodeHandler implements ParsedNodeHandlerInterface {
 		array $decays,
 		array $options = []
 	) {
+		$fulltextBoosts = array_intersect_key(
+			$boosts,
+			array_flip(
+				array_merge( FieldIterator::LANGUAGE_AGNOSTIC_FIELDS,
+					FieldIterator::LANGUAGE_AWARE_FIELDS )
+			)
+		);
 		$this->node = $node;
 		$this->entitiesHandler = $entitiesHandler;
 		$this->options = array_merge(
@@ -54,10 +61,10 @@ class WordsQueryNodeHandler implements ParsedNodeHandlerInterface {
 
 		$this->termScoringFieldIterators[$node->getWords()] = new FieldIterator(
 			$this->getTermScoringFieldQueryBuilder( $node->getWords() ),
-			array_keys( $boosts ),
+			array_keys( $fulltextBoosts ),
 			$languages,
 			$stemmingSettings,
-			$boosts,
+			$fulltextBoosts,
 			$decays
 		);
 
@@ -66,12 +73,12 @@ class WordsQueryNodeHandler implements ParsedNodeHandlerInterface {
 			$termLanguages = $synonymsLanguages[$term] ?? [];
 			$this->termScoringFieldIterators[$term] = new FieldIterator(
 				$this->getTermScoringFieldQueryBuilder( $term ),
-				array_keys( $boosts ),
+				array_keys( $fulltextBoosts ),
 				$termLanguages,
 				$stemmingSettings,
 				array_map( static function ( $boost ) use ( $score ) {
 					return $boost * $score;
-				}, $boosts ),
+				}, $fulltextBoosts ),
 				$decays
 			);
 		}

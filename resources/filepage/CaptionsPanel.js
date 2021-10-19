@@ -118,7 +118,7 @@ CaptionsPanel.prototype.captionsDataFromMediaInfoEntity = function ( mediaInfo )
 		Object.keys( mediaInfo.labels ).forEach( function ( langCode ) {
 			captionsData[ langCode ] = new CaptionData(
 				langCode,
-				mediaInfo.labels[ langCode ].value
+				mw.html.escape( mediaInfo.labels[ langCode ].value )
 			);
 		} );
 	}
@@ -428,7 +428,10 @@ CaptionsPanel.prototype.onDataChanged = function () {
 		if ( langCode ) {
 			textInput.setDir( $.uls.data.getDir( langCode ) );
 			if ( textInput.getValue() ) {
-				captionsData[ langCode ] = new CaptionData( langCode, textInput.getValue() );
+				captionsData[ langCode ] = new CaptionData(
+					langCode,
+					textInput.getValue()
+				);
 			}
 		}
 	} );
@@ -699,7 +702,7 @@ CaptionsPanel.prototype.sendData = function () {
 					.done( function ( result ) {
 						mw.mediaInfo.structuredData.currentRevision = result.entity.lastrevid;
 						self.savedCaptionsData[ langCode ] =
-							new CaptionData( langCode, text );
+							new CaptionData( langCode, mw.html.escape( text ) );
 					} )
 					.fail( function ( errorCode, error ) {
 						var apiError =

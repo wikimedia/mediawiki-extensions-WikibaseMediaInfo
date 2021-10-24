@@ -60,7 +60,7 @@ StatementWidget = function ( config ) {
 	this.publishButton = new OO.ui.ButtonInputWidget( {
 		type: 'submit',
 		useInputTag: true,
-		label: mw.message( 'wikibasemediainfo-filepage-publish' ).text(),
+		label: mw.msg( 'wikibasemediainfo-filepage-publish' ),
 		flags: [ 'primary', 'progressive' ],
 		disabled: true
 	} );
@@ -117,21 +117,21 @@ StatementWidget.prototype.getTemplateData = function () {
 		};
 
 		editButton = new OO.ui.ButtonWidget( {
-			label: mw.message( 'wikibasemediainfo-filepage-edit' ).text(),
+			label: mw.msg( 'wikibasemediainfo-filepage-edit' ),
 			framed: false,
 			flags: 'progressive',
-			title: mw.message( 'wikibasemediainfo-filepage-edit-depicts' ).text(),
+			title: mw.msg( 'wikibasemediainfo-filepage-edit-depicts' ),
 			classes: [ 'wbmi-entityview-editButton' ],
 			disabled: self.isDisabled() || self.isEditing()
 		} );
 
 		cancelButton = new OO.ui.ButtonWidget( {
-			label: mw.message( 'wikibasemediainfo-filepage-cancel' ).text(),
+			label: mw.msg( 'wikibasemediainfo-filepage-cancel' ),
 			framed: false
 		} );
 
 		removeButton = new OO.ui.ButtonWidget( {
-			label: mw.message( 'wikibasemediainfo-statements-remove' ).text(),
+			label: mw.msg( 'wikibasemediainfo-statements-remove' ),
 			framed: false,
 			flags: 'destructive',
 			classes: [ 'wbmi-statement-remove' ]
@@ -139,7 +139,7 @@ StatementWidget.prototype.getTemplateData = function () {
 
 		learnMoreLink = self.config.helpUrls[ self.state.propertyId ];
 		learnMoreButton = new OO.ui.ButtonWidget( {
-			label: mw.message( 'wikibasemediainfo-statements-learn-more' ).text(),
+			label: mw.msg( 'wikibasemediainfo-statements-learn-more' ),
 			framed: false,
 			flags: 'progressive',
 			classes: [ 'wbmi-statement-learn-more' ]
@@ -665,16 +665,16 @@ StatementWidget.prototype.showRemoveConfirmationDialog = function () {
 	var self = this;
 
 	OO.ui.confirm(
-		mw.message( 'wikibasemediainfo-remove-all-statements-confirm' ).text(),
+		mw.msg( 'wikibasemediainfo-remove-all-statements-confirm' ),
 		{
 			title: mw.msg( 'wikibasemediainfo-remove-all-statements-confirm-title' ),
 			actions: [ {
 				action: 'accept',
-				label: mw.message( 'wikibasemediainfo-remove-all-statements-confirm-accept' ).text(),
+				label: mw.msg( 'wikibasemediainfo-remove-all-statements-confirm-accept' ),
 				flags: [ 'primary', 'destructive' ]
 			}, {
 				action: 'reject',
-				label: mw.message( 'ooui-dialog-message-reject' ).text(),
+				label: mw.msg( 'ooui-dialog-message-reject' ),
 				flags: 'safe'
 			} ]
 		}

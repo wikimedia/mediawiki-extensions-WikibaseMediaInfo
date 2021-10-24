@@ -135,7 +135,7 @@ ItemWidget.prototype.getTemplateData = function () {
 
 		removeButton = new OO.ui.ButtonWidget( {
 			classes: [ 'wbmi-item-remove' ],
-			title: mw.message( 'wikibasemediainfo-statements-item-remove' ).text(),
+			title: mw.msg( 'wikibasemediainfo-statements-item-remove' ),
 			flags: 'destructive',
 			icon: 'trash',
 			framed: false
@@ -144,7 +144,7 @@ ItemWidget.prototype.getTemplateData = function () {
 
 		addQualifierButton = new OO.ui.ButtonWidget( {
 			classes: [ 'wbmi-item-qualifier-add' ],
-			label: mw.message( 'wikibasemediainfo-statements-item-add-qualifier' ).text(),
+			label: mw.msg( 'wikibasemediainfo-statements-item-add-qualifier' ),
 			flags: 'progressive',
 			framed: false
 		} );
@@ -159,8 +159,8 @@ ItemWidget.prototype.getTemplateData = function () {
 			disabled: self.isDisabled(),
 			prominent: prominent,
 			prominenceMessage: prominent ?
-				mw.message( 'wikibasemediainfo-statements-item-is-prominent' ).text() :
-				mw.message( 'wikibasemediainfo-statements-item-mark-as-prominent' ).text(),
+				mw.msg( 'wikibasemediainfo-statements-item-is-prominent' ) :
+				mw.msg( 'wikibasemediainfo-statements-item-mark-as-prominent' ),
 			prominenceToggleHandler: self.toggleItemProminence.bind( self ),
 			removeButton: removeButton,
 			addQualifierButton: addQualifierButton,

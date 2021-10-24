@@ -21,11 +21,11 @@ EntityInputWidget = function MediaInfoStatementsEntityInputWidget( config ) {
 
 	this.input = new EntityAutocompleteInputWidget( $.extend( {}, {
 		placeholder: !config.isQualifier ?
-			mw.message( 'wikibasemediainfo-statements-item-input-placeholder' ).text() :
+			mw.msg( 'wikibasemediainfo-statements-item-input-placeholder' ) :
 			undefined,
 		icon: !config.isQualifier ? 'search' : undefined,
 		label: !config.isQualifier ?
-			mw.message( 'wikibasemediainfo-statements-item-input-label' ).text() :
+			mw.msg( 'wikibasemediainfo-statements-item-input-label' ) :
 			undefined
 	}, config ) );
 	this.input.connect( this, { add: [ 'emit', 'change' ] } );

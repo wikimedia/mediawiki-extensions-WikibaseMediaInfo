@@ -47,7 +47,7 @@ QualifierWidget = function ( config ) {
 		classes: [ 'wbmi-qualifier-property' ],
 		entityType: 'property',
 		filter: this.getFilters(),
-		placeholder: mw.message( 'wikibasemediainfo-property-placeholder' ).text()
+		placeholder: mw.msg( 'wikibasemediainfo-property-placeholder' )
 	} );
 
 	this.valueInput = new inputs.MultiTypeInputWrapperWidget( {
@@ -108,7 +108,7 @@ QualifierWidget.prototype.getTemplateData = function () {
 			removeIcon: removeIcon,
 			property: formatResponse( propertyHtml ),
 			value: formatResponse( valueHtml ),
-			separator: mw.message( 'colon-separator' ).text(),
+			separator: mw.msg( 'colon-separator' ),
 			constraintsReport: self.state.constraintsReport &&
 				self.popupFromResults( self.state.constraintsReport )
 		};

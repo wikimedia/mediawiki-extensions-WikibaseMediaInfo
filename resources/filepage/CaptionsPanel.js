@@ -247,7 +247,7 @@ CaptionsPanel.prototype.getTemplateDataEditable = function () {
 		templateCaptions = [],
 		data = {
 			editing: true,
-			title: mw.message( 'wikibasemediainfo-entitytermsforlanguagelistview-caption' ).text(),
+			title: mw.msg( 'wikibasemediainfo-entitytermsforlanguagelistview-caption' ),
 			editActionsWidget: this.editActionsWidget
 		},
 		inputErrorFound = false;
@@ -299,16 +299,16 @@ CaptionsPanel.prototype.getTemplateDataReadOnly = function () {
 	// basic template data
 	data = {
 		editing: false,
-		title: mw.message( 'wikibasemediainfo-entitytermsforlanguagelistview-caption' ).text()
+		title: mw.msg( 'wikibasemediainfo-entitytermsforlanguagelistview-caption' )
 	};
 
 	// the "edit" button
 	if ( this.canEdit ) {
 		data.editToggle = new OO.ui.ButtonWidget( {
-			label: mw.message( 'wikibasemediainfo-filepage-edit' ).text(),
+			label: mw.msg( 'wikibasemediainfo-filepage-edit' ),
 			framed: false,
 			flags: 'progressive',
-			title: mw.message( 'wikibasemediainfo-filepage-edit-captions' ).text(),
+			title: mw.msg( 'wikibasemediainfo-filepage-edit-captions' ),
 			classes: [ 'wbmi-entityview-editButton' ]
 		} );
 		data.editToggle.connect( this, { click: [ 'makeEditable' ] } );
@@ -323,11 +323,11 @@ CaptionsPanel.prototype.getTemplateDataReadOnly = function () {
 			flags: 'progressive',
 			framed: false,
 			label: this.state.displayAllLanguages ?
-				mw.message( 'wikibasemediainfo-filepage-fewer-languages' ).text() :
-				mw.message(
+				mw.msg( 'wikibasemediainfo-filepage-fewer-languages' ) :
+				mw.msg(
 					'wikibasemediainfo-filepage-more-languages',
 					self.getHideableLanguageCount()
-				).text()
+				)
 		} ).on(
 			'click',
 			this.setState.bind( this, { displayAllLanguages: !this.state.displayAllLanguages } )
@@ -342,7 +342,7 @@ CaptionsPanel.prototype.getTemplateDataReadOnly = function () {
 
 		language = captionData.languageText;
 		caption = captionData.text ?
-			captionData.text : mw.message( 'wikibasemediainfo-filepage-caption-empty' ).text();
+			captionData.text : mw.msg( 'wikibasemediainfo-filepage-caption-empty' );
 
 		templateCaptions.push( {
 			show: self.state.displayAllLanguages ? true : showCaptionFlags[ langCode ],

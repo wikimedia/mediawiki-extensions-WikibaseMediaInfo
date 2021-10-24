@@ -43,7 +43,7 @@ CaptionDataEditor = function ( guid, captionData, config ) {
 		},
 		value: captionData.text,
 		dir: captionData.direction,
-		placeholder: captionData.text === '' ? mw.message( 'wikibasemediainfo-filepage-caption-empty' ).text() : '',
+		placeholder: captionData.text === '' ? mw.msg( 'wikibasemediainfo-filepage-caption-empty' ) : '',
 		classes: [ 'wbmi-caption-textInput' ]
 	} );
 	this.textInput
@@ -61,10 +61,10 @@ CaptionDataEditor = function ( guid, captionData, config ) {
 							lengthDiff >= 0 &&
 							lengthDiff < self.warnWithinMaxCaptionLength
 						) {
-							self.setInputWarning( mw.message(
+							self.setInputWarning( mw.msg(
 								'wikibasemediainfo-filepage-caption-approaching-limit',
 								lengthDiff
-							).text() );
+							) );
 						} else {
 							self.setInputWarning( '' );
 						}
@@ -76,15 +76,15 @@ CaptionDataEditor = function ( guid, captionData, config ) {
 					self.setInputWarning( '' );
 
 					if ( self.minCaptionLength !== undefined && self.minCaptionLength - length > 0 ) {
-						self.setInputError( mw.message(
+						self.setInputError( mw.msg(
 							'wikibasemediainfo-filepage-caption-too-short',
 							self.minCaptionLength - length
-						).text() );
+						) );
 					} else if ( self.maxCaptionLength !== undefined && length - self.maxCaptionLength > 0 ) {
-						self.setInputError( mw.message(
+						self.setInputError( mw.msg(
 							'wikibasemediainfo-filepage-caption-too-long',
 							length - self.maxCaptionLength
-						).text() );
+						) );
 					}
 				} )
 				.always( function () {

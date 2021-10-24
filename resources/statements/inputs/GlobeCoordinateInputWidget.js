@@ -35,7 +35,7 @@ GlobeCoordinateInputWidget = function MediaInfoStatementsGlobeCoordinateInputWid
 
 	this.coordinateInput = new OO.ui.TextInputWidget( {
 		classes: [ 'wbmi-input-widget__input' ],
-		placeholder: mw.message( 'wikibasemediainfo-coordinate-input-placeholder' ).text(),
+		placeholder: mw.msg( 'wikibasemediainfo-coordinate-input-placeholder' ),
 		isRequired: true,
 		type: 'string',
 		validate: function ( value ) {
@@ -46,7 +46,7 @@ GlobeCoordinateInputWidget = function MediaInfoStatementsGlobeCoordinateInputWid
 
 	this.precisionInput = new OO.ui.DropdownInputWidget( {
 		classes: [ 'wbmi-input-widget__input' ],
-		label: mw.message( 'wikibasemediainfo-select-precision-label' ).text(),
+		label: mw.msg( 'wikibasemediainfo-select-precision-label' ),
 		options: this.getPrecisionOptions(),
 		isRequired: true,
 		$overlay: true
@@ -303,7 +303,7 @@ GlobeCoordinateInputWidget.prototype.hasValidInput = function () {
 GlobeCoordinateInputWidget.prototype.getTemplateData = function () {
 	var submitButton = new OO.ui.ButtonWidget( {
 			classes: [ 'wbmi-input-widget__button' ],
-			label: mw.message( 'wikibasemediainfo-globecoordinate-input-button-text' ).text(),
+			label: mw.msg( 'wikibasemediainfo-globecoordinate-input-button-text' ),
 			flags: [ 'progressive' ],
 			disabled: !this.hasValidInput()
 		} ),
@@ -312,7 +312,7 @@ GlobeCoordinateInputWidget.prototype.getTemplateData = function () {
 				'wbmi-input-widget__button',
 				'wbmi-input-widget__button--map-expand'
 			],
-			label: mw.message( 'wikibasemediainfo-globecoordinate-map-button-text' ).text(),
+			label: mw.msg( 'wikibasemediainfo-globecoordinate-map-button-text' ),
 			framed: true,
 			icon: 'mapPin',
 			value: this.state.expanded
@@ -324,11 +324,11 @@ GlobeCoordinateInputWidget.prototype.getTemplateData = function () {
 	return {
 		isQualifier: this.state.isQualifier,
 		coordinates: {
-			label: mw.message( 'wikibasemediainfo-coordinate-input-label' ).text(),
+			label: mw.msg( 'wikibasemediainfo-coordinate-input-label' ),
 			input: this.coordinateInput
 		},
 		precision: {
-			label: mw.message( 'wikibasemediainfo-precision-input-label' ).text(),
+			label: mw.msg( 'wikibasemediainfo-precision-input-label' ),
 			input: this.precisionInput
 		},
 		submitButton: submitButton,
@@ -463,11 +463,11 @@ GlobeCoordinateInputWidget.prototype.getPrecisionLabel = function ( precision ) 
 	var label,
 		presets = {};
 
-	presets[ mw.message( 'wikibasemediainfo-arcminute-label' ).text() ] = 1 / 60;
-	presets[ mw.message( 'wikibasemediainfo-arcsecond-label' ).text() ] = 1 / 3600;
-	presets[ mw.message( 'wikibasemediainfo-tenth-of-arcsecond-label' ).text() ] = 1 / 36000;
-	presets[ mw.message( 'wikibasemediainfo-hundreth-of-arcsecond-label' ).text() ] = 1 / 360000;
-	presets[ mw.message( 'wikibasemediainfo-thousanth-of-arcsecond-label' ).text() ] = 1 / 3600000;
+	presets[ mw.msg( 'wikibasemediainfo-arcminute-label' ) ] = 1 / 60;
+	presets[ mw.msg( 'wikibasemediainfo-arcsecond-label' ) ] = 1 / 3600;
+	presets[ mw.msg( 'wikibasemediainfo-tenth-of-arcsecond-label' ) ] = 1 / 36000;
+	presets[ mw.msg( 'wikibasemediainfo-hundreth-of-arcsecond-label' ) ] = 1 / 360000;
+	presets[ mw.msg( 'wikibasemediainfo-thousanth-of-arcsecond-label' ) ] = 1 / 3600000;
 
 	for ( label in presets ) {
 		if ( Math.abs( precision - presets[ label ] ) < 0.000000000001 ) {

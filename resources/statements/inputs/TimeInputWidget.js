@@ -37,7 +37,7 @@ TimeInputWidget = function MediaInfoStatementsTimeInputWidget( config ) {
 		value: this.state.value,
 		classes: [ 'wbmi-input-widget__input' ],
 		isRequired: true,
-		placeholder: mw.message( 'wikibasemediainfo-time-input-placeholder' ).text(),
+		placeholder: mw.msg( 'wikibasemediainfo-time-input-placeholder' ),
 		validate: function ( value ) {
 			// mark input field as invalid except
 			return value === '' || self.hasValidInput();
@@ -99,7 +99,7 @@ TimeInputWidget.prototype.unbindEventHandlers = function () {
 TimeInputWidget.prototype.getTemplateData = function () {
 	var button = new OO.ui.ButtonWidget( {
 			classes: [ 'wbmi-input-widget__button' ],
-			label: mw.message( 'wikibasemediainfo-time-input-button-text' ).text(),
+			label: mw.msg( 'wikibasemediainfo-time-input-button-text' ),
 			flags: [ 'progressive' ],
 			disabled: !this.hasValidInput()
 		} ),
@@ -111,11 +111,11 @@ TimeInputWidget.prototype.getTemplateData = function () {
 		isQualifier: this.state.isQualifier,
 		isActive: this.state.isActive,
 		formatted: this.state.value === '' ?
-			mw.message( 'wikibasemediainfo-time-timestamp-empty' ).text() :
-			mw.message( 'wikibasemediainfo-time-timestamp-invalid' ).text(),
+			mw.msg( 'wikibasemediainfo-time-timestamp-empty' ) :
+			mw.msg( 'wikibasemediainfo-time-timestamp-invalid' ),
 		input: this.input,
-		precisionLabel: mw.message( 'wikibasemediainfo-time-precision-label' ).text(),
-		calendarLabel: mw.message( 'wikibasemediainfo-time-calendar-label' ).text(),
+		precisionLabel: mw.msg( 'wikibasemediainfo-time-precision-label' ),
+		calendarLabel: mw.msg( 'wikibasemediainfo-time-calendar-label' ),
 		precision: this.precision,
 		calendar: this.calendar,
 		button: button
@@ -129,7 +129,7 @@ TimeInputWidget.prototype.getTemplateData = function () {
 		var $formatted = $( '<span>' ).addClass( 'wbmi-input-widget--formatted' ).text( formatted );
 
 		return $.extend( {}, data, {
-			formatted: mw.message( 'wikibasemediainfo-time-timestamp-formatted', $formatted.get( 0 ).outerHTML ).text()
+			formatted: mw.msg( 'wikibasemediainfo-time-timestamp-formatted', $formatted.get( 0 ).outerHTML )
 		} );
 	} );
 };

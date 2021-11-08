@@ -1,9 +1,0 @@
-{
-	"@metadata": {
-		"authors": [
-			"Toniher"
-		]
-	},
-	"apihelp-relatedconcepts-summary": "Troba conceptes relacionats amb un terme",
-	"apihelp-relatedconcepts-example": "Troba conceptes relacionats amb <kbd>apple</kbd>."
-}

@@ -43,9 +43,6 @@
 		"MediaInfoExternalEntitySearchBaseUri": {
 			"value": ""
 		},
-		"MediaInfoMediaSearchConceptChipsSimpleHeuristics": {
-			"value": []
-		},
 		"MediaInfoSupportedDataTypes": {
 			"description": "List of property datatypes which are supported in the UI",
 			"value": [
@@ -92,8 +89,7 @@
 	},
 	"MessagesDirs": {
 		"WikibaseMediaInfo": [
-			"i18n",
-			"i18n/api"
+			"i18n"
 		]
 	},
 	"ResourceModules": {
@@ -437,17 +433,6 @@
 	"DefaultUserOptions": {
 		"wbmi-cc0-confirmed": 0,
 		"wbmi-wikidata-link-notice-dismissed": 0
-	},
-	"APIModules": {
-		"relatedconcepts": {
-			"class": "Wikibase\\MediaInfo\\Api\\ApiRelatedConcepts",
-			"factory": "Wikibase\\MediaInfo\\Api\\ApiRelatedConcepts::factory",
-			"services": [
-				"HttpRequestFactory",
-				"WikibaseRepo.BaseDataModelDeserializerFactory",
-				"WikibaseRepo.SnakFormatterFactory"
-			]
-		}
 	},
 	"manifest_version": 2,
 	"GroupPermissions": {

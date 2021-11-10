@@ -163,12 +163,11 @@
                                                                                 ]
                                                                             }
                                                                         },
-                                                                        "min_score": 1.0e-8,
                                                                         "functions": [
                                                                             {
                                                                                 "script_score": {
                                                                                     "script": {
-                                                                                        "source": "max(0, ln(_score))",
+                                                                                        "source": "max(0, ln(9999999999999999) + ln(_score))",
                                                                                         "lang": "expression"
                                                                                     }
                                                                                 }
@@ -212,7 +211,7 @@
                                                         {
                                                             "script_score": {
                                                                 "script": {
-                                                                    "source": "exp(_score) \/ 2",
+                                                                    "source": "exp(_score) \/ 2 \/ 9999999999999999",
                                                                     "lang": "expression"
                                                                 }
                                                             }
@@ -367,12 +366,11 @@
                                                                                             ]
                                                                                         }
                                                                                     },
-                                                                                    "min_score": 1.0e-8,
                                                                                     "functions": [
                                                                                         {
                                                                                             "script_score": {
                                                                                                 "script": {
-                                                                                                    "source": "max(0, ln(_score))",
+                                                                                                    "source": "max(0, ln(9999999999999999) + ln(_score))",
                                                                                                     "lang": "expression"
                                                                                                 }
                                                                                             }
@@ -416,7 +414,7 @@
                                                                     {
                                                                         "script_score": {
                                                                             "script": {
-                                                                                "source": "exp(_score) \/ 2",
+                                                                                "source": "exp(_score) \/ 2 \/ 9999999999999999",
                                                                                 "lang": "expression"
                                                                             }
                                                                         }
@@ -568,12 +566,11 @@
                                                                                             ]
                                                                                         }
                                                                                     },
-                                                                                    "min_score": 1.0e-8,
                                                                                     "functions": [
                                                                                         {
                                                                                             "script_score": {
                                                                                                 "script": {
-                                                                                                    "source": "max(0, ln(_score))",
+                                                                                                    "source": "max(0, ln(9999999999999999) + ln(_score))",
                                                                                                     "lang": "expression"
                                                                                                 }
                                                                                             }
@@ -617,7 +614,7 @@
                                                                     {
                                                                         "script_score": {
                                                                             "script": {
-                                                                                "source": "exp(_score) \/ 2",
+                                                                                "source": "exp(_score) \/ 2 \/ 9999999999999999",
                                                                                 "lang": "expression"
                                                                             }
                                                                         }
@@ -769,12 +766,11 @@
                                                                                             ]
                                                                                         }
                                                                                     },
-                                                                                    "min_score": 1.0e-8,
                                                                                     "functions": [
                                                                                         {
                                                                                             "script_score": {
                                                                                                 "script": {
-                                                                                                    "source": "max(0, ln(_score))",
+                                                                                                    "source": "max(0, ln(9999999999999999) + ln(_score))",
                                                                                                     "lang": "expression"
                                                                                                 }
                                                                                             }
@@ -818,7 +814,7 @@
                                                                     {
                                                                         "script_score": {
                                                                             "script": {
-                                                                                "source": "exp(_score) \/ 2",
+                                                                                "source": "exp(_score) \/ 2 \/ 9999999999999999",
                                                                                 "lang": "expression"
                                                                             }
                                                                         }

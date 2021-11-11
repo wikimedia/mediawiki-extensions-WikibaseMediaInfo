@@ -1,9 +1,0 @@
-{
-	"@metadata": {
-		"authors": []
-	},
-	"apihelp-relatedconcepts-summary": "Find concepts related to a term",
-	"apihelp-relatedconcepts-example": "Find concepts related to <kbd>apple</kbd>.",
-	"apihelp-relatedconcepts-param-term": "The term to find related concepts for",
-	"apihelp-relatedconcepts-param-limit": "The maximum amount of related concepts to return"
-}

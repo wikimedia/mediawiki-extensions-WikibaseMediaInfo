@@ -1,0 +1,29 @@
+{
+	"@metadata": {
+		"authors": [
+			"Ajeje Brazorf"
+		]
+	},
+	"wikibasemediainfo-filepage-fileinfo-heading": "Nfurmazzioni supra lu file",
+	"wikibasemediainfo-filepage-more-languages": "Talìa $1 {{PLURAL:$1|àutra lingua|àutri lingui}}",
+	"wikibasemediainfo-filepage-cancel": "Annulla",
+	"wikibasemediainfo-filepage-edit": "Cancia",
+	"wikibasemediainfo-filepage-statement-invalid-value": "Valuri nun vàliddu",
+	"wikibasemediainfo-filepage-statement-no-value-option": "Nuddu valuri",
+	"wikibasemediainfo-statements-learn-more": "Àutri nfurmazzioni",
+	"wikibasemediainfo-string-input-button-text": "Agghiunci",
+	"wikibasemediainfo-monolingualtext-input-button-text": "Agghiunci",
+	"wikibasemediainfo-monolingualtext-input-placeholder": "Nzirisci testu",
+	"wikibasemediainfo-time-input-button-text": "Agghiunci",
+	"wikibasemediainfo-time-precision-year1g": "miliardi di anni",
+	"wikibasemediainfo-time-precision-year100k": "100 000 anni",
+	"wikibasemediainfo-time-precision-year10k": "10 000 anni",
+	"wikibasemediainfo-time-precision-year": "annu",
+	"wikibasemediainfo-time-precision-month": "misi",
+	"wikibasemediainfo-time-precision-day": "jornu",
+	"wikibasemediainfo-time-precision-hour": "ura",
+	"wikibasemediainfo-time-precision-minute": "minutu",
+	"wikibasemediainfo-time-precision-second": "secunnu",
+	"wikibasemediainfo-quantity-input-button-text": "Agghiunci",
+	"wikibasemediainfo-globecoordinate-input-button-text": "Agghiunci"
+}

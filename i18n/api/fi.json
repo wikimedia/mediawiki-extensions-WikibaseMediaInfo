@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"MITO"
+		]
+	},
+	"apihelp-relatedconcepts-summary": "Etsi käsitteitä, jotka liittyvät termiin",
+	"apihelp-relatedconcepts-example": "Etsi käsitteitä, jotka liittyvät <kbd>omenaan</kbd>.",
+	"apihelp-relatedconcepts-param-term": "Termi, jolla etsitään siihen liittyviä käsitteitä",
+	"apihelp-relatedconcepts-param-limit": "Palautettavien käsitteiden enimmäismäärä"
+}

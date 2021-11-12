@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"Gomoko"
+		]
+	},
+	"apihelp-relatedconcepts-summary": "Trouver les concepts relatifs à un terme",
+	"apihelp-relatedconcepts-example": "Trouver les concepts relatifs à <kbd>apple</kbd>.",
+	"apihelp-relatedconcepts-param-term": "Le terme pour lequel trouver des concepts liés",
+	"apihelp-relatedconcepts-param-limit": "Le nombre maximum de concepts liés à renvoyer"
+}

@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"Amire80"
+		]
+	},
+	"apihelp-relatedconcepts-summary": "מציאת מושגים שקשורים למונח",
+	"apihelp-relatedconcepts-example": "מציאת מושגים שקשורים ל־<kbd>apple</kbd>.",
+	"apihelp-relatedconcepts-param-term": "המונח שצריך למצוא עבורו מושגים קשורים",
+	"apihelp-relatedconcepts-param-limit": "המספר המרבי של מושגים קשורים שאפשר להחזיר"
+}

@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"MuratTheTurkish"
+		]
+	},
+	"apihelp-relatedconcepts-summary": "Bir terimle ilgili kavramları bulun",
+	"apihelp-relatedconcepts-example": "<kbd>apple</kbd> ile ilgili kavramları bulun.",
+	"apihelp-relatedconcepts-param-term": "İlgili kavramları bulmak için kullanılan terim",
+	"apihelp-relatedconcepts-param-limit": "Döndürülecek maksimum ilgili kavram miktarı"
+}

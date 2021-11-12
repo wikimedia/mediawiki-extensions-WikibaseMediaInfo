@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"Kly"
+		]
+	},
+	"apihelp-relatedconcepts-summary": "查找相關某個詞的概念。",
+	"apihelp-relatedconcepts-example": "查找相關 <kbd>apple</kbd> 的概念。",
+	"apihelp-relatedconcepts-param-limit": "回傳相關概念的最大數目"
+}

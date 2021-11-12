@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"Sabelöga"
+		]
+	},
+	"apihelp-relatedconcepts-summary": "Hitta koncept som relaterar till ett begrepp",
+	"apihelp-relatedconcepts-example": "Hitta koncept som relaterar till <kbd>apple</kbd>.",
+	"apihelp-relatedconcepts-param-term": "Begrepp att hitta relaterade koncept till",
+	"apihelp-relatedconcepts-param-limit": "Det högsta antalet relaterade koncept att returnera"
+}

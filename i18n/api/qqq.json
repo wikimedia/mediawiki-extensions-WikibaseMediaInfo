@@ -1,0 +1,9 @@
+{
+	"@metadata": {
+		"authors": []
+	},
+	"apihelp-relatedconcepts-summary": "{{doc-apihelp-summary|relatedconcepts}}",
+	"apihelp-relatedconcepts-example": "{{doc-apihelp-example|relatedconcepts}}.",
+	"apihelp-relatedconcepts-param-term": "{{doc-apihelp-param|relatedconcepts|term}}",
+	"apihelp-relatedconcepts-param-limit": "{{doc-apihelp-param|relatedconcepts|limit}}"
+}

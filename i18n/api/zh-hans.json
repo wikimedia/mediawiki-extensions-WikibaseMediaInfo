@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"Shizhao"
+		]
+	},
+	"apihelp-relatedconcepts-summary": "查找与术语相关的概念",
+	"apihelp-relatedconcepts-example": "查找与<kbd>apple</kbd>相关的概念。",
+	"apihelp-relatedconcepts-param-term": "查找相关概念的术语",
+	"apihelp-relatedconcepts-param-limit": "返回相关概念的最大数量"
+}

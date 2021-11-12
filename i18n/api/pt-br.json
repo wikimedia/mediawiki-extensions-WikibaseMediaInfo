@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"Eduardoaddad"
+		]
+	},
+	"apihelp-relatedconcepts-summary": "Encontre conceitos relacionados a um termo",
+	"apihelp-relatedconcepts-example": "Encontre conceitos relacionados a <kbd>apple</kbd>.",
+	"apihelp-relatedconcepts-param-term": "O termo para encontrar conceitos relacionados para",
+	"apihelp-relatedconcepts-param-limit": "A quantidade máxima de conceitos relacionados a retornar"
+}

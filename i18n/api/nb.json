@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"Jon Harald Søby"
+		]
+	},
+	"apihelp-relatedconcepts-summary": "Finn konsepter som gjelder et begrep",
+	"apihelp-relatedconcepts-example": "Finn konsepter som gjelder <kbd>apple</kbd>.",
+	"apihelp-relatedconcepts-param-term": "Begrepet relaterte konsepter skal finnes for",
+	"apihelp-relatedconcepts-param-limit": "Maksimalt antall relaterte konsepter som skal returneres"
+}

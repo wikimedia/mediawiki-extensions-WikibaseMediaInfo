@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"Bjankuloski06"
+		]
+	},
+	"apihelp-relatedconcepts-summary": "Пронајди концепти поврзани со поим",
+	"apihelp-relatedconcepts-example": "Пронајди концепти поврзани со <kbd>apple</kbd>.",
+	"apihelp-relatedconcepts-param-term": "За кој поим да се пронајдат поврзани концепти",
+	"apihelp-relatedconcepts-param-limit": "Највеќе поврзани концепти допуштени во исходот"
+}

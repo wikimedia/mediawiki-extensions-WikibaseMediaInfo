@@ -1,0 +1,9 @@
+{
+	"@metadata": {
+		"authors": []
+	},
+	"apihelp-relatedconcepts-summary": "Konzepte zu einem Begriff finden",
+	"apihelp-relatedconcepts-example": "Konzepte zum Begriff <kbd>apple</kbd> finden",
+	"apihelp-relatedconcepts-param-term": "Der Begriff, um verwandte Konzepte zu finden für",
+	"apihelp-relatedconcepts-param-limit": "Die maximale Anzahl verwandter Konzepte, die zurückgegeben werden sollen"
+}

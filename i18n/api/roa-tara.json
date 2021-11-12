@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"Joetaras"
+		]
+	},
+	"apihelp-relatedconcepts-summary": "Iacchie le congette collegate a 'nu termine",
+	"apihelp-relatedconcepts-example": "Iacchie le congette collegate a <kbd>mela</kbd>.",
+	"apihelp-relatedconcepts-param-term": "'U termine da acchià collegate a le congette pe",
+	"apihelp-relatedconcepts-param-limit": "'U numere massime de congette collegate da turnà"
+}

@@ -198,6 +198,8 @@ class WordsQueryNodeHandler implements ParsedNodeHandlerInterface {
 	private function normalizeFulltextScores( AbstractQuery $originalQuery, string $term ): AbstractQuery {
 		$termsCountQuery = $this->getTermsCountQuery( $term );
 
+		$largeNumber = 9999999999999999;
+
 		// below is a convoluted way of multiplying the scores of 2 queries
 		// (the statement match score, and the boost based on the amount of terms);
 		// multiple queries are always summed (unless with dis_max, but that's also
@@ -222,17 +224,17 @@ class WordsQueryNodeHandler implements ParsedNodeHandlerInterface {
 						( new FunctionScore() )
 							->setQuery( $originalQuery )
 							->addScriptScoreFunction(
-								// script_score must not return a negative score, which could be
-								// produced when 0 < _score < 1; we'll simply ignore those for being
-								// too small to make any meaningful impact anyway...
-								new Script( 'max(0, ln(_score))', [], 'expression' )
+								new Script(
+									// adding a large number to the score to ensure that the result
+									// ends up being a positive value (which it may not otherwise be
+									// when 0 < _score < 1)
+									// we'll later divide the result by this value again to cancel
+									// out this workaround in the final score
+									"max(0, ln($largeNumber) + ln(_score))",
+									[],
+									'expression'
+								)
 							)
-							// $originalQuery may include documents with a score of 0 - that's
-							// perfectly acceptable, but due to the nature of this hacky workaround
-							// (being based on a sum with another non-zero value), they'd end up
-							// with a non-zero result; we should simply exclude zero values from
-							// this calculation & leave them, untouched, at 0
-							->setMinScore( 0.00000001 )
 					)
 					->addShould(
 						( new FunctionScore() )
@@ -249,7 +251,7 @@ class WordsQueryNodeHandler implements ParsedNodeHandlerInterface {
 							)
 					)
 			)
-			->addScriptScoreFunction( new Script( 'exp(_score) / 2', [], 'expression' ) )
+			->addScriptScoreFunction( new Script( "exp(_score) / 2 / $largeNumber", [], 'expression' ) )
 			// setting a minimum score simply prevents documents from being dropped
 			// when used inside a must_not clause
 			->setMinScore( 0 );

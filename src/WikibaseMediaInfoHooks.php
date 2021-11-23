@@ -37,6 +37,7 @@ use Wikibase\MediaInfo\Content\MediaInfoHandler;
 use Wikibase\MediaInfo\DataAccess\Scribunto\Scribunto_LuaWikibaseMediaInfoEntityLibrary;
 use Wikibase\MediaInfo\DataAccess\Scribunto\Scribunto_LuaWikibaseMediaInfoLibrary;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
+use Wikibase\MediaInfo\Search\Feature\CustomMatchFeature;
 use Wikibase\MediaInfo\Search\MediaSearchASTClassifier;
 use Wikibase\MediaInfo\Search\MediaSearchQueryBuilder;
 use Wikibase\MediaInfo\Services\MediaInfoByLinkedTitleLookup;
@@ -903,5 +904,19 @@ class WikibaseMediaInfoHooks {
 			'href' => $baseConceptUri . $entityId->getSerialization(),
 			'title' => $skin->msg( 'wikibase-concept-uri-tooltip' )->text()
 		];
+	}
+
+	/**
+	 * Add extra cirrus search query features for wikibase
+	 *
+	 * @param \CirrusSearch\SearchConfig $config (not used, required by hook)
+	 * @param array &$extraFeatures
+	 */
+	public static function onCirrusSearchAddQueryFeatures( $config, array &$extraFeatures ) {
+		$featureConfig = MediaWikiServices::getInstance()->getMainConfig()
+			->get( 'MediaInfoCustomMatchFeature' );
+		if ( $featureConfig ) {
+			$extraFeatures[] = new CustomMatchFeature( $featureConfig );
+		}
 	}
 }

@@ -67,6 +67,10 @@
 		"MediaInfoEnableReferences": {
 			"description": "Boolean indicating whether references are supported",
 			"value": true
+		},
+		"MediaInfoCustomMatchFeature": {
+			"description": "Configuration for the 'custommatch' search feature, see Wikibase\\MediaInfo\\Search\\Feature\\CustomMatchFeature for expected format",
+			"value": {}
 		}
 	},
 	"ServiceWiringFiles": [
@@ -89,7 +93,8 @@
 		"ArticleUndelete": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onArticleUndelete",
 		"CirrusSearchProfileService": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onCirrusSearchProfileService",
 		"CirrusSearchRegisterFullTextQueryClassifiers": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onCirrusSearchRegisterFullTextQueryClassifiers",
-		"SidebarBeforeOutput": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onSidebarBeforeOutput"
+		"SidebarBeforeOutput": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onSidebarBeforeOutput",
+		"CirrusSearchAddQueryFeatures": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onCirrusSearchAddQueryFeatures"
 	},
 	"MessagesDirs": {
 		"WikibaseMediaInfo": [

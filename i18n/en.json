@@ -13,6 +13,8 @@
 	"wikibase-mediainfo-summary-wbsetlabel-set": "Edited [$2] caption",
 	"wikibasemediainfo-add-property": "Search to add properties (part of, media type, etc.)",
 	"wikibasemediainfo-add-statement": "Add statement",
+	"wikibasemediainfo-custommatch-feature-no-profile": "There is no profile configured for custommatch:$1",
+	"wikibasemediainfo-custommatch-feature-invalid-term": "Invalid search term for custommatch search feature",
 	"wikibasemediainfo-desc": "Wikibase extension to manage structured metadata of media files",
 	"wikibasemediainfo-diffview-label": "caption",
 	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Captions",

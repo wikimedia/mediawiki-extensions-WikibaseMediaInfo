@@ -3,7 +3,8 @@
 		"authors": [
 			"Bugoslav",
 			"MaGa",
-			"Neptune, the Mystic"
+			"Neptune, the Mystic",
+			"Ponor"
 		]
 	},
 	"action-mediainfo-term": "promjena informacija o medijskoj datoteci (naslovi, sažetci)",
@@ -45,7 +46,7 @@
 	"wikibasemediainfo-filepage-statement-no-results": "Nema rezultata",
 	"wikibasemediainfo-filepage-statement-some-value-option": "Određena vrijednost",
 	"wikibasemediainfo-filepage-statement-some-value": "Određene vrijednosti bez stavke na projektu {{WBREPONAME}}",
-	"wikibasemediainfo-filepage-statement-error": "Pogrješka prilikom dohvata vrijednosti ovog stvojstva",
+	"wikibasemediainfo-filepage-statement-error": "Pogreška prilikom dohvata vrijednosti ovog svojstva",
 	"wikibasemediainfo-filepage-license-title": "Opisi i drugi doprinosi strukturiranim podatcima",
 	"wikibasemediainfo-filepage-license-content": "Klikom na \"Objavi izmjene\", slažete se s [[wmf:Terms_of_Use|Uvjetima uporabe]], i neopozivo pristajete na objavu doprinosa pod licencijom [https://creativecommons.org/publicdomain/zero/1.0/ Creative Commons CC0].",
 	"wikibasemediainfo-filepage-license-content-acceptance": "Pristajem na ove uvjete u mojim budućim uređivanjima. Ne prikazuj mi više ovu poruku.",

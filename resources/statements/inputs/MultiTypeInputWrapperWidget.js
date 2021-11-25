@@ -319,7 +319,7 @@ MultiTypeInputWrapperWidget.prototype.focus = function () {
  */
 MultiTypeInputWrapperWidget.prototype.setDisabled = function ( disabled ) {
 	this.state.input.setDisabled( disabled );
-	MultiTypeInputWrapperWidget.parent.prototype.setDisabled.call( this, disabled );
+	ComponentWidget.prototype.setDisabled.call( this, disabled );
 };
 
 /**

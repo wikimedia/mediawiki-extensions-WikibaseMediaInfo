@@ -310,7 +310,7 @@ QuantityInputWidget.prototype.focus = function () {
 QuantityInputWidget.prototype.setDisabled = function ( disabled ) {
 	this.input.setDisabled( disabled );
 	this.unit.setDisabled( disabled );
-	QuantityInputWidget.parent.prototype.setDisabled.call( this, disabled );
+	ComponentWidget.prototype.setDisabled.call( this, disabled );
 };
 
 /**

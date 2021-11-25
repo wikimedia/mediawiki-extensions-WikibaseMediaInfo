@@ -135,17 +135,19 @@ ComponentWidget.prototype.renderInternal = function () {
 	// render does not conflict with an in-progress one
 	return $.Deferred().resolve().promise()
 		.then( this.getTemplateData.bind( this ) )
-		.then( this.extractDOMNodes.bind( this ) )
-		.then( function ( data, preserve ) {
+		.then( this.extractParamDOMNodes.bind( this ) )
+		.then( function ( data, nodes ) {
 			var template = mw.template.get( self.moduleName, self.templateName ),
 				$rendered = template.render( data ),
 				scrollTop = $( window ).scrollTop();
 
-			self.rebuildDOM(
-				self.$element,
-				$( self.$element.get( 0 ).cloneNode( false ) ).append( $rendered ),
-				preserve
-			);
+			nodes = nodes.concat( self.extractDOMNodesWithContext( self.$element.get( 0 ) ) );
+
+			self.$element = $( self.rebuildDOM(
+				self.$element.get( 0 ),
+				$( self.$element.get( 0 ).cloneNode( false ) ).append( $rendered ).get( 0 ),
+				nodes
+			) );
 
 			// after having rebuilt the DOM and things might have shifted up & down,
 			// let's make sure we're back at the scroll position we were before
@@ -177,50 +179,46 @@ ComponentWidget.prototype.renderInternal = function () {
  * state)
  *
  * @private
- * @param {jQuery} $old
- * @param {jQuery} $new
- * @param {Array} [preserve]
- * @return {jQuery}
+ * @param {Node} oldContainer
+ * @param {Node} newContainer
+ * @param {Node[]} [preservedNodes]
+ * @return {Node}
  */
-ComponentWidget.prototype.rebuildDOM = function ( $old, $new, preserve ) {
-	var self = this,
-		$newNodes = $new.contents(),
-		$oldNodes = $old.contents(),
-		matchedNodes = this.matchNodes( $newNodes, $oldNodes, preserve );
+ComponentWidget.prototype.rebuildDOM = function ( oldContainer, newContainer, preservedNodes ) {
+	var newChildrenArray = [].slice.call( newContainer.childNodes ),
+		oldChildrenArray = [].slice.call( oldContainer.childNodes ),
+		matchedNodes = this.matchNodes( newChildrenArray, oldChildrenArray, preservedNodes ),
+		newNode,
+		oldNode,
+		newIndex,
+		currentIndex,
+		i;
 
-	// get rid of text nodes - we don't want to match them between rerenders,
-	// that might mess up the order of things (especially with whitespace text
-	// nodes, that are always very similar - there might be an exact copy
-	// further down the DOM) and there's nothing in these text nodes that we'd
-	// even want to preserve - we'll simply insert the new text nodes later on
-	$oldNodes.contents().filter( function ( i, node ) {
-		return node.nodeName === '#text';
-	} ).remove();
-
-	preserve = preserve || [];
-
-	$newNodes.get().forEach( function ( newNode, newIndex ) {
-		var oldNode = matchedNodes[ newIndex ].get( 0 ),
-			currentIndex = oldNode ? $old.contents().index( oldNode ) : -1;
+	for ( newIndex = 0; newIndex < newChildrenArray.length; newIndex++ ) {
+		newNode = newChildrenArray[ newIndex ];
+		oldNode = matchedNodes[ newIndex ];
+		currentIndex = oldNode ? [].slice.call( oldContainer.childNodes ).indexOf( oldNode ) : -1;
 
 		// step 1: figure out the position of the new nodes in the old DOM,
 		// insert it at the correct position (if new) or detach existing
 		// nodes that now no longer exist before the new node
 		if ( currentIndex < 0 ) {
 			// if new node did not previously exist, insert it at this index
-			if ( newIndex === 0 ) {
-				$old.prepend( newNode );
+			if ( oldContainer.childNodes.length === 0 ) {
+				oldContainer.appendChild( newNode );
 			} else {
-				$old.contents().eq( newIndex - 1 ).after( newNode );
+				oldContainer.insertBefore( newNode, oldContainer.childNodes[ newIndex ] );
 			}
 			// it's a new node; there's no merging left to be done with an old
 			// node, so let's bail early!
-			return;
+			continue;
 		} else if ( currentIndex > newIndex ) {
 			// if node already exists, but further away in DOM, detach everything
 			// in between (could be old nodes that will end up removed;
 			// could be old nodes that we'll still need elsewhere later on)
-			$old.contents().slice( newIndex, currentIndex ).detach();
+			[].slice.call( oldContainer.childNodes, newIndex, currentIndex ).forEach( function ( node ) {
+				node.parentNode.removeChild( node );
+			} );
 		}
 
 		// step 2: if we have a new node that corresponds with an existing one,
@@ -228,41 +226,49 @@ ComponentWidget.prototype.rebuildDOM = function ( $old, $new, preserve ) {
 		// or new node (if it's one to be preserved - i.e. we're manipulating the
 		// node directly elsewhere in JS), or trying to apply properties of the
 		// new node to the old node
-		if ( preserve.indexOf( oldNode ) >= 0 ) {
+		if ( preservedNodes.indexOf( oldNode ) >= 0 ) {
 			// oldNode is a node that needs to be preserved: it was a DOM node
 			// directly assigned as a variable to the template and it may have
 			// context that we must not lose (event listeners, focus state...)
 			// leave this node alone!
-			// (this block is intentionally blank to make above reasoning clear)
-		} else if ( preserve.indexOf( newNode ) >= 0 ) {
+			preservedNodes.splice( preservedNodes.indexOf( oldNode ), 1 );
+		} else if ( preservedNodes.indexOf( newNode ) >= 0 ) {
 			// same as above: it was assigned to the template, but it did not
 			// yet exist in the old render (a very similar node might exist,
 			// but not this exact one, which might have other event handlers
 			// bound or so)
 			// we must not try to merge old & new nodes, this is the exact
 			// right node - it was passed into the template as such
-			$( oldNode ).replaceWith( $( newNode ).after( $( oldNode ).clone() ) );
-		} else if ( !self.isEqualNodeAndProps( oldNode, newNode ) && preserve.indexOf( oldNode ) < 0 ) {
+			oldNode.parentNode.replaceChild( newNode, oldNode );
+			preservedNodes.splice( preservedNodes.indexOf( oldNode ), 1 );
+		} else if ( this.isEqualNodeAndProps( oldNode, newNode ) ) {
+			// this node is identical, there's nothing we need to do here,
+			// we can simply keep our old node
+		} else if ( oldNode.tagName && oldNode.tagName === newNode.tagName ) {
 			// this is for all other nodes, that were built from the HTML in
 			// the template
 			// we don't want to simply swap out these nodes, because then we
 			// could lose context (e.g. focus state or input values), so let's
 			// just try to apply the new characteristics on to the existing nodes
-			[].slice.call( oldNode.attributes ).forEach( function ( attribute ) {
-				oldNode.removeAttribute( attribute.name );
-			} );
-			[].slice.call( newNode.attributes ).forEach( function ( attribute ) {
-				oldNode.setAttribute( attribute.name, attribute.value );
-			} );
+			for ( i = 0; i < oldNode.attributes.length; i++ ) {
+				oldNode.removeAttribute( oldNode.attributes[ i ].name );
+			}
+			for ( i = 0; i < newNode.attributes.length; i++ ) {
+				oldNode.setAttribute( newNode.attributes[ i ].name, newNode.attributes[ i ].value );
+			}
 
 			// rebuild children as needed, recursively
-			self.rebuildDOM( $( oldNode ), $( newNode ), preserve );
+			oldNode = this.rebuildDOM( oldNode, newNode, preservedNodes );
+		} else {
+			oldNode.parentNode.replaceChild( newNode, oldNode );
 		}
-	} );
+	}
 
 	// remove leftover nodes, returning only the relevant ones
-	$old.contents().slice( $newNodes.length ).detach();
-	return $old;
+	[].slice.call( oldContainer.childNodes, newChildrenArray.length ).forEach( function ( node ) {
+		node.parentNode.removeChild( node );
+	} );
+	return oldContainer;
 };
 
 /**
@@ -274,7 +280,7 @@ ComponentWidget.prototype.rebuildDOM = function ( $old, $new, preserve ) {
  * @param {Object} data
  * @return {jQuery.Promise}
  */
-ComponentWidget.prototype.extractDOMNodes = function ( data ) {
+ComponentWidget.prototype.extractParamDOMNodes = function ( data ) {
 	var self = this,
 		transformed,
 		getNode,
@@ -348,101 +354,116 @@ ComponentWidget.prototype.extractDOMNodes = function ( data ) {
 };
 
 /**
- * Given 2 collection of nodes ($one and $two), this will return
- * an array of the same size as $one, where the indices correspond
- * to the nodes in $one, and the values are the best matching/most
- * similar node in $two.
- *
  * @private
- * @param {jQuery} $one
- * @param {jQuery} $two
- * @param {Array} [preserve]
+ * @param {Node} node
  * @return {Array}
  */
-ComponentWidget.prototype.matchNodes = function ( $one, $two, preserve ) {
+ComponentWidget.prototype.extractDOMNodesWithContext = function ( node ) {
+	return [].concat(
+		// the active node must be preserved, so that we don't lose e.g. focus
+		$( node ).find( document.activeElement ).addBack( document.activeElement ).get(),
+		// if this node or one of its children is a form element whose value has
+		// been altered compared to what it rendered with initially, it matters
+		$( node )
+			.find( 'input:not([type="checkbox"]):not([type="radio"]), textarea' )
+			.addBack( 'input:not([type="checkbox"]):not([type="radio"]), textarea' )
+			.filter( function ( i, n ) {
+				return n.value !== n.defaultValue;
+			} ).get(),
+		$( node )
+			.find( 'input[type="checkbox"], input[type="radio"]' )
+			.addBack( 'input[type="checkbox"], input[type="radio"]' )
+			.filter( function ( i, n ) {
+				return n.checked !== n.defaultChecked;
+			} ).get(),
+		$( node )
+			.find( 'option' )
+			.addBack( 'option' )
+			.filter( function ( i, n ) {
+				return n.selected !== n.defaultSelected;
+			} ).get()
+	);
+};
+
+/**
+ * Given 2 collection of nodes (`one` and `two`), this will return
+ * an array of the same size as `one`, where the indices correspond
+ * to the nodes in `one`, and the values are the best matching/most
+ * similar node in `two`.
+ *
+ * @private
+ * @param {Node[]} one
+ * @param {Node[]} two
+ * @param {Node[]} [preserve]
+ * @return {Node[]}
+ */
+ComponentWidget.prototype.matchNodes = function ( one, two, preserve ) {
 	var self = this,
 		used = [],
-		isRelevantNode = function ( $node ) {
-			return (
+		isRelevantNode = function ( node ) {
+			return node.tagName && (
 				// if this node or one of its children is one to be preserved, it matters
-				( preserve || [] ).some( function ( node ) {
-					return $node.find( node ).addBack( node ).length > 0;
+				( preserve || [] ).some( function ( p ) {
+					return $( node ).find( p ).addBack( p ).length > 0;
 				} ) ||
-				// if this node or one of its children is the active element, it matters
-				$node.find( document.activeElement ).addBack( document.activeElement ).length > 0 ||
-				// if this node or one of its children is a form element whose value has
-				// been altered compared to what it rendered with initially, it matters
-				$node
-					.find( 'input:not([type="checkbox"]):not([type="radio"]), textarea' )
-					.addBack( 'input:not([type="checkbox"]):not([type="radio"]), textarea' )
-					.filter( function ( i, node ) {
-						return node.value !== node.defaultValue;
-					} ).length > 0 ||
-				$node
-					.find( 'input[type="checkbox"], input[type="radio"]' )
-					.addBack( 'input[type="checkbox"], input[type="radio"]' )
-					.filter( function ( i, node ) {
-						return node.checked !== node.defaultChecked;
-					} ).length > 0 ||
-				$node
-					.find( 'option' )
-					.addBack( 'option' )
-					.filter( function ( i, node ) {
-						return node.selected !== node.defaultSelected;
-					} ).length > 0
+				self.extractDOMNodesWithContext( node ).length > 0
 			);
 		},
-		$oneHasRelevantNode = isRelevantNode( $one ),
-		$twoHasRelevantNode = isRelevantNode( $two ),
+		oneHasRelevantNode = one.reduce( function ( result, node ) {
+			return result || isRelevantNode( node );
+		}, false ),
+		twoHasRelevantNode = two.reduce( function ( result, node ) {
+			return result || isRelevantNode( node );
+		}, false ),
 		mapOne, mapTwo;
 
 	// find best matching nodes in both data sets
-	mapOne = $one.get().map( function ( node ) {
-		if ( !isRelevantNode( $( node ) ) && !$twoHasRelevantNode ) {
+	mapOne = one.map( function ( node ) {
+		if ( !isRelevantNode( node ) && !twoHasRelevantNode ) {
 			// performance optimization: the DOM reconciliation process is
 			// extremely demanding: it might end up cross-referencing just
 			// about the entire DOM
 			// since the only nodes that we need to reconcile are those that
 			// might have some input or state (e.g. focus) are some form
 			// elements, we can bypass this entire routine for all others
-			return $();
+			return [];
 		}
-		return self.findBestMatchingNodes( $( node ), $two );
+		return self.findBestMatchingNodes( node, two );
 	} );
-	mapTwo = $two.get().map( function ( node ) {
-		if ( !isRelevantNode( $( node ) ) && !$oneHasRelevantNode ) {
+	mapTwo = two.map( function ( node ) {
+		if ( !isRelevantNode( node ) && !oneHasRelevantNode ) {
 			// performance optimization: see explanation above for `mapOne`
-			return $();
+			return [];
 		}
-		return self.findBestMatchingNodes( $( node ), $one );
+		return self.findBestMatchingNodes( node, one );
 	} );
 
 	return mapOne
 		// we'll first eliminate all matches that don't cross-reference
-		// one another (e.g. where $two finds that there is a better match
-		// in $one)
-		.map( function ( $nodesInTwo, i ) {
-			var $nodeInOne = $one.eq( i );
-			return $nodesInTwo.filter( function ( j, nodeInTwo ) {
-				var $nodesInOne = mapTwo[ $two.index( nodeInTwo ) ];
-				return $nodesInOne.filter( $nodeInOne ).length > 0;
+		// one another (e.g. where `two` finds that there is a better match
+		// in `one`)
+		.map( function ( nodesInTwo, i ) {
+			var nodeInOne = one[ i ];
+			return nodesInTwo.filter( function ( nodeInTwo ) {
+				var nodesInOne = mapTwo[ two.indexOf( nodeInTwo ) ];
+				return $( nodesInOne ).filter( nodeInOne ).length > 0;
 			} );
 		} )
 		// next, we'll make sure to only keep 1 best match: the first
 		// remaining one (except if already matched elsewhere)
-		.map( function ( $nodesInTwo ) {
+		.map( function ( nodesInTwo ) {
 			// grab the first (available) node
 			// there may still be multiple matches, so let's make
 			// sure we don't match one already matched earlier...
-			var $nodeInTwo = $nodesInTwo.filter( function ( i, nodeInTwo ) {
-				return used.indexOf( nodeInTwo ) < 0;
-			} ).eq( 0 );
+			var nodeInTwo = nodesInTwo.filter( function ( node ) {
+				return used.indexOf( node ) < 0;
+			} )[ 0 ];
 
 			// append to array of used nodes, so next node can't use
 			// it anymore
-			used.push( $nodeInTwo.get( 0 ) );
+			used.push( nodeInTwo );
 
-			return $nodeInTwo;
+			return nodeInTwo;
 		} );
 };
 
@@ -451,52 +472,81 @@ ComponentWidget.prototype.matchNodes = function ( $one, $two, preserve ) {
  * node (`.isEqualNode`), or the best possible matches with the same children.
  *
  * @private
- * @param {jQuery} $needle
- * @param {jQuery} $haystack
- * @return {jQuery}
+ * @param {Node} needle
+ * @param {Node[]} haystack
+ * @return {Node[]}
  */
-ComponentWidget.prototype.findBestMatchingNodes = function ( $needle, $haystack ) {
+ComponentWidget.prototype.findBestMatchingNodes = function ( needle, haystack ) {
 	var self = this,
-		i,
-		$potentialMatches,
+		matches,
+		potentialMatches,
 		matchingChildrenAmounts,
-		maxMatchingChildren;
+		differingChildrenAmounts,
+		maxMatchingChildren,
+		minDifferingChildren,
+		i;
 
-	// find exact same node
-	for ( i = 0; i < $haystack.length; i++ ) {
-		if ( $needle.get( 0 ).isEqualNode( $haystack.get( i ) ) ) {
-			return $haystack.eq( i );
-		}
+	// find exact same node(s)
+	matches = haystack.filter( function ( node ) {
+		return node.isEqualNode( needle );
+	} );
+	if ( matches.length ) {
+		return matches;
 	}
 
 	// find similar nodes based on them having the same children
-	if ( $needle.prop( 'tagName' ) ) {
+	if ( needle && needle.tagName ) {
 		// narrow down to potential matches, based on tag name and node characteristics
-		$potentialMatches = $haystack
-			.filter( $needle.prop( 'tagName' ) )
-			.filter( function ( j, node ) {
+		potentialMatches = haystack
+			.filter( function ( node ) {
 				// test whether nodes are similar enough
 				// (we'll do this again for all their children to find the
 				// *most similar* later on - this just eliminates some,
 				// e.g. when id of node doesn't even match)
-				return self.getNumberOfEqualNodes( $needle.get(), [ node ] ) > 0;
+				return (
+					node &&
+					node.tagName === needle.tagName &&
+					self.getNumberOfEqualNodes( [ needle ], [ node ] ) > 0
+				);
 			} );
 
 		// find the largest amount of matching children
-		matchingChildrenAmounts = $potentialMatches.get().map( function ( newNode ) {
-			return self.getNumberOfEqualNodes( $needle.children().get(), $( newNode ).children().get() );
+		matchingChildrenAmounts = potentialMatches.map( function ( newNode ) {
+			return self.getNumberOfEqualNodes(
+				[].slice.call( needle.children ),
+				[].slice.call( newNode.children )
+			);
 		} );
-		maxMatchingChildren = Math.max.apply( Math, matchingChildrenAmounts.concat( 0 ) );
+		differingChildrenAmounts = potentialMatches.map( function ( newNode, j ) {
+			return Math.max( needle.children.length, newNode.children.length ) - matchingChildrenAmounts[ j ];
+		} );
 
-		if ( maxMatchingChildren > 0 ) {
-			// return the best matching node(s) - the one(s) with the largest amount of matching children
-			return $potentialMatches.filter( function ( j ) {
-				return matchingChildrenAmounts[ j ] === maxMatchingChildren;
-			} );
+		// leave only the nodes with the largest amount of matching children
+		maxMatchingChildren = Math.max.apply( Math, matchingChildrenAmounts.concat( 0 ) );
+		for ( i = 0; i < potentialMatches.length; i++ ) {
+			if ( matchingChildrenAmounts[ i ] !== maxMatchingChildren ) {
+				potentialMatches.splice( i, 1 );
+				matchingChildrenAmounts.splice( i, 1 );
+				differingChildrenAmounts.splice( i, 1 );
+			}
 		}
+
+		// in the event that there are multiple nodes with the same amount of matching
+		// children, we'll only keep the one(s) that have the minimum amount of different
+		// children
+		minDifferingChildren = Math.min.apply( Math, differingChildrenAmounts.concat( needle.children.length ) );
+		for ( i = 0; i < potentialMatches.length; i++ ) {
+			if ( differingChildrenAmounts[ i ] !== minDifferingChildren ) {
+				potentialMatches.splice( i, 1 );
+				matchingChildrenAmounts.splice( i, 1 );
+				differingChildrenAmounts.splice( i, 1 );
+			}
+		}
+
+		return potentialMatches;
 	}
 
-	return $();
+	return [];
 };
 
 /**
@@ -551,9 +601,9 @@ ComponentWidget.prototype.isEqualNodeAndProps = function ( one, two ) {
 ComponentWidget.prototype.getNumberOfEqualNodes = function ( one, two ) {
 	var self = this;
 
-	return two
+	return one
 		.map( function ( twoNode ) {
-			return one.filter( function ( oneNode ) {
+			return two.some( function ( oneNode ) {
 				var nodeOneChildren,
 					nodeTwoChildren;
 
@@ -579,13 +629,13 @@ ComponentWidget.prototype.getNumberOfEqualNodes = function ( one, two ) {
 				}
 
 				// node is not a perfect match - let's run their children through the same set of criteria
-				nodeOneChildren = $( oneNode ).children().get();
-				nodeTwoChildren = $( twoNode ).children().get();
+				nodeOneChildren = [].slice.call( oneNode.children );
+				nodeTwoChildren = [].slice.call( twoNode.children );
 				return self.getNumberOfEqualNodes( nodeOneChildren, nodeTwoChildren ) > 0;
-			} ).length;
+			} );
 		} )
-		.reduce( function ( sum, count ) {
-			return sum + count;
+		.reduce( function ( sum, isEqual ) {
+			return sum + ( isEqual ? 1 : 0 );
 		}, 0 );
 };
 

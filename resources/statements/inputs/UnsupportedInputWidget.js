@@ -97,7 +97,7 @@ UnsupportedInputWidget.prototype.focus = function () {
 UnsupportedInputWidget.prototype.setDisabled = function () {
 	// this input type is *always* disabled
 	this.input.setDisabled( true );
-	UnsupportedInputWidget.parent.prototype.setDisabled.call( this, true );
+	ComponentWidget.prototype.setDisabled.call( this, true );
 };
 
 module.exports = UnsupportedInputWidget;

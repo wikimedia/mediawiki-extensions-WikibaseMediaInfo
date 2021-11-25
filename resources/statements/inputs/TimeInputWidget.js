@@ -374,7 +374,7 @@ TimeInputWidget.prototype.setDisabled = function ( disabled ) {
 	this.input.setDisabled( disabled );
 	this.precision.setDisabled( disabled );
 	this.calendar.setDisabled( disabled );
-	TimeInputWidget.parent.prototype.setDisabled.call( this, disabled );
+	ComponentWidget.prototype.setDisabled.call( this, disabled );
 };
 
 /**

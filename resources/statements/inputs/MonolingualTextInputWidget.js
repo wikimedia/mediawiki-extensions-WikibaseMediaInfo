@@ -154,7 +154,7 @@ MonolingualTextInputWidget.prototype.focus = function () {
 MonolingualTextInputWidget.prototype.setDisabled = function ( disabled ) {
 	this.input.setDisabled( disabled );
 	this.language.setDisabled( disabled );
-	MonolingualTextInputWidget.parent.prototype.setDisabled.call( this, disabled );
+	ComponentWidget.prototype.setDisabled.call( this, disabled );
 };
 
 /**

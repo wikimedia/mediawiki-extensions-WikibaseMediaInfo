@@ -107,7 +107,7 @@ EntityInputWidget.prototype.focus = function () {
  */
 EntityInputWidget.prototype.setDisabled = function ( disabled ) {
 	this.input.setDisabled( disabled );
-	EntityInputWidget.parent.prototype.setDisabled.call( this, disabled );
+	ComponentWidget.prototype.setDisabled.call( this, disabled );
 };
 
 module.exports = EntityInputWidget;

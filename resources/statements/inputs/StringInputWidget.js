@@ -117,7 +117,7 @@ StringInputWidget.prototype.focus = function () {
  */
 StringInputWidget.prototype.setDisabled = function ( disabled ) {
 	this.input.setDisabled( disabled );
-	StringInputWidget.parent.prototype.setDisabled.call( this, disabled );
+	ComponentWidget.prototype.setDisabled.call( this, disabled );
 };
 
 /**

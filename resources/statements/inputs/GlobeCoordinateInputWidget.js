@@ -450,7 +450,7 @@ GlobeCoordinateInputWidget.prototype.focus = function () {
 GlobeCoordinateInputWidget.prototype.setDisabled = function ( disabled ) {
 	this.coordinateInput.setDisabled( disabled );
 	this.precisionInput.setDisabled( disabled );
-	GlobeCoordinateInputWidget.parent.prototype.setDisabled.call( this, disabled );
+	ComponentWidget.prototype.setDisabled.call( this, disabled );
 };
 
 /**

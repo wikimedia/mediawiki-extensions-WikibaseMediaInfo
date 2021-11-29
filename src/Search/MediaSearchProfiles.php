@@ -145,7 +145,7 @@ return [
 				// below is not actually a field
 				'synonyms' => 0,
 			],
-			'normalizeFulltextScores' => true,
+			'normalizeFulltextScores' => false,
 			'normalizeMultiClauseScores' => true,
 			'entitiesVariableBoost' => true,
 			'applyLogisticFunction' => true,
@@ -252,7 +252,7 @@ return [
 				// below is not actually a field
 				'synonyms' => 0.5,
 			],
-			'normalizeFulltextScores' => true,
+			'normalizeFulltextScores' => false,
 			'normalizeMultiClauseScores' => true,
 			'entitiesVariableBoost' => true,
 			'applyLogisticFunction' => true,

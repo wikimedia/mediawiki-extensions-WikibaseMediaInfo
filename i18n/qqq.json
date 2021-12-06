@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"Ajeje Brazorf",
 			"Amire80",
 			"Joao Xavier",
 			"Liuxinyu970226",
@@ -58,10 +59,10 @@
 	"wikibasemediainfo-statements-depicts-title": "Title text for section for adding items depicted in the image",
 	"wikibasemediainfo-statements-item-qualifiers": "Title for qualifiers section",
 	"wikibasemediainfo-statements-item-add-qualifier": "Text for button to add a qualifier",
-	"wikibasemediainfo-statements-item-reference": "Title for 1 specific references section",
-	"wikibasemediainfo-statements-item-references": "Title for all references section",
+	"wikibasemediainfo-statements-item-reference": "Title for 1 specific references section\n\n{{Identical|Reference}}",
+	"wikibasemediainfo-statements-item-references": "Title for all references section\n\n{{Identical|Reference}}",
 	"wikibasemediainfo-statements-item-add-reference": "Text for button to add a reference",
-	"wikibasemediainfo-statements-item-add-reference-snak": "Text for button to add a reference snak",
+	"wikibasemediainfo-statements-item-add-reference-snak": "Text for button to add a reference snak\n\n{{Identical|Add}}",
 	"wikibasemediainfo-statements-item-input-label": "Label text for input fields autocompleting Wikidata properties",
 	"wikibasemediainfo-statements-item-input-placeholder": "Placeholder text for input field to search for properties",
 	"wikibasemediainfo-statements-item-is-prominent": "Text for link when statement is prominent, to turn it normal again.\n\nIn the context of \"depicts\" statements, \"prominent\" describes a thing or a person that is displayed prominently in an image.",

@@ -6,5 +6,8 @@
 		]
 	},
 	"wikibasemediainfo-filepage-more-languages": "Lihat $1 {{PLURAL:$1|bahasa}} lain",
-	"wikibasemediainfo-filepage-statement-invalid-value": "Nilai tidak sah"
+	"wikibasemediainfo-filepage-statement-invalid-value": "Nilai tidak sah",
+	"wikibasemediainfo-statements-item-reference": "Rujukan",
+	"wikibasemediainfo-statements-item-references": "Rujukan",
+	"wikibasemediainfo-statements-item-add-reference-snak": "Tambahkan"
 }

@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"Ajeje Brazorf",
 			"Beta16",
 			"Fringio",
 			"Luca.favorido",
@@ -52,6 +53,8 @@
 	"wikibasemediainfo-property-placeholder": "Proprietà",
 	"wikibasemediainfo-filepage-license-agree": "Accetto",
 	"wikibasemediainfo-statements-item-add-qualifier": "Aggiungi qualificatore",
+	"wikibasemediainfo-statements-item-add-reference": "Agghiunci rifirenza",
+	"wikibasemediainfo-statements-item-add-reference-snak": "Aggiungi",
 	"wikibasemediainfo-statements-item-input-label": "da {{WBREPONAME}}",
 	"wikibasemediainfo-statements-item-input-placeholder": "Cerca per aggiungere elementi",
 	"wikibasemediainfo-statements-item-is-prominent": "Prominente",

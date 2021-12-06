@@ -428,14 +428,14 @@ ComponentWidget.prototype.matchNodes = function ( one, two, preserve ) {
 			// elements, we can bypass this entire routine for all others
 			return [];
 		}
-		return self.findBestMatchingNodes( node, two );
+		return node.tagName ? self.findBestMatchingNodes( node, two ) : [];
 	} );
 	mapTwo = two.map( function ( node ) {
 		if ( !isRelevantNode( node ) && !oneHasRelevantNode ) {
 			// performance optimization: see explanation above for `mapOne`
 			return [];
 		}
-		return self.findBestMatchingNodes( node, one );
+		return node.tagName ? self.findBestMatchingNodes( node, one ) : [];
 	} );
 
 	return mapOne

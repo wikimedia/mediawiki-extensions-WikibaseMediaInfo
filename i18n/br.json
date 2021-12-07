@@ -1,11 +1,13 @@
 {
 	"@metadata": {
 		"authors": [
-			"Fulup"
+			"Fulup",
+			"Adriendelucca"
 		]
 	},
 	"wikibase-entity-mediainfo": "Keleier media",
 	"wikibasemediainfo-desc": "Astenn eus Wikibase evit merañ metaroadennoù frammet eus restroù media",
+	"wikibasemediainfo-filepage-more-languages": "Diskouez $1 {{PLURAL:$1|yezh}} ouzhpenn",
 	"wikibasemediainfo-filepage-statement-value-type-dropdown-title": "Dibab ur seurt talvoud.",
 	"wikibasemediainfo-special-mediasearch-title": "Klask ur media",
 	"wikibasemediainfo-special-mediasearch-continue": "War-lerc'h",

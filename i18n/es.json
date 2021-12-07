@@ -11,7 +11,8 @@
 			"MarcoAurelio",
 			"Mpayansilva",
 			"Rodney Araujo",
-			"ZealousBlaze"
+			"ZealousBlaze",
+			"Agent"
 		]
 	},
 	"action-mediainfo-term": "Cambiar términos de información de medios (leyendas, resúmenes…)",
@@ -41,6 +42,7 @@
 	"wikibasemediainfo-filepage-edit": "Editar",
 	"wikibasemediainfo-filepage-publish": "Publicar cambios",
 	"wikibasemediainfo-filepage-caption-empty": "Añade una explicación corta acerca de lo que representa este archivo",
+	"wikibasemediainfo-filepage-caption-too-short": "$1 más {{PLURAL:$1|carácter|carácteres}} requeridos",
 	"wikibasemediainfo-filepage-statement-custom-value-option": "Valor personalizado",
 	"wikibasemediainfo-filepage-statement-no-value-option": "Sin valor",
 	"wikibasemediainfo-filepage-statement-no-value": "No existe ningún valor para esta propiedad",

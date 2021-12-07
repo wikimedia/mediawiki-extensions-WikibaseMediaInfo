@@ -74,7 +74,7 @@
 	"wikibasemediainfo-statements-unsupported-property-type-content": "Tüm özellik türleri tam olarak desteklenmez, ancak gelecekte de desteklenecektir. Şimdilik, desteklenmeyen özelliklerin işlevselliği beklediğiniz gibi çalışmayabilir.",
 	"wikibasemediainfo-statements-link-notice-text": "Yapısal veri etiketleri ilgili {{WBREPONAME}} sayfalarına bağlanır ve yeni bir pencerede açılır.",
 	"wikibasemediainfo-statements-link-notice-dismiss": "Kapat",
-	"wikibasemediainfo-remove-all-statements-confirm": "Bu eylem, bu özellik için mevcut tüm değerleri silecektir. Değeri olmayan özellikler, değişiklikler yayınlandığında kaldırılacaktır. Emin misiniz?",
+	"wikibasemediainfo-remove-all-statements-confirm": "Bu eylem, bu özellik için mevcut tüm değerleri silecektir. Değeri olmayan özellikler, değişiklikler yayımlandığında kaldırılacaktır. Emin misiniz?",
 	"wikibasemediainfo-remove-all-statements-confirm-title": "Hepsini kaldırılsın mı?",
 	"wikibasemediainfo-remove-all-statements-confirm-accept": "Kaldır",
 	"wikibasemediainfo-coordinate-input-label": "Koordinatlar",

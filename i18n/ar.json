@@ -43,6 +43,7 @@
 	"wikibasemediainfo-filepage-caption-approaching-limit": "$1 {{PLURAL:$1|حرف|حروف|0=حروف}} متبقي",
 	"wikibasemediainfo-filepage-statement-value-type-dropdown-title": ".اختر نوع القيمة",
 	"wikibasemediainfo-filepage-statement-custom-value-option": "قيمة مخصصة",
+	"wikibasemediainfo-filepage-statement-invalid-value": "قيمة غير صالحة",
 	"wikibasemediainfo-filepage-statement-no-value-option": "لا قيمة",
 	"wikibasemediainfo-filepage-statement-no-value": "لا توجد قيمة لهذه الخاصية",
 	"wikibasemediainfo-filepage-statement-no-data": "لا تتوفر بيانات",

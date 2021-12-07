@@ -6,7 +6,9 @@
 			"Movses",
 			"Piramidion",
 			"Vlad5250",
-			"Ата"
+			"Ата",
+			"DDPAT",
+			"NickK"
 		]
 	},
 	"action-mediainfo-term": "зміну інформації медіафайлів (підписів, описів)",
@@ -41,6 +43,7 @@
 	"wikibasemediainfo-filepage-caption-approaching-limit": "{{PLURAL:$1|Залишився $1 символ|Залишилося $1 символи|Залишилось $1 символів}}",
 	"wikibasemediainfo-filepage-statement-value-type-dropdown-title": "Виберіть тип значення.",
 	"wikibasemediainfo-filepage-statement-custom-value-option": "Нестандартне значення",
+	"wikibasemediainfo-filepage-statement-invalid-value": "Недійсне значення",
 	"wikibasemediainfo-filepage-statement-no-value-option": "Без значення",
 	"wikibasemediainfo-filepage-statement-no-value": "Для цієї властивості значення відсутнє",
 	"wikibasemediainfo-filepage-statement-no-data": "Немає доступних даних",
@@ -148,6 +151,7 @@
 	"wikibasemediainfo-special-mediasearch-quickview-close-button-text": "Закрити деталі файлу",
 	"wikibasemediainfo-special-mediasearch-quickview-previous-button-text": "Переглянути попередній результат",
 	"wikibasemediainfo-special-mediasearch-quickview-next-button-text": "Переглянути наступний результат",
+	"wikibasemediainfo-rescore-profile-classic-noboostlinks-max-boost-template": "Рейтинг, заснований на найкращому шаблоні, мові сторінки та останнім часом, коли він активований у цій вікі.",
 	"wikibasemediainfo-copytextlayout-copy": "Скопіювати",
 	"wikibasemediainfo-copytextlayout-copy-fail": "Помилка копіювання до буферу обміну.",
 	"wikibasemediainfo-copytextlayout-copy-success": "Скопійовано до буферу обміну."

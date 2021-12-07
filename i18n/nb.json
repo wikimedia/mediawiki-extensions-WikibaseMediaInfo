@@ -3,7 +3,8 @@
 		"authors": [
 			"AnB",
 			"Jon Harald Søby",
-			"Kingu"
+			"Kingu",
+			"Nettrom"
 		]
 	},
 	"action-mediainfo-term": "endre medieinfotermer (bildetekster, sammendrag)",
@@ -38,6 +39,7 @@
 	"wikibasemediainfo-filepage-caption-approaching-limit": "{{PLURAL:$1|$1|0=Ingen}} tegn igjen",
 	"wikibasemediainfo-filepage-statement-value-type-dropdown-title": "Velg en verditype.",
 	"wikibasemediainfo-filepage-statement-custom-value-option": "Tilpasset verdi",
+	"wikibasemediainfo-filepage-statement-invalid-value": "Ugyldig verdi",
 	"wikibasemediainfo-filepage-statement-no-value-option": "Ingen verdi",
 	"wikibasemediainfo-filepage-statement-no-value": "Ingen verdi finnes for denne egenskapen",
 	"wikibasemediainfo-filepage-statement-no-data": "Ingen tilgjengelige data",

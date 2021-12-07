@@ -7,7 +7,8 @@
 			"Nike",
 			"Pyscowicz",
 			"Stryn",
-			"Susannaanas"
+			"Susannaanas",
+			"Nwme"
 		]
 	},
 	"action-mediainfo-term": "muuttaa median tietokäsitteitä (kuvatekstit, yhteenvedot)",
@@ -86,7 +87,7 @@
 	"wikibasemediainfo-time-input-placeholder": "Syötä aika",
 	"wikibasemediainfo-time-timestamp-empty": "Syötä aika-arvo.",
 	"wikibasemediainfo-time-timestamp-invalid": "Aika-arvo on väärin muotoiltu.",
-	"wikibasemediainfo-time-timestamp-formatted": "Näytetään muodossa: $",
+	"wikibasemediainfo-time-timestamp-formatted": "Näytetään muodossa: $1",
 	"wikibasemediainfo-time-precision-label": "Tarkkuus",
 	"wikibasemediainfo-time-precision-year1g": "miljardi vuotta",
 	"wikibasemediainfo-time-precision-year100m": "sata miljoonaa vuotta",

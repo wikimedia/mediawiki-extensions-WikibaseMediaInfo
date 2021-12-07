@@ -3,7 +3,8 @@
 		"authors": [
 			"Bugoslav",
 			"MaGa",
-			"Neptune, the Mystic"
+			"Neptune, the Mystic",
+			"Ponor"
 		]
 	},
 	"action-mediainfo-term": "promjena informacija o medijskoj datoteci (naslovi, sažetci)",
@@ -36,14 +37,16 @@
 	"wikibasemediainfo-filepage-caption-too-short": "Nedostaje još $1 {{PLURAL:$1|znak|znaka|znakova}}",
 	"wikibasemediainfo-filepage-caption-too-long": "$1 {{PLURAL:$1|znak prekoračen|znaka prekoračena|znakova prekoračeno}}",
 	"wikibasemediainfo-filepage-caption-approaching-limit": "Preostaje $1 {{PLURAL:$1|znak|znaka|0=znakova}}",
+	"wikibasemediainfo-filepage-statement-value-type-dropdown-title": "Odaberite vrstu vrijednosti.",
 	"wikibasemediainfo-filepage-statement-custom-value-option": "Prilagođena vrijednost",
+	"wikibasemediainfo-filepage-statement-invalid-value": "Vrijednost nije valjana",
 	"wikibasemediainfo-filepage-statement-no-value-option": "Nema vrijednosti",
 	"wikibasemediainfo-filepage-statement-no-value": "Nepostojeća vrijednost ovog svojstva",
 	"wikibasemediainfo-filepage-statement-no-data": "Podatci nedostupni",
 	"wikibasemediainfo-filepage-statement-no-results": "Nema rezultata",
 	"wikibasemediainfo-filepage-statement-some-value-option": "Određena vrijednost",
 	"wikibasemediainfo-filepage-statement-some-value": "Određene vrijednosti bez stavke na projektu {{WBREPONAME}}",
-	"wikibasemediainfo-filepage-statement-error": "Pogrješka prilikom dohvata vrijednosti ovog stvojstva",
+	"wikibasemediainfo-filepage-statement-error": "Pogreška prilikom dohvata vrijednosti ovog svojstva",
 	"wikibasemediainfo-filepage-license-title": "Opisi i drugi doprinosi strukturiranim podatcima",
 	"wikibasemediainfo-filepage-license-content": "Klikom na \"Objavi izmjene\", slažete se s [[wmf:Terms_of_Use|Uvjetima uporabe]], i neopozivo pristajete na objavu doprinosa pod licencijom [https://creativecommons.org/publicdomain/zero/1.0/ Creative Commons CC0].",
 	"wikibasemediainfo-filepage-license-content-acceptance": "Pristajem na ove uvjete u mojim budućim uređivanjima. Ne prikazuj mi više ovu poruku.",
@@ -60,8 +63,11 @@
 	"wikibasemediainfo-statements-remove": "Ukloni sve",
 	"wikibasemediainfo-statements-title-depicts": "Predmeti prikazani u ovoj datoteci",
 	"wikibasemediainfo-statements-unsupported-property-title": "Nepodržano svojstvo",
+	"wikibasemediainfo-statements-unsupported-property-content": "Svojstva osim $1 još uvijek nisu podržana, ali će biti u budućnosti. \nZa sada funkcionalnost nepodržanih svojstava možda neće raditi kako biste mogli očekivati.",
+	"wikibasemediainfo-statements-unsupported-property-type-content": "Sve vrste svojstava nisu u potpunosti podržane, ali će biti u budućnosti. Za sada funkcionalnost nepodržanih svojstava možda neće raditi kako biste mogli očekivati.",
 	"wikibasemediainfo-statements-link-notice-text": "Poveznice na strukturirane podatke vode na njihove stranice na projektu {{WBREPONAME}} i otvoriti će se u novom prozoru.",
 	"wikibasemediainfo-statements-link-notice-dismiss": "Zanemari",
+	"wikibasemediainfo-remove-all-statements-confirm": "Ovom će se radnjom izbrisati sve postojeće vrijednosti ovog svojstva. Svojstva bez vrijednosti uklonit će se kada se objave promjene. Jeste li sigurni?",
 	"wikibasemediainfo-remove-all-statements-confirm-title": "Ukloni sve?",
 	"wikibasemediainfo-remove-all-statements-confirm-accept": "Ukloni",
 	"wikibasemediainfo-coordinate-input-label": "Koordinate",
@@ -117,6 +123,7 @@
 	"wikibasemediainfo-special-mediasearch-filter-namespace-custom": "Prilagođeno",
 	"wikibasemediainfo-special-mediasearch-no-results": "Nije pronađen nijedan rezultat",
 	"wikibasemediainfo-special-mediasearch-quickview-button-text": "Više pojedinosti",
+	"wikibasemediainfo-rescore-profile-classic-noboostlinks-max-boost-template": "Poredak zasnovan na najboljem predlošku, jeziku stranice i skorašnjosti na ovom wikiju.",
 	"wikibasemediainfo-copytextlayout-copy": "Kopiraj",
 	"wikibasemediainfo-copytextlayout-copy-fail": "Neuspješno kopiranje u međuspremnik.",
 	"wikibasemediainfo-copytextlayout-copy-success": "Kopirano u međuspremnik."

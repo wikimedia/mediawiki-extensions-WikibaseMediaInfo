@@ -37,6 +37,7 @@
 	"wikibasemediainfo-filepage-caption-approaching-limit": "$1 karakter maradt",
 	"wikibasemediainfo-filepage-statement-value-type-dropdown-title": "Válassz egy értéktípust.",
 	"wikibasemediainfo-filepage-statement-custom-value-option": "Egyedi érték",
+	"wikibasemediainfo-filepage-statement-invalid-value": "Érvénytelen érték",
 	"wikibasemediainfo-filepage-statement-no-value-option": "Nincs érték",
 	"wikibasemediainfo-filepage-statement-no-value": "Nem létezik érték ehhez a tulajdonsághoz",
 	"wikibasemediainfo-filepage-statement-no-data": "Nincs elérhető adat",

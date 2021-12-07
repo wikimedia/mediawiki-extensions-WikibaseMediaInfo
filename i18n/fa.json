@@ -7,7 +7,9 @@
 			"Ladsgroup",
 			"Physicsch",
 			"Reza1615",
-			"درفش کاویانی"
+			"درفش کاویانی",
+			"Darafsh",
+			"Jeeputer"
 		]
 	},
 	"action-mediainfo-term": "تغییر در متون (عنوان، خلاصه) اطلاعات پرونده",
@@ -49,8 +51,8 @@
 	"wikibasemediainfo-filepage-license-agree": "من موافقم",
 	"wikibasemediainfo-statements-depicts-title": "آیتم‌های نمایش داده شده در این تصویر",
 	"wikibasemediainfo-statements-item-add-qualifier": "اضافه کردن ریزگویی",
-	"wikibasemediainfo-statements-item-input-label": "از ویکی‌داده",
-	"wikibasemediainfo-statements-item-input-placeholder": "جستجو برای یافتن آیتم (گربه خانگی، کوه، تاج محل، غیره)",
+	"wikibasemediainfo-statements-item-input-label": "از {{WBREPONAME}}",
+	"wikibasemediainfo-statements-item-input-placeholder": "جستجو برای افزودن آیتم",
 	"wikibasemediainfo-statements-item-is-prominent": "اصلی",
 	"wikibasemediainfo-statements-item-mark-as-prominent": "به عنوان اصلی علامت بزنید",
 	"wikibasemediainfo-statements-item-remove": "حذف",

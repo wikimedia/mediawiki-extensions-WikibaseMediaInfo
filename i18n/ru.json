@@ -51,7 +51,7 @@
 	"wikibasemediainfo-filepage-caption-approaching-limit": "осталось $1 {{PLURAL:$1|символ|символа|символов|0=символов}}",
 	"wikibasemediainfo-filepage-statement-value-type-dropdown-title": "Выберите тип значения.",
 	"wikibasemediainfo-filepage-statement-custom-value-option": "Конкретное значение",
-	"wikibasemediainfo-filepage-statement-invalid-value": "Недопустимое значение",
+	"wikibasemediainfo-filepage-statement-invalid-value": "Недействительное значение",
 	"wikibasemediainfo-filepage-statement-no-value-option": "Нет значения",
 	"wikibasemediainfo-filepage-statement-no-value": "Для этого свойства не существует значения",
 	"wikibasemediainfo-filepage-statement-no-data": "Нет доступных данных",
@@ -140,5 +140,6 @@
 	"wikibasemediainfo-special-mediasearch-filter-license-other": "Другие",
 	"wikibasemediainfo-special-mediasearch-filter-namespace-discussion": "Обсуждение",
 	"wikibasemediainfo-special-mediasearch-no-results": "Мы не нашли результатов",
+	"wikibasemediainfo-rescore-profile-classic-noboostlinks-max-boost-template": "Ранжирование на основе лучшего шаблона, языка страницы и свежести появления в этой вики.",
 	"wikibasemediainfo-special-mediasearch-clear-filters": "Очистить фильтры"
 }

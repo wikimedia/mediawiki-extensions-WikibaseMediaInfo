@@ -399,7 +399,6 @@ ComponentWidget.prototype.extractDOMNodesWithContext = function ( node ) {
  */
 ComponentWidget.prototype.matchNodes = function ( one, two, preserve ) {
 	var self = this,
-		used = [],
 		isRelevantNode = function ( node ) {
 			return node.tagName && (
 				// if this node or one of its children is one to be preserved, it matters
@@ -409,144 +408,91 @@ ComponentWidget.prototype.matchNodes = function ( one, two, preserve ) {
 				self.extractDOMNodesWithContext( node ).length > 0
 			);
 		},
-		oneHasRelevantNode = one.reduce( function ( result, node ) {
-			return result || isRelevantNode( node );
-		}, false ),
-		twoHasRelevantNode = two.reduce( function ( result, node ) {
-			return result || isRelevantNode( node );
-		}, false ),
-		mapOne, mapTwo;
-
-	// find best matching nodes in both data sets
-	mapOne = one.map( function ( node ) {
-		if ( !isRelevantNode( node ) && !twoHasRelevantNode ) {
-			// performance optimization: the DOM reconciliation process is
-			// extremely demanding: it might end up cross-referencing just
-			// about the entire DOM
-			// since the only nodes that we need to reconcile are those that
-			// might have some input or state (e.g. focus) are some form
-			// elements, we can bypass this entire routine for all others
-			return [];
-		}
-		return node.tagName ? self.findBestMatchingNodes( node, two ) : [];
-	} );
-	mapTwo = two.map( function ( node ) {
-		if ( !isRelevantNode( node ) && !oneHasRelevantNode ) {
-			// performance optimization: see explanation above for `mapOne`
-			return [];
-		}
-		return node.tagName ? self.findBestMatchingNodes( node, one ) : [];
-	} );
-
-	return mapOne
-		// we'll first eliminate all matches that don't cross-reference
-		// one another (e.g. where `two` finds that there is a better match
-		// in `one`)
-		.map( function ( nodesInTwo, i ) {
-			var nodeInOne = one[ i ];
-			return nodesInTwo.filter( function ( nodeInTwo ) {
-				var nodesInOne = mapTwo[ two.indexOf( nodeInTwo ) ];
-				return $( nodesInOne ).filter( nodeInOne ).length > 0;
-			} );
-		} )
-		// next, we'll make sure to only keep 1 best match: the first
-		// remaining one (except if already matched elsewhere)
-		.map( function ( nodesInTwo ) {
-			// grab the first (available) node
-			// there may still be multiple matches, so let's make
-			// sure we don't match one already matched earlier...
-			var nodeInTwo = nodesInTwo.filter( function ( node ) {
-				return used.indexOf( node ) < 0;
-			} )[ 0 ];
-
-			// append to array of used nodes, so next node can't use
-			// it anymore
-			used.push( nodeInTwo );
-
-			return nodeInTwo;
-		} );
-};
-
-/**
- * Locate the same node in a haystack, either by being the exact same
- * node (`.isEqualNode`), or the best possible matches with the same children.
- *
- * @private
- * @param {Node} needle
- * @param {Node[]} haystack
- * @return {Node[]}
- */
-ComponentWidget.prototype.findBestMatchingNodes = function ( needle, haystack ) {
-	var self = this,
-		matches,
-		potentialMatches,
-		matchingChildrenAmounts,
-		differingChildrenAmounts,
-		maxMatchingChildren,
-		minDifferingChildren,
-		i;
-
-	// find exact same node(s)
-	matches = haystack.filter( function ( node ) {
-		return node.isEqualNode( needle );
-	} );
-	if ( matches.length ) {
-		return matches;
-	}
-
-	// find similar nodes based on them having the same children
-	if ( needle && needle.tagName ) {
-		// narrow down to potential matches, based on tag name and node characteristics
-		potentialMatches = haystack
-			.filter( function ( node ) {
-				// test whether nodes are similar enough
-				// (we'll do this again for all their children to find the
-				// *most similar* later on - this just eliminates some,
-				// e.g. when id of node doesn't even match)
-				return (
-					node &&
-					node.tagName === needle.tagName &&
-					self.getNumberOfEqualNodes( [ needle ], [ node ] ) > 0
+		getNumberOfEqualChildren = function ( needle, haystack ) {
+			return haystack.map( function ( target ) {
+				if ( self.getNumberOfEqualNodes( [ needle ], [ target ] ) === 0 ) {
+					return 0;
+				}
+				return self.getNumberOfEqualNodes(
+					[].slice.call( needle.children ),
+					[].slice.call( target.children )
 				);
 			} );
+		},
+		filterRelevantNodes = function ( needle, haystack ) {
+			return haystack.filter( function ( target ) {
+				return (
+					target.tagName &&
+					// exclude nodes where neither this or the other node are relevant
+					( isRelevantNode( needle ) || isRelevantNode( target ) )
+				);
+			} );
+		},
+		filterByMostSimilar = function ( needle, haystack ) {
+			var numbers = getNumberOfEqualChildren( needle, haystack ),
+				best = Math.max.apply( Math, numbers.concat( 0 ) );
 
-		// find the largest amount of matching children
-		matchingChildrenAmounts = potentialMatches.map( function ( newNode ) {
-			return self.getNumberOfEqualNodes(
-				[].slice.call( needle.children ),
-				[].slice.call( newNode.children )
-			);
-		} );
-		differingChildrenAmounts = potentialMatches.map( function ( newNode, j ) {
-			return Math.max( needle.children.length, newNode.children.length ) - matchingChildrenAmounts[ j ];
+			return haystack.filter( function ( target, i ) {
+				return numbers[ i ] === best;
+			} );
+		},
+		filterByLeastDissimilar = function ( needle, haystack ) {
+			var numbers = getNumberOfEqualChildren( needle, haystack ).map( function ( number, i ) {
+					return Math.max( needle.children.length, haystack[ i ].children.length ) - number;
+				} ),
+				best = Math.min.apply( Math, numbers.concat( needle.children.length ) );
+
+			return haystack.filter( function ( target, i ) {
+				return numbers[ i ] === best;
+			} );
+		};
+
+	return one.reduce( function ( result, node, index, arr ) {
+		var other = [].concat( two ),
+			remaining = arr.slice( index ).filter( function ( target ) {
+				return target.tagName !== undefined;
+			} ),
+			i;
+
+		// don't bother matching non-nodes
+		if ( node.tagName === undefined ) {
+			return result.concat( undefined );
+		}
+
+		other = filterRelevantNodes( node, other ).filter( function ( target ) {
+			// exclude nodes that we've already paired to a previous node
+			return result.indexOf( target ) < 0;
 		} );
 
-		// leave only the nodes with the largest amount of matching children
-		maxMatchingChildren = Math.max.apply( Math, matchingChildrenAmounts.concat( 0 ) );
-		for ( i = 0; i < potentialMatches.length; i++ ) {
-			if ( matchingChildrenAmounts[ i ] !== maxMatchingChildren ) {
-				potentialMatches.splice( i, 1 );
-				matchingChildrenAmounts.splice( i, 1 );
-				differingChildrenAmounts.splice( i, 1 );
+		// find the first unmatched relevant equal node (if any)
+		for ( i = 0; i < other.length; i++ ) {
+			if ( node.isEqualNode( other[ i ] ) ) {
+				return result.concat( other[ i ] );
 			}
 		}
 
-		// in the event that there are multiple nodes with the same amount of matching
-		// children, we'll only keep the one(s) that have the minimum amount of different
-		// children
-		minDifferingChildren = Math.min.apply( Math, differingChildrenAmounts.concat( needle.children.length ) );
-		for ( i = 0; i < potentialMatches.length; i++ ) {
-			if ( differingChildrenAmounts[ i ] !== minDifferingChildren ) {
-				potentialMatches.splice( i, 1 );
-				matchingChildrenAmounts.splice( i, 1 );
-				differingChildrenAmounts.splice( i, 1 );
-			}
-		}
+		// narrow it down to nodes with the most matching children
+		other = filterByMostSimilar( node, other );
 
-		return potentialMatches;
-	}
+		// narrow down nodes by cross-referencing similarities from the
+		// other side: a future node might actually be a better match...
+		other = other.filter( function ( target ) {
+			return filterByMostSimilar( target, remaining ).indexOf( node ) >= 0;
+		} );
 
-	return [];
+		// narrow it down further to the one(s) with the minimum amount
+		// of different children
+		other = filterByLeastDissimilar( node, other );
+
+		// narrow down nodes by cross-referencing dissimilarities from the
+		// other side: a future node might actually be a better match...
+		other = other.filter( function ( target ) {
+			return filterByLeastDissimilar( target, remaining ).indexOf( node ) >= 0;
+		} );
+
+		// return the first of whatever is left
+		return result.concat( other.shift() );
+	}, [] );
 };
 
 /**

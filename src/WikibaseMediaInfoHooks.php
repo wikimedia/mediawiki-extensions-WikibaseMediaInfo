@@ -66,7 +66,7 @@ class WikibaseMediaInfoHooks {
 	public static function onMediaWikiServices( MediaWikiServices $services ) {
 		$services->addServiceManipulator( 'SlotRoleRegistry', static function ( SlotRoleRegistry $registry ) {
 			if ( !$registry->isDefinedRole( 'mediainfo' ) ) {
-				// Sanity check
+				// Sense check
 				$registry->defineRoleWithModel(
 					/* role */ 'mediainfo',
 					/* content handler */ MediaInfoContent::CONTENT_MODEL_ID

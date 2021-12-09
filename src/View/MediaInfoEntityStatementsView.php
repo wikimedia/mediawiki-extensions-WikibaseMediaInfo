@@ -376,9 +376,10 @@ class MediaInfoEntityStatementsView {
 		// it's only needed for a short-lived feature flag that will soon be
 		// removed again - not worth changing this class' signature that much
 		$config = MediaWikiServices::getInstance()->getMainConfig();
-		$searchProperties = $config->get( 'MediaInfoEnableReferences' );
+		$enableReferences = $config->get( 'MediaInfoEnableReferences' ) ||
+			\RequestContext::getMain()->getRequest()->getCheck( 'MediaInfoEnableReferences' );
 		$referenceList = $statement->getReferences();
-		if ( $searchProperties && count( $referenceList ) > 0 ) {
+		if ( $enableReferences && count( $referenceList ) > 0 ) {
 			$referencesContainer = new Tag( 'div' );
 			$referencesContainer->addClasses( [ 'wbmi-item-references' ] );
 

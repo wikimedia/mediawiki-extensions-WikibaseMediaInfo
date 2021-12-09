@@ -213,7 +213,8 @@ class WikibaseMediaInfoHooks {
 				'wbmiHelpUrls' => $config->get( 'MediaInfoHelpUrls' ),
 				'wbmiExternalEntitySearchBaseUri' => $config->get( 'MediaInfoExternalEntitySearchBaseUri' ),
 				'wbmiSupportedDataTypes' => $config->get( 'MediaInfoSupportedDataTypes' ),
-				'wbmiEnableReferences' => $config->get( 'MediaInfoEnableReferences' ),
+				'wbmiEnableReferences' => $config->get( 'MediaInfoEnableReferences' ) ||
+					RequestContext::getMain()->getRequest()->getCheck( 'MediaInfoEnableReferences' ),
 			]
 		);
 	}

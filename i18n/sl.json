@@ -2,7 +2,8 @@
 	"@metadata": {
 		"authors": [
 			"Dbc334",
-			"Janezdrilc"
+			"Janezdrilc",
+			"Eleassar"
 		]
 	},
 	"action-mediainfo-term": "sprememba informacij datoteke (podnapisi, povzetki)",
@@ -10,8 +11,9 @@
 	"slot-name-mediainfo": "Strukturirane informacije o datoteki",
 	"wikibase-entity-mediainfo": "podatki o datoteki",
 	"wikibase-mediainfo-summary-wbsetlabel-add": "Dodan podnapis [$2]",
-	"wikibase-mediainfo-summary-wbsetlabel-remove": "Odstranjen podnapis [$2]",
-	"wikibase-mediainfo-summary-wbsetlabel-set": "Spremenjen podnapis [$2]",
+	"wikibase-mediainfo-summary-wbsetlabel-remove": "Odstranjen napis [$2]",
+	"wikibase-mediainfo-summary-wbsetlabel-set": "Spremenjeni podnapis [$2]",
+	"wikibasemediainfo-add-property": "Poiščite lastnosti, da jih dodate (npr. del česa, vrsta predstavnosti idr.)",
 	"wikibasemediainfo-add-statement": "Dodaj izjavo",
 	"wikibasemediainfo-desc": "Razširitev Wikiosnove za urejanje strukturiranih metapodatkov predstavnostnih datotek",
 	"wikibasemediainfo-diffview-label": "podnapis",
@@ -26,19 +28,23 @@
 	"wikibasemediainfo-filepage-edit-depicts": "Uredi prikazane predmete",
 	"wikibasemediainfo-filepage-cancel": "Prekliči",
 	"wikibasemediainfo-filepage-cancel-confirm": "Spremembe, ki ste jih naredili, ne bodo shranjene.",
+	"wikibasemediainfo-filepage-cancel-confirm-title": "Zavržem spremembe?",
 	"wikibasemediainfo-filepage-edit": "Uredi",
 	"wikibasemediainfo-filepage-publish": "Objavi spremembe",
 	"wikibasemediainfo-filepage-caption-empty": "Dodaj enovrstični opis, kaj ta datoteka predstavlja",
 	"wikibasemediainfo-filepage-caption-too-long": "$1 {{PLURAL:$1|znak|znaka|znaki|znakov}} preveč",
 	"wikibasemediainfo-filepage-caption-approaching-limit": "$1 {{PLURAL:$1|znak|znaka|znaki|znakov|0=znakov}} na voljo",
+	"wikibasemediainfo-filepage-statement-custom-value-option": "Prilagojena vrednost",
+	"wikibasemediainfo-filepage-statement-no-value-option": "Brez vrednosti",
 	"wikibasemediainfo-filepage-statement-no-value": "Za to lastnost ne obstaja vrednost",
-	"wikibasemediainfo-filepage-statement-no-data": "Ni podatkov na voljo",
+	"wikibasemediainfo-filepage-statement-no-data": "Na voljo ni nobenih podatkov",
 	"wikibasemediainfo-filepage-statement-no-results": "Ni najdenih zadetkov",
+	"wikibasemediainfo-filepage-statement-some-value-option": "Neka vrednost",
 	"wikibasemediainfo-filepage-statement-some-value": "Neka vrednost brez vnosa na {{GRAMMAR:locative|{{WBREPONAME}}}}",
 	"wikibasemediainfo-filepage-statement-error": "Pri pridobivanju vrednosti za to lastnost je prišlo do napake",
 	"wikibasemediainfo-filepage-license-title": "Prispevki podnapisov in drugih strukturiranih podatkov",
-	"wikibasemediainfo-filepage-license-content": "S klikom na \"Objavi spremembe\" se strinjaš s [[wmf:Terms_of_Use|pogoji uporabe]] in nepreklicno soglašaš z objavo svojih prispevkov pod [https://creativecommons.org/publicdomain/zero/1.0/ Dovoljenjem Creative Commons CC0].",
-	"wikibasemediainfo-filepage-license-content-acceptance": "Sprejemam te pogoje za moja nadaljnja urejanja. Ni prikazuj več tega sporočila.",
+	"wikibasemediainfo-filepage-license-content": "S klikom gumba »Objavi spremembe« izražate strinjanje s [[wmf:Terms_of_Use|pogoji uporabe]] in nepreklicno privoljujete v objavo svojih prispevkov pod licenco [https://creativecommons.org/publicdomain/zero/1.0/ Creative Commons CC0].",
+	"wikibasemediainfo-filepage-license-content-acceptance": "Te pogoje sprejmem za vsa svoja prihodnja urejanja. Tega sporočila ne prikaži več.",
 	"wikibasemediainfo-property-placeholder": "Lastnost",
 	"wikibasemediainfo-filepage-license-agree": "Strinjam se",
 	"wikibasemediainfo-statements-depicts-title": "Predmeti, prikazani na tej sliki",
@@ -46,10 +52,11 @@
 	"wikibasemediainfo-statements-item-input-label": "iz {{GRAMMAR:genitive|{{WBREPONAME}}}}",
 	"wikibasemediainfo-statements-item-input-placeholder": "Išči za dodajanje predmetov",
 	"wikibasemediainfo-statements-item-is-prominent": "Pomembno",
-	"wikibasemediainfo-statements-item-mark-as-prominent": "Označi za pomembno",
+	"wikibasemediainfo-statements-item-mark-as-prominent": "Označi kot pomembno",
 	"wikibasemediainfo-statements-item-remove": "Odstrani",
 	"wikibasemediainfo-statements-learn-more": "Več",
 	"wikibasemediainfo-statements-remove": "Odstrani vse",
 	"wikibasemediainfo-statements-title-depicts": "Predmeti, prikazani v tej datoteki",
-	"wikibasemediainfo-statements-unsupported-property-title": "Nepodprta lastnost"
+	"wikibasemediainfo-statements-unsupported-property-title": "Nepodprta lastnost",
+	"wikibasemediainfo-statements-link-notice-text": "Oznake strukturiranih podatkov se povezujejo z ustreznimi stranmi v projektu {{WBREPONAME}} in se bodo odprle v novem oknu."
 }

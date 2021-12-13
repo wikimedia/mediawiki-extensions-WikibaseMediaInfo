@@ -63,6 +63,7 @@
 	"wikibasemediainfo-remove-all-statements-confirm": "Selle tominguga kustutad selle omaduse kõik olemasolevad väärtused. Ilma väärtusteta omadused eemaldatakse, kui muudatused salvestad. Kas oled kindel?",
 	"wikibasemediainfo-remove-all-statements-confirm-title": "Kas eemaldad kõik?",
 	"wikibasemediainfo-remove-all-statements-confirm-accept": "Eemalda",
+	"wikibasemediainfo-coordinate-input-label": "Koordinaadid",
 	"wikibasemediainfo-coordinate-input-placeholder": "Laius, pikkus",
 	"wikibasemediainfo-precision-input-label": "Esitustäpsus",
 	"wikibasemediainfo-arcminute-label": "kaareminutini",

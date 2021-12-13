@@ -2,9 +2,12 @@
 	"@metadata": {
 		"authors": [
 			"Kareyac",
-			"Թալին Նայիր"
+			"Թալին Նայիր",
+			"Azniv Stepanian",
+			"Շահէն"
 		]
 	},
 	"wikibasemediainfo-statements-link-notice-dismiss": "Հեռացնել",
-	"wikibasemediainfo-remove-all-statements-confirm-accept": "Հանել"
+	"wikibasemediainfo-remove-all-statements-confirm-accept": "Հեռացնել",
+	"wikibasemediainfo-coordinate-input-placeholder": "Լայնութիւն, երկայնութիւն"
 }

@@ -2,7 +2,8 @@
 	"@metadata": {
 		"authors": [
 			"Saederup92",
-			"Weblars"
+			"Weblars",
+			"C960657"
 		]
 	},
 	"wikibase-mediainfo-summary-wbsetlabel-add": "Tilføjede billedetekst [$2]",
@@ -50,6 +51,8 @@
 	"wikibasemediainfo-time-precision-minute": "minut",
 	"wikibasemediainfo-time-precision-second": "sekund",
 	"wikibasemediainfo-time-calendar-label": "Kalender",
+	"wikibasemediainfo-time-calendar-gregorian": "gregoriansk",
+	"wikibasemediainfo-time-calendar-julian": "juliansk",
 	"wikibasemediainfo-quantity-input-button-text": "Tilføj",
 	"wikibasemediainfo-globecoordinate-input-button-text": "Tilføj",
 	"wikibasemediainfo-special-mediasearch-tab-bitmap": "Billeder",

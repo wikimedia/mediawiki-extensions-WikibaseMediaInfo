@@ -1,0 +1,24 @@
+{
+	"@metadata": {
+		"authors": [
+			"Yupik"
+		]
+	},
+	"wikibasemediainfo-diffview-label": "kovetekstâ",
+	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Koveteevstah",
+	"wikibasemediainfo-filepage-fileinfo-heading": "Tiätuvuárhá tiäđuh",
+	"wikibasemediainfo-filepage-captions-title": "Koveteevstah",
+	"wikibasemediainfo-filepage-add-caption": "Lasseet koveteevstâ",
+	"wikibasemediainfo-filepage-cancel": "Jooskâ",
+	"wikibasemediainfo-filepage-edit": "Mute",
+	"wikibasemediainfo-statements-item-remove": "Siho",
+	"wikibasemediainfo-statements-learn-more": "Lasetiäđuh",
+	"wikibasemediainfo-statements-remove": "Siho puoh",
+	"wikibasemediainfo-remove-all-statements-confirm-accept": "Siho",
+	"wikibasemediainfo-string-input-button-text": "Lasseet",
+	"wikibasemediainfo-monolingualtext-input-button-text": "Lasseet",
+	"wikibasemediainfo-monolingualtext-language-label": "Valjii kielâ",
+	"wikibasemediainfo-time-input-button-text": "Lasseet",
+	"wikibasemediainfo-quantity-input-button-text": "Lasseet",
+	"wikibasemediainfo-globecoordinate-input-button-text": "Lasseet"
+}

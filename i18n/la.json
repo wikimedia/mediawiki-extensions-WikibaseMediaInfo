@@ -1,8 +1,10 @@
 {
 	"@metadata": {
 		"authors": [
-			"AlexG1"
+			"AlexG1",
+			"Demetrius Talpa"
 		]
 	},
-	"wikibasemediainfo-filepage-license-agree": "Concordo"
+	"wikibasemediainfo-filepage-license-agree": "Concordo",
+	"wikibasemediainfo-time-precision-year100": "saeculum"
 }

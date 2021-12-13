@@ -1,0 +1,13 @@
+{
+	"@metadata": {
+		"authors": [
+			"Slomox"
+		]
+	},
+	"wikibase-entity-mediainfo": "Medieninfos",
+	"wikibasemediainfo-filepage-cancel": "Afbreken",
+	"wikibasemediainfo-filepage-edit": "Ännern",
+	"wikibasemediainfo-filepage-statement-no-value-option": "Keen Weert",
+	"wikibasemediainfo-filepage-statement-some-value-option": "En Weert",
+	"wikibasemediainfo-property-placeholder": "Egenschop"
+}

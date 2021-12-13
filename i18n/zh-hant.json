@@ -6,11 +6,12 @@
 			"Winston Sung",
 			"予弦",
 			"神樂坂秀吉",
-			"蘭斯特"
+			"蘭斯特",
+			"Wmr"
 		]
 	},
-	"action-mediainfo-term": "更改多媒體資訊項目（說明、摘要等）",
-	"right-mediainfo-term": "更改多媒體資訊項目（說明、摘要等）",
+	"action-mediainfo-term": "更改多媒體資訊項目（說明、摘要）",
+	"right-mediainfo-term": "更改多媒體資訊項目（說明、摘要）",
 	"action-mediasearch": "測試多媒體搜尋",
 	"right-mediasearch": "測試媒體搜尋",
 	"group-mediasearch-tester": "多媒體搜尋測試者",

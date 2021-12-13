@@ -298,12 +298,16 @@ ItemWidget.prototype.getData = function () {
 			this.state.guid
 		),
 		new datamodel.ReferenceList(
-			this.state.references.map( function ( reference, i ) {
-				return new datamodel.Reference(
-					reference.getData(),
-					self.state.referenceHashes[ i ]
-				);
-			} )
+			this.state.references
+				.map( function ( reference, i ) {
+					return new datamodel.Reference(
+						reference.getData(),
+						self.state.referenceHashes[ i ]
+					);
+				} )
+				.filter( function ( reference ) {
+					return reference.getSnaks().length > 0;
+				} )
 		),
 		this.state.rank
 	);

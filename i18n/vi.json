@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"Keo010122",
 			"Leduyquang753",
 			"Minh Nguyen",
 			"Nguyễn Mạnh An",
@@ -54,6 +55,10 @@
 	"wikibasemediainfo-filepage-license-agree": "Đồng ý",
 	"wikibasemediainfo-statements-depicts-title": "Các khoản mục được tả trong hình này",
 	"wikibasemediainfo-statements-item-add-qualifier": "Thêm từ hạn định",
+	"wikibasemediainfo-statements-item-reference": "Tham khảo",
+	"wikibasemediainfo-statements-item-references": "Tham khảo",
+	"wikibasemediainfo-statements-item-add-reference": "Thêm chú thích",
+	"wikibasemediainfo-statements-item-add-reference-snak": "Thêm",
 	"wikibasemediainfo-statements-item-input-label": "từ {{WBREPONAME}}",
 	"wikibasemediainfo-statements-item-input-placeholder": "Tìm kiếm để thêm khoản mục",
 	"wikibasemediainfo-statements-item-is-prominent": "Nổi bật",

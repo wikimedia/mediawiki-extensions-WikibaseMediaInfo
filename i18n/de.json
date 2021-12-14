@@ -18,6 +18,8 @@
 	"wikibase-mediainfo-summary-wbsetlabel-set": "Bildtext [$2] bearbeitet",
 	"wikibasemediainfo-add-property": "Suchen, um Eigenschaften hinzuzufügen (Teil von, Medientyp usw.)",
 	"wikibasemediainfo-add-statement": "Aussage hinzufügen",
+	"wikibasemediainfo-custommatch-feature-no-profile": "Es ist kein Profil für custommatch:$1 konfiguriert.",
+	"wikibasemediainfo-custommatch-feature-invalid-term": "Ungültiger Suchbegriff für die custommatch-Suchfunktion",
 	"wikibasemediainfo-desc": "Wikibase-Erweiterung zur Verwaltung strukturierter Metadaten von Mediendateien",
 	"wikibasemediainfo-diffview-label": "Kurzbeschreibung",
 	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Kurzbeschreibungen",

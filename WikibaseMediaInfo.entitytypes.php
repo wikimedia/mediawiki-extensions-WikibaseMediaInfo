@@ -117,6 +117,7 @@ return [
 			// Use a MediaInfo-specific EntityStatementView class
 			$propertyOrderProvider = new CachingPropertyOrderProvider(
 				new WikiPagePropertyOrderProvider(
+					MediaWikiServices::getInstance()->getWikiPageFactory(),
 					Title::newFromText( 'MediaWiki:Wikibase-SortedProperties' )
 				),
 				ObjectCache::getLocalClusterInstance()

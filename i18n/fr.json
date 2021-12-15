@@ -27,6 +27,8 @@
 	"wikibase-mediainfo-summary-wbsetlabel-set": "Légende [$2] modifiée",
 	"wikibasemediainfo-add-property": "Rechercher pour ajouter des propriétés (partie de, type de média, etc.)",
 	"wikibasemediainfo-add-statement": "Ajouter une déclaration",
+	"wikibasemediainfo-custommatch-feature-no-profile": "Il n’y a pas de profil configuré pour custommatch : $1",
+	"wikibasemediainfo-custommatch-feature-invalid-term": "Terme de recherche non valide pour la fonctionnalité de recherche custommatch",
 	"wikibasemediainfo-desc": "Extension de Wikibase pour gérer les métadonnées structurées des fichiers de média",
 	"wikibasemediainfo-diffview-label": "légende",
 	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Légendes",

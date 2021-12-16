@@ -708,41 +708,49 @@ class WikibaseMediaInfoHooks {
 
 		$searchProfileContextName = MediaSearchQueryBuilder::SEARCH_PROFILE_CONTEXT_NAME;
 		// array key in MediaSearchProfiles.php
-		$fulltextProfileName = MediaSearchQueryBuilder::LOGREG_PROFILE_NAME;
 		$rescoreProfileName = 'classic_noboostlinks_max_boost_template';
-
-		$request = RequestContext::getMain()->getRequest();
-		if ( $request->getCheck( MediaSearchQueryBuilder::SYNONYMS_PROFILE_NAME ) ) {
-			// switch to experimental implementation (only) when explicitly requested
-			$fulltextProfileName = MediaSearchQueryBuilder::SYNONYMS_PROFILE_NAME;
-		}
-		if ( $request->getCheck( MediaSearchQueryBuilder::WEIGHTED_TAGS_PROFILE_NAME ) ) {
-			// switch to experimental implementation (only) when explicitly requested
-			$fulltextProfileName = MediaSearchQueryBuilder::WEIGHTED_TAGS_PROFILE_NAME;
-		}
-
-		$service->registerDefaultProfile( SearchProfileService::FT_QUERY_BUILDER,
-			$searchProfileContextName, $fulltextProfileName );
 
 		// Need to register a rescore profile for the profile context
 		$service->registerDefaultProfile( SearchProfileService::RESCORE,
 			$searchProfileContextName, $rescoreProfileName );
 
-		$service->registerFTSearchQueryRoute(
-			$searchProfileContextName,
-			1,
-			// only for NS_FILE searches
-			[ NS_FILE ],
-			// only when the search query is found to be something mediasearch
-			// is capable of dealing with (as determined by MediaSearchASTClassifier)
-			[ $fulltextProfileName ]
-		);
+		$request = RequestContext::getMain()->getRequest();
+		$mwServices = MediaWikiServices::getInstance();
+		$config = $mwServices->getMainConfig();
+		$profiles = array_keys( $config->get( 'MediaInfoMediaSearchProfiles' ) ?: [] );
+		if ( $profiles ) {
+			// first profile is the default mediasearch profile
+			$fulltextProfileName = $profiles[0];
+
+			foreach ( $profiles as $profile ) {
+				if ( $request->getCheck( $profile ) ) {
+					// switch to non-default implementations (only) when explicitly requested
+					$fulltextProfileName = $profile;
+				}
+			}
+
+			$service->registerDefaultProfile( SearchProfileService::FT_QUERY_BUILDER,
+				$searchProfileContextName, $fulltextProfileName );
+
+			$service->registerFTSearchQueryRoute(
+				$searchProfileContextName,
+				1,
+				// only for NS_FILE searches
+				[ NS_FILE ],
+				// only when the search query is found to be something mediasearch
+				// is capable of dealing with (as determined by MediaSearchASTClassifier)
+				[ $fulltextProfileName ]
+			);
+		}
 	}
 
 	public static function onCirrusSearchRegisterFullTextQueryClassifiers(
 		ParsedQueryClassifiersRepository $repository
 	) {
-		$repository->registerClassifier( new MediaSearchASTClassifier() );
+		$mwServices = MediaWikiServices::getInstance();
+		$config = $mwServices->getMainConfig();
+		$profiles = array_keys( $config->get( 'MediaInfoMediaSearchProfiles' ) ?: [] );
+		$repository->registerClassifier( new MediaSearchASTClassifier( $profiles ) );
 	}
 
 	/**

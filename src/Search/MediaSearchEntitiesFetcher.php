@@ -9,7 +9,10 @@ class MediaSearchEntitiesFetcher {
 	protected $multiHttpClient;
 
 	/** @var string */
-	protected $externalEntitySearchBaseUri;
+	protected $entitySearchUrl;
+
+	/** @var string */
+	protected $titleMatchUrl;
 
 	/** @var string */
 	protected $inputLanguage;
@@ -17,23 +20,18 @@ class MediaSearchEntitiesFetcher {
 	/** @var string */
 	protected $outputLanguage;
 
-	/** @var string */
-	protected $titleMatchUrl = null;
-
 	public function __construct(
 		MultiHttpClient $multiHttpClient,
-		string $externalEntitySearchBaseUri,
+		string $entitySearchUrl,
+		string $titleMatchUrl,
 		string $inputLanguage,
 		string $outputLanguage
 	) {
 		$this->multiHttpClient = $multiHttpClient;
-		$this->externalEntitySearchBaseUri = $externalEntitySearchBaseUri;
+		$this->entitySearchUrl = $entitySearchUrl;
+		$this->titleMatchUrl = $titleMatchUrl;
 		$this->inputLanguage = $inputLanguage;
 		$this->outputLanguage = $outputLanguage;
-	}
-
-	public function setTitleMatchUrl( string $url ) {
-		$this->titleMatchUrl = $url;
 	}
 
 	/**
@@ -111,13 +109,13 @@ class MediaSearchEntitiesFetcher {
 				'method' => 'GET',
 				'_term' => $query,
 				'_type' => 'entitySearch',
-				'url' => $this->externalEntitySearchBaseUri . '?' . http_build_query( $params ),
+				'url' => $this->entitySearchUrl . '?' . http_build_query( $params ),
 			];
 		}, $searchQueries );
 	}
 
 	private function gatherTitleMatchRequests( array $searchQueries ): array {
-		if ( $this->titleMatchUrl === null ) {
+		if ( !$this->titleMatchUrl ) {
 			return [];
 		}
 		return array_map( function ( $query ) {

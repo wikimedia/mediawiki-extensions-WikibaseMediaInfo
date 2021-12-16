@@ -34,14 +34,13 @@ class MediaSearchEntitiesFetcherTest extends MediaWikiIntegrationTestCase {
 				return $requests;
 			} );
 
-		$entitiesFetcher = new MediaSearchEntitiesFetcher(
+		return new MediaSearchEntitiesFetcher(
 			$mockMultiHttpClient,
+			'url-not-required-for-mock',
 			'url-not-required-for-mock',
 			'en',
 			'en'
 		);
-		$entitiesFetcher->setTitleMatchUrl( 'url-not-required-for-mock' );
-		return $entitiesFetcher;
 	}
 
 	public function testGet() {

@@ -38,9 +38,6 @@ class MediaSearchASTQueryBuilder implements Visitor {
 	/** @var MediaSearchASTEntitiesExtractor */
 	private $entitiesExtractor;
 
-	/** @var float[] */
-	private $searchProperties;
-
 	/** @var array[] */
 	private $stemmingSettings;
 
@@ -61,7 +58,6 @@ class MediaSearchASTQueryBuilder implements Visitor {
 
 	/**
 	 * @param MediaSearchASTEntitiesExtractor $entitiesExtractor
-	 * @param float[] $searchProperties Properties to search statements in ([ propertyId => weight ])
 	 * @param array[] $stemmingSettings Stemming settings (see $wgWBCSUseStemming)
 	 * @param string[] $languages Languages to search text in
 	 * @param string $contentLanguage Content language code
@@ -69,14 +65,12 @@ class MediaSearchASTQueryBuilder implements Visitor {
 	 */
 	public function __construct(
 		MediaSearchASTEntitiesExtractor $entitiesExtractor,
-		array $searchProperties,
 		array $stemmingSettings,
 		array $languages,
 		string $contentLanguage,
 		array $settings = []
 	) {
 		$this->entitiesExtractor = $entitiesExtractor;
-		$this->searchProperties = $searchProperties;
 		$this->stemmingSettings = $stemmingSettings;
 		$this->languages = $languages;
 		$this->contentLanguage = $contentLanguage;
@@ -294,7 +288,6 @@ class MediaSearchASTQueryBuilder implements Visitor {
 			$node,
 			$this->parsedQuery,
 			$this->entitiesExtractor,
-			$this->searchProperties,
 			$this->boosts,
 			$this->options
 		);

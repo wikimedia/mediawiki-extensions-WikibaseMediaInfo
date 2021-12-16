@@ -9,9 +9,6 @@ use Elastica\Query\BoolQuery;
 
 class MediaSearchQueryBuilder implements FullTextQueryBuilder {
 	public const SEARCH_PROFILE_CONTEXT_NAME = 'mediasearch';
-	public const LOGREG_PROFILE_NAME = 'mediasearch_logistic_regression';
-	public const SYNONYMS_PROFILE_NAME = 'mediasearch_synonyms';
-	public const WEIGHTED_TAGS_PROFILE_NAME = 'mediasearch_weighted_tags';
 
 	/** @var KeywordFeature[] */
 	private $features;

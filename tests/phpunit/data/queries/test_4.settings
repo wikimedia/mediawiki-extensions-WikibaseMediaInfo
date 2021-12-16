@@ -11,14 +11,10 @@
 			}
 		]
 	},
-	"defaultProperties": [
-		"P1",
-		"P2"
-	],
 	"userLanguage": "en",
 	"settings": {
 		"boost": {
-			"statement": 20.0,
+			"statement": {"P1": 20, "P2": 20},
 			"descriptions.$language": 7.5,
 			"descriptions.$language.plain": 2.5,
 			"category": 0.525,

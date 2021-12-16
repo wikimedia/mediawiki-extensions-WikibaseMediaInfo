@@ -15,10 +15,6 @@
 			}
 		]
 	},
-	"defaultProperties": [
-		"P1",
-		"P2"
-	],
 	"userLanguage": "en",
 	"settings": {
 		"normalizeFulltextScores": false,
@@ -27,7 +23,7 @@
 		"applyLogisticFunction": false,
 		"useSynonyms": false,
 		"boost": {
-			"statement": 1,
+			"statement": {"P1": 1, "P2": 1},
 			"weighted_tags": {
 				"image.linked.from.wikidata.p18/": 10,
 				"image.linked.from.wikidata.p373/": 20,

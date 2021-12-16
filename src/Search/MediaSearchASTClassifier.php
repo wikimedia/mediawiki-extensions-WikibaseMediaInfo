@@ -16,17 +16,21 @@ use CirrusSearch\Parser\ParsedQueryClassifier;
 
 class MediaSearchASTClassifier extends LeafVisitor implements ParsedQueryClassifier {
 	/** @var string[] */
-	private $profiles = [
-		MediaSearchQueryBuilder::SYNONYMS_PROFILE_NAME,
-		MediaSearchQueryBuilder::LOGREG_PROFILE_NAME,
-		MediaSearchQueryBuilder::WEIGHTED_TAGS_PROFILE_NAME,
-	];
+	private $profiles;
 
 	/** @var string[] */
 	private $supported = [];
 
 	/** @var string[] */
 	private $unsupported = [];
+
+	/**
+	 * @param string[] $profiles
+	 */
+	public function __construct( array $profiles = [] ) {
+		parent::__construct();
+		$this->profiles = $profiles;
+	}
 
 	/**
 	 * @inheritDoc

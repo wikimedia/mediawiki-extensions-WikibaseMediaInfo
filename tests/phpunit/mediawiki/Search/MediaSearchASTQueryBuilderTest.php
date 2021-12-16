@@ -46,7 +46,6 @@ class MediaSearchASTQueryBuilderTest extends MediaWikiIntegrationTestCase {
 			new MediaSearchASTEntitiesExtractor( $mockMediaSearchEntitiesFetcher ),
 			[],
 			[],
-			[],
 			'',
 			[]
 		);

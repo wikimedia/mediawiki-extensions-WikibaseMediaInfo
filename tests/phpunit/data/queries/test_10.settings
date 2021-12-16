@@ -4,9 +4,6 @@
 	"entityIdsForTerm": {
 		"yet another search term": []
 	},
-	"defaultProperties": [
-		"P999"
-	],
 	"userLanguage": "de",
 	"fallbackLangs": [ "fr" ],
 	"stemmingSettings": {
@@ -19,7 +16,7 @@
 	},
 	"settings": {
 		"boost": {
-			"statement": 0,
+			"statement": {"P999": 0},
 			"descriptions.$language": 2,
 			"descriptions.$language.plain": 0,
 			"category": 0,

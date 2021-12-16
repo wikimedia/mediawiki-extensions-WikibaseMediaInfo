@@ -29,14 +29,12 @@ class MediaSearchQueryBuilderTest extends MediaWikiIntegrationTestCase {
 		$fallbackLangs = $params['fallbackLangs'] ?? [];
 		$contentLanguage = 'en';
 		$entities = $params['entitiesForTerm'] ?? [];
-		$defaultProperties = $params['defaultProperties'] ?? [];
 		$mockMediaSearchEntitiesFetcher = $this->createMockMediaSearchEntitiesFetcher( $entities );
 
 		return new MediaSearchQueryBuilder(
 			$features,
 			new MediaSearchASTQueryBuilder(
 				new MediaSearchASTEntitiesExtractor( $mockMediaSearchEntitiesFetcher ),
-				array_fill_keys( $defaultProperties, 1 ),
 				$stemmingSettings,
 				array_merge( [ $userLanguage ], $fallbackLangs ),
 				$contentLanguage,

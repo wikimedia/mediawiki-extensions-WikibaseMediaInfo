@@ -61,20 +61,16 @@
 				"url"
 			]
 		},
-		"MediaInfoMediaSearchProperties": {
-			"description": "Map of { property id: weight } for which statements should be included in media search. When not set, this defaults to default properties (see $wgMediaInfoProperties values) with a weight of 1.",
-			"value": null
-		},
-		"MediaInfoMediaSearchHasLtrPlugin": {
-			"description": "Boolean indicating whether the o19s/elasticsearch-learning-to-rank plugin is installed (in which case move advanced search features can be used)",
-			"value": false
-		},
 		"MediaInfoEnableReferences": {
 			"description": "Boolean indicating whether references are supported",
 			"value": true
 		},
 		"MediaInfoCustomMatchFeature": {
 			"description": "Configuration for the 'custommatch' search feature, see Wikibase\\MediaInfo\\Search\\Feature\\CustomMatchFeature for expected format",
+			"value": {}
+		},
+		"MediaInfoMediaSearchProfiles": {
+			"description": "Map of { profile key: settings } MediaSearch profiles",
 			"value": {}
 		}
 	},

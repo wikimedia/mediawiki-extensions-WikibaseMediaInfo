@@ -15,6 +15,8 @@
 	"wikibase-mediainfo-summary-wbsetlabel-set": "Изменет [$2] титл",
 	"wikibasemediainfo-add-property": "Пребарајте за да додадете својства (дел од, медиумски тип итн.)",
 	"wikibasemediainfo-add-statement": "Додај исказ",
+	"wikibasemediainfo-custommatch-feature-no-profile": "Не постои профил наместен за custommatch:$1",
+	"wikibasemediainfo-custommatch-feature-invalid-term": "Неважечки поим за пребарување со custommatch",
 	"wikibasemediainfo-desc": "Додаток на Викибазата за управување со структурирани метаподатоци на слики и снимки",
 	"wikibasemediainfo-diffview-label": "опис",
 	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Описи",

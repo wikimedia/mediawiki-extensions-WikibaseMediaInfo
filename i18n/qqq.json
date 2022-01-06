@@ -20,7 +20,7 @@
 	"wikibase-mediainfo-summary-wbsetlabel-set": "{{wikibase summary messages|mediainfo|Automatic edit summary generated when editing an file's caption, which appears in the ''captions'' block underneath the thumbnail on the image page. Example of a full edit summary is \"Updated [en] caption: A domestic cat relaxes in the sunshine.\".}}",
 	"wikibasemediainfo-add-property": "Placeholder text in autosuggest input for adding new property which can be used to add statements about a File",
 	"wikibasemediainfo-add-statement": "Button text for adding a statement block for a new wikibase property",
-	"wikibasemediainfo-custommatch-feature-no-profile": "Warning when the user tries to search using the 'custommatch' feature, but there is no profile configured for their search term",
+	"wikibasemediainfo-custommatch-feature-no-profile": "Warning when the user tries to search using the 'custommatch' feature, but there is no profile configured for their search term.  Parameters:\n* $1 - the requested profile name.",
 	"wikibasemediainfo-custommatch-feature-invalid-term": "Warning when the user tries to search using the 'custommatch' feature using an invalid search term",
 	"wikibasemediainfo-desc": "{{desc|name=WikibaseMediaInfo|url=https://www.mediawiki.org/wiki/Extension:WikibaseMediaInfo}}",
 	"wikibasemediainfo-diffview-label": "Sub heading for caption changes in a diff.",

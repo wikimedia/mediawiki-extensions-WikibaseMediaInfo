@@ -16,7 +16,8 @@ class MediaSearchCachingEntitiesFetcherTest extends MediaSearchEntitiesFetcherTe
 			parent::createMediaSearchEntitiesFetcher(),
 			new WANObjectCache( [ 'cache' => new HashBagOStuff() ] ),
 			'en',
-			'en'
+			'en',
+			'wbmi-mediasearch-entities'
 		);
 	}
 }

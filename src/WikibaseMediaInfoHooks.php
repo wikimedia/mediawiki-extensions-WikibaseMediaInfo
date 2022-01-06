@@ -716,6 +716,10 @@ class WikibaseMediaInfoHooks {
 			// switch to experimental implementation (only) when explicitly requested
 			$fulltextProfileName = MediaSearchQueryBuilder::SYNONYMS_PROFILE_NAME;
 		}
+		if ( $request->getCheck( MediaSearchQueryBuilder::WEIGHTED_TAGS_PROFILE_NAME ) ) {
+			// switch to experimental implementation (only) when explicitly requested
+			$fulltextProfileName = MediaSearchQueryBuilder::WEIGHTED_TAGS_PROFILE_NAME;
+		}
 
 		$service->registerDefaultProfile( SearchProfileService::FT_QUERY_BUILDER,
 			$searchProfileContextName, $fulltextProfileName );

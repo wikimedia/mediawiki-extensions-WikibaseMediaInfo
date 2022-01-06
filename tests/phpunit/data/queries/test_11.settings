@@ -1,0 +1,55 @@
+{
+	"title": "Weighted tags",
+	"term": "some search term",
+	"entitiesForTerm": {
+		"some search term": [
+			{
+				"id": "Q1",
+				"score": 1.0
+			},
+			{
+				"id": "Q2",
+				"synonyms": [
+					"A thing"
+				]
+			}
+		]
+	},
+	"defaultProperties": [
+		"P1",
+		"P2"
+	],
+	"userLanguage": "en",
+	"settings": {
+		"normalizeFulltextScores": false,
+		"normalizeMultiClauseScores": false,
+		"entitiesVariableBoost": true,
+		"applyLogisticFunction": false,
+		"useSynonyms": false,
+		"boost": {
+			"statement": 1,
+			"weighted_tags": {
+				"image.linked.from.wikidata.p18/": 10,
+				"image.linked.from.wikidata.p373/": 20,
+				"image.linked.from.wikidata.sitelink/": 30
+			},
+			"descriptions.$language": 0,
+			"descriptions.$language.plain": 0,
+			"category": 0,
+			"category.plain": 0,
+			"title": 9,
+			"title.plain": 0,
+			"redirect.title": 0,
+			"redirect.title.plain": 0,
+			"text": 0,
+			"text.plain": 0,
+			"auxiliary_text": 0,
+			"auxiliary_text.plain": 0,
+			"file_text": 0,
+			"file_text.plain": 0,
+			"heading.plain": 0,
+			"heading": 0,
+			"suggest": 0
+		}
+	}
+}

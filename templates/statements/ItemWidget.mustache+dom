@@ -73,7 +73,6 @@
 			{{{qualifiers}}}
 		</div>
 
-		{{#enableReferences}}
 		<div class="wbmi-item-references">
 			{{#editing}}<h5 class="wbmi-snaklist-title">{{referencesTitle}}</h5>{{/editing}}
 			{{#references}}
@@ -82,7 +81,6 @@
 			{{/references}}
 			{{#editing}}{{{addReferenceButton}}}{{/editing}}
 		</div>
-		{{/enableReferences}}
 
 	</div>
 

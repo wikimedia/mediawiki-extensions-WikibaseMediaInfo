@@ -110,7 +110,6 @@ module.exports.mediainfo = Object.assign( {}, module.exports.ooui, module.export
 		sandboxes.mediainfo = sinon.createSandbox();
 
 		global.mw.config.get.withArgs( 'wbmiPropertyTypes' ).returns( wbmiPropertyTypes );
-		global.mw.config.get.withArgs( 'wbmiEnableReferences' ).returns( true );
 
 		// the captions panel needs the ULS
 		helpers.requireULS();

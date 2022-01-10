@@ -172,7 +172,6 @@ ItemWidget.prototype.getTemplateData = function () {
 			referenceTitle: mw.msg( 'wikibasemediainfo-statements-item-reference' ),
 			addReferenceButton: addReferenceButton,
 			references: self.state.references,
-			enableReferences: mw.config.get( 'wbmiEnableReferences' ),
 			label: formatResponse( label ),
 			id: id.replace( /^.+:/, '' ),
 			disabled: self.isDisabled(),

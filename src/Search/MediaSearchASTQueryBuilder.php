@@ -208,17 +208,61 @@ class MediaSearchASTQueryBuilder implements Visitor {
 	}
 
 	public function visitWordsQueryNode( WordsQueryNode $node ) {
-		$synonyms = $this->getSynonyms( $node );
+		$synonyms = array_merge(
+			$this->getSynonyms( $node ),
+			[ $node->getWords() => 1 ]
+		);
 
-		// remove case variations, preserving the highest value in case of duplicates
-		$synonyms = array_reduce( array_keys( $synonyms ), static function ( $result, $key ) use (
-			$synonyms ) {
-			$lowercase = strtolower( $key );
-			$result[$lowercase] = max( $synonyms[$key], $result[$lowercase] ?? 0 );
-			return $result;
-		}, [] );
-		// remove duplicate of original term
-		unset( $synonyms[strtolower( $node->getWords() )] );
+		$toCanonicalForm = static function ( string $term ) {
+			$canonical = strtolower( $term );
+			// replace punctuation (\p{P}) and separators (\p{Z}) by a single space
+			$canonical = preg_replace( '/[\p{P}\p{Z}]+/u', ' ', $canonical );
+			return trim( $canonical );
+		};
+
+		// remove variations, preserving the highest value in case of duplicates
+		$synonyms = array_reduce(
+			array_keys( $synonyms ),
+			static function ( $result, $term ) use ( $synonyms, $toCanonicalForm ) {
+				$canonical = $toCanonicalForm( $term );
+				$result[$canonical] = max( $synonyms[$term], $result[$canonical] ?? 0 );
+				return $result;
+			},
+			[]
+		);
+
+		// sort synonyms by descending weight & descending term length
+		uksort( $synonyms, static function ( $a, $b ) {
+			return strlen( $a ) <=> strlen( $b );
+		} );
+		arsort( $synonyms );
+
+		// remove synonyms that are a superset of something we're already searching
+		// (unless said superset has a higher weight)
+		// e.g. if we're already matching "commons", then trying to find documents
+		// with "wikimedia commons" would yield no additional results - they'd
+		// already be found with "commons"...
+		// (yes, they would get a higher score for "wikimedia commons", but that's
+		// no more or less correct than "commons" in this case - it's just as good
+		// a description as the longer form as far as we know, both referring to the
+		// exact same concept
+		$synonyms = array_reduce(
+			array_keys( $synonyms ),
+			static function ( $result, $term ) use ( $synonyms ) {
+				foreach ( $result as $existing => $weight ) {
+					if ( preg_match( '/\b' . preg_quote( $existing, '/' ) . '\b/', $term ) ) {
+						// another term of equal or higher weight already matches this
+						return $result;
+					}
+				}
+				$result[$term] = $synonyms[$term];
+				return $result;
+			},
+			[]
+		);
+
+		// remove original term (and duplicates thereof)
+		unset( $synonyms[$toCanonicalForm( $node->getWords() )] );
 
 		$nodeHandler = new WordsQueryNodeHandler(
 			$node,

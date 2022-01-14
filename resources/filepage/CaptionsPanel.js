@@ -114,7 +114,7 @@ CaptionsPanel.prototype.captionsDataFromMediaInfoEntity = function ( mediaInfo )
 		Object.keys( mediaInfo.labels ).forEach( function ( langCode ) {
 			captionsData[ langCode ] = new CaptionData(
 				langCode,
-				mw.html.escape( mediaInfo.labels[ langCode ].value )
+				mediaInfo.labels[ langCode ].value
 			);
 		} );
 	}
@@ -342,7 +342,8 @@ CaptionsPanel.prototype.getTemplateDataReadOnly = function () {
 
 		language = captionData.languageText;
 		caption = captionData.text ?
-			captionData.text : mw.msg( 'wikibasemediainfo-filepage-caption-empty' );
+			mw.html.escape( captionData.text ) :
+			mw.msg( 'wikibasemediainfo-filepage-caption-empty' );
 
 		templateCaptions.push( {
 			show: self.state.displayAllLanguages ? true : showCaptionFlags[ langCode ],
@@ -698,7 +699,7 @@ CaptionsPanel.prototype.sendData = function () {
 					.done( function ( result ) {
 						mw.mediaInfo.structuredData.currentRevision = result.entity.lastrevid;
 						self.savedCaptionsData[ langCode ] =
-							new CaptionData( langCode, mw.html.escape( text ) );
+							new CaptionData( langCode, text );
 					} )
 					.fail( function ( errorCode, error ) {
 						var apiError =

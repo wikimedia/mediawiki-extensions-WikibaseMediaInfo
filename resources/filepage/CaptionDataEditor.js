@@ -76,15 +76,13 @@ CaptionDataEditor = function ( guid, captionData, config ) {
 					self.setInputWarning( '' );
 
 					if ( self.minCaptionLength !== undefined && self.minCaptionLength - length > 0 ) {
-						self.setInputError( mw.msg(
-							'wikibasemediainfo-filepage-caption-too-short',
-							self.minCaptionLength - length
-						) );
+						self.setInputError( mw.message(
+							'wikibasemediainfo-filepage-caption-too-short'
+						).params( [ self.minCaptionLength - length ] ).escaped() );
 					} else if ( self.maxCaptionLength !== undefined && length - self.maxCaptionLength > 0 ) {
-						self.setInputError( mw.msg(
-							'wikibasemediainfo-filepage-caption-too-long',
-							length - self.maxCaptionLength
-						) );
+						self.setInputError( mw.message(
+							'wikibasemediainfo-filepage-caption-too-long'
+						).params( [ length - self.maxCaptionLength ] ).escaped() );
 					}
 				} )
 				.always( function () {

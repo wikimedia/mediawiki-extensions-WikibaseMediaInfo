@@ -421,6 +421,10 @@ class WikibaseMediaInfoHooks {
 			)
 		) {
 			$tab1Html = $matches[1] . $matches[4];
+
+			// insert captions at the beginning of Tab1
+			$tab1Html = $captions . $tab1Html;
+
 			$html = preg_replace(
 				$tab1ContentRegex,
 				'$3<WBMI_TABS_PLACEHOLDER>',
@@ -438,9 +442,6 @@ class WikibaseMediaInfoHooks {
 			$out->addHTML( $html );
 			return $out;
 		}
-
-		// insert captions at the beginning of Tab1
-		$tab1Html = $captions . $tab1Html;
 
 		// Prepare tab panels
 		$tab1 = new TabPanelLayout(

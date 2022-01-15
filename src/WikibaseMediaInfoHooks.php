@@ -400,7 +400,7 @@ class WikibaseMediaInfoHooks {
 		}
 
 		// Add a title to statements for no-js
-		$statements = \Html::rawElement(
+		$statements = \Html::element(
 			'h2',
 			[ 'class' => 'wbmi-structured-data-header' ],
 			$textProvider->get( 'wikibasemediainfo-filepage-structured-data-heading' )
@@ -429,7 +429,7 @@ class WikibaseMediaInfoHooks {
 				$extractedHtml['unstructured']
 			);
 			// Add a title for no-js
-			$tab1Html = \Html::rawElement(
+			$tab1Html = \Html::element(
 				'h2',
 				[ 'class' => 'wbmi-captions-header' ],
 				$textProvider->get( 'wikibasemediainfo-filepage-captions-title' )
@@ -447,7 +447,6 @@ class WikibaseMediaInfoHooks {
 			[
 				'classes' => [ 'wbmi-tab' ],
 				'label' => $textProvider->get( 'wikibasemediainfo-filepage-fileinfo-heading' ),
-				// @phan-suppress-next-line SecurityCheck-XSS
 				'content' => new HtmlSnippet( $tab1Html ),
 				'expanded' => false,
 			]
@@ -457,7 +456,6 @@ class WikibaseMediaInfoHooks {
 			[
 				'classes' => [ 'wbmi-tab' ],
 				'label' => $textProvider->get( 'wikibasemediainfo-filepage-structured-data-heading' ),
-				// @phan-suppress-next-line SecurityCheck-XSS
 				'content' => new HtmlSnippet( $statements ),
 				'expanded' => false,
 			]

@@ -6,7 +6,6 @@ use DataValues\DataValue;
 use DataValues\Serializers\DataValueSerializer;
 use Exception;
 use Html;
-use MediaWiki\MediaWikiServices;
 use OOUI\HtmlSnippet;
 use OOUI\PanelLayout;
 use OOUI\Tag;
@@ -372,14 +371,8 @@ class MediaInfoEntityStatementsView {
 			$statementDiv->appendContent( $qualifiersContainer );
 		}
 
-		// TODO: below $config objects should probably be DI into this class, but
-		// it's only needed for a short-lived feature flag that will soon be
-		// removed again - not worth changing this class' signature that much
-		$config = MediaWikiServices::getInstance()->getMainConfig();
-		$enableReferences = $config->get( 'MediaInfoEnableReferences' ) ||
-			\RequestContext::getMain()->getRequest()->getCheck( 'MediaInfoEnableReferences' );
 		$referenceList = $statement->getReferences();
-		if ( $enableReferences && count( $referenceList ) > 0 ) {
+		if ( count( $referenceList ) > 0 ) {
 			$referencesContainer = new Tag( 'div' );
 			$referencesContainer->addClasses( [ 'wbmi-item-references' ] );
 

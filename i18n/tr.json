@@ -3,6 +3,7 @@
 		"authors": [
 			"Arbormedi",
 			"BaRaN6161 TURK",
+			"Can",
 			"Cobija",
 			"Hedda",
 			"Joseph",
@@ -61,6 +62,7 @@
 	"wikibasemediainfo-filepage-license-agree": "Kabul ediyorum",
 	"wikibasemediainfo-statements-depicts-title": "Bu resimde tasvir edilen öğeler",
 	"wikibasemediainfo-statements-item-add-qualifier": "Niteleyici еkle",
+	"wikibasemediainfo-statements-item-add-reference-snak": "Ekle",
 	"wikibasemediainfo-statements-item-input-label": "{{WBREPONAME}} üzerinden",
 	"wikibasemediainfo-statements-item-input-placeholder": "Öğe eklemek için arama yapın",
 	"wikibasemediainfo-statements-item-is-prominent": "Öne çıkan",

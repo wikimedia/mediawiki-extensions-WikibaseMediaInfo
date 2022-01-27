@@ -85,6 +85,7 @@ module.exports.createMediaWikiEnv = function () {
 		},
 
 		message: sinon.stub().returns( {
+			escaped: sinon.stub(),
 			exists: sinon.stub(),
 			text: sinon.stub(),
 			parse: sinon.stub()

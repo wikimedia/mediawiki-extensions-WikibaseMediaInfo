@@ -343,7 +343,7 @@ CaptionsPanel.prototype.getTemplateDataReadOnly = function () {
 		language = captionData.languageText;
 		caption = captionData.text ?
 			mw.html.escape( captionData.text ) :
-			mw.html.escape( mw.message( 'wikibasemediainfo-filepage-caption-empty' ) );
+			mw.msg( 'wikibasemediainfo-filepage-caption-empty' );
 
 		templateCaptions.push( {
 			show: self.state.displayAllLanguages ? true : showCaptionFlags[ langCode ],

@@ -111,8 +111,8 @@ TimeInputWidget.prototype.getTemplateData = function () {
 		isQualifier: this.state.isQualifier,
 		isActive: this.state.isActive,
 		formatted: this.state.value === '' ?
-			mw.html.escape( mw.message( 'wikibasemediainfo-time-timestamp-empty' ) ) :
-			mw.html.escape( mw.message( 'wikibasemediainfo-time-timestamp-invalid' ) ),
+			mw.msg( 'wikibasemediainfo-time-timestamp-empty' ) :
+			mw.msg( 'wikibasemediainfo-time-timestamp-invalid' ),
 		input: this.input,
 		precisionLabel: mw.msg( 'wikibasemediainfo-time-precision-label' ),
 		calendarLabel: mw.msg( 'wikibasemediainfo-time-calendar-label' ),
@@ -129,9 +129,7 @@ TimeInputWidget.prototype.getTemplateData = function () {
 		var $formatted = $( '<span>' ).addClass( 'wbmi-input-widget--formatted' ).text( formatted );
 
 		return $.extend( {}, data, {
-			formatted: mw.html.escape( mw.message(
-				'wikibasemediainfo-time-timestamp-formatted',
-				$formatted.get( 0 ).outerHTML ) )
+			formatted: mw.msg( 'wikibasemediainfo-time-timestamp-formatted', $formatted.get( 0 ).outerHTML )
 		} );
 	} );
 };

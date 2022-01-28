@@ -6,14 +6,15 @@
 			{
 				"id": "Q1",
 				"synonyms": [
-					"Some thing",
-					"Something"
+					"Some similar term",
+					"Something similar"
 				]
 			},
 			{
 				"id": "Q2",
 				"synonyms": [
-					"Another thing"
+					"A very different entity",
+					"Yet something similar"
 				]
 			}
 		]
@@ -37,6 +38,11 @@
 			"auxiliary_text.plain": 0.075,
 			"file_text": 0.15,
 			"file_text.plain": 0.05
-		}
+		},
+		"synonymsMaxAmount": 5,
+		"synonymsMinScoreThreshold": 0.5,
+		"synonymsMinByteLength": 2,
+		"synonymsMinSimilarityToCanonicalForm": 0.75,
+		"synonymsMinDifferenceFromOthers": 0.25
 	}
 }

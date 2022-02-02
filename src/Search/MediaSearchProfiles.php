@@ -85,6 +85,11 @@ return array_map( static function ( array $settings ) use ( $config ) {
 		'logisticRegressionIntercept' => 0,
 		'entitySearchBaseUri' => $config->get( 'MediaInfoExternalEntitySearchBaseUri' ),
 		'titleMatchBaseUri' => '',
+		'synonymsMaxAmount' => 5,
+		'synonymsMinScoreThreshold' => 0.5,
+		'synonymsMinByteLength' => 2,
+		'synonymsMinSimilarityToCanonicalForm' => 0.75,
+		'synonymsMinDifferenceFromOthers' => 0.25,
 	];
 	$settings = array_replace_recursive( $defaultSettings, $settings );
 

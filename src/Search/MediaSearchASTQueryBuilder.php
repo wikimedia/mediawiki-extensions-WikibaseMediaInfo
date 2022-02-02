@@ -107,6 +107,11 @@ class MediaSearchASTQueryBuilder implements Visitor {
 			'applyLogisticFunction' => (bool)( $settings['applyLogisticFunction'] ?? false ),
 			'useSynonyms' => (bool)( $settings['useSynonyms'] ?? false ),
 			'logisticRegressionIntercept' => (float)( $settings['logisticRegressionIntercept'] ?? 0 ),
+			'synonymsMaxAmount' => (float)( $settings['synonymsMaxAmount'] ?? 0 ),
+			'synonymsMinScoreThreshold' => (float)( $settings['synonymsMinScoreThreshold'] ?? 0 ),
+			'synonymsMinByteLength' => (float)( $settings['synonymsMinByteLength'] ?? 0 ),
+			'synonymsMinSimilarityToCanonicalForm' => (float)( $settings['synonymsMinSimilarityToCanonicalForm'] ?? 0 ),
+			'synonymsMinDifferenceFromOthers' => (float)( $settings['synonymsMinDifferenceFromOthers'] ?? 0 ),
 		];
 	}
 
@@ -209,60 +214,33 @@ class MediaSearchASTQueryBuilder implements Visitor {
 
 	public function visitWordsQueryNode( WordsQueryNode $node ) {
 		$synonyms = array_merge(
-			$this->getSynonyms( $node ),
-			[ $node->getWords() => 1 ]
+			// the original term (below) will be removed again later, but we should
+			// also consider it when clearing out synonyms that are too similar
+			[ $node->getWords() => 10 ],
+			$this->getSynonyms( $node, $this->options['synonymsMinScoreThreshold'] )
 		);
 
-		$toCanonicalForm = static function ( string $term ) {
-			$canonical = strtolower( $term );
-			// replace punctuation (\p{P}) and separators (\p{Z}) by a single space
-			$canonical = preg_replace( '/[\p{P}\p{Z}]+/u', ' ', $canonical );
-			return trim( $canonical );
-		};
-
-		// remove variations, preserving the highest value in case of duplicates
+		$synonyms = $this->filterTermsTooDissimilarCanonicalized(
+			$synonyms,
+			$this->options['synonymsMinSimilarityToCanonicalForm']
+		);
 		$synonyms = array_reduce(
 			array_keys( $synonyms ),
-			static function ( $result, $term ) use ( $synonyms, $toCanonicalForm ) {
-				$canonical = $toCanonicalForm( $term );
+			function ( $result, $term ) use ( $synonyms ) {
+				$canonical = $this->canonicalizeTerm( $term );
 				$result[$canonical] = max( $synonyms[$term], $result[$canonical] ?? 0 );
 				return $result;
 			},
 			[]
 		);
-
-		// sort synonyms by descending weight & descending term length
-		uksort( $synonyms, static function ( $a, $b ) {
-			return strlen( $a ) <=> strlen( $b );
-		} );
-		arsort( $synonyms );
-
-		// remove synonyms that are a superset of something we're already searching
-		// (unless said superset has a higher weight)
-		// e.g. if we're already matching "commons", then trying to find documents
-		// with "wikimedia commons" would yield no additional results - they'd
-		// already be found with "commons"...
-		// (yes, they would get a higher score for "wikimedia commons", but that's
-		// no more or less correct than "commons" in this case - it's just as good
-		// a description as the longer form as far as we know, both referring to the
-		// exact same concept
-		$synonyms = array_reduce(
-			array_keys( $synonyms ),
-			static function ( $result, $term ) use ( $synonyms ) {
-				foreach ( $result as $existing => $weight ) {
-					if ( preg_match( '/\b' . preg_quote( $existing, '/' ) . '\b/', $term ) ) {
-						// another term of equal or higher weight already matches this
-						return $result;
-					}
-				}
-				$result[$term] = $synonyms[$term];
-				return $result;
-			},
-			[]
-		);
+		$synonyms = $this->filterTermsTooShort( $synonyms, $this->options['synonymsMinByteLength'] );
+		$synonyms = $this->filterTermsTooSimilar( $synonyms, $this->options['synonymsMinDifferenceFromOthers'] );
+		$synonyms = $this->filterTermsSupersets( $synonyms );
 
 		// remove original term (and duplicates thereof)
-		unset( $synonyms[$toCanonicalForm( $node->getWords() )] );
+		unset( $synonyms[$this->canonicalizeTerm( $node->getWords() )] );
+
+		$synonyms = array_slice( $synonyms, 0, $this->options['synonymsMaxAmount'] );
 
 		$nodeHandler = new WordsQueryNodeHandler(
 			$node,
@@ -342,7 +320,7 @@ class MediaSearchASTQueryBuilder implements Visitor {
 	 * @param float $threshold relevance percentage below which not to include synonyms
 	 * @return array [synonym => score]
 	 */
-	private function getSynonyms( WordsQueryNode $node, $threshold = 0.5 ): array {
+	private function getSynonyms( WordsQueryNode $node, float $threshold = 0.5 ): array {
 		if ( !$this->options[ 'useSynonyms' ] ) {
 			return [];
 		}
@@ -364,4 +342,119 @@ class MediaSearchASTQueryBuilder implements Visitor {
 
 		return $synonyms;
 	}
+
+	private function canonicalizeTerm( string $term ): string {
+		$canonical = strtolower( $term );
+		// replace punctuation (\p{P}) and separators (\p{Z}) by a single space
+		$canonical = preg_replace( '/[\p{P}\p{Z}]+/u', ' ', $canonical );
+		return trim( $canonical );
+	}
+
+	private function filterTermsTooShort( array $synonyms, int $threshold ): array {
+		// remove variations, preserving the highest value in case of duplicates
+		return array_filter(
+			$synonyms,
+			static function ( $term ) use ( $threshold ) {
+				// discard 1-letter latin characters - they're too generic & expensive
+				return strlen( $term ) >= $threshold;
+			},
+			ARRAY_FILTER_USE_KEY
+		);
+	}
+
+	private function filterTermsTooDissimilarCanonicalized( array $synonyms, float $threshold ): array {
+		// remove variations, preserving the highest value in case of duplicates
+		return array_filter(
+			$synonyms,
+			function ( $term ) use ( $threshold ) {
+				$canonical = $this->canonicalizeTerm( $term );
+				// discard terms where a significant portion was punctuation or separators,
+				// the canonical form likely is no longer representative enough (e.g `c#` != `c`)
+				// @phan-suppress-next-line PhanPluginUseReturnValueInternalKnown
+				similar_text( strtolower( $canonical ), strtolower( $term ), $similarity );
+				return $similarity / 100 >= $threshold;
+			},
+			ARRAY_FILTER_USE_KEY
+		);
+	}
+
+	private function filterTermsTooSimilar( array $synonyms, float $threshold ): array {
+		// now calculate the similarity to other terms (with same or higher weight)
+		// and get rid of terms that are simply too similar (e.g. 'cat' and 'cats',
+		// or 'house cat' and 'housecat' are too similar; we'd rather spend our
+		// resources looking for more significantly different terms)
+		$terms = array_keys( $synonyms );
+		$differences = [];
+		foreach ( $synonyms as $term => $score ) {
+			$index = array_search( $term, $terms );
+			$previousTerms = array_slice( $terms, 0, $index );
+			$differences[$term] = array_reduce(
+				$previousTerms,
+				static function ( $min, $otherTerm ) use ( $term ) {
+					// @phan-suppress-next-line PhanPluginUseReturnValueInternalKnown
+					similar_text( strtolower( $term ), strtolower( $otherTerm ), $similarity );
+					$difference = 1 - $similarity / 100;
+					return $min === null ? $difference : min( $min, $difference );
+				},
+				null
+			);
+			if ( $differences[$term] !== null && $differences[$term] < $threshold ) {
+				unset( $synonyms[$term] );
+			}
+		}
+
+		// now re-sort them by difference compared to other terms (by weight),
+		// so that we get the "more different" terms first; then sort by weight
+		// again so that we end up with an array sorted by weight first, and
+		// "different-ness" second
+		uksort( $synonyms, static function ( $a, $b ) use ( $differences ) {
+			return $differences[ $b ] <=> $differences[ $a ];
+		} );
+		arsort( $synonyms );
+
+		return $synonyms;
+	}
+
+	private function filterTermsSupersets( array $synonyms ): array {
+		// sort synonyms by descending weight & descending term length
+		uksort( $synonyms, static function ( $a, $b ) {
+			return strlen( $a ) <=> strlen( $b );
+		} );
+		arsort( $synonyms );
+
+		// remove synonyms that are a superset of something we're already searching
+		// (unless said superset has a higher weight)
+		// e.g. if we're already matching "commons", then trying to find documents
+		// with "wikimedia commons" would yield no additional results - they'd
+		// already be found with "commons"...
+		// (yes, they would get a higher score for "wikimedia commons", but that's
+		// no more or less correct than "commons" in this case - it's just as good
+		// a description as the longer form as far as we know, both referring to the
+		// exact same concept
+		return array_reduce(
+			array_keys( $synonyms ),
+			static function ( $result, $term ) use ( $synonyms ) {
+				foreach ( $result as $existing => $weight ) {
+					if ( preg_match_all( '/\b[^\p{P}\p{Z}]+?\b/u', $existing, $matches ) ) {
+						foreach ( $matches[0] as $word ) {
+							if ( !preg_match( '/\b' . preg_quote( $word, '/' ) . '\b/', $term ) ) {
+								// at least one of the words of another synonym do not
+								// occur in this term, so it's at least more exclusive
+								// in some way = this term is no superset of that other
+								continue 2;
+							}
+						}
+						// another term of equal or higher weight already matches this
+						return $result;
+					}
+				}
+				// this synonym turned out to be different enough from all others;
+				// include it
+				$result[$term] = $synonyms[$term];
+				return $result;
+			},
+			[]
+		);
+	}
+
 }

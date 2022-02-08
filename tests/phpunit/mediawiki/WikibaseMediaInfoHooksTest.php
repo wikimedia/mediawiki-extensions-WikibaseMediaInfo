@@ -100,6 +100,7 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiIntegrationTestCase {
 				'addJsConfigVars',
 				'addModuleStyles',
 				'addModules',
+				'setPreventClickjacking',
 			] )
 			->getMock();
 
@@ -109,6 +110,7 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiIntegrationTestCase {
 			->willReturn( Language::factory( 'en' ) );
 		$out->method( 'getUser' )
 			->willReturn( new User() );
+		$out->method( 'setPreventClickjacking' );
 
 		// TODO: Test that this doesn't appear on action=history etc. contexts
 		$out->method( 'getContext' )

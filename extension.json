@@ -461,5 +461,8 @@
 	},
 	"AvailableRights": [
 		"mediainfo-term"
+	],
+	"RawHtmlMessages": [
+		"wikibasemediainfo-time-timestamp-formatted"
 	]
 }

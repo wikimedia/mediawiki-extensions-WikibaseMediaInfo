@@ -12,10 +12,12 @@ use ContentHandler;
 use Elastica\Document;
 use ExtensionRegistry;
 use MediaWiki\MediaWikiServices;
+use MediaWiki\Revision\RenderedRevision;
 use MediaWiki\Revision\RevisionRecord;
 use MediaWiki\Revision\SlotRecord;
 use MediaWiki\Revision\SlotRoleRegistry;
 use MediaWiki\Storage\BlobStore;
+use MediaWiki\User\UserIdentity;
 use OOUI\HtmlSnippet;
 use OOUI\IndexLayout;
 use OOUI\PanelLayout;
@@ -929,4 +931,31 @@ class WikibaseMediaInfoHooks {
 			$extraFeatures[] = new CustomMatchFeature( $featureConfig );
 		}
 	}
+
+	/**
+	 * @param RenderedRevision $renderedRevision
+	 * @param UserIdentity $author
+	 * @param \CommentStoreComment $summary
+	 * @param int $flags
+	 * @param \Status $hookStatus
+	 */
+	public static function onMultiContentSave(
+		RenderedRevision $renderedRevision,
+		UserIdentity $author,
+		\CommentStoreComment $summary,
+		int $flags,
+		\Status $hookStatus
+	) {
+		if ( ( $flags & EDIT_AUTOSUMMARY ) !== 0 && $renderedRevision->getRevision()->hasSlot( 'mediainfo' ) ) {
+			// remove coordinates from edit summaries when deleting location statements
+			// @see https://phabricator.wikimedia.org/T298700
+			$coordinate = '\d+°(\d+\'(\d+(\.\d+)?")?)?';
+			$summary->text = preg_replace(
+				"/(\/\* wbremoveclaims-remove:.+? \*\/ .+?): {$coordinate}[NS], {$coordinate}[EW]/u",
+				'$1',
+				$summary->text
+			);
+		}
+	}
+
 }

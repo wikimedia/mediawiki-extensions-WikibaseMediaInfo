@@ -91,7 +91,8 @@
 		"CirrusSearchProfileService": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onCirrusSearchProfileService",
 		"CirrusSearchRegisterFullTextQueryClassifiers": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onCirrusSearchRegisterFullTextQueryClassifiers",
 		"SidebarBeforeOutput": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onSidebarBeforeOutput",
-		"CirrusSearchAddQueryFeatures": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onCirrusSearchAddQueryFeatures"
+		"CirrusSearchAddQueryFeatures": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onCirrusSearchAddQueryFeatures",
+		"MultiContentSave": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onMultiContentSave"
 	},
 	"MessagesDirs": {
 		"WikibaseMediaInfo": [

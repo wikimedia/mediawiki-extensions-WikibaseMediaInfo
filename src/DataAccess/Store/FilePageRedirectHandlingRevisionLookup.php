@@ -3,7 +3,7 @@
 namespace Wikibase\MediaInfo\DataAccess\Store;
 
 use IDBAccessObject;
-use MediaWiki\Storage\RevisionStore;
+use MediaWiki\Revision\RevisionStore;
 use Wikibase\DataModel\Entity\EntityId;
 use Wikibase\Lib\Store\EntityRevisionLookup;
 use Wikibase\Lib\Store\InconsistentRedirectException;

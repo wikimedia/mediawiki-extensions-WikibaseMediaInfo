@@ -2,8 +2,8 @@
 
 namespace Wikibase\MediaInfo\Tests\MediaWiki\DataAccess\Store;
 
-use MediaWiki\Storage\RevisionRecord;
-use MediaWiki\Storage\RevisionStore;
+use MediaWiki\Revision\RevisionRecord;
+use MediaWiki\Revision\RevisionStore;
 use PHPUnit\Framework\TestCase;
 use Wikibase\DataModel\Entity\EntityRedirect;
 use Wikibase\Lib\Store\EntityRevision;

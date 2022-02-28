@@ -100,9 +100,7 @@ class MediaSearchASTQueryBuilder implements Visitor {
 			'synonyms' => 1.0,
 		];
 		$this->options = [
-			'normalizeFulltextScores' => (bool)( $settings['normalizeFulltextScores'] ?? true ),
 			'normalizeMultiClauseScores' => (bool)( $settings['normalizeMultiClauseScores'] ?? false ),
-			'hasLtrPlugin' => (bool)( $settings['hasLtrPlugin'] ?? false ),
 			'entitiesVariableBoost' => (bool)( $settings['entitiesVariableBoost'] ?? true ),
 			'applyLogisticFunction' => (bool)( $settings['applyLogisticFunction'] ?? false ),
 			'useSynonyms' => (bool)( $settings['useSynonyms'] ?? false ),
@@ -250,8 +248,7 @@ class MediaSearchASTQueryBuilder implements Visitor {
 			array_fill_keys( $synonyms, [ $this->contentLanguage ] ),
 			$this->stemmingSettings,
 			$this->boosts,
-			$this->decays,
-			$this->options
+			$this->decays
 		);
 		$this->map[$node] = $this->applyLogisticFunction( $nodeHandler->transform() );
 	}

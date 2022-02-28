@@ -39,7 +39,6 @@ class MediaSearchQueryBuilderTest extends MediaWikiIntegrationTestCase {
 				array_merge( [ $userLanguage ], $fallbackLangs ),
 				$contentLanguage,
 				$settings + [
-					'hasLtrPlugin' => true,
 					'applyLogisticFunction' => true,
 					'logisticRegressionIntercept' => 1,
 				]

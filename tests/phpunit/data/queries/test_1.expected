@@ -11,208 +11,145 @@
                                         "tie_breaker": 1,
                                         "queries": [
                                             {
-                                                "function_score": {
-                                                    "query": {
-                                                        "bool": {
-                                                            "must": [
-                                                                {
-                                                                    "function_score": {
-                                                                        "query": {
-                                                                            "bool": {
-                                                                                "filter": [
-                                                                                    {
-                                                                                        "multi_match": {
-                                                                                            "query": "some search term",
-                                                                                            "fields": [
-                                                                                                "all",
-                                                                                                "all.plain"
-                                                                                            ],
-                                                                                            "operator": "and"
-                                                                                        }
-                                                                                    }
-                                                                                ],
-                                                                                "should": [
-                                                                                    {
-                                                                                        "match": {
-                                                                                            "title": {
-                                                                                                "query": "some search term",
-                                                                                                "boost": 0.45000000000000001
-                                                                                            }
-                                                                                        }
-                                                                                    },
-                                                                                    {
-                                                                                        "match": {
-                                                                                            "title.plain": {
-                                                                                                "query": "some search term",
-                                                                                                "boost": 0.14999999999999999
-                                                                                            }
-                                                                                        }
-                                                                                    },
-                                                                                    {
-                                                                                        "match": {
-                                                                                            "category": {
-                                                                                                "query": "some search term",
-                                                                                                "boost": 0.52500000000000002
-                                                                                            }
-                                                                                        }
-                                                                                    },
-                                                                                    {
-                                                                                        "match": {
-                                                                                            "category.plain": {
-                                                                                                "query": "some search term",
-                                                                                                "boost": 0.17499999999999999
-                                                                                            }
-                                                                                        }
-                                                                                    },
-                                                                                    {
-                                                                                        "match": {
-                                                                                            "redirect.title": {
-                                                                                                "query": "some search term",
-                                                                                                "boost": 0.375
-                                                                                            }
-                                                                                        }
-                                                                                    },
-                                                                                    {
-                                                                                        "match": {
-                                                                                            "redirect.title.plain": {
-                                                                                                "query": "some search term",
-                                                                                                "boost": 0.125
-                                                                                            }
-                                                                                        }
-                                                                                    },
-                                                                                    {
-                                                                                        "match": {
-                                                                                            "heading": {
-                                                                                                "query": "some search term",
-                                                                                                "boost": 1
-                                                                                            }
-                                                                                        }
-                                                                                    },
-                                                                                    {
-                                                                                        "match": {
-                                                                                            "heading.plain": {
-                                                                                                "query": "some search term",
-                                                                                                "boost": 1
-                                                                                            }
-                                                                                        }
-                                                                                    },
-                                                                                    {
-                                                                                        "match": {
-                                                                                            "auxiliary_text": {
-                                                                                                "query": "some search term",
-                                                                                                "boost": 0.22500000000000001
-                                                                                            }
-                                                                                        }
-                                                                                    },
-                                                                                    {
-                                                                                        "match": {
-                                                                                            "auxiliary_text.plain": {
-                                                                                                "query": "some search term",
-                                                                                                "boost": 0.074999999999999997
-                                                                                            }
-                                                                                        }
-                                                                                    },
-                                                                                    {
-                                                                                        "match": {
-                                                                                            "text": {
-                                                                                                "query": "some search term",
-                                                                                                "boost": 0.29999999999999999
-                                                                                            }
-                                                                                        }
-                                                                                    },
-                                                                                    {
-                                                                                        "match": {
-                                                                                            "text.plain": {
-                                                                                                "query": "some search term",
-                                                                                                "boost": 0.10000000000000001
-                                                                                            }
-                                                                                        }
-                                                                                    },
-                                                                                    {
-                                                                                        "match": {
-                                                                                            "file_text": {
-                                                                                                "query": "some search term",
-                                                                                                "boost": 0.14999999999999999
-                                                                                            }
-                                                                                        }
-                                                                                    },
-                                                                                    {
-                                                                                        "match": {
-                                                                                            "file_text.plain": {
-                                                                                                "query": "some search term",
-                                                                                                "boost": 0.050000000000000003
-                                                                                            }
-                                                                                        }
-                                                                                    },
-                                                                                    {
-                                                                                        "match": {
-                                                                                            "suggest": {
-                                                                                                "query": "some search term",
-                                                                                                "boost": 1
-                                                                                            }
-                                                                                        }
-                                                                                    },
-                                                                                    {
-                                                                                        "match": {
-                                                                                            "descriptions.en.plain": {
-                                                                                                "query": "some search term",
-                                                                                                "boost": 2.5
-                                                                                            }
-                                                                                        }
-                                                                                    }
-                                                                                ]
-                                                                            }
-                                                                        },
-                                                                        "functions": [
-                                                                            {
-                                                                                "script_score": {
-                                                                                    "script": {
-                                                                                        "source": "max(0, ln(9999999999999999) + ln(_score))",
-                                                                                        "lang": "expression"
-                                                                                    }
-                                                                                }
-                                                                            }
-                                                                        ]
-                                                                    }
-                                                                }
-                                                            ],
-                                                            "should": [
-                                                                {
-                                                                    "function_score": {
-                                                                        "query": {
-                                                                            "match_explorer": {
-                                                                                "type": "unique_terms_count",
-                                                                                "query": {
-                                                                                    "match": {
-                                                                                        "text": {
-                                                                                            "query": "some search term"
-                                                                                        }
-                                                                                    }
-                                                                                }
-                                                                            }
-                                                                        },
-                                                                        "functions": [
-                                                                            {
-                                                                                "script_score": {
-                                                                                    "script": {
-                                                                                        "source": "ln(2 \/ max(1, min(1.25, _score)))",
-                                                                                        "lang": "expression"
-                                                                                    }
-                                                                                }
-                                                                            }
-                                                                        ]
-                                                                    }
-                                                                }
-                                                            ]
-                                                        }
-                                                    },
-                                                    "min_score": 0,
-                                                    "functions": [
+                                                "bool": {
+                                                    "filter": [
                                                         {
-                                                            "script_score": {
-                                                                "script": {
-                                                                    "source": "exp(_score) \/ 2 \/ 9999999999999999",
-                                                                    "lang": "expression"
+                                                            "multi_match": {
+                                                                "query": "some search term",
+                                                                "fields": [
+                                                                    "all",
+                                                                    "all.plain"
+                                                                ],
+                                                                "operator": "and"
+                                                            }
+                                                        }
+                                                    ],
+                                                    "should": [
+                                                        {
+                                                            "match": {
+                                                                "title": {
+                                                                    "query": "some search term",
+                                                                    "boost": 0.45000000000000001
+                                                                }
+                                                            }
+                                                        },
+                                                        {
+                                                            "match": {
+                                                                "title.plain": {
+                                                                    "query": "some search term",
+                                                                    "boost": 0.14999999999999999
+                                                                }
+                                                            }
+                                                        },
+                                                        {
+                                                            "match": {
+                                                                "category": {
+                                                                    "query": "some search term",
+                                                                    "boost": 0.52500000000000002
+                                                                }
+                                                            }
+                                                        },
+                                                        {
+                                                            "match": {
+                                                                "category.plain": {
+                                                                    "query": "some search term",
+                                                                    "boost": 0.17499999999999999
+                                                                }
+                                                            }
+                                                        },
+                                                        {
+                                                            "match": {
+                                                                "redirect.title": {
+                                                                    "query": "some search term",
+                                                                    "boost": 0.375
+                                                                }
+                                                            }
+                                                        },
+                                                        {
+                                                            "match": {
+                                                                "redirect.title.plain": {
+                                                                    "query": "some search term",
+                                                                    "boost": 0.125
+                                                                }
+                                                            }
+                                                        },
+                                                        {
+                                                            "match": {
+                                                                "heading": {
+                                                                    "query": "some search term",
+                                                                    "boost": 1
+                                                                }
+                                                            }
+                                                        },
+                                                        {
+                                                            "match": {
+                                                                "heading.plain": {
+                                                                    "query": "some search term",
+                                                                    "boost": 1
+                                                                }
+                                                            }
+                                                        },
+                                                        {
+                                                            "match": {
+                                                                "auxiliary_text": {
+                                                                    "query": "some search term",
+                                                                    "boost": 0.22500000000000001
+                                                                }
+                                                            }
+                                                        },
+                                                        {
+                                                            "match": {
+                                                                "auxiliary_text.plain": {
+                                                                    "query": "some search term",
+                                                                    "boost": 0.074999999999999997
+                                                                }
+                                                            }
+                                                        },
+                                                        {
+                                                            "match": {
+                                                                "text": {
+                                                                    "query": "some search term",
+                                                                    "boost": 0.29999999999999999
+                                                                }
+                                                            }
+                                                        },
+                                                        {
+                                                            "match": {
+                                                                "text.plain": {
+                                                                    "query": "some search term",
+                                                                    "boost": 0.10000000000000001
+                                                                }
+                                                            }
+                                                        },
+                                                        {
+                                                            "match": {
+                                                                "file_text": {
+                                                                    "query": "some search term",
+                                                                    "boost": 0.14999999999999999
+                                                                }
+                                                            }
+                                                        },
+                                                        {
+                                                            "match": {
+                                                                "file_text.plain": {
+                                                                    "query": "some search term",
+                                                                    "boost": 0.050000000000000003
+                                                                }
+                                                            }
+                                                        },
+                                                        {
+                                                            "match": {
+                                                                "suggest": {
+                                                                    "query": "some search term",
+                                                                    "boost": 1
+                                                                }
+                                                            }
+                                                        },
+                                                        {
+                                                            "match": {
+                                                                "descriptions.en.plain": {
+                                                                    "query": "some search term",
+                                                                    "boost": 2.5
                                                                 }
                                                             }
                                                         }

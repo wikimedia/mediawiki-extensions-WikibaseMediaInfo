@@ -17,7 +17,6 @@
 	},
 	"userLanguage": "en",
 	"settings": {
-		"normalizeFulltextScores": false,
 		"normalizeMultiClauseScores": false,
 		"entitiesVariableBoost": true,
 		"applyLogisticFunction": false,

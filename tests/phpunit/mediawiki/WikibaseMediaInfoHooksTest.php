@@ -10,6 +10,7 @@ use Hooks;
 use Language;
 use MediaWiki\Revision\RevisionRecord;
 use MediaWiki\Revision\SlotRecord;
+use MockTitleTrait;
 use ParserOutput;
 use Title;
 use User;
@@ -32,6 +33,7 @@ use Wikibase\Search\Elastic\Fields\TermIndexField;
  * @author Bene* < benestar.wikimedia@gmail.com >
  */
 class WikibaseMediaInfoHooksTest extends \MediaWikiIntegrationTestCase {
+	use MockTitleTrait;
 
 	public function testOnWikibaseRepoEntityNamespaces() {
 		$entityNamespaces = [];
@@ -119,8 +121,7 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiIntegrationTestCase {
 	}
 
 	public function testOnBeforePageDisplay() {
-		$imgTitle = Title::makeTitle( NS_FILE, 'Foo.jpg' );
-		$imgTitle->resetArticleID( 23 );
+		$imgTitle = $this->makeMockTitle( 'Foo.jpg', [ 'namespace' => NS_FILE, 'id' => 13 ] );
 
 		$skin = $this->getMockBuilder( \Skin::class )
 			->disableOriginalConstructor()
@@ -143,11 +144,7 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiIntegrationTestCase {
 	}
 
 	public function testOnBeforePageDisplayWithMissingTitle() {
-		$imgTitle = $this->getMockBuilder( \Title::class )
-			->disableOriginalConstructor()
-			->getMock();
-		$imgTitle->method( 'exists' )
-			->willReturn( false );
+		$imgTitle = $this->makeMockTitle( 'Foo.jpg', [ 'namespace' => NS_FILE, 'id' => 0 ] );
 
 		$out = $this->getMockOutputPage( $imgTitle );
 		$out->expects( $this->once() )

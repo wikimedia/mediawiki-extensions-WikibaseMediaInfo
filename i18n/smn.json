@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"Seipinne",
 			"Yupik"
 		]
 	},
@@ -11,6 +12,7 @@
 	"wikibasemediainfo-filepage-add-caption": "Lasseet koveteevstâ",
 	"wikibasemediainfo-filepage-cancel": "Jooskâ",
 	"wikibasemediainfo-filepage-edit": "Mute",
+	"wikibasemediainfo-filepage-publish": "Almostit nubástusâid",
 	"wikibasemediainfo-statements-item-remove": "Siho",
 	"wikibasemediainfo-statements-learn-more": "Lasetiäđuh",
 	"wikibasemediainfo-statements-remove": "Siho puoh",

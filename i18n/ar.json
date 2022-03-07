@@ -8,7 +8,8 @@
 			"NEHAOUA",
 			"Tala Ali",
 			"ديفيد",
-			"محمد أحمد عبد الفتاح"
+			"محمد أحمد عبد الفتاح",
+			"Michel Bakni"
 		]
 	},
 	"action-mediainfo-term": "تغيير مصطلحات معلومات الوسائط (التسميات التوضيحية والملخصات)",
@@ -60,7 +61,7 @@
 	"wikibasemediainfo-statements-depicts-title": "العناصر المبينة في هذه الصورة",
 	"wikibasemediainfo-statements-item-add-qualifier": "إضافة تصفية",
 	"wikibasemediainfo-statements-item-input-label": "من {{WBREPONAME}}",
-	"wikibasemediainfo-statements-item-input-placeholder": "بحث لإضافة عناصر (قطة منزلية، جبل، تاج محل، إلخ)",
+	"wikibasemediainfo-statements-item-input-placeholder": "ابحث لإضافة عناصر",
 	"wikibasemediainfo-statements-item-is-prominent": "بارز",
 	"wikibasemediainfo-statements-item-mark-as-prominent": "التعليم كبارز",
 	"wikibasemediainfo-statements-item-remove": "إزالة",

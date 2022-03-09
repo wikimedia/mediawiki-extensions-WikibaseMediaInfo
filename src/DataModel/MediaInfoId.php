@@ -75,7 +75,16 @@ class MediaInfoId extends SerializableEntityId implements Int32EntityId {
 	 * @return string
 	 */
 	public function serialize() {
-		return $this->serialization;
+		return $this->__serialize()[ 'serialization' ];
+	}
+
+	/**
+	 * @see Serializable::serialize
+	 *
+	 * @return array
+	 */
+	public function __serialize() {
+		return [ 'serialization' => $this->serialization ];
 	}
 
 	/**
@@ -84,9 +93,21 @@ class MediaInfoId extends SerializableEntityId implements Int32EntityId {
 	 * @param string $value
 	 */
 	public function unserialize( $value ) {
-		$this->serialization = $value;
+		$this->__unserialize( [ 'serialization' => $value ] );
+	}
+
+	/**
+	 * @see Serializable::unserialize
+	 *
+	 * @param array $value
+	 */
+	public function __unserialize( array $value ) {
+		if ( !array_key_exists( 'serialization', $value ) ) {
+			throw new InvalidArgumentException( 'Serialized $value must contain "serialization" key' );
+		}
+		$this->serialization = $value[ 'serialization' ];
 		list( $this->repositoryName, $this->localPart ) = self::extractRepositoryNameAndLocalPart(
-			$value
+			$this->serialization
 		);
 	}
 

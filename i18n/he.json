@@ -5,7 +5,8 @@
 			"Falling star",
 			"Guycn2",
 			"Jdforrester",
-			"Strayblues"
+			"Strayblues",
+			"Catrope"
 		]
 	},
 	"action-mediainfo-term": "לשנות פרטים של מידע על מדיה (כיתובים, סיכומים)",
@@ -31,7 +32,7 @@
 	"wikibasemediainfo-filepage-fewer-languages": "לראות פחות שפות",
 	"wikibasemediainfo-filepage-add-caption": "הוספת כיתוב",
 	"wikibasemediainfo-filepage-edit-captions": "עריכת הכיתובים",
-	"wikibasemediainfo-filepage-edit-depicts": "עריכת מה שמוצג",
+	"wikibasemediainfo-filepage-edit-depicts": "עריכת מוצגים",
 	"wikibasemediainfo-filepage-cancel": "ביטול",
 	"wikibasemediainfo-filepage-cancel-confirm": "שינויים שעשית לא יישמרו.",
 	"wikibasemediainfo-filepage-cancel-confirm-title": "לזרוק את השינויים?",

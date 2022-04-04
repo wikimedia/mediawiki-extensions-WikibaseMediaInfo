@@ -9,7 +9,8 @@
 			"درفش کاویانی",
 			"Ajam",
 			"Darafsh",
-			"Jeeputer"
+			"Jeeputer",
+			"Beginneruser"
 		]
 	},
 	"action-mediainfo-term": "تغییر در متون (عنوان، خلاصه) اطلاعات پرونده",
@@ -40,14 +41,14 @@
 	"wikibasemediainfo-filepage-statement-value-type-dropdown-title": "نوع مقدار را انتخاب کنید.",
 	"wikibasemediainfo-filepage-statement-custom-value-option": "مقدار دلخواه",
 	"wikibasemediainfo-filepage-statement-no-value-option": "بدون مقدار",
-	"wikibasemediainfo-filepage-statement-no-value": "هیچ مقداری برای این خصوصیت وجود ندارد",
+	"wikibasemediainfo-filepage-statement-no-value": "هیچ مقداری برای این ویژگی وجود ندارد",
 	"wikibasemediainfo-filepage-statement-no-data": "هیچ داده‌ای در دسترس نیست.",
 	"wikibasemediainfo-filepage-statement-no-results": "نتیجه‌ای یافت نشد",
 	"wikibasemediainfo-filepage-statement-some-value": "این خصوصیت مقداری دارد اما نامشخص است.",
 	"wikibasemediainfo-filepage-statement-error": "هنگام بارگیری مقدار این ویژگی خطایی رخ داد.",
 	"wikibasemediainfo-filepage-license-title": "عناوین و دیگر مشارکت‌های مربوط به اطلاعات ساختارمند",
 	"wikibasemediainfo-filepage-license-content-acceptance": "این شرایط را برای ویرایش‌های بعدی‌ام قبول می‌کنم. این پیام را دوباره نشان ندهید.",
-	"wikibasemediainfo-property-placeholder": "خصوصیت",
+	"wikibasemediainfo-property-placeholder": "ویژگی",
 	"wikibasemediainfo-filepage-license-agree": "من موافقم",
 	"wikibasemediainfo-statements-depicts-title": "آیتم‌های نمایش داده شده در این تصویر",
 	"wikibasemediainfo-statements-item-add-qualifier": "اضافه کردن ریزگویی",

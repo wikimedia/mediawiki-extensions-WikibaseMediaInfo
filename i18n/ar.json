@@ -39,7 +39,7 @@
 	"wikibasemediainfo-filepage-cancel-confirm-accept": "تجاهل",
 	"wikibasemediainfo-filepage-edit": "عدل",
 	"wikibasemediainfo-filepage-publish": "نشر التغييرات",
-	"wikibasemediainfo-filepage-caption-empty": "أضف شرحا من سطر واحد لما يمثله هذا الملف",
+	"wikibasemediainfo-filepage-caption-empty": "أضف شرحاً من سطر واحد لما يُمثِّله هذا الملف",
 	"wikibasemediainfo-filepage-caption-too-short": "$1 {{PLURAL:$1|حرف أكثر مطلوب|حروف أكثر مطلوبة}}",
 	"wikibasemediainfo-filepage-caption-too-long": "$1 {{PLURAL:$1|حرف|حروف}} فوق الحد",
 	"wikibasemediainfo-filepage-caption-approaching-limit": "$1 {{PLURAL:$1|حرف|حروف|0=حروف}} متبقي",

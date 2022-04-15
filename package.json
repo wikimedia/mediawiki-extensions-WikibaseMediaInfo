@@ -14,10 +14,10 @@
 	},
 	"devDependencies": {
 		"@wdio/cli": "7.4.6",
-		"@wdio/local-runner": "7.4.6",
-		"@wdio/mocha-framework": "7.4.6",
 		"@wdio/dot-reporter": "7.4.2",
 		"@wdio/junit-reporter": "7.4.2",
+		"@wdio/local-runner": "7.4.6",
+		"@wdio/mocha-framework": "7.4.6",
 		"@wdio/sync": "7.4.6",
 		"chromedriver": "2.46.0",
 		"dotenv": "8.0.0",

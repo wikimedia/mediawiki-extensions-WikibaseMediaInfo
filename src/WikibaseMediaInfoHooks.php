@@ -178,7 +178,7 @@ class WikibaseMediaInfoHooks {
 
 		$isMediaInfoPage = static::isMediaInfoPage( $imgTitle ) &&
 			// … the page view is a read
-			\Action::getActionName( $out->getContext() ) === 'view';
+			$out->getActionName() === 'view';
 
 		$properties = $config->get( 'MediaInfoProperties' );
 		$propertyTypes = [];

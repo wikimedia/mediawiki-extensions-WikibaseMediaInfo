@@ -11,7 +11,7 @@
 	],
 	"support": {
 		"issues": "https://phabricator.wikimedia.org/",
-		"irc": "irc://irc.freenode.net/wikidata"
+		"irc": "irc://irc.libera.chat/wikidata"
 	},
 	"require": {
 		"serialization/serialization": "~3.2|~4.0",
@@ -20,11 +20,11 @@
 		"wikibase/data-model-services": "~5.0"
 	},
 	"require-dev": {
-		"php-parallel-lint/php-console-highlighter": "0.5.0",
-		"php-parallel-lint/php-parallel-lint": "1.2.0",
+		"mediawiki/mediawiki-codesniffer": "38.0.0",
+		"mediawiki/mediawiki-phan-config": "0.10.2",
 		"mediawiki/minus-x": "1.1.0",
-		"mediawiki/mediawiki-codesniffer": "31.0.0",
-		"mediawiki/mediawiki-phan-config": "0.10.2"
+		"php-parallel-lint/php-console-highlighter": "0.5.0",
+		"php-parallel-lint/php-parallel-lint": "1.2.0"
 	},
 	"autoload": {
 		"psr-4": {
@@ -41,8 +41,10 @@
 		],
 		"test": [
 			"parallel-lint . --exclude vendor --exclude node_modules",
-			"phpcs -p -s",
+			"@phpcs",
 			"minus-x check ."
-		]
+		],
+		"phan": "phan -d . --long-progress-bar",
+		"phpcs": "phpcs -sp --cache"
 	}
 }

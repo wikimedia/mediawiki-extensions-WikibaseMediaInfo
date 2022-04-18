@@ -6,7 +6,8 @@
 			"Michaelbrabec",
 			"Mormegil",
 			"Patriccck",
-			"YjM"
+			"YjM",
+			"Patrik L."
 		]
 	},
 	"action-mediainfo-term": "měnit prvky informací o souborech (popisky, shrnutí)",
@@ -88,6 +89,9 @@
 	"wikibasemediainfo-monolingualtext-input-placeholder": "Zadejte text",
 	"wikibasemediainfo-monolingualtext-language-label": "Vyberte jazyk",
 	"wikibasemediainfo-time-input-button-text": "Přidat",
+	"wikibasemediainfo-time-input-placeholder": "Zadejte časový údaj",
+	"wikibasemediainfo-time-timestamp-empty": "Zadejte prosím časový údaj.",
+	"wikibasemediainfo-time-timestamp-invalid": "Časový údaj nemá správný formát.",
 	"wikibasemediainfo-time-timestamp-formatted": "Bude zobrazeno jako: $1",
 	"wikibasemediainfo-time-precision-label": "Přesnost",
 	"wikibasemediainfo-time-precision-year1g": "miliarda let",

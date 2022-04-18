@@ -17,6 +17,7 @@
 	"wikibase-mediainfo-summary-wbsetlabel-set": "[$2] 캡션을 편집",
 	"wikibasemediainfo-add-property": "속성을 추가하려면 검색하세요 (항목의 일부, 미디어 타입 등)",
 	"wikibasemediainfo-add-statement": "서술 추가하기",
+	"wikibasemediainfo-custommatch-feature-no-profile": "custommatch:$1에 대해 설정된 프로필이 없습니다",
 	"wikibasemediainfo-desc": "미디어 파일의 구조화된 메타데이터를 관리하는 위키베이스 확장 기능",
 	"wikibasemediainfo-diffview-label": "캡션",
 	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "설명",

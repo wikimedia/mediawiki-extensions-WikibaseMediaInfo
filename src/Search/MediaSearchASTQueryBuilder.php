@@ -181,6 +181,7 @@ class MediaSearchASTQueryBuilder implements Visitor {
 	public function visitParsedBooleanNode( ParsedBooleanNode $node ) {
 		$query = new BoolQuery();
 
+		$should = $must = 0;
 		foreach ( $node->getClauses() as $clause ) {
 			$clauseNode = $clause->getNode();
 			$clauseNode->accept( $this );
@@ -188,15 +189,22 @@ class MediaSearchASTQueryBuilder implements Visitor {
 				switch ( $clause->getOccur() ) {
 					case BooleanClause::SHOULD:
 						$query->addShould( $this->map[$clauseNode] );
+						$should++;
 						break;
 					case BooleanClause::MUST:
 						$query->addMust( $this->map[$clauseNode] );
+						$must++;
 						break;
 					case BooleanClause::MUST_NOT:
 						$query->addMustNot( $this->map[$clauseNode] );
 						break;
 				}
 			}
+		}
+		if ( $should && !$must ) {
+			// If we have must and should clauses allow 0 should clauses to match. If we
+			// only have should clauses require at least 1 to match.
+			$query->setMinimumShouldMatch( 1 );
 		}
 
 		if ( $query->count() > 0 ) {

@@ -87,6 +87,7 @@ class WikibaseEntitiesHandler implements ParsedNodeHandlerInterface {
 			$statementsQuery->addQuery( $query );
 		}
 		$weightedTagsQuery = new BoolQuery();
+		$weightedTagsQuery->setMinimumShouldMatch( 1 );
 		foreach ( $weightedTagsQueries as $query ) {
 			$weightedTagsQuery->addShould( $query );
 		}
@@ -101,6 +102,7 @@ class WikibaseEntitiesHandler implements ParsedNodeHandlerInterface {
 			return $weightedTagsQuery;
 		}
 		$query = new BoolQuery();
+		$query->setMinimumShouldMatch( 1 );
 		$query->addShould( $statementsQuery );
 		$query->addShould( $weightedTagsQuery );
 		return $query;

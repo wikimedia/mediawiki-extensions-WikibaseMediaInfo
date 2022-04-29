@@ -125,8 +125,8 @@ class WikibaseMediaInfoHooks {
 		&$text,
 		array $options
 	) {
-		$text = preg_replace(
-			'#<mw:slotheader>(.*?)</mw:slotheader>#',
+		$text = str_replace(
+			'<mw:slotheader>mediainfo</mw:slotheader>',
 			self::MEDIAINFO_SLOT_HEADER_PLACEHOLDER,
 			$text
 		);

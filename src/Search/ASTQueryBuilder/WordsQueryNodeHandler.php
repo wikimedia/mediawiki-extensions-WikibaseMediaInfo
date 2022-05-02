@@ -82,6 +82,7 @@ class WordsQueryNodeHandler implements ParsedNodeHandlerInterface {
 
 		// search term
 		$termQuery = new BoolQuery();
+		$termQuery->setMinimumShouldMatch( 0 );
 		$termQuery->addFilter(
 			( new MultiMatch() )
 				->setQuery( $this->node->getWords() )
@@ -108,6 +109,7 @@ class WordsQueryNodeHandler implements ParsedNodeHandlerInterface {
 			$synonymsDisMax = new DisMax();
 			foreach ( $synonyms as $synonym ) {
 				$synonymQuery = new BoolQuery();
+				$synonymQuery->setMinimumShouldMatch( 0 );
 				$synonymQuery->addFilter(
 					( new MultiMatch() )
 						->setQuery( $synonym )
@@ -125,6 +127,7 @@ class WordsQueryNodeHandler implements ParsedNodeHandlerInterface {
 		}
 
 		$query = new BoolQuery();
+		$query->setMinimumShouldMatch( 1 );
 		// search term + synonyms
 		$query->addShould( $termsDisMax );
 		// wikibase entities

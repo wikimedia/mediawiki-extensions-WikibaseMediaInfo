@@ -212,6 +212,7 @@ class CustomMatchFeature extends SimpleKeywordFeature {
 	private function combineQueries( array $queries ): AbstractQuery {
 		$profileName = '';
 		$return = new BoolQuery();
+		$return->setMinimumShouldMatch( 1 );
 		foreach ( $queries as $query ) {
 			$return->addShould( new MatchQuery(
 				$query['field'],

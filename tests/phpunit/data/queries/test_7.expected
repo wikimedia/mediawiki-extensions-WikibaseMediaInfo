@@ -3,9 +3,11 @@
         "must": [
             {
                 "bool": {
+                    "minimum_should_match": 1,
                     "should": [
                         {
                             "bool": {
+                                "minimum_should_match": 0,
                                 "filter": [
                                     {
                                         "match_phrase": {

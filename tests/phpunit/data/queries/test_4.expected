@@ -8,6 +8,7 @@
                             "function_score": {
                                 "query": {
                                     "bool": {
+                                        "minimum_should_match": 1,
                                         "should": [
                                             {
                                                 "dis_max": {
@@ -15,6 +16,7 @@
                                                     "queries": [
                                                         {
                                                             "bool": {
+                                                                "minimum_should_match": 0,
                                                                 "filter": [
                                                                     {
                                                                         "multi_match": {

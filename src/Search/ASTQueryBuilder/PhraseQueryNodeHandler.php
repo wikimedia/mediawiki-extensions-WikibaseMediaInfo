@@ -48,9 +48,12 @@ class PhraseQueryNodeHandler implements ParsedNodeHandlerInterface {
 
 	public function transform(): AbstractQuery {
 		$query = new BoolQuery();
+		$query->setMinimumShouldMatch( 1 );
 
 		// phrase query
 		$phraseQuery = new BoolQuery();
+		// filter does all the work, should's are for scoring.
+		$phraseQuery->setMinimumShouldMatch( 0 );
 		$field = $this->node->isStem() ? 'all' : 'all.plain';
 		$phraseQuery->addFilter(
 			// quick overall filter; this is faster at narrowing down

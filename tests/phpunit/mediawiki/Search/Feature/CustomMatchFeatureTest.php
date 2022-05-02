@@ -54,7 +54,8 @@ class CustomMatchFeatureTest extends \MediaWikiIntegrationTestCase {
 						  'field_2',
 						  [ 'query' => 'prefix_2_2Q11111', 'boost' => 6 ]
 						)
-					),
+					)
+					->setMinimumShouldMatch( 1 ),
 				'config' => [
 					'profile_1' => [
 						'fields' => [
@@ -90,7 +91,8 @@ class CustomMatchFeatureTest extends \MediaWikiIntegrationTestCase {
 								'field_B',
 								[ 'query' => 'prefix_Y=Q5', 'boost' => 0 ]
 							)
-						) )
+						)
+						->setMinimumShouldMatch( 1 ) )
 					->addScriptScoreFunction(
 						new Script(
 							'100 / ( 1 + exp( -1 * ( _score + intercept ) ) )',

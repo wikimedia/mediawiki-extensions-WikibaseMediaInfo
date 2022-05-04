@@ -85,7 +85,7 @@ class FilePageRedirectHandlingRevisionLookup implements EntityRevisionLookup {
 			}
 			// Otherwise, if a valid entity document can be created, return the latest revision ID.
 			if ( $entityRevision ) {
-				return LatestRevisionIdResult::concreteRevision( $revisionId );
+				return LatestRevisionIdResult::concreteRevision( $revisionId, $entityRevision->getTimestamp() );
 			}
 			// Otherwise, something is wrong.
 			throw new StorageException(

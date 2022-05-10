@@ -140,6 +140,6 @@
 	"wikibasemediainfo-special-mediasearch-filter-license-other": "Другие",
 	"wikibasemediainfo-special-mediasearch-filter-namespace-discussion": "Обсуждение",
 	"wikibasemediainfo-special-mediasearch-no-results": "Мы не нашли результатов",
-	"wikibasemediainfo-rescore-profile-classic-noboostlinks-max-boost-template": "Ранжирование на основе лучшего шаблона, языка страницы и свежести появления в этой вики.",
+	"wikibasemediainfo-rescore-profile-classic-noboostlinks-max-boost-template": "Сортировка на основе лучшего шаблона, языка страницы и свежести появления в этой вики.",
 	"wikibasemediainfo-special-mediasearch-clear-filters": "Очистить фильтры"
 }

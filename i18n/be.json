@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"Chadyka",
 			"Чаховіч Уладзіслаў"
 		]
 	},
@@ -38,7 +39,7 @@
 	"wikibasemediainfo-filepage-license-content-acceptance": "Я прымаю гэтыя ўмовы для маіх будучых правак. Не паказваць больш гэта паведамленне.",
 	"wikibasemediainfo-property-placeholder": "Уласцівасць",
 	"wikibasemediainfo-filepage-license-agree": "Я згодны",
-	"wikibasemediainfo-statements-depicts-title": "Элементы, якія адпавядаюць аб'ектам, што можна ўбачыць на гэтай выяве",
+	"wikibasemediainfo-statements-depicts-title": "Элементы, якія адпавядаюць аб’ектам, што можна ўбачыць на гэтай выяве",
 	"wikibasemediainfo-statements-item-add-qualifier": "Дадаць кваліфікатар",
 	"wikibasemediainfo-statements-item-input-label": "у Вікіданых",
 	"wikibasemediainfo-statements-item-input-placeholder": "Пошук элементаў для дадання (кошка, гара, Тадж-Махал і да т.п.)",

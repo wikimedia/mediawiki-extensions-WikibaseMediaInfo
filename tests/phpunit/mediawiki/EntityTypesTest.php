@@ -4,9 +4,10 @@ namespace Wikibase\MediaInfo\Tests\MediaWiki;
 
 use Deserializers\Deserializer;
 use Language;
-use Serializers\Serializer;
 use Wikibase\DataModel\Deserializers\DeserializerFactory;
 use Wikibase\DataModel\Serializers\SerializerFactory;
+use Wikibase\DataModel\Serializers\StatementListSerializer;
+use Wikibase\DataModel\Serializers\TermListSerializer;
 use Wikibase\Lib\ContentLanguages;
 use Wikibase\Lib\LanguageWithConversion;
 use Wikibase\Lib\TermLanguageFallbackChain;
@@ -44,17 +45,15 @@ class EntityTypesTest extends \PHPUnit\Framework\TestCase {
 	 * @return SerializerFactory
 	 */
 	private function getSerializerFactory() {
-		$serializerFactory = $this->getMockBuilder( SerializerFactory::class )
-			->disableOriginalConstructor()
-			->getMock();
+		$serializerFactory = $this->createMock( SerializerFactory::class );
 
 		$serializerFactory->expects( $this->once() )
 			->method( 'newTermListSerializer' )
-			->willReturn( $this->createMock( Serializer::class ) );
+			->willReturn( $this->createMock( TermListSerializer::class ) );
 
 		$serializerFactory->expects( $this->once() )
 			->method( 'newStatementListSerializer' )
-			->willReturn( $this->createMock( Serializer::class ) );
+			->willReturn( $this->createMock( StatementListSerializer::class ) );
 
 		return $serializerFactory;
 	}

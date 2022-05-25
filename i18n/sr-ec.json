@@ -6,7 +6,8 @@
 			"Obsuser",
 			"Zoranzoki21",
 			"Вукан Ц",
-			"Милан Јелисавчић"
+			"Милан Јелисавчић",
+			"Milicevic01"
 		]
 	},
 	"right-mediainfo-term": "Промена услова за информације медија (натписи, резимеи)",
@@ -52,7 +53,7 @@
 	"wikibasemediainfo-statements-learn-more": "Сазнајте више",
 	"wikibasemediainfo-statements-remove": "Уклони све",
 	"wikibasemediainfo-statements-title-depicts": "Ставке приказане у овој датотеци",
-	"wikibasemediainfo-statements-link-notice-text": "Ознаке структурираних података линкују до припадајућих одговарајућих страница (за — ’{{WBREPONAME}}’) и отвориће се у новом прозору.",
+	"wikibasemediainfo-statements-link-notice-text": "Називи структурираних података воде до одговарајућих страница на {{WBREPONAME}} и отвориће се у новом прозору.",
 	"wikibasemediainfo-remove-all-statements-confirm": "Ова радња ће обрисати све постојеће вредности за ово својство. Својства без вредности биће уклоњена када се измене објаве. Да ли сте сигурни?",
 	"wikibasemediainfo-remove-all-statements-confirm-accept": "Уклони",
 	"wikibasemediainfo-quantity-input-button-text": "Додај",

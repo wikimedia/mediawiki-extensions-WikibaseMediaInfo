@@ -64,7 +64,7 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiIntegrationTestCase {
 				'expected' => 'SOME_TEXT',
 			],
 			'placeholder replaced' => [
-				'original' => 'STRING_1<mw:slotheader>STRING_2</mw:slotheader>STRING_3',
+				'original' => 'STRING_1<mw:slotheader>mediainfo</mw:slotheader>STRING_3',
 				'expected' => 'STRING_1<mediainfoslotheader />STRING_3',
 			],
 		];

@@ -2,9 +2,11 @@
 
 namespace Wikibase\MediaInfo\Tests\MediaWiki;
 
-use Deserializers\Deserializer;
 use Language;
 use Wikibase\DataModel\Deserializers\DeserializerFactory;
+use Wikibase\DataModel\Deserializers\EntityIdDeserializer;
+use Wikibase\DataModel\Deserializers\StatementListDeserializer;
+use Wikibase\DataModel\Deserializers\TermListDeserializer;
 use Wikibase\DataModel\Serializers\SerializerFactory;
 use Wikibase\DataModel\Serializers\StatementListSerializer;
 use Wikibase\DataModel\Serializers\TermListSerializer;
@@ -78,15 +80,15 @@ class EntityTypesTest extends \PHPUnit\Framework\TestCase {
 
 		$deserializerFactory->expects( $this->once() )
 			->method( 'newEntityIdDeserializer' )
-			->willReturn( $this->createMock( Deserializer::class ) );
+			->willReturn( $this->createMock( EntityIdDeserializer::class ) );
 
 		$deserializerFactory->expects( $this->once() )
 			->method( 'newTermListDeserializer' )
-			->willReturn( $this->createMock( Deserializer::class ) );
+			->willReturn( $this->createMock( TermListDeserializer::class ) );
 
 		$deserializerFactory->expects( $this->once() )
 			->method( 'newStatementListDeserializer' )
-			->willReturn( $this->createMock( Deserializer::class ) );
+			->willReturn( $this->createMock( StatementListDeserializer::class ) );
 
 		return $deserializerFactory;
 	}

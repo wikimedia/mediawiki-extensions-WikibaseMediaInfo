@@ -6,7 +6,6 @@ use MediaWiki\MediaWikiServices;
 use Title;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\Repo\WikibaseRepo;
-use Wikipage;
 
 /**
  * What's tested:
@@ -50,7 +49,7 @@ class WatchlistTest extends WBMIApiTestCase {
 		$userOptionsManager->setOption( $this->editor, 'watchcreations', 1 );
 
 		$testFileTitle = Title::newFromText( $this->uploadRandomImage() );
-		$testFilePage = WikiPage::factory( $testFileTitle );
+		$testFilePage = $this->getServiceContainer()->getWikiPageFactory()->newFromTitle( $testFileTitle );
 
 		$pageId = $testFilePage->getId();
 		$entityIdComposer = WikibaseRepo::getEntityIdComposer();

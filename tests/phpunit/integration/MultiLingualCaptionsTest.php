@@ -24,7 +24,7 @@ use Wikibase\Repo\WikibaseRepo;
 class MultiLingualCaptionsTest extends WBMIApiTestCase {
 
 	public function testEditCaptions() {
-		$testFilePage = \WikiPage::factory(
+		$testFilePage = $this->getServiceContainer()->getWikiPageFactory()->newFromTitle(
 			\Title::newFromText( $this->uploadRandomImage() )
 		);
 

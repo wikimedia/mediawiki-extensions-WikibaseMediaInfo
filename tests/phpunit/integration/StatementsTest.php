@@ -176,7 +176,7 @@ class StatementsTest extends WBMIApiTestCase {
 	public function testEditStatements() {
 		$this->turnOffFederation();
 
-		$testFilePage = \WikiPage::factory(
+		$testFilePage = $this->getServiceContainer()->getWikiPageFactory()->newFromTitle(
 			\Title::newFromText( $this->uploadRandomImage() )
 		);
 
@@ -268,7 +268,8 @@ class StatementsTest extends WBMIApiTestCase {
 	public function testCanAddStatementToEmptyMediainfoRecordWhenSpecifyingBaseRevId() {
 		$this->turnOffFederation();
 
-		$filePage = \WikiPage::factory( \Title::newFromText( $this->uploadRandomImage() ) );
+		$filePage = $this->getServiceContainer()->getWikiPageFactory()
+			->newFromTitle( \Title::newFromText( $this->uploadRandomImage() ) );
 
 		$pageId = $filePage->getId();
 		$revId = $filePage->getRevisionRecord()->getId();

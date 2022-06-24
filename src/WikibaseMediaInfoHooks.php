@@ -637,7 +637,7 @@ class WikibaseMediaInfoHooks {
 		$hooksObject = new self();
 		$hooksObject->doCirrusSearchBuildDocumentParse(
 			$document,
-			WikiPage::factory( $title ),
+			MediaWikiServices::getInstance()->getWikiPageFactory()->newFromTitle( $title ),
 			// @phan-suppress-next-line PhanTypeMismatchArgumentSuperType It is a MediaInfoHandler
 			ContentHandler::getForModelID( MediaInfoContent::CONTENT_MODEL_ID )
 		);
@@ -885,7 +885,7 @@ class WikibaseMediaInfoHooks {
 		// for every undeleted revision, but now that that process is done, we
 		// need to clear the parser caches that (may have) been created during
 		// the undelete process as they were based on incorrect entities
-		$page = WikiPage::factory( $title );
+		$page = MediaWikiServices::getInstance()->getWikiPageFactory()->newFromTitle( $title );
 		$page->updateParserCache( [ 'causeAction' => 'mediainfo-id-splitting' ] );
 	}
 

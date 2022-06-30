@@ -209,9 +209,7 @@ return [
 			return new BasicMediaInfoDiffVisualizer(
 				$messageLocalizer,
 				$claimDiffer,
-				$claimDiffView,
-				$siteLookup,
-				$entityIdFormatter
+				$claimDiffView
 			);
 		},
 		Def::ENTITY_METADATA_ACCESSOR_CALLBACK => static function ( $dbName, $repoName ) {

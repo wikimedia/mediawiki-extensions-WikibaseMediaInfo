@@ -19,7 +19,7 @@
 			"Чаховіч Уладзіслаў"
 		]
 	},
-	"action-mediainfo-term": "изменение значений метаданных медиафайлов (краткие подписи, опсиания)",
+	"action-mediainfo-term": "изменение информации о медиафайлах (краткие подписи, описания)",
 	"right-mediainfo-term": "изменять термины информации о медиафайлах (краткие подписи, описания)",
 	"slot-name-mediainfo": "Структурированная информация о медиафайлах",
 	"wikibase-entity-mediainfo": "информация о медиафайлах",
@@ -66,6 +66,7 @@
 	"wikibasemediainfo-filepage-license-agree": "Я согласен",
 	"wikibasemediainfo-statements-depicts-title": "Элементы, соответствующие объектам, которые можно увидеть на этом изображении",
 	"wikibasemediainfo-statements-item-add-qualifier": "Добавить квалификатор",
+	"wikibasemediainfo-statements-item-reference": "Примечание",
 	"wikibasemediainfo-statements-item-references": "Примечания",
 	"wikibasemediainfo-statements-item-add-reference": "Добавить примечание",
 	"wikibasemediainfo-statements-item-add-reference-snak": "Добавить",

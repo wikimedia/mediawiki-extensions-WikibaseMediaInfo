@@ -8,11 +8,16 @@ use CirrusSearch\Search\CirrusIndexField;
 use Elastica\Document;
 use Hooks;
 use Language;
+use MediaWiki\Page\PageIdentity;
+use MediaWiki\Permissions\RestrictionStore;
 use MediaWiki\Revision\RevisionRecord;
 use MediaWiki\Revision\SlotRecord;
 use MockTitleTrait;
+use OutputPage;
 use ParserOutput;
+use RawMessage;
 use Title;
+use TitleFormatter;
 use User;
 use Wikibase\DataModel\Services\EntityId\EntityIdComposer;
 use Wikibase\Lib\Store\EntityByLinkedTitleLookup;
@@ -23,6 +28,7 @@ use Wikibase\MediaInfo\Search\MediaSearchQueryBuilder;
 use Wikibase\MediaInfo\Services\MediaInfoByLinkedTitleLookup;
 use Wikibase\MediaInfo\WikibaseMediaInfoHooks;
 use Wikibase\Search\Elastic\Fields\TermIndexField;
+use Wikimedia\TestingAccessWrapper;
 
 /**
  * @covers \Wikibase\MediaInfo\WikibaseMediaInfoHooks
@@ -92,7 +98,7 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiIntegrationTestCase {
 		$revision->method( 'getId' )
 			->willReturn( 999 );
 
-		$out = $this->getMockBuilder( \OutputPage::class )
+		$out = $this->getMockBuilder( OutputPage::class )
 			->disableOriginalConstructor()
 			->onlyMethods( [
 				'getTitle',
@@ -404,6 +410,140 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiIntegrationTestCase {
 			);
 
 		WikibaseMediaInfoHooks::onCirrusSearchProfileService( $service );
+	}
+
+	public function testGetProtectionMsgIsProtected() {
+		/** @var WikibaseMediaInfoHooks $wrapper */
+		$wrapper = $this->getWrapper();
+		$title = $this->getMockBuilder( Title::class )
+			->disableOriginalConstructor()
+			->getMock();
+
+		$restrictionStore = $this->getMockBuilder( RestrictionStore::class )
+			->disableOriginalConstructor()
+			->getMock();
+		$restrictionStore->method( 'isProtected' )
+			->with( $title, 'edit' )
+			->willReturn( true );
+		$this->setService( 'RestrictionStore', $restrictionStore );
+
+		$message = $this->getMockBuilder( RawMessage::class )
+			->disableOriginalConstructor()
+			->getMock();
+
+		$out = $this->getMockBuilder( OutputPage::class )
+			->disableOriginalConstructor()
+			->getMock();
+		$out->method( 'getTitle' )
+			->willReturn( $title );
+		$out->expects( $this->once() )
+			->method( 'msg' )
+			->withConsecutive( [ 'protectedpagetext', 'editprotected', 'edit' ] )
+			->willReturn( $message );
+		$wrapper->getProtectionMsg( $out );
+	}
+
+	public function testGetProtectionMsgIsSemiProtected() {
+		/** @var WikibaseMediaInfoHooks $wrapper */
+		$wrapper = $this->getWrapper();
+		$title = $this->getMockBuilder( Title::class )
+			->disableOriginalConstructor()
+			->getMock();
+
+		$restrictionStore = $this->getMockBuilder( RestrictionStore::class )
+			->disableOriginalConstructor()
+			->getMock();
+		$restrictionStore->method( 'isProtected' )
+			->with( $title, 'edit' )
+			->willReturn( true );
+		$restrictionStore->method( 'isSemiProtected' )
+			->with( $title, 'edit' )
+			->willReturn( true );
+		$this->setService( 'RestrictionStore', $restrictionStore );
+
+		$message = $this->getMockBuilder( RawMessage::class )
+			->disableOriginalConstructor()
+			->getMock();
+
+		$out = $this->getMockBuilder( OutputPage::class )
+			->disableOriginalConstructor()
+			->getMock();
+		$out->method( 'getTitle' )
+			->willReturn( $title );
+		$out->expects( $this->once() )
+			->method( 'msg' )
+			->withConsecutive( [ 'protectedpagetext', 'editsemiprotected', 'edit' ] )
+			->willReturn( $message );
+		$wrapper->getProtectionMsg( $out );
+	}
+
+	public function testGetProtectionMsgIsCascadeProtected() {
+		/** @var WikibaseMediaInfoHooks $wrapper */
+		$wrapper = $this->getWrapper();
+		$cascadeSource = $this->getMockBuilder( PageIdentity::class )
+			->disableOriginalConstructor()
+			->getMock();
+
+		$titleFormatter = $this->getMockBuilder( TitleFormatter::class )
+			->disableOriginalConstructor()
+			->getMock();
+		$titleFormatter->method( 'getPrefixedText' )
+			->willReturn( 'Cascade Source' );
+		$this->setService( 'TitleFormatter', $titleFormatter );
+
+		$restrictionStore = $this->getMockBuilder( RestrictionStore::class )
+			->disableOriginalConstructor()
+			->getMock();
+		$restrictionStore->method( 'isCascadeProtected' )
+			->willReturn( true );
+		$restrictionStore->method( 'getCascadeProtectionSources' )
+			->willReturn( [ [ $cascadeSource ] ] );
+		$this->setService( 'RestrictionStore', $restrictionStore );
+
+		$title = $this->getMockBuilder( Title::class )
+			->disableOriginalConstructor()
+			->getMock();
+
+		$message = $this->getMockBuilder( RawMessage::class )
+			->disableOriginalConstructor()
+			->getMock();
+
+		$out = $this->getMockBuilder( OutputPage::class )
+			->disableOriginalConstructor()
+			->getMock();
+		$out->method( 'getTitle' )
+			->willReturn( $title );
+		$out->expects( $this->once() )
+			->method( 'msg' )
+			->withConsecutive( [ 'cascadeprotected', 1, "* [[:Cascade Source]]\n" ] )
+			->willReturn( $message );
+
+		$wrapper->getProtectionMsg( $out );
+	}
+
+	public function testGetProtectionMsgIsNotProtected() {
+		/** @var WikibaseMediaInfoHooks $wrapper */
+		$wrapper = $this->getWrapper();
+
+		$title = $this->getMockBuilder( Title::class )
+			->disableOriginalConstructor()
+			->getMock();
+
+		$out = $this->getMockBuilder( OutputPage::class )
+			->disableOriginalConstructor()
+			->getMock();
+		$out->method( 'getTitle' )
+			->willReturn( $title );
+
+		$this->assertNull( $wrapper->getProtectionMsg( $out ) );
+	}
+
+	private function getWrapper() {
+		$entityId = $this->getMockBuilder( EntityIdComposer::class )
+			->disableOriginalConstructor()
+			->getMock();
+		$hooks = new WikibaseMediaInfoHooks( $entityId );
+		return TestingAccessWrapper::newFromObject( $hooks );
 	}
 
 }

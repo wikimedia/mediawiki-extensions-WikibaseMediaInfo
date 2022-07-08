@@ -581,23 +581,29 @@ class WikibaseMediaInfoHooks {
 		$imgTitle = $out->getTitle();
 		$msg = null;
 
+		$services = MediaWikiServices::getInstance();
+		$restrictionStore = $services->getRestrictionStore();
+
 		// Full protection.
-		if ( $imgTitle->isProtected( 'edit' ) && !$imgTitle->isSemiProtected( 'edit' ) ) {
+		if ( $restrictionStore->isProtected( $imgTitle, 'edit' ) &&
+			!$restrictionStore->isSemiProtected( $imgTitle, 'edit' )
+		) {
 			$msg = $out->msg( 'protectedpagetext', 'editprotected', 'edit' )->parseAsBlock();
 		}
 
 		// Semi-protection.
-		if ( $imgTitle->isSemiProtected( 'edit' ) ) {
+		if ( $restrictionStore->isSemiProtected( $imgTitle, 'edit' ) ) {
 			$msg = $out->msg( 'protectedpagetext', 'editsemiprotected', 'edit' )->parseAsBlock();
 		}
 
 		// Cascading protection.
-		if ( $imgTitle->isCascadeProtected() ) {
+		if ( $restrictionStore->isCascadeProtected( $imgTitle ) ) {
 			// Get the protected page(s) causing this file to be protected.
-			list( $cascadeSources ) = $imgTitle->getCascadeProtectionSources() ?: [];
+			list( $cascadeSources ) = $restrictionStore->getCascadeProtectionSources( $imgTitle );
 			$sources = '';
-			foreach ( $cascadeSources as $page ) {
-				$sources .= '* [[:' . $page->getPrefixedText() . "]]\n";
+			$titleFormatter = $services->getTitleFormatter();
+			foreach ( $cascadeSources as $pageIdentity ) {
+				$sources .= '* [[:' . $titleFormatter->getPrefixedText( $pageIdentity ) . "]]\n";
 			}
 
 			$msg = $out->msg( 'cascadeprotected', count( $cascadeSources ), $sources )->parseAsBlock();

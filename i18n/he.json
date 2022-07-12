@@ -12,7 +12,7 @@
 	"action-mediainfo-term": "לשנות פרטים של מידע על מדיה (כיתובים, תקצירים)",
 	"right-mediainfo-term": "שינוי פרטים של מידע על מדיה (כיתובים, תקצירים)",
 	"slot-name-mediainfo": "מידע מובנה על מדיה",
-	"wikibase-entity-mediainfo": "מידע על המדיה",
+	"wikibase-entity-mediainfo": "מידע על מדיה",
 	"wikibase-mediainfo-summary-wbsetlabel-add": "נוסף כיתוב [$2]",
 	"wikibase-mediainfo-summary-wbsetlabel-remove": "הוסר כיתוב [$2]",
 	"wikibase-mediainfo-summary-wbsetlabel-set": "נערך כיתוב [$2]",

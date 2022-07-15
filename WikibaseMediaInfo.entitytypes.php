@@ -320,10 +320,7 @@ return [
 			);
 		},
 		Def::PREFETCHING_TERM_LOOKUP_CALLBACK => static function ( EntitySource $entitySource ) {
-			$services = WikibaseRepo::getSingleEntitySourceServicesFactory()
-					->getServicesForSource( $entitySource );
-
-			return new MediaInfoPrefetchingTermLookup( $services->getEntityRevisionLookup() );
+			return new MediaInfoPrefetchingTermLookup( WikibaseRepo::getEntityRevisionLookup() );
 		},
 		Def::ENTITY_ID_LOOKUP_CALLBACK => static function () {
 			return MediaInfoServices::getMediaInfoIdLookup();

@@ -44,6 +44,10 @@ class WatchlistTest extends WBMIApiTestCase {
 		);
 	}
 
+	/**
+	 * See T311640
+	 * @group Broken
+	 */
 	public function testWatchlist() {
 		$userOptionsManager = MediaWikiServices::getInstance()->getUserOptionsManager();
 		$userOptionsManager->setOption( $this->editor, 'watchdefault', 0 );

@@ -16,7 +16,7 @@
 	"group-mediasearch-tester": "בודקי חיפוש מדיה",
 	"group-mediasearch-tester-member": "{{GENDER:$1|בודק|בודקת}} חיפוש מדיה",
 	"slot-name-mediainfo": "מידע מובנה על מדיה",
-	"wikibase-entity-mediainfo": "מידע על המדיה",
+	"wikibase-entity-mediainfo": "מידע על מדיה",
 	"wikibase-mediainfo-summary-wbsetlabel-add": "נוסף כיתוב [$2]",
 	"wikibase-mediainfo-summary-wbsetlabel-remove": "הוסר כיתוב [$2]",
 	"wikibase-mediainfo-summary-wbsetlabel-set": "נערך כיתוב [$2]",

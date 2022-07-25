@@ -4,7 +4,8 @@
 			"Leduyquang753",
 			"Minh Nguyen",
 			"Vinhtantran",
-			"Nguyễn Mạnh An"
+			"Nguyễn Mạnh An",
+			"Keo010122"
 		]
 	},
 	"action-mediainfo-term": "thay đổi các mục thông tin phương tiện (chú thích, tóm lược)",
@@ -15,7 +16,7 @@
 	"wikibase-mediainfo-summary-wbsetlabel-remove": "Xóa chú thích bằng [$2]",
 	"wikibase-mediainfo-summary-wbsetlabel-set": "Sửa chú thích bằng [$2]",
 	"wikibasemediainfo-add-property": "Tìm kiếm để thêm thuộc tính (một phần của, kiểu phương tiện, v.v.)",
-	"wikibasemediainfo-add-statement": "Thêm lời tuyên bố",
+	"wikibasemediainfo-add-statement": "Thêm lời phát biểu",
 	"wikibasemediainfo-desc": "Phần mở rộng Wikibase để quản lý siêu dữ liệu có cấu trúc của tập tin phương tiện",
 	"wikibasemediainfo-diffview-label": "chú thích",
 	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Chú thích",
@@ -26,7 +27,7 @@
 	"wikibasemediainfo-filepage-fewer-languages": "Xem ít ngôn ngữ lại",
 	"wikibasemediainfo-filepage-add-caption": "Thêm chú thích",
 	"wikibasemediainfo-filepage-edit-captions": "Sửa chú thích",
-	"wikibasemediainfo-filepage-edit-depicts": "Sửa đổi tuyên bố tả",
+	"wikibasemediainfo-filepage-edit-depicts": "Sửa đổi lời phát biểu tả",
 	"wikibasemediainfo-filepage-cancel": "Hủy bỏ",
 	"wikibasemediainfo-filepage-cancel-confirm": "Các thay đổi của bạn sẽ không được lưu.",
 	"wikibasemediainfo-filepage-cancel-confirm-title": "Có muốn loại bỏ các thay đổi?",

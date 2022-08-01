@@ -49,7 +49,7 @@
 	"wikibasemediainfo-filepage-edit": "Modifier",
 	"wikibasemediainfo-filepage-publish": "Publier les modifications",
 	"wikibasemediainfo-filepage-caption-empty": "Ajoutez en une ligne la description de ce que représente ce fichier",
-	"wikibasemediainfo-filepage-caption-too-short": "$1 caractère{{PLURAL:$1||s}} de plus nécessaire{{PLURAL:$1||s}}",
+	"wikibasemediainfo-filepage-caption-too-short": "$1 caractère{{PLURAL:$1||s}} de plus exigé{{PLURAL:$1||s}}",
 	"wikibasemediainfo-filepage-caption-too-long": "$1 {{PLURAL:$1|caractère|caractères}} après la limite",
 	"wikibasemediainfo-filepage-caption-approaching-limit": "{{PLURAL:$1|0=aucun caractère restant|$1 caractère restant|$1 caractères restants}}",
 	"wikibasemediainfo-filepage-statement-value-type-dropdown-title": "Choisir un type de valeur.",

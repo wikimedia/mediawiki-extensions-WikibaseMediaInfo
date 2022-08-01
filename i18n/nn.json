@@ -47,5 +47,14 @@
 	"wikibasemediainfo-statements-learn-more": "Lær meir",
 	"wikibasemediainfo-statements-remove": "Fjern alle",
 	"wikibasemediainfo-statements-title-depicts": "Element som er med i denne fila",
-	"wikibasemediainfo-statements-link-notice-text": "Merkelappar i strukturerte data lenkjar til sidene sine på Wikidata og vil opna i eit nytt vindauga."
+	"wikibasemediainfo-statements-link-notice-text": "Merkelappar i strukturerte data lenkjar til sidene sine på Wikidata og vil opna i eit nytt vindauga.",
+	"wikibasemediainfo-time-precision-year1g": "milliardar år",
+	"wikibasemediainfo-time-precision-year100m": "hundre millionar år",
+	"wikibasemediainfo-time-precision-year1m": "millionar år",
+	"wikibasemediainfo-time-precision-year100k": "100 000 år",
+	"wikibasemediainfo-time-precision-year100": "hundreår",
+	"wikibasemediainfo-time-precision-year10": "tiår",
+	"wikibasemediainfo-time-precision-year": "år",
+	"wikibasemediainfo-time-precision-month": "månad",
+	"wikibasemediainfo-time-precision-day": "dag"
 }

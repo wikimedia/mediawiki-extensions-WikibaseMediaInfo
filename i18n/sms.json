@@ -4,6 +4,11 @@
 			"Yupik"
 		]
 	},
+	"wikibasemediainfo-diffview-label": "kartt- leʹbe snimldõkteʹkstt",
+	"wikibasemediainfo-filepage-add-caption": "Lââʹzzet kartt- leʹbe snimldõkteeʹkst",
+	"wikibasemediainfo-filepage-cancel-confirm-title": "Haaʹlääk-a ton muttsid tirššled?",
+	"wikibasemediainfo-filepage-cancel-confirm-accept": "Tirššâl",
+	"wikibasemediainfo-filepage-edit": "Muuʹtt",
 	"wikibasemediainfo-filepage-publish": "Õlmstââʹtt muttsid",
 	"wikibasemediainfo-filepage-caption-approaching-limit": "võl $1 {{PLURAL:$1|0=miârkk|miârk|miârkâd}}",
 	"wikibasemediainfo-filepage-statement-no-results": "Ni mâiʹd ij käunnʼjam",
@@ -11,6 +16,7 @@
 	"wikibasemediainfo-statements-learn-more": "Lââʹssteâđ",
 	"wikibasemediainfo-string-input-button-text": "Lââʹzzet",
 	"wikibasemediainfo-monolingualtext-input-button-text": "Lââʹzzet",
+	"wikibasemediainfo-monolingualtext-input-placeholder": "Lââʹzzet teeʹkst",
 	"wikibasemediainfo-monolingualtext-language-label": "Vaʹlljed ǩiõl",
 	"wikibasemediainfo-time-input-button-text": "Lââʹzzet",
 	"wikibasemediainfo-quantity-input-button-text": "Lââʹzzet",

@@ -44,5 +44,14 @@
 	"wikibasemediainfo-filepage-license-content-acceptance": "ߒߠߋ ߘߌ߬ߢߍ߬ߣߍ߲߫ ߦߋ߫ ߛߙߊߕߌ ߣߌ߲߬ ߡߊ߬ ߒ ߠߊ߫ ߡߊ߬ߦߟߍ߬ߡߊ߲߬ߠߌ߲ ߣߊ߬ߕߐ ߟߎ߬ ߘߐ߫. ߗߋߛߓߍ ߣߌ߲߬ ߘߏ߲߬ ߞߊ߫ ߦߌ߬ߘߊ߬ ߒ ߠߊ߫ ߡߎ߬ߕߎ߲߫.",
 	"wikibasemediainfo-property-placeholder": "ߘߎ߲߬ߘߎ߲߬ߡߊ߬ߦߊ",
 	"wikibasemediainfo-filepage-license-agree": "ߒ ߛߐ߲߬ߣߍ߲߫",
-	"wikibasemediainfo-statements-depicts-title": "ߝߌ߬ߛߌ ߡߊ߲߬ߞߎߕߎ߲ ߖߌ߬ߦߊ߬ߓߍ ߣߌ߲߬ ߘߐ߫"
+	"wikibasemediainfo-statements-depicts-title": "ߝߌ߬ߛߌ ߡߊ߲߬ߞߎߕߎ߲ ߖߌ߬ߦߊ߬ߓߍ ߣߌ߲߬ ߘߐ߫",
+	"wikibasemediainfo-statements-item-reference": "ߦߟߌߡߊߛߙߋ",
+	"wikibasemediainfo-statements-item-references": "ߦߟߌߡߊߛߙߋ ߟߎ߬",
+	"wikibasemediainfo-statements-item-add-reference": "ߦߟߌߡߊߛߙߋ ߟߊߘߏ߲߬",
+	"wikibasemediainfo-statements-item-add-reference-snak": "ߊ߬ ߝߙߊ߬",
+	"wikibasemediainfo-statements-item-input-label": "{{WBREPONAME}} ߢߍ߫",
+	"wikibasemediainfo-statements-item-input-placeholder": "ߢߌߣߌ߲ߣߌ߲ ߞߍ߫ ߞߊ߬ ߝߌ߬ߛߌ ߘߏ߫ ߝߊ߬ߙߊ߫",
+	"wikibasemediainfo-statements-item-remove": "ߊ߬ ߛߋ߲߬ߓߐ߫",
+	"wikibasemediainfo-statements-learn-more": "ߘߏ߫ ߜߘߍ߫ ߟߎ߫ ߘߐߞߊ߬ߙߊ߲߬",
+	"wikibasemediainfo-statements-remove": "ߊ߬ ߓߍ߯ ߖߏ߬ߛߌ߫"
 }

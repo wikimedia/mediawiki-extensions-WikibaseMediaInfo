@@ -307,7 +307,7 @@ class MediaInfoEntityStatementsViewTest extends \PHPUnit\Framework\TestCase {
 				$statements[] = $this->sortQualifiers( $statement, $propertyOrderProvider );
 			}
 		}
-		return new StatementList( $statements );
+		return new StatementList( ...$statements );
 	}
 
 	private function sortQualifiers(
@@ -394,20 +394,20 @@ class MediaInfoEntityStatementsViewTest extends \PHPUnit\Framework\TestCase {
 				'statementList' => new StatementList()
 			],
 			'single statement, no qualifiers' => [
-				'statementList' => new StatementList( [
+				'statementList' => new StatementList(
 					new Statement( $property999NoValue )
-				] )
+				)
 			],
 			'statements, with qualifiers' => [
-				'statementList' => new StatementList( [
+				'statementList' => new StatementList(
 					new Statement( $property999SomeValue ),
 					new Statement( $property999NoValue ),
 					new Statement( $property999Value_1 ),
 					$statement999Value_2,
 					$statement999Value_3,
 					new Statement( $property888Value ),
-					new Statement( $property777Value ),
-				] )
+					new Statement( $property777Value )
+				)
 			],
 		];
 	}

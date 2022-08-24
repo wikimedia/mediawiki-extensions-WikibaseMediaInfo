@@ -2,8 +2,10 @@
 	"@metadata": {
 		"authors": [
 			"MR973",
-			"З. ӘЙЛЕ"
+			"З. ӘЙЛЕ",
+			"Kareyac"
 		]
 	},
-	"wikibasemediainfo-desc": "Медиа-файлдарҙың структураланған метамәғлүмәттәре менән идара итеү өсөн Wikibase киңәйтеү"
+	"wikibasemediainfo-desc": "Медиа-файлдарҙың структураланған метамәғлүмәттәре менән идара итеү өсөн Wikibase киңәйтеү",
+	"wikibasemediainfo-statements-item-add-reference-snak": "Өҫтәргә"
 }

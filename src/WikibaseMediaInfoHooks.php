@@ -285,10 +285,8 @@ class WikibaseMediaInfoHooks {
 			$moduleStyles[] = 'wikibase.mediainfo.statements.styles';
 
 			$jsConfigVars = array_merge( $jsConfigVars, [
-				'wbUserSpecifiedLanguages' => array_values(
-					$userLanguageLookup->getAllUserLanguages(
-						$out->getUser()
-					)
+				'wbUserSpecifiedLanguages' => $userLanguageLookup->getAllUserLanguages(
+					$out->getUser()
 				),
 				'wbCurrentRevision' => $entityRevisionId,
 				'wbEntityId' => $entityId->getSerialization(),

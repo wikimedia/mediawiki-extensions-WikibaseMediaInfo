@@ -26,7 +26,8 @@
 	"TestAutoloadNamespaces": {
 		"Wikibase\\MediaInfo\\Tests\\": "tests/phpunit/composer/",
 		"Wikibase\\MediaInfo\\Tests\\MediaWiki\\": "tests/phpunit/mediawiki/",
-		"Wikibase\\MediaInfo\\Tests\\Integration\\": "tests/phpunit/integration/"
+		"Wikibase\\MediaInfo\\Tests\\Integration\\": "tests/phpunit/integration/",
+		"Wikibase\\MediaInfo\\": "tests/phpunit/unit/"
 	},
 	"ConfigRegistry": {
 		"WikibaseMediaInfo": "GlobalVarConfig::newInstance"
@@ -74,6 +75,14 @@
 		"src/Services/MediaInfoServiceWiring.php"
 	],
 	"callback": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onRegistration",
+	"HookHandlers": {
+		"mediainfo_searchdata": {
+			"class": "\\Wikibase\\MediaInfo\\MediaInfoDataForSearchIndex",
+			"services": [
+				"ContentHandlerFactory"
+			]
+		}
+	},
 	"Hooks": {
 		"MediaWikiServices": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onMediaWikiServices",
 		"WikibaseRepoEntityNamespaces": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onWikibaseRepoEntityNamespaces",
@@ -82,7 +91,6 @@
 		"GetEntityByLinkedTitleLookup": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onGetEntityByLinkedTitleLookup",
 		"GetEntityContentModelForTitle": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onGetEntityContentModelForTitle",
 		"BeforePageDisplay": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onBeforePageDisplay",
-		"CirrusSearchBuildDocumentParse": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onCirrusSearchBuildDocumentParse",
 		"ParserOutputPostCacheTransform": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onParserOutputPostCacheTransform",
 		"GetPreferences": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onGetPreferences",
 		"ScribuntoExternalLibraries": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onScribuntoExternalLibraries",
@@ -92,7 +100,8 @@
 		"CirrusSearchRegisterFullTextQueryClassifiers": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onCirrusSearchRegisterFullTextQueryClassifiers",
 		"SidebarBeforeOutput": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onSidebarBeforeOutput",
 		"CirrusSearchAddQueryFeatures": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onCirrusSearchAddQueryFeatures",
-		"MultiContentSave": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onMultiContentSave"
+		"MultiContentSave": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onMultiContentSave",
+		"SearchDataForIndex2": "mediainfo_searchdata"
 	},
 	"MessagesDirs": {
 		"WikibaseMediaInfo": [

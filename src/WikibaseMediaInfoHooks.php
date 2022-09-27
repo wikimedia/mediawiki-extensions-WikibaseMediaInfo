@@ -2,14 +2,8 @@
 
 namespace Wikibase\MediaInfo;
 
-use AbstractContent;
-use CirrusSearch\CirrusSearch;
-use CirrusSearch\Connection;
 use CirrusSearch\Parser\ParsedQueryClassifiersRepository;
 use CirrusSearch\Profile\SearchProfileService;
-use CirrusSearch\Search\CirrusIndexField;
-use ContentHandler;
-use Elastica\Document;
 use ExtensionRegistry;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\Revision\RenderedRevision;
@@ -35,7 +29,6 @@ use Wikibase\Lib\LanguageFallbackChainFactory;
 use Wikibase\Lib\Store\EntityByLinkedTitleLookup;
 use Wikibase\Lib\UserLanguageLookup;
 use Wikibase\MediaInfo\Content\MediaInfoContent;
-use Wikibase\MediaInfo\Content\MediaInfoHandler;
 use Wikibase\MediaInfo\DataAccess\Scribunto\Scribunto_LuaWikibaseMediaInfoEntityLibrary;
 use Wikibase\MediaInfo\DataAccess\Scribunto\Scribunto_LuaWikibaseMediaInfoLibrary;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
@@ -49,7 +42,6 @@ use Wikibase\Repo\Content\EntityInstanceHolder;
 use Wikibase\Repo\MediaWikiLocalizedTextProvider;
 use Wikibase\Repo\ParserOutput\DispatchingEntityViewFactory;
 use Wikibase\Repo\WikibaseRepo;
-use WikiPage;
 
 /**
  * MediaWiki hook handlers for the Wikibase MediaInfo extension.
@@ -623,65 +615,6 @@ class WikibaseMediaInfoHooks {
 	}
 
 	/**
-	 * Note that this is a workaround until all slots are passed automatically to CirrusSearch
-	 *
-	 * @see https://phabricator.wikimedia.org/T190066
-	 *
-	 * @param Document $document The modifiable Elastica page
-	 * @param Title $title The Title for the page
-	 * @param AbstractContent $contentObject The Content object for the page
-	 * @param ParserOutput $parserOutput The ParserOutput for the page if it exists
-	 * @param Connection $connection
-	 */
-	public static function onCirrusSearchBuildDocumentParse(
-		Document $document,
-		Title $title,
-		AbstractContent $contentObject,
-		ParserOutput $parserOutput,
-		Connection $connection
-	) {
-		$hooksObject = new self();
-		$hooksObject->doCirrusSearchBuildDocumentParse(
-			$document,
-			MediaWikiServices::getInstance()->getWikiPageFactory()->newFromTitle( $title ),
-			// @phan-suppress-next-line PhanTypeMismatchArgumentSuperType It is a MediaInfoHandler
-			ContentHandler::getForModelID( MediaInfoContent::CONTENT_MODEL_ID )
-		);
-	}
-
-	public function doCirrusSearchBuildDocumentParse(
-		Document $document,
-		WikiPage $page,
-		MediaInfoHandler $handler
-	) {
-		if ( $page->getTitle()->getNamespace() !== NS_FILE ) {
-			return;
-		}
-		$revisionRecord = $page->getRevisionRecord();
-		if (
-			$revisionRecord === null || !$revisionRecord->hasSlot( MediaInfo::ENTITY_TYPE )
-		) {
-			$content = MediaInfoContent::emptyContent();
-		} else {
-			/** @var SlotRecord $mediaInfoSlot */
-			$mediaInfoSlot = $page->getRevisionRecord()->getSlot( MediaInfo::ENTITY_TYPE );
-			$content = $mediaInfoSlot->getContent();
-		}
-
-		$engine = new CirrusSearch();
-		$fieldDefinitions = $handler->getFieldsForSearchIndex( $engine );
-		$slotData = $handler->getSlotDataForSearchIndex( $content );
-
-		foreach ( $slotData as $field => $fieldData ) {
-			$document->set( $field, $fieldData );
-			if ( isset( $fieldDefinitions[$field] ) ) {
-				$hints = $fieldDefinitions[$field]->getEngineHints( $engine );
-				CirrusIndexField::addIndexingHints( $document, $field, $hints );
-			}
-		}
-	}
-
-	/**
 	 * Register a ProfileContext for cirrus that will mean that queries in NS_FILE will use
 	 * the MediaQueryBuilder class for searching
 	 *
@@ -966,5 +899,4 @@ class WikibaseMediaInfoHooks {
 			);
 		}
 	}
-
 }

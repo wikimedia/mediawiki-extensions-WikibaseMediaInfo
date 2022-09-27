@@ -9,7 +9,6 @@ use Wikibase\DataModel\Entity\EntityId;
 use Wikibase\DataModel\Entity\ItemIdParser;
 use Wikibase\DataModel\Services\Lookup\PropertyDataTypeLookup;
 use Wikibase\Lib\Store\EntityContentDataCodec;
-use Wikibase\MediaInfo\Content\MediaInfoContent;
 use Wikibase\MediaInfo\Content\MediaInfoHandler;
 use Wikibase\MediaInfo\Content\MissingMediaInfoHandler;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
@@ -17,8 +16,6 @@ use Wikibase\MediaInfo\DataModel\MediaInfoId;
 use Wikibase\MediaInfo\Search\MediaInfoFieldDefinitions;
 use Wikibase\MediaInfo\Services\FilePageLookup;
 use Wikibase\MediaInfo\Services\MediaInfoIdLookup;
-use Wikibase\Repo\Search\Fields\FieldDefinitions;
-use Wikibase\Repo\Search\Fields\WikibaseIndexField;
 use Wikibase\Repo\Validators\EntityConstraintProvider;
 use Wikibase\Repo\Validators\ValidatorErrorLocalizer;
 use Wikibase\Search\Elastic\Fields\DescriptionsProviderFieldDefinitions;
@@ -157,45 +154,6 @@ class MediaInfoHandlerTest extends \MediaWikiIntegrationTestCase {
 		$mediaInfoHandler = $this->newMediaInfoHandler();
 
 		$this->assertSame( $expected, $mediaInfoHandler->canCreateWithCustomId( $id ) );
-	}
-
-	public function testGetSlotDataForSearchIndex() {
-		$textForSearchIndex = 'TEXT_FOR_SEARCH_INDEX';
-		$fieldName = 'TEST_FIELD_NAME';
-		$fieldData = 'TEST_FIELD_DATA';
-
-		$mediaInfo = $this->createMock( MediaInfo::class );
-
-		$content = $this->createMock( MediaInfoContent::class );
-		$content->method( 'getEntity' )
-			->willReturn( $mediaInfo );
-		$content->method( 'getTextForSearchIndex' )
-			->willReturn( $textForSearchIndex );
-
-		$field = $this->createMock( WikibaseIndexField::class );
-		$field->method( 'getFieldData' )
-			->with( $mediaInfo )
-			->willReturn( $fieldData );
-
-		$fieldDefinitions = $this->createMock( FieldDefinitions::class );
-		$fieldDefinitions->method( 'getFields' )
-			->willReturn( [ $fieldName => $field ] );
-
-		$mediaInfoHandler = $this->newMediaInfoHandler();
-		$reflection = new \ReflectionClass( $mediaInfoHandler );
-		$fieldDefinitionsProperty = $reflection->getProperty( 'fieldDefinitions' );
-		$fieldDefinitionsProperty->setAccessible( true );
-		$fieldDefinitionsProperty->setValue( $mediaInfoHandler, $fieldDefinitions );
-
-		$fieldsData = $mediaInfoHandler->getSlotDataForSearchIndex( $content );
-		$this->assertEquals(
-			$textForSearchIndex,
-			$fieldsData[ MediaInfoHandler::FILE_PAGE_SEARCH_INDEX_KEY_MEDIAINFO_TEXT ]
-		);
-		$this->assertEquals(
-			$fieldData,
-			$fieldsData[ $fieldName ]
-		);
 	}
 
 	public function testGetTitleForId() {

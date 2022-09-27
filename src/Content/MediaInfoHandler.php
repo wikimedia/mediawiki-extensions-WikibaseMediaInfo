@@ -2,6 +2,7 @@
 
 namespace Wikibase\MediaInfo\Content;
 
+use Content;
 use IContextSource;
 use MediaWiki\Page\PageRecord;
 use MediaWiki\Page\PageStore;
@@ -31,8 +32,6 @@ use Wikimedia\Assert\Assert;
  * @author Bene* < benestar.wikimedia@gmail.com >
  */
 class MediaInfoHandler extends EntityHandler {
-
-	public const FILE_PAGE_SEARCH_INDEX_KEY_MEDIAINFO_TEXT = 'opening_text';
 
 	/**
 	 * @var MissingMediaInfoHandler
@@ -181,41 +180,33 @@ class MediaInfoHandler extends EntityHandler {
 	}
 
 	/**
-	 * Returns data for writing to the search index for a MediaInfo slot
-	 *
-	 * @param MediaInfoContent $content
+	 * @param Content $content
 	 * @return array
+	 * @throws \MWException
 	 */
-	public function getSlotDataForSearchIndex(
-		MediaInfoContent $content
-	) {
-		// Empty field data is acceptable when content is a redirect as CirrusSearch
-		// does not directly index redirects.
-		$fieldsData = [];
-		if ( !$content->isRedirect() ) {
-			$entity = $content->getEntity();
-			$fields = $this->fieldDefinitions->getFields();
+	public function getContentDataForSearchIndex( Content $content ): array {
+		$fieldsData = parent::getContentDataForSearchIndex( $content );
+		if ( $content->isRedirect() || !( $content instanceof MediaInfoContent ) ) {
+			return $fieldsData;
+		}
+		$entity = $content->getEntity();
+		$fields = $this->fieldDefinitions->getFields();
 
-			foreach ( $fields as $fieldName => $field ) {
-				$fieldsData[$fieldName] = $field->getFieldData( $entity );
-			}
-
-			$fieldsData[self::FILE_PAGE_SEARCH_INDEX_KEY_MEDIAINFO_TEXT] =
-				$content->getTextForSearchIndex();
-
-			// Labels data is normally indexed for prefix matching.
-			// We don't need that for MediaInfo files, so swap labels data into descriptions
-			// instead so as not to overburden the search index
-			if ( isset( $fieldsData[ LabelsField::NAME ] ) ) {
-				$fieldsData[DescriptionsField::NAME] = $fieldsData[LabelsField::NAME];
-				$fieldsData[LabelsField::NAME] = [];
-			} else {
-				$fieldsData[DescriptionsField::NAME] = [];
-			}
-
-			$fieldsData[LabelCountField::NAME] = 0;
+		foreach ( $fields as $fieldName => $field ) {
+			$fieldsData[$fieldName] = $field->getFieldData( $entity );
 		}
 
+		// Labels data is normally indexed for prefix matching.
+		// We don't need that for MediaInfo files, so swap labels data into descriptions
+		// instead so as not to overburden the search index
+		if ( isset( $fieldsData[ LabelsField::NAME ] ) ) {
+			$fieldsData[DescriptionsField::NAME] = $fieldsData[LabelsField::NAME];
+			$fieldsData[LabelsField::NAME] = [];
+		} else {
+			$fieldsData[DescriptionsField::NAME] = [];
+		}
+
+		$fieldsData[LabelCountField::NAME] = 0;
 		return $fieldsData;
 	}
 

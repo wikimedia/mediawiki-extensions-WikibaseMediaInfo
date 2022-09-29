@@ -36,15 +36,11 @@ class MediaInfoEntityTermsViewTest extends \PHPUnit\Framework\TestCase {
 	private $fallbackChain;
 
 	private function createDependencies( $fallbackLangCodes ) {
-		$this->langNameLookup = $this->getMockBuilder( LanguageNameLookup::class )
-			->disableOriginalConstructor()
-			->getMock();
+		$this->langNameLookup = $this->createMock( LanguageNameLookup::class );
 		$this->langNameLookup
 			->method( 'getName' )
 			->willReturn( 'TEST_LANGUAGE_NAME' );
-		$this->langDirLookup = $this->getMockBuilder( LanguageDirectionalityLookup::class )
-			->disableOriginalConstructor()
-			->getMock();
+		$this->langDirLookup = $this->createMock( LanguageDirectionalityLookup::class );
 		$language = !empty( $fallbackLangCodes[0] )
 			? Language::factory( $fallbackLangCodes[0] )
 			: Language::factory( 'en' );
@@ -183,17 +179,13 @@ class MediaInfoEntityTermsViewTest extends \PHPUnit\Framework\TestCase {
 		$testLangName = strtoupper( $languageCode . '_NAME' );
 		$testLangDir = 'TEST_LANG_DIR>';
 
-		$langNameLookup = $this->getMockBuilder( LanguageNameLookup::class )
-			->disableOriginalConstructor()
-			->getMock();
+		$langNameLookup = $this->createMock( LanguageNameLookup::class );
 		$langNameLookup
 			->expects( $this->atLeastOnce() )
 			->method( 'getName' )
 			->with( $languageCode )
 			->willReturn( $testLangName );
-		$langDirLookup = $this->getMockBuilder( LanguageDirectionalityLookup::class )
-			->disableOriginalConstructor()
-			->getMock();
+		$langDirLookup = $this->createMock( LanguageDirectionalityLookup::class );
 		$langDirLookup
 			->expects( $this->atLeastOnce() )
 			->method( 'getDirectionality' )

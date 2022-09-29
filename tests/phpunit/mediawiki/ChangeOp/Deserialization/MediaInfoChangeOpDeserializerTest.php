@@ -2,7 +2,6 @@
 
 namespace Wikibase\MediaInfo\Tests\MediaWiki\ChangeOp\Deserialization;
 
-use PHPUnit\Framework\MockObject\MockObject;
 use Wikibase\Lib\StaticContentLanguages;
 use Wikibase\Lib\StringNormalizer;
 use Wikibase\MediaInfo\ChangeOp\Deserialization\MediaInfoChangeOpDeserializer;
@@ -22,7 +21,7 @@ use Wikibase\Repo\Tests\ChangeOp\Deserialization\LabelsChangeOpDeserializationTe
 use Wikibase\Repo\Validators\TermValidatorFactory;
 
 /**
- * @covers Wikibase\MediaInfo\ChangeOp\Deserialization\MediaInfoChangeOpDeserializer
+ * @covers \Wikibase\MediaInfo\ChangeOp\Deserialization\MediaInfoChangeOpDeserializer
  *
  * @group WikibaseMediaInfo
  *
@@ -63,11 +62,11 @@ class MediaInfoChangeOpDeserializerTest extends \PHPUnit\Framework\TestCase {
 			],
 		];
 
-		$labelsChangeOpDeserializer = $this->getLabelsChangeOpDeserializer();
+		$labelsChangeOpDeserializer = $this->createMock( LabelsChangeOpDeserializer::class );
 		$labelsChangeOpDeserializer->expects( $this->never() )
 			->method( 'createEntityChangeOp' );
 
-		$descriptionsChangeOpDeserializer = $this->getDescriptionsChangeOpDeserializer();
+		$descriptionsChangeOpDeserializer = $this->createMock( DescriptionsChangeOpDeserializer::class );
 		$descriptionsChangeOpDeserializer->expects( $this->never() )
 			->method( 'createEntityChangeOp' );
 
@@ -82,9 +81,9 @@ class MediaInfoChangeOpDeserializerTest extends \PHPUnit\Framework\TestCase {
 
 	public function testCreateEntityChangeOp_withAliasesThrowsException() {
 		$mediaInfoChangeOpDeserializer = new MediaInfoChangeOpDeserializer(
-			$this->getLabelsChangeOpDeserializer(),
-			$this->getDescriptionsChangeOpDeserializer(),
-			$this->getClaimsChangeOpDeserializer()
+			$this->createMock( LabelsChangeOpDeserializer::class ),
+			$this->createMock( DescriptionsChangeOpDeserializer::class ),
+			$this->createMock( ClaimsChangeOpDeserializer::class )
 		);
 
 		$this->expectException( ChangeOpDeserializationException::class );
@@ -93,22 +92,13 @@ class MediaInfoChangeOpDeserializerTest extends \PHPUnit\Framework\TestCase {
 
 	public function testCreateEntityChangeOp_withSiteLinksThrowsException() {
 		$mediaInfoChangeOpDeserializer = new MediaInfoChangeOpDeserializer(
-			$this->getLabelsChangeOpDeserializer(),
-			$this->getDescriptionsChangeOpDeserializer(),
-			$this->getClaimsChangeOpDeserializer()
+			$this->createMock( LabelsChangeOpDeserializer::class ),
+			$this->createMock( DescriptionsChangeOpDeserializer::class ),
+			$this->createMock( ClaimsChangeOpDeserializer::class )
 		);
 
 		$this->expectException( ChangeOpDeserializationException::class );
 		$mediaInfoChangeOpDeserializer->createEntityChangeOp( [ 'sitelinks' => [] ] );
-	}
-
-	/**
-	 * @return LabelsChangeOpDeserializer|MockObject
-	 */
-	private function getLabelsChangeOpDeserializer() {
-		return $this->getMockBuilder( LabelsChangeOpDeserializer::class )
-			->disableOriginalConstructor()
-			->getMock();
 	}
 
 	/**
@@ -117,26 +107,17 @@ class MediaInfoChangeOpDeserializerTest extends \PHPUnit\Framework\TestCase {
 	 * @return LabelsChangeOpDeserializer
 	 */
 	private function getLabelsChangeOpDeserializerWithChangeRequest( array $changeRequest ) {
-		$changeOpDeserializer = $this->getLabelsChangeOpDeserializer();
+		$changeOpDeserializer = $this->createMock( LabelsChangeOpDeserializer::class );
 		$changeOpDeserializer->expects( $this->once() )
 			->method( 'createEntityChangeOp' )
 			->with( $changeRequest )
 			->willReturn( new ChangeOpLabel(
 				'en',
 				'kitten',
-				$this->getTermValidatorFactory()
+				$this->createMock( TermValidatorFactory::class )
 			) );
 
 		return $changeOpDeserializer;
-	}
-
-	/**
-	 * @return DescriptionsChangeOpDeserializer|MockObject
-	 */
-	private function getDescriptionsChangeOpDeserializer() {
-		return $this->getMockBuilder( DescriptionsChangeOpDeserializer::class )
-			->disableOriginalConstructor()
-			->getMock();
 	}
 
 	/**
@@ -145,26 +126,17 @@ class MediaInfoChangeOpDeserializerTest extends \PHPUnit\Framework\TestCase {
 	 * @return DescriptionsChangeOpDeserializer
 	 */
 	private function getDescriptionsChangeOpDeserializerWithChangeRequest( array $changeRequest ) {
-		$changeOpDeserializer = $this->getDescriptionsChangeOpDeserializer();
+		$changeOpDeserializer = $this->createMock( DescriptionsChangeOpDeserializer::class );
 		$changeOpDeserializer->expects( $this->once() )
 			->method( 'createEntityChangeOp' )
 			->with( $changeRequest )
 			->willReturn( new ChangeOpDescription(
 				'en',
 				'young cat',
-				$this->getTermValidatorFactory()
+				$this->createMock( TermValidatorFactory::class )
 			) );
 
 		return $changeOpDeserializer;
-	}
-
-	/**
-	 * @return ClaimsChangeOpDeserializer|MockObject
-	 */
-	private function getClaimsChangeOpDeserializer() {
-		return $this->getMockBuilder( ClaimsChangeOpDeserializer::class )
-			->disableOriginalConstructor()
-			->getMock();
 	}
 
 	/**
@@ -173,22 +145,13 @@ class MediaInfoChangeOpDeserializerTest extends \PHPUnit\Framework\TestCase {
 	 * @return ClaimsChangeOpDeserializer
 	 */
 	private function getClaimsChangeOpDeserializerWithChangeRequest( array $changeRequest ) {
-		$changeOpDeserializer = $this->getClaimsChangeOpDeserializer();
+		$changeOpDeserializer = $this->createMock( ClaimsChangeOpDeserializer::class );
 		$changeOpDeserializer->expects( $this->once() )
 			->method( 'createEntityChangeOp' )
 			->with( $changeRequest )
 			->willReturn( new ChangeOpRemoveStatement( 'some-guid' ) );
 
 		return $changeOpDeserializer;
-	}
-
-	/**
-	 * @return TermValidatorFactory
-	 */
-	private function getTermValidatorFactory() {
-		return $this->getMockBuilder( TermValidatorFactory::class )
-			->disableOriginalConstructor()
-			->getMock();
 	}
 
 	/**
@@ -208,7 +171,7 @@ class MediaInfoChangeOpDeserializerTest extends \PHPUnit\Framework\TestCase {
 				new StringNormalizer(),
 				new TermChangeOpSerializationValidator( new StaticContentLanguages( [ 'en' ] ) )
 			),
-			$this->getClaimsChangeOpDeserializer()
+			$this->createMock( ClaimsChangeOpDeserializer::class )
 		);
 	}
 

@@ -80,9 +80,7 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiIntegrationTestCase {
 	 * @dataProvider providePostCacheTransformInput
 	 */
 	public function testOnParserOutputPostCacheTransform( $original, $expected ) {
-		$parserOutput = $this->getMockBuilder( ParserOutput::class )
-			->disableOriginalConstructor()
-			->getMock();
+		$parserOutput = $this->createMock( ParserOutput::class );
 		WikibaseMediaInfoHooks::onParserOutputPostCacheTransform(
 			$parserOutput,
 			$original,
@@ -92,9 +90,7 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiIntegrationTestCase {
 	}
 
 	private function getMockOutputPage( Title $title ) {
-		$revision = $this->getMockBuilder( RevisionRecord::class )
-			->disableOriginalConstructor()
-			->getMock();
+		$revision = $this->createMock( RevisionRecord::class );
 		$revision->method( 'getId' )
 			->willReturn( 999 );
 
@@ -129,9 +125,7 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiIntegrationTestCase {
 	public function testOnBeforePageDisplay() {
 		$imgTitle = $this->makeMockTitle( 'Foo.jpg', [ 'namespace' => NS_FILE, 'id' => 13 ] );
 
-		$skin = $this->getMockBuilder( \Skin::class )
-			->disableOriginalConstructor()
-			->getMock();
+		$skin = $this->createMock( \Skin::class );
 
 		$out = $this->getMockOutputPage( $imgTitle );
 		$out->expects( $this->once() )
@@ -161,25 +155,19 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiIntegrationTestCase {
 				}
 			) );
 
-		$skin = $this->getMockBuilder( \Skin::class )
-			->disableOriginalConstructor()
-			->getMock();
+		$skin = $this->createMock( \Skin::class );
 
 		WikibaseMediaInfoHooks::onBeforePageDisplay( $out, $skin );
 	}
 
 	private function createHookObjectWithMocks() {
 		return new WikibaseMediaInfoHooks(
-			$this->getMockBuilder( EntityIdComposer::class )
-				->disableOriginalConstructor()
-				->getMock()
+			$this->createMock( EntityIdComposer::class )
 		);
 	}
 
 	public function testOnGetEntityByLinkedTitleLookup() {
-		$lookup = $this->getMockBuilder( EntityByLinkedTitleLookup::class )
-			->disableOriginalConstructor()
-			->getMock();
+		$lookup = $this->createMock( EntityByLinkedTitleLookup::class );
 		WikibaseMediaInfoHooks::onGetEntityByLinkedTitleLookup( $lookup );
 		$this->assertInstanceOf(
 			MediaInfoByLinkedTitleLookup::class,
@@ -188,9 +176,7 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiIntegrationTestCase {
 	}
 
 	private function mockSlot( MediaInfoContent $content = null ) {
-		$slot = $this->getMockBuilder( SlotRecord::class )
-			->disableOriginalConstructor()
-			->getMock();
+		$slot = $this->createMock( SlotRecord::class );
 		$slot->method( 'getModel' )
 			->willReturn( MediaInfo::ENTITY_TYPE );
 		$slot->method( 'getContent' )
@@ -199,9 +185,7 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiIntegrationTestCase {
 	}
 
 	private function mockRevisionRecord( SlotRecord $slot = null ) {
-		$revisionRecord = $this->getMockBuilder( RevisionRecord::class )
-			->disableOriginalConstructor()
-			->getMock();
+		$revisionRecord = $this->createMock( RevisionRecord::class );
 		if ( $slot === null ) {
 			$revisionRecord->method( 'hasSlot' )
 				->willReturn( false );
@@ -225,9 +209,7 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiIntegrationTestCase {
 			$slot = null;
 			$revisionRecord = $this->mockRevisionRecord( $slot );
 		} elseif ( $mode === 'has-slot' ) {
-			$content = $this->getMockBuilder( MediaInfoContent::class )
-				->disableOriginalConstructor()
-				->getMock();
+			$content = $this->createMock( MediaInfoContent::class );
 
 			$slot = $this->mockSlot( $content );
 			$revisionRecord = $this->mockRevisionRecord( $slot );
@@ -236,17 +218,13 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiIntegrationTestCase {
 		// Fields for search index, with engine hints
 		$fieldsForSearchIndex = [];
 		foreach ( $engineHints as $key => $value ) {
-			$mockField = $this->getMockBuilder( TermIndexField::class )
-				->disableOriginalConstructor()
-				->getMock();
+			$mockField = $this->createMock( TermIndexField::class );
 			$mockField->method( 'getEngineHints' )
 				->willReturn( $value );
 			$fieldsForSearchIndex[$key] = $mockField;
 		}
 
-		$mediaInfoHandler = $this->getMockBuilder( MediaInfoHandler::class )
-			->disableOriginalConstructor()
-			->getMock();
+		$mediaInfoHandler = $this->createMock( MediaInfoHandler::class );
 		$mediaInfoHandler->expects( $this->once() )
 			->method( 'getSlotDataForSearchIndex' )
 			->with( $content ?? MediaInfoContent::emptyContent() )
@@ -255,9 +233,7 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiIntegrationTestCase {
 			->method( 'getFieldsForSearchIndex' )
 			->with( $this->isInstanceOf( CirrusSearch::class ) )
 			->willReturn( $fieldsForSearchIndex );
-		$page = $this->getMockBuilder( \WikiPage::class )
-			->disableOriginalConstructor()
-			->getMock();
+		$page = $this->createMock( \WikiPage::class );
 		$page->method( 'getTitle' )
 			->willReturn( Title::makeTitle( NS_FILE, 'HooksTest' ) );
 		$page->method( 'getRevisionRecord' )

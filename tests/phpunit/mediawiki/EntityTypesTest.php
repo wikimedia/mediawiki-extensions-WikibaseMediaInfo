@@ -74,9 +74,7 @@ class EntityTypesTest extends \PHPUnit\Framework\TestCase {
 	}
 
 	private function getDeserializerFactory() {
-		$deserializerFactory = $this->getMockBuilder( DeserializerFactory::class )
-			->disableOriginalConstructor()
-			->getMock();
+		$deserializerFactory = $this->createMock( DeserializerFactory::class );
 
 		$deserializerFactory->expects( $this->once() )
 			->method( 'newEntityIdDeserializer' )

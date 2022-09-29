@@ -84,17 +84,13 @@ class MissingMediaInfoHandlerTest extends \PHPUnit\Framework\TestCase {
 		$idLookup = new MediaInfoIdLookup( $entityIdComposer, NS_FILE );
 		$filePageLookup = new FilePageLookup( $this->getTitleFactory() );
 
-		$outputGenerator = $this->getMockBuilder( EntityParserOutputGenerator::class )
-			->disableOriginalConstructor()
-			->getMock();
+		$outputGenerator = $this->createMock( EntityParserOutputGenerator::class );
 
 		$outputGenerator->method( 'getParserOutput' )
 			->willReturn( new ParserOutput( $text ) );
 
 		/** @var EntityParserOutputGeneratorFactory $outputGeneratorFactory */
-		$outputGeneratorFactory = $this->getMockBuilder( EntityParserOutputGeneratorFactory::class )
-			->disableOriginalConstructor()
-			->getMock();
+		$outputGeneratorFactory = $this->createMock( EntityParserOutputGeneratorFactory::class );
 
 		$outputGeneratorFactory->method( 'getEntityParserOutputGenerator' )
 			->willReturn( $outputGenerator );

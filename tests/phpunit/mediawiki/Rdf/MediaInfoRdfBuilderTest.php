@@ -53,7 +53,7 @@ class MediaInfoRdfBuilderTest extends TestCase {
 	private $helper;
 	private $mediaInfoSpecificComponentsRdfBuilder;
 
-	public function setUp(): void {
+	protected function setUp(): void {
 		parent::setUp();
 		$this->helper = new NTriplesRdfTestHelper();
 		$this->dedupe = $this->createMock( DedupeBag::class );

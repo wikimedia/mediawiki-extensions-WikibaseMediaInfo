@@ -20,12 +20,9 @@ class EntityIdFixingRevisionLookupTest extends TestCase {
 	private $defaultLookup;
 	private $logger;
 
-	public function setUp(): void {
-		$this->defaultLookup = $this->getMockBuilder( EntityRevisionLookup::class )
-			->disableOriginalConstructor()
-			->getMock();
-		$this->logger = $this->getMockBuilder( LoggerInterface::class )
-			->getMock();
+	protected function setUp(): void {
+		$this->defaultLookup = $this->createMock( EntityRevisionLookup::class );
+		$this->logger = $this->createMock( LoggerInterface::class );
 	}
 
 	public function testGetEntityRevisionDelegatesCallToDefaultLookupAndReturnsEntityRevision() {
@@ -33,9 +30,7 @@ class EntityIdFixingRevisionLookupTest extends TestCase {
 		$revisionId = 4711;
 		$mode = LookupConstants::LATEST_FROM_REPLICA;
 
-		$entityRevision = $this->getMockBuilder( EntityRevision::class )
-			->disableOriginalConstructor()
-			->getMock();
+		$entityRevision = $this->createMock( EntityRevision::class );
 
 		$this->defaultLookup->expects( $this->once() )
 			->method( 'getEntityRevision' )

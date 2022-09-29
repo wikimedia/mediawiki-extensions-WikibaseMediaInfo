@@ -35,12 +35,6 @@ use Wikibase\Search\Elastic\Fields\StatementProviderFieldDefinitions;
  */
 class MediaInfoHandlerTest extends \MediaWikiIntegrationTestCase {
 
-	private function getMockWithoutConstructor( $className ) {
-		return $this->getMockBuilder( $className )
-			->disableOriginalConstructor()
-			->getMock();
-	}
-
 	private function newMediaInfoHandler( array $replacements = [] ) {
 		$m17 = new MediaInfoId( 'M17' );
 
@@ -48,9 +42,7 @@ class MediaInfoHandlerTest extends \MediaWikiIntegrationTestCase {
 		$propertyLookup->method( 'getDataTypeIdForProperty' )
 			->willReturn( 'string' );
 
-		$missingMediaInfoHandler = $this->getMockWithoutConstructor(
-			MissingMediaInfoHandler::class
-		);
+		$missingMediaInfoHandler = $this->createMock( MissingMediaInfoHandler::class );
 		$missingMediaInfoHandler->method( 'getMediaInfoId' )
 			->willReturn( $m17 );
 		$missingMediaInfoHandler->method( 'showVirtualMediaInfo' )
@@ -58,7 +50,7 @@ class MediaInfoHandlerTest extends \MediaWikiIntegrationTestCase {
 				$context->getOutput()->addHTML( 'MISSING!' );
 			} );
 
-		$idLookup = $this->getMockWithoutConstructor( MediaInfoIdLookup::class );
+		$idLookup = $this->createMock( MediaInfoIdLookup::class );
 		$idLookup->method( 'getEntityIdForTitle' )
 			->willReturnCallback( static function ( Title $title ) {
 				if ( $title->getPrefixedDBkey() !== 'Test-M1.png' ) {
@@ -68,7 +60,7 @@ class MediaInfoHandlerTest extends \MediaWikiIntegrationTestCase {
 				return new MediaInfoId( 'M1' );
 			} );
 
-		$filePageLookup = $this->getMockWithoutConstructor( FilePageLookup::class );
+		$filePageLookup = $this->createMock( FilePageLookup::class );
 		$filePageLookup->method( 'getFilePage' )
 			->willReturnCallback( static function ( MediaInfoId $id ) {
 				if ( $id->getSerialization() !== 'M1' ) {
@@ -79,8 +71,8 @@ class MediaInfoHandlerTest extends \MediaWikiIntegrationTestCase {
 			} );
 
 		return new MediaInfoHandler(
-			$this->getMockWithoutConstructor( EntityContentDataCodec::class ),
-			$this->getMockWithoutConstructor( EntityConstraintProvider::class ),
+			$this->createMock( EntityContentDataCodec::class ),
+			$this->createMock( EntityConstraintProvider::class ),
 			$this->createMock( ValidatorErrorLocalizer::class ),
 			new ItemIdParser(),
 			$missingMediaInfoHandler,
@@ -172,28 +164,20 @@ class MediaInfoHandlerTest extends \MediaWikiIntegrationTestCase {
 		$fieldName = 'TEST_FIELD_NAME';
 		$fieldData = 'TEST_FIELD_DATA';
 
-		$mediaInfo = $this->getMockBuilder( MediaInfo::class )
-			->disableOriginalConstructor()
-			->getMock();
+		$mediaInfo = $this->createMock( MediaInfo::class );
 
-		$content = $this->getMockBuilder( MediaInfoContent::class )
-			->disableOriginalConstructor()
-			->getMock();
+		$content = $this->createMock( MediaInfoContent::class );
 		$content->method( 'getEntity' )
 			->willReturn( $mediaInfo );
 		$content->method( 'getTextForSearchIndex' )
 			->willReturn( $textForSearchIndex );
 
-		$field = $this->getMockBuilder( WikibaseIndexField::class )
-			->disableOriginalConstructor()
-			->getMock();
+		$field = $this->createMock( WikibaseIndexField::class );
 		$field->method( 'getFieldData' )
 			->with( $mediaInfo )
 			->willReturn( $fieldData );
 
-		$fieldDefinitions = $this->getMockBuilder( FieldDefinitions::class )
-			->disableOriginalConstructor()
-			->getMock();
+		$fieldDefinitions = $this->createMock( FieldDefinitions::class );
 		$fieldDefinitions->method( 'getFields' )
 			->willReturn( [ $fieldName => $field ] );
 
@@ -220,9 +204,7 @@ class MediaInfoHandlerTest extends \MediaWikiIntegrationTestCase {
 
 		$mediaInfoHandler = $this->newMediaInfoHandler();
 
-		$mockId = $this->getMockBuilder( MediaInfoId::class )
-			->disableOriginalConstructor()
-			->getMock();
+		$mockId = $this->createMock( MediaInfoId::class );
 		$mockId->method( 'getNumericId' )
 			->willReturn( $testId );
 

@@ -39,18 +39,10 @@ class MediaInfoViewTest extends \PHPUnit\Framework\TestCase {
 	private $sut;
 
 	private function createMocks() {
-		$this->entityTermsView = $this->getMockBuilder( MediaInfoEntityTermsView::class )
-			->disableOriginalConstructor()
-			->getMock();
-		$this->statementsView = $this->getMockBuilder(
-			MediaInfoEntityStatementsView::class
-			)
-			->disableOriginalConstructor()
-			->getMock();
+		$this->entityTermsView = $this->createMock( MediaInfoEntityTermsView::class );
+		$this->statementsView = $this->createMock( MediaInfoEntityStatementsView::class );
 
-		$this->entity = $this->getMockBuilder( MediaInfo::class )
-			->disableOriginalConstructor()
-			->getMock();
+		$this->entity = $this->createMock( MediaInfo::class );
 		$this->entity->method( 'getType' )
 			->willReturn( $this->values['entityType'] );
 		$this->entity->method( 'getID' )
@@ -98,10 +90,7 @@ class MediaInfoViewTest extends \PHPUnit\Framework\TestCase {
 		$this->createMocks();
 		try {
 			$this->sut->getContent( new Property( new NumericPropertyId( 'P999' ), null, 'string' ) );
-			$this->assertFalse(
-				true,
-				'Expected exception not thrown when invalid type passed'
-			);
+			$this->fail( 'Expected exception not thrown when invalid type passed' );
 		} catch ( \Exception $e ) {
 			$this->assertTrue( true );
 		}

@@ -146,17 +146,13 @@ class MediaInfoSpecificComponentsRdfBuilderTest extends TestCase {
 
 		$entity = $this->getTestData()->getEntity( $entityName );
 		$writer = $this->getTestData()->getNTriplesWriter( false );
-		$handler = $this->getMockBuilder( MediaInfoHandler::class )
-			->disableOriginalConstructor()
-			->getMock();
+		$handler = $this->createMock( MediaInfoHandler::class );
 		$handler->expects( $this->once() )
 			->method( 'getTitleForId' )
 			->with( $entity->getId() )
 			->willReturn( ( $file === null ) ? null : $file->getTitle() );
 
-		$repoGroup = $this->getMockBuilder( RepoGroup::class )
-			->disableOriginalConstructor()
-			->getMock();
+		$repoGroup = $this->createMock( RepoGroup::class );
 		if ( $file === null ) {
 			$repoGroup->expects( $this->never() )
 				->method( 'findFile' );

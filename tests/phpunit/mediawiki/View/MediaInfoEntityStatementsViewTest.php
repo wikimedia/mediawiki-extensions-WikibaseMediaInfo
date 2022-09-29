@@ -65,9 +65,7 @@ class MediaInfoEntityStatementsViewTest extends \PHPUnit\Framework\TestCase {
 
 		$this->serializerFactory = WikibaseRepo::getCompactBaseDataModelSerializerFactory();
 
-		$snakFormatter = $this->getMockBuilder( SnakFormatter::class )
-			->disableOriginalConstructor()
-			->getMock();
+		$snakFormatter = $this->createMock( SnakFormatter::class );
 		$snakFormatter->method( 'formatSnak' )
 			->will(
 				$this->returnCallback( function ( Snak $snak ) {
@@ -96,16 +94,10 @@ class MediaInfoEntityStatementsViewTest extends \PHPUnit\Framework\TestCase {
 					return '';
 				} )
 			);
-		$this->snakFormatterFactory = $this->getMockBuilder(
-				OutputFormatSnakFormatterFactory::class
-			)
-			->disableOriginalConstructor()
-			->getMock();
+		$this->snakFormatterFactory = $this->createMock( OutputFormatSnakFormatterFactory::class );
 		$this->snakFormatterFactory->method( 'getSnakFormatter' )->willReturn( $snakFormatter );
 
-		$valueFormatter = $this->getMockBuilder( DispatchingValueFormatter::class )
-			->disableOriginalConstructor()
-			->getMock();
+		$valueFormatter = $this->createMock( DispatchingValueFormatter::class );
 		$valueFormatter->method( 'formatValue' )
 			->will(
 				$this->returnCallback( static function ( DataValue $value ) {
@@ -127,11 +119,7 @@ class MediaInfoEntityStatementsViewTest extends \PHPUnit\Framework\TestCase {
 					return null;
 				} )
 			);
-		$this->valueFormatterFactory = $this->getMockBuilder(
-			OutputFormatValueFormatterFactory::class
-		)
-			->disableOriginalConstructor()
-			->getMock();
+		$this->valueFormatterFactory = $this->createMock( OutputFormatValueFormatterFactory::class );
 		$this->valueFormatterFactory->method( 'getValueFormatter' )->willReturn( $valueFormatter );
 	}
 
@@ -142,9 +130,7 @@ class MediaInfoEntityStatementsViewTest extends \PHPUnit\Framework\TestCase {
 	public function testGetHtml( StatementList $statementList ) {
 		$this->createDependencies();
 
-		$orderProvider = $this->getMockBuilder( PropertyOrderProvider::class )
-			->disableOriginalConstructor()
-			->getMock();
+		$orderProvider = $this->createMock( PropertyOrderProvider::class );
 		$orderProvider->method( 'getPropertyOrder' )
 			->willReturn( [
 				'P888' => 1,
@@ -188,7 +174,7 @@ class MediaInfoEntityStatementsViewTest extends \PHPUnit\Framework\TestCase {
 	}
 
 	/**
-	 * @param StatementList $sortedStatementList The SORTED statement list
+	 * @param StatementList $sortedStatementList
 	 * @return string
 	 */
 	private function getPropertyIdRegex( StatementList $sortedStatementList ) {
@@ -200,7 +186,7 @@ class MediaInfoEntityStatementsViewTest extends \PHPUnit\Framework\TestCase {
 	}
 
 	/**
-	 * @param StatementList $sortedStatementList The SORTED statement list
+	 * @param StatementList $sortedStatementList
 	 * @return string
 	 */
 	private function getMainSnakValueRegex(
@@ -215,7 +201,7 @@ class MediaInfoEntityStatementsViewTest extends \PHPUnit\Framework\TestCase {
 	}
 
 	/**
-	 * @param StatementList $sortedStatementList The SORTED statement list
+	 * @param StatementList $sortedStatementList
 	 * @return string
 	 */
 	private function getQualifiersRegex(

@@ -836,7 +836,10 @@ class WikibaseMediaInfoHooks {
 		$newEntity->setId( $newEntityId );
 		foreach ( $newEntity->getStatements()->toArray() as $statement ) {
 			// statement GUIDs also contain the M-id, so let's go fix those too
-			$existingStatementGuid = $statementGuidParser->parse( $statement->getGuid() );
+			$existingStatementGuidString = $statement->getGuid();
+			// cast GUID to non-null for Phan (we know it exists)
+			'@phan-var string $existingStatementGuidString';
+			$existingStatementGuid = $statementGuidParser->parse( $existingStatementGuidString );
 			if ( !$newEntityId->equals( $existingStatementGuid->getEntityId() ) ) {
 				$newStatementGuid = new StatementGuid( $newEntityId, $existingStatementGuid->getGuidPart() );
 				$statement->setGuid( (string)$newStatementGuid );

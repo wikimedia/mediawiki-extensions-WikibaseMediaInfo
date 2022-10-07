@@ -4,6 +4,7 @@ namespace Wikibase\MediaInfo\Tests\MediaWiki\View;
 
 use DataValues\DataValue;
 use DataValues\StringValue;
+use MediaWikiTestCaseTrait;
 use ValueFormatters\FormatterOptions;
 use Wikibase\DataModel\Entity\EntityIdValue;
 use Wikibase\DataModel\Entity\ItemId;
@@ -36,6 +37,7 @@ use Wikibase\View\LocalizedTextProvider;
  * @license GPL-2.0-or-later
  */
 class MediaInfoEntityStatementsViewTest extends \PHPUnit\Framework\TestCase {
+	use MediaWikiTestCaseTrait;
 
 	/**
 	 * @var LocalizedTextProvider
@@ -170,14 +172,14 @@ class MediaInfoEntityStatementsViewTest extends \PHPUnit\Framework\TestCase {
 
 		$sortedStatementList = $this->sortStatementList( $statementList, $orderProvider );
 
-		$this->assertRegExp( $this->getPropertyIdRegex( $sortedStatementList ), $html );
-		$this->assertRegExp(
+		$this->assertMatchesRegularExpression( $this->getPropertyIdRegex( $sortedStatementList ), $html );
+		$this->assertMatchesRegularExpression(
 			$this->getMainSnakValueRegex(
 				$sortedStatementList
 			),
 			$html
 		);
-		$this->assertRegExp(
+		$this->assertMatchesRegularExpression(
 			$this->getQualifiersRegex(
 				$sortedStatementList
 			),

@@ -3,6 +3,7 @@
 namespace Wikibase\MediaInfo\Tests\MediaWiki\View;
 
 use Language;
+use MediaWikiTestCaseTrait;
 use Wikibase\DataModel\Term\Term;
 use Wikibase\DataModel\Term\TermList;
 use Wikibase\Lib\ContentLanguages;
@@ -23,6 +24,7 @@ use Wikibase\View\LocalizedTextProvider;
  * @license GPL-2.0-or-later
  */
 class MediaInfoEntityTermsViewTest extends \PHPUnit\Framework\TestCase {
+	use MediaWikiTestCaseTrait;
 
 	/** @var LanguageNameLookup */
 	private $langNameLookup;
@@ -115,7 +117,7 @@ class MediaInfoEntityTermsViewTest extends \PHPUnit\Framework\TestCase {
 		$html = $sut->getHtml( $testEntity );
 
 		// Check language codes found in the right order
-		$this->assertRegExp(
+		$this->assertMatchesRegularExpression(
 			$labelOrderRegex,
 			$html,
 			'Language codes not found in order in output'
@@ -207,28 +209,28 @@ class MediaInfoEntityTermsViewTest extends \PHPUnit\Framework\TestCase {
 		$html = $sut->getSingleCaptionLayout( $labels, $languageCode, $showLabel )->toString();
 
 		if ( $labels->hasTermForLanguage( $languageCode ) ) {
-			$this->assertRegExp(
+			$this->assertMatchesRegularExpression(
 				'/lang=("|\')' . htmlspecialchars( $languageCode ) . '\\1/',
 				$html,
 				'Expected language attribute not found'
 			);
-			$this->assertRegExp(
+			$this->assertMatchesRegularExpression(
 				'/' . htmlspecialchars( $testLangName ) . '/',
 				$html,
 				'Expected language name not found'
 			);
-			$this->assertRegExp(
+			$this->assertMatchesRegularExpression(
 				'/dir=("|\')' . htmlspecialchars( $testLangDir ) . '\\1/',
 				$html,
 				'Expected dir attribute not found'
 			);
-			$this->assertNotRegExp(
+			$this->assertDoesNotMatchRegularExpression(
 				'/' . MediaInfoEntityTermsView::CAPTION_EMPTY_CLASS . '/',
 				$html,
 				'Show label class found unexpectedly in output'
 			);
 		} else {
-			$this->assertRegExp(
+			$this->assertMatchesRegularExpression(
 				'/' . MediaInfoEntityTermsView::CAPTION_EMPTY_CLASS . '/',
 				$html,
 				'Show label class found unexpectedly in output'
@@ -236,23 +238,23 @@ class MediaInfoEntityTermsViewTest extends \PHPUnit\Framework\TestCase {
 		}
 
 		if ( $showLabel ) {
-			$this->assertNotRegExp(
+			$this->assertDoesNotMatchRegularExpression(
 				'/' . MediaInfoEntityTermsView::HIDEABLE_CAPTION_CLASS . '/',
 				$html,
 				'hideable label class found unexpectedly in output'
 			);
-			$this->assertNotRegExp(
+			$this->assertDoesNotMatchRegularExpression(
 				'/display:\s*none/i',
 				$html,
 				'Expected "display:none" found unexpectedly in output'
 			);
 		} else {
-			$this->assertRegExp(
+			$this->assertMatchesRegularExpression(
 				'/' . MediaInfoEntityTermsView::HIDEABLE_CAPTION_CLASS . '/',
 				$html,
 				'hideable label class not found in output'
 			);
-			$this->assertRegExp(
+			$this->assertMatchesRegularExpression(
 				'/display:\s*none/i',
 				$html,
 				'Expected "display:none" not found in output'

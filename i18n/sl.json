@@ -6,10 +6,10 @@
 			"Eleassar"
 		]
 	},
-	"action-mediainfo-term": "sprememba informacij datoteke (podnapisi, povzetki)",
-	"right-mediainfo-term": "Spremeni podatke o datoteki (podnapise, povzetke)",
-	"slot-name-mediainfo": "Strukturirane informacije o datoteki",
-	"wikibase-entity-mediainfo": "podatki o datoteki",
+	"action-mediainfo-term": "spremembo informacij o predstavnosti (napisi, povzetki)",
+	"right-mediainfo-term": "Spremeni informacije o predstavnosti (napise, povzetke)",
+	"slot-name-mediainfo": "Strukturirane informacije o predstavnosti",
+	"wikibase-entity-mediainfo": "informacije o predstavnosti",
 	"wikibase-mediainfo-summary-wbsetlabel-add": "Dodan podnapis [$2]",
 	"wikibase-mediainfo-summary-wbsetlabel-remove": "Odstranjen napis [$2]",
 	"wikibase-mediainfo-summary-wbsetlabel-set": "Spremenjeni podnapis [$2]",

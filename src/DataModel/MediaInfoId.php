@@ -83,7 +83,7 @@ class MediaInfoId extends SerializableEntityId implements Int32EntityId {
 	 *
 	 * @return array
 	 */
-	public function __serialize() {
+	public function __serialize(): array {
 		return [ 'serialization' => $this->serialization ];
 	}
 
@@ -101,7 +101,7 @@ class MediaInfoId extends SerializableEntityId implements Int32EntityId {
 	 *
 	 * @param array $value
 	 */
-	public function __unserialize( array $value ) {
+	public function __unserialize( array $value ): void {
 		if ( !array_key_exists( 'serialization', $value ) ) {
 			throw new InvalidArgumentException( 'Serialized $value must contain "serialization" key' );
 		}

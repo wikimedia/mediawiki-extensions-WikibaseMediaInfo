@@ -5,5 +5,24 @@
 		]
 	},
 	"wikibasemediainfo-filepage-statement-no-value-option": "Dəyər yoxdur",
-	"wikibasemediainfo-statements-item-add-qualifier": "Göstərici əlavə et"
+	"wikibasemediainfo-property-placeholder": "Parametr",
+	"wikibasemediainfo-statements-item-add-qualifier": "Göstərici əlavə et",
+	"wikibasemediainfo-precision-input-label": "Dəqiqlik",
+	"wikibasemediainfo-time-timestamp-invalid": "Vaxt dəyəri səhvdir.",
+	"wikibasemediainfo-time-timestamp-formatted": "Belə görünəcək: $1",
+	"wikibasemediainfo-time-precision-label": "Dəqiqlik",
+	"wikibasemediainfo-time-precision-year1g": "milyard il",
+	"wikibasemediainfo-time-precision-year100m": "yüz milyon il",
+	"wikibasemediainfo-time-precision-year10m": "on milyon il",
+	"wikibasemediainfo-time-precision-year1m": "milyon il",
+	"wikibasemediainfo-time-precision-year100k": "yüz min il",
+	"wikibasemediainfo-time-precision-year10k": "on min il",
+	"wikibasemediainfo-time-precision-year100": "əsr",
+	"wikibasemediainfo-time-precision-year10": "onillik",
+	"wikibasemediainfo-time-precision-year": "il",
+	"wikibasemediainfo-time-precision-month": "ay",
+	"wikibasemediainfo-time-precision-day": "gün",
+	"wikibasemediainfo-time-calendar-label": "Təqvim",
+	"wikibasemediainfo-time-calendar-gregorian": "Qriqori təqvimi",
+	"wikibasemediainfo-time-calendar-julian": "Yuli təqvimi"
 }

@@ -3,7 +3,8 @@
 		"authors": [
 			"Chadyka",
 			"No Sleep till Krupki",
-			"Чаховіч Уладзіслаў"
+			"Чаховіч Уладзіслаў",
+			"Plaga med"
 		]
 	},
 	"action-mediainfo-term": "змяненне значэнняў метаданых медыяфайлаў (загалоўкі, апісанні)",
@@ -15,7 +16,7 @@
 	"wikibase-mediainfo-summary-wbsetlabel-set": "Зменены загаловак [$2]",
 	"wikibasemediainfo-add-property": "Пошук для дадавання ўласцівасцяў (частка, тып мэдыя і г. д.)",
 	"wikibasemediainfo-add-statement": "Дадаць сцверджанне",
-	"wikibasemediainfo-custommatch-feature-no-profile": "Няма профілю, настроенага для custommatch:$1",
+	"wikibasemediainfo-custommatch-feature-no-profile": "Няма профілю, сканфігураванага для custommatch:$1",
 	"wikibasemediainfo-custommatch-feature-invalid-term": "Няслушны пошукавы тэрмін для функцыі пошуку custommatch",
 	"wikibasemediainfo-desc": "Пашырэнне Wikibase для кіравання структураванымі метададзенымі медыяфайлаў",
 	"wikibasemediainfo-diffview-label": "назва",

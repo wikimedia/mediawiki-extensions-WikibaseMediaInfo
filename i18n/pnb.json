@@ -1,10 +1,12 @@
 {
 	"@metadata": {
 		"authors": [
-			"Abbas dhothar"
+			"Abbas dhothar",
+			"Bgo eiu"
 		]
 	},
 	"wikibasemediainfo-filepage-cancel": "رد کرو",
 	"wikibasemediainfo-filepage-statement-no-data": "کوئی ڈیٹا دستیاب نئیں",
+	"wikibasemediainfo-property-placeholder": "وشیشتا",
 	"wikibasemediainfo-statements-learn-more": "ہور سکھو"
 }

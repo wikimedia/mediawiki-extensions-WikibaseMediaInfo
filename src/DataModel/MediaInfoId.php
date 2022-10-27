@@ -105,7 +105,7 @@ class MediaInfoId extends SerializableEntityId implements Int32EntityId {
 		if ( !array_key_exists( 'serialization', $value ) ) {
 			throw new InvalidArgumentException( 'Serialized $value must contain "serialization" key' );
 		}
-		$this->serialization = $value[ 'serialization' ];
+		$this->serialization = $value[ 'serialization' ] ?? '';
 		list( $this->repositoryName, $this->localPart ) = self::extractRepositoryNameAndLocalPart(
 			$this->serialization
 		);

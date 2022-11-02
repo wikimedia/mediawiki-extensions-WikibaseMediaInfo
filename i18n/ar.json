@@ -21,6 +21,7 @@
 	"wikibase-mediainfo-summary-wbsetlabel-set": "تم تعديل التسمية التوضيحية [$2]",
 	"wikibasemediainfo-add-property": "البحث لإضافة خصائص (جزء من، نوع الميديا، إلخ.)",
 	"wikibasemediainfo-add-statement": "إضافة بيان",
+	"wikibasemediainfo-custommatch-feature-no-profile": "لا يوجد ملف تعريف تم تكوينه للمطابقة المخصصة: $1",
 	"wikibasemediainfo-custommatch-feature-invalid-term": "عنصر بحث خاطئ لميزة البحث المطابق المخصص",
 	"wikibasemediainfo-desc": "امتداد Wikibase لإدارة البيانات الوصفية المهيكلة لملفات الوسائط",
 	"wikibasemediainfo-diffview-label": "الشرح",
@@ -123,5 +124,6 @@
 	"wikibasemediainfo-quantity-unit-label": "وحدة",
 	"wikibasemediainfo-quantity-unit-button-text": "حدد الوحدة",
 	"wikibasemediainfo-globecoordinate-input-button-text": "إضافة",
-	"wikibasemediainfo-globecoordinate-map-button-text": "اختر على الخريطة"
+	"wikibasemediainfo-globecoordinate-map-button-text": "اختر على الخريطة",
+	"wikibasemediainfo-rescore-profile-classic-noboostlinks-max-boost-template": "يعتمد الترتيب على أفضل قالب ولغة الصفحة والحداثة عند تفعيلها في هذا الويكي."
 }

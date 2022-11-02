@@ -116,7 +116,7 @@ class MediaInfoEntityStatementsViewTest extends \PHPUnit\Framework\TestCase {
 					) {
 						return $map[$value->getEntityId()->getSerialization()];
 					}
-					return null;
+					return '';
 				} )
 			);
 		$this->valueFormatterFactory = $this->createMock( OutputFormatValueFormatterFactory::class );

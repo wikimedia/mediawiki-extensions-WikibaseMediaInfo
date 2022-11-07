@@ -55,7 +55,7 @@ class EntityIdFixingRevisionLookupTest extends TestCase {
 		$entityRevision = new EntityRevision(
 			new MediaInfo( $oldEntityId ),
 			$revisionId,
-			20160114180301
+			'20160114180301'
 		);
 		$exception = new DivergingEntityIdException(
 			$entityRevision,

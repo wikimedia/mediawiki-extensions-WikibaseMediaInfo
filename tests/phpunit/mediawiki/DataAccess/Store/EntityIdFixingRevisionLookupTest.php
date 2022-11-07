@@ -46,8 +46,6 @@ class EntityIdFixingRevisionLookupTest extends TestCase {
 	}
 
 	public function testFixesEntityIdInsideEntityRevisionOnDivergingEntityIdException() {
-		$this->markTestSkipped( 'Skipped to allow changing interface of DivergingEntityIdException.' );
-
 		$newEntityId = new MediaInfoId( 'M1235' );
 		$oldEntityId = new MediaInfoId( 'M1234' );
 		$revisionId = 4711;
@@ -60,8 +58,9 @@ class EntityIdFixingRevisionLookupTest extends TestCase {
 			'20160114180301'
 		);
 		$exception = new DivergingEntityIdException(
+			$revisionId,
 			$entityRevision,
-			$warningMessage
+			$newEntityId->getSerialization()
 		);
 
 		$this->defaultLookup->expects( $this->once() )
@@ -70,7 +69,14 @@ class EntityIdFixingRevisionLookupTest extends TestCase {
 
 		$this->logger->expects( $this->once() )
 			->method( 'warning' )
-			->with( $warningMessage );
+			->with(
+				'Revision {revisionId} belongs to {actualEntityId} instead of expected {entityId}',
+				[
+					'revisionId' => $revisionId,
+					'actualEntityId' => $oldEntityId->getSerialization(),
+					'entityId' => $newEntityId->getSerialization()
+				],
+			);
 		$lookup = $this->getEntityIdFixingRevisionLookup();
 
 		$actualEntityRevision = $lookup->getEntityRevision( $newEntityId, $revisionId, $mode );

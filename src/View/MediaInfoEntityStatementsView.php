@@ -390,6 +390,7 @@ class MediaInfoEntityStatementsView {
 					);
 					$referenceSnaklist->appendContent( $referenceTitle );
 
+					// @phan-suppress-next-line PhanTypeMismatchArgumentSuperType
 					$referenceSnaklist->appendContent( $this->renderSnakList( $snakList ) );
 				}
 			}

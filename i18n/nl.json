@@ -13,7 +13,8 @@
 			"Sjoerddebruin",
 			"Spinster",
 			"Xbaked potatox",
-			"Krinkle"
+			"Krinkle",
+			"AHendriksen-collecties"
 		]
 	},
 	"action-mediainfo-term": "de media-info te wijzigen (bijschriften, samenvattingen)",
@@ -106,7 +107,7 @@
 	"wikibasemediainfo-time-precision-year10k": "10.000 jaren",
 	"wikibasemediainfo-time-precision-year1k": "millennium",
 	"wikibasemediainfo-time-precision-year100": "eeuw",
-	"wikibasemediainfo-time-precision-year10": "decenium",
+	"wikibasemediainfo-time-precision-year10": "decennium",
 	"wikibasemediainfo-time-precision-year": "jaar",
 	"wikibasemediainfo-time-precision-month": "maand",
 	"wikibasemediainfo-time-precision-day": "dag",

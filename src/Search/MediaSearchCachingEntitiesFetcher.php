@@ -58,7 +58,7 @@ class MediaSearchCachingEntitiesFetcher extends MediaSearchEntitiesFetcher {
 			function ( $query ) {
 				return $this->objectCache->makeKey(
 					$this->keyPrefix,
-					$query,
+					$this->objectCache->hash256( $query ),
 					$this->inputLanguage,
 					$this->outputLanguage
 				);

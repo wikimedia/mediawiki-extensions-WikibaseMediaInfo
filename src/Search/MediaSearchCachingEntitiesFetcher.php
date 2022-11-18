@@ -18,7 +18,7 @@ class MediaSearchCachingEntitiesFetcher extends MediaSearchEntitiesFetcher {
 	protected $outputLanguage;
 
 	/** @var string */
-	protected $keyPrefix;
+	protected $queryKeyspace;
 
 	/** @var int */
 	protected $ttl;
@@ -28,14 +28,14 @@ class MediaSearchCachingEntitiesFetcher extends MediaSearchEntitiesFetcher {
 		WANObjectCache $objectCache,
 		string $inputLanguage,
 		string $outputLanguage,
-		string $keyPrefix = 'wbmi-mediasearch-entities',
+		string $queryKeyspace = '*',
 		int $ttl = WANObjectCache::TTL_DAY
 	) {
 		$this->fetcher = $fetcher;
 		$this->objectCache = $objectCache;
 		$this->inputLanguage = $inputLanguage;
 		$this->outputLanguage = $outputLanguage;
-		$this->keyPrefix = $keyPrefix;
+		$this->queryKeyspace = $queryKeyspace;
 		$this->ttl = $ttl;
 	}
 
@@ -57,7 +57,8 @@ class MediaSearchCachingEntitiesFetcher extends MediaSearchEntitiesFetcher {
 			$searchQueries,
 			function ( $query ) {
 				return $this->objectCache->makeKey(
-					$this->keyPrefix,
+					'wbmi-mediasearch-entities',
+					$this->queryKeyspace,
 					$this->objectCache->hash256( $query ),
 					$this->inputLanguage,
 					$this->outputLanguage

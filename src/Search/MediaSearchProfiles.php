@@ -143,7 +143,7 @@ return array_map( static function ( array $settings ) use ( $config ) {
 					$mwServices->getMainWANObjectCache(),
 					$languageCode,
 					$config->get( 'LanguageCode' ),
-					"wbmi-mediasearch-entities-$entitySearchBaseUri-$titleMatchBaseUri"
+					$entitySearchBaseUri . '-' . $titleMatchBaseUri
 				)
 			);
 

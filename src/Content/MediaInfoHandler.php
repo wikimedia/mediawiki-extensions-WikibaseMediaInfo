@@ -201,9 +201,9 @@ class MediaInfoHandler extends EntityHandler {
 		// instead so as not to overburden the search index
 		if ( isset( $fieldsData[ LabelsField::NAME ] ) ) {
 			$fieldsData[DescriptionsField::NAME] = $fieldsData[LabelsField::NAME];
-			$fieldsData[LabelsField::NAME] = [];
+			$fieldsData[LabelsField::NAME] = null;
 		} else {
-			$fieldsData[DescriptionsField::NAME] = [];
+			$fieldsData[DescriptionsField::NAME] = null;
 		}
 
 		$fieldsData[LabelCountField::NAME] = 0;

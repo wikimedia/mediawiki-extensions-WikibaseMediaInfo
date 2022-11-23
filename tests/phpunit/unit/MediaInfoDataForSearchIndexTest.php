@@ -73,7 +73,7 @@ class MediaInfoDataForSearchIndexTest extends \MediaWikiUnitTestCase {
 		$expectedFields = [
 			'my_data' => 'should remain here',
 			'label_count' => 0,
-			'labels' => [],
+			'labels' => null,
 			'labels_all' => null,
 			'descriptions' => [
 				'ar' => [ 'شعبي جزائري (موسيقى)' ],

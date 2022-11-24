@@ -93,7 +93,7 @@ class MediaSearchEntitiesFetcherTest extends MediaWikiIntegrationTestCase {
 
 		foreach ( $terms as $term ) {
 			$this->assertArrayHasKey( $term, $results );
-			$this->assertEmpty( $results[$term] );
+			$this->assertSame( [], $results[$term] );
 		}
 	}
 }

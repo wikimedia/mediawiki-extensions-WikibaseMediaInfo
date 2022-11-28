@@ -91,6 +91,7 @@ class MediaSearchQueryBuilderTest extends MediaWikiIntegrationTestCase {
 		$searchContext = $this->createSearchContext( $settings['term'] );
 		$builder->build( $searchContext, $settings['term'] );
 
+		$this->setIniSetting( 'serialize_precision', -1 );
 		$this->assertFileContains(
 			$expectedFile,
 			json_encode( $searchContext->getQuery()->toArray(), JSON_PRETTY_PRINT ),

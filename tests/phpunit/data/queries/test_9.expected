@@ -31,7 +31,7 @@
                                                             "match": {
                                                                 "title": {
                                                                     "query": "some search term",
-                                                                    "boost": 0.45000000000000001
+                                                                    "boost": 0.45
                                                                 }
                                                             }
                                                         },
@@ -39,7 +39,7 @@
                                                             "match": {
                                                                 "title.plain": {
                                                                     "query": "some search term",
-                                                                    "boost": 0.14999999999999999
+                                                                    "boost": 0.15
                                                                 }
                                                             }
                                                         },
@@ -47,7 +47,7 @@
                                                             "match": {
                                                                 "category": {
                                                                     "query": "some search term",
-                                                                    "boost": 0.52500000000000002
+                                                                    "boost": 0.525
                                                                 }
                                                             }
                                                         },
@@ -55,7 +55,7 @@
                                                             "match": {
                                                                 "category.plain": {
                                                                     "query": "some search term",
-                                                                    "boost": 0.17499999999999999
+                                                                    "boost": 0.175
                                                                 }
                                                             }
                                                         },
@@ -95,7 +95,7 @@
                                                             "match": {
                                                                 "auxiliary_text": {
                                                                     "query": "some search term",
-                                                                    "boost": 0.22500000000000001
+                                                                    "boost": 0.225
                                                                 }
                                                             }
                                                         },
@@ -103,7 +103,7 @@
                                                             "match": {
                                                                 "auxiliary_text.plain": {
                                                                     "query": "some search term",
-                                                                    "boost": 0.074999999999999997
+                                                                    "boost": 0.075
                                                                 }
                                                             }
                                                         },
@@ -111,7 +111,7 @@
                                                             "match": {
                                                                 "text": {
                                                                     "query": "some search term",
-                                                                    "boost": 0.29999999999999999
+                                                                    "boost": 0.3
                                                                 }
                                                             }
                                                         },
@@ -119,7 +119,7 @@
                                                             "match": {
                                                                 "text.plain": {
                                                                     "query": "some search term",
-                                                                    "boost": 0.10000000000000001
+                                                                    "boost": 0.1
                                                                 }
                                                             }
                                                         },
@@ -127,7 +127,7 @@
                                                             "match": {
                                                                 "file_text": {
                                                                     "query": "some search term",
-                                                                    "boost": 0.14999999999999999
+                                                                    "boost": 0.15
                                                                 }
                                                             }
                                                         },
@@ -135,7 +135,7 @@
                                                             "match": {
                                                                 "file_text.plain": {
                                                                     "query": "some search term",
-                                                                    "boost": 0.050000000000000003
+                                                                    "boost": 0.05
                                                                 }
                                                             }
                                                         },
@@ -180,7 +180,7 @@
                                                                         "match": {
                                                                             "title": {
                                                                                 "query": "something similar",
-                                                                                "boost": 0.45000000000000001
+                                                                                "boost": 0.45
                                                                             }
                                                                         }
                                                                     },
@@ -188,7 +188,7 @@
                                                                         "match": {
                                                                             "title.plain": {
                                                                                 "query": "something similar",
-                                                                                "boost": 0.14999999999999999
+                                                                                "boost": 0.15
                                                                             }
                                                                         }
                                                                     },
@@ -196,7 +196,7 @@
                                                                         "match": {
                                                                             "category": {
                                                                                 "query": "something similar",
-                                                                                "boost": 0.52500000000000002
+                                                                                "boost": 0.525
                                                                             }
                                                                         }
                                                                     },
@@ -204,7 +204,7 @@
                                                                         "match": {
                                                                             "category.plain": {
                                                                                 "query": "something similar",
-                                                                                "boost": 0.17499999999999999
+                                                                                "boost": 0.175
                                                                             }
                                                                         }
                                                                     },
@@ -244,7 +244,7 @@
                                                                         "match": {
                                                                             "auxiliary_text": {
                                                                                 "query": "something similar",
-                                                                                "boost": 0.22500000000000001
+                                                                                "boost": 0.225
                                                                             }
                                                                         }
                                                                     },
@@ -252,7 +252,7 @@
                                                                         "match": {
                                                                             "auxiliary_text.plain": {
                                                                                 "query": "something similar",
-                                                                                "boost": 0.074999999999999997
+                                                                                "boost": 0.075
                                                                             }
                                                                         }
                                                                     },
@@ -260,7 +260,7 @@
                                                                         "match": {
                                                                             "text": {
                                                                                 "query": "something similar",
-                                                                                "boost": 0.29999999999999999
+                                                                                "boost": 0.3
                                                                             }
                                                                         }
                                                                     },
@@ -268,7 +268,7 @@
                                                                         "match": {
                                                                             "text.plain": {
                                                                                 "query": "something similar",
-                                                                                "boost": 0.10000000000000001
+                                                                                "boost": 0.1
                                                                             }
                                                                         }
                                                                     },
@@ -276,7 +276,7 @@
                                                                         "match": {
                                                                             "file_text": {
                                                                                 "query": "something similar",
-                                                                                "boost": 0.14999999999999999
+                                                                                "boost": 0.15
                                                                             }
                                                                         }
                                                                     },
@@ -284,7 +284,7 @@
                                                                         "match": {
                                                                             "file_text.plain": {
                                                                                 "query": "something similar",
-                                                                                "boost": 0.050000000000000003
+                                                                                "boost": 0.05
                                                                             }
                                                                         }
                                                                     },
@@ -318,7 +318,7 @@
                                                                         "match": {
                                                                             "title": {
                                                                                 "query": "a very different entity",
-                                                                                "boost": 0.22500000000000001
+                                                                                "boost": 0.225
                                                                             }
                                                                         }
                                                                     },
@@ -326,7 +326,7 @@
                                                                         "match": {
                                                                             "title.plain": {
                                                                                 "query": "a very different entity",
-                                                                                "boost": 0.074999999999999997
+                                                                                "boost": 0.075
                                                                             }
                                                                         }
                                                                     },
@@ -334,7 +334,7 @@
                                                                         "match": {
                                                                             "category": {
                                                                                 "query": "a very different entity",
-                                                                                "boost": 0.26250000000000001
+                                                                                "boost": 0.2625
                                                                             }
                                                                         }
                                                                     },
@@ -342,7 +342,7 @@
                                                                         "match": {
                                                                             "category.plain": {
                                                                                 "query": "a very different entity",
-                                                                                "boost": 0.087499999999999994
+                                                                                "boost": 0.0875
                                                                             }
                                                                         }
                                                                     },
@@ -390,7 +390,7 @@
                                                                         "match": {
                                                                             "auxiliary_text.plain": {
                                                                                 "query": "a very different entity",
-                                                                                "boost": 0.037499999999999999
+                                                                                "boost": 0.0375
                                                                             }
                                                                         }
                                                                     },
@@ -398,7 +398,7 @@
                                                                         "match": {
                                                                             "text": {
                                                                                 "query": "a very different entity",
-                                                                                "boost": 0.14999999999999999
+                                                                                "boost": 0.15
                                                                             }
                                                                         }
                                                                     },
@@ -406,7 +406,7 @@
                                                                         "match": {
                                                                             "text.plain": {
                                                                                 "query": "a very different entity",
-                                                                                "boost": 0.050000000000000003
+                                                                                "boost": 0.05
                                                                             }
                                                                         }
                                                                     },
@@ -414,7 +414,7 @@
                                                                         "match": {
                                                                             "file_text": {
                                                                                 "query": "a very different entity",
-                                                                                "boost": 0.074999999999999997
+                                                                                "boost": 0.075
                                                                             }
                                                                         }
                                                                     },
@@ -422,7 +422,7 @@
                                                                         "match": {
                                                                             "file_text.plain": {
                                                                                 "query": "a very different entity",
-                                                                                "boost": 0.025000000000000001
+                                                                                "boost": 0.025
                                                                             }
                                                                         }
                                                                     },

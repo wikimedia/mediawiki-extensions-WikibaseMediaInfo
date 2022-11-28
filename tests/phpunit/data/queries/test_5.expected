@@ -31,7 +31,7 @@
                                                             "match": {
                                                                 "title": {
                                                                     "query": "on the 4th of July 1806",
-                                                                    "boost": 0.45000000000000001
+                                                                    "boost": 0.45
                                                                 }
                                                             }
                                                         },
@@ -39,7 +39,7 @@
                                                             "match": {
                                                                 "title.plain": {
                                                                     "query": "on the 4th of July 1806",
-                                                                    "boost": 0.14999999999999999
+                                                                    "boost": 0.15
                                                                 }
                                                             }
                                                         },
@@ -47,7 +47,7 @@
                                                             "match": {
                                                                 "category": {
                                                                     "query": "on the 4th of July 1806",
-                                                                    "boost": 0.52500000000000002
+                                                                    "boost": 0.525
                                                                 }
                                                             }
                                                         },
@@ -55,7 +55,7 @@
                                                             "match": {
                                                                 "category.plain": {
                                                                     "query": "on the 4th of July 1806",
-                                                                    "boost": 0.17499999999999999
+                                                                    "boost": 0.175
                                                                 }
                                                             }
                                                         },
@@ -95,7 +95,7 @@
                                                             "match": {
                                                                 "auxiliary_text": {
                                                                     "query": "on the 4th of July 1806",
-                                                                    "boost": 0.22500000000000001
+                                                                    "boost": 0.225
                                                                 }
                                                             }
                                                         },
@@ -103,7 +103,7 @@
                                                             "match": {
                                                                 "auxiliary_text.plain": {
                                                                     "query": "on the 4th of July 1806",
-                                                                    "boost": 0.074999999999999997
+                                                                    "boost": 0.075
                                                                 }
                                                             }
                                                         },
@@ -111,7 +111,7 @@
                                                             "match": {
                                                                 "text": {
                                                                     "query": "on the 4th of July 1806",
-                                                                    "boost": 0.29999999999999999
+                                                                    "boost": 0.3
                                                                 }
                                                             }
                                                         },
@@ -119,7 +119,7 @@
                                                             "match": {
                                                                 "text.plain": {
                                                                     "query": "on the 4th of July 1806",
-                                                                    "boost": 0.10000000000000001
+                                                                    "boost": 0.1
                                                                 }
                                                             }
                                                         },
@@ -127,7 +127,7 @@
                                                             "match": {
                                                                 "file_text": {
                                                                     "query": "on the 4th of July 1806",
-                                                                    "boost": 0.14999999999999999
+                                                                    "boost": 0.15
                                                                 }
                                                             }
                                                         },
@@ -135,7 +135,7 @@
                                                             "match": {
                                                                 "file_text.plain": {
                                                                     "query": "on the 4th of July 1806",
-                                                                    "boost": 0.050000000000000003
+                                                                    "boost": 0.05
                                                                 }
                                                             }
                                                         },

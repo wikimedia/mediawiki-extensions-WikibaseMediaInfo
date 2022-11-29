@@ -3,7 +3,9 @@
 		"authors": [
 			"Чаховіч Уладзіслаў",
 			"Chadyka",
-			"No Sleep till Krupki"
+			"No Sleep till Krupki",
+			"Maksim L.",
+			"Plaga med"
 		]
 	},
 	"action-mediainfo-term": "змяненне значэнняў метаданых медыяфайлаў (загалоўкі, апісанні)",
@@ -44,7 +46,7 @@
 	"wikibasemediainfo-filepage-statement-no-data": "Няма даступных дадзеных",
 	"wikibasemediainfo-filepage-statement-no-results": "Нічога не знойдзена",
 	"wikibasemediainfo-filepage-statement-some-value-option": "Нейкае значэнне",
-	"wikibasemediainfo-filepage-statement-some-value": "Нейкае значэнне без элементу ў сховішчы {{WBREPONAME}}",
+	"wikibasemediainfo-filepage-statement-some-value": "Нейкае значэнне без элементу ў {{grammar:месны|{{WBREPONAME}}}}",
 	"wikibasemediainfo-filepage-statement-error": "Пры атрыманні значэння для гэтай уласцівасці адбылася памылка",
 	"wikibasemediainfo-filepage-license-title": "Даданне загалоўкаў і іншых структураваных даных",
 	"wikibasemediainfo-filepage-license-content": "Націскаючы «Апублікаваць змены», вы згаджаецеся з [[wmf:Terms_of_Use|умовамі выкарыстання]], а таксама згаджаецеся безадзыўна публікаваць свой унёсак на ўмовах [https://creativecommons.org/publicdomain/zero/1.0/ ліцэнзіі Creative Commons CC0].",
@@ -53,7 +55,7 @@
 	"wikibasemediainfo-filepage-license-agree": "Я згодны",
 	"wikibasemediainfo-statements-depicts-title": "Элементы, якія адпавядаюць аб’ектам, што можна ўбачыць на гэтай выяве",
 	"wikibasemediainfo-statements-item-add-qualifier": "Дадаць кваліфікатар",
-	"wikibasemediainfo-statements-item-input-label": "з сховішча {{WBREPONAME}}",
+	"wikibasemediainfo-statements-item-input-label": "з {{grammar:genitive|{{WBREPONAME}}}}",
 	"wikibasemediainfo-statements-item-input-placeholder": "Пошук для дадавання элементаў",
 	"wikibasemediainfo-statements-item-is-prominent": "Вылучаецца",
 	"wikibasemediainfo-statements-item-mark-as-prominent": "Пазначыць у якасці вызначальнага",

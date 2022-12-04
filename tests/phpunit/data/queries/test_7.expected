@@ -23,7 +23,7 @@
                                         "match": {
                                             "title.plain": {
                                                 "query": "phrase search",
-                                                "boost": 0.14999999999999999
+                                                "boost": 0.15
                                             }
                                         }
                                     },
@@ -31,7 +31,7 @@
                                         "match": {
                                             "category.plain": {
                                                 "query": "phrase search",
-                                                "boost": 0.17499999999999999
+                                                "boost": 0.175
                                             }
                                         }
                                     },
@@ -55,7 +55,7 @@
                                         "match": {
                                             "auxiliary_text.plain": {
                                                 "query": "phrase search",
-                                                "boost": 0.074999999999999997
+                                                "boost": 0.075
                                             }
                                         }
                                     },
@@ -63,7 +63,7 @@
                                         "match": {
                                             "text.plain": {
                                                 "query": "phrase search",
-                                                "boost": 0.10000000000000001
+                                                "boost": 0.1
                                             }
                                         }
                                     },
@@ -71,7 +71,7 @@
                                         "match": {
                                             "file_text.plain": {
                                                 "query": "phrase search",
-                                                "boost": 0.050000000000000003
+                                                "boost": 0.05
                                             }
                                         }
                                     },

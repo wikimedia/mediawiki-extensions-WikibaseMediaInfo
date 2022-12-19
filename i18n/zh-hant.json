@@ -7,7 +7,8 @@
 			"予弦",
 			"神樂坂秀吉",
 			"蘭斯特",
-			"Wmr"
+			"Wmr",
+			"捍粵者"
 		]
 	},
 	"action-mediainfo-term": "更改多媒體資訊項目（說明、摘要）",
@@ -42,8 +43,8 @@
 	"wikibasemediainfo-filepage-publish": "發佈更改",
 	"wikibasemediainfo-filepage-caption-empty": "添加單行說明來描述出檔案所代表的內容",
 	"wikibasemediainfo-filepage-caption-too-short": "需要 $1 個以上{{PLURAL:$1|字元}}",
-	"wikibasemediainfo-filepage-caption-too-long": "超過 $1 個{{PLURAL:$1|字元|字元}}限制",
-	"wikibasemediainfo-filepage-caption-approaching-limit": "還剩$1個{{PLURAL:$1|字元}}",
+	"wikibasemediainfo-filepage-caption-too-long": "比限制多$1{{PLURAL:$1|字元}}",
+	"wikibasemediainfo-filepage-caption-approaching-limit": "還剩$1{{PLURAL:$1|字元}}",
 	"wikibasemediainfo-filepage-statement-value-type-dropdown-title": "請挑選數值類型。",
 	"wikibasemediainfo-filepage-statement-custom-value-option": "自訂值",
 	"wikibasemediainfo-filepage-statement-no-value-option": "沒有值",

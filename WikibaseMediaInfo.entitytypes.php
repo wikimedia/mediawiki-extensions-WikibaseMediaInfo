@@ -59,7 +59,6 @@ use Wikibase\MediaInfo\View\MediaInfoEntityTermsView;
 use Wikibase\MediaInfo\View\MediaInfoView;
 use Wikibase\Repo\Diff\ClaimDiffer;
 use Wikibase\Repo\Diff\ClaimDifferenceVisualizer;
-use Wikibase\Repo\MediaWikiLanguageDirectionalityLookup;
 use Wikibase\Repo\MediaWikiLocalizedTextProvider;
 use Wikibase\Repo\Rdf\DedupeBag;
 use Wikibase\Repo\Rdf\EntityMentionListener;
@@ -104,7 +103,7 @@ return [
 			$languageCode = $language->getCode();
 
 			// Use a MediaInfo-specific EntityTermsView class instead of the default one
-			$langDirLookup = new MediaWikiLanguageDirectionalityLookup();
+			$langDirLookup = WikibaseRepo::getLanguageDirectionalityLookup();
 			$textProvider = new MediaWikiLocalizedTextProvider( $language );
 			$mediaInfoEntityTermsView = new MediaInfoEntityTermsView(
 				WikibaseRepo::getLanguageNameLookupFactory()->getForLanguage( $language ),

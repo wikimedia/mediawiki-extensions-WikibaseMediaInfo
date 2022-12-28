@@ -2,7 +2,7 @@
 
 namespace Wikibase\MediaInfo\Tests\MediaWiki;
 
-use Language;
+use MediaWiki\MediaWikiServices;
 use Wikibase\DataModel\Deserializers\DeserializerFactory;
 use Wikibase\DataModel\Deserializers\EntityIdDeserializer;
 use Wikibase\DataModel\Deserializers\StatementListDeserializer;
@@ -118,7 +118,7 @@ class EntityTypesTest extends \PHPUnit\Framework\TestCase {
 			->willReturn( true );
 		$mediaInfoView = call_user_func(
 			$callback,
-			Language::factory( 'en' ),
+			MediaWikiServices::getInstance()->getLanguageFactory()->getLanguage( 'en' ),
 			new TermLanguageFallbackChain( [ LanguageWithConversion::factory( 'en' ) ], $stubContentLanguages ),
 			new MediaInfo()
 		);

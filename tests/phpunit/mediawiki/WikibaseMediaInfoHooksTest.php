@@ -4,7 +4,6 @@ namespace Wikibase\MediaInfo\Tests\MediaWiki;
 
 use CirrusSearch\Profile\SearchProfileService;
 use Hooks;
-use Language;
 use MediaWiki\Page\PageIdentity;
 use MediaWiki\Permissions\RestrictionStore;
 use MediaWiki\Revision\RevisionRecord;
@@ -104,7 +103,7 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiIntegrationTestCase {
 		$out->method( 'getTitle' )
 			->willReturn( $title );
 		$out->method( 'getLanguage' )
-			->willReturn( Language::factory( 'en' ) );
+			->willReturn( $this->getServiceContainer()->getLanguageFactory()->getLanguage( 'en' ) );
 		$out->method( 'getUser' )
 			->willReturn( new User() );
 		$out->method( 'setPreventClickjacking' );

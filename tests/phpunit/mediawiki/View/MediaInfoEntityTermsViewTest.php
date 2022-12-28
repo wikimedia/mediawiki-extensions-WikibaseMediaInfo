@@ -2,7 +2,7 @@
 
 namespace Wikibase\MediaInfo\Tests\MediaWiki\View;
 
-use Language;
+use MediaWiki\MediaWikiServices;
 use MediaWikiTestCaseTrait;
 use Wikibase\DataModel\Term\Term;
 use Wikibase\DataModel\Term\TermList;
@@ -41,9 +41,10 @@ class MediaInfoEntityTermsViewTest extends \PHPUnit\Framework\TestCase {
 			->method( 'getName' )
 			->willReturn( 'TEST_LANGUAGE_NAME' );
 		$this->langDirLookup = $this->createMock( LanguageDirectionalityLookup::class );
+		$languageFactory = MediaWikiServices::getInstance()->getLanguageFactory();
 		$language = !empty( $fallbackLangCodes[0] )
-			? Language::factory( $fallbackLangCodes[0] )
-			: Language::factory( 'en' );
+			? $languageFactory->getLanguage( $fallbackLangCodes[0] )
+			: $languageFactory->getLanguage( 'en' );
 		$this->textProvider = new MediaWikiLocalizedTextProvider( $language );
 		$languages = [];
 		foreach ( $fallbackLangCodes as $langCode ) {

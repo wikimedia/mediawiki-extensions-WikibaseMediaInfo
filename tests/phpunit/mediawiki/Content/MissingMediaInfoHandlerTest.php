@@ -3,7 +3,7 @@
 namespace Wikibase\MediaInfo\Tests\MediaWiki\Content;
 
 use FauxRequest;
-use Language;
+use MediaWiki\MediaWikiServices;
 use ParserOutput;
 use RequestContext;
 use Title;
@@ -61,7 +61,7 @@ class MissingMediaInfoHandlerTest extends \PHPUnit\Framework\TestCase {
 		$context = new RequestContext();
 		$context->setRequest( new FauxRequest() );
 		$context->setTitle( $title );
-		$context->setLanguage( Language::factory( 'qqx' ) );
+		$context->setLanguage( MediaWikiServices::getInstance()->getLanguageFactory()->getLanguage( 'qqx' ) );
 
 		return $context;
 	}

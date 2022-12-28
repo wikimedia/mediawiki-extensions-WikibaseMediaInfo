@@ -60,7 +60,7 @@
 	"wikibasemediainfo-statements-item-references": "Sklici",
 	"wikibasemediainfo-statements-item-add-reference": "Dodaj sklic",
 	"wikibasemediainfo-statements-item-add-reference-snak": "Dodaj",
-	"wikibasemediainfo-statements-item-input-label": "iz {{GRAMMAR:genitive|{{WBREPONAME}}}}",
+	"wikibasemediainfo-statements-item-input-label": "iz projekta {{WBREPONAME}}",
 	"wikibasemediainfo-statements-item-input-placeholder": "Poiščite predmete, da jih dodate",
 	"wikibasemediainfo-statements-item-is-prominent": "Pomembno",
 	"wikibasemediainfo-statements-item-mark-as-prominent": "Označi kot pomembno",

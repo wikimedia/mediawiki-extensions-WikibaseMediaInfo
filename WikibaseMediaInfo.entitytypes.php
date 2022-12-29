@@ -25,7 +25,6 @@ use Wikibase\DataModel\Services\Lookup\InProcessCachingDataTypeLookup;
 use Wikibase\Lib\DataTypeDefinitions;
 use Wikibase\Lib\EntityTypeDefinitions;
 use Wikibase\Lib\EntityTypeDefinitions as Def;
-use Wikibase\Lib\LanguageNameLookup;
 use Wikibase\Lib\SettingsArray;
 use Wikibase\Lib\Store\CachingPropertyOrderProvider;
 use Wikibase\Lib\Store\EntityContentDataCodec;
@@ -108,7 +107,7 @@ return [
 			$langDirLookup = new MediaWikiLanguageDirectionalityLookup();
 			$textProvider = new MediaWikiLocalizedTextProvider( $language );
 			$mediaInfoEntityTermsView = new MediaInfoEntityTermsView(
-				new LanguageNameLookup( $languageCode ),
+				WikibaseRepo::getLanguageNameLookupFactory()->getForLanguage( $language ),
 				$langDirLookup,
 				$textProvider,
 				$termFallbackChain

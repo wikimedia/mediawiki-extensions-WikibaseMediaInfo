@@ -33,7 +33,7 @@
 		"nyc": "15.0.0",
 		"oojs": "3.0.0",
 		"oojs-ui": "0.36.3",
-		"qunit": "2.9.3",
+		"qunit": "2.19.3",
 		"sinon": "7.2.7",
 		"stylelint-config-wikimedia": "0.10.1",
 		"tap-mocha-reporter": "5.0.1",

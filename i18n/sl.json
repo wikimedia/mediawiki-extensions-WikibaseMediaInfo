@@ -52,7 +52,7 @@
 	"wikibasemediainfo-filepage-license-agree": "Strinjam se",
 	"wikibasemediainfo-statements-depicts-title": "Predmeti, prikazani na tej sliki",
 	"wikibasemediainfo-statements-item-add-qualifier": "Dodaj kvalifikator",
-	"wikibasemediainfo-statements-item-input-label": "iz {{GRAMMAR:genitive|{{WBREPONAME}}}}",
+	"wikibasemediainfo-statements-item-input-label": "iz projekta {{WBREPONAME}}",
 	"wikibasemediainfo-statements-item-input-placeholder": "Poiščite predmete, da jih dodate",
 	"wikibasemediainfo-statements-item-is-prominent": "Pomembno",
 	"wikibasemediainfo-statements-item-mark-as-prominent": "Označi kot pomembno",

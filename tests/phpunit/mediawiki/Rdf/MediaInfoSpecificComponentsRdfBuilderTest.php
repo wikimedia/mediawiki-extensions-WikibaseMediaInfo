@@ -4,6 +4,7 @@ namespace Wikibase\MediaInfo\Tests\MediaWiki\Rdf;
 
 use File;
 use InvalidArgumentException;
+use MediaWiki\Revision\SlotRecord;
 use PHPUnit\Framework\TestCase;
 use RepoGroup;
 use Wikibase\DataAccess\DatabaseEntitySource;
@@ -66,8 +67,8 @@ class MediaInfoSpecificComponentsRdfBuilderTest extends TestCase {
 						'test',
 						'testdb',
 						[
-							'item' => [ 'namespaceId' => 100, 'slot' => 'main' ],
-							'property' => [ 'namespaceId' => 200, 'slot' => 'main' ],
+							'item' => [ 'namespaceId' => 100, 'slot' => SlotRecord::MAIN ],
+							'property' => [ 'namespaceId' => 200, 'slot' => SlotRecord::MAIN ],
 							'mediainfo' => [ 'namespaceId' => 700, 'slot' => 'mediainfo' ],
 						],
 						'http://acme.test/',

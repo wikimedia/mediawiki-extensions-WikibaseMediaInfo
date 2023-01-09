@@ -1,0 +1,21 @@
+{
+	"@metadata": {
+		"authors": [
+			"Afalau"
+		]
+	},
+	"wikibasemediainfo-diffview-label": "pennawd",
+	"wikibasemediainfo-filepage-cancel-confirm-accept": "Canslo",
+	"wikibasemediainfo-filepage-edit": "Golygu",
+	"wikibasemediainfo-filepage-publish": "Cyhoeddi newidiadau",
+	"wikibasemediainfo-statements-item-remove": "Dileu",
+	"wikibasemediainfo-statements-learn-more": "Dysgu mwy",
+	"wikibasemediainfo-time-precision-year100": "canrif",
+	"wikibasemediainfo-time-precision-year10": "degawd",
+	"wikibasemediainfo-time-precision-year": "blwyddyn",
+	"wikibasemediainfo-time-precision-month": "mis",
+	"wikibasemediainfo-time-precision-day": "dyddiad",
+	"wikibasemediainfo-time-precision-hour": "awr",
+	"wikibasemediainfo-time-precision-minute": "munud",
+	"wikibasemediainfo-quantity-input-button-text": "Ychwanegu"
+}

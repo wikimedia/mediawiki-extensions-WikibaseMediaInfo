@@ -74,7 +74,7 @@
 	"wikibasemediainfo-statements-unsupported-property-content": "Уласцівасці акрамя $1 яшчэ не цалкам падтрымліваюцца, але будуць падтрымлівацца у будучыні. На дадзены момант функцыі непадтрымоўваных уласцівасцяў могуць працаваць не так, як вы чакаеце.",
 	"wikibasemediainfo-statements-unsupported-property-type-content": "Не ўсе тыпы ўласцівасцяў цалкам падтрымліваюцца, але будуць падтрымлівацца у будучыні. На дадзены момант функцыі непадтрымоўваных уласцівасцяў могуць працаваць не так, як вы чакаеце.",
 	"wikibasemediainfo-statements-link-notice-text": "Меткі структураваных дадзеных спасылаюцца на адпаведныя ім старонкі {{GRAMMAR:родны|{{WBREPONAME}}}} і адкрыюцца ў новым вакне.",
-	"wikibasemediainfo-statements-link-notice-dismiss": "Зачыніць",
+	"wikibasemediainfo-statements-link-notice-dismiss": "Закрыць",
 	"wikibasemediainfo-remove-all-statements-confirm": "Гэтае дзеянне выдаліць з уласцівасці ўсе існыя значэньні. Уласцівасці без значэнняў будуць выдаленыя пры захаванні. Вы ўпэўненыя?",
 	"wikibasemediainfo-remove-all-statements-confirm-title": "Выдаліць усе?",
 	"wikibasemediainfo-remove-all-statements-confirm-accept": "Выдаліць",

@@ -4,6 +4,7 @@ namespace Wikibase\MediaInfo\Tests\MediaWiki\View;
 
 use DataValues\DataValue;
 use DataValues\StringValue;
+use MediaWiki\MediaWikiServices;
 use MediaWikiTestCaseTrait;
 use ValueFormatters\FormatterOptions;
 use Wikibase\DataModel\Entity\EntityIdValue;
@@ -21,7 +22,6 @@ use Wikibase\Lib\Formatters\DispatchingValueFormatter;
 use Wikibase\Lib\Formatters\OutputFormatSnakFormatterFactory;
 use Wikibase\Lib\Formatters\OutputFormatValueFormatterFactory;
 use Wikibase\Lib\Formatters\SnakFormatter;
-use Wikibase\Lib\LanguageWithConversion;
 use Wikibase\Lib\Store\PropertyOrderProvider;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\MediaInfo\View\MediaInfoEntityStatementsView;
@@ -56,12 +56,9 @@ class MediaInfoEntityStatementsViewTest extends \PHPUnit\Framework\TestCase {
 	 */
 	private $serializerFactory;
 
-	private function createDependencies( array $langCodes = [ 'en' ] ) {
-		$languages = [];
-		foreach ( $langCodes as $langCode ) {
-			$languages[] = LanguageWithConversion::factory( $langCode );
-		}
-		$this->textProvider = new MediaWikiLocalizedTextProvider( $languages[0]->getLanguage() );
+	private function createDependencies() {
+		$this->textProvider = new MediaWikiLocalizedTextProvider(
+			MediaWikiServices::getInstance()->getLanguageFactory()->getLanguage( 'en' ) );
 
 		$this->serializerFactory = WikibaseRepo::getCompactBaseDataModelSerializerFactory();
 

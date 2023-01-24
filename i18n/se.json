@@ -1,12 +1,14 @@
 {
 	"@metadata": {
 		"authors": [
-			"Yupik"
+			"Yupik",
+			"Kimberli Mäkäräinen (WMNO)"
 		]
 	},
 	"wikibasemediainfo-statements-item-reference": "Gáldu",
 	"wikibasemediainfo-statements-item-references": "Gáldut",
 	"wikibasemediainfo-statements-item-remove": "Sihko",
 	"wikibasemediainfo-statements-learn-more": "Lassedieđut",
-	"wikibasemediainfo-remove-all-statements-confirm-accept": "Sihko"
+	"wikibasemediainfo-remove-all-statements-confirm-accept": "Sihko",
+	"wikibasemediainfo-monolingualtext-language-label": "Vállje giela"
 }

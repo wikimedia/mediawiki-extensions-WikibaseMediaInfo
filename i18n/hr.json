@@ -72,7 +72,7 @@
 	"wikibasemediainfo-remove-all-statements-confirm-title": "Ukloni sve?",
 	"wikibasemediainfo-remove-all-statements-confirm-accept": "Ukloni",
 	"wikibasemediainfo-coordinate-input-label": "Koordinate",
-	"wikibasemediainfo-coordinate-input-placeholder": "Zamljopisna širina, dužina",
+	"wikibasemediainfo-coordinate-input-placeholder": "Zemljopisna širina, dužina",
 	"wikibasemediainfo-precision-input-label": "Preciznost",
 	"wikibasemediainfo-select-precision-label": "Odaberi preciznost",
 	"wikibasemediainfo-string-input-button-text": "Dodaj",

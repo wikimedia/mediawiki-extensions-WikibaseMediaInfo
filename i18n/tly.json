@@ -1,10 +1,12 @@
 {
 	"@metadata": {
 		"authors": [
-			"Patriot Kur"
+			"Patriot Kur",
+			"Patriot Kor"
 		]
 	},
 	"wikibasemediainfo-filepage-cancel": "Ləğv karde",
+	"wikibasemediainfo-statements-item-references": "İstinadon",
 	"wikibasemediainfo-time-precision-year1k": "həzosorə",
 	"wikibasemediainfo-time-precision-year": "sor",
 	"wikibasemediainfo-time-precision-day": "rüj",

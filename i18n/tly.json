@@ -7,6 +7,8 @@
 	},
 	"wikibasemediainfo-filepage-cancel": "Ləğv karde",
 	"wikibasemediainfo-statements-item-references": "İstinadon",
+	"wikibasemediainfo-monolingualtext-input-button-text": "Əlovə",
+	"wikibasemediainfo-time-input-button-text": "Əlovə",
 	"wikibasemediainfo-time-precision-year1k": "həzosorə",
 	"wikibasemediainfo-time-precision-year": "sor",
 	"wikibasemediainfo-time-precision-day": "rüj",
@@ -14,5 +16,7 @@
 	"wikibasemediainfo-time-precision-minute": "dəğiğə",
 	"wikibasemediainfo-time-precision-second": "saniyə",
 	"wikibasemediainfo-time-calendar-label": "Təğvim",
-	"wikibasemediainfo-time-calendar-gregorian": "Qriqoriyan"
+	"wikibasemediainfo-time-calendar-gregorian": "Qriqoriyan",
+	"wikibasemediainfo-quantity-input-button-text": "Əlovə",
+	"wikibasemediainfo-globecoordinate-input-button-text": "Əlovə"
 }

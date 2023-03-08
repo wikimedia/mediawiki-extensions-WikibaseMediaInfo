@@ -82,7 +82,7 @@ return array_map( static function ( array $settings ) use ( $config ) {
 		'useSynonyms' => false,
 		'logisticRegressionIntercept' => 0,
 		'entitySearchBaseUri' => $config->get( 'MediaInfoExternalEntitySearchBaseUri' ),
-		'titleMatchBaseUri' => '',
+		'titleMatchBaseUri' => $config->get( 'MediaInfoMediaSearchTitleMatchBaseUri' ),
 		'synonymsMaxAmount' => 5,
 		'synonymsMinScoreThreshold' => 0.5,
 		'synonymsMinByteLength' => 2,

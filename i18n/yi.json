@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"Pacha Tchernof",
 			"פוילישער"
 		]
 	},
@@ -18,5 +19,7 @@
 	"wikibasemediainfo-filepage-add-caption": "צולייגן א בילדקעפל",
 	"wikibasemediainfo-filepage-edit-captions": "רעדאקטירן בילדקעפלעך",
 	"wikibasemediainfo-filepage-cancel": "אַנולירן",
-	"wikibasemediainfo-filepage-publish": "פובליקירן ענדערונגען"
+	"wikibasemediainfo-filepage-publish": "פובליקירן ענדערונגען",
+	"wikibasemediainfo-time-precision-year100": "יאָרהונדערט",
+	"wikibasemediainfo-time-precision-year": "יאָר"
 }

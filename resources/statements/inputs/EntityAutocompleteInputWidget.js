@@ -275,7 +275,7 @@ EntityAutocompleteInputWidget.prototype.filterData = function ( data ) {
 			filterType = 'includeOnMatch';
 		if ( field.indexOf( '!' ) === 0 ) {
 			filterType = 'excludeOnMatch';
-			field = filter.field.substr( 1 );
+			field = filter.field.slice( 1 );
 		}
 		values = filter.value.split( '|' );
 		data = data.filter( function ( datum ) {

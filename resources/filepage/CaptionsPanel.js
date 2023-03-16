@@ -825,7 +825,7 @@ CaptionsPanel.prototype.setReady = function () {
 CaptionsPanel.prototype.createGuid = function () {
 	return 'xxxxxxxx-xxxx-4xxx-8xxx-xxxxxxxxxxxx'.replace(
 		/[x]/g, function () {
-			return ( Math.random() * 16 ).toString( 16 ).substring( 0, 1 );
+			return ( Math.random() * 16 ).toString( 16 ).slice( 0, 1 );
 		}
 	);
 };

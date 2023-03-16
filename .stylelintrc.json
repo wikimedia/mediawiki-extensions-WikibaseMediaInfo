@@ -2,6 +2,7 @@
 	"extends": "stylelint-config-wikimedia",
 	"rules": {
 		"selector-class-pattern": "^(wbmi|wb|wikibase)-",
-		"unit-disallowed-list": null
+		"unit-disallowed-list": null,
+		"selector-pseudo-element-colon-notation": null
 	}
 }

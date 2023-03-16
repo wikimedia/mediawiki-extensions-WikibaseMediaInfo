@@ -48,7 +48,7 @@ mw.template.registerCompiler( 'mustache+dom', {
 							// on<event> handlers can't be parsed into the HTML, so we'll
 							// assign them a random name, which will point to a place where
 							// the actual handler will be
-							random = 'fn_' + Math.random().toString( 36 ).substring( 2 );
+							random = 'fn_' + Math.random().toString( 36 ).slice( 2 );
 							handlers[ random ] = d[ key ];
 							result[ key ] = 'return $( "#' + random + '" ).data( "handler" )( event )';
 						} else if (

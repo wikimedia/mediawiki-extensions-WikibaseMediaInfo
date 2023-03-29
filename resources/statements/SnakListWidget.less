@@ -38,7 +38,7 @@
 	margin-left: @wbmi-spacing-base * 2;
 	position: relative;
 
-	&:before {
+	&::before {
 		.wbmi-vertical-line();
 	}
 
@@ -53,18 +53,18 @@
 		display: none;
 	}
 
-	.wbmi-snak:before,
+	.wbmi-snak::before,
 	/* @todo BC: below selector no longer exist; can be removed 30 days after patch that introduced this comment */
-	.wbmi-qualifier:before {
+	.wbmi-qualifier::before {
 		.wbmi-horizontal-line();
 		left: -1.5rem;
 	}
 
 	// override position of horizontal line for last qualifier, to make
 	// sure it lines up perfectly with the height of the vertical line
-	.wbmi-snak:last-child:before,
+	.wbmi-snak:last-child::before,
 	/* @todo BC: below selector no longer exist; can be removed 30 days after patch that introduced this comment */
-	.wbmi-qualifier:last-child:before {
+	.wbmi-qualifier:last-child::before {
 		bottom: @wbmi-spacing-base;
 	}
 }

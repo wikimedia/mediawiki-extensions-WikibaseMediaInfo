@@ -7,7 +7,8 @@
 			"Zoranzoki21",
 			"Вукан Ц",
 			"Милан Јелисавчић",
-			"Milicevic01"
+			"Milicevic01",
+			"Zenfiric"
 		]
 	},
 	"right-mediainfo-term": "Промена услова за информације медија (натписи, резимеи)",
@@ -34,7 +35,7 @@
 	"wikibasemediainfo-filepage-cancel-confirm-accept": "Одбаци",
 	"wikibasemediainfo-filepage-edit": "Уреди",
 	"wikibasemediainfo-filepage-publish": "Објави промене",
-	"wikibasemediainfo-filepage-caption-empty": "Додајте објашњење у једном реду о томе шта ова датотека представља",
+	"wikibasemediainfo-filepage-caption-empty": "Додајте укратко објашњење шта ова датотека представља/приказује",
 	"wikibasemediainfo-filepage-caption-too-long": "$1 {{PLURAL:$1|знак|знака|знакова}} преко ограничења",
 	"wikibasemediainfo-filepage-caption-approaching-limit": "{{PLURAL:$1|Остао је $1 знак|Остала су $1 знака|Остало је $1 знакова|0=Није остало знакова}}",
 	"wikibasemediainfo-filepage-statement-no-value-option": "Нема вредности",

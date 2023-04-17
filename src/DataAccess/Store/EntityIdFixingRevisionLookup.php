@@ -49,9 +49,7 @@ class EntityIdFixingRevisionLookup implements EntityRevisionLookup {
 			$entityRevision = $this->lookup->getEntityRevision( $entityId, $revisionId, $mode );
 		} catch ( DivergingEntityIdException $exception ) {
 			// TODO "correct" log level?
-			$this->logger->warning(
-				...$exception->getNormalizedDataForLogging()
-			);
+			$this->logger->warning( $exception->getNormalizedMessage(), $exception->getMessageContext() );
 
 			$entityRevision = $exception->getEntityRevision();
 			$entityRevision->getEntity()->setId( $entityId );

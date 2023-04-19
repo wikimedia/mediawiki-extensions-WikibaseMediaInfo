@@ -2,8 +2,8 @@
 
 namespace Wikibase\MediaInfo\Services;
 
+use MediaWiki\Title\TitleFactory;
 use Title;
-use TitleFactory;
 use Wikibase\MediaInfo\DataModel\MediaInfoId;
 
 /**

@@ -2,8 +2,8 @@
 
 namespace Wikibase\MediaInfo\Tests\MediaWiki\Services;
 
+use MediaWiki\Title\TitleFactory;
 use Title;
-use TitleFactory;
 use Wikibase\MediaInfo\DataModel\MediaInfoId;
 use Wikibase\MediaInfo\Services\FilePageLookup;
 

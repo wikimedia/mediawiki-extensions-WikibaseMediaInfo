@@ -30,6 +30,7 @@
 	"wikibasemediainfo-statements-learn-more": "Lââʹssteâđ",
 	"wikibasemediainfo-statements-remove": "Jaukkâd puk",
 	"wikibasemediainfo-remove-all-statements-confirm-accept": "Jaukkâd",
+	"wikibasemediainfo-coordinate-input-label": "Koordinaatt",
 	"wikibasemediainfo-string-input-button-text": "Lââʹzzet",
 	"wikibasemediainfo-monolingualtext-input-button-text": "Lââʹzzet",
 	"wikibasemediainfo-monolingualtext-input-placeholder": "Lââʹzzet teeʹkst",
@@ -45,5 +46,6 @@
 	"wikibasemediainfo-time-calendar-gregorian": "Gregoriaanlaž",
 	"wikibasemediainfo-time-calendar-julian": "Juliaanlaž",
 	"wikibasemediainfo-quantity-input-button-text": "Lââʹzzet",
-	"wikibasemediainfo-globecoordinate-input-button-text": "Lââʹzzet"
+	"wikibasemediainfo-globecoordinate-input-button-text": "Lââʹzzet",
+	"wikibasemediainfo-globecoordinate-map-button-text": "Vaʹlljed mäddkaartâst"
 }

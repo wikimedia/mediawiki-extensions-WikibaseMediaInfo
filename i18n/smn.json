@@ -17,11 +17,13 @@
 	"wikibasemediainfo-statements-learn-more": "Lasetiäđuh",
 	"wikibasemediainfo-statements-remove": "Siho puoh",
 	"wikibasemediainfo-remove-all-statements-confirm-accept": "Siho",
+	"wikibasemediainfo-coordinate-input-label": "Koordinaateh",
 	"wikibasemediainfo-string-input-button-text": "Lasseet",
 	"wikibasemediainfo-monolingualtext-input-button-text": "Lasseet",
 	"wikibasemediainfo-monolingualtext-language-label": "Valjii kielâ",
 	"wikibasemediainfo-time-input-button-text": "Lasseet",
 	"wikibasemediainfo-time-calendar-label": "Kalender",
 	"wikibasemediainfo-quantity-input-button-text": "Lasseet",
-	"wikibasemediainfo-globecoordinate-input-button-text": "Lasseet"
+	"wikibasemediainfo-globecoordinate-input-button-text": "Lasseet",
+	"wikibasemediainfo-globecoordinate-map-button-text": "Valjii káártást"
 }

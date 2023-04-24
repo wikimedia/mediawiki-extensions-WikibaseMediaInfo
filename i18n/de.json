@@ -5,7 +5,9 @@
 			"Lucas Werkmeister",
 			"Metalhead64",
 			"Mirzali",
-			"Speravir"
+			"Speravir",
+			"Brettchenweber",
+			"Umherirrender"
 		]
 	},
 	"action-mediainfo-term": "Bildtexte oder Zusammenfassungen zu ändern",
@@ -39,7 +41,7 @@
 	"wikibasemediainfo-filepage-edit": "Bearbeiten",
 	"wikibasemediainfo-filepage-publish": "Änderungen veröffentlichen",
 	"wikibasemediainfo-filepage-caption-empty": "Ergänze eine einzeilige Erklärung, was diese Datei darstellt.",
-	"wikibasemediainfo-filepage-caption-too-short": "$1 {{PLURAL:$1|weiteres Zeichen|weitere Zeichen}} sind notwendig",
+	"wikibasemediainfo-filepage-caption-too-short": "$1 {{PLURAL:$1|weiteres Zeichen ist|weitere Zeichen sind}} notwendig",
 	"wikibasemediainfo-filepage-caption-too-long": "{{PLURAL:$1|Ein|$1}} Zeichen über der Grenze",
 	"wikibasemediainfo-filepage-caption-approaching-limit": "Noch {{PLURAL:$1|ein|$1|0=$1}} Zeichen",
 	"wikibasemediainfo-filepage-statement-value-type-dropdown-title": "Wähle einen Wertetyp aus.",

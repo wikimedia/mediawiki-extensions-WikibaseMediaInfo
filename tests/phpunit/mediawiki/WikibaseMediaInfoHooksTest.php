@@ -3,7 +3,6 @@
 namespace Wikibase\MediaInfo\Tests\MediaWiki;
 
 use CirrusSearch\Profile\SearchProfileService;
-use Hooks;
 use MediaWiki\Page\PageIdentity;
 use MediaWiki\Permissions\RestrictionStore;
 use MediaWiki\Revision\RevisionRecord;
@@ -51,7 +50,7 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiIntegrationTestCase {
 	 */
 	public function testOnWikibaseEntityTypes( $hook ) {
 		$entityTypeDefinitions = [];
-		Hooks::run( $hook, [ &$entityTypeDefinitions ] );
+		$this->getServiceContainer()->getHookContainer()->run( $hook, [ &$entityTypeDefinitions ] );
 		$this->assertArrayHasKey( 'mediainfo', $entityTypeDefinitions );
 	}
 

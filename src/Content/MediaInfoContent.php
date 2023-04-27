@@ -2,9 +2,9 @@
 
 namespace Wikibase\MediaInfo\Content;
 
-use Hooks;
 use InvalidArgumentException;
 use LogicException;
+use MediaWiki\MediaWikiServices;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\Repo\Content\EntityContent;
 use Wikibase\Repo\Content\EntityHolder;
@@ -140,7 +140,9 @@ class MediaInfoContent extends EntityContent {
 		$searchTextGenerator = new FingerprintSearchTextGenerator();
 		$text = $searchTextGenerator->generate( $this->getMediaInfo() );
 
-		if ( !Hooks::run( 'WikibaseTextForSearchIndex', [ $this, &$text ] ) ) {
+		if ( !MediaWikiServices::getInstance()->getHookContainer()
+			->run( 'WikibaseTextForSearchIndex', [ $this, &$text ] )
+		) {
 			return '';
 		}
 

@@ -179,10 +179,11 @@ class FilePageRedirectHandlingRevisionLookupTest extends TestCase {
 		RevisionStore $revisionStore = null,
 		WikiPageEntityDataLoader $entityDataLoader = null
 	) {
-		$revisionStore = $revisionStore ?? $this->createMock( RevisionStore::class );
-		$entityDataLoader = $entityDataLoader ?? $this->createMock( WikiPageEntityDataLoader::class );
-
-		return new FilePageRedirectHandlingRevisionLookup( $defaultLookup, $revisionStore, $entityDataLoader );
+		return new FilePageRedirectHandlingRevisionLookup(
+			$defaultLookup,
+			$revisionStore ?? $this->createMock( RevisionStore::class ),
+			$entityDataLoader ?? $this->createMock( WikiPageEntityDataLoader::class )
+		);
 	}
 
 }

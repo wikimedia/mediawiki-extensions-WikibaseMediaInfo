@@ -185,25 +185,17 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiIntegrationTestCase {
 	public function testGetProtectionMsgIsProtected() {
 		/** @var WikibaseMediaInfoHooks $wrapper */
 		$wrapper = $this->getWrapper();
-		$title = $this->getMockBuilder( Title::class )
-			->disableOriginalConstructor()
-			->getMock();
+		$title = $this->createMock( Title::class );
 
-		$restrictionStore = $this->getMockBuilder( RestrictionStore::class )
-			->disableOriginalConstructor()
-			->getMock();
+		$restrictionStore = $this->createMock( RestrictionStore::class );
 		$restrictionStore->method( 'isProtected' )
 			->with( $title, 'edit' )
 			->willReturn( true );
 		$this->setService( 'RestrictionStore', $restrictionStore );
 
-		$message = $this->getMockBuilder( RawMessage::class )
-			->disableOriginalConstructor()
-			->getMock();
+		$message = $this->createMock( RawMessage::class );
 
-		$out = $this->getMockBuilder( OutputPage::class )
-			->disableOriginalConstructor()
-			->getMock();
+		$out = $this->createMock( OutputPage::class );
 		$out->method( 'getTitle' )
 			->willReturn( $title );
 		$out->expects( $this->once() )
@@ -216,13 +208,9 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiIntegrationTestCase {
 	public function testGetProtectionMsgIsSemiProtected() {
 		/** @var WikibaseMediaInfoHooks $wrapper */
 		$wrapper = $this->getWrapper();
-		$title = $this->getMockBuilder( Title::class )
-			->disableOriginalConstructor()
-			->getMock();
+		$title = $this->createMock( Title::class );
 
-		$restrictionStore = $this->getMockBuilder( RestrictionStore::class )
-			->disableOriginalConstructor()
-			->getMock();
+		$restrictionStore = $this->createMock( RestrictionStore::class );
 		$restrictionStore->method( 'isProtected' )
 			->with( $title, 'edit' )
 			->willReturn( true );
@@ -231,13 +219,9 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiIntegrationTestCase {
 			->willReturn( true );
 		$this->setService( 'RestrictionStore', $restrictionStore );
 
-		$message = $this->getMockBuilder( RawMessage::class )
-			->disableOriginalConstructor()
-			->getMock();
+		$message = $this->createMock( RawMessage::class );
 
-		$out = $this->getMockBuilder( OutputPage::class )
-			->disableOriginalConstructor()
-			->getMock();
+		$out = $this->createMock( OutputPage::class );
 		$out->method( 'getTitle' )
 			->willReturn( $title );
 		$out->expects( $this->once() )
@@ -250,37 +234,25 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiIntegrationTestCase {
 	public function testGetProtectionMsgIsCascadeProtected() {
 		/** @var WikibaseMediaInfoHooks $wrapper */
 		$wrapper = $this->getWrapper();
-		$cascadeSource = $this->getMockBuilder( PageIdentity::class )
-			->disableOriginalConstructor()
-			->getMock();
+		$cascadeSource = $this->createMock( PageIdentity::class );
 
-		$titleFormatter = $this->getMockBuilder( TitleFormatter::class )
-			->disableOriginalConstructor()
-			->getMock();
+		$titleFormatter = $this->createMock( TitleFormatter::class );
 		$titleFormatter->method( 'getPrefixedText' )
 			->willReturn( 'Cascade Source' );
 		$this->setService( 'TitleFormatter', $titleFormatter );
 
-		$restrictionStore = $this->getMockBuilder( RestrictionStore::class )
-			->disableOriginalConstructor()
-			->getMock();
+		$restrictionStore = $this->createMock( RestrictionStore::class );
 		$restrictionStore->method( 'isCascadeProtected' )
 			->willReturn( true );
 		$restrictionStore->method( 'getCascadeProtectionSources' )
 			->willReturn( [ [ $cascadeSource ] ] );
 		$this->setService( 'RestrictionStore', $restrictionStore );
 
-		$title = $this->getMockBuilder( Title::class )
-			->disableOriginalConstructor()
-			->getMock();
+		$title = $this->createMock( Title::class );
 
-		$message = $this->getMockBuilder( RawMessage::class )
-			->disableOriginalConstructor()
-			->getMock();
+		$message = $this->createMock( RawMessage::class );
 
-		$out = $this->getMockBuilder( OutputPage::class )
-			->disableOriginalConstructor()
-			->getMock();
+		$out = $this->createMock( OutputPage::class );
 		$out->method( 'getTitle' )
 			->willReturn( $title );
 		$out->expects( $this->once() )
@@ -295,13 +267,9 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiIntegrationTestCase {
 		/** @var WikibaseMediaInfoHooks $wrapper */
 		$wrapper = $this->getWrapper();
 
-		$title = $this->getMockBuilder( Title::class )
-			->disableOriginalConstructor()
-			->getMock();
+		$title = $this->createMock( Title::class );
 
-		$out = $this->getMockBuilder( OutputPage::class )
-			->disableOriginalConstructor()
-			->getMock();
+		$out = $this->createMock( OutputPage::class );
 		$out->method( 'getTitle' )
 			->willReturn( $title );
 
@@ -309,9 +277,7 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiIntegrationTestCase {
 	}
 
 	private function getWrapper() {
-		$entityId = $this->getMockBuilder( EntityIdComposer::class )
-			->disableOriginalConstructor()
-			->getMock();
+		$entityId = $this->createMock( EntityIdComposer::class );
 		$hooks = new WikibaseMediaInfoHooks( $entityId );
 		return TestingAccessWrapper::newFromObject( $hooks );
 	}

@@ -29,6 +29,7 @@
 	"wikibasemediainfo-precision-input-label": "ትኽክልነት",
 	"wikibasemediainfo-string-input-button-text": "ወስኽ",
 	"wikibasemediainfo-monolingualtext-input-button-text": "ወስኽ",
+	"wikibasemediainfo-monolingualtext-input-placeholder": "ጽሑፍ ኣእትው",
 	"wikibasemediainfo-monolingualtext-language-label": "ቋንቋ ምረጽ",
 	"wikibasemediainfo-time-input-button-text": "ወስኽ",
 	"wikibasemediainfo-time-precision-label": "ትኽክልነት",
@@ -45,5 +46,6 @@
 	"wikibasemediainfo-time-calendar-gregorian": "ጎርጎርዮሳዊ",
 	"wikibasemediainfo-time-calendar-julian": "ጁልያዊ",
 	"wikibasemediainfo-quantity-input-button-text": "ወስኽ",
-	"wikibasemediainfo-globecoordinate-input-button-text": "ወስኽ"
+	"wikibasemediainfo-globecoordinate-input-button-text": "ወስኽ",
+	"wikibasemediainfo-globecoordinate-map-button-text": "ኣብ ካርታ ምረጽ"
 }

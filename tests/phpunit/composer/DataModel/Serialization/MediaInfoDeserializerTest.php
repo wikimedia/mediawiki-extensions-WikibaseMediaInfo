@@ -59,7 +59,7 @@ class MediaInfoDeserializerTest extends \PHPUnit\Framework\TestCase {
 		);
 	}
 
-	public function provideObjectSerializations() {
+	public static function provideObjectSerializations() {
 		$serializations = [];
 
 		$serializations['empty'] = [
@@ -148,7 +148,7 @@ class MediaInfoDeserializerTest extends \PHPUnit\Framework\TestCase {
 		$this->assertTrue( $deserializer->isDeserializerFor( $serialization ) );
 	}
 
-	public function provideInvalidSerializations() {
+	public static function provideInvalidSerializations() {
 		return [
 			[ null ],
 			[ '' ],

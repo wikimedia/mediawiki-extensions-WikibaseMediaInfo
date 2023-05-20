@@ -15,7 +15,7 @@ use Wikibase\MediaInfo\DataModel\MediaInfoId;
  */
 class MediaInfoIdTest extends \PHPUnit\Framework\TestCase {
 
-	public function provideValidIds() {
+	public static function provideValidIds() {
 		return [
 			[ 'm1', 'M1' ],
 			[ 'M2', 'M2' ],
@@ -35,7 +35,7 @@ class MediaInfoIdTest extends \PHPUnit\Framework\TestCase {
 		$this->assertSame( $expected, $id->getSerialization() );
 	}
 
-	public function provideInvalidIds() {
+	public static function provideInvalidIds() {
 		return [
 			[ null ],
 			[ false ],
@@ -89,7 +89,7 @@ class MediaInfoIdTest extends \PHPUnit\Framework\TestCase {
 		$this->assertSame( $expected, $id->getSerialization() );
 	}
 
-	public function provideIdSerializations() {
+	public static function provideIdSerializations() {
 		return [
 			[ 'M2', 'M2' ],
 

@@ -27,7 +27,7 @@ class CustomMatchFeatureTest extends \MediaWikiIntegrationTestCase {
 		}
 	}
 
-	public function expectedQueryProvider() {
+	public static function expectedQueryProvider() {
 		return [
 			'regular search' => [
 				'expected' => ( new BoolQuery() )
@@ -144,7 +144,7 @@ class CustomMatchFeatureTest extends \MediaWikiIntegrationTestCase {
 		$this->assertNotNull( $feature->apply( $searchContext, $searchString ) );
 	}
 
-	public function applyNoDataProvider() {
+	public static function applyNoDataProvider() {
 		return [
 			'empty data' => [
 				'custommatch:',
@@ -203,7 +203,7 @@ class CustomMatchFeatureTest extends \MediaWikiIntegrationTestCase {
 		$node->getParsedValue();
 	}
 
-	public function parseProvider() {
+	public static function parseProvider() {
 		return [
 			'empty search term' => [
 				'value' => '',

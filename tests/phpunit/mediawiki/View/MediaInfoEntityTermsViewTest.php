@@ -56,7 +56,7 @@ class MediaInfoEntityTermsViewTest extends \PHPUnit\Framework\TestCase {
 		$this->fallbackChain = new TermLanguageFallbackChain( $languages, $stubContentLanguages );
 	}
 
-	private function createTestEntityWithLabels( $labelsArray ) {
+	private static function createTestEntityWithLabels( $labelsArray ) {
 		$labels = new TermList();
 		foreach ( $labelsArray as $langCode => $value ) {
 			$labels->setTerm( new Term( $langCode, $value ) );
@@ -71,7 +71,7 @@ class MediaInfoEntityTermsViewTest extends \PHPUnit\Framework\TestCase {
 	 */
 	public function testGetHtml( $labels, $fallbackLangCodes ) {
 		$this->createDependencies( $fallbackLangCodes );
-		$testEntity = $this->createTestEntityWithLabels( $labels );
+		$testEntity = self::createTestEntityWithLabels( $labels );
 
 		// Expected display order of label languages is:
 		// First language in the fallback chain, whether or not it has a value
@@ -138,7 +138,7 @@ class MediaInfoEntityTermsViewTest extends \PHPUnit\Framework\TestCase {
 		}
 	}
 
-	public function provideLabelsAndFallback() {
+	public static function provideLabelsAndFallback() {
 		return [
 			[
 				'labels' => [
@@ -255,8 +255,8 @@ class MediaInfoEntityTermsViewTest extends \PHPUnit\Framework\TestCase {
 		}
 	}
 
-	public function provideForGetSingleLabelHtml() {
-		$termList = $this->createTestEntityWithLabels( [
+	public static function provideForGetSingleLabelHtml() {
+		$termList = self::createTestEntityWithLabels( [
 			'en' => 'EN_TEST_LABEL',
 			'fr' => 'FR_TEST_LABEL',
 			'ar' => 'AR_TEST_LABEL',

@@ -317,7 +317,7 @@ class MediaInfoEntityStatementsViewTest extends \PHPUnit\Framework\TestCase {
 		return $statement;
 	}
 
-	public function provideStatementList() {
+	public static function provideStatementList() {
 		$property999NoValue = new PropertyNoValueSnak( new NumericPropertyId( 'P999' ) );
 		$property999SomeValue = new PropertySomeValueSnak( new NumericPropertyId( 'P999' ) );
 		$property999Value_1 = new PropertyValueSnak(

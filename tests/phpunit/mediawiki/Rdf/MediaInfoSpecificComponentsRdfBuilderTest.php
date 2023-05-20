@@ -101,7 +101,7 @@ class MediaInfoSpecificComponentsRdfBuilderTest extends TestCase {
 		return $builder;
 	}
 
-	public function provideMediaInfoPartialRDFWithFile() {
+	public static function provideMediaInfoPartialRDFWithFile() {
 		return [
 			[ 'M1', 'M1_base', null ],
 			[ 'M1', 'M1_jpg', new FileMock( 'Test.jpg', [

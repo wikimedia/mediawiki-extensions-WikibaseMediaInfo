@@ -72,7 +72,7 @@ class MediaInfoTest extends \PHPUnit\Framework\TestCase {
 		$this->assertSame( $id, $mediaInfo->getId() );
 	}
 
-	public function provideInvalidIds() {
+	public static function provideInvalidIds() {
 		return [
 			[ null ],
 			[ false ],
@@ -126,7 +126,7 @@ class MediaInfoTest extends \PHPUnit\Framework\TestCase {
 		$this->assertFalse( $mediaInfo->isEmpty() );
 	}
 
-	public function provideEqualEntities() {
+	public static function provideEqualEntities() {
 		$empty = new MediaInfo();
 
 		$withLabel = new MediaInfo();
@@ -181,7 +181,7 @@ class MediaInfoTest extends \PHPUnit\Framework\TestCase {
 		$this->assertTrue( $a->equals( $b ) );
 	}
 
-	public function provideNotEqualEntities() {
+	public static function provideNotEqualEntities() {
 		$withLabel1 = new MediaInfo();
 		$withLabel1->getLabels()->setTextForLanguage( 'en', 'Foo' );
 

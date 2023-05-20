@@ -68,7 +68,7 @@ class MediaInfoContentTest extends \PHPUnit\Framework\TestCase {
 		$this->assertFalse( $content->isEmpty() );
 	}
 
-	public function provideCountable() {
+	public static function provideCountable() {
 		$countable = [];
 
 		$mediaInfo = new MediaInfo();
@@ -106,7 +106,7 @@ class MediaInfoContentTest extends \PHPUnit\Framework\TestCase {
 		$this->assertTrue( $mediaInfoContent->isCountable() );
 	}
 
-	public function provideNotCountable() {
+	public static function provideNotCountable() {
 		return [
 			[ new MediaInfo() ],
 			[ new MediaInfo( new MediaInfoId( 'M1' ) ) ],
@@ -122,7 +122,7 @@ class MediaInfoContentTest extends \PHPUnit\Framework\TestCase {
 		$this->assertFalse( $mediaInfoContent->isCountable() );
 	}
 
-	public function provideTextForSearchIndex() {
+	public static function provideTextForSearchIndex() {
 		$searchIndex = [
 			[ new MediaInfo(), '' ]
 		];

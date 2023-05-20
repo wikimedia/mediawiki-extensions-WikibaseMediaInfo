@@ -38,7 +38,7 @@ class MediaInfoSerializerTest extends \PHPUnit\Framework\TestCase {
 		return new MediaInfoSerializer( $termListSerializer, $statementListSerializer );
 	}
 
-	public function provideObjectSerializations() {
+	public static function provideObjectSerializations() {
 		$serializations = [];
 
 		$mediaInfo = new MediaInfo();
@@ -128,7 +128,7 @@ class MediaInfoSerializerTest extends \PHPUnit\Framework\TestCase {
 		$this->assertTrue( $serializer->isSerializerFor( $object ) );
 	}
 
-	public function provideInvalidObjects() {
+	public static function provideInvalidObjects() {
 		return [
 			[ null ],
 			[ '' ],

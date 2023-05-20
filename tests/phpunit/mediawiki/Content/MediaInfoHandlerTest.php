@@ -140,7 +140,7 @@ class MediaInfoHandlerTest extends \MediaWikiIntegrationTestCase {
 		$this->assertFalse( $mediaInfoHandler->allowAutomaticIds() );
 	}
 
-	public function provideCanCreateWithCustomId() {
+	public static function provideCanCreateWithCustomId() {
 		return [
 			'id matches existing file page' => [ new MediaInfoId( 'M1' ), true ],
 			'id does not match existing file page' => [ new MediaInfoId( 'M17' ), false ],

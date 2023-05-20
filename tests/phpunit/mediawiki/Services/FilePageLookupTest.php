@@ -42,7 +42,7 @@ class FilePageLookupTest extends \PHPUnit\Framework\TestCase {
 		return $titleFactory;
 	}
 
-	public function provideGetFilePage() {
+	public static function provideGetFilePage() {
 		return [
 			[ new MediaInfoId( 'M1' ), 'Test-1.png' ],
 		];
@@ -61,7 +61,7 @@ class FilePageLookupTest extends \PHPUnit\Framework\TestCase {
 		$this->assertEquals( NS_FILE, $title->getNamespace() );
 	}
 
-	public function provideGetFilePage_fail() {
+	public static function provideGetFilePage_fail() {
 		return [
 			'no such page' => [ new MediaInfoId( 'M17' ) ],
 			'bad namespace' => [ new MediaInfoId( 'M2' ) ],

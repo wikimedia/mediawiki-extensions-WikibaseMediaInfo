@@ -38,7 +38,7 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiIntegrationTestCase {
 		$this->assertArrayHasKey( MediaInfo::ENTITY_TYPE, $entityNamespaces );
 	}
 
-	public function provideWikibaseEntityTypesHooks() {
+	public static function provideWikibaseEntityTypesHooks() {
 		return [
 			[ 'WikibaseRepoEntityTypes' ],
 			[ 'WikibaseClientEntityTypes' ],
@@ -54,7 +54,7 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiIntegrationTestCase {
 		$this->assertArrayHasKey( 'mediainfo', $entityTypeDefinitions );
 	}
 
-	public function providePostCacheTransformInput() {
+	public static function providePostCacheTransformInput() {
 		return [
 			'no placeholder, no change' => [
 				'original' => 'SOME_TEXT',

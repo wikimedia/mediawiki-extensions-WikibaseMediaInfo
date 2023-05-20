@@ -100,7 +100,7 @@ class MediaSearchQueryBuilderTest extends MediaWikiIntegrationTestCase {
 		);
 	}
 
-	public function provideTestQuery() {
+	public static function provideTestQuery() {
 		$fixturesDir = __DIR__ . '/../../data/queries/';
 		$tests = [];
 		foreach ( glob( $fixturesDir . '*.settings' ) as $settingsFile ) {

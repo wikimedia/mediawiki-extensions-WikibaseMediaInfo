@@ -30,7 +30,7 @@ class MediaInfoIdLookupTest extends \PHPUnit\Framework\TestCase {
 		] );
 	}
 
-	public function provideGetEntityIdForTitle() {
+	public static function provideGetEntityIdForTitle() {
 		$title = Title::makeTitle( NS_FILE, 'File:Test.jpg' );
 		$title->resetArticleID( 13 );
 
@@ -52,7 +52,7 @@ class MediaInfoIdLookupTest extends \PHPUnit\Framework\TestCase {
 		$this->assertEquals( $expected, $entityId->getSerialization() );
 	}
 
-	public function provideGetEntityIdForTitle_fail() {
+	public static function provideGetEntityIdForTitle_fail() {
 		$badNamespaceTitle = Title::makeTitle( NS_MAIN, 'File:Test.jpg' );
 		$badNamespaceTitle->resetArticleID( 13 );
 

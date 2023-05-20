@@ -108,7 +108,7 @@ class MediaInfoRdfBuilderTest extends TestCase {
 		$builder->addEntity( $mediainfo );
 	}
 
-	public function provideAddEntity(): array {
+	public static function provideAddEntity(): array {
 		return [
 			"No flavors selected" => [ 0, new MediaInfo( new MediaInfoId( 'M1' ) ) ],
 			"Just truthy statements requested" => [
@@ -212,7 +212,7 @@ class MediaInfoRdfBuilderTest extends TestCase {
 		return $builder;
 	}
 
-	public function provideMediaInfoFullRDF() {
+	public static function provideMediaInfoFullRDF() {
 		return [
 			[ 'M1', 'M1_full' ],
 		];

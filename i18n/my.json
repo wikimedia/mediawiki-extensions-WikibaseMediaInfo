@@ -15,6 +15,7 @@
 	"wikibasemediainfo-filepage-edit": "ပြင်ဆင်ရန်",
 	"wikibasemediainfo-filepage-publish": "ပြောင်းလဲမှုများကို လွှင့်တင်ရန်",
 	"wikibasemediainfo-filepage-caption-empty": "ဤဖိုင်၏ဆိုလိုရင်းကို စာတစ်ကြောင်းရှင်းလင်းချက်ဖြင့် ထည့်သွင်းရန်",
+	"wikibasemediainfo-filepage-license-agree": "မိမိ သဘောတူသည်",
 	"wikibasemediainfo-statements-item-remove": "ဖယ်ရှားရန်",
 	"wikibasemediainfo-statements-learn-more": "ပိုမို လေ့လာရန်",
 	"wikibasemediainfo-statements-remove": "အားလုံးကို ဖယ်ရှား",
@@ -27,6 +28,7 @@
 	"wikibasemediainfo-monolingualtext-language-label": "ဘာသာစကား ရွေးရန်",
 	"wikibasemediainfo-time-input-button-text": "ပေါင်းထည့်ရန်",
 	"wikibasemediainfo-time-input-placeholder": "အချိန်ရိုက်ထည့်ပါ",
+	"wikibasemediainfo-time-precision-label": "တိကျမှု",
 	"wikibasemediainfo-time-precision-year1g": "ဘီလီယံနှစ်",
 	"wikibasemediainfo-time-precision-year10m": "တစ်ဆယ်မီလီယံနှစ်",
 	"wikibasemediainfo-time-precision-year1m": "မီလီယံနှစ်",
@@ -44,5 +46,6 @@
 	"wikibasemediainfo-time-calendar-gregorian": "ဂရီဂေါရီးယန်း",
 	"wikibasemediainfo-time-calendar-julian": "ဂျူလီယန်",
 	"wikibasemediainfo-quantity-input-button-text": "ပေါင်းထည့်ရန်",
-	"wikibasemediainfo-globecoordinate-input-button-text": "ပေါင်းထည့်ရန်"
+	"wikibasemediainfo-globecoordinate-input-button-text": "ပေါင်းထည့်ရန်",
+	"wikibasemediainfo-globecoordinate-map-button-text": "မြေပုံပေါ်တွင်ရွေးချယ်ပါ"
 }

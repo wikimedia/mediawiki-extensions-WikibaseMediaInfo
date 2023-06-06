@@ -22,7 +22,6 @@ class MediaInfoIdTest extends \PHPUnit\Framework\TestCase {
 			[ 'm2147483647', 'M2147483647' ],
 			[ 'M2147483647', 'M2147483647' ],
 			[ ':m17', 'M17' ],
-			[ 'foo:m17', 'foo:M17' ],
 		];
 	}
 

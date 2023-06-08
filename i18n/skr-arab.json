@@ -4,6 +4,7 @@
 			"Saraiki"
 		]
 	},
+	"wikibase-entity-mediainfo": "میڈیا ڄاݨکاری",
 	"wikibasemediainfo-diffview-label": "عنوان",
 	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "عنوان",
 	"wikibasemediainfo-filepage-captions-title": "عنوان",
@@ -15,6 +16,10 @@
 	"wikibasemediainfo-filepage-publish": "تبدیلیاں شائع کرو",
 	"wikibasemediainfo-property-placeholder": "خاصیت",
 	"wikibasemediainfo-filepage-license-agree": "میں متفق ہاں",
+	"wikibasemediainfo-statements-item-reference": "حوالہ",
+	"wikibasemediainfo-statements-item-references": "حوالے",
+	"wikibasemediainfo-statements-item-add-reference": "حوالہ شامل کرو",
+	"wikibasemediainfo-statements-item-add-reference-snak": "شامل کرو",
 	"wikibasemediainfo-statements-item-remove": "ہٹاؤ",
 	"wikibasemediainfo-statements-learn-more": "ٻیا سِکھو",
 	"wikibasemediainfo-statements-remove": "سب ہٹاؤ",

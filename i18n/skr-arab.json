@@ -27,6 +27,7 @@
 	"wikibasemediainfo-remove-all-statements-confirm-title": "سب ہٹاؤں؟",
 	"wikibasemediainfo-remove-all-statements-confirm-accept": "ہٹاؤ",
 	"wikibasemediainfo-coordinate-input-label": "کوآرڈینیٹ",
+	"wikibasemediainfo-coordinate-input-placeholder": "عرض بلد، طول بلد",
 	"wikibasemediainfo-string-input-button-text": "شامل کرو",
 	"wikibasemediainfo-monolingualtext-input-button-text": "شامل کرو",
 	"wikibasemediainfo-monolingualtext-input-placeholder": "عبارت درج کرو",
@@ -53,5 +54,6 @@
 	"wikibasemediainfo-time-calendar-julian": "جولیئن",
 	"wikibasemediainfo-quantity-input-button-text": "شامل کرو",
 	"wikibasemediainfo-quantity-unit-label": "یِکائی",
-	"wikibasemediainfo-globecoordinate-input-button-text": "شامل کرو"
+	"wikibasemediainfo-globecoordinate-input-button-text": "شامل کرو",
+	"wikibasemediainfo-globecoordinate-map-button-text": "نقشے تے چݨو"
 }

@@ -13,5 +13,11 @@
 	"wikibasemediainfo-remove-all-statements-confirm-accept": "Sihko",
 	"wikibasemediainfo-coordinate-input-label": "Koordináhtat",
 	"wikibasemediainfo-monolingualtext-language-label": "Vállje giela",
+	"wikibasemediainfo-time-precision-year1m": "miljovdna jagi",
+	"wikibasemediainfo-time-precision-year10k": "10 000 jagi",
+	"wikibasemediainfo-time-precision-year100": "čuohtejahki",
+	"wikibasemediainfo-time-precision-year": "jahki",
+	"wikibasemediainfo-time-precision-day": "beaivi",
+	"wikibasemediainfo-time-precision-hour": "diibmu",
 	"wikibasemediainfo-globecoordinate-map-button-text": "Vállje kárttas"
 }

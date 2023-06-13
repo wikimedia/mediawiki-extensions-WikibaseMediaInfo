@@ -26,11 +26,8 @@ class MediaInfoId extends SerializableEntityId implements Int32EntityId {
 	 * @throws InvalidArgumentException
 	 */
 	public function __construct( $idSerialization ) {
-		$parts = self::splitSerialization( $idSerialization );
-		$this->assertValidIdFormat( $parts[2] );
-		parent::__construct( self::joinSerialization(
-			[ $parts[0], $parts[1], strtoupper( $parts[2] ) ]
-		) );
+		$this->assertValidIdFormat( $idSerialization );
+		parent::__construct( strtoupper( $idSerialization ) );
 	}
 
 	private function assertValidIdFormat( $idSerialization ) {
@@ -56,8 +53,7 @@ class MediaInfoId extends SerializableEntityId implements Int32EntityId {
 	 * @return int Guaranteed to be a unique integer in the range [1..2147483647].
 	 */
 	public function getNumericId() {
-		$serializationParts = self::splitSerialization( $this->serialization );
-		return (int)substr( $serializationParts[2], 1 );
+		return (int)substr( $this->serialization, 1 );
 	}
 
 	/**

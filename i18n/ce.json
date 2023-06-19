@@ -31,6 +31,7 @@
 	"wikibasemediainfo-filepage-statement-no-value-option": "МаьӀна дац",
 	"wikibasemediainfo-filepage-statement-some-value-option": "Цхьадолу маьӀна",
 	"wikibasemediainfo-filepage-statement-some-value": "ХӀокху билгалонан цхьадолу маьӀнаш ду элемент йоцуш {{plural:{{WBREPONAME}}}}",
+	"wikibasemediainfo-filepage-license-content": "«Арахеца» тӀетаӀӀина, хьо реза хуьлу [[wmf:Terms_of_Use|лелоран билламан]], цул сов, хьо реза хуьлу йухайоккхила доцуш хьан къинхьегам [https://creativecommons.org/publicdomain/zero/1.0/ Creative Commons CC0 лицензин] билламехь дӀайазбан.",
 	"wikibasemediainfo-property-placeholder": "Билгало",
 	"wikibasemediainfo-filepage-license-agree": "Реза",
 	"wikibasemediainfo-statements-item-add-qualifier": "ТӀетоха квалификатор",

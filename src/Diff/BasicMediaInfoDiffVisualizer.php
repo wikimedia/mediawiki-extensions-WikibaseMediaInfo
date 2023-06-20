@@ -7,8 +7,8 @@ use Diff\DiffOp\DiffOp;
 use Diff\DiffOp\DiffOpAdd;
 use Diff\DiffOp\DiffOpChange;
 use Diff\DiffOp\DiffOpRemove;
+use InvalidArgumentException;
 use MessageLocalizer;
-use MWException;
 use Wikibase\DataModel\Services\Diff\EntityDiff;
 use Wikibase\Repo\Content\EntityContentDiff;
 use Wikibase\Repo\Diff\BasicDiffView;
@@ -55,7 +55,6 @@ class BasicMediaInfoDiffVisualizer implements EntityDiffVisualizer {
 	 * @param EntityContentDiff $diff
 	 *
 	 * @return string
-	 * @throws MWException
 	 */
 	public function visualizeEntityContentDiff( EntityContentDiff $diff ) {
 		return $this->visualizeEntityDiff( $diff->getEntityDiff() );
@@ -67,7 +66,6 @@ class BasicMediaInfoDiffVisualizer implements EntityDiffVisualizer {
 	 * @param EntityDiff $diff
 	 *
 	 * @return string
-	 * @throws MWException
 	 */
 	protected function visualizeEntityDiff( EntityDiff $diff ) {
 		if ( $diff->isEmpty() ) {
@@ -100,7 +98,6 @@ class BasicMediaInfoDiffVisualizer implements EntityDiffVisualizer {
 	 * @param DiffOp $claimDiffOp
 	 *
 	 * @return string HTML
-	 * @throws MWException
 	 */
 	protected function getClaimDiffHtml( DiffOp $claimDiffOp ) {
 		if ( $claimDiffOp instanceof DiffOpChange ) {
@@ -119,7 +116,7 @@ class BasicMediaInfoDiffVisualizer implements EntityDiffVisualizer {
 		} elseif ( $claimDiffOp instanceof DiffOpRemove ) {
 			return $this->claimDiffVisualizer->visualizeRemovedClaim( $claimDiffOp->getOldValue() );
 		} else {
-			throw new MWException( 'Encountered an unexpected diff operation type for a claim' );
+			throw new InvalidArgumentException( 'Encountered an unexpected diff operation type for a claim' );
 		}
 	}
 

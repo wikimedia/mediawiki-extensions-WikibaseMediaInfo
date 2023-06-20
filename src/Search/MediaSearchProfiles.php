@@ -5,8 +5,8 @@ namespace Wikibase\MediaInfo\Search;
 use CirrusSearch\Parser\FullTextKeywordRegistry;
 use CirrusSearch\SearchConfig;
 use MediaWiki\MediaWikiServices;
-use MWException;
 use RequestContext;
+use UnexpectedValueException;
 use Wikibase\Repo\WikibaseRepo;
 
 if ( !function_exists( 'Wikibase\MediaInfo\Search\closureToAnonymousClass' ) ) {
@@ -122,7 +122,7 @@ return array_map( static function ( array $settings ) use ( $config ) {
 			$configFactory = $mwServices->getConfigFactory();
 			$searchConfig = $configFactory->makeConfig( 'CirrusSearch' );
 			if ( !$searchConfig instanceof SearchConfig ) {
-				throw new MWException( 'CirrusSearch config must be instanceof SearchConfig' );
+				throw new UnexpectedValueException( 'CirrusSearch config must be instanceof SearchConfig' );
 			}
 			$features = ( new FullTextKeywordRegistry( $searchConfig ) )->getKeywords();
 

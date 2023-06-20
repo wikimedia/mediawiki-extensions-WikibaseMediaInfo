@@ -55,7 +55,6 @@ class MissingMediaInfoHandlerTest extends \PHPUnit\Framework\TestCase {
 	/**
 	 * @param Title $title
 	 * @return RequestContext
-	 * @throws \MWException
 	 */
 	private function getContext( Title $title ) {
 		$context = new RequestContext();

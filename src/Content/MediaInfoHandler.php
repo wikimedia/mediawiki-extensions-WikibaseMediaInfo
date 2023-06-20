@@ -182,7 +182,6 @@ class MediaInfoHandler extends EntityHandler {
 	/**
 	 * @param Content $content
 	 * @return array
-	 * @throws \MWException
 	 */
 	public function getContentDataForSearchIndex( Content $content ): array {
 		$fieldsData = parent::getContentDataForSearchIndex( $content );

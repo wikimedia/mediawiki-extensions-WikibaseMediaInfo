@@ -16,7 +16,7 @@ return [
 		$mediaInfoNamespace = $nsLookup->getEntityNamespace( MediaInfo::ENTITY_TYPE );
 
 		if ( !is_int( $mediaInfoNamespace ) ) {
-			throw new MWException( 'No namespace configured for MediaInfo entities!' );
+			throw new LogicException( 'No namespace configured for MediaInfo entities!' );
 		}
 
 		return new MediaInfoIdLookup( $entityIdComposer, $mediaInfoNamespace );

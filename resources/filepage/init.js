@@ -32,7 +32,10 @@
 		if ( $tabs.length === 0 ) {
 			throw new Error( 'Missing MediaInfo tabs' );
 		}
-		return OO.ui.infuse( $tabs );
+		var tabs = OO.ui.infuse( $tabs );
+		// This shouldn't be needed, as this is the first tab, but it is (T340803)
+		tabs.setTabPanel( 'wikiTextPlusCaptions' );
+		return tabs;
 	}
 
 	/**

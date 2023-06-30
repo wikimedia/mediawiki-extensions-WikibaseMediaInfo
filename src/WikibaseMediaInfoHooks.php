@@ -459,6 +459,8 @@ class WikibaseMediaInfoHooks {
 			'framed' => false,
 		] );
 		$tabs->addTabPanels( [ $tab1, $tab2 ] );
+		// This shouldn't be needed, as this is the first tab, but it is (T340803)
+		$tabs->setTabPanel( 'wikiTextPlusCaptions' );
 		$tabs->setInfusable( true );
 
 		$tabWrapper = new PanelLayout( [

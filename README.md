@@ -277,7 +277,7 @@ the MediaWiki framework (located in `tests/phpunit/composer`) by running
 `composer test`. This command also runs code style checks using PHPCS.
 
 Tests relying on the MediaWiki framework (located in `tests/phpunit/mediawiki`)
-must by run using MediaWiki core's `phpunit.php` endpoint.
+must by run using MediaWiki core's `composer phpunit:entrypoint` command.
 
 ### Node-QUnit
 

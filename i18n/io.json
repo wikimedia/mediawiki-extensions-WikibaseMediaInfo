@@ -15,6 +15,7 @@
 	"wikibasemediainfo-filepage-caption-empty": "Adjuntez 1 lineo explikanta quo reprezentas ca arkivo",
 	"wikibasemediainfo-filepage-statement-some-value-option": "Kelka valoro",
 	"wikibasemediainfo-statements-item-add-reference-snak": "Adjuntar",
+	"wikibasemediainfo-statements-item-input-label": "de {{WBREPONAME}}",
 	"wikibasemediainfo-statements-item-input-placeholder": "Serchez por adjuntar artikli",
 	"wikibasemediainfo-statements-item-is-prominent": "Eminenta",
 	"wikibasemediainfo-statements-item-mark-as-prominent": "Indikez kom eminenta",

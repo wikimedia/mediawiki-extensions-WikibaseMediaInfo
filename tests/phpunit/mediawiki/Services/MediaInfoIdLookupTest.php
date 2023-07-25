@@ -19,11 +19,7 @@ class MediaInfoIdLookupTest extends \PHPUnit\Framework\TestCase {
 
 	private function getEntityIdComposer() {
 		return new EntityIdComposer( [
-			'mediainfo' => static function ( $repositoryName, $uniquePart = null ) {
-				if ( $uniquePart === null ) {
-					$uniquePart = $repositoryName;
-				}
-
+			'mediainfo' => static function ( $uniquePart ) {
 				return new MediaInfoId( 'M' . $uniquePart );
 			},
 		] );

@@ -71,11 +71,7 @@ class MissingMediaInfoHandlerTest extends \PHPUnit\Framework\TestCase {
 	 */
 	private function newHandler( Title $title, $text = '' ) {
 		$entityIdComposer = new EntityIdComposer( [
-			'mediainfo' => static function ( $repositoryName, $uniquePart = null ) {
-				if ( $uniquePart === null ) {
-					$uniquePart = $repositoryName;
-				}
-
+			'mediainfo' => static function ( $uniquePart ) {
 				return new MediaInfoId( 'M' . $uniquePart );
 			},
 		] );

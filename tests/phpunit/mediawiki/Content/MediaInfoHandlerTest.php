@@ -3,6 +3,7 @@
 namespace Wikibase\MediaInfo\Tests\MediaWiki\Content;
 
 use IContextSource;
+use MediaWiki\Title\TitleFactory;
 use RequestContext;
 use Title;
 use Wikibase\DataModel\Entity\EntityId;
@@ -158,7 +159,13 @@ class MediaInfoHandlerTest extends \MediaWikiIntegrationTestCase {
 
 	public function testGetTitleForId() {
 		$testId = 999;
-		$testTitle = Title::newFromID( $testId );
+		$testTitle = Title::makeTitle( NS_MAIN, __METHOD__ );
+		$testTitle->resetArticleID( $testId );
+		$titleFactory = $this->getMockBuilder( TitleFactory::class )
+			->onlyMethods( [ 'newFromID' ] )
+			->getMock();
+		$titleFactory->method( 'newFromID' )->with( $testId )->willReturn( $testTitle );
+		$this->setService( 'TitleFactory', $titleFactory );
 
 		$mediaInfoHandler = $this->newMediaInfoHandler();
 

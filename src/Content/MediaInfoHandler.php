@@ -49,7 +49,7 @@ class MediaInfoHandler extends EntityHandler {
 	private $filePageLookup;
 
 	/**
-	 * @var Title[]
+	 * @var array<string,Title|null>
 	 */
 	private $titleForIdCache = [];
 
@@ -219,7 +219,7 @@ class MediaInfoHandler extends EntityHandler {
 		'@phan-var MediaInfoId $id';
 		$idString = $id->getSerialization();
 		if ( !isset( $this->titleForIdCache[$idString] ) ) {
-			$this->titleForIdCache[$idString] = Title::newFromID( $id->getNumericId() );
+			$this->titleForIdCache[$idString] = $this->titleFactory->newFromID( $id->getNumericId() );
 		}
 		return $this->titleForIdCache[$idString];
 	}
@@ -260,7 +260,6 @@ class MediaInfoHandler extends EntityHandler {
 
 			// @phan-suppress-next-line PhanTypeMismatchArgumentNullable
 			$idString = $this->getIdForTitle( $title )->getSerialization();
-			// @phan-suppress-next-line PhanTypeMismatchProperty
 			$this->titleForIdCache[$idString] = $title;
 			$titles[$idString] = $title;
 		}

@@ -25,6 +25,7 @@ use Wikimedia\TestingAccessWrapper;
  * @covers \Wikibase\MediaInfo\WikibaseMediaInfoHooks
  *
  * @group WikibaseMediaInfo
+ * @group Database
  *
  * @license GPL-2.0-or-later
  * @author Bene* < benestar.wikimedia@gmail.com >
@@ -167,6 +168,7 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiIntegrationTestCase {
 	}
 
 	public function testOnCirrusSearchProfileServiceMediaSearch() {
+		$this->markTestSkippedIfExtensionNotLoaded( 'CirrusSearch' );
 		$this->setMwGlobals( [
 			'wgWBCSUseCirrus' => true,
 			'wgMediaInfoMediaSearchProfiles' => [ 'some-mediasearch-profile' => [] ],

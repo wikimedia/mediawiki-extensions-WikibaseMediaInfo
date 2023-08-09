@@ -8,7 +8,6 @@ use MediaWiki\Title\TitleFactory;
 use ParserOutput;
 use RequestContext;
 use Title;
-use Wikibase\DataModel\Entity\SerializableEntityId;
 use Wikibase\DataModel\Services\EntityId\EntityIdComposer;
 use Wikibase\MediaInfo\Content\MissingMediaInfoHandler;
 use Wikibase\MediaInfo\DataModel\MediaInfoId;
@@ -72,12 +71,12 @@ class MissingMediaInfoHandlerTest extends \PHPUnit\Framework\TestCase {
 	 */
 	private function newHandler( Title $title, $text = '' ) {
 		$entityIdComposer = new EntityIdComposer( [
-			'mediainfo' => static function ( $repositoryName, $uniquePart ) {
-				return new MediaInfoId( SerializableEntityId::joinSerialization( [
-					$repositoryName,
-					'',
-					'M' . $uniquePart
-				] ) );
+			'mediainfo' => static function ( $repositoryName, $uniquePart = null ) {
+				if ( $uniquePart === null ) {
+					$uniquePart = $repositoryName;
+				}
+
+				return new MediaInfoId( 'M' . $uniquePart );
 			},
 		] );
 		$idLookup = new MediaInfoIdLookup( $entityIdComposer, NS_FILE );

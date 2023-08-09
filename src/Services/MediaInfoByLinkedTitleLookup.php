@@ -53,7 +53,6 @@ class MediaInfoByLinkedTitleLookup implements EntityByLinkedTitleLookup {
 		}
 
 		$entityId = WikibaseRepo::getEntityIdComposer()->composeEntityId(
-			'',
 			MediaInfo::ENTITY_TYPE,
 			$pageId
 		);

@@ -58,7 +58,6 @@ class MediaInfoIdLookup implements EntityIdLookup {
 		// an 'M' prepended - this is encapsulated by EntityIdComposer::composeEntityId()
 		try {
 			return $this->entityIdComposer->composeEntityId(
-				'',
 				MediaInfo::ENTITY_TYPE,
 				$title->getArticleID()
 			);

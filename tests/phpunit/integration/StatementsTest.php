@@ -183,7 +183,6 @@ class StatementsTest extends WBMIApiTestCase {
 		$pageId = $testFilePage->getId();
 		$entityIdComposer = WikibaseRepo::getEntityIdComposer();
 		$entityId = $entityIdComposer->composeEntityId(
-			'',
 			MediaInfo::ENTITY_TYPE,
 			$pageId
 		)->getSerialization();

@@ -4,10 +4,10 @@ namespace Wikibase\MediaInfo\Tests\MediaWiki\Content;
 
 use FauxRequest;
 use MediaWiki\MediaWikiServices;
+use MediaWiki\Title\Title;
 use MediaWiki\Title\TitleFactory;
 use ParserOutput;
 use RequestContext;
-use Title;
 use Wikibase\DataModel\Services\EntityId\EntityIdComposer;
 use Wikibase\MediaInfo\Content\MissingMediaInfoHandler;
 use Wikibase\MediaInfo\DataModel\MediaInfoId;

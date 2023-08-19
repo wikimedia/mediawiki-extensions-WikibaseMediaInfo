@@ -3,7 +3,7 @@
 namespace Wikibase\MediaInfo\Tests\Integration;
 
 use MediaWiki\MediaWikiServices;
-use Title;
+use MediaWiki\Title\Title;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\Repo\WikibaseRepo;
 

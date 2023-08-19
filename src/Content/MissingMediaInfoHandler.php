@@ -4,7 +4,7 @@ namespace Wikibase\MediaInfo\Content;
 
 use IContextSource;
 use MediaWiki\Linker\LinkTarget;
-use Title;
+use MediaWiki\Title\Title;
 use Wikibase\Lib\Store\EntityRevision;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\MediaInfo\DataModel\MediaInfoId;

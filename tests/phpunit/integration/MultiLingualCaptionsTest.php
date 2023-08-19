@@ -2,6 +2,7 @@
 
 namespace Wikibase\MediaInfo\Tests\Integration;
 
+use MediaWiki\Title\Title;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\Repo\WikibaseRepo;
 
@@ -25,7 +26,7 @@ class MultiLingualCaptionsTest extends WBMIApiTestCase {
 
 	public function testEditCaptions() {
 		$testFilePage = $this->getServiceContainer()->getWikiPageFactory()->newFromTitle(
-			\Title::newFromText( $this->uploadRandomImage() )
+			Title::newFromText( $this->uploadRandomImage() )
 		);
 
 		$pageId = $testFilePage->getId();

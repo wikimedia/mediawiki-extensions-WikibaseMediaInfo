@@ -2,6 +2,7 @@
 
 namespace Wikibase\MediaInfo\Tests\Integration;
 
+use MediaWiki\Title\Title;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\Repo\WikibaseRepo;
 use Wikimedia\Assert\Assert;
@@ -177,7 +178,7 @@ class StatementsTest extends WBMIApiTestCase {
 		$this->turnOffFederation();
 
 		$testFilePage = $this->getServiceContainer()->getWikiPageFactory()->newFromTitle(
-			\Title::newFromText( $this->uploadRandomImage() )
+			Title::newFromText( $this->uploadRandomImage() )
 		);
 
 		$pageId = $testFilePage->getId();
@@ -268,7 +269,7 @@ class StatementsTest extends WBMIApiTestCase {
 		$this->turnOffFederation();
 
 		$filePage = $this->getServiceContainer()->getWikiPageFactory()
-			->newFromTitle( \Title::newFromText( $this->uploadRandomImage() ) );
+			->newFromTitle( Title::newFromText( $this->uploadRandomImage() ) );
 
 		$pageId = $filePage->getId();
 		$revId = $filePage->getRevisionRecord()->getId();

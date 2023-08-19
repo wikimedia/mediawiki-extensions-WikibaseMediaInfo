@@ -6,6 +6,7 @@ use MediaWiki\Content\ContentHandlerFactory;
 use MediaWiki\HookContainer\HookContainer;
 use MediaWiki\Page\PageStore;
 use MediaWiki\Revision\RevisionRecord;
+use MediaWiki\Title\TitleFactory;
 use Psr\Log\LoggerInterface;
 use Wikibase\DataModel\Entity\ItemIdParser;
 use Wikibase\DataModel\Services\Lookup\PropertyDataTypeLookup;
@@ -119,7 +120,7 @@ class MediaInfoDataForSearchIndexTest extends \MediaWikiUnitTestCase {
 				)
 			),
 			$this->createMock( PageStore::class ),
-			$this->createMock( \TitleFactory::class ),
+			$this->createMock( TitleFactory::class ),
 			null
 		);
 	}

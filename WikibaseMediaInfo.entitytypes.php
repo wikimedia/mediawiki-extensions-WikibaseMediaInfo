@@ -14,6 +14,7 @@
  */
 
 use MediaWiki\MediaWikiServices;
+use MediaWiki\Title\Title;
 use Wikibase\DataAccess\EntitySource;
 use Wikibase\DataModel\Deserializers\DeserializerFactory;
 use Wikibase\DataModel\Entity\EntityDocument;
@@ -22,8 +23,8 @@ use Wikibase\DataModel\Serializers\SerializerFactory;
 use Wikibase\DataModel\Services\EntityId\EntityIdFormatter;
 use Wikibase\DataModel\Services\Lookup\InProcessCachingDataTypeLookup;
 use Wikibase\Lib\DataTypeDefinitions;
-use Wikibase\Lib\EntityTypeDefinitions;
 use Wikibase\Lib\EntityTypeDefinitions as Def;
+use Wikibase\Lib\EntityTypeDefinitions;
 use Wikibase\Lib\SettingsArray;
 use Wikibase\Lib\Store\CachingPropertyOrderProvider;
 use Wikibase\Lib\Store\EntityContentDataCodec;

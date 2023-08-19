@@ -3,7 +3,7 @@
 namespace Wikibase\MediaInfo\Services;
 
 use InvalidArgumentException;
-use Title;
+use MediaWiki\Title\Title;
 use UnexpectedValueException;
 use Wikibase\DataModel\Services\EntityId\EntityIdComposer;
 use Wikibase\Lib\Store\EntityIdLookup;

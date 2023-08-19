@@ -2,7 +2,7 @@
 
 namespace Wikibase\MediaInfo\DataAccess\Scribunto;
 
-use Title;
+use MediaWiki\Title\Title;
 use Wikibase\Client\DataAccess\Scribunto\Scribunto_LuaWikibaseLibrary;
 use Wikibase\Lib\Store\EntityIdLookup;
 use Wikibase\MediaInfo\DataModel\MediaInfoId;

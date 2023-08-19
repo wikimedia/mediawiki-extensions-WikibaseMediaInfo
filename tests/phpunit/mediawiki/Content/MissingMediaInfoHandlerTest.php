@@ -2,8 +2,8 @@
 
 namespace Wikibase\MediaInfo\Tests\MediaWiki\Content;
 
-use FauxRequest;
 use MediaWiki\MediaWikiServices;
+use MediaWiki\Request\FauxRequest;
 use MediaWiki\Title\Title;
 use MediaWiki\Title\TitleFactory;
 use ParserOutput;

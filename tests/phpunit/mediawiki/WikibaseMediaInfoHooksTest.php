@@ -3,6 +3,7 @@
 namespace Wikibase\MediaInfo\Tests\MediaWiki;
 
 use CirrusSearch\Profile\SearchProfileService;
+use MediaWiki\Language\RawMessage;
 use MediaWiki\Page\PageIdentity;
 use MediaWiki\Permissions\RestrictionStore;
 use MediaWiki\Revision\RevisionRecord;
@@ -10,7 +11,6 @@ use MediaWiki\Title\Title;
 use MockTitleTrait;
 use OutputPage;
 use ParserOutput;
-use RawMessage;
 use TitleFormatter;
 use User;
 use Wikibase\DataModel\Services\EntityId\EntityIdComposer;

@@ -4,8 +4,8 @@ namespace Wikibase\MediaInfo;
 
 use FileContentsHasher;
 use LightnCandy\LightnCandy;
+use MediaWiki\Html\TemplateParser;
 use RuntimeException;
-use TemplateParser;
 
 /**
  * A simple core Mustache TemplateParser override to allow it to

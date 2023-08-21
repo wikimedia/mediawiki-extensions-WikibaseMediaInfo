@@ -4,7 +4,14 @@
 			"Beta16",
 			"Fringio",
 			"Sakretsu",
-			"Selven"
+			"Selven",
+			"Ajeje Brazorf",
+			"Luca.favorido",
+			"Mannivu",
+			"TheRukk",
+			"Toa",
+			"Valerio Bozzolan",
+			"ZioNicco"
 		]
 	},
 	"right-mediainfo-term": "Modifica le informazioni del file (didascalie, riassunti)",
@@ -50,8 +57,8 @@
 	"wikibasemediainfo-statements-item-add-qualifier": "Aggiungi qualificatore",
 	"wikibasemediainfo-statements-item-input-label": "da {{WBREPONAME}}",
 	"wikibasemediainfo-statements-item-input-placeholder": "Cerca per aggiungere elementi",
-	"wikibasemediainfo-statements-item-is-prominent": "Prominente",
-	"wikibasemediainfo-statements-item-mark-as-prominent": "Segna come prominente",
+	"wikibasemediainfo-statements-item-is-prominent": "Preminente",
+	"wikibasemediainfo-statements-item-mark-as-prominent": "Segna come preminente",
 	"wikibasemediainfo-statements-item-remove": "Rimuovi",
 	"wikibasemediainfo-statements-learn-more": "Ulteriori informazioni",
 	"wikibasemediainfo-statements-remove": "Rimuovi tutto",

@@ -15,17 +15,15 @@ class MediaSearchEntitiesFetcherTest extends MediaWikiIntegrationTestCase {
 		$mockMultiHttpClient->method( 'runMulti' )
 			->willReturnCallback( static function ( array $requests ) {
 				foreach ( $requests as $i => $request ) {
-					if ( preg_match( '/&gsrsearch=(.*?)&/', $request['url'], $matches )
-					) {
+					if ( preg_match( '/&gsrsearch=(.*?)&/', $request['url'], $matches ) ) {
 						$term = $matches[1];
 						$filename = __DIR__ . "/../../data/entities_search/$term.json";
 						$requests[$i]['response']['body'] = file_exists( $filename ) ?
 							file_get_contents( $filename ) : '';
-					} elseif ( preg_match( '/&titles=(.*?)&/', $request['url'],
-						$matches ) ) {
+					} elseif ( preg_match( '/&titles=(.*?)&/', $request['url'], $matches ) ) {
 						$term = $matches[1];
 						$filename = __DIR__ . '/../../data/entities_search/' .
-									strtolower( $term ) . '_titleMatch.json';
+							strtolower( $term ) . '_titleMatch.json';
 						$requests[$i]['response']['body'] = file_exists( $filename ) ?
 							file_get_contents( $filename ) : '';
 					}

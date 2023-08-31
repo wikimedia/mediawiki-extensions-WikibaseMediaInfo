@@ -28,9 +28,6 @@ class MediaInfoId extends SerializableEntityId implements Int32EntityId {
 	public function __construct( $idSerialization ) {
 		$this->assertValidIdFormat( $idSerialization );
 		parent::__construct( strtoupper( $idSerialization ) );
-
-		$this->repositoryName = '';
-		$this->localPart = '';
 	}
 
 	private function assertValidIdFormat( $idSerialization ) {
@@ -105,9 +102,6 @@ class MediaInfoId extends SerializableEntityId implements Int32EntityId {
 			throw new InvalidArgumentException( 'Serialized $value must contain "serialization" key' );
 		}
 		$this->serialization = $value[ 'serialization' ] ?? '';
-
-		$this->repositoryName = '';
-		$this->localPart = '';
 	}
 
 }

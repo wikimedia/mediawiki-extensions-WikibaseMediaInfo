@@ -3,6 +3,7 @@
 namespace Wikibase\MediaInfo\Tests\DataModel;
 
 use InvalidArgumentException;
+use MediaWikiTestCaseTrait;
 use Wikibase\MediaInfo\DataModel\MediaInfoId;
 
 /**
@@ -14,6 +15,8 @@ use Wikibase\MediaInfo\DataModel\MediaInfoId;
  * @author Bene* < benestar.wikimedia@gmail.com >
  */
 class MediaInfoIdTest extends \PHPUnit\Framework\TestCase {
+
+	use MediaWikiTestCaseTrait;
 
 	public static function provideValidIds() {
 		return [
@@ -78,6 +81,7 @@ class MediaInfoIdTest extends \PHPUnit\Framework\TestCase {
 	public function testSerialize() {
 		$id = new MediaInfoId( 'M1' );
 
+		$this->expectDeprecationAndContinue( '/MediaInfoId::serialize/' );
 		$this->assertSame( 'M1', $id->serialize() );
 	}
 
@@ -86,6 +90,7 @@ class MediaInfoIdTest extends \PHPUnit\Framework\TestCase {
 	 */
 	public function testUnserialize( $serialization, $expected ) {
 		$id = new MediaInfoId( 'M1' );
+		$this->expectDeprecationAndContinue( '/MediaInfoId::unserialize/' );
 		$id->unserialize( $serialization );
 		$this->assertSame( $expected, $id->getSerialization() );
 	}
@@ -143,6 +148,7 @@ class MediaInfoIdTest extends \PHPUnit\Framework\TestCase {
 		// but remains compatible with older serialization formats (as long as they
 		// are still supported via implementing the Serializable interface)
 		// See more thorough description above about those changes in serialization format
+		$this->expectDeprecationAndContinue( '/MediaInfoId::unserialize/' );
 		$this->assertEquals(
 			new MediaInfoId( 'M1' ),
 			unserialize( 'C:40:"Wikibase\MediaInfo\DataModel\MediaInfoId":2:{M1}' )

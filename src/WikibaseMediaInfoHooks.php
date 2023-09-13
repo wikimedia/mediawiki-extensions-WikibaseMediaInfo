@@ -261,7 +261,7 @@ class WikibaseMediaInfoHooks {
 					foreach ( $statement->getQualifiers() as $qualifierSnak ) {
 						$qualifierPropertyId = $qualifierSnak->getPropertyId();
 						try {
-							$existingPropertyTypes[$qualifierPropertyId->serialize()] =
+							$existingPropertyTypes[$qualifierPropertyId->getSerialization()] =
 								WBMIHooksHelper::getPropertyType( $qualifierPropertyId );
 						} catch ( PropertyDataTypeLookupException $e ) {
 							// ignore when property can't be found - it likely no longer exists;

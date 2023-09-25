@@ -1,10 +1,11 @@
 {
 	"@metadata": {
 		"authors": [
-			"Mehtab ahmed"
+			"Mehtab ahmed",
+			"Amire80"
 		]
 	},
-	"action-mediainfo-term": "ميڊيا معلومات جا اصطلاح (عنوان، تَتَ)  بدلايو",
+	"action-mediainfo-term": "ميڊيا معلومات جا اصطلاح (عنوان، تَتَ) بدلايو",
 	"right-mediainfo-term": "ميڊيا معلومات جا اصطلاح (عنوان، تَتَ)  بدلايو",
 	"wikibase-entity-mediainfo": "ميڊيا معلومات",
 	"wikibase-mediainfo-summary-wbsetlabel-add": "[$2] عنوان وڌو",

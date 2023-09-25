@@ -48,6 +48,7 @@
 	"wikibasemediainfo-statements-remove": "Fjern alle",
 	"wikibasemediainfo-statements-title-depicts": "Element som er med i denne fila",
 	"wikibasemediainfo-statements-link-notice-text": "Merkelappar i strukturerte data lenkjar til sidene sine på Wikidata og vil opna i eit nytt vindauga.",
+	"wikibasemediainfo-time-timestamp-formatted": "Vil verta vist som: $1",
 	"wikibasemediainfo-time-precision-year1g": "milliardar år",
 	"wikibasemediainfo-time-precision-year100m": "hundre millionar år",
 	"wikibasemediainfo-time-precision-year1m": "millionar år",

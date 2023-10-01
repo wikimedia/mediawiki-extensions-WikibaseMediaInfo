@@ -5,12 +5,18 @@ namespace Wikibase\MediaInfo;
 use CirrusSearch\Parser\ParsedQueryClassifiersRepository;
 use CirrusSearch\Profile\SearchProfileService;
 use ExtensionRegistry;
+use MediaWiki\Hook\BeforePageDisplayHook;
+use MediaWiki\Hook\ParserOutputPostCacheTransformHook;
+use MediaWiki\Hook\SidebarBeforeOutputHook;
 use MediaWiki\MediaWikiServices;
+use MediaWiki\Page\Hook\ArticleUndeleteHook;
+use MediaWiki\Page\Hook\RevisionUndeletedHook;
+use MediaWiki\Preferences\Hook\GetPreferencesHook;
 use MediaWiki\Revision\RenderedRevision;
 use MediaWiki\Revision\RevisionRecord;
 use MediaWiki\Revision\SlotRecord;
-use MediaWiki\Revision\SlotRoleRegistry;
 use MediaWiki\Storage\BlobStore;
+use MediaWiki\Storage\Hook\MultiContentSaveHook;
 use MediaWiki\Title\Title;
 use MediaWiki\User\UserIdentity;
 use OOUI\HtmlSnippet;
@@ -49,27 +55,17 @@ use Wikibase\Repo\WikibaseRepo;
  * @license GPL-2.0-or-later
  * @author Bene* < benestar.wikimedia@gmail.com >
  */
-class WikibaseMediaInfoHooks {
+class WikibaseMediaInfoHooks implements
+	BeforePageDisplayHook,
+	ParserOutputPostCacheTransformHook,
+	GetPreferencesHook,
+	RevisionUndeletedHook,
+	ArticleUndeleteHook,
+	SidebarBeforeOutputHook,
+	MultiContentSaveHook
+{
 
 	public const MEDIAINFO_SLOT_HEADER_PLACEHOLDER = '<mediainfoslotheader />';
-
-	/**
-	 * Hook to register the MediaInfo slot role.
-	 *
-	 * @param MediaWikiServices $services
-	 */
-	public static function onMediaWikiServices( MediaWikiServices $services ) {
-		$services->addServiceManipulator( 'SlotRoleRegistry', static function ( SlotRoleRegistry $registry ) {
-			if ( !$registry->isDefinedRole( 'mediainfo' ) ) {
-				// Sense check
-				$registry->defineRoleWithModel(
-					/* role */ 'mediainfo',
-					/* content handler */ MediaInfoContent::CONTENT_MODEL_ID
-					/*, layout – we want to set "prepend" in future, once MediaWiki supports that */
-				);
-			}
-		} );
-	}
 
 	/**
 	 * Hook to register the MediaInfo entity namespaces for EntityNamespaceLookup.
@@ -112,13 +108,13 @@ class WikibaseMediaInfoHooks {
 	 *
 	 * @param ParserOutput $parserOutput
 	 * @param string &$text
-	 * @param array $options
+	 * @param array &$options
 	 */
-	public static function onParserOutputPostCacheTransform(
-		ParserOutput $parserOutput,
+	public function onParserOutputPostCacheTransform(
+		$parserOutput,
 		&$text,
-		array $options
-	) {
+		&$options
+	): void {
 		$text = str_replace(
 			'<mw:slotheader>mediainfo</mw:slotheader>',
 			self::MEDIAINFO_SLOT_HEADER_PLACEHOLDER,
@@ -157,7 +153,7 @@ class WikibaseMediaInfoHooks {
 	 * @throws \ConfigException
 	 * @throws \OOUI\Exception
 	 */
-	public static function onBeforePageDisplay( $out, $skin ) {
+	public function onBeforePageDisplay( $out, $skin ): void {
 		$config = MediaWikiServices::getInstance()->getMainConfig();
 
 		// Hide any MediaInfo content and UI on a page, if the target page is a redirect.
@@ -697,7 +693,7 @@ class WikibaseMediaInfoHooks {
 	 * @param \User $user
 	 * @param array[] &$preferences
 	 */
-	public static function onGetPreferences( \User $user, array &$preferences ) {
+	public function onGetPreferences( $user, &$preferences ) {
 		$preferences['wbmi-cc0-confirmed'] = [
 			'type' => 'api'
 		];
@@ -729,8 +725,9 @@ class WikibaseMediaInfoHooks {
 
 	/**
 	 * @param RevisionRecord $revision
+	 * @param ?int $oldPageID
 	 */
-	public static function onRevisionUndeleted( RevisionRecord $revision ) {
+	public function onRevisionUndeleted( $revision, $oldPageID ) {
 		$title = Title::newFromLinkTarget( $revision->getPageAsLinkTarget() );
 		if ( !$title->inNamespace( NS_FILE ) ) {
 			// short-circuit if we're not even dealing with a file
@@ -818,7 +815,7 @@ class WikibaseMediaInfoHooks {
 	 * @param int $oldPageId
 	 * @param array $restoredPages
 	 */
-	public static function onArticleUndelete( Title $title, $create, $comment, $oldPageId, array $restoredPages ) {
+	public function onArticleUndelete( $title, $create, $comment, $oldPageId, $restoredPages ) {
 		if ( !$title->inNamespace( NS_FILE ) || $oldPageId === $title->getArticleID() ) {
 			return;
 		}
@@ -838,7 +835,7 @@ class WikibaseMediaInfoHooks {
 	 * @param string[] &$sidebar
 	 * @return void
 	 */
-	public static function onSidebarBeforeOutput( Skin $skin, array &$sidebar ): void {
+	public function onSidebarBeforeOutput( $skin, &$sidebar ): void {
 		$title = $skin->getTitle();
 		if ( !static::isMediaInfoPage( $title ) ) {
 			return;
@@ -881,12 +878,12 @@ class WikibaseMediaInfoHooks {
 	 * @param int $flags
 	 * @param \Status $hookStatus
 	 */
-	public static function onMultiContentSave(
-		RenderedRevision $renderedRevision,
-		UserIdentity $author,
-		\CommentStoreComment $summary,
-		int $flags,
-		\Status $hookStatus
+	public function onMultiContentSave(
+		$renderedRevision,
+		$author,
+		$summary,
+		$flags,
+		$hookStatus
 	) {
 		if ( ( $flags & EDIT_AUTOSUMMARY ) !== 0 && $renderedRevision->getRevision()->hasSlot( 'mediainfo' ) ) {
 			// remove coordinates from edit summaries when deleting location statements

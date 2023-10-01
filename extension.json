@@ -76,6 +76,12 @@
 	],
 	"callback": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onRegistration",
 	"HookHandlers": {
+		"main": {
+			"class": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks"
+		},
+		"services": {
+			"class": "Wikibase\\MediaInfo\\WikibaseMediaInfoServicesHooks"
+		},
 		"mediainfo_searchdata": {
 			"class": "\\Wikibase\\MediaInfo\\MediaInfoDataForSearchIndex",
 			"services": [
@@ -84,23 +90,23 @@
 		}
 	},
 	"Hooks": {
-		"MediaWikiServices": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onMediaWikiServices",
+		"MediaWikiServices": "services",
 		"WikibaseRepoEntityNamespaces": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onWikibaseRepoEntityNamespaces",
 		"WikibaseRepoEntityTypes": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onWikibaseEntityTypes",
 		"WikibaseClientEntityTypes": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onWikibaseEntityTypes",
 		"GetEntityByLinkedTitleLookup": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onGetEntityByLinkedTitleLookup",
 		"GetEntityContentModelForTitle": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onGetEntityContentModelForTitle",
-		"BeforePageDisplay": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onBeforePageDisplay",
-		"ParserOutputPostCacheTransform": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onParserOutputPostCacheTransform",
-		"GetPreferences": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onGetPreferences",
+		"BeforePageDisplay": "main",
+		"ParserOutputPostCacheTransform": "main",
+		"GetPreferences": "main",
 		"ScribuntoExternalLibraries": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onScribuntoExternalLibraries",
-		"RevisionUndeleted": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onRevisionUndeleted",
-		"ArticleUndelete": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onArticleUndelete",
+		"RevisionUndeleted": "main",
+		"ArticleUndelete": "main",
 		"CirrusSearchProfileService": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onCirrusSearchProfileService",
 		"CirrusSearchRegisterFullTextQueryClassifiers": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onCirrusSearchRegisterFullTextQueryClassifiers",
-		"SidebarBeforeOutput": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onSidebarBeforeOutput",
+		"SidebarBeforeOutput": "main",
 		"CirrusSearchAddQueryFeatures": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onCirrusSearchAddQueryFeatures",
-		"MultiContentSave": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onMultiContentSave",
+		"MultiContentSave": "main",
 		"SearchDataForIndex2": "mediainfo_searchdata"
 	},
 	"MessagesDirs": {

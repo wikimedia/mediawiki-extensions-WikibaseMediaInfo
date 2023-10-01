@@ -73,10 +73,11 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiIntegrationTestCase {
 	 */
 	public function testOnParserOutputPostCacheTransform( $original, $expected ) {
 		$parserOutput = $this->createMock( ParserOutput::class );
-		WikibaseMediaInfoHooks::onParserOutputPostCacheTransform(
+		$options = [];
+		( new WikibaseMediaInfoHooks )->onParserOutputPostCacheTransform(
 			$parserOutput,
 			$original,
-			[]
+			$options
 		);
 		$this->assertEquals( $expected, $original );
 	}
@@ -132,7 +133,7 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiIntegrationTestCase {
 		$out->expects( $this->once() )
 			->method( 'addModules' );
 
-		WikibaseMediaInfoHooks::onBeforePageDisplay( $out, $skin );
+		( new WikibaseMediaInfoHooks )->onBeforePageDisplay( $out, $skin );
 	}
 
 	public function testOnBeforePageDisplayWithMissingTitle() {
@@ -149,7 +150,7 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiIntegrationTestCase {
 
 		$skin = $this->createMock( \Skin::class );
 
-		WikibaseMediaInfoHooks::onBeforePageDisplay( $out, $skin );
+		( new WikibaseMediaInfoHooks )->onBeforePageDisplay( $out, $skin );
 	}
 
 	private function createHookObjectWithMocks() {

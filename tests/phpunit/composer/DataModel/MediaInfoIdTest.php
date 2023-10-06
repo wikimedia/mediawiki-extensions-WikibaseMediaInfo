@@ -81,30 +81,13 @@ class MediaInfoIdTest extends \PHPUnit\Framework\TestCase {
 	public function testSerialize() {
 		$id = new MediaInfoId( 'M1' );
 
-		$this->expectDeprecationAndContinue( '/MediaInfoId::serialize/' );
-		$this->assertSame( 'M1', $id->serialize() );
+		$this->assertSame( [ 'serialization' => 'M1' ], $id->__serialize() );
 	}
 
-	/**
-	 * @dataProvider provideIdSerializations
-	 */
-	public function testUnserialize( $serialization, $expected ) {
+	public function testUnserialize() {
 		$id = new MediaInfoId( 'M1' );
-		$this->expectDeprecationAndContinue( '/MediaInfoId::unserialize/' );
-		$id->unserialize( $serialization );
-		$this->assertSame( $expected, $id->getSerialization() );
-	}
-
-	public static function provideIdSerializations() {
-		return [
-			[ 'M2', 'M2' ],
-
-			// All these cases are kind of an injection vector and allow constructing invalid ids.
-			[ 'string', 'string' ],
-			[ '', '' ],
-			[ 2, 2 ],
-			[ null, '' ],
-		];
+		$id->__unserialize( [ 'serialization' => 'M2' ] );
+		$this->assertSame( 'M2', $id->getSerialization() );
 	}
 
 	/**

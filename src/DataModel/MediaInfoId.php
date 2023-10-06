@@ -68,30 +68,10 @@ class MediaInfoId extends SerializableEntityId implements Int32EntityId {
 	/**
 	 * @see Serializable::serialize
 	 *
-	 * @return string
-	 */
-	public function serialize() {
-		wfDeprecated( __METHOD__, '1.41' );
-		return $this->__serialize()[ 'serialization' ];
-	}
-
-	/**
-	 * @see Serializable::serialize
-	 *
 	 * @return array
 	 */
 	public function __serialize(): array {
 		return [ 'serialization' => $this->serialization ];
-	}
-
-	/**
-	 * @see Serializable::unserialize
-	 *
-	 * @param string $value
-	 */
-	public function unserialize( $value ) {
-		wfDeprecated( __METHOD__, '1.41' );
-		$this->__unserialize( [ 'serialization' => $value ] );
 	}
 
 	/**

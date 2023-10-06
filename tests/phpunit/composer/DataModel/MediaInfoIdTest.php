@@ -90,6 +90,19 @@ class MediaInfoIdTest extends \PHPUnit\Framework\TestCase {
 		$this->assertSame( 'M2', $id->getSerialization() );
 	}
 
+	public function testUnserializeInvalid(): void {
+		$id = new MediaInfoId( 'M1' );
+		$this->expectException( InvalidArgumentException::class );
+		$id->__unserialize( [ 'serialization' => 'm' ] );
+	}
+
+	public function testUnserializeNotNormalized(): void {
+		$id = new MediaInfoId( 'M1' );
+		$this->expectException( InvalidArgumentException::class );
+		$id->__unserialize( [ 'serialization' => 'm2' ] );
+		// 'm2' is allowed in the constructor (silently uppercased) but not in unserialize()
+	}
+
 	/**
 	 * @dataProvider provideValidIds
 	 */

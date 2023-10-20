@@ -1,57 +1,29 @@
-@import '../lib/wikimedia-ui-base.less';
+@import 'mediawiki.skin.variables.less';
 
 // Global MediaInfo variables
 // ---------------------------------------------------------
-// Use semantic variable names from wikimedia-ui-base in the code when it makes
-// sense to do so. Otherwise, create a new extension-specific semantic
+// Use semantic variable names from Codex design tokens in the code when it
+// makes sense to do so. Otherwise, create a new extension-specific semantic
 // variable here.
+// See https://doc.wikimedia.org/codex/latest/design-tokens/overview.html
 
 // Colors
 // ---------------------------------------------------------
 // https://design.wikimedia.org/style-guide/visual-style_colors.html
 
-@wbmi-box-shadow-color: @wmui-color-base20;
-
-// Not from style guide, but for consistency with similar existing functionality
-@wbmi-background-color--odd: #f6f8fc;
-
-@wbmi-icon-color--subtle: @wmui-color-base50;
-
-@wbmi-indicator-color: @color-base--subtle;
+@wbmi-box-shadow-color: #54595d;
 
 @wbmi-background-color-pending-stripe: #ddd;
 
-@wbmi-background-color-tool--hover: @wmui-color-base90;
-@wbmi-background-color-tool--focus: @wmui-color-base80;
-@wbmi-background-color-tool--active: @wmui-color-base80;
-@wbmi-background-color-tool--selected: @background-color-primary;
-
-@wbmi-color-taboption: @color-base--hover;
-
-@wbmi-color-tool: @wmui-color-base0;
-
-@wbmi-background-color-namespace-label: @background-color-tabs;
-
 // Border
 // ---------------------------------------------------------
-@wbmi-border-panel--target: 2px solid @color-primary;
-@wbmi-border-color-panel--active: @color-primary--active;
-@wbmi-border-color-base--lighter: @border-color-heading;
-@wbmi-border-color-base--focus: @color-primary--focus;
-@wbmi-border-color-input--hover: @border-color-base--active;
-@wbmi-border-color-result: @background-color-tabs;
-
-@wbmi-border-color-tool:               transparent;
-@wbmi-border-color-tool--hover:        @wmui-color-base30;
+@wbmi-border-panel--target: 2px solid @border-color-progressive;
+@wbmi-border-color-panel--active: @border-color-progressive--active;
+@wbmi-border-color-base--lighter: @border-color-subtle;
 
 // Sizes
 // ---------------------------------------------------------
-@wbmi-size-base: 32 / @wbmi-font-size-browser / @wbmi-font-size-base;
-
 @wbmi-size-icon-inner: unit( 20 / 16 / 0.8, em );
-
-@wbmi-max-width-base: 50em;
-@wbmi-max-width-input-base: @max-width-base;
 
 // Spacing
 // ---------------------------------------------------------
@@ -60,68 +32,13 @@
 @wbmi-spacing-xs: @wbmi-spacing-base / 4;
 @wbmi-spacing-hairline: 3px;
 
-@wbmi-spacing-base-px: 16px;
-
-@wbmi-padding-horizontal-base: 12px;
-@wbmi-padding-vertical-base: 6px;
-@wbmi-padding-vertical-tool: 5px;
-@wbmi-padding-vertical-mobile: 11px;
-
-@wbmi-margin-horizontal-base: 6px;
-@wbmi-margin-horizontal-mobile: 8px;
-@wbmi-margin-vertical-base: 6px;
-
-@wbmi-padding-horizontal-input-text: 8px;
-@wbmi-padding-input-text:
-	@wbmi-padding-vertical-base
-	@wbmi-padding-horizontal-input-text * 2 + @size-indicator
-	@wbmi-padding-vertical-base
-	@wbmi-padding-horizontal-input-text * 2 + @size-icon;
-
-@wbmi-padding-end-dropdown: @size-indicator + ( 1.5 * @wbmi-padding-horizontal-base );
-
 // Typography
 // ---------------------------------------------------------
-@wbmi-font-size-large: 1.2em;
 @wbmi-font-size-medium: 1em;
 @wbmi-font-size-sm: 0.8em;
 
 @wbmi-font-size-browser: 16; // assumed browser default of `16px`
 @wbmi-font-size-base: 0.875 / 1em; // equals `14px` at browser default of `16px`
-
-@wbmi-line-height-base: unit( 18 / @wbmi-font-size-browser / @wbmi-font-size-base, em);
-@wbmi-line-height-input: unit( 18 / 16 / 0.8, em ); // Firefox needs a value, Chrome the unit; equals `18px` at base `font-size: 12.8px`
-
-// Opacity
-// ---------------------------------------------------------
-@wbmi-opacity-indicator--disabled: 0.15; // equals `#c7c8cc` on background-color `#fff`
-
-// Binary inputs
-// ---------------------------------------------------------
-@wbmi-background-color-input-binary--checked: @color-primary;
-@wbmi-background-color-input-binary--active: @color-primary--active;
-
-@wbmi-border-color-framed-progressive--hover: @color-primary--hover;
-@wbmi-border-color-input-binary: @border-color-base--active;
-@wbmi-border-color-input-binary--active: @color-primary--active;
-@wbmi-border-color-input-binary--checked: @color-primary;
-@wbmi-border-width-radio--checked: 6px;
-
-@wbmi-box-shadow-input--focus: inset 0 0 0 1px @color-primary;
-@wbmi-box-shadow-input-binary--active: inset 0 0 0 1px @color-primary--active;
-@wbmi-box-shadow-progressive--focus: inset 0 0 0 1px @color-primary, inset 0 0 0 2px @color-base--inverted;
-
-@wbmi-size-icon-small: 14 / @wbmi-font-size-browser / @wbmi-font-size-base;
-@wbmi-size-input-binary: 20 / @wbmi-font-size-browser / @wbmi-font-size-base;
-
-@wbmi-margin-top-fieldlayout--labelled: 12px;
-
-// Dialog
-// ---------------------------------------------------------
-@wbmi-border-color-dialog: @background-color-tabs;
-@wbmi-padding-dialog: 16px;
-// Header/footer content height + top/bottom padding + 1px border
-@wbmi-spacing-dialog-body: 51px;
 
 // State
 // ---------------------------------------------------------
@@ -129,13 +46,13 @@
 
 // Line thingys
 //---------------------------------------------------------
-@wbmi-color-line: #979797;
+@wbmi-border-color-line: #979797;
 @wbmi-offset-line: 1rem;
 
 // Mixins
 // ---------------------------------------------------------
 .wbmi-bullet-separator() {
-	color: @color-base--emphasized;
+	color: @color-emphasized;
 	content: '\2022'; // &bull;
 	cursor: initial;
 	display: inline-block;
@@ -144,16 +61,16 @@
 };
 
 .wbmi-vertical-line() {
-	border-left: 1px solid @wbmi-color-line;
+	border-left: 1px solid @wbmi-border-color-line;
 	content: '';
-	height: ~'calc(100% - 1.5rem)'; // ~ is required to disable LESS auto-calculation...
+	height: ~'calc( 100% - 1.5rem )'; // ~ is required to disable LESS auto-calculation...
 	left: -( @wbmi-offset-line );
 	position: absolute;
 	top: 0;
 };
 
 .wbmi-horizontal-line() {
-	border-bottom: 1px solid @wbmi-color-line;
+	border-bottom: 1px solid @wbmi-border-color-line;
 	content: '';
 	height: 1em;
 	left: -( @wbmi-offset-line );
@@ -162,14 +79,10 @@
 };
 
 .wbmi-max-container-width() {
-	@media screen and ( min-width: @width-breakpoint-desktop ) {
+	@media screen and ( min-width: @min-width-breakpoint-desktop ) {
 		box-sizing: border-box;
 		max-width: 800px;
 	}
-};
-
-.wbmi-result-box-shadow() {
-	box-shadow: 4px 4px 5px -2px @border-color-base;
 };
 
 // Taken from OOUI.

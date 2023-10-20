@@ -5,13 +5,13 @@
 .wbmi-statements-widget {
 	margin-bottom: @wbmi-spacing-sm;
 
-	@media screen and ( max-width: @width-breakpoint-tablet ) {
+	@media screen and ( max-width: @min-width-breakpoint-tablet ) {
 		font-size: 0.9em;
 	}
 
 	// force all links (and links that act as button) to OOUI's primary color
 	a {
-		color: @color-primary;
+		color: @color-progressive;
 	}
 
 	h4.wbmi-entity-label {
@@ -66,7 +66,7 @@
 		.wbmi-entityview-statementsGroup & > .oo-ui-labelElement-label {
 			display: none;
 
-			@media screen and ( min-width: @width-breakpoint-tablet ) {
+			@media screen and ( min-width: @min-width-breakpoint-tablet ) {
 				display: initial;
 			}
 		}
@@ -104,7 +104,7 @@
 			}
 		}
 
-		@media screen and ( max-width: @width-breakpoint-tablet ) {
+		@media screen and ( max-width: @min-width-breakpoint-tablet ) {
 			display: block;
 
 			.wbmi-entity-title {

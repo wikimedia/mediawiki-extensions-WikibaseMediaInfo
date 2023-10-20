@@ -13,7 +13,7 @@
 	// This block of rules can be removed when other statements is enabled everywhere
 	&.wbmi-item--other-statements-disabled {
 		.wbmi-entity-primary::before {
-			@media screen and ( min-width: @width-breakpoint-tablet ) {
+			@media screen and ( min-width: @min-width-breakpoint-tablet ) {
 				.wbmi-bullet-separator();
 			}
 		}
@@ -28,7 +28,7 @@
 		.wbmi-entity-header {
 			.flex-display();
 			padding: @wbmi-spacing-sm;
-			background-color: @background-color-framed;
+			background-color: @background-color-interactive-subtle;
 		}
 
 		.wbmi-entity-primary,
@@ -37,7 +37,7 @@
 
 			&.wbmi-entity-is-primary,
 			&.wbmi-entity-is-prominent {
-				color: @color-base--subtle;
+				color: @color-subtle;
 
 				/* stylelint-disable-next-line selector-class-pattern */
 				.oo-ui-iconElement {
@@ -54,7 +54,7 @@
 		margin-top: @wbmi-spacing-hairline;
 
 		.wbmi-item-container {
-			background-color: @background-color-framed;
+			background-color: @background-color-interactive-subtle;
 		}
 
 		.wbmi-item-references,
@@ -67,7 +67,7 @@
 		// border is applied on -container, because .wbmi-item would also
 		// include delete icon
 		.wbmi-item-container {
-			border: 1px solid @background-color-base--hover;
+			border: 1px solid @background-color-interactive;
 		}
 
 		+ .wbmi-item-edit {

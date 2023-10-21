@@ -220,7 +220,7 @@ class MediaInfoEntityStatementsView {
 		}
 
 		// Format main property (e.g. depicts).
-		if ( !empty( $statements ) ) {
+		if ( $statements ) {
 			$formatValueCache = array_replace_recursive(
 				$formatValueCache,
 				$this->getValueFormatValueCache(

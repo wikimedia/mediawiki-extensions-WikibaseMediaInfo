@@ -2,7 +2,8 @@
 	"@metadata": {
 		"authors": [
 			"Fitoschido",
-			"Xuacu"
+			"Xuacu",
+			"YoaR"
 		]
 	},
 	"action-mediainfo-term": "cambiar los términos d'información de multimedia (pies, resumes)",
@@ -25,7 +26,7 @@
 	"wikibasemediainfo-filepage-add-caption": "Añadir un pie",
 	"wikibasemediainfo-filepage-edit-captions": "Editar pies",
 	"wikibasemediainfo-filepage-edit-depicts": "Editar les representaciones",
-	"wikibasemediainfo-filepage-cancel": "Encaboxar",
+	"wikibasemediainfo-filepage-cancel": "Zarrar",
 	"wikibasemediainfo-filepage-cancel-confirm": "Nun van guardase los cambeos que ficisti.",
 	"wikibasemediainfo-filepage-cancel-confirm-title": "¿Descartar los cambeos?",
 	"wikibasemediainfo-filepage-cancel-confirm-accept": "Descartar",

@@ -7,7 +7,7 @@
 .wbmi-entityview-captionsPanel {
 	.wbmi-filepage-panel();
 
-	@media screen and ( max-width: @width-breakpoint-tablet ) {
+	@media screen and ( max-width: @min-width-breakpoint-tablet ) {
 		font-size: 0.9em;
 	}
 
@@ -62,11 +62,11 @@
 		.flex( 1, 1, auto );
 
 		&.wbmi-entityview-emptyCaption {
-			color: @color-base--subtle;
+			color: @color-subtle;
 		}
 
 		.@{edit-mode}& {
-			@media screen and ( max-width: @width-breakpoint-tablet ) {
+			@media screen and ( max-width: @min-width-breakpoint-tablet ) {
 				.flex( 1, 1, 100%, 3 );
 			}
 		}

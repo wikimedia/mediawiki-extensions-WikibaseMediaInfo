@@ -32,7 +32,6 @@
 		"tmp": "0.1.0",
 		"wikibase-data-model": "^6.1.0",
 		"wikibase-data-values": "^0.10.0",
-		"wikibase-serialization": "^5.0.0",
-		"wikimedia-ui-base": "0.21.0"
+		"wikibase-serialization": "^5.0.0"
 	}
 }

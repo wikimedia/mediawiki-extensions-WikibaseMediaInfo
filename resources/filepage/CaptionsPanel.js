@@ -49,7 +49,7 @@ CaptionsPanel = function ( config ) {
 	config = config || {};
 
 	// Parent constructor
-	CaptionsPanel.parent.call( this, config );
+	CaptionsPanel.super.call( this, config );
 
 	// Mixin constructor
 	OO.ui.mixin.PendingElement.call( this, config );

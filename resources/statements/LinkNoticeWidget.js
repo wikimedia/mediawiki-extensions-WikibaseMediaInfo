@@ -17,7 +17,7 @@ LinkNoticeWidget = function ( config ) {
 		canDisplay: this.canDisplay()
 	};
 
-	LinkNoticeWidget.parent.call( this, config );
+	LinkNoticeWidget.super.call( this, config );
 	ComponentWidget.call(
 		this,
 		'wikibase.mediainfo.statements',

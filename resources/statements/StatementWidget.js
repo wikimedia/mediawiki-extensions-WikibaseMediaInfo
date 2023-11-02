@@ -65,7 +65,7 @@ StatementWidget = function ( config ) {
 		disabled: true
 	} );
 
-	StatementWidget.parent.call( this, config );
+	StatementWidget.super.call( this, config );
 	DOMLessGroupWidget.call( this );
 	ComponentWidget.call(
 		this,

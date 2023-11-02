@@ -23,7 +23,7 @@ QUnit.module( 'ComponentWidget', Object.assign( {}, hooks.mediainfo, {
 				variable: config.variable || 'foo'
 			};
 
-			ExampleComponentWidget.parent.call( this, config );
+			ExampleComponentWidget.super.call( this, config );
 			ComponentWidget.call(
 				this,
 				'module-not-required-because-stubbed-out',

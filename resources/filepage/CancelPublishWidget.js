@@ -27,7 +27,7 @@ CancelPublishWidget = function () {
 	cancelButton.connect( this, { click: [ 'emit', 'cancel' ] } );
 	publishButton.connect( this, { click: [ 'emit', 'publish' ] } );
 
-	CancelPublishWidget.parent.call(
+	CancelPublishWidget.super.call(
 		this,
 		{
 			content: [ cancelButton, publishButton ],

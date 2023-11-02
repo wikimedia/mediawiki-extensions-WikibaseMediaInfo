@@ -29,7 +29,7 @@ CaptionsEditActionsWidget = function () {
 	cancelAndPublishButtons.connect( this, { publish: [ 'emit', 'publish' ] } );
 	addCaptionButton.connect( this, { click: [ 'emit', 'add' ] } );
 
-	CaptionsEditActionsWidget.parent.call(
+	CaptionsEditActionsWidget.super.call(
 		this,
 		{
 			content: [ editActions ]

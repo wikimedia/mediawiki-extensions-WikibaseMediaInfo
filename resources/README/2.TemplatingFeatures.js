@@ -21,7 +21,7 @@ var ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
 TemplatingFeatures = function TemplatingFeaturesConstructor( config ) {
 	config = config || {};
 
-	TemplatingFeatures.parent.call( this, config );
+	TemplatingFeatures.super.call( this, config );
 
 	this.state = $.extend( {}, config, {
 		editing: false,

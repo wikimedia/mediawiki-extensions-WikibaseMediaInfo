@@ -35,7 +35,7 @@ MonolingualTextInputWidget = function MediaInfoStatementsMonolingualTextInputWid
 	} );
 	this.language.connect( this, { select: 'onChangeLanguage' } );
 
-	MonolingualTextInputWidget.parent.call( this );
+	MonolingualTextInputWidget.super.call( this );
 	ComponentWidget.call(
 		this,
 		'wikibase.mediainfo.statements',

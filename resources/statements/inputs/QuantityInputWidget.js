@@ -35,7 +35,7 @@ QuantityInputWidget = function MediaInfoStatementsQuantityInputWidget( config ) 
 
 	this.bindEventHandlers();
 
-	QuantityInputWidget.parent.call( this );
+	QuantityInputWidget.super.call( this );
 	AbstractInputWidget.call( this, config );
 	ComponentWidget.call(
 		this,

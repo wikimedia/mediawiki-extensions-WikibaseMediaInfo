@@ -61,7 +61,7 @@ SnakWidget = function ( config ) {
 	this.propertyInput.connect( this, { add: 'onChange' } );
 	this.valueInput.connect( this, { change: 'onChange' } );
 
-	SnakWidget.parent.call( this, config );
+	SnakWidget.super.call( this, config );
 	ComponentWidget.call(
 		this,
 		'wikibase.mediainfo.statements',

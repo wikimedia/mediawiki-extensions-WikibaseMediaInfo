@@ -37,7 +37,7 @@ var ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
 ExampleComponentWidget = function ExampleComponentWidgetConstructor( config ) {
 	config = config || {};
 
-	ExampleComponentWidget.parent.call( this, config );
+	ExampleComponentWidget.super.call( this, config );
 
 	// initialize state - this data will be used for the initial render
 	this.state = $.extend( {}, config, {

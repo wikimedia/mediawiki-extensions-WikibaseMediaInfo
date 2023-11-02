@@ -59,7 +59,7 @@ GlobeCoordinateInputWidget = function MediaInfoStatementsGlobeCoordinateInputWid
 
 	this.bindEventListeners();
 
-	GlobeCoordinateInputWidget.parent.call( this );
+	GlobeCoordinateInputWidget.super.call( this );
 	ComponentWidget.call(
 		this,
 		'wikibase.mediainfo.statements',

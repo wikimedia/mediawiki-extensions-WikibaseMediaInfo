@@ -19,7 +19,7 @@ var ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
 BestPractices = function BestPracticesConstructor( config ) {
 	config = config || {};
 
-	BestPractices.parent.call( this, config );
+	BestPractices.super.call( this, config );
 
 	this.state = $.extend( {}, config, {
 		some: '',

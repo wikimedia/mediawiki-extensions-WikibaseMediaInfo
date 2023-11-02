@@ -34,7 +34,7 @@ UlsWidget = function ( config ) {
 		this.setValue( config.language );
 	}
 
-	UlsWidget.parent.call( this );
+	UlsWidget.super.call( this );
 	this.$element = this.dropdown.$element;
 };
 OO.inheritClass( UlsWidget, OO.ui.Widget );
@@ -109,7 +109,7 @@ UlsWidget.prototype.getValue = function () {
  */
 UlsWidget.prototype.setDisabled = function ( disabled ) {
 	this.dropdown.setDisabled( disabled );
-	UlsWidget.parent.prototype.setDisabled.call( this, disabled );
+	UlsWidget.super.prototype.setDisabled.call( this, disabled );
 };
 
 module.exports = UlsWidget;

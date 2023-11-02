@@ -24,7 +24,7 @@ StringInputWidget = function MediaInfoStatementsStringInputWidget( config ) {
 	this.input.connect( this, { enter: 'onEnter' } );
 	this.input.connect( this, { change: 'onChange' } );
 
-	StringInputWidget.parent.call( this );
+	StringInputWidget.super.call( this );
 	ComponentWidget.call(
 		this,
 		'wikibase.mediainfo.statements',

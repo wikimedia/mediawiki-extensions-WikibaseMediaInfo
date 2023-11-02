@@ -16,7 +16,7 @@ AddPropertyWidget = function MediaInfoAddPropertyWidget( config ) {
 		editing: false
 	};
 
-	AddPropertyWidget.parent.call( this, config );
+	AddPropertyWidget.super.call( this, config );
 	ComponentWidget.call(
 		this,
 		'wikibase.mediainfo.statements',

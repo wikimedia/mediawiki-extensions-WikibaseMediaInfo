@@ -35,7 +35,7 @@ EntityAutocompleteInputWidget = function MediaInfoStatementsEntityAutocompleteIn
 	this.dataCache = {};
 
 	// eslint-disable-next-line mediawiki/class-doc
-	EntityAutocompleteInputWidget.parent.call( this, $.extend( {}, config, {
+	EntityAutocompleteInputWidget.super.call( this, $.extend( {}, config, {
 		// classes should *always* be added, because some essential functionality
 		// (e.g. CSS to turn red on invalid input) depends on these classes
 		classes: [
@@ -143,7 +143,7 @@ EntityAutocompleteInputWidget.prototype.setValue = function ( value ) {
 
 	this.entityId = index >= 0 ? Object.keys( this.dataCache )[ index ] : undefined;
 
-	EntityAutocompleteInputWidget.parent.prototype.setValue.call( this, value );
+	EntityAutocompleteInputWidget.super.prototype.setValue.call( this, value );
 
 	return this;
 };
@@ -152,7 +152,7 @@ EntityAutocompleteInputWidget.prototype.setValue = function ( value ) {
  * @inheritdoc
  */
 EntityAutocompleteInputWidget.prototype.onBlur = function () {
-	EntityAutocompleteInputWidget.parent.prototype.onBlur.call( this );
+	EntityAutocompleteInputWidget.super.prototype.onBlur.call( this );
 
 	// verify that this.data (which should contain the entity id) is set
 	// if not, mark the input as destructive to indicate the value is invalid

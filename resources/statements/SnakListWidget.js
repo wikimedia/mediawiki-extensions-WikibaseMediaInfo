@@ -30,7 +30,7 @@ SnakListWidget = function MediaInfoStatementsSnakListWidget( config ) {
 		constraintsReport: null
 	};
 
-	SnakListWidget.parent.call( this, $.extend( {}, config ) );
+	SnakListWidget.super.call( this, $.extend( {}, config ) );
 	ComponentWidget.call(
 		this,
 		'wikibase.mediainfo.statements',

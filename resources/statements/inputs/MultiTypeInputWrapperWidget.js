@@ -77,7 +77,7 @@ MultiTypeInputWrapperWidget = function ( config ) {
 	this.snakTypeWidget.dropdownWidget.setIndicator( null );
 	this.snakTypeWidget.connect( this, { change: 'onSnakTypeChange' } );
 
-	MultiTypeInputWrapperWidget.parent.call( this, config );
+	MultiTypeInputWrapperWidget.super.call( this, config );
 	ComponentWidget.call(
 		this,
 		'wikibase.mediainfo.statements',

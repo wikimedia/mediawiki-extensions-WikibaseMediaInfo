@@ -22,7 +22,7 @@ UnsupportedInputWidget = function MediaInfoStatementsUnsupportedInputWidget( con
 		disabled: true
 	} );
 
-	UnsupportedInputWidget.parent.call( this );
+	UnsupportedInputWidget.super.call( this );
 	ComponentWidget.call(
 		this,
 		'wikibase.mediainfo.statements',

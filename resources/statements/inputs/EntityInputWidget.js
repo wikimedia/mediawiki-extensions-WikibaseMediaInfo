@@ -31,7 +31,7 @@ EntityInputWidget = function MediaInfoStatementsEntityInputWidget( config ) {
 	this.input.connect( this, { add: [ 'emit', 'change' ] } );
 	this.input.connect( this, { add: [ 'emit', 'add', this ] } );
 
-	EntityInputWidget.parent.call( this );
+	EntityInputWidget.super.call( this );
 	AbstractInputWidget.call( this, config );
 	ComponentWidget.call(
 		this,

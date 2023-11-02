@@ -17,14 +17,14 @@ QUnit.module( 'DOMLessGroupWidget', Object.assign( {}, hooks.mediainfo, {
 		// an ItemWidget to insert to the group
 		DOMLessGroupWidget = require( '../../../../resources/base/DOMLessGroupWidget.js' );
 		GroupWidget = function ( config ) {
-			GroupWidget.parent.call( this, config );
+			GroupWidget.super.call( this, config );
 			DOMLessGroupWidget.call( this, config );
 		};
 		OO.inheritClass( GroupWidget, OO.ui.Widget );
 		OO.mixinClass( GroupWidget, DOMLessGroupWidget );
 
 		ItemWidget = function ( config ) {
-			ItemWidget.parent.call( this, config );
+			ItemWidget.super.call( this, config );
 			OO.ui.mixin.ItemWidget.call( this, config );
 		};
 		OO.inheritClass( ItemWidget, OO.ui.Widget );

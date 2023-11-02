@@ -72,7 +72,7 @@ ItemWidget = function MediaInfoStatementsItemWidget( config ) {
 	this.map = undefined;
 	this.initializeMap();
 
-	ItemWidget.parent.call( this, $.extend( {}, config ) );
+	ItemWidget.super.call( this, $.extend( {}, config ) );
 	DOMLessGroupWidget.call( this, $.extend( {}, config ) );
 	ComponentWidget.call(
 		this,

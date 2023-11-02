@@ -58,7 +58,7 @@ TimeInputWidget = function MediaInfoStatementsTimeInputWidget( config ) {
 
 	this.bindEventHandlers();
 
-	TimeInputWidget.parent.call( this );
+	TimeInputWidget.super.call( this );
 	AbstractInputWidget.call( this, config );
 	ComponentWidget.call(
 		this,

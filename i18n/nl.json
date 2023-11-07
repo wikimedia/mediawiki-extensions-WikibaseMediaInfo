@@ -84,7 +84,7 @@
 	"wikibasemediainfo-statements-unsupported-property-type-content": "Niet alle eigenschaptypes worden volledig ondersteund, maar zullen in de toekomst ondersteund gaan worden. Voor nu werkt de functionaliteit voor niet-ondersteunde eigenschappen mogelijk niet zoals u zou verwachten.",
 	"wikibasemediainfo-statements-link-notice-text": "Labels van gestructureerde data linken naar de respectievelijke {{WBREPONAME}}-pagina's en worden in een nieuw venster geopend.",
 	"wikibasemediainfo-statements-link-notice-dismiss": "Sluiten",
-	"wikibasemediainfo-remove-all-statements-confirm": "Met deze actie worden alle bestaande waarden voor deze eigenschap verwijderd. Eigenschappen zonder waarden worden verwijderd wanneer wijzigingen worden gepubliceerd. Weet je het zeker?",
+	"wikibasemediainfo-remove-all-statements-confirm": "Hierdoor worden alle bestaande waarden voor deze eigenschap verwijderd. Eigenschappen zonder waarden worden verwijderd wanneer de wijzigingen worden gepubliceerd. Weet u het zeker?",
 	"wikibasemediainfo-remove-all-statements-confirm-title": "Alles verwijderen?",
 	"wikibasemediainfo-remove-all-statements-confirm-accept": "verwijder",
 	"wikibasemediainfo-coordinate-input-label": "Coördinaten",

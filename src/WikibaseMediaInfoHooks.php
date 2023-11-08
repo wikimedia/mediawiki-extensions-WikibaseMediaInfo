@@ -397,7 +397,7 @@ class WikibaseMediaInfoHooks implements
 		// Tab 1 will be everything after (and including) <div id="mw-imagepage-content">
 		// except for children of #mw-imagepage-content before .mw-parser-output (e.g. diffs)
 		$tab1ContentRegex = '/(<div\b[^>]*\bid=(\'|")mw-imagepage-content\\2[^>]*>)(.*)' .
-			'(<div\b[^>]*\bclass=(\'|")mw-parser-output\\5[^>]*>.*$)/is';
+			'(<div\b[^>]*\bclass=(\'|")[^\'"]+mw-parser-output\\5[^>]*>.*$)/is';
 		// Snip out the div, and replace with a placeholder
 		if (
 			preg_match(

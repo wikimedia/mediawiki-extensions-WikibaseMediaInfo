@@ -485,7 +485,10 @@ StatementWidget.prototype.submit = function ( baseRevId ) {
 				bot: 1,
 				summary: self.config.summary || undefined,
 				tags: self.config.tags || undefined,
-				assertuser: !mw.user.isAnon() ? mw.user.getName() : undefined
+				assertuser: !mw.user.isAnon() ? mw.user.getName() : undefined,
+				errorformat: 'html',
+				errorlang: mw.config.get( 'wgUserLanguage' ),
+				errorsuselocal: true
 			} ).then(
 				function ( response ) {
 					var guid = response.claim.id,

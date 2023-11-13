@@ -4,5 +4,22 @@
 			"Bosogo"
 		]
 	},
-	"wikibasemediainfo-filepage-cancel": "Жокко чыгаруу"
+	"wikibasemediainfo-filepage-fileinfo-heading": "Файл тууралуу",
+	"wikibasemediainfo-filepage-structured-data-heading": "Түзүмдөлгөн маалымат",
+	"wikibasemediainfo-filepage-add-caption": "Коштомо жазууну кошуу",
+	"wikibasemediainfo-filepage-edit-captions": "Коштомо жазууларды түзөтүү",
+	"wikibasemediainfo-filepage-cancel": "Жокко чыгаруу",
+	"wikibasemediainfo-filepage-edit": "Түзөтүү",
+	"wikibasemediainfo-string-input-button-text": "Кошуу",
+	"wikibasemediainfo-monolingualtext-input-button-text": "Кошуу",
+	"wikibasemediainfo-time-input-button-text": "Кошуу",
+	"wikibasemediainfo-time-precision-year100": "кылым",
+	"wikibasemediainfo-time-precision-year": "жыл",
+	"wikibasemediainfo-time-precision-month": "ай",
+	"wikibasemediainfo-time-precision-day": "күн",
+	"wikibasemediainfo-time-precision-hour": "саат",
+	"wikibasemediainfo-time-precision-minute": "мүнөт",
+	"wikibasemediainfo-time-calendar-label": "Календарь",
+	"wikibasemediainfo-quantity-input-button-text": "Кошуу",
+	"wikibasemediainfo-globecoordinate-input-button-text": "Кошуу"
 }

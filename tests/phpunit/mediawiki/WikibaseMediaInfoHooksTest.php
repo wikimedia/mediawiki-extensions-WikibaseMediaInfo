@@ -205,7 +205,7 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiIntegrationTestCase {
 			->willReturn( $title );
 		$out->expects( $this->once() )
 			->method( 'msg' )
-			->withConsecutive( [ 'protectedpagetext', 'editprotected', 'edit' ] )
+			->with( 'protectedpagetext', 'editprotected', 'edit' )
 			->willReturn( $message );
 		$wrapper->getProtectionMsg( $out );
 	}
@@ -231,7 +231,7 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiIntegrationTestCase {
 			->willReturn( $title );
 		$out->expects( $this->once() )
 			->method( 'msg' )
-			->withConsecutive( [ 'protectedpagetext', 'editsemiprotected', 'edit' ] )
+			->with( 'protectedpagetext', 'editsemiprotected', 'edit' )
 			->willReturn( $message );
 		$wrapper->getProtectionMsg( $out );
 	}
@@ -262,7 +262,7 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiIntegrationTestCase {
 			->willReturn( $title );
 		$out->expects( $this->once() )
 			->method( 'msg' )
-			->withConsecutive( [ 'cascadeprotected', 1, "* [[:Cascade Source]]\n" ] )
+			->with( 'cascadeprotected', 1, "* [[:Cascade Source]]\n" )
 			->willReturn( $message );
 
 		$wrapper->getProtectionMsg( $out );

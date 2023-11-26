@@ -3,21 +3,11 @@
 namespace Wikibase\MediaInfo\Tests\Integration;
 
 use MockSearchEngine;
-use TestUser;
 
 /**
  * Base class for test classes
  */
 abstract class WBMIApiTestCase extends \ApiUploadTestCase {
-
-	private function setupWbEditorUser() {
-		self::$users['wbeditor'] = new TestUser(
-			'Apitesteditor',
-			'Api Test Editor',
-			'api_test_editor@example.com',
-			[ 'wbeditor' ]
-		);
-	}
 
 	private function setupSearchEngine() {
 		MockSearchEngine::clearMockResults();
@@ -29,12 +19,11 @@ abstract class WBMIApiTestCase extends \ApiUploadTestCase {
 	protected function setUp(): void {
 		parent::setUp();
 
-		$this->setupWbEditorUser();
 		$this->setupSearchEngine();
 	}
 
 	private function login() {
-		$user = self::$users['uploader'];
+		$user = $this->getTestUser();
 		$userName = $user->getUser()->getName();
 		$password = $user->getPassword();
 
@@ -82,7 +71,7 @@ abstract class WBMIApiTestCase extends \ApiUploadTestCase {
 		list( $result, , ) = $this->doApiRequestWithToken(
 			$params,
 			$session,
-			self::$users['uploader']->getUser()
+			$this->getTestUser()->getUser()
 		);
 
 		$this->assertArrayHasKey( 'upload', $result, "Bad response: " . json_encode( $result ) );

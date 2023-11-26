@@ -35,6 +35,7 @@ class MultiLingualCaptionsTest extends WBMIApiTestCase {
 			MediaInfo::ENTITY_TYPE,
 			$pageId
 		)->getSerialization();
+		$testUserWbeditor = $this->getTestUser( [ 'wbeditor' ] );
 
 		// Add a caption (first caption has to be added without the revision id)
 		$this->doApiRequestWithToken(
@@ -46,7 +47,7 @@ class MultiLingualCaptionsTest extends WBMIApiTestCase {
 				'bot' => 1,
 			],
 			null,
-			self::$users['wbeditor']->getUser()
+			$testUserWbeditor->getUser()
 		);
 
 		// Add a 2nd caption
@@ -59,7 +60,7 @@ class MultiLingualCaptionsTest extends WBMIApiTestCase {
 				'bot' => 1,
 			],
 			null,
-			self::$users['wbeditor']->getUser()
+			$testUserWbeditor->getUser()
 		);
 
 		// Get the entity from the API
@@ -70,7 +71,7 @@ class MultiLingualCaptionsTest extends WBMIApiTestCase {
 				'props' => 'info|labels'
 			],
 			null,
-			self::$users['wbeditor']->getUser()
+			$testUserWbeditor->getUser()
 		);
 		$captions = $result['entities'][$entityId]['labels'];
 
@@ -87,7 +88,7 @@ class MultiLingualCaptionsTest extends WBMIApiTestCase {
 				'bot' => 1,
 			],
 			null,
-			self::$users['wbeditor']->getUser()
+			$testUserWbeditor->getUser()
 		);
 
 		// Edit French caption
@@ -100,7 +101,7 @@ class MultiLingualCaptionsTest extends WBMIApiTestCase {
 				'bot' => 1,
 			],
 			null,
-			self::$users['wbeditor']->getUser()
+			$testUserWbeditor->getUser()
 		);
 
 		// Get the entity from the API
@@ -111,7 +112,7 @@ class MultiLingualCaptionsTest extends WBMIApiTestCase {
 				'props' => 'info|labels'
 			],
 			null,
-			self::$users['wbeditor']->getUser()
+			$testUserWbeditor->getUser()
 		);
 		$captions = $result['entities'][$entityId]['labels'];
 
@@ -128,7 +129,7 @@ class MultiLingualCaptionsTest extends WBMIApiTestCase {
 				'srsearch' => 'TEST_FRENCH_CAPTION_EDITED'
 			],
 			null,
-			self::$users['wbeditor']->getUser()
+			$testUserWbeditor->getUser()
 		);
 	}
 

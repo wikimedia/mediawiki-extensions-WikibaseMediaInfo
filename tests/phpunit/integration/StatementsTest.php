@@ -68,7 +68,7 @@ class StatementsTest extends WBMIApiTestCase {
 		list( $result, , ) = $this->doApiRequestWithToken(
 			$params,
 			null,
-			self::$users['uploader']->getUser()
+			$this->getTestUser()->getUser()
 		);
 		return $result['entity']['id'];
 	}
@@ -141,7 +141,7 @@ class StatementsTest extends WBMIApiTestCase {
 		$this->doApiRequestWithToken(
 			$params,
 			null,
-			self::$users['wbeditor']->getUser()
+			$this->getTestUser( [ 'wbeditor' ] )->getUser()
 		);
 	}
 
@@ -153,7 +153,7 @@ class StatementsTest extends WBMIApiTestCase {
 				'props' => 'claims'
 			],
 			null,
-			self::$users['wbeditor']->getUser()
+			$this->getTestUser( [ 'wbeditor' ] )->getUser()
 		);
 		$statements = $result['entities'][$entityId]['statements'];
 
@@ -221,6 +221,8 @@ class StatementsTest extends WBMIApiTestCase {
 			$this->entityHasStatement( $entityId, $testClaim_1 )
 		);
 
+		$testUserWbeditor = $this->getTestUser( [ 'wbeditor' ] );
+
 		// Remove statement 2 and check it is no longer in the entity
 		$this->doApiRequestWithToken(
 			[
@@ -228,7 +230,7 @@ class StatementsTest extends WBMIApiTestCase {
 				'claim' => $testClaim_2['id'],
 			],
 			null,
-			self::$users['wbeditor']->getUser()
+			$testUserWbeditor->getUser()
 		);
 		$this->assertFalse(
 			$this->entityHasStatement( $entityId, $testClaim_2 )
@@ -244,7 +246,7 @@ class StatementsTest extends WBMIApiTestCase {
 				'srsearch' => 'haswbstatement:' . $testPropertyId
 			],
 			null,
-			self::$users['wbeditor']->getUser()
+			$testUserWbeditor->getUser()
 		);
 
 		// Clear entity and check that statement 1 is also gone
@@ -256,7 +258,7 @@ class StatementsTest extends WBMIApiTestCase {
 				'clear' => true,
 			],
 			null,
-			self::$users['wbeditor']->getUser()
+			$testUserWbeditor->getUser()
 		);
 		$this->assertFalse(
 			$this->entityHasStatement( $entityId, $testClaim_1 )
@@ -288,7 +290,7 @@ class StatementsTest extends WBMIApiTestCase {
 				'format' => 'json',
 			],
 			null,
-			self::$users['wbeditor']->getUser()
+			$this->getTestUser( [ 'wbeditor' ] )->getUser()
 		);
 
 		$this->assertTrue( $this->entityHasStatement( $mediainfoId, $statement ) );

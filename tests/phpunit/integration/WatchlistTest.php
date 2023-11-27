@@ -26,7 +26,7 @@ class WatchlistTest extends WBMIApiTestCase {
 
 	protected function setUp(): void {
 		parent::setUp();
-		$this->editor = self::$users['wbeditor']->getUser();
+		$this->editor = $this->getTestUser( [ 'wbeditor' ] )->getUser();
 	}
 
 	private function addCaption( string $entityId, string $language, string $caption ) {

@@ -1,0 +1,36 @@
+{
+	"@metadata": {
+		"authors": [
+			"Attah Mohammed"
+		]
+	},
+	"wikibasemediainfo-add-statement": "Pahimi yɛltɔɣili",
+	"wikibasemediainfo-filepage-cancel": "Nyahima",
+	"wikibasemediainfo-filepage-publish": "Zaŋ wuhi salo taɣibu",
+	"wikibasemediainfo-filepage-statement-no-results": "Shɛhira shɛli kani",
+	"wikibasemediainfo-filepage-license-agree": "N saɣiya",
+	"wikibasemediainfo-statements-item-input-label": "Di yila {{WBREPONAME}}",
+	"wikibasemediainfo-statements-item-input-placeholder": "Vihima m-pahi neen' shɛŋa",
+	"wikibasemediainfo-statements-item-remove": "Yihima",
+	"wikibasemediainfo-statements-learn-more": "Bɔhim pahi",
+	"wikibasemediainfo-statements-remove": "Yihimi zaa",
+	"wikibasemediainfo-remove-all-statements-confirm-title": "N-yihi di zaa?",
+	"wikibasemediainfo-remove-all-statements-confirm-accept": "Yihima",
+	"wikibasemediainfo-string-input-button-text": "Pahi",
+	"wikibasemediainfo-monolingualtext-input-button-text": "Pahi",
+	"wikibasemediainfo-monolingualtext-input-placeholder": "Kpɛhimi yɛltɔɣili",
+	"wikibasemediainfo-monolingualtext-language-label": "Piimi balli",
+	"wikibasemediainfo-time-input-button-text": "Pahi",
+	"wikibasemediainfo-time-input-placeholder": "Kpɛhimi saha",
+	"wikibasemediainfo-time-timestamp-empty": "Pahimi suɣulo kpɛhimI saha maa bukaata.",
+	"wikibasemediainfo-time-precision-year": "Yuuni",
+	"wikibasemediainfo-time-precision-month": "Goli",
+	"wikibasemediainfo-time-precision-day": "Dabisili",
+	"wikibasemediainfo-time-precision-hour": "Hawa yini",
+	"wikibasemediainfo-time-precision-minute": "Minti",
+	"wikibasemediainfo-time-precision-second": "Ayi",
+	"wikibasemediainfo-time-calendar-label": "Kalanda",
+	"wikibasemediainfo-quantity-input-button-text": "Pahi",
+	"wikibasemediainfo-globecoordinate-input-button-text": "Pahi",
+	"wikibasemediainfo-globecoordinate-map-button-text": "Piimi mapu ni"
+}

@@ -29,7 +29,11 @@
 	"wikibasemediainfo-time-timestamp-empty": "Pahimi suɣulo kpɛhimI saha maa bukaata.",
 	"wikibasemediainfo-time-precision-year": "Yuuni",
 	"wikibasemediainfo-time-precision-month": "Goli",
+	"wikibasemediainfo-time-precision-day": "Dabisili",
+	"wikibasemediainfo-time-precision-hour": "Hawa yini",
+	"wikibasemediainfo-time-precision-minute": "Minti",
 	"wikibasemediainfo-time-precision-second": "Ayi",
+	"wikibasemediainfo-time-calendar-label": "Kalanda",
 	"wikibasemediainfo-quantity-input-button-text": "Pahi",
 	"wikibasemediainfo-globecoordinate-input-button-text": "Pahi",
 	"wikibasemediainfo-globecoordinate-map-button-text": "Piimi mapu ni"

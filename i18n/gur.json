@@ -1,0 +1,37 @@
+{
+	"@metadata": {
+		"authors": [
+			"Akakiiri"
+		]
+	},
+	"wikibasemediainfo-remove-all-statements-confirm-title": "Yeseba za'an",
+	"wikibasemediainfo-remove-all-statements-confirm-accept": "Yese",
+	"wikibasemediainfo-coordinate-input-label": "'Coordinaters'",
+	"wikibasemediainfo-coordinate-input-placeholder": "'Latitude, longitude'",
+	"wikibasemediainfo-precision-input-label": "'Precision'",
+	"wikibasemediainfo-select-precision-label": "Loe 'precision'",
+	"wikibasemediainfo-arcminute-label": "Tari ta bo 'arcminute'",
+	"wikibasemediainfo-arcsecond-label": "Tarı ta bo 'arcsecond'",
+	"wikibasemediainfo-tenth-of-arcsecond-label": "'to 1/10 of an arcsecond'",
+	"wikibasemediainfo-hundreth-of-arcsecond-label": "'to 1/100 of an arcsecond'",
+	"wikibasemediainfo-thousanth-of-arcsecond-label": "'to 1/1000 of an arcsecond'",
+	"wikibasemediainfo-string-input-button-text": "Dikɛ pa'asɛ",
+	"wikibasemediainfo-monolingualtext-input-button-text": "Pa'asɛ",
+	"wikibasemediainfo-monolingualtext-input-placeholder": "Kɛ'ɛsɛ kaalegɔ le",
+	"wikibasemediainfo-monolingualtext-language-label": "Loe yetɔgum",
+	"wikibasemediainfo-time-input-button-text": "Pa'asɛ",
+	"wikibasemediainfo-time-input-placeholder": "Kɛ'ɛsɛ saŋa",
+	"wikibasemediainfo-time-timestamp-empty": "N beleni mɛ kɛ'ɛsɛ saŋa n suni se'em",
+	"wikibasemediainfo-time-timestamp-invalid": "Saŋa la n suni se'em la tee mɛ.",
+	"wikibasemediainfo-time-timestamp-formatted": "La wan ga'arɛ wuu : $1",
+	"wikibasemediainfo-time-precision-label": "'precision'",
+	"wikibasemediainfo-time-precision-year1g": "Yuum tusa",
+	"wikibasemediainfo-time-precision-year100m": "Yuum tusekɔbesi",
+	"wikibasemediainfo-time-precision-year10m": "Yuum kɔbesi pia",
+	"wikibasemediainfo-time-precision-year1m": "Yuum tusa",
+	"wikibasemediainfo-time-precision-year100k": "Yuuma 100,000",
+	"wikibasemediainfo-time-precision-year10k": "Yuuma 10,000",
+	"wikibasemediainfo-time-precision-year1k": "'millennium'",
+	"wikibasemediainfo-time-precision-year100": "Yuuman sa",
+	"wikibasemediainfo-time-precision-year10": "Yuuman sa"
+}

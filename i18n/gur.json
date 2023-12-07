@@ -104,5 +104,10 @@
 	"wikibasemediainfo-time-calendar-gregorian": "\"Gregorian\"",
 	"wikibasemediainfo-time-calendar-julian": "\"Julian\"",
 	"wikibasemediainfo-quantity-input-button-text": "Pa'asɛ",
-	"wikibasemediainfo-quantity-unit-placeholder": "Taapɛ \"unit\" la (fu San bɔta)"
+	"wikibasemediainfo-quantity-unit-placeholder": "Taapɛ \"unit\" la (fu San bɔta)",
+	"wikibasemediainfo-quantity-unit-label": "'unit'",
+	"wikibasemediainfo-quantity-unit-button-text": "Sɛtum 'unit'",
+	"wikibasemediainfo-globecoordinate-input-button-text": "Pa'asɛ",
+	"wikibasemediainfo-globecoordinate-map-button-text": "Loe map la puan",
+	"wikibasemediainfo-rescore-profile-classic-noboostlinks-max-boost-template": "'Ranking based on Beset template', yetɔgum pɛgerɛ la 'recency when activated on this wiki'"
 }

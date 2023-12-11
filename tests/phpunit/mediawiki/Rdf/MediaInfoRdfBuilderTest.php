@@ -39,6 +39,11 @@ use Wikimedia\Purtle\RdfWriter;
  */
 class MediaInfoRdfBuilderTest extends TestCase {
 
+	private $dedupe;
+	private $vocabulary;
+	private $writer;
+	private $mentionedEntityTracker;
+	private $valueSnakRdfBuilderFactory;
 	private $termsRdfBuilder;
 	private $truthyStatementRdfBuilderFactory;
 	private $fullStatementRdfBuilderFactory;

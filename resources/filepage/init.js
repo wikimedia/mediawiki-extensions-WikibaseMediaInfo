@@ -87,7 +87,7 @@
 		var api = new mw.Api(),
 			lang = mw.config.get( 'wgUserLanguage' );
 		if (
-			!mw.user.isAnon() &&
+			mw.user.isNamed() &&
 			mw.config.get( 'wbmiDoConstraintCheck' )
 		) {
 			api.get( {

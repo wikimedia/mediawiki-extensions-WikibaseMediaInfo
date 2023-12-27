@@ -8,7 +8,8 @@
 			"予弦",
 			"捍粵者",
 			"神樂坂秀吉",
-			"蘭斯特"
+			"蘭斯特",
+			"SunAfterRain"
 		]
 	},
 	"action-mediainfo-term": "更改多媒體資訊項目（說明、摘要）",
@@ -58,6 +59,10 @@
 	"wikibasemediainfo-filepage-license-agree": "我同意",
 	"wikibasemediainfo-statements-depicts-title": "項目在此圖片已描述",
 	"wikibasemediainfo-statements-item-add-qualifier": "新增限定詞",
+	"wikibasemediainfo-statements-item-reference": "參考文獻",
+	"wikibasemediainfo-statements-item-references": "參考文獻",
+	"wikibasemediainfo-statements-item-add-reference": "添加參考文獻",
+	"wikibasemediainfo-statements-item-add-reference-snak": "添加",
 	"wikibasemediainfo-statements-item-input-label": "自{{WBREPONAME}}",
 	"wikibasemediainfo-statements-item-input-placeholder": "搜尋來添加項目",
 	"wikibasemediainfo-statements-item-is-prominent": "突顯",

@@ -4,11 +4,12 @@
 			"Fitoschido",
 			"Jmarchn",
 			"Mguix",
+			"SMP",
 			"Toniher"
 		]
 	},
-	"action-mediainfo-term": "canvia els termes d'informació multimèdia (llegendes, resums)",
-	"right-mediainfo-term": "Canvia els termes d'informació multimèdia (llegendes, resums)",
+	"action-mediainfo-term": "canviar els termes d'informació multimèdia (llegendes, resums)",
+	"right-mediainfo-term": "Canviar els termes d'informació multimèdia (llegendes, resums)",
 	"slot-name-mediainfo": "Informació estructurada multimèdia",
 	"wikibase-entity-mediainfo": "informació multimèdia",
 	"wikibase-mediainfo-summary-wbsetlabel-add": "S'ha afegit la llegenda [$2]",

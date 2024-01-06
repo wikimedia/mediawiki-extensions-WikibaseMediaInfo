@@ -14,6 +14,7 @@
  */
 
 use MediaWiki\MediaWikiServices;
+use MediaWiki\Site\SiteLookup;
 use MediaWiki\Title\Title;
 use Wikibase\DataAccess\EntitySource;
 use Wikibase\DataModel\Deserializers\DeserializerFactory;

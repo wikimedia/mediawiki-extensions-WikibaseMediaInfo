@@ -2,8 +2,8 @@
 
 namespace Wikibase\MediaInfo\View;
 
-use Html;
 use InvalidArgumentException;
+use MediaWiki\Html\Html;
 use Wikibase\DataModel\Entity\EntityDocument;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\View\EntityDocumentView;

@@ -2,6 +2,7 @@
 
 namespace Wikibase\MediaInfo;
 
+use MediaWiki\Config\ConfigException;
 use Wikibase\DataModel\Entity\PropertyId;
 use Wikibase\DataModel\Services\Lookup\PropertyDataTypeLookupException;
 use Wikibase\MediaInfo\View\MediaInfoEntityStatementsView;
@@ -19,7 +20,7 @@ class WBMIHooksHelper {
 	/**
 	 * @param PropertyId $id
 	 * @return string
-	 * @throws \ConfigException
+	 * @throws ConfigException
 	 * @throws PropertyDataTypeLookupException
 	 */
 	public static function getPropertyType( PropertyId $id ) {

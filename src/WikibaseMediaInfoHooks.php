@@ -5,26 +5,31 @@ namespace Wikibase\MediaInfo;
 use CirrusSearch\Parser\ParsedQueryClassifiersRepository;
 use CirrusSearch\Profile\SearchProfileService;
 use ExtensionRegistry;
+use MediaWiki\CommentStore\CommentStoreComment;
+use MediaWiki\Config\ConfigException;
 use MediaWiki\Hook\BeforePageDisplayHook;
 use MediaWiki\Hook\ParserOutputPostCacheTransformHook;
 use MediaWiki\Hook\SidebarBeforeOutputHook;
+use MediaWiki\Html\Html;
 use MediaWiki\MediaWikiServices;
+use MediaWiki\Output\OutputPage;
 use MediaWiki\Page\Hook\ArticleUndeleteHook;
 use MediaWiki\Page\Hook\RevisionUndeletedHook;
+use MediaWiki\Parser\ParserOutput;
 use MediaWiki\Preferences\Hook\GetPreferencesHook;
 use MediaWiki\Revision\RenderedRevision;
 use MediaWiki\Revision\RevisionRecord;
 use MediaWiki\Revision\SlotRecord;
+use MediaWiki\Status\Status;
 use MediaWiki\Storage\BlobStore;
 use MediaWiki\Storage\Hook\MultiContentSaveHook;
 use MediaWiki\Title\Title;
+use MediaWiki\User\User;
 use MediaWiki\User\UserIdentity;
 use OOUI\HtmlSnippet;
 use OOUI\IndexLayout;
 use OOUI\PanelLayout;
 use OOUI\TabPanelLayout;
-use OutputPage;
-use ParserOutput;
 use RequestContext;
 use Skin;
 use Wikibase\Client\WikibaseClient;
@@ -148,9 +153,9 @@ class WikibaseMediaInfoHooks implements
 	/**
 	 * Replace mediainfo-specific placeholders (if any), move structured data, add data and modules
 	 *
-	 * @param \OutputPage $out
+	 * @param OutputPage $out
 	 * @param \Skin $skin
-	 * @throws \ConfigException
+	 * @throws ConfigException
 	 * @throws \OOUI\Exception
 	 */
 	public function onBeforePageDisplay( $out, $skin ): void {
@@ -209,7 +214,7 @@ class WikibaseMediaInfoHooks implements
 	}
 
 	/**
-	 * @param \OutputPage $out
+	 * @param OutputPage $out
 	 * @param \Skin $skin
 	 * @param bool $isMediaInfoPage
 	 * @param UserLanguageLookup $userLanguageLookup
@@ -388,7 +393,7 @@ class WikibaseMediaInfoHooks implements
 		}
 
 		// Add a title to statements for no-js
-		$statements = \Html::element(
+		$statements = Html::element(
 			'h2',
 			[ 'class' => 'wbmi-structured-data-header' ],
 			$textProvider->get( 'wikibasemediainfo-filepage-structured-data-heading' )
@@ -417,7 +422,7 @@ class WikibaseMediaInfoHooks implements
 				$extractedHtml['unstructured']
 			);
 			// Add a title for no-js
-			$tab1Html = \Html::element(
+			$tab1Html = Html::element(
 				'h2',
 				[ 'class' => 'wbmi-captions-header' ],
 				$textProvider->get( 'wikibasemediainfo-filepage-captions-title' )
@@ -690,7 +695,7 @@ class WikibaseMediaInfoHooks implements
 	/**
 	 * Handler for the GetPreferences hook
 	 *
-	 * @param \User $user
+	 * @param User $user
 	 * @param array[] &$preferences
 	 */
 	public function onGetPreferences( $user, &$preferences ) {
@@ -874,9 +879,9 @@ class WikibaseMediaInfoHooks implements
 	/**
 	 * @param RenderedRevision $renderedRevision
 	 * @param UserIdentity $author
-	 * @param \CommentStoreComment $summary
+	 * @param CommentStoreComment $summary
 	 * @param int $flags
-	 * @param \Status $hookStatus
+	 * @param Status $hookStatus
 	 */
 	public function onMultiContentSave(
 		$renderedRevision,

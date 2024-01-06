@@ -2,13 +2,13 @@
 
 namespace Wikibase\MediaInfo\View;
 
-use Html;
+use MediaWiki\Html\Html;
+use MediaWiki\Output\OutputPage;
 use OOUI\Element;
 use OOUI\HorizontalLayout;
 use OOUI\LabelWidget;
 use OOUI\PanelLayout;
 use OOUI\Tag;
-use OutputPage;
 use Wikibase\DataModel\Term\TermList;
 use Wikibase\Lib\LanguageNameLookup;
 use Wikibase\Lib\TermLanguageFallbackChain;

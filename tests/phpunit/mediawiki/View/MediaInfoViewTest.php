@@ -2,7 +2,7 @@
 
 namespace Wikibase\MediaInfo\Tests\MediaWiki\View;
 
-use Html;
+use MediaWiki\Html\Html;
 use Wikibase\DataModel\Entity\EntityDocument;
 use Wikibase\DataModel\Entity\NumericPropertyId;
 use Wikibase\DataModel\Entity\Property;

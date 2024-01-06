@@ -5,6 +5,7 @@ namespace extensions\WikibaseMediaInfo\tests\phpunit\unit;
 use MediaWiki\Content\ContentHandlerFactory;
 use MediaWiki\HookContainer\HookContainer;
 use MediaWiki\Page\PageStore;
+use MediaWiki\Parser\ParserOutput;
 use MediaWiki\Revision\RevisionRecord;
 use MediaWiki\Title\TitleFactory;
 use Psr\Log\LoggerInterface;
@@ -65,7 +66,7 @@ class MediaInfoDataForSearchIndexTest extends \MediaWikiUnitTestCase {
 			$fields,
 			$this->createMock( \ContentHandler::class ),
 			$this->createMock( \WikiPage::class ),
-			$this->createMock( \ParserOutput::class ),
+			$this->createMock( ParserOutput::class ),
 			$this->createMock( \SearchEngine::class ),
 			$revision
 		);

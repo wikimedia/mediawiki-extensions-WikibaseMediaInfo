@@ -121,10 +121,6 @@
 			],
 			"dependencies": [
 				"mediawiki.template.mustache"
-			],
-			"targets": [
-				"desktop",
-				"mobile"
 			]
 		},
 		"wikibase.mediainfo.base": {
@@ -137,10 +133,6 @@
 			"dependencies": [
 				"oojs",
 				"oojs-ui-core"
-			],
-			"targets": [
-				"desktop",
-				"mobile"
 			]
 		},
 		"wikibase.mediainfo.readme": {
@@ -168,20 +160,12 @@
 				"oojs",
 				"oojs-ui-core",
 				"oojs-ui-widgets"
-			],
-			"targets": [
-				"desktop",
-				"mobile"
 			]
 		},
 		"wikibase.mediainfo.getDeserializer": {
 			"scripts": "resources/getDeserializer.js",
 			"dependencies": [
 				"wikibase.mediainfo.serialization.MediaInfoDeserializer"
-			],
-			"targets": [
-				"desktop",
-				"mobile"
 			]
 		},
 		"wikibase.mediainfo.serialization.MediaInfoDeserializer": {
@@ -193,10 +177,6 @@
 				"util.inherit",
 				"wikibase.datamodel",
 				"wikibase.serialization"
-			],
-			"targets": [
-				"desktop",
-				"mobile"
 			]
 		},
 		"wikibase.mediainfo.filePageDisplay": {
@@ -261,10 +241,6 @@
 			"templates": [
 				"templates/filepage/ProtectionMsgWidget.mustache+dom",
 				"templates/filepage/CaptionsPanel.mustache+dom"
-			],
-			"targets": [
-				"desktop",
-				"mobile"
 			]
 		},
 		"wikibase.mediainfo.filepage.styles": {
@@ -273,10 +249,6 @@
 				"resources/filepage/styles/mediainfo-filepage-captionspanel.less",
 				"resources/filepage/styles/mediainfo-filepage-protectionmsgwidget.less",
 				"resources/filepage/styles/mediainfo-filepage-statementpanel.less"
-			],
-			"targets": [
-				"desktop",
-				"mobile"
 			]
 		},
 		"wikibase.mediainfo.statements": {
@@ -428,10 +400,6 @@
 				"templates/statements/inputs/TimeInputWidget.mustache+dom",
 				"templates/statements/inputs/UnsupportedInputWidget.mustache+dom",
 				"templates/statements/inputs/MultiTypeInputWrapperWidget.mustache+dom"
-			],
-			"targets": [
-				"desktop",
-				"mobile"
 			]
 		},
 		"wikibase.mediainfo.statements.styles": {
@@ -449,10 +417,6 @@
 				"resources/statements/inputs/QuantityInputWidget.less",
 				"resources/statements/inputs/InputWidget.less",
 				"resources/statements/inputs/MultiTypeInputWrapperWidget.less"
-			],
-			"targets": [
-				"desktop",
-				"mobile"
 			]
 		}
 	},

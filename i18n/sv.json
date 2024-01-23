@@ -17,6 +17,8 @@
 	"wikibase-mediainfo-summary-wbsetlabel-set": "Redigerade bildtext [$2]",
 	"wikibasemediainfo-add-property": "Sök efter att lägga till egenskaper (del av, medietyp, etc.)",
 	"wikibasemediainfo-add-statement": "Lägg till uttalande",
+	"wikibasemediainfo-custommatch-feature-no-profile": "Det finns ingen profil konfigurerad för custommatch:$1",
+	"wikibasemediainfo-custommatch-feature-invalid-term": "Ogiltig sökterm för sökfunktionen custommatch",
 	"wikibasemediainfo-desc": "Wikibase-tillägg för att hantera strukturerad metadata för mediafiler",
 	"wikibasemediainfo-diffview-label": "bildtext",
 	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Bildtexter",
@@ -54,7 +56,12 @@
 	"wikibasemediainfo-property-placeholder": "Egenskap",
 	"wikibasemediainfo-filepage-license-agree": "Jag godkänner",
 	"wikibasemediainfo-statements-depicts-title": "Objekt avbildade i den här bilden",
+	"wikibasemediainfo-statements-item-qualifiers": "Bestämningar",
 	"wikibasemediainfo-statements-item-add-qualifier": "Lägg till bestämning",
+	"wikibasemediainfo-statements-item-reference": "Referens",
+	"wikibasemediainfo-statements-item-references": "Referenser",
+	"wikibasemediainfo-statements-item-add-reference": "Lägg till referens",
+	"wikibasemediainfo-statements-item-add-reference-snak": "Lägg till",
 	"wikibasemediainfo-statements-item-input-label": "från {{WBREPONAME}}",
 	"wikibasemediainfo-statements-item-input-placeholder": "Sök efter att lägga till objekt",
 	"wikibasemediainfo-statements-item-is-prominent": "Framträdande",
@@ -113,5 +120,6 @@
 	"wikibasemediainfo-quantity-unit-label": "enhet",
 	"wikibasemediainfo-quantity-unit-button-text": "Sätt enhet",
 	"wikibasemediainfo-globecoordinate-input-button-text": "Lägg till",
-	"wikibasemediainfo-globecoordinate-map-button-text": "Välj på karta"
+	"wikibasemediainfo-globecoordinate-map-button-text": "Välj på karta",
+	"wikibasemediainfo-rescore-profile-classic-noboostlinks-max-boost-template": "Ranking bygger på bäst mall, sidspråk och aktualitet när den är aktiverad på den här wikin."
 }

@@ -33,12 +33,12 @@ return [
 			WikibaseRepo::getValidatorErrorLocalizer( $services ),
 			WikibaseRepo::getEntityIdParser( $services ),
 			new MissingMediaInfoHandler(
-				MediaInfoServices::getMediaInfoIdLookup(),
-				MediaInfoServices::getFilePageLookup(),
+				MediaInfoServices::getMediaInfoIdLookup( $services ),
+				MediaInfoServices::getFilePageLookup( $services ),
 				WikibaseRepo::getEntityParserOutputGeneratorFactory( $services )
 			),
-			MediaInfoServices::getMediaInfoIdLookup(),
-			MediaInfoServices::getFilePageLookup(),
+			MediaInfoServices::getMediaInfoIdLookup( $services ),
+			MediaInfoServices::getFilePageLookup( $services ),
 			WikibaseRepo::getFieldDefinitionsFactory( $services )
 				->getFieldDefinitionsByType( MediaInfo::ENTITY_TYPE ),
 			$services->getPageStore(),

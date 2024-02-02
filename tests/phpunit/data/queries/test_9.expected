@@ -2,157 +2,454 @@
     "bool": {
         "must": [
             {
-                "function_score": {
-                    "query": {
-                        "bool": {
-                            "minimum_should_match": 1,
-                            "should": [
-                                {
-                                    "dis_max": {
-                                        "tie_breaker": 1,
-                                        "queries": [
+                "bool": {
+                    "should": [
+                        {
+                            "multi_match": {
+                                "query": "some search term",
+                                "fields": [
+                                    "all_near_match^3",
+                                    "all_near_match.asciifolding^2.25"
+                                ]
+                            }
+                        },
+                        {
+                            "function_score": {
+                                "query": {
+                                    "bool": {
+                                        "minimum_should_match": 1,
+                                        "should": [
                                             {
-                                                "bool": {
-                                                    "minimum_should_match": 0,
-                                                    "filter": [
+                                                "dis_max": {
+                                                    "tie_breaker": 1,
+                                                    "queries": [
                                                         {
-                                                            "multi_match": {
-                                                                "query": "some search term",
-                                                                "fields": [
-                                                                    "all",
-                                                                    "all.plain"
+                                                            "bool": {
+                                                                "minimum_should_match": 0,
+                                                                "filter": [
+                                                                    {
+                                                                        "multi_match": {
+                                                                            "query": "some search term",
+                                                                            "fields": [
+                                                                                "all",
+                                                                                "all.plain"
+                                                                            ],
+                                                                            "operator": "and"
+                                                                        }
+                                                                    }
                                                                 ],
-                                                                "operator": "and"
-                                                            }
-                                                        }
-                                                    ],
-                                                    "should": [
-                                                        {
-                                                            "match": {
-                                                                "title": {
-                                                                    "query": "some search term",
-                                                                    "boost": 0.45
-                                                                }
+                                                                "should": [
+                                                                    {
+                                                                        "match": {
+                                                                            "title": {
+                                                                                "query": "some search term",
+                                                                                "boost": 0.45
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        "match": {
+                                                                            "title.plain": {
+                                                                                "query": "some search term",
+                                                                                "boost": 0.15
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        "match": {
+                                                                            "category": {
+                                                                                "query": "some search term",
+                                                                                "boost": 0.525
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        "match": {
+                                                                            "category.plain": {
+                                                                                "query": "some search term",
+                                                                                "boost": 0.175
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        "match": {
+                                                                            "redirect.title": {
+                                                                                "query": "some search term",
+                                                                                "boost": 0.375
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        "match": {
+                                                                            "redirect.title.plain": {
+                                                                                "query": "some search term",
+                                                                                "boost": 0.125
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        "match": {
+                                                                            "heading": {
+                                                                                "query": "some search term",
+                                                                                "boost": 1
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        "match": {
+                                                                            "heading.plain": {
+                                                                                "query": "some search term",
+                                                                                "boost": 1
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        "match": {
+                                                                            "auxiliary_text": {
+                                                                                "query": "some search term",
+                                                                                "boost": 0.225
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        "match": {
+                                                                            "auxiliary_text.plain": {
+                                                                                "query": "some search term",
+                                                                                "boost": 0.075
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        "match": {
+                                                                            "text": {
+                                                                                "query": "some search term",
+                                                                                "boost": 0.3
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        "match": {
+                                                                            "text.plain": {
+                                                                                "query": "some search term",
+                                                                                "boost": 0.1
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        "match": {
+                                                                            "file_text": {
+                                                                                "query": "some search term",
+                                                                                "boost": 0.15
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        "match": {
+                                                                            "file_text.plain": {
+                                                                                "query": "some search term",
+                                                                                "boost": 0.05
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        "match": {
+                                                                            "suggest": {
+                                                                                "query": "some search term",
+                                                                                "boost": 1
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        "match": {
+                                                                            "descriptions.en.plain": {
+                                                                                "query": "some search term",
+                                                                                "boost": 2.5
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                ]
                                                             }
                                                         },
                                                         {
-                                                            "match": {
-                                                                "title.plain": {
-                                                                    "query": "some search term",
-                                                                    "boost": 0.15
-                                                                }
-                                                            }
-                                                        },
-                                                        {
-                                                            "match": {
-                                                                "category": {
-                                                                    "query": "some search term",
-                                                                    "boost": 0.525
-                                                                }
-                                                            }
-                                                        },
-                                                        {
-                                                            "match": {
-                                                                "category.plain": {
-                                                                    "query": "some search term",
-                                                                    "boost": 0.175
-                                                                }
-                                                            }
-                                                        },
-                                                        {
-                                                            "match": {
-                                                                "redirect.title": {
-                                                                    "query": "some search term",
-                                                                    "boost": 0.375
-                                                                }
-                                                            }
-                                                        },
-                                                        {
-                                                            "match": {
-                                                                "redirect.title.plain": {
-                                                                    "query": "some search term",
-                                                                    "boost": 0.125
-                                                                }
-                                                            }
-                                                        },
-                                                        {
-                                                            "match": {
-                                                                "heading": {
-                                                                    "query": "some search term",
-                                                                    "boost": 1
-                                                                }
-                                                            }
-                                                        },
-                                                        {
-                                                            "match": {
-                                                                "heading.plain": {
-                                                                    "query": "some search term",
-                                                                    "boost": 1
-                                                                }
-                                                            }
-                                                        },
-                                                        {
-                                                            "match": {
-                                                                "auxiliary_text": {
-                                                                    "query": "some search term",
-                                                                    "boost": 0.225
-                                                                }
-                                                            }
-                                                        },
-                                                        {
-                                                            "match": {
-                                                                "auxiliary_text.plain": {
-                                                                    "query": "some search term",
-                                                                    "boost": 0.075
-                                                                }
-                                                            }
-                                                        },
-                                                        {
-                                                            "match": {
-                                                                "text": {
-                                                                    "query": "some search term",
-                                                                    "boost": 0.3
-                                                                }
-                                                            }
-                                                        },
-                                                        {
-                                                            "match": {
-                                                                "text.plain": {
-                                                                    "query": "some search term",
-                                                                    "boost": 0.1
-                                                                }
-                                                            }
-                                                        },
-                                                        {
-                                                            "match": {
-                                                                "file_text": {
-                                                                    "query": "some search term",
-                                                                    "boost": 0.15
-                                                                }
-                                                            }
-                                                        },
-                                                        {
-                                                            "match": {
-                                                                "file_text.plain": {
-                                                                    "query": "some search term",
-                                                                    "boost": 0.05
-                                                                }
-                                                            }
-                                                        },
-                                                        {
-                                                            "match": {
-                                                                "suggest": {
-                                                                    "query": "some search term",
-                                                                    "boost": 1
-                                                                }
-                                                            }
-                                                        },
-                                                        {
-                                                            "match": {
-                                                                "descriptions.en.plain": {
-                                                                    "query": "some search term",
-                                                                    "boost": 2.5
-                                                                }
+                                                            "dis_max": {
+                                                                "queries": [
+                                                                    {
+                                                                        "bool": {
+                                                                            "minimum_should_match": 0,
+                                                                            "filter": [
+                                                                                {
+                                                                                    "multi_match": {
+                                                                                        "query": "something similar",
+                                                                                        "fields": [
+                                                                                            "all"
+                                                                                        ],
+                                                                                        "type": "phrase"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "should": [
+                                                                                {
+                                                                                    "match": {
+                                                                                        "title": {
+                                                                                            "query": "something similar",
+                                                                                            "boost": 0.45
+                                                                                        }
+                                                                                    }
+                                                                                },
+                                                                                {
+                                                                                    "match": {
+                                                                                        "title.plain": {
+                                                                                            "query": "something similar",
+                                                                                            "boost": 0.15
+                                                                                        }
+                                                                                    }
+                                                                                },
+                                                                                {
+                                                                                    "match": {
+                                                                                        "category": {
+                                                                                            "query": "something similar",
+                                                                                            "boost": 0.525
+                                                                                        }
+                                                                                    }
+                                                                                },
+                                                                                {
+                                                                                    "match": {
+                                                                                        "category.plain": {
+                                                                                            "query": "something similar",
+                                                                                            "boost": 0.175
+                                                                                        }
+                                                                                    }
+                                                                                },
+                                                                                {
+                                                                                    "match": {
+                                                                                        "redirect.title": {
+                                                                                            "query": "something similar",
+                                                                                            "boost": 0.375
+                                                                                        }
+                                                                                    }
+                                                                                },
+                                                                                {
+                                                                                    "match": {
+                                                                                        "redirect.title.plain": {
+                                                                                            "query": "something similar",
+                                                                                            "boost": 0.125
+                                                                                        }
+                                                                                    }
+                                                                                },
+                                                                                {
+                                                                                    "match": {
+                                                                                        "heading": {
+                                                                                            "query": "something similar",
+                                                                                            "boost": 1
+                                                                                        }
+                                                                                    }
+                                                                                },
+                                                                                {
+                                                                                    "match": {
+                                                                                        "heading.plain": {
+                                                                                            "query": "something similar",
+                                                                                            "boost": 1
+                                                                                        }
+                                                                                    }
+                                                                                },
+                                                                                {
+                                                                                    "match": {
+                                                                                        "auxiliary_text": {
+                                                                                            "query": "something similar",
+                                                                                            "boost": 0.225
+                                                                                        }
+                                                                                    }
+                                                                                },
+                                                                                {
+                                                                                    "match": {
+                                                                                        "auxiliary_text.plain": {
+                                                                                            "query": "something similar",
+                                                                                            "boost": 0.075
+                                                                                        }
+                                                                                    }
+                                                                                },
+                                                                                {
+                                                                                    "match": {
+                                                                                        "text": {
+                                                                                            "query": "something similar",
+                                                                                            "boost": 0.3
+                                                                                        }
+                                                                                    }
+                                                                                },
+                                                                                {
+                                                                                    "match": {
+                                                                                        "text.plain": {
+                                                                                            "query": "something similar",
+                                                                                            "boost": 0.1
+                                                                                        }
+                                                                                    }
+                                                                                },
+                                                                                {
+                                                                                    "match": {
+                                                                                        "file_text": {
+                                                                                            "query": "something similar",
+                                                                                            "boost": 0.15
+                                                                                        }
+                                                                                    }
+                                                                                },
+                                                                                {
+                                                                                    "match": {
+                                                                                        "file_text.plain": {
+                                                                                            "query": "something similar",
+                                                                                            "boost": 0.05
+                                                                                        }
+                                                                                    }
+                                                                                },
+                                                                                {
+                                                                                    "match": {
+                                                                                        "suggest": {
+                                                                                            "query": "something similar",
+                                                                                            "boost": 1
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                            ]
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        "bool": {
+                                                                            "minimum_should_match": 0,
+                                                                            "filter": [
+                                                                                {
+                                                                                    "multi_match": {
+                                                                                        "query": "a very different entity",
+                                                                                        "fields": [
+                                                                                            "all"
+                                                                                        ],
+                                                                                        "type": "phrase"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "should": [
+                                                                                {
+                                                                                    "match": {
+                                                                                        "title": {
+                                                                                            "query": "a very different entity",
+                                                                                            "boost": 0.225
+                                                                                        }
+                                                                                    }
+                                                                                },
+                                                                                {
+                                                                                    "match": {
+                                                                                        "title.plain": {
+                                                                                            "query": "a very different entity",
+                                                                                            "boost": 0.075
+                                                                                        }
+                                                                                    }
+                                                                                },
+                                                                                {
+                                                                                    "match": {
+                                                                                        "category": {
+                                                                                            "query": "a very different entity",
+                                                                                            "boost": 0.2625
+                                                                                        }
+                                                                                    }
+                                                                                },
+                                                                                {
+                                                                                    "match": {
+                                                                                        "category.plain": {
+                                                                                            "query": "a very different entity",
+                                                                                            "boost": 0.0875
+                                                                                        }
+                                                                                    }
+                                                                                },
+                                                                                {
+                                                                                    "match": {
+                                                                                        "redirect.title": {
+                                                                                            "query": "a very different entity",
+                                                                                            "boost": 0.1875
+                                                                                        }
+                                                                                    }
+                                                                                },
+                                                                                {
+                                                                                    "match": {
+                                                                                        "redirect.title.plain": {
+                                                                                            "query": "a very different entity",
+                                                                                            "boost": 0.0625
+                                                                                        }
+                                                                                    }
+                                                                                },
+                                                                                {
+                                                                                    "match": {
+                                                                                        "heading": {
+                                                                                            "query": "a very different entity",
+                                                                                            "boost": 0.5
+                                                                                        }
+                                                                                    }
+                                                                                },
+                                                                                {
+                                                                                    "match": {
+                                                                                        "heading.plain": {
+                                                                                            "query": "a very different entity",
+                                                                                            "boost": 0.5
+                                                                                        }
+                                                                                    }
+                                                                                },
+                                                                                {
+                                                                                    "match": {
+                                                                                        "auxiliary_text": {
+                                                                                            "query": "a very different entity",
+                                                                                            "boost": 0.1125
+                                                                                        }
+                                                                                    }
+                                                                                },
+                                                                                {
+                                                                                    "match": {
+                                                                                        "auxiliary_text.plain": {
+                                                                                            "query": "a very different entity",
+                                                                                            "boost": 0.0375
+                                                                                        }
+                                                                                    }
+                                                                                },
+                                                                                {
+                                                                                    "match": {
+                                                                                        "text": {
+                                                                                            "query": "a very different entity",
+                                                                                            "boost": 0.15
+                                                                                        }
+                                                                                    }
+                                                                                },
+                                                                                {
+                                                                                    "match": {
+                                                                                        "text.plain": {
+                                                                                            "query": "a very different entity",
+                                                                                            "boost": 0.05
+                                                                                        }
+                                                                                    }
+                                                                                },
+                                                                                {
+                                                                                    "match": {
+                                                                                        "file_text": {
+                                                                                            "query": "a very different entity",
+                                                                                            "boost": 0.075
+                                                                                        }
+                                                                                    }
+                                                                                },
+                                                                                {
+                                                                                    "match": {
+                                                                                        "file_text.plain": {
+                                                                                            "query": "a very different entity",
+                                                                                            "boost": 0.025
+                                                                                        }
+                                                                                    }
+                                                                                },
+                                                                                {
+                                                                                    "match": {
+                                                                                        "suggest": {
+                                                                                            "query": "a very different entity",
+                                                                                            "boost": 0.5
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                            ]
+                                                                        }
+                                                                    }
+                                                                ]
                                                             }
                                                         }
                                                     ]
@@ -162,279 +459,35 @@
                                                 "dis_max": {
                                                     "queries": [
                                                         {
-                                                            "bool": {
-                                                                "minimum_should_match": 0,
-                                                                "filter": [
-                                                                    {
-                                                                        "multi_match": {
-                                                                            "query": "something similar",
-                                                                            "fields": [
-                                                                                "all"
-                                                                            ],
-                                                                            "type": "phrase"
-                                                                        }
-                                                                    }
-                                                                ],
-                                                                "should": [
-                                                                    {
-                                                                        "match": {
-                                                                            "title": {
-                                                                                "query": "something similar",
-                                                                                "boost": 0.45
-                                                                            }
-                                                                        }
-                                                                    },
-                                                                    {
-                                                                        "match": {
-                                                                            "title.plain": {
-                                                                                "query": "something similar",
-                                                                                "boost": 0.15
-                                                                            }
-                                                                        }
-                                                                    },
-                                                                    {
-                                                                        "match": {
-                                                                            "category": {
-                                                                                "query": "something similar",
-                                                                                "boost": 0.525
-                                                                            }
-                                                                        }
-                                                                    },
-                                                                    {
-                                                                        "match": {
-                                                                            "category.plain": {
-                                                                                "query": "something similar",
-                                                                                "boost": 0.175
-                                                                            }
-                                                                        }
-                                                                    },
-                                                                    {
-                                                                        "match": {
-                                                                            "redirect.title": {
-                                                                                "query": "something similar",
-                                                                                "boost": 0.375
-                                                                            }
-                                                                        }
-                                                                    },
-                                                                    {
-                                                                        "match": {
-                                                                            "redirect.title.plain": {
-                                                                                "query": "something similar",
-                                                                                "boost": 0.125
-                                                                            }
-                                                                        }
-                                                                    },
-                                                                    {
-                                                                        "match": {
-                                                                            "heading": {
-                                                                                "query": "something similar",
-                                                                                "boost": 1
-                                                                            }
-                                                                        }
-                                                                    },
-                                                                    {
-                                                                        "match": {
-                                                                            "heading.plain": {
-                                                                                "query": "something similar",
-                                                                                "boost": 1
-                                                                            }
-                                                                        }
-                                                                    },
-                                                                    {
-                                                                        "match": {
-                                                                            "auxiliary_text": {
-                                                                                "query": "something similar",
-                                                                                "boost": 0.225
-                                                                            }
-                                                                        }
-                                                                    },
-                                                                    {
-                                                                        "match": {
-                                                                            "auxiliary_text.plain": {
-                                                                                "query": "something similar",
-                                                                                "boost": 0.075
-                                                                            }
-                                                                        }
-                                                                    },
-                                                                    {
-                                                                        "match": {
-                                                                            "text": {
-                                                                                "query": "something similar",
-                                                                                "boost": 0.3
-                                                                            }
-                                                                        }
-                                                                    },
-                                                                    {
-                                                                        "match": {
-                                                                            "text.plain": {
-                                                                                "query": "something similar",
-                                                                                "boost": 0.1
-                                                                            }
-                                                                        }
-                                                                    },
-                                                                    {
-                                                                        "match": {
-                                                                            "file_text": {
-                                                                                "query": "something similar",
-                                                                                "boost": 0.15
-                                                                            }
-                                                                        }
-                                                                    },
-                                                                    {
-                                                                        "match": {
-                                                                            "file_text.plain": {
-                                                                                "query": "something similar",
-                                                                                "boost": 0.05
-                                                                            }
-                                                                        }
-                                                                    },
-                                                                    {
-                                                                        "match": {
-                                                                            "suggest": {
-                                                                                "query": "something similar",
-                                                                                "boost": 1
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                ]
+                                                            "match": {
+                                                                "statement_keywords": {
+                                                                    "query": "P1=Q1",
+                                                                    "boost": 20
+                                                                }
                                                             }
                                                         },
                                                         {
-                                                            "bool": {
-                                                                "minimum_should_match": 0,
-                                                                "filter": [
-                                                                    {
-                                                                        "multi_match": {
-                                                                            "query": "a very different entity",
-                                                                            "fields": [
-                                                                                "all"
-                                                                            ],
-                                                                            "type": "phrase"
-                                                                        }
-                                                                    }
-                                                                ],
-                                                                "should": [
-                                                                    {
-                                                                        "match": {
-                                                                            "title": {
-                                                                                "query": "a very different entity",
-                                                                                "boost": 0.225
-                                                                            }
-                                                                        }
-                                                                    },
-                                                                    {
-                                                                        "match": {
-                                                                            "title.plain": {
-                                                                                "query": "a very different entity",
-                                                                                "boost": 0.075
-                                                                            }
-                                                                        }
-                                                                    },
-                                                                    {
-                                                                        "match": {
-                                                                            "category": {
-                                                                                "query": "a very different entity",
-                                                                                "boost": 0.2625
-                                                                            }
-                                                                        }
-                                                                    },
-                                                                    {
-                                                                        "match": {
-                                                                            "category.plain": {
-                                                                                "query": "a very different entity",
-                                                                                "boost": 0.0875
-                                                                            }
-                                                                        }
-                                                                    },
-                                                                    {
-                                                                        "match": {
-                                                                            "redirect.title": {
-                                                                                "query": "a very different entity",
-                                                                                "boost": 0.1875
-                                                                            }
-                                                                        }
-                                                                    },
-                                                                    {
-                                                                        "match": {
-                                                                            "redirect.title.plain": {
-                                                                                "query": "a very different entity",
-                                                                                "boost": 0.0625
-                                                                            }
-                                                                        }
-                                                                    },
-                                                                    {
-                                                                        "match": {
-                                                                            "heading": {
-                                                                                "query": "a very different entity",
-                                                                                "boost": 0.5
-                                                                            }
-                                                                        }
-                                                                    },
-                                                                    {
-                                                                        "match": {
-                                                                            "heading.plain": {
-                                                                                "query": "a very different entity",
-                                                                                "boost": 0.5
-                                                                            }
-                                                                        }
-                                                                    },
-                                                                    {
-                                                                        "match": {
-                                                                            "auxiliary_text": {
-                                                                                "query": "a very different entity",
-                                                                                "boost": 0.1125
-                                                                            }
-                                                                        }
-                                                                    },
-                                                                    {
-                                                                        "match": {
-                                                                            "auxiliary_text.plain": {
-                                                                                "query": "a very different entity",
-                                                                                "boost": 0.0375
-                                                                            }
-                                                                        }
-                                                                    },
-                                                                    {
-                                                                        "match": {
-                                                                            "text": {
-                                                                                "query": "a very different entity",
-                                                                                "boost": 0.15
-                                                                            }
-                                                                        }
-                                                                    },
-                                                                    {
-                                                                        "match": {
-                                                                            "text.plain": {
-                                                                                "query": "a very different entity",
-                                                                                "boost": 0.05
-                                                                            }
-                                                                        }
-                                                                    },
-                                                                    {
-                                                                        "match": {
-                                                                            "file_text": {
-                                                                                "query": "a very different entity",
-                                                                                "boost": 0.075
-                                                                            }
-                                                                        }
-                                                                    },
-                                                                    {
-                                                                        "match": {
-                                                                            "file_text.plain": {
-                                                                                "query": "a very different entity",
-                                                                                "boost": 0.025
-                                                                            }
-                                                                        }
-                                                                    },
-                                                                    {
-                                                                        "match": {
-                                                                            "suggest": {
-                                                                                "query": "a very different entity",
-                                                                                "boost": 0.5
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                ]
+                                                            "match": {
+                                                                "statement_keywords": {
+                                                                    "query": "P2=Q1",
+                                                                    "boost": 20
+                                                                }
+                                                            }
+                                                        },
+                                                        {
+                                                            "match": {
+                                                                "statement_keywords": {
+                                                                    "query": "P1=Q2",
+                                                                    "boost": 10
+                                                                }
+                                                            }
+                                                        },
+                                                        {
+                                                            "match": {
+                                                                "statement_keywords": {
+                                                                    "query": "P2=Q2",
+                                                                    "boost": 10
+                                                                }
                                                             }
                                                         }
                                                     ]
@@ -443,60 +496,23 @@
                                         ]
                                     }
                                 },
-                                {
-                                    "dis_max": {
-                                        "queries": [
-                                            {
-                                                "match": {
-                                                    "statement_keywords": {
-                                                        "query": "P1=Q1",
-                                                        "boost": 20
-                                                    }
-                                                }
-                                            },
-                                            {
-                                                "match": {
-                                                    "statement_keywords": {
-                                                        "query": "P2=Q1",
-                                                        "boost": 20
-                                                    }
-                                                }
-                                            },
-                                            {
-                                                "match": {
-                                                    "statement_keywords": {
-                                                        "query": "P1=Q2",
-                                                        "boost": 10
-                                                    }
-                                                }
-                                            },
-                                            {
-                                                "match": {
-                                                    "statement_keywords": {
-                                                        "query": "P2=Q2",
-                                                        "boost": 10
-                                                    }
-                                                }
+                                "functions": [
+                                    {
+                                        "script_score": {
+                                            "script": {
+                                                "source": "100 \/ ( 1 + exp( -1 * ( _score + intercept ) ) )",
+                                                "params": {
+                                                    "intercept": 1
+                                                },
+                                                "lang": "expression"
                                             }
-                                        ]
+                                        }
                                     }
-                                }
-                            ]
-                        }
-                    },
-                    "functions": [
-                        {
-                            "script_score": {
-                                "script": {
-                                    "source": "100 \/ ( 1 + exp( -1 * ( _score + intercept ) ) )",
-                                    "params": {
-                                        "intercept": 1
-                                    },
-                                    "lang": "expression"
-                                }
+                                ]
                             }
                         }
-                    ]
+                    ],
+                    "minimum_should_match": 1
                 }
             }
         ],

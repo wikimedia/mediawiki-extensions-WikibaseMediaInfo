@@ -17,6 +17,7 @@ use CirrusSearch\Parser\AST\PrefixNode;
 use CirrusSearch\Parser\AST\Visitor\Visitor;
 use CirrusSearch\Parser\AST\WildcardNode;
 use CirrusSearch\Parser\AST\WordsQueryNode;
+use CirrusSearch\Query\Builder\NearMatchFieldQueryBuilder;
 use Elastica\Query\AbstractQuery;
 use Elastica\Query\BoolQuery;
 use Elastica\Query\FunctionScore;
@@ -110,6 +111,7 @@ class MediaSearchASTQueryBuilder implements Visitor {
 			'synonymsMinByteLength' => (float)( $settings['synonymsMinByteLength'] ?? 0 ),
 			'synonymsMinSimilarityToCanonicalForm' => (float)( $settings['synonymsMinSimilarityToCanonicalForm'] ?? 0 ),
 			'synonymsMinDifferenceFromOthers' => (float)( $settings['synonymsMinDifferenceFromOthers'] ?? 0 ),
+			'nearMatchBoost' => (float)( $settings['nearMatchBoost'] ?? 3.0 ),
 		];
 	}
 
@@ -118,8 +120,20 @@ class MediaSearchASTQueryBuilder implements Visitor {
 		$this->parsedQuery = $parsedQuery;
 		$root = $parsedQuery->getRoot();
 		$root->accept( $this );
+		$nearMatchQuery = NearMatchFieldQueryBuilder::defaultFromWeight( $this->options["nearMatchBoost"] )
+			->buildFromParsedQuery( $parsedQuery );
+		$mainQuery = $this->map[$root] ?? new MatchNone();
+		if ( $mainQuery instanceof MatchNone ) {
+			return $nearMatchQuery;
+		} elseif ( $nearMatchQuery instanceof MatchNone ) {
+			return $mainQuery;
+		}
 
-		return $this->map[$root] ?? new MatchNone();
+		$b = new BoolQuery();
+		$b->addShould( $nearMatchQuery );
+		$b->addShould( $mainQuery );
+		$b->setMinimumShouldMatch( 1 );
+		return $b;
 	}
 
 	/**

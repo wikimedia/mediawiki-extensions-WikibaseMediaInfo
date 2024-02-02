@@ -3,39 +3,13 @@
         "must": [
             {
                 "bool": {
-                    "minimum_should_match": 1,
                     "should": [
                         {
-                            "dis_max": {
-                                "tie_breaker": 1,
-                                "queries": [
-                                    {
-                                        "bool": {
-                                            "minimum_should_match": 0,
-                                            "filter": [
-                                                {
-                                                    "multi_match": {
-                                                        "query": "some search term",
-                                                        "fields": [
-                                                            "all",
-                                                            "all.plain"
-                                                        ],
-                                                        "operator": "and"
-                                                    }
-                                                }
-                                            ],
-                                            "should": [
-                                                {
-                                                    "match": {
-                                                        "title": {
-                                                            "query": "some search term",
-                                                            "boost": 9
-                                                        }
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
+                            "multi_match": {
+                                "query": "some search term",
+                                "fields": [
+                                    "all_near_match^3",
+                                    "all_near_match.asciifolding^2.25"
                                 ]
                             }
                         },
@@ -45,37 +19,33 @@
                                 "should": [
                                     {
                                         "dis_max": {
+                                            "tie_breaker": 1,
                                             "queries": [
                                                 {
-                                                    "match": {
-                                                        "statement_keywords": {
-                                                            "query": "P1=Q1",
-                                                            "boost": 1
-                                                        }
-                                                    }
-                                                },
-                                                {
-                                                    "match": {
-                                                        "statement_keywords": {
-                                                            "query": "P2=Q1",
-                                                            "boost": 1
-                                                        }
-                                                    }
-                                                },
-                                                {
-                                                    "match": {
-                                                        "statement_keywords": {
-                                                            "query": "P1=Q2",
-                                                            "boost": 0.5
-                                                        }
-                                                    }
-                                                },
-                                                {
-                                                    "match": {
-                                                        "statement_keywords": {
-                                                            "query": "P2=Q2",
-                                                            "boost": 0.5
-                                                        }
+                                                    "bool": {
+                                                        "minimum_should_match": 0,
+                                                        "filter": [
+                                                            {
+                                                                "multi_match": {
+                                                                    "query": "some search term",
+                                                                    "fields": [
+                                                                        "all",
+                                                                        "all.plain"
+                                                                    ],
+                                                                    "operator": "and"
+                                                                }
+                                                            }
+                                                        ],
+                                                        "should": [
+                                                            {
+                                                                "match": {
+                                                                    "title": {
+                                                                        "query": "some search term",
+                                                                        "boost": 9
+                                                                    }
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -86,27 +56,72 @@
                                             "minimum_should_match": 1,
                                             "should": [
                                                 {
-                                                    "match": {
-                                                        "weighted_tags": {
-                                                            "query": "image.linked.from.wikidata.p18\/Q1",
-                                                            "boost": 10
-                                                        }
+                                                    "dis_max": {
+                                                        "queries": [
+                                                            {
+                                                                "match": {
+                                                                    "statement_keywords": {
+                                                                        "query": "P1=Q1",
+                                                                        "boost": 1
+                                                                    }
+                                                                }
+                                                            },
+                                                            {
+                                                                "match": {
+                                                                    "statement_keywords": {
+                                                                        "query": "P2=Q1",
+                                                                        "boost": 1
+                                                                    }
+                                                                }
+                                                            },
+                                                            {
+                                                                "match": {
+                                                                    "statement_keywords": {
+                                                                        "query": "P1=Q2",
+                                                                        "boost": 0.5
+                                                                    }
+                                                                }
+                                                            },
+                                                            {
+                                                                "match": {
+                                                                    "statement_keywords": {
+                                                                        "query": "P2=Q2",
+                                                                        "boost": 0.5
+                                                                    }
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 },
                                                 {
-                                                    "match": {
-                                                        "weighted_tags": {
-                                                            "query": "image.linked.from.wikidata.p373\/Q1",
-                                                            "boost": 20
-                                                        }
-                                                    }
-                                                },
-                                                {
-                                                    "match": {
-                                                        "weighted_tags": {
-                                                            "query": "image.linked.from.wikidata.sitelink\/Q1",
-                                                            "boost": 30
-                                                        }
+                                                    "bool": {
+                                                        "minimum_should_match": 1,
+                                                        "should": [
+                                                            {
+                                                                "match": {
+                                                                    "weighted_tags": {
+                                                                        "query": "image.linked.from.wikidata.p18\/Q1",
+                                                                        "boost": 10
+                                                                    }
+                                                                }
+                                                            },
+                                                            {
+                                                                "match": {
+                                                                    "weighted_tags": {
+                                                                        "query": "image.linked.from.wikidata.p373\/Q1",
+                                                                        "boost": 20
+                                                                    }
+                                                                }
+                                                            },
+                                                            {
+                                                                "match": {
+                                                                    "weighted_tags": {
+                                                                        "query": "image.linked.from.wikidata.sitelink\/Q1",
+                                                                        "boost": 30
+                                                                    }
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -115,7 +130,8 @@
                                 ]
                             }
                         }
-                    ]
+                    ],
+                    "minimum_should_match": 1
                 }
             }
         ],

@@ -609,7 +609,7 @@ CaptionsPanel.prototype.makeEditable = function () {
 	var self = this;
 
 	// Show IP address logging notice to anon users
-	if ( mw.user.isAnon() ) {
+	if ( mw.config.get( 'wbmiShowIPEditingWarning' ) && mw.user.isAnon() ) {
 		AnonWarning.notifyOnce();
 	}
 
@@ -679,7 +679,8 @@ CaptionsPanel.prototype.addNewEmptyLanguageRow = function () {
 CaptionsPanel.prototype.sendData = function () {
 	var self = this,
 		captionsDataEditors = $.extend( {}, this.state.captionsDataEditors ),
-		promise = $.Deferred().resolve().promise();
+		promise = $.Deferred().resolve().promise(),
+		tempUserCreated = false;
 
 	this.setSending();
 
@@ -698,6 +699,9 @@ CaptionsPanel.prototype.sendData = function () {
 				)
 					.done( function ( result ) {
 						mw.mediaInfo.structuredData.currentRevision = result.entity.lastrevid;
+						if ( result.tempusercreated || false ) {
+							tempUserCreated = true;
+						}
 						self.savedCaptionsData[ langCode ] =
 							new CaptionData( langCode, text );
 					} )
@@ -721,6 +725,9 @@ CaptionsPanel.prototype.sendData = function () {
 				)
 					.done( function ( result ) {
 						mw.mediaInfo.structuredData.currentRevision = result.entity.lastrevid;
+						if ( result.tempusercreated || false ) {
+							tempUserCreated = true;
+						}
 						delete self.savedCaptionsData[ langCode ];
 					} )
 					.fail( function ( errorCode, error ) {
@@ -753,6 +760,9 @@ CaptionsPanel.prototype.sendData = function () {
 			captionsDataEditors: captionsDataEditors
 		} );
 	} ).always( function () {
+		if ( tempUserCreated ) {
+			mw.tempUserCreated.showPopup();
+		}
 		self.setReady();
 	} );
 };

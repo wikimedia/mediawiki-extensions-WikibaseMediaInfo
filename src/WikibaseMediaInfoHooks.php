@@ -24,6 +24,7 @@ use MediaWiki\Status\Status;
 use MediaWiki\Storage\BlobStore;
 use MediaWiki\Storage\Hook\MultiContentSaveHook;
 use MediaWiki\Title\Title;
+use MediaWiki\User\TempUser\TempUserConfig;
 use MediaWiki\User\User;
 use MediaWiki\User\UserIdentity;
 use OOUI\HtmlSnippet;
@@ -201,6 +202,7 @@ class WikibaseMediaInfoHooks implements
 			$isMediaInfoPage,
 			new BabelUserLanguageLookup(),
 			WikibaseRepo::getEntityViewFactory(),
+			MediaWikiServices::getInstance()->getTempUserConfig(),
 			[
 				'wbmiDefaultProperties' => array_values( $properties ),
 				'wbmiPropertyTitles' => $propertyTitles,
@@ -219,6 +221,7 @@ class WikibaseMediaInfoHooks implements
 	 * @param bool $isMediaInfoPage
 	 * @param UserLanguageLookup $userLanguageLookup
 	 * @param DispatchingEntityViewFactory $entityViewFactory
+	 * @param TempUserConfig $tempUserConfig
 	 * @param array $jsConfigVars Variables to expose to JavaScript
 	 * @throws \OOUI\Exception
 	 */
@@ -228,6 +231,7 @@ class WikibaseMediaInfoHooks implements
 		$isMediaInfoPage,
 		UserLanguageLookup $userLanguageLookup,
 		DispatchingEntityViewFactory $entityViewFactory,
+		TempUserConfig $tempUserConfig,
 		array $jsConfigVars = []
 	) {
 		// Site-wide config
@@ -294,6 +298,7 @@ class WikibaseMediaInfoHooks implements
 					'{{fullurl:Special:UserLogin/signup|returnto={{FULLPAGENAMEE}}}}'
 				)->parseAsBlock(),
 				'wbmiProtectionMsg' => $this->getProtectionMsg( $out ),
+				'wbmiShowIPEditingWarning' => !$tempUserConfig->isEnabled(),
 				// extend/override wbmiPropertyTypes (which already contains a property type map
 				// for all default properties) with property types for existing statements
 				'wbmiPropertyTypes' => $jsConfigVars['wbmiPropertyTypes'] + $existingPropertyTypes,

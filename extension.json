@@ -196,6 +196,7 @@
 				"wikibase.mediainfo.uls",
 				"mediawiki.action.edit.editWarning",
 				"mediawiki.template.mustache+dom",
+				"mediawiki.tempUserCreated",
 				"oojs",
 				"oojs-ui-core",
 				"oojs-ui-widgets",
@@ -236,7 +237,9 @@
 				"wikibasemediainfo-statements-unsupported-property-content",
 				"wikibasemediainfo-statements-unsupported-property-type-content",
 				"protectedpagetext",
-				"cascadeprotected"
+				"cascadeprotected",
+				"postedit-temp-created-label",
+				"postedit-temp-created"
 			],
 			"templates": [
 				"templates/filepage/ProtectionMsgWidget.mustache+dom",

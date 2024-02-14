@@ -150,7 +150,7 @@ StatementPanel.prototype.makeEditable = function () {
 	var self = this;
 
 	// Show IP address logging notice to anon users
-	if ( mw.user.isAnon() ) {
+	if ( mw.config.get( 'wbmiShowIPEditingWarning' ) && mw.user.isAnon() ) {
 		AnonWarning.notifyOnce();
 	}
 
@@ -194,6 +194,10 @@ StatementPanel.prototype.sendData = function () {
 			// if the statement widget is removed then also remove the panel
 			if ( self.statementWidget.getData().length === 0 && !self.config.isDefaultProperty ) {
 				self.remove();
+			}
+
+			if ( response.tempusercreated || false ) {
+				mw.tempUserCreated.showPopup();
 			}
 		} ).catch( function () {
 			// allow panel to be re-enabled to allow trying submission again

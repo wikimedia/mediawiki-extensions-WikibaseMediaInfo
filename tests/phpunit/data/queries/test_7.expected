@@ -3,93 +3,109 @@
         "must": [
             {
                 "bool": {
-                    "minimum_should_match": 1,
                     "should": [
                         {
-                            "bool": {
-                                "minimum_should_match": 0,
-                                "filter": [
-                                    {
-                                        "match_phrase": {
-                                            "all.plain": {
-                                                "query": "phrase search",
-                                                "slop": 0
-                                            }
-                                        }
-                                    }
-                                ],
-                                "should": [
-                                    {
-                                        "match": {
-                                            "title.plain": {
-                                                "query": "phrase search",
-                                                "boost": 0.15
-                                            }
-                                        }
-                                    },
-                                    {
-                                        "match": {
-                                            "category.plain": {
-                                                "query": "phrase search",
-                                                "boost": 0.175
-                                            }
-                                        }
-                                    },
-                                    {
-                                        "match": {
-                                            "redirect.title.plain": {
-                                                "query": "phrase search",
-                                                "boost": 0.125
-                                            }
-                                        }
-                                    },
-                                    {
-                                        "match": {
-                                            "heading.plain": {
-                                                "query": "phrase search",
-                                                "boost": 1
-                                            }
-                                        }
-                                    },
-                                    {
-                                        "match": {
-                                            "auxiliary_text.plain": {
-                                                "query": "phrase search",
-                                                "boost": 0.075
-                                            }
-                                        }
-                                    },
-                                    {
-                                        "match": {
-                                            "text.plain": {
-                                                "query": "phrase search",
-                                                "boost": 0.1
-                                            }
-                                        }
-                                    },
-                                    {
-                                        "match": {
-                                            "file_text.plain": {
-                                                "query": "phrase search",
-                                                "boost": 0.05
-                                            }
-                                        }
-                                    },
-                                    {
-                                        "match": {
-                                            "descriptions.de.plain": {
-                                                "query": "phrase search",
-                                                "boost": 2.5
-                                            }
-                                        }
-                                    }
+                            "multi_match": {
+                                "query": "\"phrase search\"",
+                                "fields": [
+                                    "all_near_match^3",
+                                    "all_near_match.asciifolding^2.25"
                                 ]
                             }
                         },
                         {
-                            "match_none": {}
+                            "bool": {
+                                "minimum_should_match": 1,
+                                "should": [
+                                    {
+                                        "bool": {
+                                            "minimum_should_match": 0,
+                                            "filter": [
+                                                {
+                                                    "match_phrase": {
+                                                        "all.plain": {
+                                                            "query": "phrase search",
+                                                            "slop": 0
+                                                        }
+                                                    }
+                                                }
+                                            ],
+                                            "should": [
+                                                {
+                                                    "match": {
+                                                        "title.plain": {
+                                                            "query": "phrase search",
+                                                            "boost": 0.15
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    "match": {
+                                                        "category.plain": {
+                                                            "query": "phrase search",
+                                                            "boost": 0.175
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    "match": {
+                                                        "redirect.title.plain": {
+                                                            "query": "phrase search",
+                                                            "boost": 0.125
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    "match": {
+                                                        "heading.plain": {
+                                                            "query": "phrase search",
+                                                            "boost": 1
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    "match": {
+                                                        "auxiliary_text.plain": {
+                                                            "query": "phrase search",
+                                                            "boost": 0.075
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    "match": {
+                                                        "text.plain": {
+                                                            "query": "phrase search",
+                                                            "boost": 0.1
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    "match": {
+                                                        "file_text.plain": {
+                                                            "query": "phrase search",
+                                                            "boost": 0.05
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    "match": {
+                                                        "descriptions.de.plain": {
+                                                            "query": "phrase search",
+                                                            "boost": 2.5
+                                                        }
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "match_none": {}
+                                    }
+                                ]
+                            }
                         }
-                    ]
+                    ],
+                    "minimum_should_match": 1
                 }
             }
         ],

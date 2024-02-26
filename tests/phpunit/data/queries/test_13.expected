@@ -3,46 +3,62 @@
         "must": [
             {
                 "bool": {
-                    "minimum_should_match": 1,
                     "should": [
                         {
-                            "dis_max": {
-                                "tie_breaker": 1,
-                                "queries": [
-                                    {
-                                        "bool": {
-                                            "minimum_should_match": 0,
-                                            "filter": [
-                                                {
-                                                    "multi_match": {
-                                                        "query": "some search term",
-                                                        "fields": [
-                                                            "all",
-                                                            "all.plain"
-                                                        ],
-                                                        "operator": "and"
-                                                    }
-                                                }
-                                            ],
-                                            "should": [
-                                                {
-                                                    "match": {
-                                                        "title": {
-                                                            "query": "some search term",
-                                                            "boost": 9
-                                                        }
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
+                            "multi_match": {
+                                "query": "some search term",
+                                "fields": [
+                                    "all_near_match^3",
+                                    "all_near_match.asciifolding^2.25"
                                 ]
                             }
                         },
                         {
-                            "match_none": {}
+                            "bool": {
+                                "minimum_should_match": 1,
+                                "should": [
+                                    {
+                                        "dis_max": {
+                                            "tie_breaker": 1,
+                                            "queries": [
+                                                {
+                                                    "bool": {
+                                                        "minimum_should_match": 0,
+                                                        "filter": [
+                                                            {
+                                                                "multi_match": {
+                                                                    "query": "some search term",
+                                                                    "fields": [
+                                                                        "all",
+                                                                        "all.plain"
+                                                                    ],
+                                                                    "operator": "and"
+                                                                }
+                                                            }
+                                                        ],
+                                                        "should": [
+                                                            {
+                                                                "match": {
+                                                                    "title": {
+                                                                        "query": "some search term",
+                                                                        "boost": 9
+                                                                    }
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "match_none": {}
+                                    }
+                                ]
+                            }
                         }
-                    ]
+                    ],
+                    "minimum_should_match": 1
                 }
             }
         ],

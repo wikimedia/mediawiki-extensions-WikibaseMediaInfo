@@ -2,6 +2,7 @@
 	"@metadata": {
 		"authors": [
 			"Codenstory",
+			"Dr1t jg",
 			"Ellif",
 			"Jonghaya",
 			"Kwj2772",
@@ -9,6 +10,7 @@
 			"Ykhwong"
 		]
 	},
+	"action-mediainfo-term": "미디어 정보 용어(설명, 요약) 변경",
 	"right-mediainfo-term": "미디어 정보 용어(설명, 요약) 변경",
 	"slot-name-mediainfo": "구조화된 미디어 정보",
 	"wikibase-entity-mediainfo": "미디어 정보",
@@ -18,6 +20,7 @@
 	"wikibasemediainfo-add-property": "속성을 추가하려면 검색하세요 (항목의 일부, 미디어 타입 등)",
 	"wikibasemediainfo-add-statement": "서술 추가하기",
 	"wikibasemediainfo-custommatch-feature-no-profile": "custommatch:$1에 대해 설정된 프로필이 없습니다",
+	"wikibasemediainfo-custommatch-feature-invalid-term": "잘못된 커스텀매치 검색 기능에 대한 검색어",
 	"wikibasemediainfo-desc": "미디어 파일의 구조화된 메타데이터를 관리하는 위키베이스 확장 기능",
 	"wikibasemediainfo-diffview-label": "캡션",
 	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "설명",

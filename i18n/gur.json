@@ -68,6 +68,7 @@
 	"wikibasemediainfo-statements-unsupported-property-content": "'properties other than' $1 nan ka suŋeri za'an, dee wan suŋɛ za'an beere. Dee nananawa, 'functionality for unsupported properties' ta'am kan tum wuu fum n botı se'em la.",
 	"wikibasemediainfo-statements-unsupported-property-type-content": "Dagi 'property' buuri za'an n suŋɛ za'an waabi, dee ta'am dee ta'am suŋɛ beere. Dee nananawa, 'functionality for unsupported properties'ta'am kan tum wuu fum n botı se'em la.",
 	"wikibasemediainfo-statements-link-notice-text": "'structured data labels' linki la ba 'respective' {{WBREPONAME}} pɛga dee wan yu'ɛ n boi takole paalega puan.",
+	"wikibasemediainfo-statements-link-notice-dismiss": "Keese",
 	"wikibasemediainfo-remove-all-statements-confirm-title": "Yeseba za'an",
 	"wikibasemediainfo-remove-all-statements-confirm-accept": "Yese",
 	"wikibasemediainfo-coordinate-input-label": "'Coordinaters'",

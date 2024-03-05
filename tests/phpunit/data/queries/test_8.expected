@@ -8,8 +8,8 @@
                             "multi_match": {
                                 "query": "cat AND dog NOT donkey",
                                 "fields": [
-                                    "all_near_match^3",
-                                    "all_near_match.asciifolding^2.25"
+                                    "all_near_match^5",
+                                    "all_near_match.asciifolding^3.75"
                                 ]
                             }
                         },
@@ -193,6 +193,7 @@
                                                     ]
                                                 }
                                             },
+                                            "boost_mode": "replace",
                                             "functions": [
                                                 {
                                                     "script_score": {
@@ -374,6 +375,7 @@
                                                     ]
                                                 }
                                             },
+                                            "boost_mode": "replace",
                                             "functions": [
                                                 {
                                                     "script_score": {
@@ -568,6 +570,7 @@
                                                     ]
                                                 }
                                             },
+                                            "boost_mode": "replace",
                                             "functions": [
                                                 {
                                                     "script_score": {

@@ -123,11 +123,11 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiIntegrationTestCase {
 		$out = $this->getMockOutputPage( $imgTitle );
 		$out->expects( $this->once() )
 			->method( 'addJsConfigVars' )
-			->will( $this->returnCallback(
+			->willReturnCallback(
 				function ( $keys ) {
 					$this->assertArrayHasKey( 'wbCurrentRevision', $keys );
 				}
-			) );
+			);
 		$out->expects( $this->once() )
 			->method( 'addModuleStyles' );
 		$out->expects( $this->once() )
@@ -142,11 +142,11 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiIntegrationTestCase {
 		$out = $this->getMockOutputPage( $imgTitle );
 		$out->expects( $this->once() )
 			->method( 'addJsConfigVars' )
-			->will( $this->returnCallback(
+			->willReturnCallback(
 				function ( $keys ) {
 					$this->assertArrayNotHasKey( 'wbCurrentRevision', $keys );
 				}
-			) );
+			);
 
 		$skin = $this->createMock( \Skin::class );
 

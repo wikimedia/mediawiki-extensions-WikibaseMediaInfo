@@ -25,15 +25,15 @@ class MediaInfoSerializerTest extends \PHPUnit\Framework\TestCase {
 	private function newSerializer() {
 		$termListSerializer = $this->createMock( Serializer::class );
 		$termListSerializer->method( 'serialize' )
-			->will( $this->returnCallback( static function ( TermList $terms ) {
+			->willReturnCallback( static function ( TermList $terms ) {
 				return $terms->toTextArray();
-			} ) );
+			} );
 
 		$statementListSerializer = $this->createMock( Serializer::class );
 		$statementListSerializer->method( 'serialize' )
-			->will( $this->returnCallback( static function ( StatementList $statementList ) {
+			->willReturnCallback( static function ( StatementList $statementList ) {
 				return implode( '|', $statementList->getPropertyIds() );
-			} ) );
+			} );
 
 		return new MediaInfoSerializer( $termListSerializer, $statementListSerializer );
 	}

@@ -24,7 +24,7 @@ class FilePageLookupTest extends \PHPUnit\Framework\TestCase {
 		$titleFactory = $this->createMock( TitleFactory::class );
 
 		$titleFactory->method( 'newFromId' )
-			->will( $this->returnCallback( static function ( $pageId ) {
+			->willReturnCallback( static function ( $pageId ) {
 				switch ( $pageId ) {
 					case 1:
 						$title = Title::makeTitle( NS_FILE, 'Test-' . $pageId . '.png' );
@@ -37,7 +37,7 @@ class FilePageLookupTest extends \PHPUnit\Framework\TestCase {
 					default:
 						return null;
 				}
-			} ) );
+			} );
 
 		return $titleFactory;
 	}

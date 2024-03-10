@@ -64,58 +64,54 @@ class MediaInfoEntityStatementsViewTest extends \PHPUnit\Framework\TestCase {
 
 		$snakFormatter = $this->createMock( SnakFormatter::class );
 		$snakFormatter->method( 'formatSnak' )
-			->will(
-				$this->returnCallback( function ( Snak $snak ) {
-					if ( $snak instanceof PropertyNoValueSnak ) {
-						return $this->textProvider->get(
-							'wikibasemediainfo-filepage-statement-no-value'
-						);
-					} elseif ( $snak instanceof PropertySomeValueSnak ) {
-						return $this->textProvider->get(
-							'wikibasemediainfo-filepage-statement-some-value'
-						);
-					} elseif ( $snak instanceof PropertyValueSnak ) {
-						$value = $snak->getDataValue();
-						if ( !( $value instanceof EntityIdValue ) ) {
-							return $value->getValue();
-						}
-						$map = [
-							'Q333' => 'ITEM Q333 LABEL',
-							'Q999' => 'ITEM Q999 LABEL',
-							'Q3333' => 'ITEM Q3333 LABEL',
-						];
-						if ( isset( $map[$value->getEntityId()->getSerialization()] ) ) {
-							return $map[$value->getEntityId()->getSerialization()];
-						}
+			->willReturnCallback( function ( Snak $snak ) {
+				if ( $snak instanceof PropertyNoValueSnak ) {
+					return $this->textProvider->get(
+						'wikibasemediainfo-filepage-statement-no-value'
+					);
+				} elseif ( $snak instanceof PropertySomeValueSnak ) {
+					return $this->textProvider->get(
+						'wikibasemediainfo-filepage-statement-some-value'
+					);
+				} elseif ( $snak instanceof PropertyValueSnak ) {
+					$value = $snak->getDataValue();
+					if ( !( $value instanceof EntityIdValue ) ) {
+						return $value->getValue();
 					}
-					return '';
-				} )
-			);
+					$map = [
+						'Q333' => 'ITEM Q333 LABEL',
+						'Q999' => 'ITEM Q999 LABEL',
+						'Q3333' => 'ITEM Q3333 LABEL',
+					];
+					if ( isset( $map[$value->getEntityId()->getSerialization()] ) ) {
+						return $map[$value->getEntityId()->getSerialization()];
+					}
+				}
+				return '';
+			} );
 		$this->snakFormatterFactory = $this->createMock( OutputFormatSnakFormatterFactory::class );
 		$this->snakFormatterFactory->method( 'getSnakFormatter' )->willReturn( $snakFormatter );
 
 		$valueFormatter = $this->createMock( DispatchingValueFormatter::class );
 		$valueFormatter->method( 'formatValue' )
-			->will(
-				$this->returnCallback( static function ( DataValue $value ) {
-					$map = [
-						'P333' => 'PROPERTY P333 LABEL',
-						'P444' => 'PROPERTY P444 LABEL',
-						'P555' => 'PROPERTY P555 LABEL',
-						'P666' => 'PROPERTY P666 LABEL',
-						'P777' => 'PROPERTY P777 LABEL',
-						'P888' => 'PROPERTY P888 LABEL',
-						'P999' => 'PROPERTY P999 LABEL',
-					];
-					if (
-						$value instanceof EntityIdValue &&
-						isset( $map[$value->getEntityId()->getSerialization()] )
-					) {
-						return $map[$value->getEntityId()->getSerialization()];
-					}
-					return '';
-				} )
-			);
+			->willReturnCallback( static function ( DataValue $value ) {
+				$map = [
+					'P333' => 'PROPERTY P333 LABEL',
+					'P444' => 'PROPERTY P444 LABEL',
+					'P555' => 'PROPERTY P555 LABEL',
+					'P666' => 'PROPERTY P666 LABEL',
+					'P777' => 'PROPERTY P777 LABEL',
+					'P888' => 'PROPERTY P888 LABEL',
+					'P999' => 'PROPERTY P999 LABEL',
+				];
+				if (
+					$value instanceof EntityIdValue &&
+					isset( $map[$value->getEntityId()->getSerialization()] )
+				) {
+					return $map[$value->getEntityId()->getSerialization()];
+				}
+				return '';
+			} );
 		$this->valueFormatterFactory = $this->createMock( OutputFormatValueFormatterFactory::class );
 		$this->valueFormatterFactory->method( 'getValueFormatter' )->willReturn( $valueFormatter );
 	}

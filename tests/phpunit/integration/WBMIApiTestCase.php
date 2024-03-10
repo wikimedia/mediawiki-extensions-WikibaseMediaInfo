@@ -32,7 +32,7 @@ abstract class WBMIApiTestCase extends \ApiUploadTestCase {
 			'lgname' => $userName,
 			'lgpassword' => $password
 		];
-		list( , , $session ) = $this->doApiRequest( $params );
+		[ , , $session ] = $this->doApiRequest( $params );
 		return $session;
 	}
 
@@ -68,7 +68,7 @@ abstract class WBMIApiTestCase extends \ApiUploadTestCase {
 			'text' => "This is the page text for $fileName",
 		];
 
-		list( $result, , ) = $this->doApiRequestWithToken(
+		[ $result, , ] = $this->doApiRequestWithToken(
 			$params,
 			$session,
 			$this->getTestUser()->getUser()

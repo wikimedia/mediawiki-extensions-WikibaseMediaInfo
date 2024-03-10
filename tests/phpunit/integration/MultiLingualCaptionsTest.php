@@ -51,7 +51,7 @@ class MultiLingualCaptionsTest extends WBMIApiTestCase {
 		);
 
 		// Add a 2nd caption
-		list( $result, , ) = $this->doApiRequestWithToken(
+		[ $result, , ] = $this->doApiRequestWithToken(
 			[
 				'action' => 'wbsetlabel',
 				'id' => $entityId,
@@ -64,7 +64,7 @@ class MultiLingualCaptionsTest extends WBMIApiTestCase {
 		);
 
 		// Get the entity from the API
-		list( $result, , ) = $this->doApiRequestWithToken(
+		[ $result, , ] = $this->doApiRequestWithToken(
 			[
 				'action' => 'wbgetentities',
 				'ids' => $entityId,
@@ -92,7 +92,7 @@ class MultiLingualCaptionsTest extends WBMIApiTestCase {
 		);
 
 		// Edit French caption
-		list( $result, , ) = $this->doApiRequestWithToken(
+		[ $result, , ] = $this->doApiRequestWithToken(
 			[
 				'action' => 'wbsetlabel',
 				'id' => $entityId,
@@ -105,7 +105,7 @@ class MultiLingualCaptionsTest extends WBMIApiTestCase {
 		);
 
 		// Get the entity from the API
-		list( $result, , ) = $this->doApiRequestWithToken(
+		[ $result, , ] = $this->doApiRequestWithToken(
 			[
 				'action' => 'wbgetentities',
 				'ids' => $entityId,

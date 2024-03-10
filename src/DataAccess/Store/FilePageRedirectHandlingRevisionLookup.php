@@ -73,7 +73,7 @@ class FilePageRedirectHandlingRevisionLookup implements EntityRevisionLookup {
 			$revisionId = $e->getRevisionId();
 			$slotRole = $e->getSlotRole();
 			$revision = $this->revisionStore->getRevisionById( $revisionId, $revStoreFlags );
-			list( $entityRevision, $redirect ) = $this->entityDataLoader->loadEntityDataFromWikiPageRevision(
+			[ $entityRevision, $redirect ] = $this->entityDataLoader->loadEntityDataFromWikiPageRevision(
 				$revision, $slotRole, $revStoreFlags
 			);
 

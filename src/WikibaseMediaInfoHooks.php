@@ -597,7 +597,7 @@ class WikibaseMediaInfoHooks implements
 		// Cascading protection.
 		if ( $restrictionStore->isCascadeProtected( $imgTitle ) ) {
 			// Get the protected page(s) causing this file to be protected.
-			list( $cascadeSources ) = $restrictionStore->getCascadeProtectionSources( $imgTitle );
+			[ $cascadeSources ] = $restrictionStore->getCascadeProtectionSources( $imgTitle );
 			$sources = '';
 			$titleFormatter = $services->getTitleFormatter();
 			foreach ( $cascadeSources as $pageIdentity ) {

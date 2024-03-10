@@ -145,7 +145,7 @@ class MediaInfoEntityTermsView {
 			count( $fbChainLanguages ) > 0 &&
 			!in_array( $fbChainLanguages[0], $orderedLangCodes )
 		) {
-			array_unshift( $orderedLangCodes,  $fbChainLanguages[0] );
+			array_unshift( $orderedLangCodes, $fbChainLanguages[0] );
 		}
 		return $orderedLangCodes;
 	}

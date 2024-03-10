@@ -65,7 +65,7 @@ class StatementsTest extends WBMIApiTestCase {
 			"new" => $type,
 			"data" => json_encode( $data ),
 		];
-		list( $result, , ) = $this->doApiRequestWithToken(
+		[ $result, , ] = $this->doApiRequestWithToken(
 			$params,
 			null,
 			$this->getTestUser()->getUser()
@@ -146,7 +146,7 @@ class StatementsTest extends WBMIApiTestCase {
 	}
 
 	private function entityHasStatement( $entityId, $testStatement ) {
-		list( $result, , ) = $this->doApiRequestWithToken(
+		[ $result, , ] = $this->doApiRequestWithToken(
 			[
 				'action' => 'wbgetentities',
 				'ids' => $entityId,

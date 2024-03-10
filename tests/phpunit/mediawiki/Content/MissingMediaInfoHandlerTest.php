@@ -33,7 +33,7 @@ class MissingMediaInfoHandlerTest extends \PHPUnit\Framework\TestCase {
 		$titleFactory = $this->createMock( TitleFactory::class );
 
 		$titleFactory->method( 'newFromID' )
-			->will( $this->returnCallback( static function ( $pageId ) {
+			->willReturnCallback( static function ( $pageId ) {
 				switch ( $pageId ) {
 					case 1:
 						$title = Title::makeTitle( NS_FILE, 'Test-' . $pageId . '.png' );
@@ -46,7 +46,7 @@ class MissingMediaInfoHandlerTest extends \PHPUnit\Framework\TestCase {
 					default:
 						return null;
 				}
-			} ) );
+			} );
 
 		return $titleFactory;
 	}

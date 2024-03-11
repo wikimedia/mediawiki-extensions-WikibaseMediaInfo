@@ -248,30 +248,4 @@
 		window.addEventListener( 'hashchange', scrollToCurrentAnchor.bind( null, tabs ) );
 		$.when.apply( $, existingStatementPanels ).then( scrollToCurrentAnchor.bind( null, tabs ) );
 	} );
-
-	/**
-	 * Ensure browser default 'Leave Site' popup triggers when leaving a page
-	 * with edits
-	 *
-	 * @return {string} message
-	 */
-	window.onbeforeunload = function () {
-		var allPanels,
-			hasChanges;
-
-		// combine statement panels with captions panel
-		allPanels = Object.keys( statementPanels ).map( function ( propertyId ) {
-			return statementPanels[ propertyId ];
-		} ).concat( captionsPanel );
-
-		hasChanges = allPanels.some( function ( panel ) {
-			return panel && panel.isEditable() && panel.hasChanges();
-		} );
-
-		if ( hasChanges ) {
-			// this message is not usually displayed (browsers have default language)
-			// include a valid message for some versions of IE that display the message
-			return mw.msg( 'wikibasemediainfo-filepage-cancel-confirm' );
-		}
-	};
 }() );

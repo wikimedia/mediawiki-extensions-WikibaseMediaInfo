@@ -14,7 +14,7 @@ this data.
   upgraded to a more recent LTS version once our CI system can support it.
 
 ### MW Extensions
-The following Mediawiki extensions must be installed and configured prior to
+The following MediaWiki extensions must be installed and configured prior to
 installing WikibaseMediaInfo:
 
 - [UniversalLanguageSelector](https://www.mediawiki.org/wiki/Extension:UniversalLanguageSelector)

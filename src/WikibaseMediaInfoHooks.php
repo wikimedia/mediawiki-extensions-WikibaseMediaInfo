@@ -750,7 +750,7 @@ class WikibaseMediaInfoHooks implements
 		}
 
 		$mwServices = MediaWikiServices::getInstance();
-		$dbw = wfGetDB( DB_PRIMARY );
+		$dbw = $mwServices->getDBLoadBalancerFactory()->getPrimaryDatabase();
 		$blobStore = $mwServices->getBlobStoreFactory()->newSqlBlobStore();
 		$statementGuidParser = WikibaseRepo::getStatementGuidParser( $mwServices );
 

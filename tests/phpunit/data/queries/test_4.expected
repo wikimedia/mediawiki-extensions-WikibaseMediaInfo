@@ -8,8 +8,8 @@
                             "multi_match": {
                                 "query": "some search term",
                                 "fields": [
-                                    "all_near_match^3",
-                                    "all_near_match.asciifolding^2.25"
+                                    "all_near_match^5",
+                                    "all_near_match.asciifolding^3.75"
                                 ]
                             }
                         },
@@ -217,6 +217,7 @@
                                                     ]
                                                 }
                                             },
+                                            "boost_mode": "replace",
                                             "functions": [
                                                 {
                                                     "script_score": {

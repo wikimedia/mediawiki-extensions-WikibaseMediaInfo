@@ -111,7 +111,7 @@ class MediaSearchASTQueryBuilder implements Visitor {
 			'synonymsMinByteLength' => (float)( $settings['synonymsMinByteLength'] ?? 0 ),
 			'synonymsMinSimilarityToCanonicalForm' => (float)( $settings['synonymsMinSimilarityToCanonicalForm'] ?? 0 ),
 			'synonymsMinDifferenceFromOthers' => (float)( $settings['synonymsMinDifferenceFromOthers'] ?? 0 ),
-			'nearMatchBoost' => (float)( $settings['nearMatchBoost'] ?? 3.0 ),
+			'nearMatchBoost' => (float)( $settings['nearMatchBoost'] ?? 5.0 ),
 		];
 	}
 
@@ -124,16 +124,17 @@ class MediaSearchASTQueryBuilder implements Visitor {
 			->buildFromParsedQuery( $parsedQuery );
 		$mainQuery = $this->map[$root] ?? new MatchNone();
 		if ( $mainQuery instanceof MatchNone ) {
-			return $nearMatchQuery;
+			$actualQuery = $nearMatchQuery;
 		} elseif ( $nearMatchQuery instanceof MatchNone ) {
-			return $mainQuery;
+			$actualQuery = $mainQuery;
+		} else {
+			$actualQuery = new BoolQuery();
+			$actualQuery->addShould( $nearMatchQuery );
+			$actualQuery->addShould( $mainQuery );
+			$actualQuery->setMinimumShouldMatch( 1 );
 		}
 
-		$b = new BoolQuery();
-		$b->addShould( $nearMatchQuery );
-		$b->addShould( $mainQuery );
-		$b->setMinimumShouldMatch( 1 );
-		return $b;
+		return $actualQuery;
 	}
 
 	/**
@@ -157,7 +158,8 @@ class MediaSearchASTQueryBuilder implements Visitor {
 					[ 'intercept' => $this->options['logisticRegressionIntercept'] ],
 					'expression'
 				)
-			);
+			)
+			->setBoostMode( FunctionScore::BOOST_MODE_REPLACE );
 	}
 
 	/**

@@ -117,7 +117,7 @@
 	"wikibasemediainfo-time-calendar-gregorian": "格里曆",
 	"wikibasemediainfo-time-calendar-julian": "儒略曆",
 	"wikibasemediainfo-quantity-input-button-text": "添加",
-	"wikibasemediainfo-quantity-unit-placeholder": "輸入單位（選填）",
+	"wikibasemediainfo-quantity-unit-placeholder": "請輸入單位（非必填）",
 	"wikibasemediainfo-quantity-unit-label": "單位",
 	"wikibasemediainfo-quantity-unit-button-text": "設定單位",
 	"wikibasemediainfo-globecoordinate-input-button-text": "添加",

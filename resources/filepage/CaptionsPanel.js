@@ -539,7 +539,8 @@ CaptionsPanel.prototype.getWbSetLabelParams = function ( language, text ) {
 		action: 'wbsetlabel',
 		id: mw.config.get( 'wbEntityId' ),
 		value: text,
-		language: language
+		language: language,
+		returnto: mw.config.get( 'wgPageName' )
 	};
 	// Don't send baserevid unless we already have saved captions (a quirk of the api)
 	if ( Object.keys( this.savedCaptionsData ).length > 0 ) {
@@ -680,7 +681,7 @@ CaptionsPanel.prototype.sendData = function () {
 	var self = this,
 		captionsDataEditors = $.extend( {}, this.state.captionsDataEditors ),
 		promise = $.Deferred().resolve().promise(),
-		tempUserCreated = false;
+		tempuser = {};
 
 	this.setSending();
 
@@ -697,13 +698,19 @@ CaptionsPanel.prototype.sendData = function () {
 					'csrf',
 					self.getWbSetLabelParams( langCode, text )
 				)
-					.done( function ( result ) {
-						mw.mediaInfo.structuredData.currentRevision = result.entity.lastrevid;
-						if ( result.tempusercreated || false ) {
-							tempUserCreated = true;
-						}
+					.done( function ( response ) {
+						mw.mediaInfo.structuredData.currentRevision = response.entity.lastrevid;
+
 						self.savedCaptionsData[ langCode ] =
 							new CaptionData( langCode, text );
+
+						// extract tempuser properties from response, if present
+						// (this will only be present the first request)
+						for ( var property in response ) {
+							if ( property.match( /^tempuser/ ) ) {
+								tempuser[ property ] = response[ property ];
+							}
+						}
 					} )
 					.fail( function ( errorCode, error ) {
 						var apiError =
@@ -723,12 +730,18 @@ CaptionsPanel.prototype.sendData = function () {
 					'csrf',
 					self.getWbSetLabelParams( langCode, '' )
 				)
-					.done( function ( result ) {
-						mw.mediaInfo.structuredData.currentRevision = result.entity.lastrevid;
-						if ( result.tempusercreated || false ) {
-							tempUserCreated = true;
-						}
+					.done( function ( response ) {
+						mw.mediaInfo.structuredData.currentRevision = response.entity.lastrevid;
+
 						delete self.savedCaptionsData[ langCode ];
+
+						// extract tempuser properties from response, if present
+						// (this will only be present the first request)
+						for ( var property in response ) {
+							if ( property.match( /^tempuser/ ) ) {
+								tempuser[ property ] = response[ property ];
+							}
+						}
 					} )
 					.fail( function ( errorCode, error ) {
 						var apiError =
@@ -760,7 +773,9 @@ CaptionsPanel.prototype.sendData = function () {
 			captionsDataEditors: captionsDataEditors
 		} );
 	} ).always( function () {
-		if ( tempUserCreated ) {
+		if ( tempuser.tempuserredirect ) {
+			window.location.href = tempuser.tempuserredirect;
+		} else if ( tempuser.tempusercreated ) {
 			mw.tempUserCreated.showPopup();
 		}
 		self.setReady();

@@ -196,7 +196,9 @@ StatementPanel.prototype.sendData = function () {
 				self.remove();
 			}
 
-			if ( response.tempusercreated || false ) {
+			if ( response.tempuserredirect ) {
+				window.location.href = response.tempuserredirect;
+			} else if ( response.tempusercreated ) {
 				mw.tempUserCreated.showPopup();
 			}
 		} ).catch( function () {

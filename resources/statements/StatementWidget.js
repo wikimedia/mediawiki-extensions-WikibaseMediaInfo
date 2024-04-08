@@ -464,7 +464,8 @@ StatementWidget.prototype.submit = function ( baseRevId ) {
 		removedStatements = this.getRemovals(),
 		hasFailures = false,
 		errors = [],
-		disabled = this.isDisabled();
+		disabled = this.isDisabled(),
+		tempuser = {};
 
 	this.setEditing( false )
 		.then( self.setErrors.bind( self, [] ) );
@@ -488,7 +489,9 @@ StatementWidget.prototype.submit = function ( baseRevId ) {
 				assertuser: mw.user.isNamed() ? mw.user.getName() : undefined,
 				errorformat: 'html',
 				errorlang: mw.config.get( 'wgUserLanguage' ),
-				errorsuselocal: true
+				errorsuselocal: true,
+				returnto: mw.config.get( 'wgPageName' ),
+				returntoanchor: '#' + statement.getClaim().getMainSnak().getPropertyId()
 			} ).then(
 				function ( response ) {
 					var guid = response.claim.id,
@@ -507,6 +510,21 @@ StatementWidget.prototype.submit = function ( baseRevId ) {
 						}
 						data.addItem( responseStatement );
 					}
+
+					// extract tempuser properties from response, if present
+					// (this will only be present the first request)
+					for ( var property in response ) {
+						if ( property.match( /^tempuser/ ) ) {
+							tempuser[ property ] = response[ property ];
+						}
+					}
+					// make sure to attach known tempuser data to any follow-up
+					// response, so it ends up propagating until the last response,
+					// and can be handled once all changes have been submitted
+					if ( Object.keys( tempuser ).length > 0 ) {
+						$.extend( response, tempuser );
+					}
+
 					return response;
 				}
 			).catch(
@@ -553,7 +571,25 @@ StatementWidget.prototype.submit = function ( baseRevId ) {
 				bot: 1,
 				summary: self.config.summary || undefined,
 				tags: self.config.tags || undefined,
-				assertuser: mw.user.isNamed() ? mw.user.getName() : undefined
+				assertuser: mw.user.isNamed() ? mw.user.getName() : undefined,
+				returnto: mw.config.get( 'wgPageName' ),
+				returntoanchor: '#' + removedStatements[ 0 ].getClaim().getMainSnak().getPropertyId()
+			} ).then( function ( response ) {
+				// extract tempuser properties from response, if present
+				// (this will only be present the first request)
+				for ( var property in response ) {
+					if ( property.match( /^tempuser/ ) ) {
+						tempuser[ property ] = response[ property ];
+					}
+				}
+				// make sure to attach known tempuser data to any follow-up
+				// response, so it ends up propagating until the last response,
+				// and can be handled once all changes have been submitted
+				if ( Object.keys( tempuser ).length > 0 ) {
+					$.extend( response, tempuser );
+				}
+
+				return response;
 			} ).catch( function ( errorCode, error ) {
 				var apiError = wikibase.api.RepoApiError.newFromApiResponse( error, 'save' ),
 					promises;

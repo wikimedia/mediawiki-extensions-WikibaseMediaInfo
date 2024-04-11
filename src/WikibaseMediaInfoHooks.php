@@ -804,18 +804,18 @@ class WikibaseMediaInfoHooks implements
 		);
 
 		// update content record to point to new, corrected, content blob
-		$dbw->update(
-			'content',
-			[
+		$dbw->newUpdateQueryBuilder()
+			->update( 'content' )
+			->set( [
 				'content_size' => $unsavedSlot->getSize(),
 				'content_sha1' => $unsavedSlot->getSha1(),
 				'content_address' => $blobAddress,
-			],
-			[
+			] )
+			->where( [
 				'content_id' => $existingContentId,
-			],
-			__METHOD__
-		);
+			] )
+			->caller( __METHOD__ )
+			->execute();
 	}
 
 	/**

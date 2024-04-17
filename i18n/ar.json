@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"BAB ZAA",
 			"Habib-d",
 			"Kaganer",
 			"Meno25",
@@ -117,7 +118,7 @@
 	"wikibasemediainfo-time-precision-minute": "دقيقة",
 	"wikibasemediainfo-time-precision-second": "ثانية",
 	"wikibasemediainfo-time-calendar-label": "التقويم",
-	"wikibasemediainfo-time-calendar-gregorian": "جريجوري",
+	"wikibasemediainfo-time-calendar-gregorian": "غريغوري",
 	"wikibasemediainfo-time-calendar-julian": "يولياني",
 	"wikibasemediainfo-quantity-input-button-text": "إضافة",
 	"wikibasemediainfo-quantity-unit-placeholder": "اكتب الوحدة (اختياري)",

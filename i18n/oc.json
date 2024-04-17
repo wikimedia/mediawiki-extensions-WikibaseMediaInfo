@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"Quentí"
+			"Quentí",
+			"BrennodAloisi"
 		]
 	},
 	"wikibasemediainfo-filepage-statement-custom-value-option": "Valor personalizada",
@@ -12,7 +13,10 @@
 	"wikibasemediainfo-monolingualtext-input-placeholder": "Dintrar lo tèxte",
 	"wikibasemediainfo-monolingualtext-language-label": "Seleccionar la lenga",
 	"wikibasemediainfo-time-precision-label": "Precision",
+	"wikibasemediainfo-time-precision-year100": "sègle",
+	"wikibasemediainfo-time-precision-year10": "decenni",
 	"wikibasemediainfo-time-precision-year": "an",
+	"wikibasemediainfo-time-precision-month": "mes",
 	"wikibasemediainfo-time-precision-day": "jorn",
 	"wikibasemediainfo-time-precision-hour": "ora",
 	"wikibasemediainfo-time-precision-minute": "minuta",

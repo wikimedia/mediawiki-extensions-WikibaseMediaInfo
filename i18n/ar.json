@@ -9,7 +9,8 @@
 			"NEHAOUA",
 			"Tala Ali",
 			"ديفيد",
-			"محمد أحمد عبد الفتاح"
+			"محمد أحمد عبد الفتاح",
+			"BAB ZAA"
 		]
 	},
 	"action-mediainfo-term": "تغيير مصطلحات معلومات الوسائط (التسميات التوضيحية والملخصات)",
@@ -117,7 +118,7 @@
 	"wikibasemediainfo-time-precision-minute": "دقيقة",
 	"wikibasemediainfo-time-precision-second": "ثانية",
 	"wikibasemediainfo-time-calendar-label": "التقويم",
-	"wikibasemediainfo-time-calendar-gregorian": "جريجوري",
+	"wikibasemediainfo-time-calendar-gregorian": "غريغوري",
 	"wikibasemediainfo-time-calendar-julian": "يولياني",
 	"wikibasemediainfo-quantity-input-button-text": "إضافة",
 	"wikibasemediainfo-quantity-unit-placeholder": "اكتب الوحدة (اختياري)",

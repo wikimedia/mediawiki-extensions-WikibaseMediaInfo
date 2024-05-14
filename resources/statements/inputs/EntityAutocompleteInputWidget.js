@@ -161,6 +161,12 @@ EntityAutocompleteInputWidget.prototype.onBlur = function () {
 	} else {
 		this.setFlags( { destructive: false } );
 	}
+	this.emit( 'blur' );
+};
+
+EntityAutocompleteInputWidget.prototype.onFocus = function () {
+	EntityAutocompleteInputWidget.super.prototype.onFocus.call( this );
+	this.emit( 'focus' );
 };
 
 /**

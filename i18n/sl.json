@@ -46,7 +46,7 @@
 	"wikibasemediainfo-filepage-statement-no-data": "Na voljo ni nobenih podatkov",
 	"wikibasemediainfo-filepage-statement-no-results": "Ni najdenih zadetkov",
 	"wikibasemediainfo-filepage-statement-some-value-option": "Neka vrednost",
-	"wikibasemediainfo-filepage-statement-some-value": "Neka vrednost brez predmeta {{GRAMMAR:locative|{{WBREPONAME}}}}",
+	"wikibasemediainfo-filepage-statement-some-value": "Neka vrednost brez predmeta v {{WBREPONAME}}h",
 	"wikibasemediainfo-filepage-statement-error": "Pri pridobivanju vrednosti za to lastnost je prišlo do napake",
 	"wikibasemediainfo-filepage-license-title": "Prispevki napisov in drugih strukturiranih podatkov",
 	"wikibasemediainfo-filepage-license-content": "S klikom gumba »Objavi spremembe« izražate strinjanje s [[wmf:Terms_of_Use|pogoji uporabe]] in nepreklicno privoljujete v objavo svojih prispevkov pod licenco [https://creativecommons.org/publicdomain/zero/1.0/ Creative Commons CC0].",

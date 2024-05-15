@@ -4,11 +4,12 @@ namespace Wikibase\Repo\Tests\Rdf;
 
 use InvalidArgumentException;
 use MediaWiki\Revision\SlotRecord;
-use PHPUnit\Framework\TestCase;
 use Wikibase\DataAccess\DatabaseEntitySource;
 use Wikibase\DataAccess\EntitySourceDefinitions;
 use Wikibase\Lib\Store\EntityRevisionLookup;
+use Wikibase\Lib\Store\PropertyInfoLookup;
 use Wikibase\Lib\SubEntityTypesMapper;
+use Wikibase\Lib\Tests\Store\MockPropertyInfoLookup;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\MediaInfo\DataModel\MediaInfoId;
 use Wikibase\MediaInfo\Rdf\MediaInfoRdfBuilder;
@@ -34,10 +35,11 @@ use Wikimedia\Purtle\RdfWriter;
  * @covers Wikibase\MediaInfo\Rdf\MediaInfoRdfBuilder
  *
  * @group WikibaseRdf
+ * @group Database
  *
  * @license GPL-2.0-or-later
  */
-class MediaInfoRdfBuilderTest extends TestCase {
+class MediaInfoRdfBuilderTest extends \MediaWikiIntegrationTestCase {
 
 	private $dedupe;
 	private $vocabulary;
@@ -49,11 +51,6 @@ class MediaInfoRdfBuilderTest extends TestCase {
 	private $fullStatementRdfBuilderFactory;
 
 	/**
-	 * @var RdfBuilderTestData|null
-	 */
-	private $testData = null;
-
-	/**
 	 * @var NTriplesRdfTestHelper
 	 */
 	private $helper;
@@ -61,7 +58,13 @@ class MediaInfoRdfBuilderTest extends TestCase {
 
 	protected function setUp(): void {
 		parent::setUp();
-		$this->helper = new NTriplesRdfTestHelper();
+
+		$testData = new RdfBuilderTestData(
+			__DIR__ . '/../../data/entities',
+			__DIR__ . '/../../data/MediaInfoSpecificComponentsRdfBuilder'
+		);
+
+		$this->helper = new NTriplesRdfTestHelper( $testData );
 		$this->dedupe = $this->createMock( DedupeBag::class );
 		$this->vocabulary = $this->createMock( RdfVocabulary::class );
 		$this->writer = $this->createMock( RdfWriter::class );
@@ -72,6 +75,8 @@ class MediaInfoRdfBuilderTest extends TestCase {
 		$this->fullStatementRdfBuilderFactory = $this->createMock( FullStatementRdfBuilderFactory::class );
 		$this->mediaInfoSpecificComponentsRdfBuilder =
 			$this->createMock( MediaInfoSpecificComponentsRdfBuilder::class );
+
+		$this->setService( 'WikibaseRepo.PropertyInfoLookup', $testData->getPropertyInfoLookup() );
 	}
 
 	/**
@@ -184,14 +189,7 @@ class MediaInfoRdfBuilderTest extends TestCase {
 	 * @return RdfBuilderTestData
 	 */
 	private function getTestData() {
-		if ( $this->testData === null ) {
-			$this->testData = new RdfBuilderTestData(
-				__DIR__ . '/../../data/entities',
-				__DIR__ . '/../../data/MediaInfoSpecificComponentsRdfBuilder'
-			);
-		}
-
-		return $this->testData;
+		return $this->helper->getTestData();
 	}
 
 	/**
@@ -227,6 +225,10 @@ class MediaInfoRdfBuilderTest extends TestCase {
 	 * @dataProvider provideMediaInfoFullRDF
 	 */
 	public function testMediaInfoFullRDF( $entityName, $dataSetName ) {
+		$propertyInfo = [ 'P180' => [ PropertyInfoLookup::KEY_DATA_TYPE => 'wikibase-item' ] ];
+		$propertyInfoLookup = new MockPropertyInfoLookup( $propertyInfo );
+		$this->setService( 'WikibaseRepo.PropertyInfoLookup', $propertyInfoLookup );
+
 		$entity = $this->getTestData()->getEntity( $entityName );
 		$writer = $this->getTestData()->getNTriplesWriter( false );
 

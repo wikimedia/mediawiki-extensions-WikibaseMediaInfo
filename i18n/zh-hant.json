@@ -2,6 +2,7 @@
 	"@metadata": {
 		"authors": [
 			"A Retired User",
+			"Cookai1205",
 			"Kly",
 			"SunAfterRain",
 			"Winston Sung",
@@ -37,7 +38,7 @@
 	"wikibasemediainfo-filepage-cancel-confirm-title": "捨棄變更？",
 	"wikibasemediainfo-filepage-cancel-confirm-accept": "捨棄",
 	"wikibasemediainfo-filepage-edit": "編輯",
-	"wikibasemediainfo-filepage-publish": "發佈更改",
+	"wikibasemediainfo-filepage-publish": "發布變更",
 	"wikibasemediainfo-filepage-caption-empty": "添加單行說明來描述出檔案所代表的內容",
 	"wikibasemediainfo-filepage-caption-too-short": "需要 $1 個以上{{PLURAL:$1|字元}}",
 	"wikibasemediainfo-filepage-caption-too-long": "比限制多$1{{PLURAL:$1|字元}}",

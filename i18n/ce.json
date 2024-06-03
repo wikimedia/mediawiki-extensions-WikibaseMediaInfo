@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"Исмаил Садуев",
 			"Умар"
 		]
 	},
@@ -20,7 +21,7 @@
 	"wikibasemediainfo-filepage-fewer-languages": "КӀезга меттанаш",
 	"wikibasemediainfo-filepage-add-caption": "ТӀетоха куьг",
 	"wikibasemediainfo-filepage-edit-captions": "Боца хаамаш нисбе",
-	"wikibasemediainfo-filepage-edit-depicts": "Нисйе гушйерг",
+	"wikibasemediainfo-filepage-edit-depicts": "Гойтуш йолчун хаам нисбан",
 	"wikibasemediainfo-filepage-cancel": "Йухайаккха",
 	"wikibasemediainfo-filepage-cancel-confirm-title": "Йухабаха хийцамаш?",
 	"wikibasemediainfo-filepage-cancel-confirm-accept": "Йухадаккха",

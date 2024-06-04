@@ -1,0 +1,28 @@
+{
+	"@metadata": {
+		"authors": [
+			"Cabal"
+		]
+	},
+	"wikibasemediainfo-diffview-label": "ਸੁਰਖੀ",
+	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "ਸੁਰਖੀ",
+	"wikibasemediainfo-filepage-captions-title": "ਸੁਰਖੀ",
+	"wikibasemediainfo-filepage-fewer-languages": "ਘੱਟ ਭਾਸ਼ਾਵਾਂ ਵੇਖੋ",
+	"wikibasemediainfo-filepage-add-caption": "ਇੱਕ ਸੁਰਖੀ ਸ਼ਾਮਲ ਕਰੋ",
+	"wikibasemediainfo-filepage-cancel": "ਰੱਦ ਕਰੋ",
+	"wikibasemediainfo-filepage-cancel-confirm": "ਤੁਹਾਡੇ ਵੱਲੋਂ ਕੀਤੀਆਂ ਤਬਦੀਲੀਆਂ ਨੂੰ ਸੰਭਾਲਿਆ ਨਹੀਂ ਜਾਵੇਗਾ।",
+	"wikibasemediainfo-filepage-publish": "ਤਬਦੀਲੀਆਂ ਸਾਂਭੋ",
+	"wikibasemediainfo-filepage-license-agree": "ਮੈਂ ਸਹਿਮਤ ਹਾਂ।",
+	"wikibasemediainfo-statements-item-add-reference-snak": "ਜੋੜੋ",
+	"wikibasemediainfo-statements-item-input-label": "{{WBREPONAME}} ਤੋਂ",
+	"wikibasemediainfo-statements-item-remove": "ਹਟਾਓ",
+	"wikibasemediainfo-statements-learn-more": "ਹੋਰ ਜਾਣੋ",
+	"wikibasemediainfo-statements-remove": "ਸਾਰੇ ਹਟਾਓ",
+	"wikibasemediainfo-remove-all-statements-confirm-title": "ਕੀ ਸਾਰੇ ਹਟਾਉਣੇ ਹੈ?",
+	"wikibasemediainfo-remove-all-statements-confirm-accept": "ਹਟਾਓ",
+	"wikibasemediainfo-string-input-button-text": "ਜੋੜੋ",
+	"wikibasemediainfo-monolingualtext-input-button-text": "ਜੋੜੋ",
+	"wikibasemediainfo-time-input-button-text": "ਜੋੜੋ",
+	"wikibasemediainfo-quantity-input-button-text": "ਜੋੜੋ",
+	"wikibasemediainfo-globecoordinate-input-button-text": "ਜੋੜੋ"
+}

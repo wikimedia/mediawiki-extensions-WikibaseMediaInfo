@@ -2,12 +2,14 @@
 
 namespace Wikibase\MediaInfo\Tests\Integration;
 
+use MediaWiki\Tests\Api\ApiUploadTestCase;
+use MediaWiki\Tests\Api\RandomImageGenerator;
 use MockSearchEngine;
 
 /**
  * Base class for test classes
  */
-abstract class WBMIApiTestCase extends \ApiUploadTestCase {
+abstract class WBMIApiTestCase extends ApiUploadTestCase {
 
 	private function setupSearchEngine() {
 		MockSearchEngine::clearMockResults();
@@ -42,7 +44,7 @@ abstract class WBMIApiTestCase extends \ApiUploadTestCase {
 		$mimeType = 'image/png';
 
 		try {
-			$randomImageGenerator = new \RandomImageGenerator();
+			$randomImageGenerator = new RandomImageGenerator();
 			$filePaths = $randomImageGenerator->writeImages(
 				1,
 				$extension,

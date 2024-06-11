@@ -2,10 +2,10 @@
 
 namespace Wikibase\MediaInfo\Tests\MediaWiki\Content;
 
-use IContextSource;
+use MediaWiki\Context\IContextSource;
+use MediaWiki\Context\RequestContext;
 use MediaWiki\Title\Title;
 use MediaWiki\Title\TitleFactory;
-use RequestContext;
 use Wikibase\DataModel\Entity\EntityId;
 use Wikibase\DataModel\Entity\ItemIdParser;
 use Wikibase\DataModel\Services\Lookup\PropertyDataTypeLookup;

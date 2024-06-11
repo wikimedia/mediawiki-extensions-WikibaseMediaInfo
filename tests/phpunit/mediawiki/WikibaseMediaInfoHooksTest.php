@@ -3,6 +3,7 @@
 namespace Wikibase\MediaInfo\Tests\MediaWiki;
 
 use CirrusSearch\Profile\SearchProfileService;
+use MediaWiki\Context\RequestContext;
 use MediaWiki\Language\RawMessage;
 use MediaWiki\Output\OutputPage;
 use MediaWiki\Page\PageIdentity;
@@ -111,7 +112,7 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiIntegrationTestCase {
 
 		// TODO: Test that this doesn't appear on action=history etc. contexts
 		$out->method( 'getContext' )
-			->willReturn( new \RequestContext() );
+			->willReturn( new RequestContext() );
 		return $out;
 	}
 

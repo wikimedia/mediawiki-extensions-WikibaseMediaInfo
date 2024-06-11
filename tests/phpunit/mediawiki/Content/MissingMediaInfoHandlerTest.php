@@ -2,12 +2,12 @@
 
 namespace Wikibase\MediaInfo\Tests\MediaWiki\Content;
 
+use MediaWiki\Context\RequestContext;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\Parser\ParserOutput;
 use MediaWiki\Request\FauxRequest;
 use MediaWiki\Title\Title;
 use MediaWiki\Title\TitleFactory;
-use RequestContext;
 use Wikibase\DataModel\Services\EntityId\EntityIdComposer;
 use Wikibase\MediaInfo\Content\MissingMediaInfoHandler;
 use Wikibase\MediaInfo\DataModel\MediaInfoId;

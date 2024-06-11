@@ -2,7 +2,7 @@
 
 namespace Wikibase\MediaInfo\Content;
 
-use IContextSource;
+use MediaWiki\Context\IContextSource;
 use MediaWiki\Linker\LinkTarget;
 use MediaWiki\Title\Title;
 use Wikibase\Lib\Store\EntityRevision;

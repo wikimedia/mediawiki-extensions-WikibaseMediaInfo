@@ -3,7 +3,7 @@
 namespace Wikibase\MediaInfo\Content;
 
 use Content;
-use IContextSource;
+use MediaWiki\Context\IContextSource;
 use MediaWiki\Page\PageRecord;
 use MediaWiki\Page\PageStore;
 use MediaWiki\Title\Title;

@@ -4,8 +4,8 @@ namespace Wikibase\MediaInfo\Search;
 
 use CirrusSearch\Parser\FullTextKeywordRegistry;
 use CirrusSearch\SearchConfig;
+use MediaWiki\Context\RequestContext;
 use MediaWiki\MediaWikiServices;
-use RequestContext;
 use UnexpectedValueException;
 use Wikibase\Repo\WikibaseRepo;
 

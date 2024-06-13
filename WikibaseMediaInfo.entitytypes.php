@@ -119,7 +119,7 @@ return [
 					MediaWikiServices::getInstance()->getWikiPageFactory(),
 					Title::newFromText( 'MediaWiki:Wikibase-SortedProperties' )
 				),
-				ObjectCache::getLocalClusterInstance()
+				MediaWikiServices::getInstance()->getObjectCacheFactory()->getLocalClusterInstance()
 			);
 
 			$defaultPropertyIdsForView = [];

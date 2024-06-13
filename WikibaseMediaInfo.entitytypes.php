@@ -100,14 +100,15 @@ return [
 			TermLanguageFallbackChain $termFallbackChain,
 			EntityDocument $entity
 		) {
-			$mwConfig = MediaWikiServices::getInstance()->getMainConfig();
+			$services = MediaWikiServices::getInstance();
+			$mwConfig = $services->getMainConfig();
 			$languageCode = $language->getCode();
 
 			// Use a MediaInfo-specific EntityTermsView class instead of the default one
-			$langDirLookup = WikibaseRepo::getLanguageDirectionalityLookup();
+			$langDirLookup = WikibaseRepo::getLanguageDirectionalityLookup( $services );
 			$textProvider = new MediaWikiLocalizedTextProvider( $language );
 			$mediaInfoEntityTermsView = new MediaInfoEntityTermsView(
-				WikibaseRepo::getLanguageNameLookupFactory()->getForLanguage( $language ),
+				WikibaseRepo::getLanguageNameLookupFactory( $services )->getForLanguage( $language ),
 				$langDirLookup,
 				$textProvider,
 				$termFallbackChain
@@ -116,10 +117,10 @@ return [
 			// Use a MediaInfo-specific EntityStatementView class
 			$propertyOrderProvider = new CachingPropertyOrderProvider(
 				new WikiPagePropertyOrderProvider(
-					MediaWikiServices::getInstance()->getWikiPageFactory(),
+					$services->getWikiPageFactory(),
 					Title::newFromText( 'MediaWiki:Wikibase-SortedProperties' )
 				),
-				MediaWikiServices::getInstance()->getObjectCacheFactory()->getLocalClusterInstance()
+				$services->getObjectCacheFactory()->getLocalClusterInstance()
 			);
 
 			$defaultPropertyIdsForView = [];
@@ -132,9 +133,9 @@ return [
 				$propertyOrderProvider,
 				$textProvider,
 				$defaultPropertyIdsForView,
-				WikibaseRepo::getSnakFormatterFactory(),
-				WikibaseRepo::getValueFormatterFactory(),
-				WikibaseRepo::getBaseDataModelSerializerFactory(),
+				WikibaseRepo::getSnakFormatterFactory( $services ),
+				WikibaseRepo::getValueFormatterFactory( $services ),
+				WikibaseRepo::getBaseDataModelSerializerFactory( $services ),
 				$languageCode,
 				$properties
 			);

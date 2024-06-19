@@ -35,7 +35,7 @@ EntityAutocompleteInputWidget = function MediaInfoStatementsEntityAutocompleteIn
 	this.dataCache = {};
 
 	// eslint-disable-next-line mediawiki/class-doc
-	EntityAutocompleteInputWidget.super.call( this, $.extend( {}, config, {
+	EntityAutocompleteInputWidget.super.call( this, Object.assign( {}, config, {
 		// classes should *always* be added, because some essential functionality
 		// (e.g. CSS to turn red on invalid input) depends on these classes
 		classes: [
@@ -46,14 +46,14 @@ EntityAutocompleteInputWidget = function MediaInfoStatementsEntityAutocompleteIn
 
 	OO.ui.mixin.FlaggedElement.call(
 		this,
-		$.extend( {}, {
+		Object.assign( {}, {
 			$flagged: this.$element
 		}, config )
 	);
 
 	OO.ui.mixin.LookupElement.call(
 		this,
-		$.extend( {}, {
+		Object.assign( {}, {
 			allowSuggestionsWhenEmpty: false,
 			highlightFirst: false
 		}, config )

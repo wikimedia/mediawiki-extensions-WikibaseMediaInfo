@@ -21,7 +21,7 @@ BestPractices = function BestPracticesConstructor( config ) {
 
 	BestPractices.super.call( this, config );
 
-	this.state = $.extend( {}, config, {
+	this.state = Object.assign( {}, config, {
 		some: '',
 		relevant: 0,
 		data: {}

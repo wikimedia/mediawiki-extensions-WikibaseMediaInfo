@@ -23,7 +23,7 @@ TemplatingFeatures = function TemplatingFeaturesConstructor( config ) {
 
 	TemplatingFeatures.super.call( this, config );
 
-	this.state = $.extend( {}, config, {
+	this.state = Object.assign( {}, config, {
 		editing: false,
 		input: new OO.ui.TextInputWidget( { classes: [ 'example-input' ] } )
 	} );

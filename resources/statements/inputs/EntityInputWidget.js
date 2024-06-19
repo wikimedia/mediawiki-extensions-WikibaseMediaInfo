@@ -19,7 +19,7 @@ var ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
 EntityInputWidget = function MediaInfoStatementsEntityInputWidget( config ) {
 	config = config || {};
 
-	this.input = new EntityAutocompleteInputWidget( $.extend( {}, {
+	this.input = new EntityAutocompleteInputWidget( Object.assign( {}, {
 		placeholder: !config.isQualifier ?
 			mw.msg( 'wikibasemediainfo-statements-item-input-placeholder' ) :
 			undefined,

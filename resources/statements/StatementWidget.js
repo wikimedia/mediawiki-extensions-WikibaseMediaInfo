@@ -522,7 +522,7 @@ StatementWidget.prototype.submit = function ( baseRevId ) {
 					// response, so it ends up propagating until the last response,
 					// and can be handled once all changes have been submitted
 					if ( Object.keys( tempuser ).length > 0 ) {
-						$.extend( response, tempuser );
+						Object.assign( response, tempuser );
 					}
 
 					return response;
@@ -586,7 +586,7 @@ StatementWidget.prototype.submit = function ( baseRevId ) {
 				// response, so it ends up propagating until the last response,
 				// and can be handled once all changes have been submitted
 				if ( Object.keys( tempuser ).length > 0 ) {
-					$.extend( response, tempuser );
+					Object.assign( response, tempuser );
 				}
 
 				return response;

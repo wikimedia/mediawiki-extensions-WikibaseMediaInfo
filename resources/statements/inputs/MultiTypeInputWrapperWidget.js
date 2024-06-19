@@ -28,7 +28,7 @@ var ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
  * @param {boolean} [config.isQualifier]
  */
 MultiTypeInputWrapperWidget = function ( config ) {
-	this.config = $.extend( {
+	this.config = Object.assign( {
 		isQualifier: false,
 		type: undefined, // default to unsupported input type
 		classes: []

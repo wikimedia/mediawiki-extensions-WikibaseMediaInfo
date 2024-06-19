@@ -15,7 +15,7 @@ UlsWidget = function ( config ) {
 
 	// create an empty dropdown to give this element the appearance of a dropdown,
 	// even though it'll show a ULS widget when opened
-	this.dropdown = new OO.ui.DropdownWidget( $.extend( {}, config, {
+	this.dropdown = new OO.ui.DropdownWidget( Object.assign( {}, config, {
 		classes: [ 'wbmi-input-uls' ],
 		menu: {},
 		label: this.label
@@ -62,7 +62,7 @@ UlsWidget.prototype.initialiseUls = function ( languages ) {
 		},
 		// clone languages list: uls will mess with it internally,
 		// removing languages it doesn't know
-		languages: $.extend( {}, languages ),
+		languages: Object.assign( {}, languages ),
 		onVisible: function () {
 			// Re-position the ULS *after* the widget has been rendered, so that we can be
 			// sure it's in the right place

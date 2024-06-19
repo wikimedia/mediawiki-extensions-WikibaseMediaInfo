@@ -43,7 +43,7 @@ StatementPanel = function StatementPanelConstructor( config ) {
 
 	this.licenseDialogWidget = new LicenseDialogWidget();
 
-	this.statementWidget = new StatementWidget( $.extend( {
+	this.statementWidget = new StatementWidget( Object.assign( {
 		showControls: !this.disabled && this.config.showControls,
 		valueType: this.config.propertyType in dataTypesMap ? dataTypesMap[ this.config.propertyType ].dataValueType : undefined
 	}, this.config ) );

@@ -41,7 +41,7 @@ DATA_TYPES = {
  * @param {Object} config Configuration options
  */
 ItemWidget = function MediaInfoStatementsItemWidget( config ) {
-	this.config = $.extend( { editing: false }, config );
+	this.config = Object.assign( { editing: false }, config );
 
 	this.guidGenerator = new wikibase.utilities.ClaimGuidGenerator( config.entityId );
 
@@ -72,15 +72,15 @@ ItemWidget = function MediaInfoStatementsItemWidget( config ) {
 	this.map = undefined;
 	this.initializeMap();
 
-	ItemWidget.super.call( this, $.extend( {}, config ) );
-	DOMLessGroupWidget.call( this, $.extend( {}, config ) );
+	ItemWidget.super.call( this, Object.assign( {}, config ) );
+	DOMLessGroupWidget.call( this, Object.assign( {}, config ) );
 	ComponentWidget.call(
 		this,
 		'wikibase.mediainfo.statements',
 		'templates/statements/ItemWidget.mustache+dom'
 	);
-	FormatValueElement.call( this, $.extend( {}, config ) );
-	ConstraintsReportHandlerElement.call( this, $.extend( {}, config ) );
+	FormatValueElement.call( this, Object.assign( {}, config ) );
+	ConstraintsReportHandlerElement.call( this, Object.assign( {}, config ) );
 };
 
 OO.inheritClass( ItemWidget, OO.ui.Widget );
@@ -317,7 +317,7 @@ ItemWidget.prototype.getData = function () {
  * @return {SnakListWidget}
  */
 ItemWidget.prototype.createSnaklistWidget = function ( config ) {
-	var widget = new SnakListWidget( $.extend( { editing: this.config.editing }, config ) );
+	var widget = new SnakListWidget( Object.assign( { editing: this.config.editing }, config ) );
 	widget.connect( this, { remove: [ 'emit', 'change' ] } );
 	widget.connect( this, { change: [ 'emit', 'change' ] } );
 	return widget;
@@ -329,7 +329,7 @@ ItemWidget.prototype.createSnaklistWidget = function ( config ) {
  */
 ItemWidget.prototype.createReferenceWidget = function ( config ) {
 	var self = this,
-		widget = this.createSnaklistWidget( $.extend( config, {
+		widget = this.createSnaklistWidget( Object.assign( config, {
 			editing: this.state.editing,
 			addText: mw.msg( 'wikibasemediainfo-statements-item-add-reference-snak' )
 		} ) );

@@ -10,7 +10,7 @@ var ComponentWidget = function MediaInfoComponentWidget( moduleName, templateNam
 	// can resonably expect that we'll want to rerender if it
 	// changes; probably should prefer using OOUI's built-in
 	// `isDisabled` and `getItems` methods over these copies in state
-	this.state = $.extend( { _disabled: this.isDisabled(), _group: [] }, this.state || {} );
+	this.state = Object.assign( { _disabled: this.isDisabled(), _group: [] }, this.state || {} );
 	this.pendingState = {};
 	this.moduleName = moduleName;
 	this.templateName = templateName;
@@ -71,7 +71,7 @@ ComponentWidget.prototype.setState = function ( state ) {
 	// add the newest state changes - expanding on previous (if any)
 	// changes that have no yet been rendered (because previous render
 	// was still happening, possibly)
-	this.pendingState = $.extend( {}, this.pendingState, state );
+	this.pendingState = Object.assign( {}, this.pendingState, state );
 
 	// this will prevent new data from starting a render right
 	// away (there may be more changes coming in and it'd be
@@ -98,12 +98,12 @@ ComponentWidget.prototype.render = function () {
 
 	this.renderPromise = this.renderPromise
 		.then( function ( $element ) {
-			var previousState = $.extend( {}, self.state ),
+			var previousState = Object.assign( {}, self.state ),
 				hasChanges = Object.keys( self.pendingState ).some( function ( key ) {
 					return ( !( key in self.state ) || self.state[ key ] !== self.pendingState[ key ] );
 				} );
 
-			self.state = $.extend( {}, self.state, self.pendingState );
+			self.state = Object.assign( {}, self.state, self.pendingState );
 			self.pendingState = {};
 
 			if ( !hasChanges ) {
@@ -610,7 +610,7 @@ ComponentWidget.prototype.setDisabled = function ( disabled ) {
  */
 ComponentWidget.prototype.addItems = function () {
 	var result = OO.ui.mixin.GroupElement.prototype.addItems.apply( this, arguments );
-	this.setState( { _group: $.extend( [], this.getItems() ) } );
+	this.setState( { _group: Object.assign( [], this.getItems() ) } );
 	return result;
 };
 
@@ -622,7 +622,7 @@ ComponentWidget.prototype.addItems = function () {
  */
 ComponentWidget.prototype.removeItems = function () {
 	var result = OO.ui.mixin.GroupElement.prototype.removeItems.apply( this, arguments );
-	this.setState( { _group: $.extend( [], this.getItems() ) } );
+	this.setState( { _group: Object.assign( [], this.getItems() ) } );
 	return result;
 };
 
@@ -634,7 +634,7 @@ ComponentWidget.prototype.removeItems = function () {
  */
 ComponentWidget.prototype.moveItem = function () {
 	var result = OO.ui.mixin.GroupElement.prototype.moveItem.apply( this, arguments );
-	this.setState( { _group: $.extend( [], this.getItems() ) } );
+	this.setState( { _group: Object.assign( [], this.getItems() ) } );
 	return result;
 };
 
@@ -646,7 +646,7 @@ ComponentWidget.prototype.moveItem = function () {
  */
 ComponentWidget.prototype.insertItem = function () {
 	var result = OO.ui.mixin.GroupElement.prototype.insertItem.apply( this, arguments );
-	this.setState( { _group: $.extend( [], this.getItems() ) } );
+	this.setState( { _group: Object.assign( [], this.getItems() ) } );
 	return result;
 };
 
@@ -658,7 +658,7 @@ ComponentWidget.prototype.insertItem = function () {
  */
 ComponentWidget.prototype.clearItems = function () {
 	var result = OO.ui.mixin.GroupElement.prototype.clearItems.apply( this, arguments );
-	this.setState( { _group: $.extend( [], this.getItems() ) } );
+	this.setState( { _group: Object.assign( [], this.getItems() ) } );
 	return result;
 };
 

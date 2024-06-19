@@ -16,7 +16,7 @@ var SnakWidget = require( './SnakWidget.js' ),
  * @param {Object} [config] Configuration options
  */
 SnakListWidget = function MediaInfoStatementsSnakListWidget( config ) {
-	this.config = $.extend( {
+	this.config = Object.assign( {
 		editing: false,
 		addText: ''
 	}, config );
@@ -30,13 +30,13 @@ SnakListWidget = function MediaInfoStatementsSnakListWidget( config ) {
 		constraintsReport: null
 	};
 
-	SnakListWidget.super.call( this, $.extend( {}, config ) );
+	SnakListWidget.super.call( this, Object.assign( {}, config ) );
 	ComponentWidget.call(
 		this,
 		'wikibase.mediainfo.statements',
 		'templates/statements/SnakListWidget.mustache+dom'
 	);
-	ConstraintsReportHandlerElement.call( this, $.extend( {}, config ) );
+	ConstraintsReportHandlerElement.call( this, Object.assign( {}, config ) );
 };
 
 OO.inheritClass( SnakListWidget, OO.ui.Widget );

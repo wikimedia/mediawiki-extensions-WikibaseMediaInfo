@@ -40,7 +40,7 @@ ExampleComponentWidget = function ExampleComponentWidgetConstructor( config ) {
 	ExampleComponentWidget.super.call( this, config );
 
 	// initialize state - this data will be used for the initial render
-	this.state = $.extend( {}, config, {
+	this.state = Object.assign( {}, config, {
 		editing: false,
 		disabled: false,
 		title: config.title || 'Main Page'

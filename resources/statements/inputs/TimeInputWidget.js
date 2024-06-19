@@ -65,7 +65,7 @@ TimeInputWidget = function MediaInfoStatementsTimeInputWidget( config ) {
 		'wikibase.mediainfo.statements',
 		'templates/statements/inputs/TimeInputWidget.mustache+dom'
 	);
-	FormatValueElement.call( this, $.extend( {}, config ) );
+	FormatValueElement.call( this, Object.assign( {}, config ) );
 };
 OO.inheritClass( TimeInputWidget, OO.ui.Widget );
 OO.mixinClass( TimeInputWidget, AbstractInputWidget );
@@ -130,7 +130,7 @@ TimeInputWidget.prototype.getTemplateData = function () {
 		var $formatted = $( '<span>' ).addClass( 'wbmi-input-widget--formatted' ).text( formatted );
 
 		// wikibasemediainfo-time-timestamp-formatted is part of $wgRawHtmlMessages and safe to use as is here
-		return $.extend( {}, data, {
+		return Object.assign( {}, data, {
 			formatted: mw.message( 'wikibasemediainfo-time-timestamp-formatted', $formatted.get( 0 ).outerHTML ).text()
 		} );
 	} );

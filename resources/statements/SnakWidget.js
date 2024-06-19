@@ -67,8 +67,8 @@ SnakWidget = function ( config ) {
 		'wikibase.mediainfo.statements',
 		'templates/statements/SnakWidget.mustache+dom'
 	);
-	FormatValueElement.call( this, $.extend( {}, config ) );
-	ConstraintsReportHandlerElement.call( this, $.extend( {}, config ) );
+	FormatValueElement.call( this, Object.assign( {}, config ) );
+	ConstraintsReportHandlerElement.call( this, Object.assign( {}, config ) );
 };
 OO.inheritClass( SnakWidget, OO.ui.Widget );
 OO.mixinClass( SnakWidget, ComponentWidget );

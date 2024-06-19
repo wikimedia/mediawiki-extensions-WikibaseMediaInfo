@@ -74,7 +74,7 @@ CaptionsPanel = function ( config ) {
 	this.editActionsWidget.connect( this, { publish: 'sendData' } );
 	this.editActionsWidget.connect( this, { cancel: 'onCancel' } );
 
-	this.state = $.extend(
+	this.state = Object.assign(
 		{},
 		this.getCaptionsState( this.savedCaptionsData ),
 		{
@@ -403,7 +403,7 @@ CaptionsPanel.prototype.onCancel = function () {
  * @param {string} guidToRemove
  */
 CaptionsPanel.prototype.onCaptionDeleted = function ( guidToRemove ) {
-	var modifiedCaptionsDataEditors = $.extend( {}, this.state.captionsDataEditors );
+	var modifiedCaptionsDataEditors = Object.assign( {}, this.state.captionsDataEditors );
 	delete modifiedCaptionsDataEditors[ guidToRemove ];
 	this.setState( {
 		captionsDataEditors: modifiedCaptionsDataEditors
@@ -439,7 +439,7 @@ CaptionsPanel.prototype.onDataChanged = function () {
  * Restores to a read-only view with the saved captions data
  */
 CaptionsPanel.prototype.restoreToSaved = function () {
-	var restoredState = $.extend( {}, this.getCaptionsState( this.savedCaptionsData ), {
+	var restoredState = Object.assign( {}, this.getCaptionsState( this.savedCaptionsData ), {
 		editing: false,
 		disabled: false
 	} );
@@ -455,7 +455,7 @@ CaptionsPanel.prototype.restoreToSaved = function () {
  */
 CaptionsPanel.prototype.getAvailableLanguages = function ( excludeLanguages ) {
 	var languages = {};
-	$.extend( languages, wbTermsLanguages );
+	Object.assign( languages, wbTermsLanguages );
 	( excludeLanguages || [] ).forEach( function ( languageCode ) {
 		delete languages[ languageCode ];
 	} );
@@ -638,7 +638,7 @@ CaptionsPanel.prototype.makeEditable = function () {
 				var captionsDataEditors = {},
 					captionsState = self.getCaptionsState(
 						// Copy by value so the saved data isn't modified
-						$.extend( {}, self.savedCaptionsData )
+						Object.assign( {}, self.savedCaptionsData )
 					);
 
 				captionsState.orderedLanguageCodes.forEach( function ( langCode ) {
@@ -650,7 +650,7 @@ CaptionsPanel.prototype.makeEditable = function () {
 				} );
 
 				self.setState(
-					$.extend(
+					Object.assign(
 						captionsState,
 						{
 							captionsDataEditors: captionsDataEditors,
@@ -667,7 +667,7 @@ CaptionsPanel.prototype.makeEditable = function () {
 
 CaptionsPanel.prototype.addNewEmptyLanguageRow = function () {
 	var guid = this.createGuid(),
-		captionsDataEditors = $.extend(
+		captionsDataEditors = Object.assign(
 			{},
 			this.state.captionsDataEditors
 		);
@@ -679,7 +679,7 @@ CaptionsPanel.prototype.addNewEmptyLanguageRow = function () {
 
 CaptionsPanel.prototype.sendData = function () {
 	var self = this,
-		captionsDataEditors = $.extend( {}, this.state.captionsDataEditors ),
+		captionsDataEditors = Object.assign( {}, this.state.captionsDataEditors ),
 		promise = $.Deferred().resolve().promise(),
 		tempuser = {};
 
@@ -757,7 +757,7 @@ CaptionsPanel.prototype.sendData = function () {
 
 	promise.then( function () {
 		self.setState(
-			$.extend(
+			Object.assign(
 				{},
 				self.getCaptionsState( self.savedCaptionsData ),
 				{

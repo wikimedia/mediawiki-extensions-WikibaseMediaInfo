@@ -1,20 +1,21 @@
 {
 	"@metadata": {
 		"authors": [
-			"Robby"
+			"Robby",
+			"Volvox"
 		]
 	},
 	"wikibase-entity-mediainfo": "Medieninformatiounen",
 	"wikibasemediainfo-desc": "Wikibase-Erweiderung fir déi strukturéiert Meta-Donnéeë vu Medie-Fichieren zegeréieren",
-	"wikibasemediainfo-diffview-label": "Beschreiwung",
-	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Beschreiwungen",
+	"wikibasemediainfo-diffview-label": "Beschrëftung",
+	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Beschrëftungen",
 	"wikibasemediainfo-filepage-fileinfo-heading": "Informatiounen iwwer de Fichier",
 	"wikibasemediainfo-filepage-structured-data-heading": "Strukturéiert Daten",
-	"wikibasemediainfo-filepage-captions-title": "Beschreiwungen",
+	"wikibasemediainfo-filepage-captions-title": "Beschrëftungen",
 	"wikibasemediainfo-filepage-more-languages": "{{PLURAL:$1|Eng Sprooch|$1 Sprooche}} méi weisen",
 	"wikibasemediainfo-filepage-fewer-languages": "Manner Sprooche weisen",
-	"wikibasemediainfo-filepage-add-caption": "Eng Beschreiwung derbäisetzen",
-	"wikibasemediainfo-filepage-edit-captions": "Beschreiwungen änneren",
+	"wikibasemediainfo-filepage-add-caption": "Eng Beschrëftung derbäisetzen",
+	"wikibasemediainfo-filepage-edit-captions": "Beschrëftungen änneren",
 	"wikibasemediainfo-filepage-edit-depicts": "Duerstellungen änneren",
 	"wikibasemediainfo-filepage-cancel": "Ofbriechen",
 	"wikibasemediainfo-filepage-cancel-confirm": "Ännerungen déi Dir gemaach hutt ginn net gespäichert.",

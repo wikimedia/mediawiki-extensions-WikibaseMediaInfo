@@ -328,11 +328,13 @@ ItemWidget.prototype.createSnaklistWidget = function ( config ) {
  * @return {SnakListWidget}
  */
 ItemWidget.prototype.createReferenceWidget = function ( config ) {
-	var self = this,
-		widget = this.createSnaklistWidget( Object.assign( config, {
-			editing: this.state.editing,
-			addText: mw.msg( 'wikibasemediainfo-statements-item-add-reference-snak' )
-		} ) );
+	var widget, self = this;
+	config = config || {};
+
+	widget = this.createSnaklistWidget( Object.assign( config, {
+		editing: this.state.editing,
+		addText: mw.msg( 'wikibasemediainfo-statements-item-add-reference-snak' )
+	} ) );
 
 	// if a reference snaklist widget is emptied, remove it entirely
 	widget.on( 'empty', function () {

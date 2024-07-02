@@ -99,6 +99,10 @@ module.exports.createMediaWikiEnv = function () {
 			} )
 		},
 
+		language: {
+			convertNumber: sinon.stub()
+		},
+
 		loader: {
 			using: sinon.stub().resolves( sinon.stub() )
 		},

@@ -195,6 +195,7 @@
 			"dependencies": [
 				"wikibase.mediainfo.uls",
 				"mediawiki.action.edit.editWarning",
+				"mediawiki.language",
 				"mediawiki.template.mustache+dom",
 				"mediawiki.tempUserCreated",
 				"oojs",

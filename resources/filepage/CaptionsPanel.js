@@ -326,7 +326,7 @@ CaptionsPanel.prototype.getTemplateDataReadOnly = function () {
 				mw.msg( 'wikibasemediainfo-filepage-fewer-languages' ) :
 				mw.msg(
 					'wikibasemediainfo-filepage-more-languages',
-					self.getHideableLanguageCount()
+					mw.language.convertNumber( self.getHideableLanguageCount() )
 				)
 		} ).on(
 			'click',

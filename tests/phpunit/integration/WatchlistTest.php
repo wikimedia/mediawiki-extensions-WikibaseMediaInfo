@@ -2,7 +2,6 @@
 
 namespace Wikibase\MediaInfo\Tests\Integration;
 
-use MediaWiki\MediaWikiServices;
 use MediaWiki\Title\Title;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\Repo\WikibaseRepo;
@@ -44,7 +43,7 @@ class WatchlistTest extends WBMIApiTestCase {
 	}
 
 	public function testWatchlist() {
-		$userOptionsManager = MediaWikiServices::getInstance()->getUserOptionsManager();
+		$userOptionsManager = $this->getServiceContainer()->getUserOptionsManager();
 		$userOptionsManager->setOption( $this->editor, 'watchdefault', 0 );
 		$userOptionsManager->setOption( $this->editor, 'watchcreations', 1 );
 

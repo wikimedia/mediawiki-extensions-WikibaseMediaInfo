@@ -2,6 +2,7 @@
 
 namespace Wikibase\MediaInfo\Tests\Integration;
 
+use MediaWiki\MainConfigNames;
 use MediaWiki\Tests\Api\ApiUploadTestCase;
 use MediaWiki\Tests\Api\RandomImageGenerator;
 use MockSearchEngine;
@@ -13,8 +14,8 @@ abstract class WBMIApiTestCase extends ApiUploadTestCase {
 
 	private function setupSearchEngine() {
 		MockSearchEngine::clearMockResults();
-		$this->setMwGlobals( [
-			'wgSearchType' => MockSearchEngine::class,
+		$this->overrideConfigValues( [
+			MainConfigNames::SearchType => MockSearchEngine::class,
 		] );
 	}
 

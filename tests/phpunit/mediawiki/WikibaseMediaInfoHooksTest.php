@@ -171,9 +171,9 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiIntegrationTestCase {
 
 	public function testOnCirrusSearchProfileServiceMediaSearch() {
 		$this->markTestSkippedIfExtensionNotLoaded( 'CirrusSearch' );
-		$this->setMwGlobals( [
-			'wgWBCSUseCirrus' => true,
-			'wgMediaInfoMediaSearchProfiles' => [ 'some-mediasearch-profile' => [] ],
+		$this->overrideConfigValues( [
+			'WBCSUseCirrus' => true,
+			'MediaInfoMediaSearchProfiles' => [ 'some-mediasearch-profile' => [] ],
 		] );
 
 		$service = $this->createMock( SearchProfileService::class );

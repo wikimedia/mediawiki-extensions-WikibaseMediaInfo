@@ -23,7 +23,7 @@
 	"wikibasemediainfo-filepage-cancel-confirm-accept": "Verwerfen",
 	"wikibasemediainfo-filepage-edit": "Änneren",
 	"wikibasemediainfo-filepage-publish": "Ännerunge publizéieren",
-	"wikibasemediainfo-filepage-caption-empty": "Setzt eng Erklärung an enger Zeil derbäi wat dëse Fichier duerstellt",
+	"wikibasemediainfo-filepage-caption-empty": "Setzt eng Erklärung an enger Zeil derbäi, wat dëse Fichier duerstellt",
 	"wikibasemediainfo-filepage-caption-too-long": "$1 {{PLURAL:$1|Zeechen}} iwwer d'Limitte",
 	"wikibasemediainfo-filepage-statement-custom-value-option": "personaliséierte Wäert",
 	"wikibasemediainfo-filepage-statement-no-value-option": "Kee Wäert",
@@ -45,6 +45,8 @@
 	"wikibasemediainfo-statements-item-remove": "Ewechhuelen",
 	"wikibasemediainfo-statements-learn-more": "Fir méi ze wëssen",
 	"wikibasemediainfo-statements-remove": "All ewechhuelen",
+	"wikibasemediainfo-statements-link-notice-text": "Etikette vun de strukturéierten Daten linken op hi jeeweileg {{WBREPONAME}}-Säiten a ginn an enger neier Fënster opgemaach.",
+	"wikibasemediainfo-statements-link-notice-dismiss": "Verwerfen",
 	"wikibasemediainfo-remove-all-statements-confirm-title": "All ewechhuelen?",
 	"wikibasemediainfo-remove-all-statements-confirm-accept": "Ewechhuelen",
 	"wikibasemediainfo-coordinate-input-label": "Koordinaten",
@@ -81,5 +83,7 @@
 	"wikibasemediainfo-time-calendar-julian": "Julianesch",
 	"wikibasemediainfo-quantity-input-button-text": "Derbäisetzen",
 	"wikibasemediainfo-quantity-unit-label": "Eenheet",
-	"wikibasemediainfo-quantity-unit-button-text": "Eenheet definéieren"
+	"wikibasemediainfo-quantity-unit-button-text": "Eenheet definéieren",
+	"wikibasemediainfo-globecoordinate-input-button-text": "Derbäisetzen",
+	"wikibasemediainfo-globecoordinate-map-button-text": "Op der Kaart eraussichen"
 }

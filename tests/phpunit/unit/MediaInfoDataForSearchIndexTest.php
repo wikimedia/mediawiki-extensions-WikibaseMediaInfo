@@ -8,7 +8,7 @@ use MediaWiki\Page\PageStore;
 use MediaWiki\Parser\ParserOutput;
 use MediaWiki\Revision\RevisionRecord;
 use MediaWiki\Title\TitleFactory;
-use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 use Wikibase\DataModel\Entity\ItemIdParser;
 use Wikibase\DataModel\Services\Lookup\PropertyDataTypeLookup;
 use Wikibase\DataModel\Statement\StatementList;
@@ -48,7 +48,7 @@ class MediaInfoDataForSearchIndexTest extends \MediaWikiUnitTestCase {
 			],
 			new ObjectFactory( $this->createMock( ServiceContainer::class ) ),
 			$this->createMock( HookContainer::class ),
-			$this->createMock( LoggerInterface::class )
+			new NullLogger()
 		);
 
 		$content = new MediaInfoContent( new EntityInstanceHolder( $this->createEntity() ) );

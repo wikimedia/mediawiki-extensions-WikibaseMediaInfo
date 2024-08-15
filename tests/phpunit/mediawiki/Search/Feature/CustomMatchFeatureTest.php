@@ -22,9 +22,7 @@ class CustomMatchFeatureTest extends \MediaWikiIntegrationTestCase {
 	public function setUp(): void {
 		parent::setUp();
 
-		if ( !\ExtensionRegistry::getInstance()->isLoaded( 'CirrusSearch' ) ) {
-			$this->markTestSkipped( 'CirrusSearch needed.' );
-		}
+		$this->markTestSkippedIfExtensionNotLoaded( 'CirrusSearch' );
 	}
 
 	public static function expectedQueryProvider() {

@@ -233,7 +233,7 @@ class MediaInfoHandler extends EntityHandler {
 	 */
 	public function getTitlesForIds( array $ids ) {
 		'@phan-var MediaInfoId[] $ids';
-		Assert::parameterElementType( 'Wikibase\MediaInfo\DataModel\MediaInfoId', $ids, '$ids' );
+		Assert::parameterElementType( MediaInfoId::class, $ids, '$ids' );
 
 		$titles = [];
 		$uncachedNumericIds = [];

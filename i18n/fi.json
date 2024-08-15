@@ -8,7 +8,8 @@
 			"Nwme",
 			"Pyscowicz",
 			"Stryn",
-			"Susannaanas"
+			"Susannaanas",
+			"Samoasambia"
 		]
 	},
 	"action-mediainfo-term": "muuttaa median tietokäsitteitä (kuvatekstit, yhteenvedot)",
@@ -40,6 +41,7 @@
 	"wikibasemediainfo-filepage-caption-empty": "Lisää yhden rivin pituinen kuvaus tästä tiedostosta",
 	"wikibasemediainfo-filepage-statement-value-type-dropdown-title": "Valitse arvon tyyppi.",
 	"wikibasemediainfo-filepage-statement-custom-value-option": "Mukautettu arvo",
+	"wikibasemediainfo-filepage-statement-invalid-value": "Virheellinen arvo",
 	"wikibasemediainfo-filepage-statement-no-value-option": "Ei arvoa",
 	"wikibasemediainfo-filepage-statement-no-value": "Tälle omaisuudelle ei ole arvoa",
 	"wikibasemediainfo-filepage-statement-no-data": "Tietoja ei käytettävissä",
@@ -53,6 +55,7 @@
 	"wikibasemediainfo-property-placeholder": "Ominaisuus",
 	"wikibasemediainfo-filepage-license-agree": "Hyväksyn",
 	"wikibasemediainfo-statements-depicts-title": "Tässä kuvassa kuvatut kohteet",
+	"wikibasemediainfo-statements-item-qualifiers": "Tarkenteet",
 	"wikibasemediainfo-statements-item-add-qualifier": "Lisää tarkenne",
 	"wikibasemediainfo-statements-item-reference": "Lähde",
 	"wikibasemediainfo-statements-item-references": "Lähteet",

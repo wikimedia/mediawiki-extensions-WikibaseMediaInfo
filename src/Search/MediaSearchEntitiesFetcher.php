@@ -143,19 +143,13 @@ class MediaSearchEntitiesFetcher {
 	 * Replicates php's ucfirst() function with multibyte support.
 	 *
 	 * @param string $str The string being converted.
-	 * @param null|string $encoding Optional encoding parameter is the character encoding.
-	 * 	If it is omitted, the internal character encoding value will be used.
 	 *
 	 * @return string The input string with first character uppercased.
 	 * @see https://github.com/cofirazak/phpMissingFunctions/blob/master/src/StringFunc.php
 	 */
-	public function mbUcFirst( string $str, string $encoding = null ): string {
-		if ( $encoding === null ) {
-			$encoding = mb_internal_encoding();
-		}
-
-		return mb_strtoupper( mb_substr( $str, 0, 1, $encoding ), $encoding ) .
-			   mb_substr( $str, 1, null, $encoding );
+	public function mbUcFirst( string $str ): string {
+		return mb_strtoupper( mb_substr( $str, 0, 1 ) ) .
+			   mb_substr( $str, 1 );
 	}
 
 	private function transformTitleMatchResult( array $result ): ?array {

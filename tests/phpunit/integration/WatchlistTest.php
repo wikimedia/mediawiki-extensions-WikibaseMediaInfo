@@ -3,6 +3,7 @@
 namespace Wikibase\MediaInfo\Tests\Integration;
 
 use MediaWiki\Title\Title;
+use MediaWiki\User\User;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\Repo\WikibaseRepo;
 
@@ -21,6 +22,7 @@ use Wikibase\Repo\WikibaseRepo;
  */
 class WatchlistTest extends WBMIApiTestCase {
 
+	/** @var User */
 	private $editor;
 
 	protected function setUp(): void {

@@ -23,6 +23,7 @@ use Wikimedia\Assert\Assert;
  */
 class StatementsTest extends WBMIApiTestCase {
 
+	/** @var array|null */
 	private $stashedWikibaseSettings;
 
 	private function restoreFederation() {

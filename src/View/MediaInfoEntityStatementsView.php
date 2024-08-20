@@ -38,12 +38,13 @@ use Wikibase\View\LocalizedTextProvider;
  */
 class MediaInfoEntityStatementsView {
 
-	private $propertyOrderProvider;
-	private $textProvider;
-	private $defaultPropertyIds;
-	private $snakFormatterFactory;
-	private $valueFormatterFactory;
-	private $serializerFactory;
+	private PropertyOrderProvider $propertyOrderProvider;
+	private LocalizedTextProvider $textProvider;
+	/** @var NumericPropertyId[] */
+	private array $defaultPropertyIds;
+	private OutputFormatSnakFormatterFactory $snakFormatterFactory;
+	private OutputFormatValueFormatterFactory $valueFormatterFactory;
+	private SerializerFactory $serializerFactory;
 	private $languageCode;
 	private $properties;
 

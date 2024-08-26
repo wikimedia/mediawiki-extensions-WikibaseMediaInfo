@@ -2,6 +2,7 @@
 
 namespace Wikibase\MediaInfo\Tests\MediaWiki\DataAccess\Store;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Wikibase\Lib\Store\DivergingEntityIdException;
@@ -17,7 +18,9 @@ use Wikibase\MediaInfo\DataModel\MediaInfoId;
  */
 class EntityIdFixingRevisionLookupTest extends TestCase {
 
+	/** @var EntityRevisionLookup&MockObject */
 	private $defaultLookup;
+	/** @var LoggerInterface&MockObject */
 	private $logger;
 
 	protected function setUp(): void {

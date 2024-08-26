@@ -4,6 +4,7 @@ namespace Wikibase\Repo\Tests\Rdf;
 
 use InvalidArgumentException;
 use MediaWiki\Revision\SlotRecord;
+use PHPUnit\Framework\MockObject\MockObject;
 use Wikibase\DataAccess\DatabaseEntitySource;
 use Wikibase\DataAccess\EntitySourceDefinitions;
 use Wikibase\Lib\Store\EntityRevisionLookup;
@@ -41,19 +42,28 @@ use Wikimedia\Purtle\RdfWriter;
  */
 class MediaInfoRdfBuilderTest extends \MediaWikiIntegrationTestCase {
 
+	/** @var DedupeBag&MockObject */
 	private $dedupe;
+	/** @var RdfVocabulary&MockObject */
 	private $vocabulary;
+	/** @var RdfWriter&MockObject */
 	private $writer;
+	/** @var EntityMentionListener&MockObject */
 	private $mentionedEntityTracker;
+	/** @var ValueSnakRdfBuilderFactory&MockObject */
 	private $valueSnakRdfBuilderFactory;
+	/** @var TermsRdfBuilder&MockObject */
 	private $termsRdfBuilder;
+	/** @var TruthyStatementRdfBuilderFactory&MockObject */
 	private $truthyStatementRdfBuilderFactory;
+	/** @var FullStatementRdfBuilderFactory&MockObject */
 	private $fullStatementRdfBuilderFactory;
 
 	/**
 	 * @var NTriplesRdfTestHelper
 	 */
 	private $helper;
+	/** @var MediaInfoSpecificComponentsRdfBuilder&MockObject */
 	private $mediaInfoSpecificComponentsRdfBuilder;
 
 	protected function setUp(): void {

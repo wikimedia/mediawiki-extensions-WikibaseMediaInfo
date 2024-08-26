@@ -45,7 +45,9 @@ class MediaInfoEntityStatementsView {
 	private OutputFormatSnakFormatterFactory $snakFormatterFactory;
 	private OutputFormatValueFormatterFactory $valueFormatterFactory;
 	private SerializerFactory $serializerFactory;
+	/** @var string */
 	private $languageCode;
+	/** @var array<string,string> */
 	private $properties;
 
 	public const STATEMENTS_CUSTOM_TAG = 'mediaInfoViewStatements';
@@ -59,7 +61,7 @@ class MediaInfoEntityStatementsView {
 	 * @param OutputFormatValueFormatterFactory $valueFormatterFactory
 	 * @param SerializerFactory $serializerFactory
 	 * @param string $languageCode
-	 * @param string[] $properties Array of property IDs
+	 * @param array<string,string> $properties Array of property IDs
 	 */
 	public function __construct(
 		PropertyOrderProvider $propertyOrderProvider,

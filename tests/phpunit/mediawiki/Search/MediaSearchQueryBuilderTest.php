@@ -10,6 +10,7 @@ use CirrusSearch\Search\SearchContext;
 use CirrusSearch\Search\SearchQueryBuilder;
 use CirrusSearch\SearchConfig;
 use MediaWiki\HookContainer\HookContainer;
+use MediaWiki\MainConfigNames;
 use MediaWikiIntegrationTestCase;
 use Wikibase\MediaInfo\Search\MediaSearchASTEntitiesExtractor;
 use Wikibase\MediaInfo\Search\MediaSearchASTQueryBuilder;
@@ -20,6 +21,12 @@ use Wikibase\MediaInfo\Search\MediaSearchQueryBuilder;
  * @covers \Wikibase\MediaInfo\Search\MediaSearchQueryBuilder
  */
 class MediaSearchQueryBuilderTest extends MediaWikiIntegrationTestCase {
+
+	protected function setUp(): void {
+		parent::setUp();
+		$this->overrideConfigValue( MainConfigNames::LanguageCode, 'qqx' );
+	}
+
 	private function createSUT( array $params = [] ): MediaSearchQueryBuilder {
 		$searchConfig = $this->createMock( SearchConfig::class );
 		$features = ( new FullTextKeywordRegistry( $searchConfig ) )->getKeywords();

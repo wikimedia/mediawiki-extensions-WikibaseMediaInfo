@@ -4,7 +4,8 @@ namespace Wikibase\MediaInfo\Tests\MediaWiki\View;
 
 use DataValues\DataValue;
 use DataValues\StringValue;
-use MediaWiki\MediaWikiServices;
+use MediaWiki\MainConfigNames;
+use MediaWikiIntegrationTestCase;
 use MediaWikiTestCaseTrait;
 use ValueFormatters\FormatterOptions;
 use Wikibase\DataModel\Entity\EntityIdValue;
@@ -25,7 +26,6 @@ use Wikibase\Lib\Formatters\SnakFormatter;
 use Wikibase\Lib\Store\PropertyOrderProvider;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\MediaInfo\View\MediaInfoEntityStatementsView;
-use Wikibase\Repo\MediaWikiLocalizedTextProvider;
 use Wikibase\Repo\WikibaseRepo;
 use Wikibase\View\LocalizedTextProvider;
 
@@ -36,13 +36,9 @@ use Wikibase\View\LocalizedTextProvider;
  *
  * @license GPL-2.0-or-later
  */
-class MediaInfoEntityStatementsViewTest extends \PHPUnit\Framework\TestCase {
+class MediaInfoEntityStatementsViewTest extends MediaWikiIntegrationTestCase {
 	use MediaWikiTestCaseTrait;
 
-	/**
-	 * @var LocalizedTextProvider
-	 */
-	private $textProvider;
 	/**
 	 * @var OutputFormatSnakFormatterFactory
 	 */
@@ -56,36 +52,24 @@ class MediaInfoEntityStatementsViewTest extends \PHPUnit\Framework\TestCase {
 	 */
 	private $serializerFactory;
 
-	private function createDependencies() {
-		$this->textProvider = new MediaWikiLocalizedTextProvider(
-			MediaWikiServices::getInstance()->getLanguageFactory()->getLanguage( 'en' ) );
+	protected function setUp(): void {
+		parent::setUp();
+		$this->overrideConfigValue( MainConfigNames::LanguageCode, 'qqx' );
+	}
 
+	private function createDependencies() {
 		$this->serializerFactory = WikibaseRepo::getCompactBaseDataModelSerializerFactory();
 
 		$snakFormatter = $this->createMock( SnakFormatter::class );
 		$snakFormatter->method( 'formatSnak' )
-			->willReturnCallback( function ( Snak $snak ) {
+			->willReturnCallback( static function ( Snak $snak ) {
 				if ( $snak instanceof PropertyNoValueSnak ) {
-					return $this->textProvider->get(
-						'wikibasemediainfo-filepage-statement-no-value'
-					);
+					return '(wikibasemediainfo-filepage-statement-no-value)';
 				} elseif ( $snak instanceof PropertySomeValueSnak ) {
-					return $this->textProvider->get(
-						'wikibasemediainfo-filepage-statement-some-value'
-					);
+					return '(wikibasemediainfo-filepage-statement-some-value)';
 				} elseif ( $snak instanceof PropertyValueSnak ) {
 					$value = $snak->getDataValue();
-					if ( !( $value instanceof EntityIdValue ) ) {
-						return $value->getValue();
-					}
-					$map = [
-						'Q333' => 'ITEM Q333 LABEL',
-						'Q999' => 'ITEM Q999 LABEL',
-						'Q3333' => 'ITEM Q3333 LABEL',
-					];
-					if ( isset( $map[$value->getEntityId()->getSerialization()] ) ) {
-						return $map[$value->getEntityId()->getSerialization()];
-					}
+					return $value instanceof EntityIdValue ? $value->getEntityId() : $value->getValue();
 				}
 				return '';
 			} );
@@ -95,22 +79,7 @@ class MediaInfoEntityStatementsViewTest extends \PHPUnit\Framework\TestCase {
 		$valueFormatter = $this->createMock( DispatchingValueFormatter::class );
 		$valueFormatter->method( 'formatValue' )
 			->willReturnCallback( static function ( DataValue $value ) {
-				$map = [
-					'P333' => 'PROPERTY P333 LABEL',
-					'P444' => 'PROPERTY P444 LABEL',
-					'P555' => 'PROPERTY P555 LABEL',
-					'P666' => 'PROPERTY P666 LABEL',
-					'P777' => 'PROPERTY P777 LABEL',
-					'P888' => 'PROPERTY P888 LABEL',
-					'P999' => 'PROPERTY P999 LABEL',
-				];
-				if (
-					$value instanceof EntityIdValue &&
-					isset( $map[$value->getEntityId()->getSerialization()] )
-				) {
-					return $map[$value->getEntityId()->getSerialization()];
-				}
-				return '';
+				return $value instanceof EntityIdValue ? $value->getEntityId() : $value->getValue();
 			} );
 		$this->valueFormatterFactory = $this->createMock( OutputFormatValueFormatterFactory::class );
 		$this->valueFormatterFactory->method( 'getValueFormatter' )->willReturn( $valueFormatter );
@@ -137,7 +106,7 @@ class MediaInfoEntityStatementsViewTest extends \PHPUnit\Framework\TestCase {
 
 		$sut = new MediaInfoEntityStatementsView(
 			$orderProvider,
-			$this->textProvider,
+			$this->createMock( LocalizedTextProvider::class ),
 			[ new NumericPropertyId( 'P1' ) ],
 			$this->snakFormatterFactory,
 			$this->valueFormatterFactory,
@@ -226,14 +195,12 @@ class MediaInfoEntityStatementsViewTest extends \PHPUnit\Framework\TestCase {
 		return '/' . implode( '.+', $labels ) . '/';
 	}
 
-	private function getSnakValueRegexPart(
-		Snak $snak
-	) {
+	private function getSnakValueRegexPart( Snak $snak ): string {
 		$snakFormatter = $this->snakFormatterFactory->getSnakFormatter(
 			null,
 			new FormatterOptions()
 		);
-		return $snakFormatter->formatSnak( $snak );
+		return preg_quote( $snakFormatter->formatSnak( $snak ), '/' );
 	}
 
 	/**

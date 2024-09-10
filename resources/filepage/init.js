@@ -142,12 +142,10 @@
 	 * @param {OO.ui.IndexLayout} tabs
 	 */
 	function scrollToCurrentAnchor( tabs ) {
-		var uri = mw.Uri();
-
-		if ( uri.fragment && uri.fragment in statementPanels ) {
+		if ( location.hash && location.hash.slice( 1 ) in statementPanels ) {
 			Object.keys( tabs.tabPanels ).some( function ( name ) {
 				var panel = tabs.getTabPanel( name ),
-					$node = panel.$element.find( '#' + uri.fragment );
+					$node = panel.$element.find( location.hash );
 
 				if ( $node.length === 0 ) {
 					return false;

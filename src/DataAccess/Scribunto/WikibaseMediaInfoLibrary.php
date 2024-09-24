@@ -3,7 +3,7 @@
 namespace Wikibase\MediaInfo\DataAccess\Scribunto;
 
 use MediaWiki\Title\Title;
-use Wikibase\Client\DataAccess\Scribunto\Scribunto_LuaWikibaseLibrary;
+use Wikibase\Client\DataAccess\Scribunto\WikibaseLibrary;
 use Wikibase\Lib\Store\EntityIdLookup;
 use Wikibase\MediaInfo\DataModel\MediaInfoId;
 use Wikibase\MediaInfo\Services\MediaInfoServices;
@@ -11,7 +11,7 @@ use Wikibase\MediaInfo\Services\MediaInfoServices;
 /**
  * Registers and defines functions to access WikibaseMediaInfo through the Scribunto extension
  */
-class Scribunto_LuaWikibaseMediaInfoLibrary extends Scribunto_LuaWikibaseLibrary {
+class WikibaseMediaInfoLibrary extends WikibaseLibrary {
 
 	/**
 	 * @var EntityIdLookup

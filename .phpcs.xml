@@ -6,10 +6,6 @@
 		<exclude name="MediaWiki.Commenting.FunctionComment.MissingDocumentationPublic" />
 	</rule>
 
-	<rule ref="Squiz.Classes.ValidClassName.NotCamelCaps">
-		<exclude-pattern>Scribunto_LuaWikibaseMediaInfo*</exclude-pattern>
-	</rule>
-
 	<file>.</file>
 	<arg name="extensions" value="php"/>
 	<arg name="encoding" value="UTF-8"/>

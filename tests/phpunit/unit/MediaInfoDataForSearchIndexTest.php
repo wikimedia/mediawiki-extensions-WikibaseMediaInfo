@@ -74,7 +74,6 @@ class MediaInfoDataForSearchIndexTest extends \MediaWikiUnitTestCase {
 		// descriptions in the index document.
 		$expectedFields = [
 			'my_data' => 'should remain here',
-			'label_count' => 0,
 			'labels' => null,
 			'labels_all' => null,
 			'descriptions' => [

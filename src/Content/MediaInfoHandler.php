@@ -23,7 +23,6 @@ use Wikibase\Repo\Search\Fields\FieldDefinitions;
 use Wikibase\Repo\Validators\EntityConstraintProvider;
 use Wikibase\Repo\Validators\ValidatorErrorLocalizer;
 use Wikibase\Search\Elastic\Fields\DescriptionsField;
-use Wikibase\Search\Elastic\Fields\LabelCountField;
 use Wikibase\Search\Elastic\Fields\LabelsField;
 use Wikimedia\Assert\Assert;
 
@@ -205,7 +204,7 @@ class MediaInfoHandler extends EntityHandler {
 			$fieldsData[DescriptionsField::NAME] = null;
 		}
 
-		$fieldsData[LabelCountField::NAME] = 0;
+		$fieldsData['label_count'] = 0;
 		return $fieldsData;
 	}
 

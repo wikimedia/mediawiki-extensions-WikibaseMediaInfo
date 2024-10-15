@@ -204,7 +204,6 @@ class MediaInfoHandler extends EntityHandler {
 			$fieldsData[DescriptionsField::NAME] = null;
 		}
 
-		$fieldsData['label_count'] = 0;
 		return $fieldsData;
 	}
 

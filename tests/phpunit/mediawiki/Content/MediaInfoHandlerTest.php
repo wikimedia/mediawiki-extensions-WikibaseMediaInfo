@@ -80,7 +80,7 @@ class MediaInfoHandlerTest extends \MediaWikiIntegrationTestCase {
 				? $replacements[ 'filePageLookup' ] : $filePageLookup,
 			new MediaInfoFieldDefinitions(
 				new LabelsProviderFieldDefinitions( [ 'ar', 'de' ] ),
-				new DescriptionsProviderFieldDefinitions( [ 'ar', 'de' ], [] ),
+				new DescriptionsProviderFieldDefinitions( [ 'ar', 'de' ], null ),
 				new StatementProviderFieldDefinitions(
 					$propertyLookup,
 					[],

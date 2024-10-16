@@ -149,11 +149,10 @@ return [
 		Def::CONTENT_MODEL_ID => MediaInfoContent::CONTENT_MODEL_ID,
 		Def::SEARCH_FIELD_DEFINITIONS => static function ( array $languageCodes, SettingsArray $searchSettings ) {
 			$services = MediaWikiServices::getInstance();
-			$config = $services->getConfigFactory()->makeConfig( 'WikibaseCirrusSearch' );
+			$configFactory = $services->getConfigFactory();
 			return new MediaInfoFieldDefinitions(
 				new LabelsProviderFieldDefinitions( $languageCodes ),
-				new DescriptionsProviderFieldDefinitions( $languageCodes,
-					$config->get( 'UseStemming' ) ),
+				new DescriptionsProviderFieldDefinitions( $languageCodes, $configFactory ),
 				StatementProviderFieldDefinitions::newFromSettings(
 					new InProcessCachingDataTypeLookup(
 						WikibaseRepo::getPropertyDataTypeLookup( $services ) ),

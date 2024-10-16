@@ -109,7 +109,7 @@ class MediaInfoDataForSearchIndexTest extends \MediaWikiUnitTestCase {
 			$this->createMock( FilePageLookup::class ),
 			new MediaInfoFieldDefinitions(
 				new LabelsProviderFieldDefinitions( [ 'ar', 'en' ] ),
-				new DescriptionsProviderFieldDefinitions( [ 'ar', 'en' ], [] ),
+				new DescriptionsProviderFieldDefinitions( [ 'ar', 'en' ], null ),
 				new StatementProviderFieldDefinitions(
 					$this->createMock( PropertyDataTypeLookup::class ),
 					[],

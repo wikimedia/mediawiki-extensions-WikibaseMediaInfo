@@ -41,8 +41,8 @@ use Wikibase\Lib\LanguageFallbackChainFactory;
 use Wikibase\Lib\Store\EntityByLinkedTitleLookup;
 use Wikibase\Lib\UserLanguageLookup;
 use Wikibase\MediaInfo\Content\MediaInfoContent;
-use Wikibase\MediaInfo\DataAccess\Scribunto\Scribunto_LuaWikibaseMediaInfoEntityLibrary;
-use Wikibase\MediaInfo\DataAccess\Scribunto\Scribunto_LuaWikibaseMediaInfoLibrary;
+use Wikibase\MediaInfo\DataAccess\Scribunto\WikibaseMediaInfoEntityLibrary;
+use Wikibase\MediaInfo\DataAccess\Scribunto\WikibaseMediaInfoLibrary;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\MediaInfo\Search\Feature\CustomMatchFeature;
 use Wikibase\MediaInfo\Search\MediaSearchASTClassifier;
@@ -725,9 +725,9 @@ class WikibaseMediaInfoHooks implements
 		}
 		$allowDataTransclusion = WikibaseClient::getSettings()->getSetting( 'allowDataTransclusion' );
 		if ( $engine === 'lua' && $allowDataTransclusion === true ) {
-			$extraLibraries['mw.wikibase.mediainfo'] = Scribunto_LuaWikibaseMediaInfoLibrary::class;
+			$extraLibraries['mw.wikibase.mediainfo'] = WikibaseMediaInfoLibrary::class;
 			$extraLibraries['mw.wikibase.mediainfo.entity'] = [
-				'class' => Scribunto_LuaWikibaseMediaInfoEntityLibrary::class,
+				'class' => WikibaseMediaInfoEntityLibrary::class,
 				'deferLoad' => true,
 			];
 		}

@@ -2,12 +2,12 @@
 
 namespace Wikibase\MediaInfo\DataAccess\Scribunto;
 
-use Wikibase\Client\DataAccess\Scribunto\Scribunto_LuaWikibaseEntityLibrary;
+use Wikibase\Client\DataAccess\Scribunto\WikibaseEntityLibrary;
 
 /**
  * Registers and defines functions to access WikibaseMediaInfo through the Scribunto extension
  */
-class Scribunto_LuaWikibaseMediaInfoEntityLibrary extends Scribunto_LuaWikibaseEntityLibrary {
+class WikibaseMediaInfoEntityLibrary extends WikibaseEntityLibrary {
 
 	/**
 	 * Register the mw.wikibase.mediainfo.entity.lua library.

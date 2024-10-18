@@ -158,7 +158,8 @@ return [
 						WikibaseRepo::getPropertyDataTypeLookup( $services ) ),
 					WikibaseRepo::getDataTypeDefinitions( $services )
 						->getSearchIndexDataFormatterCallbacks(),
-					$searchSettings
+					$searchSettings,
+					WikibaseRepo::getLogger( $services )
 				)
 			);
 		},

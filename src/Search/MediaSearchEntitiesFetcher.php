@@ -2,7 +2,7 @@
 
 namespace Wikibase\MediaInfo\Search;
 
-use MultiHttpClient;
+use Wikimedia\Http\MultiHttpClient;
 
 class MediaSearchEntitiesFetcher {
 	/** @var MultiHttpClient */

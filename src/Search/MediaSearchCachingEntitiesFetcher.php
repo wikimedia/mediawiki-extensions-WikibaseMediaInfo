@@ -2,7 +2,7 @@
 
 namespace Wikibase\MediaInfo\Search;
 
-use WANObjectCache;
+use Wikimedia\ObjectCache\WANObjectCache;
 
 class MediaSearchCachingEntitiesFetcher extends MediaSearchEntitiesFetcher {
 	/** @var MediaSearchEntitiesFetcher */

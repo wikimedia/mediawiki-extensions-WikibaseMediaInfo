@@ -2,7 +2,6 @@
 
 namespace Wikibase\MediaInfo\DataAccess\Store;
 
-use IDBAccessObject;
 use MediaWiki\Revision\RevisionStore;
 use Wikibase\DataModel\Entity\EntityId;
 use Wikibase\Lib\Store\EntityRevisionLookup;
@@ -11,6 +10,7 @@ use Wikibase\Lib\Store\LatestRevisionIdResult;
 use Wikibase\Lib\Store\LookupConstants;
 use Wikibase\Lib\Store\Sql\WikiPageEntityDataLoader;
 use Wikibase\Lib\Store\StorageException;
+use Wikimedia\Rdbms\IDBAccessObject;
 
 /**
  * This service works around (intended behaviour does not seem fully defined as of 2019-10)

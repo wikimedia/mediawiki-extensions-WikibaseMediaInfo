@@ -2,6 +2,7 @@
 
 namespace extensions\WikibaseMediaInfo\tests\phpunit\unit;
 
+use MediaWiki\Content\ContentHandler;
 use MediaWiki\Content\ContentHandlerFactory;
 use MediaWiki\HookContainer\HookContainer;
 use MediaWiki\Page\PageStore;
@@ -64,7 +65,7 @@ class MediaInfoDataForSearchIndexTest extends \MediaWikiUnitTestCase {
 		$fields = [ 'my_data' => 'should remain here' ];
 		$hook->onSearchDataForIndex2(
 			$fields,
-			$this->createMock( \ContentHandler::class ),
+			$this->createMock( ContentHandler::class ),
 			$this->createMock( \WikiPage::class ),
 			$this->createMock( ParserOutput::class ),
 			$this->createMock( \SearchEngine::class ),

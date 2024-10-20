@@ -2,7 +2,7 @@
 
 namespace Wikibase\MediaInfo\Content;
 
-use Content;
+use MediaWiki\Content\Content;
 use MediaWiki\Context\IContextSource;
 use MediaWiki\Page\PageRecord;
 use MediaWiki\Page\PageStore;

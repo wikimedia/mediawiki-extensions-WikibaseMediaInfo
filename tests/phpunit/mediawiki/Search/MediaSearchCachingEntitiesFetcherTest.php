@@ -2,10 +2,10 @@
 
 namespace Wikibase\MediaInfo\Tests\MediaWiki\Search;
 
-use HashBagOStuff;
-use WANObjectCache;
 use Wikibase\MediaInfo\Search\MediaSearchCachingEntitiesFetcher;
 use Wikibase\MediaInfo\Search\MediaSearchEntitiesFetcher;
+use Wikimedia\ObjectCache\HashBagOStuff;
+use Wikimedia\ObjectCache\WANObjectCache;
 
 /**
  * @covers \Wikibase\MediaInfo\Search\MediaSearchCachingEntitiesFetcher

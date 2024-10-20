@@ -4,7 +4,6 @@ namespace Wikibase\MediaInfo;
 
 use CirrusSearch\Parser\ParsedQueryClassifiersRepository;
 use CirrusSearch\Profile\SearchProfileService;
-use ExtensionRegistry;
 use MediaWiki\CommentStore\CommentStoreComment;
 use MediaWiki\Config\ConfigException;
 use MediaWiki\Context\RequestContext;
@@ -18,6 +17,8 @@ use MediaWiki\Page\Hook\ArticleUndeleteHook;
 use MediaWiki\Page\Hook\RevisionUndeletedHook;
 use MediaWiki\Parser\ParserOutput;
 use MediaWiki\Preferences\Hook\GetPreferencesHook;
+use MediaWiki\Registration\ExtensionDependencyError;
+use MediaWiki\Registration\ExtensionRegistry;
 use MediaWiki\Revision\RenderedRevision;
 use MediaWiki\Revision\RevisionRecord;
 use MediaWiki\Revision\SlotRecord;
@@ -132,7 +133,7 @@ class WikibaseMediaInfoHooks implements
 		if ( !ExtensionRegistry::getInstance()->isLoaded( 'WikibaseRepository' ) ) {
 			// HACK: Declaring a dependency on Wikibase in extension.json
 			// requires more work. See T258822.
-			throw new \ExtensionDependencyError( [ [
+			throw new ExtensionDependencyError( [ [
 				'msg' => 'WikibaseMediaInfo requires Wikibase to be installed.',
 				'type' => 'missing-phpExtension',
 				'missing' => 'Wikibase',

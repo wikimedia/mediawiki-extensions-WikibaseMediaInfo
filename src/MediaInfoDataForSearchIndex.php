@@ -2,7 +2,7 @@
 
 namespace Wikibase\MediaInfo;
 
-use ContentHandler;
+use MediaWiki\Content\ContentHandler;
 use MediaWiki\Content\ContentHandlerFactory;
 use MediaWiki\Content\Hook\SearchDataForIndex2Hook;
 use MediaWiki\Parser\ParserOutput;

@@ -3,8 +3,8 @@
 namespace Wikibase\MediaInfo\Tests\MediaWiki\Search;
 
 use MediaWikiIntegrationTestCase;
-use MultiHttpClient;
 use Wikibase\MediaInfo\Search\MediaSearchEntitiesFetcher;
+use Wikimedia\Http\MultiHttpClient;
 
 /**
  * @covers \Wikibase\MediaInfo\Search\MediaSearchEntitiesFetcher

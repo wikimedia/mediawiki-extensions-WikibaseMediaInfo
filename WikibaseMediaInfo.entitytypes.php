@@ -13,6 +13,7 @@
  * @author Bene* < benestar.wikimedia@gmail.com >
  */
 
+use MediaWiki\Language\Language;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\Site\SiteLookup;
 use MediaWiki\Title\Title;

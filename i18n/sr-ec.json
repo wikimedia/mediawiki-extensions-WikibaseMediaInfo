@@ -11,7 +11,8 @@
 			"Zenfiric"
 		]
 	},
-	"right-mediainfo-term": "Промена услова за информације медија (натписи, резимеи)",
+	"action-mediainfo-term": "мењањате услове за податке о медијима (поднатписи, описи)",
+	"right-mediainfo-term": "мењање услова за податке о медијима (поднатписи, описи)",
 	"slot-name-mediainfo": "Структуриране информације о медијима",
 	"wikibase-entity-mediainfo": "медија инфо",
 	"wikibase-mediainfo-summary-wbsetlabel-add": "Додат опис ([$2])",
@@ -21,7 +22,7 @@
 	"wikibasemediainfo-add-statement": "Додај изјаву",
 	"wikibasemediainfo-desc": "Есктензија Wikibase за управљање структурисаним метаподацима медијских датотека",
 	"wikibasemediainfo-diffview-label": "натпис",
-	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Натписи",
+	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Поднаписи",
 	"wikibasemediainfo-filepage-fileinfo-heading": "Информације о датотеци",
 	"wikibasemediainfo-filepage-structured-data-heading": "Структурирани подаци",
 	"wikibasemediainfo-filepage-captions-title": "Натписи",
@@ -37,6 +38,7 @@
 	"wikibasemediainfo-filepage-edit": "Уреди",
 	"wikibasemediainfo-filepage-publish": "Објави измене",
 	"wikibasemediainfo-filepage-caption-empty": "Укратко шта ова датотека представља/приказује",
+	"wikibasemediainfo-filepage-caption-too-short": "Мора бар још $1 {{PLURAL:$1|карактер|карактера}}",
 	"wikibasemediainfo-filepage-caption-too-long": "$1 {{PLURAL:$1|знак|знака|знакова}} преко ограничења",
 	"wikibasemediainfo-filepage-caption-approaching-limit": "{{PLURAL:$1|Остао је $1 знак|Остала су $1 знака|Остало је $1 знакова|0=Није остало знакова}}",
 	"wikibasemediainfo-filepage-statement-value-type-dropdown-title": "Изаберите врсту вредности.",

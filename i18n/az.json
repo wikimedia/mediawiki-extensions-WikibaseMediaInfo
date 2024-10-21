@@ -1,9 +1,19 @@
 {
 	"@metadata": {
 		"authors": [
+			"Nemoralis",
 			"Toghrul Rahimli"
 		]
 	},
+	"action-mediainfo-term": "media məlumat terminlərini (başlıqlar, xülasələr) dəyişdirmək",
+	"right-mediainfo-term": "Media məlumat terminlərini (başlıqlar, xülasələr) dəyişdirmək",
+	"slot-name-mediainfo": "Strukturlaşdırılmış media məlumatı",
+	"wikibase-entity-mediainfo": "media məlumatı",
+	"wikibase-mediainfo-summary-wbsetlabel-add": "[$2] başlığı əlavə edildi",
+	"wikibase-mediainfo-summary-wbsetlabel-remove": "[$2] başlığı silindi",
+	"wikibase-mediainfo-summary-wbsetlabel-set": "[$2] başlığı redaktə edildi",
+	"wikibasemediainfo-add-property": "Xüsusiyyətlər əlavə etmək üçün axtarış (hissə, media növü və s.)",
+	"wikibasemediainfo-add-statement": "İfadə əlavə et",
 	"wikibasemediainfo-filepage-statement-no-value-option": "Dəyər yoxdur",
 	"wikibasemediainfo-property-placeholder": "Parametr",
 	"wikibasemediainfo-statements-item-add-qualifier": "Göstərici əlavə et",

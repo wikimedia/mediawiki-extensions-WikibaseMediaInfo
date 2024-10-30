@@ -5,9 +5,7 @@
 			"Muhammad Idriss Criteria"
 		]
 	},
-	"action-mediainfo-term": "change media info terms (captions, summaries)",
 	"right-mediainfo-term": "Canja kalmomin bayanan kafofin watsa labarai (ƙaddamarwa, taƙaitawa)",
-	"slot-name-mediainfo": "Structured media info",
 	"wikibase-entity-mediainfo": "Bayanan kafofin watsa labarai",
 	"wikibase-mediainfo-summary-wbsetlabel-add": "An kara [$2] rubutun",
 	"wikibase-mediainfo-summary-wbsetlabel-remove": "An cire [$2] rubutun",

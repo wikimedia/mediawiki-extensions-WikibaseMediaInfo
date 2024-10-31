@@ -52,10 +52,10 @@ class MediaInfo
 	 * @param StatementList|null $statements
 	 */
 	public function __construct(
-		MediaInfoId $id = null,
-		TermList $labels = null,
-		TermList $descriptions = null,
-		StatementList $statements = null
+		?MediaInfoId $id = null,
+		?TermList $labels = null,
+		?TermList $descriptions = null,
+		?StatementList $statements = null
 	) {
 		$this->id = $id;
 		$this->labels = $labels ?: new TermList();

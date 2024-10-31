@@ -266,7 +266,7 @@ class CustomMatchFeature extends SimpleKeywordFeature {
 	 * @return array|null
 	 */
 	private function parseSearchString( string $searchString, string $keyword = '',
-										WarningCollector $warningCollector = null
+										?WarningCollector $warningCollector = null
 	): ?array {
 		if ( !preg_match( '/^(\w+)=(.+)$/i', $searchString, $matches ) ) {
 			if ( $warningCollector !== null ) {

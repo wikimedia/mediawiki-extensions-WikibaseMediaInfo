@@ -144,7 +144,7 @@ class WikibaseMediaInfoHooks implements
 	 * @param Title|null $title
 	 * @return bool
 	 */
-	public static function isMediaInfoPage( Title $title = null ) {
+	public static function isMediaInfoPage( ?Title $title = null ) {
 		// Check if the page exists and the page is a file
 		return $title !== null &&
 			$title->exists() &&

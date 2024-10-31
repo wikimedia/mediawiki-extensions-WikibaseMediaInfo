@@ -47,7 +47,7 @@ class MediaInfoPrefetchingTermLookup extends EntityTermLookupBase implements Pre
 	 * @param string[]|null $languageCodes The desired languages, given as language codes.
 	 *        If null, all languages are prefetched.
 	 */
-	private function prefetchTerm( EntityId $entityId, array $termTypes = null, array $languageCodes = null ) {
+	private function prefetchTerm( EntityId $entityId, ?array $termTypes = null, ?array $languageCodes = null ) {
 		$termTypes = $termTypes ?: $this->supportedTermTypes;
 
 		// init term cache, indicating these entity/term combinations were

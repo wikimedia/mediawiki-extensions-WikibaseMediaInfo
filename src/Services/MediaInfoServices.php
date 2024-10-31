@@ -15,7 +15,7 @@ class MediaInfoServices {
 	 * @param MediaWikiServices|null $services
 	 * @return MediaInfoIdLookup
 	 */
-	public static function getMediaInfoIdLookup( MediaWikiServices $services = null ) {
+	public static function getMediaInfoIdLookup( ?MediaWikiServices $services = null ) {
 		return ( $services ?? MediaWikiServices::getInstance() )->getService( 'MediaInfoIdLookup' );
 	}
 
@@ -23,7 +23,7 @@ class MediaInfoServices {
 	 * @param MediaWikiServices|null $services
 	 * @return FilePageLookup
 	 */
-	public static function getFilePageLookup( MediaWikiServices $services = null ) {
+	public static function getFilePageLookup( ?MediaWikiServices $services = null ) {
 		return ( $services ?? MediaWikiServices::getInstance() )->getService( 'MediaInfoFilePageLookup' );
 	}
 
@@ -31,7 +31,7 @@ class MediaInfoServices {
 	 * @param MediaWikiServices|null $services
 	 * @return MediaInfoHandler
 	 */
-	public static function getMediaInfoHandler( MediaWikiServices $services = null ) {
+	public static function getMediaInfoHandler( ?MediaWikiServices $services = null ) {
 		return ( $services ?? MediaWikiServices::getInstance() )->getService( 'MediaInfoHandler' );
 	}
 

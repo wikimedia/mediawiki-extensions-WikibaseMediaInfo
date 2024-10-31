@@ -35,7 +35,7 @@ class MediaInfoContent extends EntityContent {
 	 * @param EntityHolder|null $mediaInfoHolder
 	 * @throws InvalidArgumentException
 	 */
-	public function __construct( EntityHolder $mediaInfoHolder = null ) {
+	public function __construct( ?EntityHolder $mediaInfoHolder = null ) {
 		parent::__construct( self::CONTENT_MODEL_ID );
 
 		if ( $mediaInfoHolder !== null

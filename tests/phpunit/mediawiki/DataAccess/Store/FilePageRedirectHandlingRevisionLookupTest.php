@@ -176,8 +176,8 @@ class FilePageRedirectHandlingRevisionLookupTest extends TestCase {
 
 	private function newLookup(
 		EntityRevisionLookup $defaultLookup,
-		RevisionStore $revisionStore = null,
-		WikiPageEntityDataLoader $entityDataLoader = null
+		?RevisionStore $revisionStore = null,
+		?WikiPageEntityDataLoader $entityDataLoader = null
 	) {
 		return new FilePageRedirectHandlingRevisionLookup(
 			$defaultLookup,

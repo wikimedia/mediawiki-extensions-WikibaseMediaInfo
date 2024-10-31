@@ -140,7 +140,7 @@ class MediaInfoSpecificComponentsRdfBuilderTest extends TestCase {
 	/**
 	 * @dataProvider provideMediaInfoPartialRDFWithFile
 	 */
-	public function testMediaInfoPartialRDFWithFile( $entityName, $dataSetName, File $file = null ) {
+	public function testMediaInfoPartialRDFWithFile( $entityName, $dataSetName, ?File $file = null ) {
 		if ( $file && !$file->getHandler() ) {
 			$this->markTestSkipped( 'No MediaHandler registered for ' . $file->getMimeType() );
 		}

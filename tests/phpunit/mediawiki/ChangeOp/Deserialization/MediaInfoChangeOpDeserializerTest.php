@@ -16,8 +16,6 @@ use Wikibase\Repo\ChangeOp\Deserialization\LabelsChangeOpDeserializer;
 use Wikibase\Repo\ChangeOp\Deserialization\TermChangeOpSerializationValidator;
 use Wikibase\Repo\ChangeOp\FingerprintChangeOpFactory;
 use Wikibase\Repo\Tests\ChangeOp\ChangeOpTestMockProvider;
-use Wikibase\Repo\Tests\ChangeOp\Deserialization\DescriptionsChangeOpDeserializationTester;
-use Wikibase\Repo\Tests\ChangeOp\Deserialization\LabelsChangeOpDeserializationTester;
 use Wikibase\Repo\Validators\TermValidatorFactory;
 
 /**
@@ -29,9 +27,6 @@ use Wikibase\Repo\Validators\TermValidatorFactory;
  * @author Katie Filbert < aude.wiki@gmail.com >
  */
 class MediaInfoChangeOpDeserializerTest extends \PHPUnit\Framework\TestCase {
-
-	use LabelsChangeOpDeserializationTester;
-	use DescriptionsChangeOpDeserializationTester;
 
 	public function testCreateEntityChangeOp() {
 		$changeRequest = [

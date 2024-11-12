@@ -289,6 +289,7 @@
 			"dependencies": [
 				"wikibase.mediainfo.base",
 				"wikibase.mediainfo.uls",
+				"mediawiki.jqueryMsg",
 				"mediawiki.template.mustache+dom",
 				"mw.config.values.wbDataTypes",
 				"oojs",
@@ -445,8 +446,5 @@
 	},
 	"AvailableRights": [
 		"mediainfo-term"
-	],
-	"RawHtmlMessages": [
-		"wikibasemediainfo-time-timestamp-formatted"
 	]
 }

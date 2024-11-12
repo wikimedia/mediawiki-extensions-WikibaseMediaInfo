@@ -128,10 +128,10 @@ TimeInputWidget.prototype.getTemplateData = function () {
 	return this.formatValue( this.getData() ).then( function ( formatted ) {
 		// The method $.text() will handle the escaping of the user input preventing XSS.
 		var $formatted = $( '<span>' ).addClass( 'wbmi-input-widget--formatted' ).text( formatted );
+		var $msg = mw.message( 'wikibasemediainfo-time-timestamp-formatted' ).params( $formatted ).parseDom();
 
-		// wikibasemediainfo-time-timestamp-formatted is part of $wgRawHtmlMessages and safe to use as is here
 		return Object.assign( {}, data, {
-			formatted: mw.message( 'wikibasemediainfo-time-timestamp-formatted', $formatted.get( 0 ).outerHTML ).text()
+			formatted: $( '<div>' ).append( $msg ).html()
 		} );
 	} );
 };

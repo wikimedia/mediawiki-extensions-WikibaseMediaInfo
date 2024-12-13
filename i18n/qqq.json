@@ -9,6 +9,7 @@
 			"Pikne",
 			"Robby",
 			"Shirayuki",
+			"Toliño",
 			"Umherirrender"
 		]
 	},
@@ -119,11 +120,11 @@
 	"wikibasemediainfo-time-calendar-label": "Label for calendar dropdown\n{{identical|Calendar}}",
 	"wikibasemediainfo-time-calendar-gregorian": "Label for Gregorian calendar",
 	"wikibasemediainfo-time-calendar-julian": "Label for Julian calendar",
-	"wikibasemediainfo-quantity-input-button-text": "ਜੋੜੋ",
+	"wikibasemediainfo-quantity-input-button-text": "Text for button to add a numeric/quantity statement",
 	"wikibasemediainfo-quantity-unit-placeholder": "Placeholder text for quantity unit input field",
 	"wikibasemediainfo-quantity-unit-label": "Label text for quantity unit input field",
 	"wikibasemediainfo-quantity-unit-button-text": "Text for button to add a quantity unit",
-	"wikibasemediainfo-globecoordinate-input-button-text": "ਜੋੜੋ",
+	"wikibasemediainfo-globecoordinate-input-button-text": "Text for button to add a globecoordinate statement",
 	"wikibasemediainfo-globecoordinate-map-button-text": "Text for button to expand coordinate input to select on map",
 	"wikibasemediainfo-rescore-profile-classic-noboostlinks-max-boost-template": "Classic query independent search profile without boost links (affects fulltext search ranking algorithm)."
 }

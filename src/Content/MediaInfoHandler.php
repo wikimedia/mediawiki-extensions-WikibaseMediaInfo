@@ -119,7 +119,7 @@ class MediaInfoHandler extends EntityHandler {
 	 *
 	 * @return MediaInfoContent
 	 */
-	public function newEntityContent( ?EntityHolder $entityHolder = null ) {
+	public function newEntityContent( ?EntityHolder $entityHolder ) {
 		return new MediaInfoContent( $entityHolder );
 	}
 

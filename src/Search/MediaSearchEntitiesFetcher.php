@@ -166,7 +166,7 @@ class MediaSearchEntitiesFetcher {
 		return null;
 	}
 
-	private function addToTransformedResponses( array $collection, array $item ) {
+	private function addToTransformedResponses( array $collection, array $item ): array {
 		if ( !isset( $collection[ $item['entityId'] ] ) ) {
 			$collection[ $item['entityId'] ] = $item;
 			return $collection;

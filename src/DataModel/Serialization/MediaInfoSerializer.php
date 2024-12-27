@@ -66,7 +66,7 @@ class MediaInfoSerializer implements DispatchableSerializer {
 		return $this->getSerialized( $object );
 	}
 
-	private function getSerialized( MediaInfo $mediaInfo ) {
+	private function getSerialized( MediaInfo $mediaInfo ): array {
 		$serialization = [ 'type' => $mediaInfo->getType() ];
 
 		$id = $mediaInfo->getId();

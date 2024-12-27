@@ -102,7 +102,7 @@ class MediaInfoEntityTermsView {
 		);
 	}
 
-	private function getCaptionsHeader() {
+	private function getCaptionsHeader(): Tag {
 		$header = new Tag( 'h3' );
 		$header->addClasses( [ 'wbmi-entityview-captions-header' ] );
 		$header->appendContent(
@@ -236,7 +236,7 @@ class MediaInfoEntityTermsView {
 		return $layout;
 	}
 
-	private function getCaptionElementForLanguage( TermList $termList, $languageCode ) {
+	private function getCaptionElementForLanguage( TermList $termList, string $languageCode ): Element {
 		$classes = [ 'wbmi-caption-value' ];
 		try {
 			$captionText = $termList->getByLanguage( $languageCode )->getText();

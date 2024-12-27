@@ -265,7 +265,7 @@ class MediaInfoEntityStatementsView {
 		return $panel;
 	}
 
-	private function createPropertyHeader( $propertyIdString ) {
+	private function createPropertyHeader( string $propertyIdString ): Tag {
 		$propertyId = new NumericPropertyId( $propertyIdString );
 
 		$propertyTitle = $this->createFormattedDataValue(
@@ -333,14 +333,14 @@ class MediaInfoEntityStatementsView {
 		return $tag;
 	}
 
-	private function createStatementDiv( Statement $statement ) {
+	private function createStatementDiv( Statement $statement ): Tag {
 		$div = new Tag( 'div' );
 		$div->appendContent( $this->innerStatementDiv( $statement ) );
 		$div->addClasses( [ 'wbmi-item', 'wbmi-item-read' ] );
 		return $div;
 	}
 
-	private function innerStatementDiv( Statement $statement ) {
+	private function innerStatementDiv( Statement $statement ): Tag {
 		$mainSnak = $statement->getMainSnak();
 
 		$statementDiv = new Tag( 'div' );
@@ -404,7 +404,7 @@ class MediaInfoEntityStatementsView {
 		return $statementDiv;
 	}
 
-	private function renderSnakList( SnakList $snakList ) {
+	private function renderSnakList( SnakList $snakList ): Tag {
 		$propertyOrder = $this->propertyOrderProvider->getPropertyOrder();
 		if ( $propertyOrder === null ) {
 			$snakList->orderByProperty();
@@ -595,7 +595,7 @@ class MediaInfoEntityStatementsView {
 		return $statementsByProperty;
 	}
 
-	private function addDefaultStatements( $statementsByProperty ) {
+	private function addDefaultStatements( array $statementsByProperty ): array {
 		foreach ( $this->defaultPropertyIds as $propertyId ) {
 			if ( !isset( $statementsByProperty[ $propertyId->getSerialization() ] ) ) {
 				$statementsByProperty[ $propertyId->getSerialization() ] = [];

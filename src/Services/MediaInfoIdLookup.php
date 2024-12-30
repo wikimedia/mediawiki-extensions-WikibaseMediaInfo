@@ -33,6 +33,7 @@ class MediaInfoIdLookup implements EntityIdLookup {
 		$this->mediaInfoNamespace = $mediaInfoNamespace;
 	}
 
+	/** @inheritDoc */
 	public function getEntityIds( array $titles ) {
 		$results = [];
 		foreach ( $titles as $title ) {
@@ -41,6 +42,7 @@ class MediaInfoIdLookup implements EntityIdLookup {
 		return array_filter( $results );
 	}
 
+	/** @inheritDoc */
 	public function getEntityIdForTitle( Title $title ) {
 		if ( !$title->inNamespace( $this->mediaInfoNamespace ) ) {
 			return null;

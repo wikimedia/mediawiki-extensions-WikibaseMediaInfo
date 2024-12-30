@@ -52,6 +52,7 @@ class FilePageRedirectHandlingRevisionLookup implements EntityRevisionLookup {
 		$this->entityDataLoader = $entityDataLoader;
 	}
 
+	/** @inheritDoc */
 	public function getEntityRevision(
 		EntityId $entityId,
 		$revisionId = 0,
@@ -60,6 +61,7 @@ class FilePageRedirectHandlingRevisionLookup implements EntityRevisionLookup {
 		return $this->lookup->getEntityRevision( $entityId, $revisionId, $mode );
 	}
 
+	/** @inheritDoc */
 	public function getLatestRevisionId( EntityId $entityId, $mode = LookupConstants::LATEST_FROM_REPLICA ) {
 		try {
 			return $this->lookup->getLatestRevisionId( $entityId, $mode );

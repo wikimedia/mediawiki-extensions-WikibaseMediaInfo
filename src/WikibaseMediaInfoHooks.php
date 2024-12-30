@@ -615,6 +615,7 @@ class WikibaseMediaInfoHooks implements
 		$lookup = new MediaInfoByLinkedTitleLookup( $lookup );
 	}
 
+	/** @inheritDoc */
 	public static function onGetEntityContentModelForTitle( Title $title, &$contentModel ) {
 		if ( $title->inNamespace( NS_FILE ) && $title->getArticleID() ) {
 			$contentModel = MediaInfoContent::CONTENT_MODEL_ID;

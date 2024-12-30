@@ -55,14 +55,17 @@ class MediaInfoContent extends EntityContent {
 	public static function emptyContent(): MediaInfoContent {
 		return new self( new class() implements EntityHolder {
 
+			/** @inheritDoc */
 			public function getEntity( $expectedClass = MediaInfo::class ) {
 				return new MediaInfo();
 			}
 
+			/** @inheritDoc */
 			public function getEntityId() {
 				return null;
 			}
 
+			/** @inheritDoc */
 			public function getEntityType() {
 				return MediaInfo::ENTITY_TYPE;
 			}

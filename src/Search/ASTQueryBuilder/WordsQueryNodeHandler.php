@@ -152,6 +152,7 @@ class WordsQueryNodeHandler implements ParsedNodeHandlerInterface {
 				$this->term = $term;
 			}
 
+			/** @inheritDoc */
 			public function getQuery( $field, $boost ): AbstractQuery {
 				return ( new MatchQuery() )
 					->setFieldQuery( $field, $this->term )

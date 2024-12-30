@@ -326,7 +326,7 @@ class MediaSearchASTQueryBuilder implements Visitor {
 		// this is already dealt with elsewhere in the query building process
 	}
 
-	private function getWikibaseEntitiesHandler( ParsedNode $node ) {
+	private function getWikibaseEntitiesHandler( ParsedNode $node ): WikibaseEntitiesHandler {
 		return new WikibaseEntitiesHandler(
 			$node,
 			$this->parsedQuery,

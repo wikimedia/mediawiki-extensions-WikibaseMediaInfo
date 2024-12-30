@@ -128,7 +128,7 @@ class MediaInfoSpecificComponentsRdfBuilder implements EntityRdfBuilder {
 		}
 	}
 
-	private function getFileSpecificType( File $file ) {
+	private function getFileSpecificType( File $file ): ?string {
 		switch ( $file->getMediaType() ) {
 			case MEDIATYPE_BITMAP:
 			case MEDIATYPE_DRAWING:

@@ -526,7 +526,7 @@ class WikibaseMediaInfoHooks implements
 	private function createEmptyStructuredData(
 		OutputPage $out,
 		DispatchingEntityViewFactory $entityViewFactory
-	) {
+	): string {
 		$emptyMediaInfo = new MediaInfo();
 		$fallbackChainFactory = new LanguageFallbackChainFactory();
 		$view = $entityViewFactory->newEntityView(

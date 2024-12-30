@@ -81,7 +81,7 @@ class MediaInfoDiffer implements EntityDifferStrategy {
 		return new EntityDiff( $diffOps );
 	}
 
-	private function toDiffArray( MediaInfo $mediaInfo ) {
+	private function toDiffArray( MediaInfo $mediaInfo ): array {
 		$array = [];
 
 		$array['label'] = $mediaInfo->getLabels()->toTextArray();

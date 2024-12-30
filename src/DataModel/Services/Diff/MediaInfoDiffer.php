@@ -67,6 +67,11 @@ class MediaInfoDiffer implements EntityDifferStrategy {
 		}
 	}
 
+	/**
+	 * @param MediaInfo $from
+	 * @param MediaInfo $to
+	 * @return EntityDiff
+	 */
 	public function diffMediaInfos( MediaInfo $from, MediaInfo $to ) {
 		$diffOps = $this->recursiveMapDiffer->doDiff(
 			$this->toDiffArray( $from ),

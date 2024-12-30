@@ -107,6 +107,10 @@ class MediaInfoEntityStatementsView {
 		);
 	}
 
+	/**
+	 * @param string $propertyIdString
+	 * @return string
+	 */
 	public static function getHtmlContainerClass( $propertyIdString ) {
 		return 'wbmi-entityview-statementsGroup-' . str_replace( ':', '_', $propertyIdString );
 	}

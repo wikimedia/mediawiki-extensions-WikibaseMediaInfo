@@ -145,6 +145,9 @@ class WordsQueryNodeHandler implements ParsedNodeHandlerInterface {
 			/** @var string */
 			private $term;
 
+			/**
+			 * @param string $term
+			 */
 			public function __construct( $term ) {
 				$this->term = $term;
 			}

@@ -81,12 +81,18 @@ class MediaInfoView implements EntityDocumentView {
 		);
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getCaptionsHtml( MediaInfo $entity ) {
 		return $this->captionsView->getHtml(
 			$entity
 		);
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getStatementsHtml( MediaInfo $entity ) {
 		return $this->statementsView->getHtml(
 			$entity

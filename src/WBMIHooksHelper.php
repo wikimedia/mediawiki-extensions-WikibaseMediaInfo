@@ -28,26 +28,41 @@ class WBMIHooksHelper {
 		return $propertyDataTypeLookup->getDataTypeIdForProperty( $id );
 	}
 
+	/**
+	 * @return string
+	 */
 	public static function getMediaInfoViewRegex() {
 		$tag = MediaInfoView::MEDIAINFOVIEW_CUSTOM_TAG;
 		return '/<' . $tag . '[^>]*>(.*)<\/' . $tag . '>/is';
 	}
 
+	/**
+	 * @return string
+	 */
 	public static function getMediaInfoCaptionsRegex() {
 		$tag = MediaInfoEntityTermsView::CAPTIONS_CUSTOM_TAG;
 		return '/<' . $tag . '>(.*)<\/' . $tag . '>/is';
 	}
 
+	/**
+	 * @return string
+	 */
 	public static function getMediaInfoStatementsRegex() {
 		$tag = MediaInfoEntityStatementsView::STATEMENTS_CUSTOM_TAG;
 		return '/<' . $tag . '>(.*)<\/' . $tag . '>/is';
 	}
 
+	/**
+	 * @return string
+	 */
 	public static function getStructuredDataHeaderRegex() {
 		return '#<h1\b[^>]*\bclass=(\'|")mw-slot-header\\1[^>]*>' .
 			WikibaseMediaInfoHooks::MEDIAINFO_SLOT_HEADER_PLACEHOLDER . '</h1>#iU';
 	}
 
+	/**
+	 * @return int
+	 */
 	public static function getMaxCaptionLength() {
 		$settings = WikibaseRepo::getSettings();
 		return $settings->getSetting( 'string-limits' )['multilang']['length'];

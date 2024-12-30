@@ -171,6 +171,11 @@ class MediaInfoSpecificComponentsRdfBuilder implements EntityRdfBuilder {
 		}
 	}
 
+	/**
+	 * @param MediaInfoId $id
+	 * @param string $schemaProperty
+	 * @param int $value
+	 */
 	private function addPositiveIntegerValue( MediaInfoId $id, $schemaProperty, $value ) {
 		if ( is_int( $value ) && $value > 0 ) {
 			$this->aboutId( $id )

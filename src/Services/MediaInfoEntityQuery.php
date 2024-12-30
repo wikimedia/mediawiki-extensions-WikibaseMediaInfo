@@ -24,10 +24,17 @@ class MediaInfoEntityQuery extends PageTableEntityQueryBase {
 		return [ 'page_id' => $entityId->getNumericId() ];
 	}
 
+	/**
+	 * @param \stdClass $row
+	 * @return string
+	 */
 	protected function getEntityIdStringFromRow( \stdClass $row ) {
 		return 'M' . $row->page_id;
 	}
 
+	/**
+	 * @return array
+	 */
 	protected function getFieldsNeededForMapping() {
 		return [ 'page_id' ];
 	}

@@ -5,7 +5,8 @@
 			"B20180",
 			"Bebiezaza",
 			"Patsagorn Y.",
-			"Ekminarin"
+			"Ekminarin",
+			"Siam2019"
 		]
 	},
 	"action-mediainfo-term": "เปลี่ยนคำอธิบายสนเทศสื่อ (ข้อบ่งใช้คำบรรยาย)",
@@ -34,7 +35,7 @@
 	"wikibasemediainfo-filepage-cancel-confirm-accept": "ละทิ้ง",
 	"wikibasemediainfo-filepage-edit": "แก้ไข",
 	"wikibasemediainfo-filepage-publish": "เผยแพร่การเปลี่ยนแปลง",
-	"wikibasemediainfo-filepage-caption-empty": "เพิ่มคำบรรยายทรรทัดเดียวเพื่อขยายความว่าไฟล์นี้มีอะไร",
+	"wikibasemediainfo-filepage-caption-empty": "เพิ่มคำอธิบายบรรทัดเดียวว่าไฟล์นี้แสดงถึงอะไร",
 	"wikibasemediainfo-filepage-caption-too-short": "ตัองมีเพิ่มอีก $1 {{PLURAL:$1|ตัวอักษร}}",
 	"wikibasemediainfo-filepage-caption-too-long": "เกินข้อจำกัดไป $1 {{PLURAL:$1|ตัวอักษร}}",
 	"wikibasemediainfo-filepage-caption-approaching-limit": "เหลืออีก $1 {{PLURAL:$1|ตัวอักษร}}",

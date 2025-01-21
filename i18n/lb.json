@@ -56,6 +56,8 @@
 	"wikibasemediainfo-select-precision-label": "Prezisioun eraussichen",
 	"wikibasemediainfo-arcsecond-label": "op eng Bousekonn genee",
 	"wikibasemediainfo-tenth-of-arcsecond-label": "op 1/10 vun enger Bousekonn genee",
+	"wikibasemediainfo-hundreth-of-arcsecond-label": "op 1/100 vun enger Bousekonn genee",
+	"wikibasemediainfo-thousanth-of-arcsecond-label": "op 1/1000 vun enger Bousekonn genee",
 	"wikibasemediainfo-string-input-button-text": "Derbäisetzen",
 	"wikibasemediainfo-monolingualtext-input-button-text": "Derbäisetzen",
 	"wikibasemediainfo-monolingualtext-input-placeholder": "Text aginn",

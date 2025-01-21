@@ -2,7 +2,8 @@
 	"@metadata": {
 		"authors": [
 			"Robby",
-			"Volvox"
+			"Volvox",
+			"Les Meloures"
 		]
 	},
 	"wikibase-entity-mediainfo": "Medieninformatiounen",
@@ -53,6 +54,8 @@
 	"wikibasemediainfo-coordinate-input-placeholder": "Breedegrad, Längegrad",
 	"wikibasemediainfo-precision-input-label": "Prezisioun",
 	"wikibasemediainfo-select-precision-label": "Prezisioun eraussichen",
+	"wikibasemediainfo-arcsecond-label": "op eng Bousekonn genee",
+	"wikibasemediainfo-tenth-of-arcsecond-label": "op 1/10 vun enger Bousekonn genee",
 	"wikibasemediainfo-string-input-button-text": "Derbäisetzen",
 	"wikibasemediainfo-monolingualtext-input-button-text": "Derbäisetzen",
 	"wikibasemediainfo-monolingualtext-input-placeholder": "Text aginn",

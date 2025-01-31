@@ -7,6 +7,7 @@
 			"Mkazberuk",
 			"Rail",
 			"Railfail536",
+			"Rzuwig",
 			"Woytecr"
 		]
 	},
@@ -55,7 +56,9 @@
 	"wikibasemediainfo-property-placeholder": "Właściwość",
 	"wikibasemediainfo-filepage-license-agree": "Akceptuję",
 	"wikibasemediainfo-statements-depicts-title": "Obiekty przedstawione na tym zdjęciu",
+	"wikibasemediainfo-statements-item-qualifiers": "Kwalifikatory",
 	"wikibasemediainfo-statements-item-add-qualifier": "Dodaj kwalifikator",
+	"wikibasemediainfo-statements-item-references": "Przypisy",
 	"wikibasemediainfo-statements-item-input-label": "z {{GRAMMAR:D.lp|{{WBREPONAME}}}}",
 	"wikibasemediainfo-statements-item-input-placeholder": "Wyszukaj elementy, aby je dodać",
 	"wikibasemediainfo-statements-item-is-prominent": "Wyraźnie widoczny",

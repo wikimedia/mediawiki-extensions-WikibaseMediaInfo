@@ -59,6 +59,8 @@
 	"wikibasemediainfo-statements-item-qualifiers": "Kwalifikatory",
 	"wikibasemediainfo-statements-item-add-qualifier": "Dodaj kwalifikator",
 	"wikibasemediainfo-statements-item-references": "Przypisy",
+	"wikibasemediainfo-statements-item-add-reference": "Dodaj przypis",
+	"wikibasemediainfo-statements-item-add-reference-snak": "Dodaj",
 	"wikibasemediainfo-statements-item-input-label": "z {{GRAMMAR:D.lp|{{WBREPONAME}}}}",
 	"wikibasemediainfo-statements-item-input-placeholder": "Wyszukaj elementy, aby je dodać",
 	"wikibasemediainfo-statements-item-is-prominent": "Wyraźnie widoczny",

@@ -69,7 +69,7 @@ class EntityTypesTest extends \PHPUnit\Framework\TestCase {
 		$callback = $registry['mediainfo']['serializer-factory-callback'];
 		$this->assertIsCallable( $callback );
 
-		$mediaInfoSerializer = call_user_func( $callback, $this->getSerializerFactory() );
+		$mediaInfoSerializer = $callback( $this->getSerializerFactory() );
 		$this->assertInstanceOf( MediaInfoSerializer::class, $mediaInfoSerializer );
 	}
 
@@ -100,7 +100,7 @@ class EntityTypesTest extends \PHPUnit\Framework\TestCase {
 		$callback = $registry['mediainfo']['deserializer-factory-callback'];
 		$this->assertIsCallable( $callback );
 
-		$mediaInfoDeserializer = call_user_func( $callback, $this->getDeserializerFactory() );
+		$mediaInfoDeserializer = $callback( $this->getDeserializerFactory() );
 		$this->assertInstanceOf( MediaInfoDeserializer::class, $mediaInfoDeserializer );
 	}
 
@@ -116,8 +116,7 @@ class EntityTypesTest extends \PHPUnit\Framework\TestCase {
 		$stubContentLanguages = $this->createStub( ContentLanguages::class );
 		$stubContentLanguages->method( 'hasLanguage' )
 			->willReturn( true );
-		$mediaInfoView = call_user_func(
-			$callback,
+		$mediaInfoView = $callback(
 			MediaWikiServices::getInstance()->getLanguageFactory()->getLanguage( 'en' ),
 			new TermLanguageFallbackChain( [ LanguageWithConversion::factory( 'en' ) ], $stubContentLanguages ),
 			new MediaInfo()
@@ -145,7 +144,7 @@ class EntityTypesTest extends \PHPUnit\Framework\TestCase {
 		$callback = $registry['mediainfo']['content-handler-factory-callback'];
 		$this->assertIsCallable( $callback );
 
-		$mediaInfoHandler = call_user_func( $callback );
+		$mediaInfoHandler = $callback();
 		$this->assertInstanceOf( MediaInfoHandler::class, $mediaInfoHandler );
 	}
 

@@ -30,8 +30,8 @@ if ( !function_exists( 'Wikibase\MediaInfo\Search\closureToAnonymousClass' ) ) {
 				$this->callable = $callable;
 			}
 
-			public function __invoke() {
-				return call_user_func_array( $this->callable, func_get_args() );
+			public function __invoke( ...$args ) {
+				return ( $this->callable )( ...$args );
 			}
 
 			public function __toString() {

@@ -15,6 +15,7 @@ use Wikibase\DataModel\Services\Lookup\PropertyDataTypeLookup;
 use Wikibase\DataModel\Statement\StatementList;
 use Wikibase\DataModel\Term\Term;
 use Wikibase\DataModel\Term\TermList;
+use Wikibase\Lib\DataTypeFactory;
 use Wikibase\Lib\Store\EntityContentDataCodec;
 use Wikibase\MediaInfo\Content\MediaInfoContent;
 use Wikibase\MediaInfo\Content\MediaInfoHandler;
@@ -39,7 +40,6 @@ class MediaInfoDataForSearchIndexTest extends \MediaWikiUnitTestCase {
 	 * @covers \Wikibase\MediaInfo\MediaInfoDataForSearchIndex::onSearchDataForIndex2
 	 */
 	public function test() {
-		$this->markTestSkipped( 'T372993' );
 		$contentHandlerFactory = new ContentHandlerFactory(
 			[
 				MediaInfoContent::CONTENT_MODEL_ID => [
@@ -113,6 +113,7 @@ class MediaInfoDataForSearchIndexTest extends \MediaWikiUnitTestCase {
 				new LabelsProviderFieldDefinitions( [ 'ar', 'en' ] ),
 				new DescriptionsProviderFieldDefinitions( [ 'ar', 'en' ], null ),
 				new StatementProviderFieldDefinitions(
+					new DataTypeFactory( [] ),
 					$this->createMock( PropertyDataTypeLookup::class ),
 					[],
 					[],

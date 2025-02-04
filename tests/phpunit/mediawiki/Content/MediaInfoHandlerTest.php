@@ -9,6 +9,7 @@ use MediaWiki\Title\TitleFactory;
 use Wikibase\DataModel\Entity\EntityId;
 use Wikibase\DataModel\Entity\ItemIdParser;
 use Wikibase\DataModel\Services\Lookup\PropertyDataTypeLookup;
+use Wikibase\Lib\DataTypeFactory;
 use Wikibase\Lib\Store\EntityContentDataCodec;
 use Wikibase\MediaInfo\Content\MediaInfoHandler;
 use Wikibase\MediaInfo\Content\MissingMediaInfoHandler;
@@ -34,7 +35,6 @@ use Wikibase\Search\Elastic\Fields\StatementProviderFieldDefinitions;
 class MediaInfoHandlerTest extends \MediaWikiIntegrationTestCase {
 
 	private function newMediaInfoHandler( array $replacements = [] ) {
-		$this->markTestSkipped( 'T372993' );
 		$m17 = new MediaInfoId( 'M17' );
 
 		$propertyLookup = $this->createMock( PropertyDataTypeLookup::class );
@@ -83,6 +83,7 @@ class MediaInfoHandlerTest extends \MediaWikiIntegrationTestCase {
 				new LabelsProviderFieldDefinitions( [ 'ar', 'de' ] ),
 				new DescriptionsProviderFieldDefinitions( [ 'ar', 'de' ], null ),
 				new StatementProviderFieldDefinitions(
+					new DataTypeFactory( [] ),
 					$propertyLookup,
 					[],
 					[],

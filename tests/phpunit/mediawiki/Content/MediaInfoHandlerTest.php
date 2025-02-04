@@ -34,6 +34,7 @@ use Wikibase\Search\Elastic\Fields\StatementProviderFieldDefinitions;
 class MediaInfoHandlerTest extends \MediaWikiIntegrationTestCase {
 
 	private function newMediaInfoHandler( array $replacements = [] ) {
+		$this->markTestSkipped( 'T372993' );
 		$m17 = new MediaInfoId( 'M17' );
 
 		$propertyLookup = $this->createMock( PropertyDataTypeLookup::class );

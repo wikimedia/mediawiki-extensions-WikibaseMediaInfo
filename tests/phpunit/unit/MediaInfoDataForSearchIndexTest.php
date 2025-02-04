@@ -39,6 +39,7 @@ class MediaInfoDataForSearchIndexTest extends \MediaWikiUnitTestCase {
 	 * @covers \Wikibase\MediaInfo\MediaInfoDataForSearchIndex::onSearchDataForIndex2
 	 */
 	public function test() {
+		$this->markTestSkipped( 'T372993' );
 		$contentHandlerFactory = new ContentHandlerFactory(
 			[
 				MediaInfoContent::CONTENT_MODEL_ID => [

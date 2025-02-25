@@ -1,15 +1,14 @@
 'use strict';
 
-let ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
+const ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
 	FormatValueElement = require( 'wikibase.mediainfo.base' ).FormatValueElement,
-	AbstractInputWidget = require( './AbstractInputWidget.js' ),
-	TimeInputWidget;
+	AbstractInputWidget = require( './AbstractInputWidget.js' );
 
 /**
  * @param {Object} config Configuration options
  * @param {boolean} [config.isQualifier]
  */
-TimeInputWidget = function MediaInfoStatementsTimeInputWidget( config ) {
+const TimeInputWidget = function MediaInfoStatementsTimeInputWidget( config ) {
 	const self = this;
 
 	config = config || {};
@@ -97,17 +96,16 @@ TimeInputWidget.prototype.unbindEventHandlers = function () {
  * @inheritDoc
  */
 TimeInputWidget.prototype.getTemplateData = function () {
-	let button = new OO.ui.ButtonWidget( {
-			classes: [ 'wbmi-input-widget__button' ],
-			label: mw.msg( 'wikibasemediainfo-time-input-button-text' ),
-			flags: [ 'progressive' ],
-			disabled: !this.hasValidInput()
-		} ),
-		data;
+	const button = new OO.ui.ButtonWidget( {
+		classes: [ 'wbmi-input-widget__button' ],
+		label: mw.msg( 'wikibasemediainfo-time-input-button-text' ),
+		flags: [ 'progressive' ],
+		disabled: !this.hasValidInput()
+	} );
 
 	button.connect( this, { click: 'onEnter' } );
 
-	data = {
+	const data = {
 		isQualifier: this.state.isQualifier,
 		isActive: this.state.isActive,
 		formatted: this.state.value === '' ?
@@ -271,8 +269,9 @@ TimeInputWidget.prototype.setData = function ( data ) {
 	const self = this;
 
 	return this.formatValue( data ).then( ( formatted ) => {
-		let json = data.toJSON(),
-			existing;
+		const json = data.toJSON();
+
+		let existing;
 
 		try {
 			existing = self.getData();
@@ -324,8 +323,9 @@ TimeInputWidget.prototype.setData = function ( data ) {
  * @inheritdoc
  */
 TimeInputWidget.prototype.clear = function () {
-	let self = this,
-		existing;
+	const self = this;
+
+	let existing;
 
 	try {
 		existing = this.getData();

@@ -1,15 +1,14 @@
 'use strict';
 
-let ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
-	inputs = require( './inputs/index.js' ),
-	AddPropertyWidget;
+const ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
+	inputs = require( './inputs/index.js' );
 
 /**
  * @constructor
  * @param {Object} [config]
  * @param {Array} [config.propertyIds] An array of property ids of statements that exist on the page
  */
-AddPropertyWidget = function MediaInfoAddPropertyWidget( config ) {
+const AddPropertyWidget = function MediaInfoAddPropertyWidget( config ) {
 	config = config || {};
 	this.state = {
 		propertyIds: config.propertyIds || [],
@@ -30,11 +29,7 @@ OO.mixinClass( AddPropertyWidget, ComponentWidget );
  * @inheritDoc
  */
 AddPropertyWidget.prototype.getTemplateData = function () {
-	let propertyInputWidget,
-		addPropertyButton,
-		removeButton;
-
-	propertyInputWidget = new inputs.EntityInputWidget( {
+	const propertyInputWidget = new inputs.EntityInputWidget( {
 		entityType: 'property',
 		filter: this.getFilters(),
 		maxSuggestions: 7,
@@ -45,7 +40,7 @@ AddPropertyWidget.prototype.getTemplateData = function () {
 	propertyInputWidget.connect( this, { add: [ 'setEditing', false ] } );
 	propertyInputWidget.connect( this, { add: [ 'emit', 'choose' ] } );
 
-	addPropertyButton = new OO.ui.ButtonWidget( {
+	const addPropertyButton = new OO.ui.ButtonWidget( {
 		classes: [ 'wbmi-entityview-add-statement-property-button' ],
 		framed: true,
 		icon: 'add',
@@ -55,7 +50,7 @@ AddPropertyWidget.prototype.getTemplateData = function () {
 
 	addPropertyButton.connect( this, { click: [ 'setEditing', !this.state.editing ] } );
 
-	removeButton = new OO.ui.ButtonWidget( {
+	const removeButton = new OO.ui.ButtonWidget( {
 		classes: [ 'wbmi-item-remove' ],
 		title: mw.msg( 'wikibasemediainfo-statements-item-remove' ),
 		flags: 'destructive',

@@ -1,6 +1,6 @@
 'use strict';
 
-let ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
+const ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
 	AbstractInputWidget = require( './AbstractInputWidget.js' ),
 	EntityInputWidget = require( './EntityInputWidget.js' ),
 	MonolingualTextInputWidget = require( './MonolingualTextInputWidget.js' ),
@@ -14,8 +14,7 @@ let ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
 		VALUE: datamodel.PropertyValueSnak.TYPE,
 		SOMEVALUE: datamodel.PropertySomeValueSnak.TYPE,
 		NOVALUE: datamodel.PropertyNoValueSnak.TYPE
-	},
-	MultiTypeInputWrapperWidget;
+	};
 
 /**
  * This input widget is essentially a wrapper around other input types,
@@ -27,7 +26,7 @@ let ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
  * @param {Array} [config.classes]
  * @param {boolean} [config.isQualifier]
  */
-MultiTypeInputWrapperWidget = function ( config ) {
+const MultiTypeInputWrapperWidget = function ( config ) {
 	this.config = Object.assign( {
 		isQualifier: false,
 		type: undefined, // default to unsupported input type
@@ -181,8 +180,8 @@ MultiTypeInputWrapperWidget.prototype.onChange = function () {
  * @return {jQuery.Promise}
  */
 MultiTypeInputWrapperWidget.prototype.onSnakTypeChange = function ( snakType ) {
-	let input,
-		promise;
+	let input;
+	let promise;
 
 	switch ( snakType ) {
 		case valueTypes.SOMEVALUE:
@@ -250,9 +249,8 @@ MultiTypeInputWrapperWidget.prototype.getData = function () {
  * @inheritDoc
  */
 MultiTypeInputWrapperWidget.prototype.setData = function ( data ) {
-	let self = this,
-		type = data ? data.getType() : this.state.type,
-		input;
+	const self = this,
+		type = data ? data.getType() : this.state.type;
 
 	try {
 		if ( this.state.snakType !== valueTypes.VALUE || data.equals( this.getData() ) ) {
@@ -272,7 +270,7 @@ MultiTypeInputWrapperWidget.prototype.setData = function ( data ) {
 	// own later on!
 	this.allowEmitChange = false;
 
-	input = this.createInput( type );
+	const input = this.createInput( type );
 
 	return input.setData( data )
 		.then( this.setState.bind( this, {

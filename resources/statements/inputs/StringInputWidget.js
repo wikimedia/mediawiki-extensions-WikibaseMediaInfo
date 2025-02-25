@@ -1,14 +1,13 @@
 'use strict';
 
-let ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
-	AbstractInputWidget = require( './AbstractInputWidget.js' ),
-	StringInputWidget;
+const ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
+	AbstractInputWidget = require( './AbstractInputWidget.js' );
 
 /**
  * @param {Object} config Configuration options
  * @param {boolean} [config.isQualifier]
  */
-StringInputWidget = function MediaInfoStatementsStringInputWidget( config ) {
+const StringInputWidget = function MediaInfoStatementsStringInputWidget( config ) {
 	config = config || {};
 
 	this.state = {

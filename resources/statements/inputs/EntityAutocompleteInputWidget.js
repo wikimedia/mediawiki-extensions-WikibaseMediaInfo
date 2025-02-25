@@ -1,8 +1,7 @@
 'use strict';
 
-let FormatValueElement = require( 'wikibase.mediainfo.base' ).FormatValueElement,
-	datamodel = require( 'wikibase.datamodel' ),
-	EntityAutocompleteInputWidget;
+const FormatValueElement = require( 'wikibase.mediainfo.base' ).FormatValueElement,
+	datamodel = require( 'wikibase.datamodel' );
 
 /**
  * @param {Object} config Configuration options
@@ -14,7 +13,7 @@ let FormatValueElement = require( 'wikibase.mediainfo.base' ).FormatValueElement
  *      equal to 'property' will be returned.
  *      Suffixing the value of 'field' with the character ! inverts the filter
  */
-EntityAutocompleteInputWidget = function MediaInfoStatementsEntityAutocompleteInputWidget( config ) {
+const EntityAutocompleteInputWidget = function MediaInfoStatementsEntityAutocompleteInputWidget( config ) {
 	config = config || {};
 
 	this.apiUri =
@@ -222,10 +221,6 @@ EntityAutocompleteInputWidget.prototype.onMousedown = function ( e ) {
  * @inheritdoc
  */
 EntityAutocompleteInputWidget.prototype.getLookupMenuOptionsFromData = function ( data ) {
-	let i,
-		item,
-		items = [];
-
 	data = this.filterData( data );
 
 	if ( this.maxSuggestions !== undefined ) {
@@ -244,10 +239,11 @@ EntityAutocompleteInputWidget.prototype.getLookupMenuOptionsFromData = function 
 		];
 	}
 
-	for ( i = 0; i < data.length; i++ ) {
+	const items = [];
+	for ( let i = 0; i < data.length; i++ ) {
 		this.dataCache[ data[ i ].id ] = data[ i ];
 
-		item = new OO.ui.MenuOptionWidget( {
+		const item = new OO.ui.MenuOptionWidget( {
 			// this data will be passed to onLookupMenuChoose when item is selected
 			data: data[ i ],
 			label: this.createLabelFromSuggestion( data[ i ] )
@@ -272,14 +268,14 @@ EntityAutocompleteInputWidget.prototype.filterData = function ( data ) {
 	}
 
 	filters.forEach( ( filter ) => {
-		let values,
-			field = filter.field,
-			filterType = 'includeOnMatch';
+		let field = filter.field;
+		let filterType = 'includeOnMatch';
+
 		if ( field.indexOf( '!' ) === 0 ) {
 			filterType = 'excludeOnMatch';
 			field = filter.field.slice( 1 );
 		}
-		values = filter.value.split( '|' );
+		const values = filter.value.split( '|' );
 		data = data.filter( ( datum ) => {
 			if ( filterType === 'includeOnMatch' ) {
 				return values.indexOf( datum[ field ] ) !== -1;
@@ -297,13 +293,12 @@ EntityAutocompleteInputWidget.prototype.filterData = function ( data ) {
  * @return {jQuery}
  */
 EntityAutocompleteInputWidget.prototype.createLabelFromSuggestion = function ( entityStub ) {
-	let data = {},
-		template;
-
-	template = mw.template.get(
+	const template = mw.template.get(
 		'wikibase.mediainfo.statements',
 		'templates/statements/inputs/EntityAutocompleteInputWidgetLabel.mustache+dom'
 	);
+
+	const data = {};
 
 	data.label = entityStub.label || entityStub.id;
 	data.description = entityStub.description;

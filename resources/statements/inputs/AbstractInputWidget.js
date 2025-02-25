@@ -110,11 +110,10 @@ AbstractInputWidget.prototype.setDisabled = function () {
  * @return {jQuery.Promise.<dataValues.DataValue>}
  */
 AbstractInputWidget.prototype.parseValue = function ( propertyId, datatype ) {
-	let api = wikibase.api.getLocationAgnosticMwApi(
-			mw.config.get( 'wbmiRepoApiUrl', mw.config.get( 'wbRepoApiUrl' ) ),
-			{ anonymous: true }
-		),
-		promise;
+	const api = wikibase.api.getLocationAgnosticMwApi(
+		mw.config.get( 'wbmiRepoApiUrl', mw.config.get( 'wbRepoApiUrl' ) ),
+		{ anonymous: true }
+	);
 
 	if ( propertyId === undefined && datatype === undefined ) {
 		// parsevalue API only accepts one or the other
@@ -126,7 +125,7 @@ AbstractInputWidget.prototype.parseValue = function ( propertyId, datatype ) {
 		throw new Error( 'The arguments "datatype" and "propertyId" can not be used together' );
 	}
 
-	promise = api.get( {
+	const promise = api.get( {
 		action: 'wbparsevalue',
 		format: 'json',
 		property: propertyId,

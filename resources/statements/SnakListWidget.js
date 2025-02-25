@@ -6,16 +6,15 @@
  * @param {string} [config.editing] True for edit mode, False for read mode
  * @param {string} [config.addText] Text for "add" button
  */
-let SnakWidget = require( './SnakWidget.js' ),
+const SnakWidget = require( './SnakWidget.js' ),
 	ConstraintsReportHandlerElement = require( './ConstraintsReportHandlerElement.js' ),
 	ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
-	datamodel = require( 'wikibase.datamodel' ),
-	SnakListWidget;
+	datamodel = require( 'wikibase.datamodel' );
 
 /**
  * @param {Object} [config] Configuration options
  */
-SnakListWidget = function MediaInfoStatementsSnakListWidget( config ) {
+const SnakListWidget = function MediaInfoStatementsSnakListWidget( config ) {
 	this.config = Object.assign( {
 		editing: false,
 		addText: ''
@@ -47,16 +46,15 @@ OO.mixinClass( SnakListWidget, ConstraintsReportHandlerElement );
  * @inheritDoc
  */
 SnakListWidget.prototype.getTemplateData = function () {
-	let errors = this.getErrors(),
-		errorMessages = ( errors.length > 0 ) ?
-			errors.map( ( error ) => new OO.ui.MessageWidget( {
-				type: 'error',
-				label: error,
-				classes: [ 'wbmi-statement-error-msg--inline' ]
-			} ) ) : null,
-		addButton;
+	const errors = this.getErrors();
+	const errorMessages = ( errors.length > 0 ) ?
+		errors.map( ( error ) => new OO.ui.MessageWidget( {
+			type: 'error',
+			label: error,
+			classes: [ 'wbmi-statement-error-msg--inline' ]
+		} ) ) : null;
 
-	addButton = new OO.ui.ButtonWidget( {
+	const addButton = new OO.ui.ButtonWidget( {
 		classes: [ 'wbmi-snaklist-add-snak' ],
 		label: this.config.addText,
 		flags: 'progressive',
@@ -109,9 +107,9 @@ SnakListWidget.prototype.removeWidgets = function ( snaks ) {
  * @return {SnakWidget}
  */
 SnakListWidget.prototype.createWidget = function ( data ) {
-	let widget = new SnakWidget( { editing: this.state.editing } ),
-		promise = $.Deferred().resolve().promise(),
-		self = this;
+	const widget = new SnakWidget( { editing: this.state.editing } );
+	let promise = $.Deferred().resolve().promise();
+	const self = this;
 
 	if ( data ) {
 		promise = widget.setData( data );

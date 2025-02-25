@@ -1,16 +1,15 @@
 'use strict';
 
-let ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
+const ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
 	wbMonolingualTextLanguages = require( '../config/wbMonolingualTextLanguages.json' ),
 	UlsWidget = require( 'wikibase.mediainfo.uls' ),
-	AbstractInputWidget = require( './AbstractInputWidget.js' ),
-	MonolingualTextInputWidget;
+	AbstractInputWidget = require( './AbstractInputWidget.js' );
 
 /**
  * @param {Object} config Configuration options
  * @param {boolean} [config.isQualifier]
  */
-MonolingualTextInputWidget = function MediaInfoStatementsMonolingualTextInputWidget( config ) {
+const MonolingualTextInputWidget = function MediaInfoStatementsMonolingualTextInputWidget( config ) {
 	config = config || {};
 
 	this.state = {

@@ -1,7 +1,6 @@
 'use strict';
 
-let ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
-	TemplatingFeatures;
+const ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget;
 
 /**
  * This builds on the ExampleComponentWidget to show some of the
@@ -18,7 +17,7 @@ let ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
  * @constructor
  * @param {Object} config
  */
-TemplatingFeatures = function TemplatingFeaturesConstructor( config ) {
+const TemplatingFeatures = function TemplatingFeaturesConstructor( config ) {
 	config = config || {};
 
 	TemplatingFeatures.super.call( this, config );

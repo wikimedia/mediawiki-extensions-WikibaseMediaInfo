@@ -14,15 +14,12 @@ const ProtectionMsgWidget = function () {
 };
 
 ProtectionMsgWidget.prototype.render = function () {
-	let data,
-		template;
-
-	data = {
+	const data = {
 		shouldDisplay: this.shouldDisplay(),
 		widget: this.widget
 	};
 
-	template = mw.template.get(
+	const template = mw.template.get(
 		'wikibase.mediainfo.filePageDisplay',
 		'templates/filepage/ProtectionMsgWidget.mustache+dom'
 	);

@@ -2,17 +2,18 @@
 
 	'use strict';
 
-	let StatementListDeserializer = require( 'wikibase.serialization' ).StatementListDeserializer,
+	const StatementListDeserializer = require( 'wikibase.serialization' ).StatementListDeserializer,
 		AddPropertyWidget = require( 'wikibase.mediainfo.statements' ).AddPropertyWidget,
 		CaptionsPanel = require( './CaptionsPanel.js' ),
 		LinkNoticeWidget = require( 'wikibase.mediainfo.statements' ).LinkNoticeWidget,
 		ProtectionMsgWidget = require( './ProtectionMsgWidget.js' ),
 		StatementPanel = require( './StatementPanel.js' ),
-		addPropertyWidget,
 		defaultProperties = mw.config.get( 'wbmiDefaultProperties' ) || [],
 		propertyTypes = mw.config.get( 'wbmiPropertyTypes' ) || {},
 		mediaInfoEntity = mw.config.get( 'wbEntity' ) || {},
-		statementPanels = {},
+		statementPanels = {};
+
+	let addPropertyWidget,
 		captionsPanel;
 
 	Object.freeze( defaultProperties );
@@ -116,10 +117,9 @@
 	 * @return {StatementPanel}
 	 */
 	function createStatementsPanel( $el, propId, propertyType ) {
-		let sp,
-			editable = isEditable();
+		const editable = isEditable();
 
-		sp = new StatementPanel( {
+		const sp = new StatementPanel( {
 			$element: $el,
 			entityId: mw.config.get( 'wbEntityId' ),
 			helpUrls: mw.config.get( 'wbmiHelpUrls' ) || {},
@@ -173,13 +173,12 @@
 	 * @param {jQuery} content
 	 */
 	mw.hook( 'wikipage.content' ).add( ( $content ) => {
-		let linkNoticeWidget = new LinkNoticeWidget(),
-			protectionMsgWidget = new ProtectionMsgWidget(),
-			$statements = $content.find( '.wbmi-entityview-statementsGroup' ),
-			existingProperties = defaultProperties.concat( Object.keys( mediaInfoEntity.statements || {} ) ),
-			deserializer = new StatementListDeserializer(),
-			tabs,
-			existingStatementPanels;
+		const linkNoticeWidget = new LinkNoticeWidget();
+		const protectionMsgWidget = new ProtectionMsgWidget();
+		const $statements = $content.find( '.wbmi-entityview-statementsGroup' );
+		const existingProperties = defaultProperties.concat( Object.keys( mediaInfoEntity.statements || {} ) );
+		const deserializer = new StatementListDeserializer();
+		let tabs;
 
 		// Try to infuse the mediainfo tabs.
 		// https://phabricator.wikimedia.org/T262470.
@@ -212,7 +211,7 @@
 		}
 
 		// Set up existing statement panels
-		existingStatementPanels = $statements.get().map( ( element ) => {
+		const existingStatementPanels = $statements.get().map( ( element ) => {
 			const $statement = $( element ),
 				propId = $statement.data( 'property' ),
 				statementsJson = JSON.parse( $statement.attr( 'data-statements' ) || '[]' ),

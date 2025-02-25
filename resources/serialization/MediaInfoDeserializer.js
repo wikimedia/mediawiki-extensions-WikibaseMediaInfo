@@ -21,14 +21,12 @@
 		 * @return {MediaInfo}
 		 */
 		deserialize: function ( serialization ) {
-			let statementGroupSetDeserializer, termMapDeserializer;
-
 			if ( serialization.type !== MediaInfo.TYPE ) {
 				throw new Error( 'Serialization does not resolve to an MediaInfo' );
 			}
 
-			statementGroupSetDeserializer = new SERIALIZER.StatementGroupSetDeserializer();
-			termMapDeserializer = new SERIALIZER.TermMapDeserializer();
+			const statementGroupSetDeserializer = new SERIALIZER.StatementGroupSetDeserializer();
+			const termMapDeserializer = new SERIALIZER.TermMapDeserializer();
 
 			return new MediaInfo(
 				serialization.id,

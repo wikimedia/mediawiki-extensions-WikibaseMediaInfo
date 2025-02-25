@@ -1,7 +1,6 @@
 'use strict';
 
-let ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
-	BestPractices;
+const ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget;
 
 /**
  * This builds on the ExampleComponentWidget & TemplatingFetaures
@@ -16,7 +15,7 @@ let ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
  * @constructor
  * @param {Object} config
  */
-BestPractices = function BestPracticesConstructor( config ) {
+const BestPractices = function BestPracticesConstructor( config ) {
 	config = config || {};
 
 	BestPractices.super.call( this, config );

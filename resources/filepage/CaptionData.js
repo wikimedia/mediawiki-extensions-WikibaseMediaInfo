@@ -1,7 +1,5 @@
 'use strict';
 
-let CaptionData;
-
 /**
 	* A value object holding all data for a caption
 	*
@@ -9,7 +7,7 @@ let CaptionData;
 	* @param {string} [langCode] 2-letter language code
 	* @param {string} [captionText]
 	*/
-CaptionData = function ( langCode, captionText ) {
+const CaptionData = function ( langCode, captionText ) {
 	this.languageCode = langCode || '';
 	this.languageText = $.uls.data.getAutonym( langCode );
 	this.direction = $.uls.data.getDir( langCode );

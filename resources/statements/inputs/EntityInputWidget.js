@@ -1,9 +1,8 @@
 'use strict';
 
-let ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
+const ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
 	EntityAutocompleteInputWidget = require( './EntityAutocompleteInputWidget.js' ),
-	AbstractInputWidget = require( './AbstractInputWidget.js' ),
-	EntityInputWidget;
+	AbstractInputWidget = require( './AbstractInputWidget.js' );
 
 /**
  * @param {Object} [config] Configuration options
@@ -16,7 +15,7 @@ let ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
  *      equal to 'property' will be returned.
  *      Suffixing the value of 'field' with the character ! inverts the filter
  */
-EntityInputWidget = function MediaInfoStatementsEntityInputWidget( config ) {
+const EntityInputWidget = function MediaInfoStatementsEntityInputWidget( config ) {
 	config = config || {};
 
 	this.input = new EntityAutocompleteInputWidget( Object.assign( {}, {

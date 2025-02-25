@@ -1,10 +1,10 @@
 'use strict';
 
-let ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
-	AbstractInputWidget = require( './AbstractInputWidget.js' ),
-	kartoBox,
-	kartoEditing,
-	GlobeCoordinateInputWidget;
+const ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
+	AbstractInputWidget = require( './AbstractInputWidget.js' );
+
+let kartoBox,
+	kartoEditing;
 
 /**
  * Widget that wraps globe-coordinate fields.
@@ -12,7 +12,7 @@ let ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
  * @param {Object} config Configuration options
  * @param {boolean} [config.isQualifier]
  */
-GlobeCoordinateInputWidget = function MediaInfoStatementsGlobeCoordinateInputWidget( config ) {
+const GlobeCoordinateInputWidget = function MediaInfoStatementsGlobeCoordinateInputWidget( config ) {
 	const self = this;
 
 	config = config || {};
@@ -110,9 +110,10 @@ GlobeCoordinateInputWidget.prototype.unbindEventListeners = function () {
  * @return {jQuery.Promise}
  */
 GlobeCoordinateInputWidget.prototype.setData = function ( newData ) {
-	let json = newData.toJSON(),
-		self = this,
-		existingData;
+	const json = newData.toJSON(),
+		self = this;
+
+	let existingData;
 
 	try {
 		existingData = this.getData();
@@ -346,18 +347,16 @@ GlobeCoordinateInputWidget.prototype.render = function () {
 	const self = this;
 
 	return ComponentWidget.prototype.render.call( this ).then( ( $element ) => {
-		let layer, data;
-
 		if ( self.map === undefined || kartoEditing === undefined ) {
 			return $element;
 		}
 
 		// after having re-rendered our DOM, let's also update the marker on our map
 		// to reflect the current state
-		layer = kartoEditing.getKartographerLayer( self.map );
+		const layer = kartoEditing.getKartographerLayer( self.map );
 
 		try {
-			data = self.getData().getValue();
+			const data = self.getData().getValue();
 
 			layer.setGeoJSON( {
 				type: 'Feature',
@@ -460,8 +459,7 @@ GlobeCoordinateInputWidget.prototype.setDisabled = function ( disabled ) {
  * @return {string}
  */
 GlobeCoordinateInputWidget.prototype.getPrecisionLabel = function ( precision ) {
-	let label,
-		presets = {};
+	const presets = {};
 
 	presets[ mw.msg( 'wikibasemediainfo-arcminute-label' ) ] = 1 / 60;
 	presets[ mw.msg( 'wikibasemediainfo-arcsecond-label' ) ] = 1 / 3600;
@@ -469,7 +467,7 @@ GlobeCoordinateInputWidget.prototype.getPrecisionLabel = function ( precision ) 
 	presets[ mw.msg( 'wikibasemediainfo-hundreth-of-arcsecond-label' ) ] = 1 / 360000;
 	presets[ mw.msg( 'wikibasemediainfo-thousanth-of-arcsecond-label' ) ] = 1 / 3600000;
 
-	for ( label in presets ) {
+	for ( const label in presets ) {
 		if ( Math.abs( precision - presets[ label ] ) < 0.000000000001 ) {
 			return label;
 		}
@@ -555,8 +553,8 @@ GlobeCoordinateInputWidget.zoomToPrecision = function ( zoom, latitude ) {
  * @return {number}
  */
 GlobeCoordinateInputWidget.precisionToDigits = function ( precision ) {
-	let digits = -1,
-		previous;
+	let digits = -1;
+	let previous;
 
 	do {
 		previous = precision;

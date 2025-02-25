@@ -1,7 +1,6 @@
 'use strict';
 
-let ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
-	LinkNoticeWidget;
+const ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget;
 
 /**
  * Dismissable message box which appears above statements UI in both Filepage
@@ -9,7 +8,7 @@ let ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
  *
  * @param {Object} config
  */
-LinkNoticeWidget = function ( config ) {
+const LinkNoticeWidget = function ( config ) {
 	this.prefKey = 'wbmi-wikidata-link-notice-dismissed';
 
 	this.state = {
@@ -31,16 +30,14 @@ OO.mixinClass( LinkNoticeWidget, ComponentWidget );
  * @inheritDoc
  */
 LinkNoticeWidget.prototype.getTemplateData = function () {
-	let noticeWidget, dismissControl;
-
-	noticeWidget = new OO.ui.MessageWidget( {
+	const noticeWidget = new OO.ui.MessageWidget( {
 		type: 'warning',
 		label: mw.msg( 'wikibasemediainfo-statements-link-notice-text' ),
 		classes: [ 'wbmi-link-notice' ]
 	} );
 	noticeWidget.setIcon( 'info' );
 
-	dismissControl = new OO.ui.ButtonWidget( {
+	const dismissControl = new OO.ui.ButtonWidget( {
 		framed: false,
 		icon: 'close',
 		label: mw.msg( 'wikibasemediainfo-statements-link-notice-dismiss' ),

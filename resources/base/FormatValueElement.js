@@ -54,22 +54,20 @@ FormatValueElement.toCache = function ( key, result ) {
  * @return {jQuery.Promise}
  */
 FormatValueElement.prototype.formatValue = function ( dataValue, format, language, propertyId ) {
-	let api,
-		data = { type: dataValue.getType(), value: dataValue.toJSON() },
-		stringified = JSON.stringify( data ),
-		promise,
-		params,
-		key,
-		otherKey;
+	const data = { type: dataValue.getType(), value: dataValue.toJSON() };
+	const stringified = JSON.stringify( data );
+	let promise;
+	let params;
+	let otherKey;
 
-	api = wikibase.api.getLocationAgnosticMwApi(
+	const api = wikibase.api.getLocationAgnosticMwApi(
 		mw.config.get( 'wbmiRepoApiUrl', mw.config.get( 'wbRepoApiUrl' ) ),
 		{ anonymous: true }
 	);
 
 	format = format || 'text/plain';
 	language = language || mw.config.get( 'wgUserLanguage' );
-	key = FormatValueElement.getKey( dataValue, format, language, propertyId );
+	const key = FormatValueElement.getKey( dataValue, format, language, propertyId );
 
 	// backward compatibility for output generated before property ids
 	// were included - this can be deleted after parser caches expire

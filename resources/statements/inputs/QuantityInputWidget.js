@@ -1,15 +1,14 @@
 'use strict';
 
-let ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
+const ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
 	EntityAutocompleteInputWidget = require( './EntityAutocompleteInputWidget.js' ),
-	AbstractInputWidget = require( './AbstractInputWidget.js' ),
-	QuantityInputWidget;
+	AbstractInputWidget = require( './AbstractInputWidget.js' );
 
 /**
  * @param {Object} config Configuration options
  * @param {boolean} [config.isQualifier]
  */
-QuantityInputWidget = function MediaInfoStatementsQuantityInputWidget( config ) {
+const QuantityInputWidget = function MediaInfoStatementsQuantityInputWidget( config ) {
 	config = config || {};
 
 	this.state = {
@@ -72,9 +71,7 @@ QuantityInputWidget.prototype.unbindEventHandlers = function () {
  * @inheritDoc
  */
 QuantityInputWidget.prototype.getTemplateData = function () {
-	let submitButton, addUnitButton, removeUnitButton;
-
-	submitButton = new OO.ui.ButtonWidget( {
+	const submitButton = new OO.ui.ButtonWidget( {
 		classes: [ 'wbmi-input-widget__button', 'wbmi-input-widget--submit' ],
 		label: mw.msg( 'wikibasemediainfo-quantity-input-button-text' ),
 		flags: [ 'progressive' ],
@@ -82,7 +79,7 @@ QuantityInputWidget.prototype.getTemplateData = function () {
 	} );
 	submitButton.connect( this, { click: 'onEnter' } );
 
-	addUnitButton = new OO.ui.ButtonWidget( {
+	const addUnitButton = new OO.ui.ButtonWidget( {
 		classes: [ 'wbmi-input-widget__button', 'wbmi-input-widget--add-unit' ],
 		label: mw.msg( 'wikibasemediainfo-quantity-unit-button-text' ),
 		icon: 'add',
@@ -90,7 +87,7 @@ QuantityInputWidget.prototype.getTemplateData = function () {
 	} );
 	addUnitButton.connect( this, { click: [ 'setState', { showUnitInput: true } ] } );
 
-	removeUnitButton = new OO.ui.ButtonWidget( {
+	const removeUnitButton = new OO.ui.ButtonWidget( {
 		classes: [ 'wbmi-input-widget__button', 'wbmi-input-widget--remove-unit' ],
 		icon: 'trash',
 		flags: [ 'destructive' ]
@@ -235,9 +232,10 @@ QuantityInputWidget.prototype.hasValidInput = function () {
  * @inheritDoc
  */
 QuantityInputWidget.prototype.setData = function ( data ) {
-	let self = this,
-		json = data.toJSON(),
-		existing;
+	const self = this,
+		json = data.toJSON();
+
+	let existing;
 
 	try {
 		existing = self.getData();

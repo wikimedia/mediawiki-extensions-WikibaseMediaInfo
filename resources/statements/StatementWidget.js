@@ -1,14 +1,13 @@
 'use strict';
 
-let dataTypesMap = mw.config.get( 'wbDataTypes' ),
+const dataTypesMap = mw.config.get( 'wbDataTypes' ),
 	ItemWidget = require( './ItemWidget.js' ),
 	inputs = require( './inputs/index.js' ),
 	FormatValueElement = require( 'wikibase.mediainfo.base' ).FormatValueElement,
 	ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
 	DOMLessGroupWidget = require( 'wikibase.mediainfo.base' ).DOMLessGroupWidget,
 	datamodel = require( 'wikibase.datamodel' ),
-	serialization = require( 'wikibase.serialization' ),
-	StatementWidget;
+	serialization = require( 'wikibase.serialization' );
 
 /**
  * @constructor
@@ -28,7 +27,7 @@ let dataTypesMap = mw.config.get( 'wbDataTypes' ),
  * @param {string} [config.summary] Summary for edits
  * @param {string[]} [config.tags] Change tags to apply to edits
  */
-StatementWidget = function ( config ) {
+const StatementWidget = function ( config ) {
 	let valueType = config.valueType;
 
 	if ( !valueType && config.propertyType && config.propertyType in dataTypesMap ) {
@@ -103,9 +102,7 @@ StatementWidget.prototype.getTemplateData = function () {
 
 	// fetch property value & url
 	return this.formatValue( dataValue, 'text/html' ).then( ( html ) => {
-		let formatResponse, editButton, cancelButton, removeButton, learnMoreLink, learnMoreButton;
-
-		formatResponse = function ( response ) {
+		const formatResponse = function ( response ) {
 			return $( '<div>' )
 				.append( response )
 				.find( 'a' )
@@ -114,7 +111,7 @@ StatementWidget.prototype.getTemplateData = function () {
 				.html();
 		};
 
-		editButton = new OO.ui.ButtonWidget( {
+		const editButton = new OO.ui.ButtonWidget( {
 			label: mw.msg( 'wikibasemediainfo-filepage-edit' ),
 			framed: false,
 			flags: 'progressive',
@@ -123,20 +120,20 @@ StatementWidget.prototype.getTemplateData = function () {
 			disabled: self.isDisabled() || self.isEditing()
 		} );
 
-		cancelButton = new OO.ui.ButtonWidget( {
+		const cancelButton = new OO.ui.ButtonWidget( {
 			label: mw.msg( 'wikibasemediainfo-filepage-cancel' ),
 			framed: false
 		} );
 
-		removeButton = new OO.ui.ButtonWidget( {
+		const removeButton = new OO.ui.ButtonWidget( {
 			label: mw.msg( 'wikibasemediainfo-statements-remove' ),
 			framed: false,
 			flags: 'destructive',
 			classes: [ 'wbmi-statement-remove' ]
 		} );
 
-		learnMoreLink = self.config.helpUrls[ self.state.propertyId ];
-		learnMoreButton = new OO.ui.ButtonWidget( {
+		const learnMoreLink = self.config.helpUrls[ self.state.propertyId ];
+		const learnMoreButton = new OO.ui.ButtonWidget( {
 			label: mw.msg( 'wikibasemediainfo-statements-learn-more' ),
 			framed: false,
 			flags: 'progressive',
@@ -254,10 +251,9 @@ StatementWidget.prototype.getData = function () {
  * @return {jQuery.Promise}
  */
 StatementWidget.prototype.setData = function ( data ) {
-	let self = this,
-		existing = [],
-		promises = [],
-		sortedData;
+	const self = this;
+	const existing = [];
+	const promises = [];
 
 	// Bail early and discard existing data if data argument is not a statement list
 	if ( !( data instanceof datamodel.StatementList ) ) {
@@ -267,7 +263,7 @@ StatementWidget.prototype.setData = function ( data ) {
 	// clear out input field
 	this.input.clear();
 
-	sortedData = data.toArray().sort( ( statement1, statement2 ) => statement2.getRank() - statement1.getRank() );
+	const sortedData = data.toArray().sort( ( statement1, statement2 ) => statement2.getRank() - statement1.getRank() );
 
 	// get rid of existing widgets that are no longer present in the
 	// new set of data we've been fed
@@ -290,10 +286,9 @@ StatementWidget.prototype.setData = function ( data ) {
 	} );
 
 	sortedData.forEach( ( statement, i ) => {
-		let mainSnak = statement.getClaim().getMainSnak(),
-			widget = existing[ i ],
-			type = mainSnak.getType(),
-			value;
+		const mainSnak = statement.getClaim().getMainSnak();
+		let widget = existing[ i ];
+		const type = mainSnak.getType();
 
 		if ( mainSnak.getPropertyId() !== self.state.propertyId ) {
 			throw new Error( 'Invalid statement: property ID mismatch' );
@@ -305,7 +300,7 @@ StatementWidget.prototype.setData = function ( data ) {
 			return;
 		}
 
-		value = type === 'value' ? mainSnak.getValue() : null;
+		const value = type === 'value' ? mainSnak.getValue() : null;
 
 		if ( self.state.valueType && value && value.getType() !== self.state.valueType ) {
 			throw new Error( 'Invalid statement: value type mismatch' );
@@ -438,20 +433,20 @@ StatementWidget.prototype.resetData = function ( data ) {
  * @return {jQuery.Promise}
  */
 StatementWidget.prototype.submit = function ( baseRevId ) {
-	let self = this,
-		api = wikibase.api.getLocationAgnosticMwApi(
-			mw.config.get( 'wbmiRepoApiUrl', mw.config.get( 'wbRepoApiUrl' ) )
-		),
-		data = this.getData(),
-		statementsByGuid = {},
-		serializer = new serialization.StatementSerializer(),
-		promise = $.Deferred().resolve( { pageinfo: { lastrevid: baseRevId } } ).promise(),
-		changedStatements = this.getChanges(),
-		removedStatements = this.getRemovals(),
-		hasFailures = false,
-		errors = [],
-		disabled = this.isDisabled(),
-		tempuser = {};
+	const self = this;
+	const api = wikibase.api.getLocationAgnosticMwApi(
+		mw.config.get( 'wbmiRepoApiUrl', mw.config.get( 'wbRepoApiUrl' ) )
+	);
+	const data = this.getData();
+	const statementsByGuid = {};
+	const serializer = new serialization.StatementSerializer();
+	let promise = $.Deferred().resolve( { pageinfo: { lastrevid: baseRevId } } ).promise();
+	const changedStatements = this.getChanges();
+	const removedStatements = this.getRemovals();
+	let hasFailures = false;
+	const errors = [];
+	const disabled = this.isDisabled();
+	const tempuser = {};
 
 	this.setEditing( false )
 		.then( self.setErrors.bind( self, [] ) );
@@ -479,10 +474,10 @@ StatementWidget.prototype.submit = function ( baseRevId ) {
 			returntoanchor: '#' + statement.getClaim().getMainSnak().getPropertyId()
 		} ).then(
 			( response ) => {
-				let guid = response.claim.id,
-					originalStatement = statementsByGuid[ guid ],
-					deserializer = new serialization.StatementDeserializer(),
-					responseStatement;
+				const guid = response.claim.id;
+				const originalStatement = statementsByGuid[ guid ];
+				const deserializer = new serialization.StatementDeserializer();
+				let responseStatement;
 				if ( response.claim.qualifiers !== undefined ) {
 					// Capture hashes for new qualifiers by replacing the original
 					// statement with a new statement created from the response
@@ -570,14 +565,13 @@ StatementWidget.prototype.submit = function ( baseRevId ) {
 
 			return response;
 		} ).catch( ( errorCode, error ) => {
-			let apiError = wikibase.api.RepoApiError.newFromApiResponse( error, 'save' ),
-				promises;
+			const apiError = wikibase.api.RepoApiError.newFromApiResponse( error, 'save' );
 
 			hasFailures = true;
 			errors.push( apiError.detailedMessage );
 
 			// restore statements that failed to delete
-			promises = removedStatements.map( ( statement ) => {
+			const promises = removedStatements.map( ( statement ) => {
 				const mainSnak = statement.getClaim().getMainSnak(),
 					snakType = mainSnak.getType(),
 					value = snakType === 'value' ? mainSnak.getValue() : null,

@@ -1,7 +1,6 @@
 'use strict';
 
-let ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
-	ExampleComponentWidget;
+const ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget;
 
 /**
  * This is an example ComponentWidget implementation, to show
@@ -34,7 +33,7 @@ let ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
  * @constructor
  * @param {Object} config
  */
-ExampleComponentWidget = function ExampleComponentWidgetConstructor( config ) {
+const ExampleComponentWidget = function ExampleComponentWidgetConstructor( config ) {
 	config = config || {};
 
 	ExampleComponentWidget.super.call( this, config );

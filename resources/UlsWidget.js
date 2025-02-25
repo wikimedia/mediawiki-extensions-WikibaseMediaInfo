@@ -1,7 +1,5 @@
 'use strict';
 
-let UlsWidget;
-
 /**
  * @constructor
  * @param {Object} [config]
@@ -9,7 +7,7 @@ let UlsWidget;
  * @param {Object} [config.language] Language code for default language
  * @param {Object} [config.label] Label for dropdown
  */
-UlsWidget = function ( config ) {
+const UlsWidget = function ( config ) {
 	this.languageValue = '';
 	this.label = config.label || '';
 

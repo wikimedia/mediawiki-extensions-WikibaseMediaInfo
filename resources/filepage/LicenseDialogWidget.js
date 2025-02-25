@@ -1,11 +1,9 @@
 'use strict';
 
-let LicenseDialogWidget;
-
 /**
  * @constructor
  */
-LicenseDialogWidget = function () {
+const LicenseDialogWidget = function () {
 	this.dialog = new OO.ui.MessageDialog();
 	this.windowManager = new OO.ui.WindowManager();
 	this.windowManager.addWindows( [ this.dialog ] );

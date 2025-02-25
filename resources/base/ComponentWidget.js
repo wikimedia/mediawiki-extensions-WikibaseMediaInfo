@@ -183,14 +183,14 @@ ComponentWidget.prototype.renderInternal = function () {
  * @return {Node}
  */
 ComponentWidget.prototype.rebuildDOM = function ( oldContainer, newContainer, preservedNodes ) {
-	let newChildrenArray = [].slice.call( newContainer.childNodes ),
-		oldChildrenArray = [].slice.call( oldContainer.childNodes ),
-		matchedNodes = this.matchNodes( newChildrenArray, oldChildrenArray, preservedNodes ),
-		newNode,
-		oldNode,
-		newIndex,
-		currentIndex,
-		i;
+	const newChildrenArray = [].slice.call( newContainer.childNodes );
+	const oldChildrenArray = [].slice.call( oldContainer.childNodes );
+	const matchedNodes = this.matchNodes( newChildrenArray, oldChildrenArray, preservedNodes );
+	let newNode;
+	let oldNode;
+	let newIndex;
+	let currentIndex;
+	let i;
 
 	for ( newIndex = 0; newIndex < newChildrenArray.length; newIndex++ ) {
 		newNode = newChildrenArray[ newIndex ];
@@ -279,12 +279,9 @@ ComponentWidget.prototype.rebuildDOM = function ( oldContainer, newContainer, pr
  * @return {jQuery.Promise}
  */
 ComponentWidget.prototype.extractParamDOMNodes = function ( data ) {
-	let self = this,
-		transformed,
-		getNode,
-		transformNodes;
+	const self = this;
 
-	getNode = function ( variable ) {
+	const getNode = function ( variable ) {
 		// check if `instanceof Node` (except that wouldn't work headless;
 		// ref `Node` missing)
 		if ( typeof variable === 'object' && typeof variable.nodeType === 'number' ) {
@@ -297,11 +294,11 @@ ComponentWidget.prototype.extractParamDOMNodes = function ( data ) {
 		throw new Error( 'Not a node-like variable' );
 	};
 
-	transformNodes = function ( d ) {
-		let keys = Object.keys( d ),
-			result = new d.constructor(),
-			originals = [],
-			key, i, j, recursive, nodes, node;
+	const transformNodes = function ( d ) {
+		const keys = Object.keys( d );
+		const result = new d.constructor();
+		let originals = [];
+		let key, i, j, recursive, nodes, node;
 
 		for ( i = 0; i < keys.length; i++ ) {
 			key = keys[ i ];
@@ -347,7 +344,7 @@ ComponentWidget.prototype.extractParamDOMNodes = function ( data ) {
 		return { data: result, nodes: originals };
 	};
 
-	transformed = transformNodes( data );
+	const transformed = transformNodes( data );
 	return $.Deferred().resolve( transformed.data, transformed.nodes ).promise();
 };
 
@@ -430,9 +427,9 @@ ComponentWidget.prototype.matchNodes = function ( one, two, preserve ) {
 		};
 
 	return one.reduce( ( result, node, index, arr ) => {
-		let other = [].concat( two ),
-			remaining = arr.slice( index ).filter( ( target ) => target.tagName !== undefined ),
-			i;
+		let other = [].concat( two );
+		const remaining = arr.slice( index ).filter( ( target ) => target.tagName !== undefined );
+		let i;
 
 		// don't bother matching non-nodes
 		if ( node.tagName === undefined ) {
@@ -480,8 +477,8 @@ ComponentWidget.prototype.matchNodes = function ( one, two, preserve ) {
  * @return {boolean}
  */
 ComponentWidget.prototype.isEqualNodeAndProps = function ( one, two ) {
-	let self = this,
-		property, descriptor;
+	const self = this;
+	let property, descriptor;
 
 	if ( !one.isEqualNode( two ) ) {
 		return false;
@@ -523,8 +520,6 @@ ComponentWidget.prototype.getNumberOfEqualNodes = function ( one, two ) {
 
 	return one
 		.map( ( twoNode ) => two.some( ( oneNode ) => {
-			let nodeOneChildren,
-				nodeTwoChildren;
 
 			if ( oneNode.tagName !== twoNode.tagName ) {
 				return false;
@@ -548,8 +543,8 @@ ComponentWidget.prototype.getNumberOfEqualNodes = function ( one, two ) {
 			}
 
 			// node is not a perfect match - let's run their children through the same set of criteria
-			nodeOneChildren = [].slice.call( oneNode.children );
-			nodeTwoChildren = [].slice.call( twoNode.children );
+			const nodeOneChildren = [].slice.call( oneNode.children );
+			const nodeTwoChildren = [].slice.call( twoNode.children );
 			return self.getNumberOfEqualNodes( nodeOneChildren, nodeTwoChildren ) > 0;
 		} ) )
 		.reduce( ( sum, isEqual ) => sum + ( isEqual ? 1 : 0 ), 0 );

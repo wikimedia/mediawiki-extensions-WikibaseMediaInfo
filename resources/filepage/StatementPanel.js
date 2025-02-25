@@ -1,11 +1,10 @@
 'use strict';
 
-let AnonWarning = require( './AnonWarning.js' ),
+const AnonWarning = require( './AnonWarning.js' ),
 	FormatValueElement = require( 'wikibase.mediainfo.base' ).FormatValueElement,
 	LicenseDialogWidget = require( './LicenseDialogWidget.js' ),
 	StatementWidget = require( 'wikibase.mediainfo.statements' ).StatementWidget,
-	dataTypesMap = mw.config.get( 'wbDataTypes' ),
-	StatementPanel;
+	dataTypesMap = mw.config.get( 'wbDataTypes' );
 
 /**
  * Panel for displaying/editing structured data statements
@@ -26,7 +25,7 @@ let AnonWarning = require( './AnonWarning.js' ),
  *  e.g. { P1: "https://commons.wikimedia.org/wiki/Special:MyLanguage/Commons:Depicts" }
  * @fires dataLoadedReadOnly
  */
-StatementPanel = function StatementPanelConstructor( config ) {
+const StatementPanel = function StatementPanelConstructor( config ) {
 	// Parent constructor
 	StatementPanel.super.apply( this, arguments );
 
@@ -211,20 +210,18 @@ StatementPanel.prototype.sendData = function () {
 };
 
 StatementPanel.prototype.showUnsupportedPopup = function () {
-	let popup, popupMsg, $content;
-
-	popupMsg = mw.message(
+	const popupMsg = mw.message(
 		'wikibasemediainfo-statements-unsupported-property-type-content'
 	).parse();
 
-	$content = $( '<div>' ).append(
+	const $content = $( '<div>' ).append(
 		$( '<h4>' ).html(
 			mw.message( 'wikibasemediainfo-statements-unsupported-property-title' ).parse()
 		),
 		$( '<p>' ).html( popupMsg )
 	);
 
-	popup = new OO.ui.PopupWidget( {
+	const popup = new OO.ui.PopupWidget( {
 		$floatableContainer: this.statementWidget.$element,
 		position: 'after',
 		padded: true,

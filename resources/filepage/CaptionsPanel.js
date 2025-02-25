@@ -1,13 +1,12 @@
 'use strict';
 
-let AnonWarning = require( './AnonWarning.js' ),
+const AnonWarning = require( './AnonWarning.js' ),
 	CaptionData = require( './CaptionData.js' ),
 	CaptionDataEditor = require( './CaptionDataEditor.js' ),
 	CaptionsEditActionsWidget = require( './CaptionsEditActionsWidget.js' ),
 	LicenseDialogWidget = require( './LicenseDialogWidget.js' ),
 	ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
-	wbTermsLanguages = require( 'wikibase.mediainfo.statements' ).config.wbTermsLanguages,
-	CaptionsPanel;
+	wbTermsLanguages = require( 'wikibase.mediainfo.statements' ).config.wbTermsLanguages;
 
 /**
  * Panel for displaying/editing structured data multi-lingual captions
@@ -44,7 +43,7 @@ let AnonWarning = require( './AnonWarning.js' ),
  * @param {number} [config.warnWithinMaxCaptionLength] Show a warning when the caption length is within X
  *   characters of the max
  */
-CaptionsPanel = function ( config ) {
+const CaptionsPanel = function ( config ) {
 	const self = this;
 	config = config || {};
 
@@ -187,9 +186,9 @@ CaptionsPanel.prototype.addCaptionsDataForUserLanguages = function ( captionData
  * @private
  */
 CaptionsPanel.prototype.getOrderedLangCodes = function ( captionDataArray ) {
-	let i,
-		captionLanguages = Object.keys( captionDataArray ),
-		rearrangedCaptionLanguages = [];
+	let i;
+	const captionLanguages = Object.keys( captionDataArray );
+	const rearrangedCaptionLanguages = [];
 
 	// First language in fallback chain (i.e. the interface language) is always first
 	rearrangedCaptionLanguages.push( this.languageFallbackChain[ 0 ] );
@@ -243,14 +242,15 @@ CaptionsPanel.prototype.getTemplateData = function () {
  * @return {Object|jQuery.Promise<Object>}
  */
 CaptionsPanel.prototype.getTemplateDataEditable = function () {
-	let self = this,
-		templateCaptions = [],
-		data = {
-			editing: true,
-			title: mw.msg( 'wikibasemediainfo-entitytermsforlanguagelistview-caption' ),
-			editActionsWidget: this.editActionsWidget
-		},
-		inputErrorFound = false;
+	const self = this;
+	const templateCaptions = [];
+	const data = {
+		editing: true,
+		title: mw.msg( 'wikibasemediainfo-entitytermsforlanguagelistview-caption' ),
+		editActionsWidget: this.editActionsWidget
+	};
+
+	let inputErrorFound = false;
 
 	Object.keys( this.state.captionsDataEditors ).forEach( ( guid ) => {
 		const captionDataEditor = self.state.captionsDataEditors[ guid ];
@@ -290,14 +290,13 @@ CaptionsPanel.prototype.getTemplateDataEditable = function () {
  * @return {Object|jQuery.Promise<Object>}
  */
 CaptionsPanel.prototype.getTemplateDataReadOnly = function () {
-	let self = this,
-		templateCaptions = [],
-		showCaptionFlags = this.getShowCaptionFlagsByLangCode(),
-		count = 0,
-		data;
+	const self = this;
+	const templateCaptions = [];
+	const showCaptionFlags = this.getShowCaptionFlagsByLangCode();
+	let count = 0;
 
 	// basic template data
-	data = {
+	const data = {
 		editing: false,
 		title: mw.msg( 'wikibasemediainfo-entitytermsforlanguagelistview-caption' )
 	};
@@ -336,12 +335,9 @@ CaptionsPanel.prototype.getTemplateDataReadOnly = function () {
 
 	// captions data
 	this.state.orderedLanguageCodes.forEach( ( langCode ) => {
-		let captionData = self.state.captionsData[ langCode ],
-			language,
-			caption;
-
-		language = captionData.languageText;
-		caption = captionData.text ?
+		const captionData = self.state.captionsData[ langCode ];
+		const language = captionData.languageText;
+		const caption = captionData.text ?
 			mw.html.escape( captionData.text ) :
 			mw.message( 'wikibasemediainfo-filepage-caption-empty' ).escaped();
 
@@ -489,9 +485,9 @@ CaptionsPanel.prototype.refreshLanguageSelectorsOptions = function () {
  * @return {boolean} True if any captions have been changed/added/deleted
  */
 CaptionsPanel.prototype.hasChanges = function () {
-	let self = this,
-		nonEmptyCaptionsData = {},
-		hasChanges;
+	const self = this;
+	const nonEmptyCaptionsData = {};
+	let hasChanges;
 	hasChanges = Object.keys( this.state.captionsData ).some( ( langCode ) => {
 		if ( self.state.captionsData[ langCode ].text !== '' ) {
 			nonEmptyCaptionsData[ langCode ] = self.state.captionsData[ langCode ];
@@ -558,13 +554,13 @@ CaptionsPanel.prototype.getWbSetLabelParams = function ( language, text ) {
  * @private
  */
 CaptionsPanel.prototype.getShowCaptionFlagsByLangCode = function () {
-	let self = this,
-		firstCaptionIsBlank,
-		indexedShowCaptionFlags = {};
+	const self = this;
+	let firstCaptionIsBlank;
+	const indexedShowCaptionFlags = {};
 
 	this.state.orderedLanguageCodes.forEach( ( langCode, index ) => {
-		let captionData = self.state.captionsData[ langCode ],
-			showCaption;
+		const captionData = self.state.captionsData[ langCode ];
+		let showCaption;
 		if ( index === 0 ) {
 			showCaption = true;
 			firstCaptionIsBlank = ( captionData.text === '' );
@@ -674,10 +670,10 @@ CaptionsPanel.prototype.addNewEmptyLanguageRow = function () {
 };
 
 CaptionsPanel.prototype.sendData = function () {
-	let self = this,
-		captionsDataEditors = Object.assign( {}, this.state.captionsDataEditors ),
-		promise = $.Deferred().resolve().promise(),
-		tempuser = {};
+	const self = this;
+	const captionsDataEditors = Object.assign( {}, this.state.captionsDataEditors );
+	let promise = $.Deferred().resolve().promise();
+	const tempuser = {};
 
 	this.setSending();
 

@@ -11,10 +11,10 @@ OO.initClass( ConstraintsReportHandlerElement );
  * @see WikibaseQualityConstraints/modules/gadget.js::__addResultsToSnak()
  */
 ConstraintsReportHandlerElement.prototype.popupFromResults = function ( resultArray ) {
-	let reports = resultArray.map( this.buildReport.bind( this ) ),
-		list = this.buildReportList( reports ),
-		icon,
-		titleMessageKey;
+	const reports = resultArray.map( this.buildReport.bind( this ) );
+	const list = this.buildReportList( reports );
+	let icon;
+	let titleMessageKey;
 
 	if ( list !== null ) {
 		switch ( list.items[ 0 ].status ) {

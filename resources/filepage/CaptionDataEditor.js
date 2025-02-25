@@ -1,8 +1,7 @@
 'use strict';
 
-let CaptionDataEditor,
-	wbTermsLanguages = require( 'wikibase.mediainfo.statements' ).config.wbTermsLanguages,
-	UlsWidget = require( 'wikibase.mediainfo.uls' );
+const wbTermsLanguages = require( 'wikibase.mediainfo.statements' ).config.wbTermsLanguages;
+const UlsWidget = require( 'wikibase.mediainfo.uls' );
 
 /**
  * A value object holding all relevant widgets for editing a single caption
@@ -15,7 +14,7 @@ let CaptionDataEditor,
  * @param {number} [config.maxCaptionLength]
  * @param {number} [config.warnWithinMaxCaptionLength]
  */
-CaptionDataEditor = function ( guid, captionData, config ) {
+const CaptionDataEditor = function ( guid, captionData, config ) {
 	const self = this;
 
 	config = config || {};
@@ -50,8 +49,8 @@ CaptionDataEditor = function ( guid, captionData, config ) {
 		.on( 'change', () => {
 			self.textInput.getValidity()
 				.done( () => {
-					let length = self.textInput.getValue().length,
-						lengthDiff;
+					const length = self.textInput.getValue().length;
+					let lengthDiff;
 
 					self.setInputError( '' );
 

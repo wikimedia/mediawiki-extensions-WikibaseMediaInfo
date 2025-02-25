@@ -9,7 +9,6 @@
 	},
 	"rules": {
 		"max-len": "off",
-		"prefer-const": "off",
 		"no-jquery/variable-pattern": "off",
 		"no-jquery/no-event-shorthand": "off",
 		"compat/compat": "warn",

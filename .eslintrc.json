@@ -1,7 +1,7 @@
 {
 	"root": true,
 	"extends": [
-		"wikimedia/client-es5",
+		"wikimedia/client",
 		".eslintshared.json"
 	],
 	"env": {
@@ -9,6 +9,8 @@
 	},
 	"rules": {
 		"max-len": "off",
+		"no-var": "off",
+		"prefer-arrow-callback": "off",
 		"no-jquery/variable-pattern": "off",
 		"no-jquery/no-event-shorthand": "off",
 		"compat/compat": "warn",
@@ -18,7 +20,7 @@
 	"overrides": [
 		{
 			"files": "**/*.vue",
-			"extends": "wikimedia/vue-es5",
+			"extends": "wikimedia/vue3-es6",
 			"rules": {
 				"vue/html-self-closing": [
 					"error",

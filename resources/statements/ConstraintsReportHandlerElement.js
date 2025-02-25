@@ -1,6 +1,6 @@
 'use strict';
 
-var ConstraintsReportHandlerElement = function MediaInfoStatementsConstraintsReportHandlerElement() {};
+const ConstraintsReportHandlerElement = function MediaInfoStatementsConstraintsReportHandlerElement() {};
 OO.initClass( ConstraintsReportHandlerElement );
 
 /**
@@ -11,7 +11,7 @@ OO.initClass( ConstraintsReportHandlerElement );
  * @see WikibaseQualityConstraints/modules/gadget.js::__addResultsToSnak()
  */
 ConstraintsReportHandlerElement.prototype.popupFromResults = function ( resultArray ) {
-	var reports = resultArray.map( this.buildReport.bind( this ) ),
+	let reports = resultArray.map( this.buildReport.bind( this ) ),
 		list = this.buildReportList( reports ),
 		icon,
 		titleMessageKey;
@@ -53,7 +53,7 @@ ConstraintsReportHandlerElement.prototype.popupFromResults = function ( resultAr
  * @see WikibaseQualityConstraints/modules/gadget.js::_buildReport()
  */
 ConstraintsReportHandlerElement.prototype.buildReport = function ( result ) {
-	var config = {
+	const config = {
 		status: result.status,
 		constraint: result.constraint,
 		message: result[ 'message-html' ]
@@ -70,7 +70,7 @@ ConstraintsReportHandlerElement.prototype.buildReport = function ( result ) {
  * @see WikibaseQualityConstraints/modules/gadget.js::_buildReportList()
  */
 ConstraintsReportHandlerElement.prototype.buildReportList = function ( reports ) {
-	var list = wikibase.quality.constraints.ui.ConstraintReportList.static.fromPanels(
+	const list = wikibase.quality.constraints.ui.ConstraintReportList.static.fromPanels(
 		reports,
 		{
 			statuses: [
@@ -120,7 +120,7 @@ ConstraintsReportHandlerElement.prototype.buildReportList = function ( reports )
  */
 ConstraintsReportHandlerElement.prototype.createPopupWidget = function ( $content, icon, titleMessageKey, classes ) {
 	// eslint-disable-next-line mediawiki/class-doc
-	var widget = new OO.ui.PopupButtonWidget( {
+	const widget = new OO.ui.PopupButtonWidget( {
 		icon: icon,
 		// eslint-disable-next-line mediawiki/msg-doc
 		title: mw.msg( titleMessageKey ),

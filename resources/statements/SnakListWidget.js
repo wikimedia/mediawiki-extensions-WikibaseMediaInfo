@@ -6,7 +6,7 @@
  * @param {string} [config.editing] True for edit mode, False for read mode
  * @param {string} [config.addText] Text for "add" button
  */
-var SnakWidget = require( './SnakWidget.js' ),
+let SnakWidget = require( './SnakWidget.js' ),
 	ConstraintsReportHandlerElement = require( './ConstraintsReportHandlerElement.js' ),
 	ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
 	datamodel = require( 'wikibase.datamodel' ),
@@ -47,15 +47,13 @@ OO.mixinClass( SnakListWidget, ConstraintsReportHandlerElement );
  * @inheritDoc
  */
 SnakListWidget.prototype.getTemplateData = function () {
-	var errors = this.getErrors(),
+	let errors = this.getErrors(),
 		errorMessages = ( errors.length > 0 ) ?
-			errors.map( function ( error ) {
-				return new OO.ui.MessageWidget( {
-					type: 'error',
-					label: error,
-					classes: [ 'wbmi-statement-error-msg--inline' ]
-				} );
-			} ) : null,
+			errors.map( ( error ) => new OO.ui.MessageWidget( {
+				type: 'error',
+				label: error,
+				classes: [ 'wbmi-statement-error-msg--inline' ]
+			} ) ) : null,
 		addButton;
 
 	addButton = new OO.ui.ButtonWidget( {
@@ -83,11 +81,11 @@ SnakListWidget.prototype.getTemplateData = function () {
  * @fires OO.EmitterList#remove
  */
 SnakListWidget.prototype.removeWidgets = function ( snaks ) {
-	var self = this,
+	const self = this,
 		newWidgets = [],
 		removedWidgets = [];
 
-	this.state.snaks.forEach( function ( snak ) {
+	this.state.snaks.forEach( ( snak ) => {
 		if ( snaks.indexOf( snak ) < 0 ) {
 			// not present in array of items to remove = keep
 			newWidgets.push( snak );
@@ -96,8 +94,8 @@ SnakListWidget.prototype.removeWidgets = function ( snaks ) {
 		}
 	} );
 
-	return this.setState( { snaks: newWidgets } ).then( function () {
-		removedWidgets.forEach( function ( snak ) {
+	return this.setState( { snaks: newWidgets } ).then( () => {
+		removedWidgets.forEach( ( snak ) => {
 			self.emit( 'change', snak );
 		} );
 		if ( newWidgets.length === 0 ) {
@@ -111,7 +109,7 @@ SnakListWidget.prototype.removeWidgets = function ( snaks ) {
  * @return {SnakWidget}
  */
 SnakListWidget.prototype.createWidget = function ( data ) {
-	var widget = new SnakWidget( { editing: this.state.editing } ),
+	let widget = new SnakWidget( { editing: this.state.editing } ),
 		promise = $.Deferred().resolve().promise(),
 		self = this;
 
@@ -120,7 +118,7 @@ SnakListWidget.prototype.createWidget = function ( data ) {
 	}
 
 	return promise.then(
-		function () {
+		() => {
 			widget.connect( self, { delete: [ 'removeWidgets', [ widget ] ] } );
 			widget.connect( self, { change: [ 'emit', 'change' ] } );
 			return widget;
@@ -132,12 +130,10 @@ SnakListWidget.prototype.createWidget = function ( data ) {
  * @param {datamodel.Snak} [data]
  */
 SnakListWidget.prototype.addWidget = function ( data ) {
-	var self = this;
-	this.createWidget( data ).then( function ( widget ) {
-		return self.setState( { snaks: self.state.snaks.concat( [ widget ] ) } )
-			.then( self.emit.bind( self, 'change' ) )
-			.then( widget.focus.bind( widget ) );
-	} );
+	const self = this;
+	this.createWidget( data ).then( ( widget ) => self.setState( { snaks: self.state.snaks.concat( [ widget ] ) } )
+		.then( self.emit.bind( self, 'change' ) )
+		.then( widget.focus.bind( widget ) ) );
 };
 
 /**
@@ -145,9 +141,7 @@ SnakListWidget.prototype.addWidget = function ( data ) {
  * @return {jQuery.Promise}
  */
 SnakListWidget.prototype.setEditing = function ( editing ) {
-	var promises = this.state.snaks.map( function ( widget ) {
-		return widget.setEditing( editing );
-	} );
+	const promises = this.state.snaks.map( ( widget ) => widget.setEditing( editing ) );
 
 	return $.when.apply( $, promises ).then( this.setState.bind( this, { editing: editing } ) );
 };
@@ -157,7 +151,7 @@ SnakListWidget.prototype.setEditing = function ( editing ) {
  */
 SnakListWidget.prototype.getData = function () {
 	return new datamodel.SnakList( this.state.snaks
-		.map( function ( snak ) {
+		.map( ( snak ) => {
 			// try to fetch data - if it fails (likely because of incomplete input),
 			// we'll just ignore that snak
 			try {
@@ -166,9 +160,7 @@ SnakListWidget.prototype.getData = function () {
 				return undefined;
 			}
 		} )
-		.filter( function ( data ) {
-			return data instanceof datamodel.Snak;
-		} )
+		.filter( ( data ) => data instanceof datamodel.Snak )
 	);
 };
 
@@ -177,8 +169,8 @@ SnakListWidget.prototype.getData = function () {
  * @return {jQuery.Deferred}
  */
 SnakListWidget.prototype.setData = function ( data ) {
-	var self = this,
-		existingWidgetsData = self.state.snaks.map( function ( widget ) {
+	const self = this,
+		existingWidgetsData = self.state.snaks.map( ( widget ) => {
 			try {
 				return widget.getData();
 			} catch ( e ) {
@@ -192,29 +184,29 @@ SnakListWidget.prototype.setData = function ( data ) {
 	}
 
 	return $.Deferred().resolve()
-		.then( function () {
+		.then(
 			// get rid of existing snak widgets that are no longer present in the
 			// new set of data we've been fed (or are in an invalid state)
-			return self.removeWidgets( self.state.snaks.filter( function ( item, i ) {
+			() => self.removeWidgets( self.state.snaks.filter( ( item, i ) => {
 				if ( existingWidgetsData[ i ] === undefined ) {
 					// failed to fetch data (likely because of incomplete input),
 					// so we should remove this snak...
 					return true;
 				}
 				return !data.hasItem( existingWidgetsData[ i ] );
-			} ) );
-		} )
-		.then( function () {
-			var newSnakWidgets = [],
+			} ) )
+		)
+		.then( () => {
+			const newSnakWidgets = [],
 				promises = [];
 
 			// add new snak widgets that don't already exist
-			data.each( function ( i, snak ) {
-				var exists = existingWidgetsData[ i ] && existingWidgetsData[ i ].equals( snak ),
+			data.each( ( i, snak ) => {
+				const exists = existingWidgetsData[ i ] && existingWidgetsData[ i ].equals( snak ),
 					widgetPromise = exists ? $.Deferred().resolve( self.state.snaks[ i ] ) : self.createWidget();
 
 				promises.push(
-					widgetPromise.then( function ( innerWidget ) {
+					widgetPromise.then( ( innerWidget ) => {
 						newSnakWidgets[ i ] = innerWidget;
 						return innerWidget.setData( snak );
 					} )
@@ -242,17 +234,15 @@ SnakListWidget.prototype.setData = function ( data ) {
 SnakListWidget.prototype.setConstraintsReport = function ( results ) {
 	// extract snaklist constraint reports, pass them along to snak widget,
 	// and gather promises
-	var promises = this.state.snaks.map( function ( widget ) {
-		var data, propertyId, hash, result;
+	const promises = this.state.snaks.map( ( widget ) => {
+		let data, propertyId, hash, result;
 
 		try {
 			data = widget.getData();
 			propertyId = data.getPropertyId();
 			hash = data.getHash();
 
-			result = results[ propertyId ].filter( function ( responseForSnak ) {
-				return responseForSnak.hash === hash;
-			} )[ 0 ] || null;
+			result = results[ propertyId ].filter( ( responseForSnak ) => responseForSnak.hash === hash )[ 0 ] || null;
 			return widget.setConstraintsReport( result );
 		} catch ( e ) {
 			return widget.setConstraintsReport( null );

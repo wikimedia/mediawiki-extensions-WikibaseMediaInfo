@@ -1,6 +1,6 @@
 'use strict';
 
-var ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
+let ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
 	inputs = require( './inputs/index.js' ),
 	AddPropertyWidget;
 
@@ -30,7 +30,7 @@ OO.mixinClass( AddPropertyWidget, ComponentWidget );
  * @inheritDoc
  */
 AddPropertyWidget.prototype.getTemplateData = function () {
-	var propertyInputWidget,
+	let propertyInputWidget,
 		addPropertyButton,
 		removeButton;
 
@@ -77,10 +77,8 @@ AddPropertyWidget.prototype.getTemplateData = function () {
  * @return {Array}
  */
 AddPropertyWidget.prototype.getFilters = function () {
-	var supportedTypes = mw.config.get( 'wbmiSupportedDataTypes' ) || [],
-		uniqueTypes = supportedTypes.filter( function ( item, index, self ) {
-			return self.indexOf( item ) === index;
-		} );
+	const supportedTypes = mw.config.get( 'wbmiSupportedDataTypes' ) || [],
+		uniqueTypes = supportedTypes.filter( ( item, index, self ) => self.indexOf( item ) === index );
 
 	return [
 		{ field: 'datatype', value: uniqueTypes.join( '|' ) },
@@ -124,9 +122,7 @@ AddPropertyWidget.prototype.onChoose = function ( input ) {
  */
 AddPropertyWidget.prototype.onStatementPanelRemoved = function ( panelPropertyId ) {
 	this.setState( {
-		propertyIds: this.state.propertyIds.filter( function ( propertyId ) {
-			return propertyId !== panelPropertyId;
-		} )
+		propertyIds: this.state.propertyIds.filter( ( propertyId ) => propertyId !== panelPropertyId )
 	} );
 };
 

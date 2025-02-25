@@ -1,6 +1,6 @@
 'use strict';
 
-var ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
+let ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
 	AbstractInputWidget = require( './AbstractInputWidget.js' ),
 	UnsupportedInputWidget;
 
@@ -65,13 +65,13 @@ UnsupportedInputWidget.prototype.getData = function () {
  * @inheritDoc
  */
 UnsupportedInputWidget.prototype.setData = function ( data ) {
-	var self = this;
+	const self = this;
 
 	if ( data.equals( this.state.data ) ) {
 		return $.Deferred().resolve( this.$element ).promise();
 	}
 
-	return this.setState( { data: data } ).then( function ( $element ) {
+	return this.setState( { data: data } ).then( ( $element ) => {
 		self.emit( 'change', self );
 		return $element;
 	} );

@@ -3,7 +3,7 @@
 
 	/* eslint-disable no-underscore-dangle */
 
-	var datamodel = require( 'wikibase.datamodel' ),
+	const datamodel = require( 'wikibase.datamodel' ),
 		PARENT = datamodel.Entity,
 
 		/**

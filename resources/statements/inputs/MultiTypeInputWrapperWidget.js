@@ -1,6 +1,6 @@
 'use strict';
 
-var ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
+let ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
 	AbstractInputWidget = require( './AbstractInputWidget.js' ),
 	EntityInputWidget = require( './EntityInputWidget.js' ),
 	MonolingualTextInputWidget = require( './MonolingualTextInputWidget.js' ),
@@ -92,16 +92,14 @@ OO.mixinClass( MultiTypeInputWrapperWidget, ComponentWidget );
  * @inheritDoc
  */
 MultiTypeInputWrapperWidget.prototype.getTemplateData = function () {
-	var self = this,
+	const self = this,
 		errors = this.getErrors(),
 		errorMessages = ( errors.length > 0 ) ?
-			errors.map( function ( error ) {
-				return new OO.ui.MessageWidget( {
-					type: 'error',
-					label: error,
-					classes: [ 'wbmi-statement-error-msg' ]
-				} );
-			} ) : null,
+			errors.map( ( error ) => new OO.ui.MessageWidget( {
+				type: 'error',
+				label: error,
+				classes: [ 'wbmi-statement-error-msg' ]
+			} ) ) : null,
 		// Currently somevalue/novalue are only intended to be used with
 		// Wikidata items. Somevalue/novalue snaks for other datatypes added via
 		// the API will be displayed and can be deleted but cannot be edited,
@@ -122,7 +120,7 @@ MultiTypeInputWrapperWidget.prototype.getTemplateData = function () {
 		showSnakTypeWidget: showSnakTypeWidget,
 		snakTypeWidget: this.snakTypeWidget,
 		input: this.state.input,
-		type: Object.keys( this.types ).reduce( function ( result, type ) {
+		type: Object.keys( this.types ).reduce( ( result, type ) => {
 			// `type` will be a map like: { quantity: true, string: false, ... }
 			result[ type ] = self.state.type === type;
 			return result;
@@ -139,7 +137,7 @@ MultiTypeInputWrapperWidget.prototype.getTemplateData = function () {
  * @return {jQuery.Promise}
  */
 MultiTypeInputWrapperWidget.prototype.setInputType = function ( type ) {
-	var self = this,
+	const self = this,
 		changed = this.state.type !== type || this.getSnakType() !== valueTypes.VALUE,
 		input = this.createInput( type );
 
@@ -149,7 +147,7 @@ MultiTypeInputWrapperWidget.prototype.setInputType = function ( type ) {
 		snakType: valueTypes.VALUE,
 		// re-use existing input if the type has not changed
 		input: changed ? input : this.state.input
-	} ).then( function ( $element ) {
+	} ).then( ( $element ) => {
 		if ( changed ) {
 			self.emit( 'change' );
 		}
@@ -162,7 +160,7 @@ MultiTypeInputWrapperWidget.prototype.setInputType = function ( type ) {
  * @return {AbstractInputWidget}
  */
 MultiTypeInputWrapperWidget.prototype.createInput = function ( type ) {
-	var Constructor = type in this.types ? this.types[ type ] : UnsupportedInputWidget;
+	const Constructor = type in this.types ? this.types[ type ] : UnsupportedInputWidget;
 
 	return new Constructor( { isQualifier: this.config.isQualifier } ).connect( this, {
 		add: [ 'emit', 'add', this ],
@@ -183,7 +181,7 @@ MultiTypeInputWrapperWidget.prototype.onChange = function () {
  * @return {jQuery.Promise}
  */
 MultiTypeInputWrapperWidget.prototype.onSnakTypeChange = function ( snakType ) {
-	var input,
+	let input,
 		promise;
 
 	switch ( snakType ) {
@@ -252,7 +250,7 @@ MultiTypeInputWrapperWidget.prototype.getData = function () {
  * @inheritDoc
  */
 MultiTypeInputWrapperWidget.prototype.setData = function ( data ) {
-	var self = this,
+	let self = this,
 		type = data ? data.getType() : this.state.type,
 		input;
 
@@ -281,7 +279,7 @@ MultiTypeInputWrapperWidget.prototype.setData = function ( data ) {
 			type: type,
 			input: input
 		} ) )
-		.then( function ( $element ) {
+		.then( ( $element ) => {
 			self.allowEmitChange = true;
 			self.emit( 'change' );
 			return $element;
@@ -356,10 +354,10 @@ MultiTypeInputWrapperWidget.prototype.setSnakType = function ( snakType ) {
  * @inheritdoc
  */
 MultiTypeInputWrapperWidget.prototype.setErrors = function ( errors ) {
-	var self = this;
+	const self = this;
 
 	return ComponentWidget.prototype.setErrors.call( this, errors )
-		.then( function () {
+		.then( () => {
 			if ( errors.length > 0 ) {
 				self.state.input.flagAsInvalid();
 			}

@@ -1,6 +1,6 @@
 'use strict';
 
-var CaptionData;
+let CaptionData;
 
 /**
 	* A value object holding all data for a caption

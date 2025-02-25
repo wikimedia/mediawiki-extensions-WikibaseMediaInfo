@@ -1,6 +1,6 @@
 'use strict';
 
-var ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
+let ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
 	LinkNoticeWidget;
 
 /**
@@ -31,7 +31,7 @@ OO.mixinClass( LinkNoticeWidget, ComponentWidget );
  * @inheritDoc
  */
 LinkNoticeWidget.prototype.getTemplateData = function () {
-	var noticeWidget, dismissControl;
+	let noticeWidget, dismissControl;
 
 	noticeWidget = new OO.ui.MessageWidget( {
 		type: 'warning',
@@ -83,7 +83,7 @@ LinkNoticeWidget.prototype.dismiss = function () {
  * @return {boolean}
  */
 LinkNoticeWidget.prototype.isDismissed = function () {
-	var numVal;
+	let numVal;
 
 	if ( mw.user.isAnon() ) {
 		numVal = Number( mw.storage.get( this.prefKey ) ) || 0;
@@ -101,7 +101,7 @@ LinkNoticeWidget.prototype.isDismissed = function () {
  * @return {boolean}
  */
 LinkNoticeWidget.prototype.canDisplay = function () {
-	var message = mw.message( 'wikibasemediainfo-statements-link-notice-text' );
+	const message = mw.message( 'wikibasemediainfo-statements-link-notice-text' );
 	return message.exists() && message.text() !== '-';
 };
 

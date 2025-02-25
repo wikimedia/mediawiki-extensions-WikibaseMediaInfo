@@ -1,6 +1,6 @@
 'use strict';
 
-var ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
+let ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
 	FormatValueElement = require( 'wikibase.mediainfo.base' ).FormatValueElement,
 	AbstractInputWidget = require( './AbstractInputWidget.js' ),
 	TimeInputWidget;
@@ -10,7 +10,7 @@ var ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
  * @param {boolean} [config.isQualifier]
  */
 TimeInputWidget = function MediaInfoStatementsTimeInputWidget( config ) {
-	var self = this;
+	const self = this;
 
 	config = config || {};
 
@@ -97,7 +97,7 @@ TimeInputWidget.prototype.unbindEventHandlers = function () {
  * @inheritDoc
  */
 TimeInputWidget.prototype.getTemplateData = function () {
-	var button = new OO.ui.ButtonWidget( {
+	let button = new OO.ui.ButtonWidget( {
 			classes: [ 'wbmi-input-widget__button' ],
 			label: mw.msg( 'wikibasemediainfo-time-input-button-text' ),
 			flags: [ 'progressive' ],
@@ -125,10 +125,10 @@ TimeInputWidget.prototype.getTemplateData = function () {
 		return data;
 	}
 
-	return this.formatValue( this.getData() ).then( function ( formatted ) {
+	return this.formatValue( this.getData() ).then( ( formatted ) => {
 		// The method $.text() will handle the escaping of the user input preventing XSS.
-		var $formatted = $( '<span>' ).addClass( 'wbmi-input-widget--formatted' ).text( formatted );
-		var msg = mw.message( 'wikibasemediainfo-time-timestamp-formatted' ).params( $formatted ).parse();
+		const $formatted = $( '<span>' ).addClass( 'wbmi-input-widget--formatted' ).text( formatted );
+		const msg = mw.message( 'wikibasemediainfo-time-timestamp-formatted' ).params( $formatted ).parse();
 
 		return Object.assign( {}, data, {
 			formatted: msg
@@ -150,7 +150,7 @@ TimeInputWidget.prototype.onFocus = function () {
  * @param {string} value
  */
 TimeInputWidget.prototype.onChange = function ( value ) {
-	var self = this;
+	const self = this;
 
 	if ( this.parseValuePromise ) {
 		// abort existing API calls if input has changed
@@ -164,8 +164,8 @@ TimeInputWidget.prototype.onChange = function ( value ) {
 
 	this.parseValuePromise = this.parseValue( undefined, 'time' );
 	this.parseValuePromise
-		.then( function ( dataValue ) {
-			var json = dataValue.toJSON();
+		.then( ( dataValue ) => {
+			const json = dataValue.toJSON();
 
 			if ( !self.state.customPrecision ) {
 				// update precision dropdown (if not already manually overridden)
@@ -199,10 +199,8 @@ TimeInputWidget.prototype.onChange = function ( value ) {
 				inferredPrecision: json.precision
 			} ).then( self.input.setValidityFlag.bind( self.input, true ) );
 		} )
-		.catch( function () {
-			return self.setState( { value: value, time: false } )
-				.then( self.input.setValidityFlag.bind( self.input, false ) );
-		} )
+		.catch( () => self.setState( { value: value, time: false } )
+			.then( self.input.setValidityFlag.bind( self.input, false ) ) )
 		.always( this.emit.bind( this, 'change', this ) );
 };
 
@@ -270,10 +268,10 @@ TimeInputWidget.prototype.hasValidInput = function () {
  * @inheritDoc
  */
 TimeInputWidget.prototype.setData = function ( data ) {
-	var self = this;
+	const self = this;
 
-	return this.formatValue( data ).then( function ( formatted ) {
-		var json = data.toJSON(),
+	return this.formatValue( data ).then( ( formatted ) => {
+		let json = data.toJSON(),
 			existing;
 
 		try {
@@ -313,7 +311,7 @@ TimeInputWidget.prototype.setData = function ( data ) {
 			inferredCalendarmodel: json.calendarmodel,
 			customCalendarmodel: false,
 			isActive: false
-		} ).then( function ( $element ) {
+		} ).then( ( $element ) => {
 			if ( !data.equals( existing ) ) {
 				self.emit( 'change', self );
 			}
@@ -326,7 +324,7 @@ TimeInputWidget.prototype.setData = function ( data ) {
  * @inheritdoc
  */
 TimeInputWidget.prototype.clear = function () {
-	var self = this,
+	let self = this,
 		existing;
 
 	try {
@@ -354,7 +352,7 @@ TimeInputWidget.prototype.clear = function () {
 		inferredCalendarmodel: dataValues.TimeValue.CALENDARS.GREGORIAN,
 		customCalendarmodel: false,
 		isActive: false
-	} ).then( function ( $element ) {
+	} ).then( ( $element ) => {
 		if ( existing !== undefined ) {
 			self.emit( 'change', self );
 		}
@@ -392,11 +390,11 @@ TimeInputWidget.prototype.flagAsInvalid = function () {
  * @return {Object[]}
  */
 TimeInputWidget.prototype.getPrecisionOptions = function () {
-	var map = dataValues.TimeValue.PRECISIONS;
+	const map = dataValues.TimeValue.PRECISIONS;
 
 	return Object.keys( map )
-		.map( function ( i ) {
-			var id = map[ i ].id,
+		.map( ( i ) => {
+			const id = map[ i ].id,
 				// The following messages are used here:
 				// * wikibasemediainfo-time-precision-year1h
 				// * wikibasemediainfo-time-precision-year100m
@@ -420,9 +418,7 @@ TimeInputWidget.prototype.getPrecisionOptions = function () {
 				label: message.exists() ? message.text() : undefined
 			};
 		} )
-		.filter( function ( data ) {
-			return data.label !== undefined;
-		} );
+		.filter( ( data ) => data.label !== undefined );
 };
 
 /**
@@ -431,11 +427,11 @@ TimeInputWidget.prototype.getPrecisionOptions = function () {
  * @return {Object[]}
  */
 TimeInputWidget.prototype.getCalendarOptions = function () {
-	var map = dataValues.TimeValue.CALENDARS;
+	const map = dataValues.TimeValue.CALENDARS;
 
 	return Object.keys( map )
-		.map( function ( id ) {
-			var value = map[ id ],
+		.map( ( id ) => {
+			const value = map[ id ],
 				// The following messages are used here:
 				// * wikibasemediainfo-time-calendar-gregorian
 				// * wikibasemediainfo-time-calendar-julian
@@ -446,9 +442,7 @@ TimeInputWidget.prototype.getCalendarOptions = function () {
 				label: message.exists() ? message.text() : undefined
 			};
 		} )
-		.filter( function ( data ) {
-			return data.label !== undefined;
-		} );
+		.filter( ( data ) => data.label !== undefined );
 };
 
 module.exports = TimeInputWidget;

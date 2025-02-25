@@ -1,6 +1,6 @@
 'use strict';
 
-var SnakWidget,
+let SnakWidget,
 	ConstraintsReportHandlerElement = require( './ConstraintsReportHandlerElement.js' ),
 	ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
 	FormatValueElement = require( 'wikibase.mediainfo.base' ).FormatValueElement,
@@ -79,10 +79,10 @@ OO.mixinClass( SnakWidget, ConstraintsReportHandlerElement );
  * @inheritDoc
  */
 SnakWidget.prototype.getTemplateData = function () {
-	var self = this;
+	const self = this;
 
-	return this.asyncFormatForDisplay().then( function ( propertyHtml, valueHtml ) {
-		var formatResponse, removeIcon;
+	return this.asyncFormatForDisplay().then( ( propertyHtml, valueHtml ) => {
+		let formatResponse, removeIcon;
 
 		formatResponse = function ( html ) {
 			return $( '<div>' )
@@ -149,7 +149,7 @@ SnakWidget.prototype.setEditing = function ( editing ) {
  * @return {jQuery.Promise}
  */
 SnakWidget.prototype.setData = function ( data ) {
-	var self = this,
+	let self = this,
 		snakType = data.getType(),
 		propertyId = data.getPropertyId(),
 		dataValue,
@@ -178,7 +178,7 @@ SnakWidget.prototype.setData = function ( data ) {
 		this.valueInput.setDataType( dataType )
 			.then( this.valueInput.setData.bind( this.valueInput, dataValue ) )
 			.then( this.valueInput.setSnakType.bind( this.valueInput, snakType ) )
-	).then( function () {
+	).then( () => {
 		if ( snakType === valueTypes.VALUE ) {
 			self.valueInput.setDisabled( false );
 		}
@@ -196,7 +196,7 @@ SnakWidget.prototype.setData = function ( data ) {
  * @return {datamodel.Snak} data
  */
 SnakWidget.prototype.getData = function () {
-	var property = this.propertyInput.getData(),
+	let property = this.propertyInput.getData(),
 		propertyId = property.toJSON().id,
 		dataValue = this.valueInput.getData(),
 		snakType = this.valueInput.getSnakType(),
@@ -259,7 +259,7 @@ SnakWidget.prototype.formatProperty = function ( propId, format, language ) {
  * @return {jQuery.Promise}
  */
 SnakWidget.prototype.asyncFormatForDisplay = function () {
-	var promises,
+	let promises,
 		dataValue,
 		propertyId,
 		valuePromise,
@@ -281,7 +281,7 @@ SnakWidget.prototype.asyncFormatForDisplay = function () {
 
 		this.formatDisplayPromise = $.when.apply( $, promises ).promise( {
 			abort: function () {
-				promises.forEach( function ( promise ) {
+				promises.forEach( ( promise ) => {
 					promise.abort();
 				} );
 			}
@@ -300,7 +300,7 @@ SnakWidget.prototype.asyncFormatForDisplay = function () {
  * @return {datamodel.Snak}
  */
 SnakWidget.prototype.cloneSnak = function ( data ) {
-	var serializer = new serialization.SnakSerializer(),
+	const serializer = new serialization.SnakSerializer(),
 		deserializer = new serialization.SnakDeserializer();
 
 	return deserializer.deserialize( serializer.serialize( data ) );
@@ -310,10 +310,8 @@ SnakWidget.prototype.cloneSnak = function ( data ) {
  * @return {Object[]} filters
  */
 SnakWidget.prototype.getFilters = function () {
-	var supportedTypes = mw.config.get( 'wbmiSupportedDataTypes' ) || [],
-		uniqueTypes = supportedTypes.filter( function ( item, index, self ) {
-			return self.indexOf( item ) === index;
-		} );
+	const supportedTypes = mw.config.get( 'wbmiSupportedDataTypes' ) || [],
+		uniqueTypes = supportedTypes.filter( ( item, index, self ) => self.indexOf( item ) === index );
 
 	return [
 		{ field: 'datatype', value: uniqueTypes.join( '|' ) }

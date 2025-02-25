@@ -3,7 +3,7 @@
 /**
  * Page protection message to indicate user's ability to edit media info.
  */
-var ProtectionMsgWidget = function () {
+const ProtectionMsgWidget = function () {
 	this.message = mw.config.get( 'wbmiProtectionMsg' );
 	this.widget = new OO.ui.Widget( $.extend( {
 		$content: this.message,
@@ -14,7 +14,7 @@ var ProtectionMsgWidget = function () {
 };
 
 ProtectionMsgWidget.prototype.render = function () {
-	var data,
+	let data,
 		template;
 
 	data = {

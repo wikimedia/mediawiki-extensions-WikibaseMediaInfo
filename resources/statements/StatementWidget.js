@@ -1,6 +1,6 @@
 'use strict';
 
-var dataTypesMap = mw.config.get( 'wbDataTypes' ),
+let dataTypesMap = mw.config.get( 'wbDataTypes' ),
 	ItemWidget = require( './ItemWidget.js' ),
 	inputs = require( './inputs/index.js' ),
 	FormatValueElement = require( 'wikibase.mediainfo.base' ).FormatValueElement,
@@ -21,7 +21,7 @@ var dataTypesMap = mw.config.get( 'wbDataTypes' ),
  * @param {string} [config.editing] True for edit mode, False for read mode
  * @param {boolean} [config.isDefaultProperty] True if the widget is shown even if there are
  *  no values for the property
- * @param {Object} [config.helpUrls]  An object with property id as members and help urls for
+ * @param {Object} [config.helpUrls] An object with property id as members and help urls for
  *  the property as values
  *  e.g. { P1: "https://commons.wikimedia.org/wiki/Special:MyLanguage/Commons:Depicts" }
  * @param {boolean} [config.showControls] Whether or not to display editing controls (default to false)
@@ -29,7 +29,7 @@ var dataTypesMap = mw.config.get( 'wbDataTypes' ),
  * @param {string[]} [config.tags] Change tags to apply to edits
  */
 StatementWidget = function ( config ) {
-	var valueType = config.valueType;
+	let valueType = config.valueType;
 
 	if ( !valueType && config.propertyType && config.propertyType in dataTypesMap ) {
 		// backward compatibility from before we were using value type...
@@ -91,21 +91,19 @@ OO.mixinClass( StatementWidget, FormatValueElement );
  * @inheritDoc
  */
 StatementWidget.prototype.getTemplateData = function () {
-	var self = this,
+	const self = this,
 		dataValue = new datamodel.EntityId( this.state.propertyId ),
 		errors = this.getErrors(),
 		errorMessages = ( errors.length > 0 ) ?
-			errors.map( function ( error ) {
-				return new OO.ui.MessageWidget( {
-					type: 'error',
-					label: error,
-					classes: [ 'wbmi-statement-error-msg' ]
-				} );
-			} ) : null;
+			errors.map( ( error ) => new OO.ui.MessageWidget( {
+				type: 'error',
+				label: error,
+				classes: [ 'wbmi-statement-error-msg' ]
+			} ) ) : null;
 
 	// fetch property value & url
-	return this.formatValue( dataValue, 'text/html' ).then( function ( html ) {
-		var formatResponse, editButton, cancelButton, removeButton, learnMoreLink, learnMoreButton;
+	return this.formatValue( dataValue, 'text/html' ).then( ( html ) => {
+		let formatResponse, editButton, cancelButton, removeButton, learnMoreLink, learnMoreButton;
 
 		formatResponse = function ( response ) {
 			return $( '<div>' )
@@ -178,7 +176,7 @@ StatementWidget.prototype.getTemplateData = function () {
  * @return {boolean}
  */
 StatementWidget.prototype.hasChanges = function () {
-	var changes = this.getChanges(),
+	const changes = this.getChanges(),
 		removals = this.getRemovals();
 
 	return changes.length > 0 || removals.length > 0;
@@ -191,11 +189,11 @@ StatementWidget.prototype.hasChanges = function () {
  * @fires change
  */
 StatementWidget.prototype.addItemFromInput = function () {
-	var self = this;
+	const self = this;
 
 	this.input.parseValue( this.state.propertyId ).then(
-		function () {
-			var dataValue = self.input.getData(),
+		() => {
+			const dataValue = self.input.getData(),
 				widget = self.createItem( self.input.getSnakType(), dataValue );
 
 			self.addItems( [ widget ] );
@@ -210,8 +208,8 @@ StatementWidget.prototype.addItemFromInput = function () {
 			self.input.clear();
 			self.input.setErrors( [] );
 		},
-		function ( errorCode, error ) {
-			var apiError = wikibase.api.RepoApiError.newFromApiResponse( error, 'save' ),
+		( errorCode, error ) => {
+			const apiError = wikibase.api.RepoApiError.newFromApiResponse( error, 'save' ),
 				errorMessage = new OO.ui.HtmlSnippet( apiError.detailedMessage );
 			self.input.setErrors( [ errorMessage ] );
 		}
@@ -224,7 +222,7 @@ StatementWidget.prototype.addItemFromInput = function () {
  * @return {ItemWidget}
  */
 StatementWidget.prototype.createItem = function ( snakType, dataValue ) {
-	var widget = new ItemWidget( {
+	const widget = new ItemWidget( {
 		disabled: this.isDisabled(),
 		editing: this.state.editing,
 		entityId: this.state.entityId,
@@ -246,9 +244,7 @@ StatementWidget.prototype.createItem = function ( snakType, dataValue ) {
  * @return {datamodel.StatementList}
  */
 StatementWidget.prototype.getData = function () {
-	return new datamodel.StatementList( this.getItems().map( function ( item ) {
-		return item.getData();
-	} ) );
+	return new datamodel.StatementList( this.getItems().map( ( item ) => item.getData() ) );
 };
 
 /**
@@ -258,7 +254,7 @@ StatementWidget.prototype.getData = function () {
  * @return {jQuery.Promise}
  */
 StatementWidget.prototype.setData = function ( data ) {
-	var self = this,
+	let self = this,
 		existing = [],
 		promises = [],
 		sortedData;
@@ -271,32 +267,30 @@ StatementWidget.prototype.setData = function ( data ) {
 	// clear out input field
 	this.input.clear();
 
-	sortedData = data.toArray().sort( function ( statement1, statement2 ) {
-		return statement2.getRank() - statement1.getRank();
-	} );
+	sortedData = data.toArray().sort( ( statement1, statement2 ) => statement2.getRank() - statement1.getRank() );
 
 	// get rid of existing widgets that are no longer present in the
 	// new set of data we've been fed
-	this.removeItems( this.getItems().filter( function ( item ) {
+	this.removeItems( this.getItems().filter(
 		// we could pretty much just do `!data.hasItem( item.getData() )`,
 		// but that one does not compare GUIDs, so if there are multiple
 		// similar claims, but with a similar GUID, it'll consider them
 		// all the same
-		return !data.toArray().some( function ( statement ) {
-			return statement.equals( item.getData() ) && statement.getClaim().getGuid() === item.getData().getClaim().getGuid();
-		} );
-	} ) );
+		( item ) => !data.toArray().some(
+			( statement ) => statement.equals( item.getData() ) && statement.getClaim().getGuid() === item.getData().getClaim().getGuid()
+		)
+	) );
 
 	// figure out which items have an existing widget already
 	// we're doing this outside of the creation below, because
 	// setData is async, and new objects may not immediately
 	// have their data set
-	sortedData.forEach( function ( statement, i ) {
+	sortedData.forEach( ( statement, i ) => {
 		existing[ i ] = self.findItemFromData( statement );
 	} );
 
-	sortedData.forEach( function ( statement, i ) {
-		var mainSnak = statement.getClaim().getMainSnak(),
+	sortedData.forEach( ( statement, i ) => {
+		let mainSnak = statement.getClaim().getMainSnak(),
 			widget = existing[ i ],
 			type = mainSnak.getType(),
 			value;
@@ -327,9 +321,7 @@ StatementWidget.prototype.setData = function ( data ) {
 		promises.push( widget.setData( statement ) );
 	} );
 
-	return $.when.apply( $, promises ).then( function () {
-		return self.$element;
-	} );
+	return $.when.apply( $, promises ).then( () => self.$element );
 };
 
 /**
@@ -348,10 +340,10 @@ StatementWidget.prototype.updatePublishButtonState = function () {
  * @return {jQuery.Deferred}
  */
 StatementWidget.prototype.setEditing = function ( editing ) {
-	var self = this,
+	const self = this,
 		promises = [];
 
-	this.getItems().forEach( function ( item ) {
+	this.getItems().forEach( ( item ) => {
 		try {
 			promises.push( item.setEditing( editing ) );
 		} catch ( e ) {
@@ -393,31 +385,27 @@ StatementWidget.prototype.setDisabled = function ( disabled ) {
  * @return {datamodel.Statement[]}
  */
 StatementWidget.prototype.getChanges = function () {
-	var currentStatements = this.getData().toArray(),
-		previousStatements = this.state.initialData.toArray().reduce( function ( result, statement ) {
+	const currentStatements = this.getData().toArray(),
+		previousStatements = this.state.initialData.toArray().reduce( ( result, statement ) => {
 			result[ statement.getClaim().getGuid() ] = statement;
 			return result;
 		}, {} );
 
-	return currentStatements.filter( function ( statement ) {
-		return !( statement.getClaim().getGuid() in previousStatements ) ||
-			!statement.equals( previousStatements[ statement.getClaim().getGuid() ] );
-	} );
+	return currentStatements.filter( ( statement ) => !( statement.getClaim().getGuid() in previousStatements ) ||
+			!statement.equals( previousStatements[ statement.getClaim().getGuid() ] ) );
 };
 
 /**
  * @return {datamodel.Statement[]}
  */
 StatementWidget.prototype.getRemovals = function () {
-	var data = this.getData(),
-		currentStatements = data.toArray().reduce( function ( result, statement ) {
+	const data = this.getData(),
+		currentStatements = data.toArray().reduce( ( result, statement ) => {
 			result[ statement.getClaim().getGuid() ] = statement;
 			return result;
 		}, {} );
 
-	return this.state.initialData.toArray().filter( function ( statement ) {
-		return !( statement.getClaim().getGuid() in currentStatements );
-	} );
+	return this.state.initialData.toArray().filter( ( statement ) => !( statement.getClaim().getGuid() in currentStatements ) );
 };
 
 /**
@@ -434,16 +422,14 @@ StatementWidget.prototype.getRemovals = function () {
  * @return {jQuery.Promise}
  */
 StatementWidget.prototype.resetData = function ( data ) {
-	var self = this;
+	const self = this;
 
 	data = this.cloneData( data === undefined ? this.state.initialData : data );
 
 	return this.setData( data )
-		.then( function () {
-			// use the `.getData()` result instead of `data` because that'll
-			// already include valid GUIDs, whereas `data` might not
-			return self.setState( { initialData: self.getData() } );
-		} )
+		// use the `.getData()` result instead of `data` because that'll
+		// already include valid GUIDs, whereas `data` might not
+		.then( () => self.setState( { initialData: self.getData() } ) )
 		.then( this.setEditing.bind( this, false ) );
 };
 
@@ -452,7 +438,7 @@ StatementWidget.prototype.resetData = function ( data ) {
  * @return {jQuery.Promise}
  */
 StatementWidget.prototype.submit = function ( baseRevId ) {
-	var self = this,
+	let self = this,
 		api = wikibase.api.getLocationAgnosticMwApi(
 			mw.config.get( 'wbmiRepoApiUrl', mw.config.get( 'wbRepoApiUrl' ) )
 		),
@@ -471,113 +457,48 @@ StatementWidget.prototype.submit = function ( baseRevId ) {
 		.then( self.setErrors.bind( self, [] ) );
 	this.setDisabled( true );
 
-	data.toArray().forEach( function ( statement ) {
+	data.toArray().forEach( ( statement ) => {
 		statementsByGuid[ statement.getClaim().getGuid() ] = statement;
 	} );
 
-	changedStatements.forEach( function ( statement ) {
-		promise = promise.then( function ( innerStatement, prevResponse ) {
-			return api.postWithEditToken( {
-				action: 'wbsetclaim',
-				format: 'json',
-				claim: JSON.stringify( serializer.serialize( innerStatement ) ),
-				// fetch the previous response's rev id and feed it to the next
-				baserevid: prevResponse.pageinfo ? ( prevResponse.pageinfo.lastrevid || undefined ) : undefined,
-				bot: 1,
-				summary: self.config.summary || undefined,
-				tags: self.config.tags || undefined,
-				assertuser: mw.user.isNamed() ? mw.user.getName() : undefined,
-				errorformat: 'html',
-				errorlang: mw.config.get( 'wgUserLanguage' ),
-				errorsuselocal: true,
-				returnto: mw.config.get( 'wgPageName' ),
-				returntoanchor: '#' + statement.getClaim().getMainSnak().getPropertyId()
-			} ).then(
-				function ( response ) {
-					var guid = response.claim.id,
-						originalStatement = statementsByGuid[ guid ],
-						deserializer = new serialization.StatementDeserializer(),
-						responseStatement;
-					if ( response.claim.qualifiers !== undefined ) {
-						// Capture hashes for new qualifiers by replacing the original
-						// statement with a new statement created from the response
-						responseStatement = deserializer.deserialize( response.claim );
-						if ( data.hasItem( originalStatement ) ) {
-							data.removeItem( originalStatement );
-							// also remove the item from the StatementWidget itself,
-							// or the data will be recreated in this.resetData()
-							self.removeItems( [ self.findItemFromData( originalStatement ) ] );
-						}
-						data.addItem( responseStatement );
+	changedStatements.forEach( ( statement ) => {
+		promise = promise.then( ( ( innerStatement, prevResponse ) => api.postWithEditToken( {
+			action: 'wbsetclaim',
+			format: 'json',
+			claim: JSON.stringify( serializer.serialize( innerStatement ) ),
+			// fetch the previous response's rev id and feed it to the next
+			baserevid: prevResponse.pageinfo ? ( prevResponse.pageinfo.lastrevid || undefined ) : undefined,
+			bot: 1,
+			summary: self.config.summary || undefined,
+			tags: self.config.tags || undefined,
+			assertuser: mw.user.isNamed() ? mw.user.getName() : undefined,
+			errorformat: 'html',
+			errorlang: mw.config.get( 'wgUserLanguage' ),
+			errorsuselocal: true,
+			returnto: mw.config.get( 'wgPageName' ),
+			returntoanchor: '#' + statement.getClaim().getMainSnak().getPropertyId()
+		} ).then(
+			( response ) => {
+				let guid = response.claim.id,
+					originalStatement = statementsByGuid[ guid ],
+					deserializer = new serialization.StatementDeserializer(),
+					responseStatement;
+				if ( response.claim.qualifiers !== undefined ) {
+					// Capture hashes for new qualifiers by replacing the original
+					// statement with a new statement created from the response
+					responseStatement = deserializer.deserialize( response.claim );
+					if ( data.hasItem( originalStatement ) ) {
+						data.removeItem( originalStatement );
+						// also remove the item from the StatementWidget itself,
+						// or the data will be recreated in this.resetData()
+						self.removeItems( [ self.findItemFromData( originalStatement ) ] );
 					}
-
-					// extract tempuser properties from response, if present
-					// (this will only be present the first request)
-					for ( var property in response ) {
-						if ( property.match( /^tempuser/ ) ) {
-							tempuser[ property ] = response[ property ];
-						}
-					}
-					// make sure to attach known tempuser data to any follow-up
-					// response, so it ends up propagating until the last response,
-					// and can be handled once all changes have been submitted
-					if ( Object.keys( tempuser ).length > 0 ) {
-						Object.assign( response, tempuser );
-					}
-
-					return response;
+					data.addItem( responseStatement );
 				}
-			).catch(
-				function ( errorCode, error ) {
-					var apiError = wikibase.api.RepoApiError.newFromApiResponse( error, 'save' ),
-						errorMessage = new OO.ui.HtmlSnippet( apiError.detailedMessage ),
-						guid = statement.getClaim().getGuid(),
-						initialStatement = self.state.initialData.toArray().filter( function ( filterStatement ) {
-							return filterStatement.getClaim().getGuid() === guid;
-						} )[ 0 ];
 
-					// TODO: show item-specific errors within item UI by using
-					// the item's setErrors method.
-					// TODO: flag the offending input so we can make it clear to
-					// the user which top-level statement or qualifier needs to
-					// be fixed.
-					hasFailures = true;
-					errors.push( errorMessage );
-
-					// replace statement with what we previously had, since we failed
-					// to submit the changes...
-					data.removeItem( statement );
-					if ( initialStatement ) {
-						data.addItem( initialStatement );
-					}
-
-					return prevResponse;
-				}
-			);
-		}.bind( null, statement ) );
-	} );
-
-	// Delete removed items
-	if ( removedStatements.length > 0 ) {
-		promise = promise.then( function ( prevResponse ) {
-			return api.postWithEditToken( {
-				action: 'wbremoveclaims',
-				format: 'json',
-				claim: removedStatements.map( function ( statement ) {
-					return statement.getClaim().getGuid();
-				} ).join( '|' ),
-				// fetch the previous response's rev id and feed it to the next
-				baserevid: prevResponse.pageinfo ? ( prevResponse.pageinfo.lastrevid || undefined ) : undefined,
-				bot: 1,
-				summary: self.config.summary || undefined,
-				tags: self.config.tags || undefined,
-				assertuser: mw.user.isNamed() ? mw.user.getName() : undefined,
-				returnto: mw.config.get( 'wgPageName' ),
-				returntoanchor: '#' + removedStatements[ 0 ].getClaim().getMainSnak().getPropertyId()
-			} ).then( function ( response ) {
 				// extract tempuser properties from response, if present
 				// (this will only be present the first request)
-				for ( var property in response ) {
+				for ( const property in response ) {
 					if ( property.match( /^tempuser/ ) ) {
 						tempuser[ property ] = response[ property ];
 					}
@@ -590,38 +511,93 @@ StatementWidget.prototype.submit = function ( baseRevId ) {
 				}
 
 				return response;
-			} ).catch( function ( errorCode, error ) {
-				var apiError = wikibase.api.RepoApiError.newFromApiResponse( error, 'save' ),
-					promises;
+			}
+		).catch(
+			( errorCode, error ) => {
+				const apiError = wikibase.api.RepoApiError.newFromApiResponse( error, 'save' ),
+					errorMessage = new OO.ui.HtmlSnippet( apiError.detailedMessage ),
+					guid = statement.getClaim().getGuid(),
+					initialStatement = self.state.initialData.toArray().filter( ( filterStatement ) => filterStatement.getClaim().getGuid() === guid )[ 0 ];
 
+				// TODO: show item-specific errors within item UI by using
+				// the item's setErrors method.
+				// TODO: flag the offending input so we can make it clear to
+				// the user which top-level statement or qualifier needs to
+				// be fixed.
 				hasFailures = true;
-				errors.push( apiError.detailedMessage );
+				errors.push( errorMessage );
 
-				// restore statements that failed to delete
-				promises = removedStatements.map( function ( statement ) {
-					var mainSnak = statement.getClaim().getMainSnak(),
-						snakType = mainSnak.getType(),
-						value = snakType === 'value' ? mainSnak.getValue() : null,
-						item = self.createItem( snakType, value );
+				// replace statement with what we previously had, since we failed
+				// to submit the changes...
+				data.removeItem( statement );
+				if ( initialStatement ) {
+					data.addItem( initialStatement );
+				}
 
-					self.addItems( [ item ] );
+				return prevResponse;
+			}
+		) ).bind( null, statement ) );
+	} );
 
-					data.addItem( statement );
-					return item.setData( statement );
-				} );
+	// Delete removed items
+	if ( removedStatements.length > 0 ) {
+		promise = promise.then( ( prevResponse ) => api.postWithEditToken( {
+			action: 'wbremoveclaims',
+			format: 'json',
+			claim: removedStatements.map( ( statement ) => statement.getClaim().getGuid() ).join( '|' ),
+			// fetch the previous response's rev id and feed it to the next
+			baserevid: prevResponse.pageinfo ? ( prevResponse.pageinfo.lastrevid || undefined ) : undefined,
+			bot: 1,
+			summary: self.config.summary || undefined,
+			tags: self.config.tags || undefined,
+			assertuser: mw.user.isNamed() ? mw.user.getName() : undefined,
+			returnto: mw.config.get( 'wgPageName' ),
+			returntoanchor: '#' + removedStatements[ 0 ].getClaim().getMainSnak().getPropertyId()
+		} ).then( ( response ) => {
+			// extract tempuser properties from response, if present
+			// (this will only be present the first request)
+			for ( const property in response ) {
+				if ( property.match( /^tempuser/ ) ) {
+					tempuser[ property ] = response[ property ];
+				}
+			}
+			// make sure to attach known tempuser data to any follow-up
+			// response, so it ends up propagating until the last response,
+			// and can be handled once all changes have been submitted
+			if ( Object.keys( tempuser ).length > 0 ) {
+				Object.assign( response, tempuser );
+			}
 
-				return $.when.apply( $, promises ).then( function () {
-					// keep the update chain moving...
-					return prevResponse;
-				} );
+			return response;
+		} ).catch( ( errorCode, error ) => {
+			let apiError = wikibase.api.RepoApiError.newFromApiResponse( error, 'save' ),
+				promises;
+
+			hasFailures = true;
+			errors.push( apiError.detailedMessage );
+
+			// restore statements that failed to delete
+			promises = removedStatements.map( ( statement ) => {
+				const mainSnak = statement.getClaim().getMainSnak(),
+					snakType = mainSnak.getType(),
+					value = snakType === 'value' ? mainSnak.getValue() : null,
+					item = self.createItem( snakType, value );
+
+				self.addItems( [ item ] );
+
+				data.addItem( statement );
+				return item.setData( statement );
 			} );
-		} );
+
+			// keep the update chain moving...
+			return $.when.apply( $, promises ).then( () => prevResponse );
+		} ) );
 	}
 
 	// store data after we've submitted all changes, so that we'll reset to the
 	// actual most recent correct state
-	promise = promise.then( function ( response ) {
-		var deferred = $.Deferred();
+	promise = promise.then( ( response ) => {
+		const deferred = $.Deferred();
 
 		// reset to original, pre-submit, disabled state
 		self.setDisabled( disabled );
@@ -653,7 +629,7 @@ StatementWidget.prototype.submit = function ( baseRevId ) {
  * @return {datamodel.StatementList}
  */
 StatementWidget.prototype.cloneData = function ( data ) {
-	var serializer = new serialization.StatementListSerializer(),
+	const serializer = new serialization.StatementListSerializer(),
 		deserializer = new serialization.StatementListDeserializer();
 
 	return deserializer.deserialize( serializer.serialize( data ) );
@@ -664,7 +640,7 @@ StatementWidget.prototype.cloneData = function ( data ) {
  * button for a given block of statements.
  */
 StatementWidget.prototype.showCancelConfirmationDialog = function () {
-	var self = this;
+	const self = this;
 
 	if ( this.hasChanges() ) {
 		OO.ui.confirm(
@@ -684,7 +660,7 @@ StatementWidget.prototype.showCancelConfirmationDialog = function () {
 					}
 				]
 			}
-		).then( function ( confirmed ) {
+		).then( ( confirmed ) => {
 			if ( confirmed ) {
 				self.setErrors( [] )
 					.then( self.emit.bind( self, 'cancel' ) );
@@ -701,7 +677,7 @@ StatementWidget.prototype.showCancelConfirmationDialog = function () {
  * All" button for a given block of statements.
  */
 StatementWidget.prototype.showRemoveConfirmationDialog = function () {
-	var self = this;
+	const self = this;
 
 	OO.ui.confirm(
 		mw.msg( 'wikibasemediainfo-remove-all-statements-confirm' ),
@@ -717,10 +693,10 @@ StatementWidget.prototype.showRemoveConfirmationDialog = function () {
 				flags: 'safe'
 			} ]
 		}
-	).done( function ( confirmed ) {
+	).done( ( confirmed ) => {
 		if ( confirmed ) {
 			self.clearItems();
-			self.submit().then( function () {
+			self.submit().then( () => {
 				self.emit( 'widgetRemoved', self.state.propertyId );
 			} );
 		}
@@ -737,15 +713,13 @@ StatementWidget.prototype.handleConstraintsResponse = function ( responseForProp
 	if ( responseForPropertyId === null ) {
 		return;
 	}
-	this.getItems().forEach( function ( itemWidget ) {
-		var guid, result;
+	this.getItems().forEach( ( itemWidget ) => {
+		let guid, result;
 
 		try {
 			// find the constraint report for this GUID
 			guid = itemWidget.getData().getClaim().getGuid();
-			result = responseForPropertyId.filter( function ( responseForStatement ) {
-				return responseForStatement.id === guid;
-			} )[ 0 ] || null;
+			result = responseForPropertyId.filter( ( responseForStatement ) => responseForStatement.id === guid )[ 0 ] || null;
 			itemWidget.setConstraintsReport( result );
 		} catch ( e ) {
 			itemWidget.setConstraintsReport( null );

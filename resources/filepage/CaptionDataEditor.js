@@ -1,6 +1,6 @@
 'use strict';
 
-var CaptionDataEditor,
+let CaptionDataEditor,
 	wbTermsLanguages = require( 'wikibase.mediainfo.statements' ).config.wbTermsLanguages,
 	UlsWidget = require( 'wikibase.mediainfo.uls' );
 
@@ -16,7 +16,7 @@ var CaptionDataEditor,
  * @param {number} [config.warnWithinMaxCaptionLength]
  */
 CaptionDataEditor = function ( guid, captionData, config ) {
-	var self = this;
+	const self = this;
 
 	config = config || {};
 
@@ -32,7 +32,7 @@ CaptionDataEditor = function ( guid, captionData, config ) {
 	if ( captionData.languageCode !== '' ) {
 		this.languageSelector.setValue( captionData.languageCode );
 	}
-	this.languageSelector.on( 'select', function () {
+	this.languageSelector.on( 'select', () => {
 		self.emit( 'languageSelectorUpdated' );
 	} );
 
@@ -47,10 +47,10 @@ CaptionDataEditor = function ( guid, captionData, config ) {
 		classes: [ 'wbmi-caption-textInput' ]
 	} );
 	this.textInput
-		.on( 'change', function () {
+		.on( 'change', () => {
 			self.textInput.getValidity()
-				.done( function () {
-					var length = self.textInput.getValue().length,
+				.done( () => {
+					let length = self.textInput.getValue().length,
 						lengthDiff;
 
 					self.setInputError( '' );
@@ -70,8 +70,8 @@ CaptionDataEditor = function ( guid, captionData, config ) {
 						}
 					}
 				} )
-				.fail( function () {
-					var length = self.textInput.getValue().length;
+				.fail( () => {
+					const length = self.textInput.getValue().length;
 
 					self.setInputWarning( '' );
 
@@ -87,11 +87,11 @@ CaptionDataEditor = function ( guid, captionData, config ) {
 						).escaped() );
 					}
 				} )
-				.always( function () {
+				.always( () => {
 					self.emit( 'textInputChanged' );
 				} );
 		} )
-		.on( 'keypress', function ( event ) {
+		.on( 'keypress', ( event ) => {
 			// if the key pressed is the 'enter' key
 			if ( event.keycode === 13 || event.which === 13 ) {
 				self.emit( 'textInputSubmitted' );
@@ -105,7 +105,7 @@ CaptionDataEditor = function ( guid, captionData, config ) {
 		classes: [ 'wbmi-caption-deleteButton' ],
 		id: guid
 	} );
-	this.deleter.on( 'click', function () {
+	this.deleter.on( 'click', () => {
 		self.emit( 'captionDeleted', guid );
 	} );
 

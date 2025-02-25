@@ -1,6 +1,6 @@
 'use strict';
 
-var ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
+let ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
 	wbMonolingualTextLanguages = require( '../config/wbMonolingualTextLanguages.json' ),
 	UlsWidget = require( 'wikibase.mediainfo.uls' ),
 	AbstractInputWidget = require( './AbstractInputWidget.js' ),
@@ -50,7 +50,7 @@ OO.mixinClass( MonolingualTextInputWidget, ComponentWidget );
  * @inheritDoc
  */
 MonolingualTextInputWidget.prototype.getTemplateData = function () {
-	var button = new OO.ui.ButtonWidget( {
+	const button = new OO.ui.ButtonWidget( {
 		classes: [ 'wbmi-input-widget__button' ],
 		label: mw.msg( 'wikibasemediainfo-monolingualtext-input-button-text' ),
 		flags: [ 'progressive' ],
@@ -121,7 +121,7 @@ MonolingualTextInputWidget.prototype.getData = function () {
  * @inheritDoc
  */
 MonolingualTextInputWidget.prototype.setData = function ( data ) {
-	var json = data.toJSON();
+	const json = data.toJSON();
 
 	this.input.setValue( json.text );
 	this.language.setValue( json.language );

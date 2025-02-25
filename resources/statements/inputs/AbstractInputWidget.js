@@ -6,7 +6,7 @@
  * @param {boolean} [config.isQualifier] True when used as qualifier value, false (default) for statement level
  */
 // eslint-disable-next-line no-unused-vars
-var AbstractInputWidget = function MediaInfoStatementsAbstractInputWidget( config ) {};
+const AbstractInputWidget = function MediaInfoStatementsAbstractInputWidget( config ) {};
 
 /**
  * Fired when the value is considered "complete" (e.g. hitting "enter", clicking "add", ...)
@@ -110,7 +110,7 @@ AbstractInputWidget.prototype.setDisabled = function () {
  * @return {jQuery.Promise.<dataValues.DataValue>}
  */
 AbstractInputWidget.prototype.parseValue = function ( propertyId, datatype ) {
-	var api = wikibase.api.getLocationAgnosticMwApi(
+	let api = wikibase.api.getLocationAgnosticMwApi(
 			mw.config.get( 'wbmiRepoApiUrl', mw.config.get( 'wbRepoApiUrl' ) ),
 			{ anonymous: true }
 		),
@@ -138,8 +138,8 @@ AbstractInputWidget.prototype.parseValue = function ( propertyId, datatype ) {
 
 	// parse on the server
 	return promise
-		.then( function ( response ) {
-			var rawValue = response.results[ 0 ];
+		.then( ( response ) => {
+			const rawValue = response.results[ 0 ];
 			return dataValues.newDataValue( rawValue.type, rawValue.value );
 		} )
 		.promise( { abort: promise.abort } );

@@ -1,6 +1,6 @@
 'use strict';
 
-var CancelPublishWidget;
+let CancelPublishWidget;
 
 /**
  * Widget containing 'cancel' and 'publish' buttons
@@ -8,7 +8,7 @@ var CancelPublishWidget;
  * @constructor
  */
 CancelPublishWidget = function () {
-	var cancelButton = new OO.ui.ButtonWidget( {
+	const cancelButton = new OO.ui.ButtonWidget( {
 			framed: false,
 			label: mw.msg( 'wikibasemediainfo-filepage-cancel' )
 		} ),

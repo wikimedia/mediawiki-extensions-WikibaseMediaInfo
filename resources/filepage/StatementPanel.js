@@ -1,6 +1,6 @@
 'use strict';
 
-var AnonWarning = require( './AnonWarning.js' ),
+let AnonWarning = require( './AnonWarning.js' ),
 	FormatValueElement = require( 'wikibase.mediainfo.base' ).FormatValueElement,
 	LicenseDialogWidget = require( './LicenseDialogWidget.js' ),
 	StatementWidget = require( 'wikibase.mediainfo.statements' ).StatementWidget,
@@ -99,12 +99,12 @@ StatementPanel.prototype.unbindEventHandlers = function () {
  * @param {Object} data
  */
 StatementPanel.prototype.populateFormatValueCache = function ( data ) {
-	Object.keys( data ).forEach( function ( dataValue ) {
-		Object.keys( data[ dataValue ] ).forEach( function ( format ) {
-			Object.keys( data[ dataValue ][ format ] ).forEach( function ( language ) {
-				var properties = data[ dataValue ][ format ][ language ];
-				Object.keys( properties ).forEach( function ( propertyId ) {
-					var json = JSON.parse( dataValue ),
+	Object.keys( data ).forEach( ( dataValue ) => {
+		Object.keys( data[ dataValue ] ).forEach( ( format ) => {
+			Object.keys( data[ dataValue ][ format ] ).forEach( ( language ) => {
+				const properties = data[ dataValue ][ format ][ language ];
+				Object.keys( properties ).forEach( ( propertyId ) => {
+					const json = JSON.parse( dataValue ),
 						key = FormatValueElement.getKey(
 							dataValues.newDataValue( json.type, json.value ),
 							format,
@@ -139,7 +139,7 @@ StatementPanel.prototype.isEditable = function () {
  * @return {boolean}
  */
 StatementPanel.prototype.isSupportedType = function () {
-	var supportedTypes = mw.config.get( 'wbmiSupportedDataTypes' ) || [];
+	const supportedTypes = mw.config.get( 'wbmiSupportedDataTypes' ) || [];
 	return supportedTypes.indexOf( this.config.propertyType ) >= 0;
 };
 
@@ -147,7 +147,7 @@ StatementPanel.prototype.isSupportedType = function () {
  * Toggle the panel into edit mode. This method is asynchronous.
  */
 StatementPanel.prototype.makeEditable = function () {
-	var self = this;
+	const self = this;
 
 	// Show IP address logging notice to anon users
 	if ( mw.config.get( 'wbmiShowIPEditingWarning' ) && mw.user.isAnon() ) {
@@ -157,7 +157,7 @@ StatementPanel.prototype.makeEditable = function () {
 	// show dialog informing user of licensing & store the returned promise
 	// in licenseAcceptance - submit won't be possible until dialog is closed
 	this.licenseDialogWidget.getConfirmationIfNecessary().then(
-		function () {
+		() => {
 			self.statementWidget.setEditing.bind( self.statementWidget, true );
 
 			if ( !self.isSupportedType() ) {
@@ -172,22 +172,22 @@ StatementPanel.prototype.makeEditable = function () {
  * Toggle the panel into read mode. This method is asynchronous.
  */
 StatementPanel.prototype.makeReadOnly = function () {
-	var self = this;
+	const self = this;
 	this.statementWidget.disconnect( this, { change: 'makeEditable' } );
-	this.statementWidget.resetData().then( function () {
+	this.statementWidget.resetData().then( () => {
 		self.statementWidget.connect( self, { change: 'makeEditable' } );
 		self.emit( 'readOnly' );
 	} );
 };
 
 StatementPanel.prototype.sendData = function () {
-	var self = this;
+	const self = this;
 
 	this.statementWidget.disconnect( this, { change: 'makeEditable' } );
 	this.pushPending();
 
 	this.statementWidget.submit( mw.mediaInfo.structuredData.currentRevision || undefined )
-		.then( function ( response ) {
+		.then( ( response ) => {
 			mw.mediaInfo.structuredData.currentRevision = response.pageinfo.lastrevid;
 			self.makeReadOnly();
 
@@ -201,17 +201,17 @@ StatementPanel.prototype.sendData = function () {
 			} else if ( response.tempusercreated ) {
 				mw.tempUserCreated.showPopup();
 			}
-		} ).catch( function () {
+		} ).catch( () => {
 			// allow panel to be re-enabled to allow trying submission again
 			self.statementWidget.setDisabled( false );
-		} ).always( function () {
+		} ).always( () => {
 			self.statementWidget.connect( self, { change: 'makeEditable' } );
 			self.popPending();
 		} );
 };
 
 StatementPanel.prototype.showUnsupportedPopup = function () {
-	var popup, popupMsg, $content;
+	let popup, popupMsg, $content;
 
 	popupMsg = mw.message(
 		'wikibasemediainfo-statements-unsupported-property-type-content'
@@ -266,7 +266,7 @@ StatementPanel.prototype.handleConstraintsResponse = function ( response ) {
  * @see WikibaseQualityConstraints/modules/gadget.js::_extractResultsForStatement()
  */
 StatementPanel.prototype.extractResultsForPropertyId = function ( response ) {
-	var propertyId = this.config.propertyId,
+	const propertyId = this.config.propertyId,
 		entityId = mw.config.get( 'wbEntityId' ),
 		entityData = response.wbcheckconstraints[ entityId ];
 	if ( 'claims' in entityData ) {

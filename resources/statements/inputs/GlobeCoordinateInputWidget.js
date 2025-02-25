@@ -1,6 +1,6 @@
 'use strict';
 
-var ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
+let ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
 	AbstractInputWidget = require( './AbstractInputWidget.js' ),
 	kartoBox,
 	kartoEditing,
@@ -13,7 +13,7 @@ var ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
  * @param {boolean} [config.isQualifier]
  */
 GlobeCoordinateInputWidget = function MediaInfoStatementsGlobeCoordinateInputWidget( config ) {
-	var self = this;
+	const self = this;
 
 	config = config || {};
 
@@ -75,13 +75,13 @@ OO.mixinClass( GlobeCoordinateInputWidget, ComponentWidget );
  * Bind event listeners, including one on the map if using Kartographer
  */
 GlobeCoordinateInputWidget.prototype.bindEventListeners = function () {
-	var self = this;
+	const self = this;
 
 	this.coordinateInput.connect( this, { change: this.debouncedOnChange } );
 	this.coordinateInput.connect( this, { enter: 'onEnter' } );
 	this.precisionInput.connect( this, { change: 'onPrecisionChange' } );
 	mw.loader.using( [ 'ext.kartographer.box', 'ext.kartographer.editing' ] )
-		.then( function () {
+		.then( () => {
 			self.map.on( 'click', self.onMapClickHandler );
 		} );
 };
@@ -90,14 +90,14 @@ GlobeCoordinateInputWidget.prototype.bindEventListeners = function () {
  * Unbind event listeners, including one on the map if using Kartographer
  */
 GlobeCoordinateInputWidget.prototype.unbindEventListeners = function () {
-	var self = this;
+	const self = this;
 
 	this.coordinateInput.disconnect( this, { change: this.debouncedOnChange } );
 	this.coordinateInput.disconnect( this, { enter: 'onEnter' } );
 	this.precisionInput.disconnect( this, { change: 'onPrecisionChange' } );
 
 	mw.loader.using( [ 'ext.kartographer.box', 'ext.kartographer.editing' ] )
-		.then( function () {
+		.then( () => {
 			self.map.off( 'click', self.onMapClickHandler );
 		} );
 };
@@ -110,7 +110,7 @@ GlobeCoordinateInputWidget.prototype.unbindEventListeners = function () {
  * @return {jQuery.Promise}
  */
 GlobeCoordinateInputWidget.prototype.setData = function ( newData ) {
-	var json = newData.toJSON(),
+	let json = newData.toJSON(),
 		self = this,
 		existingData;
 
@@ -131,7 +131,7 @@ GlobeCoordinateInputWidget.prototype.setData = function ( newData ) {
 		inferredPrecision: json.precision,
 		customPrecision: null,
 		expanded: false
-	} ).then( function ( $element ) {
+	} ).then( ( $element ) => {
 		if ( !newData.equals( existingData ) ) {
 			self.emit( 'change', self );
 		}
@@ -174,7 +174,7 @@ GlobeCoordinateInputWidget.prototype.getRawValueOptions = function () {
  * @inheritdoc
  */
 GlobeCoordinateInputWidget.prototype.clear = function () {
-	var layer;
+	let layer;
 
 	this.coordinateInput.setValue( '' );
 	this.precisionInput.setValue( '' );
@@ -198,7 +198,7 @@ GlobeCoordinateInputWidget.prototype.clear = function () {
  * @param {string} newValue new input value
  */
 GlobeCoordinateInputWidget.prototype.onChange = function ( newValue ) {
-	var self = this;
+	const self = this;
 
 	if ( this.parseValuePromise && this.parseValuePromise.abort ) {
 		this.parseValuePromise.abort();
@@ -218,8 +218,8 @@ GlobeCoordinateInputWidget.prototype.onChange = function ( newValue ) {
 
 	this.parseValuePromise = this.parseValue( undefined, 'globe-coordinate' );
 	this.parseValuePromise
-		.then( function ( response ) {
-			var json = response.toJSON();
+		.then( ( response ) => {
+			const json = response.toJSON();
 
 			// set the value of the precision dropdown to the inferred precision if
 			// no custom precision has been set
@@ -238,7 +238,7 @@ GlobeCoordinateInputWidget.prototype.onChange = function ( newValue ) {
 				inferredPrecision: json.precision
 			} );
 		} )
-		.catch( function () {
+		.catch( () => {
 			self.coordinateInput.setValidityFlag( false );
 		} );
 };
@@ -264,7 +264,7 @@ GlobeCoordinateInputWidget.prototype.onExpandClick = function () {
  * @param {Object} e event
  */
 GlobeCoordinateInputWidget.prototype.onMapClick = function ( e ) {
-	var coordinates = this.map.mouseEventToLatLng( e.originalEvent ),
+	const coordinates = this.map.mouseEventToLatLng( e.originalEvent ),
 		precision = this.constructor.zoomToPrecision( this.map.getZoom(), coordinates.lat ),
 		meaningfulDigits = this.constructor.precisionToDigits( precision ),
 		lat = coordinates.lat.toFixed( meaningfulDigits ),
@@ -301,7 +301,7 @@ GlobeCoordinateInputWidget.prototype.hasValidInput = function () {
  * @inheritDoc
  */
 GlobeCoordinateInputWidget.prototype.getTemplateData = function () {
-	var submitButton = new OO.ui.ButtonWidget( {
+	const submitButton = new OO.ui.ButtonWidget( {
 			classes: [ 'wbmi-input-widget__button' ],
 			label: mw.msg( 'wikibasemediainfo-globecoordinate-input-button-text' ),
 			flags: [ 'progressive' ],
@@ -343,10 +343,10 @@ GlobeCoordinateInputWidget.prototype.getTemplateData = function () {
  * @inheritDoc
  */
 GlobeCoordinateInputWidget.prototype.render = function () {
-	var self = this;
+	const self = this;
 
-	return ComponentWidget.prototype.render.call( this ).then( function ( $element ) {
-		var layer, data;
+	return ComponentWidget.prototype.render.call( this ).then( ( $element ) => {
+		let layer, data;
 
 		if ( self.map === undefined || kartoEditing === undefined ) {
 			return $element;
@@ -390,7 +390,7 @@ GlobeCoordinateInputWidget.prototype.render = function () {
  * @return {jQuery.Promise}
  */
 GlobeCoordinateInputWidget.prototype.initializeMap = function () {
-	var self = this;
+	const self = this;
 
 	if ( this.map ) {
 		// map already initialized previously
@@ -398,7 +398,7 @@ GlobeCoordinateInputWidget.prototype.initializeMap = function () {
 	}
 
 	return mw.loader.using( [ 'ext.kartographer.box', 'ext.kartographer.editing' ] )
-		.then( function ( require ) {
+		.then( ( require ) => {
 			kartoBox = require( 'ext.kartographer.box' );
 			kartoEditing = require( 'ext.kartographer.editing' );
 
@@ -423,7 +423,7 @@ GlobeCoordinateInputWidget.prototype.initializeMap = function () {
 			// added to the DOM, it won't know what size it needs to initialize with...
 			// we'll listen for DOM changes and when we discover this node getting
 			// added, we'll invalidate its existing (incorrect) size
-			new MutationObserver( function () {
+			new MutationObserver( () => {
 				if ( self.$map.parents( 'body' ).length > 0 ) {
 					self.map.invalidateSize();
 
@@ -460,7 +460,7 @@ GlobeCoordinateInputWidget.prototype.setDisabled = function ( disabled ) {
  * @return {string}
  */
 GlobeCoordinateInputWidget.prototype.getPrecisionLabel = function ( precision ) {
-	var label,
+	let label,
 		presets = {};
 
 	presets[ mw.msg( 'wikibasemediainfo-arcminute-label' ) ] = 1 / 60;
@@ -484,11 +484,11 @@ GlobeCoordinateInputWidget.prototype.getPrecisionLabel = function ( precision ) 
  * @return {Object[]}
  */
 GlobeCoordinateInputWidget.prototype.getPrecisionOptions = function () {
-	var precisions = this.constructor.getPrecisions(),
+	const precisions = this.constructor.getPrecisions(),
 		precisionValues = [],
 		self = this;
 
-	precisions.forEach( function ( precision ) {
+	precisions.forEach( ( precision ) => {
 		precisionValues.unshift( {
 			data: precision,
 			label: self.getPrecisionLabel( precision )
@@ -535,15 +535,13 @@ GlobeCoordinateInputWidget.getPrecisions = function () {
  * @return {number}
  */
 GlobeCoordinateInputWidget.zoomToPrecision = function ( zoom, latitude ) {
-	var precisions = this.getPrecisions(),
+	const precisions = this.getPrecisions(),
 		metersPerPx = ( 156543.03392 * Math.cos( ( latitude * Math.PI ) / 180 ) ) / Math.pow( 2, zoom ),
 		// 111.32m = 1 degree at equator, then corrected for latitude
 		degrees = metersPerPx / ( 111.32 * 1000 * Math.cos( latitude * ( Math.PI / 180 ) ) );
 
 	// find closest match for the actual precision
-	return precisions.reduce( function ( best, value ) {
-		return Math.abs( value - degrees ) < Math.abs( best - degrees ) ? value : best;
-	}, Math.max.apply( null, precisions ) );
+	return precisions.reduce( ( best, value ) => Math.abs( value - degrees ) < Math.abs( best - degrees ) ? value : best, Math.max.apply( null, precisions ) );
 };
 
 /**
@@ -557,7 +555,7 @@ GlobeCoordinateInputWidget.zoomToPrecision = function ( zoom, latitude ) {
  * @return {number}
  */
 GlobeCoordinateInputWidget.precisionToDigits = function ( precision ) {
-	var digits = -1,
+	let digits = -1,
 		previous;
 
 	do {
@@ -580,7 +578,7 @@ GlobeCoordinateInputWidget.precisionToDigits = function ( precision ) {
  */
 GlobeCoordinateInputWidget.precisionToZoom = function ( precision, latitude ) {
 	// 111.32m = 1 degree at equator, then corrected for latitude
-	var metersPerPx = precision * ( 111.32 * 1000 * Math.cos( latitude * ( Math.PI / 180 ) ) ),
+	const metersPerPx = precision * ( 111.32 * 1000 * Math.cos( latitude * ( Math.PI / 180 ) ) ),
 		zoom = Math.log( ( 156543.03392 * Math.cos( ( latitude * Math.PI ) / 180 ) ) / metersPerPx ) / Math.log( 2 );
 
 	return Math.round( zoom );

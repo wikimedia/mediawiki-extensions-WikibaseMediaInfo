@@ -1,62 +1,6 @@
 {
 	"root": true,
 	"extends": [
-		"wikimedia/client",
-		".eslintshared.json"
-	],
-	"env": {
-		"commonjs": true
-	},
-	"rules": {
-		"max-len": "off",
-		"no-var": "off",
-		"prefer-arrow-callback": "off",
-		"no-jquery/variable-pattern": "off",
-		"no-jquery/no-event-shorthand": "off",
-		"compat/compat": "warn",
-		"no-jquery/no-extend": "warn",
-		"es-x/no-object-assign": "warn"
-	},
-	"overrides": [
-		{
-			"files": "**/*.vue",
-			"extends": "wikimedia/vue3-es6",
-			"rules": {
-				"vue/html-self-closing": [
-					"error",
-					{
-						"html": {
-							"void": "never",
-							"normal": "never",
-							"component": "never"
-						}
-					}
-				],
-				"vue/v-bind-style": [
-					"warn",
-					"shorthand"
-				],
-				"vue/v-on-style": [
-					"warn",
-					"shorthand"
-				],
-				"vue/v-slot-style": [
-					"warn",
-					"shorthand"
-				]
-			}
-		}
-	],
-	"settings": {
-		"jsdoc": {
-			"preferredTypes": {
-				"CaptionData": "CaptionData",
-				"CaptionsPanel": "CaptionsPanel",
-				"datamodel": "datamodel",
-				"EntityInputWidget": "EntityInputWidget",
-				"MediaInfo": "MediaInfo",
-				"StatementPanel": "StatementPanel"
-			}
-		}
-	}
+		"wikimedia/server"
+	]
 }

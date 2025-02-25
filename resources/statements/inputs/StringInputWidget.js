@@ -1,6 +1,6 @@
 'use strict';
 
-var ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
+let ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
 	AbstractInputWidget = require( './AbstractInputWidget.js' ),
 	StringInputWidget;
 
@@ -39,7 +39,7 @@ OO.mixinClass( StringInputWidget, ComponentWidget );
  * @inheritDoc
  */
 StringInputWidget.prototype.getTemplateData = function () {
-	var button = new OO.ui.ButtonWidget( {
+	const button = new OO.ui.ButtonWidget( {
 		classes: [ 'wbmi-input-widget__button' ],
 		label: mw.msg( 'wikibasemediainfo-string-input-button-text' ),
 		flags: [ 'progressive' ],

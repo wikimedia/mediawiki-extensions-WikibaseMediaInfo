@@ -1,6 +1,6 @@
 mw.template.registerCompiler( 'mustache+dom', {
 	compile: function () {
-		var compiler = mw.template.getCompiler( 'mustache' ),
+		const compiler = mw.template.getCompiler( 'mustache' ),
 			compiled = compiler.compile.apply( compiler, arguments );
 
 		return {
@@ -30,14 +30,14 @@ mw.template.registerCompiler( 'mustache+dom', {
 			 * @return {jQuery} Rendered HTML
 			 */
 			render: function ( data ) {
-				var self = this,
+				let self = this,
 					$container = $( '<div>' ),
 					handlers = {},
 					dom = [],
 					random, transformNodes, i, $result;
 
 				transformNodes = function ( d ) {
-					var keys = Object.keys( d ),
+					let keys = Object.keys( d ),
 						result = new d.constructor(),
 						key, j, node, $stub;
 
@@ -95,7 +95,7 @@ mw.template.registerCompiler( 'mustache+dom', {
 				}
 
 				// ... and add nodes with the on<event> callback handlers
-				Object.keys( handlers ).forEach( function ( randomId ) {
+				Object.keys( handlers ).forEach( ( randomId ) => {
 					$( '<script>' )
 						.attr( 'id', randomId )
 						.data( 'handler', handlers[ randomId ] )

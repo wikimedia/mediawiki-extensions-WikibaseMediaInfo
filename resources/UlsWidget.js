@@ -1,6 +1,6 @@
 'use strict';
 
-var UlsWidget;
+let UlsWidget;
 
 /**
  * @constructor
@@ -43,7 +43,7 @@ OO.inheritClass( UlsWidget, OO.ui.Widget );
  * @param {Object} [languages] Keys are 2-letter language codes, values are language autonyms
  */
 UlsWidget.prototype.initialiseUls = function ( languages ) {
-	var ulsWidget = this;
+	const ulsWidget = this;
 
 	this.languages = languages;
 
@@ -66,7 +66,7 @@ UlsWidget.prototype.initialiseUls = function ( languages ) {
 		onVisible: function () {
 			// Re-position the ULS *after* the widget has been rendered, so that we can be
 			// sure it's in the right place
-			var offset = ulsWidget.$element.offset();
+			const offset = ulsWidget.$element.offset();
 			if ( this.$menu.css( 'direction' ) === 'rtl' ) {
 				offset.left = offset.left - parseInt( this.$menu.css( 'width' ) ) + ulsWidget.$element.width();
 			}
@@ -87,7 +87,7 @@ UlsWidget.prototype.updateLanguages = function ( languages ) {
  * @param {string} value 2-letter language code
  */
 UlsWidget.prototype.setValue = function ( value ) {
-	var current = this.languageValue;
+	const current = this.languageValue;
 	this.languageValue = value;
 
 	// T209380: We want this to be the language autonym for the display value

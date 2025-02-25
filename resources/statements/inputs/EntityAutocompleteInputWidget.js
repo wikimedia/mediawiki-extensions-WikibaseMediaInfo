@@ -1,6 +1,6 @@
 'use strict';
 
-var FormatValueElement = require( 'wikibase.mediainfo.base' ).FormatValueElement,
+let FormatValueElement = require( 'wikibase.mediainfo.base' ).FormatValueElement,
 	datamodel = require( 'wikibase.datamodel' ),
 	EntityAutocompleteInputWidget;
 
@@ -70,7 +70,7 @@ OO.mixinClass( EntityAutocompleteInputWidget, FormatValueElement );
  * @inheritdoc
  */
 EntityAutocompleteInputWidget.prototype.onLookupMenuChoose = function ( item ) {
-	var data = item.getData();
+	const data = item.getData();
 	this.setData( data.id );
 	this.emit( 'add', data );
 };
@@ -80,7 +80,7 @@ EntityAutocompleteInputWidget.prototype.onLookupMenuChoose = function ( item ) {
  * @return {jQuery.Promise}
  */
 EntityAutocompleteInputWidget.prototype.setData = function ( entityId ) {
-	var self = this;
+	const self = this;
 
 	if ( entityId === this.entityId ) {
 		return $.Deferred().resolve( this.$element ).promise();
@@ -106,7 +106,7 @@ EntityAutocompleteInputWidget.prototype.setData = function ( entityId ) {
 
 	this.entityId = entityId;
 	return this.formatValue( new datamodel.EntityId( entityId ), 'text/plain' )
-		.then( function ( plain ) {
+		.then( ( plain ) => {
 			// update textual representation (= label) in the input field
 			self.setValue( plain );
 			self.setFlags( { destructive: false } );
@@ -114,14 +114,12 @@ EntityAutocompleteInputWidget.prototype.setData = function ( entityId ) {
 			// so let's make sure to overrule it and restore the entity id
 			self.entityId = entityId;
 		} )
-		.catch( function () {
+		.catch( () => {
 			// failed to format this id - invalidate it
 			self.entityId = undefined;
 			self.setFlags( { destructive: true } );
 		} )
-		.always( function () {
-			return self.$element;
-		} );
+		.always( () => self.$element );
 };
 
 /**
@@ -135,10 +133,8 @@ EntityAutocompleteInputWidget.prototype.getData = function () {
  * @inheritdoc
  */
 EntityAutocompleteInputWidget.prototype.setValue = function ( value ) {
-	var self = this,
-		labels = Object.keys( this.dataCache ).map( function ( entityId ) {
-			return self.dataCache[ entityId ].label || self.dataCache[ entityId ].id;
-		} ),
+	const self = this,
+		labels = Object.keys( this.dataCache ).map( ( entityId ) => self.dataCache[ entityId ].label || self.dataCache[ entityId ].id ),
 		index = labels.indexOf( this.cleanUpValue( value ) );
 
 	this.entityId = index >= 0 ? Object.keys( this.dataCache )[ index ] : undefined;
@@ -175,7 +171,7 @@ EntityAutocompleteInputWidget.prototype.onFocus = function () {
  * @inheritdoc
  */
 EntityAutocompleteInputWidget.prototype.getLookupRequest = function () {
-	var value = this.getValue(),
+	const value = this.getValue(),
 		deferred = $.Deferred(),
 		api = wikibase.api.getLocationAgnosticMwApi( this.apiUri, { anonymous: true } ),
 		requestParams = {
@@ -226,7 +222,7 @@ EntityAutocompleteInputWidget.prototype.onMousedown = function ( e ) {
  * @inheritdoc
  */
 EntityAutocompleteInputWidget.prototype.getLookupMenuOptionsFromData = function ( data ) {
-	var i,
+	let i,
 		item,
 		items = [];
 
@@ -264,7 +260,7 @@ EntityAutocompleteInputWidget.prototype.getLookupMenuOptionsFromData = function 
 };
 
 EntityAutocompleteInputWidget.prototype.filterData = function ( data ) {
-	var filters = this.filter;
+	let filters = this.filter;
 
 	if ( filters === undefined ) {
 		return data;
@@ -275,8 +271,8 @@ EntityAutocompleteInputWidget.prototype.filterData = function ( data ) {
 		filters = [ filters ];
 	}
 
-	filters.forEach( function ( filter ) {
-		var values,
+	filters.forEach( ( filter ) => {
+		let values,
 			field = filter.field,
 			filterType = 'includeOnMatch';
 		if ( field.indexOf( '!' ) === 0 ) {
@@ -284,7 +280,7 @@ EntityAutocompleteInputWidget.prototype.filterData = function ( data ) {
 			field = filter.field.slice( 1 );
 		}
 		values = filter.value.split( '|' );
-		data = data.filter( function ( datum ) {
+		data = data.filter( ( datum ) => {
 			if ( filterType === 'includeOnMatch' ) {
 				return values.indexOf( datum[ field ] ) !== -1;
 			} else {
@@ -301,7 +297,7 @@ EntityAutocompleteInputWidget.prototype.filterData = function ( data ) {
  * @return {jQuery}
  */
 EntityAutocompleteInputWidget.prototype.createLabelFromSuggestion = function ( entityStub ) {
-	var data = {},
+	let data = {},
 		template;
 
 	template = mw.template.get(

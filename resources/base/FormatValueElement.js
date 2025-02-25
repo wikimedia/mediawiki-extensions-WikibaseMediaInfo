@@ -1,6 +1,6 @@
 'use strict';
 
-var FormatValueElement = function MediaInfoStatementsFormatValueElement() {};
+const FormatValueElement = function MediaInfoStatementsFormatValueElement() {};
 OO.initClass( FormatValueElement );
 
 FormatValueElement.cache = {};
@@ -18,7 +18,7 @@ FormatValueElement.getKey = function ( dataValue, format, language, propertyId )
 		format: format,
 		language: language,
 		property: propertyId
-	}, function ( key, value ) {
+	}, ( key, value ) => {
 		// make sure the data gets sorted during stringify, or we might
 		// end up with a different key for data that is essentially the
 		// same, but where the properties were stringified in a different
@@ -27,7 +27,7 @@ FormatValueElement.getKey = function ( dataValue, format, language, propertyId )
 		if ( value instanceof Object && !( value instanceof Array ) ) {
 			return Object.keys( value )
 				.sort()
-				.reduce( function ( sorted, sortedKey ) {
+				.reduce( ( sorted, sortedKey ) => {
 					sorted[ sortedKey ] = value[ sortedKey ];
 					return sorted;
 				}, {} );
@@ -54,7 +54,7 @@ FormatValueElement.toCache = function ( key, result ) {
  * @return {jQuery.Promise}
  */
 FormatValueElement.prototype.formatValue = function ( dataValue, format, language, propertyId ) {
-	var api,
+	let api,
 		data = { type: dataValue.getType(), value: dataValue.toJSON() },
 		stringified = JSON.stringify( data ),
 		promise,
@@ -92,9 +92,7 @@ FormatValueElement.prototype.formatValue = function ( dataValue, format, languag
 		};
 		promise = api.get( params );
 
-		FormatValueElement.cache[ key ] = promise.then( function ( response ) {
-			return response.result || '';
-		} ).promise( { abort: function () {
+		FormatValueElement.cache[ key ] = promise.then( ( response ) => response.result || '' ).promise( { abort: function () {
 			if ( !( key in FormatValueElement.cache ) ) {
 				// request already aborted/failed and cleaned out of cache
 				return;
@@ -111,7 +109,7 @@ FormatValueElement.prototype.formatValue = function ( dataValue, format, languag
 			delete FormatValueElement.cache[ key ];
 		} } );
 
-		FormatValueElement.cache[ key ].catch( function () {
+		FormatValueElement.cache[ key ].catch( () => {
 			// this promise seems to have failed, might as well remove this from
 			// cache, so it's re-attempted next time we need this...
 			delete FormatValueElement.cache[ key ];

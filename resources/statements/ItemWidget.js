@@ -11,7 +11,7 @@
  * @param {dataValues.DataValue} [config.dataValue] Relevant DataValue object, or null for valueless
  * @param {string} [config.editing] True for edit mode, False for read mode
  */
-var DATA_TYPES,
+let DATA_TYPES,
 	SnakListWidget = require( './SnakListWidget.js' ),
 	ConstraintsReportHandlerElement = require( './ConstraintsReportHandlerElement.js' ),
 	ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
@@ -93,17 +93,15 @@ OO.mixinClass( ItemWidget, ConstraintsReportHandlerElement );
  * @inheritDoc
  */
 ItemWidget.prototype.getTemplateData = function () {
-	var self = this,
+	let self = this,
 		labelPromise,
 		errors = this.getErrors(),
 		errorMessages = ( errors.length > 0 ) ?
-			errors.map( function ( error ) {
-				return new OO.ui.MessageWidget( {
-					type: 'error',
-					label: error,
-					classes: [ 'wbmi-statement-error-msg--inline' ]
-				} );
-			} ) : null;
+			errors.map( ( error ) => new OO.ui.MessageWidget( {
+				type: 'error',
+				label: error,
+				classes: [ 'wbmi-statement-error-msg--inline' ]
+			} ) ) : null;
 
 	// Get the formatted label text for the value if necessary,
 	// or else use a dummy promise
@@ -121,8 +119,8 @@ ItemWidget.prototype.getTemplateData = function () {
 		).promise();
 	}
 
-	return labelPromise.then( function ( label ) {
-		var id = self.dataValue ? self.dataValue.toJSON().id : '',
+	return labelPromise.then( ( label ) => {
+		let id = self.dataValue ? self.dataValue.toJSON().id : '',
 			prominent = self.state.rank === datamodel.Statement.RANK.PREFERRED,
 			dataValueType = self.state.dataValue ? self.state.dataValue.getType() : undefined,
 			removeButton,
@@ -153,8 +151,8 @@ ItemWidget.prototype.getTemplateData = function () {
 			flags: 'progressive',
 			framed: false
 		} );
-		addReferenceButton.on( 'click', function () {
-			var widget = self.createReferenceWidget();
+		addReferenceButton.on( 'click', () => {
+			const widget = self.createReferenceWidget();
 			// initialize with an empty snak input
 			widget.addWidget();
 			self.setState( {
@@ -191,7 +189,7 @@ ItemWidget.prototype.getTemplateData = function () {
 };
 
 ItemWidget.prototype.render = function () {
-	var self = this,
+	let self = this,
 		promise = ComponentWidget.prototype.render.call( this );
 
 	if (
@@ -199,8 +197,8 @@ ItemWidget.prototype.render = function () {
 		this.state.dataValue &&
 		this.state.dataValue.getType() === DATA_TYPES.GLOBECOORDINATE
 	) {
-		promise = promise.then( function ( $element ) {
-			var data = self.state.dataValue.getValue(),
+		promise = promise.then( ( $element ) => {
+			const data = self.state.dataValue.getValue(),
 				layer = kartoEditing.getKartographerLayer( self.map );
 
 			// we've just rerendered & DOM might look different then it did
@@ -256,14 +254,12 @@ ItemWidget.prototype.toggleItemProminence = function ( event ) {
  * @return {jQuery.Promise}
  */
 ItemWidget.prototype.setEditing = function ( editing ) {
-	var self = this;
+	const self = this;
 
 	return $.Deferred().resolve().promise()
 		.then( this.qualifiers.setEditing.bind( this.qualifiers, editing ) )
-		.then( function () {
-			var promises = self.state.references.map( function ( reference ) {
-				return reference.setEditing( editing );
-			} );
+		.then( () => {
+			const promises = self.state.references.map( ( reference ) => reference.setEditing( editing ) );
 			return $.when.apply( $, promises );
 		} )
 		.then( this.setState.bind( this, { editing: editing } ) );
@@ -273,7 +269,7 @@ ItemWidget.prototype.setEditing = function ( editing ) {
  * @return {datamodel.Statement}
  */
 ItemWidget.prototype.getData = function () {
-	var self = this,
+	let self = this,
 		snak;
 
 	switch ( this.state.snakType ) {
@@ -298,15 +294,11 @@ ItemWidget.prototype.getData = function () {
 		),
 		new datamodel.ReferenceList(
 			this.state.references
-				.map( function ( reference, i ) {
-					return new datamodel.Reference(
-						reference.getData(),
-						self.state.referenceHashes[ i ]
-					);
-				} )
-				.filter( function ( reference ) {
-					return reference.getSnaks().length > 0;
-				} )
+				.map( ( reference, i ) => new datamodel.Reference(
+					reference.getData(),
+					self.state.referenceHashes[ i ]
+				) )
+				.filter( ( reference ) => reference.getSnaks().length > 0 )
 		),
 		this.state.rank
 	);
@@ -317,7 +309,7 @@ ItemWidget.prototype.getData = function () {
  * @return {SnakListWidget}
  */
 ItemWidget.prototype.createSnaklistWidget = function ( config ) {
-	var widget = new SnakListWidget( Object.assign( { editing: this.config.editing }, config ) );
+	const widget = new SnakListWidget( Object.assign( { editing: this.config.editing }, config ) );
 	widget.connect( this, { remove: [ 'emit', 'change' ] } );
 	widget.connect( this, { change: [ 'emit', 'change' ] } );
 	return widget;
@@ -328,7 +320,7 @@ ItemWidget.prototype.createSnaklistWidget = function ( config ) {
  * @return {SnakListWidget}
  */
 ItemWidget.prototype.createReferenceWidget = function ( config ) {
-	var widget, self = this;
+	let widget, self = this;
 	config = config || {};
 
 	widget = this.createSnaklistWidget( Object.assign( config, {
@@ -337,11 +329,11 @@ ItemWidget.prototype.createReferenceWidget = function ( config ) {
 	} ) );
 
 	// if a reference snaklist widget is emptied, remove it entirely
-	widget.on( 'empty', function () {
-		var newReferences = [],
+	widget.on( 'empty', () => {
+		const newReferences = [],
 			newReferenceHashes = [];
 
-		self.state.references.forEach( function ( reference, i ) {
+		self.state.references.forEach( ( reference, i ) => {
 			if ( widget !== reference ) {
 				newReferences.push( reference );
 				newReferenceHashes.push( self.state.referenceHashes[ i ] );
@@ -362,7 +354,7 @@ ItemWidget.prototype.createReferenceWidget = function ( config ) {
  * @return {jQuery.Deferred}
  */
 ItemWidget.prototype.setData = function ( data ) {
-	var claim,
+	let claim,
 		mainSnak,
 		qualifiers,
 		referencesArray,
@@ -393,9 +385,7 @@ ItemWidget.prototype.setData = function ( data ) {
 		this.emit( 'change' );
 	}
 
-	referencesHashes = referencesArray.map( function ( reference ) {
-		return reference.getHash();
-	} );
+	referencesHashes = referencesArray.map( ( reference ) => reference.getHash() );
 
 	for ( i = 0; i < referencesArray.length; i++ ) {
 		if ( referencesHashes.indexOf( this.state.referenceHashes[ i ] ) >= 0 ) {
@@ -432,7 +422,7 @@ ItemWidget.prototype.setData = function ( data ) {
  * @return {jQuery.Promise}
  */
 ItemWidget.prototype.initializeMap = function () {
-	var self = this;
+	const self = this;
 
 	if (
 		// map already initialized previously
@@ -445,8 +435,8 @@ ItemWidget.prototype.initializeMap = function () {
 	}
 
 	return mw.loader.using( [ 'ext.kartographer.box', 'ext.kartographer.editing' ] )
-		.then( function ( require ) {
-			var sdTab;
+		.then( ( require ) => {
+			let sdTab;
 
 			kartoBox = require( 'ext.kartographer.box' );
 			kartoEditing = require( 'ext.kartographer.editing' );
@@ -473,7 +463,7 @@ ItemWidget.prototype.initializeMap = function () {
 			// becomes visible.
 			// eslint-disable-next-line no-jquery/no-global-selector
 			sdTab = $( '.wbmi-structured-data-header' ).closest( '.wbmi-tab' )[ 0 ];
-			new MutationObserver( function () {
+			new MutationObserver( () => {
 				if ( self.$map.parents( 'body' ).length > 0 ) {
 					self.map.invalidateSize();
 				}
@@ -496,13 +486,13 @@ ItemWidget.prototype.initializeMap = function () {
  * @return {jQuery.Promise}
  */
 ItemWidget.prototype.setConstraintsReport = function ( results ) {
-	var self = this,
+	const self = this,
 		promises = [];
 
 	promises.push( this.setState( { constraintsReport: results && results.mainsnak.results } ) );
 	promises.push( this.qualifiers.setConstraintsReport( results.qualifiers || {} ) );
-	( results.references || [] ).forEach( function ( snakListResult ) {
-		var i = self.state.referenceHashes.indexOf( snakListResult.hash );
+	( results.references || [] ).forEach( ( snakListResult ) => {
+		const i = self.state.referenceHashes.indexOf( snakListResult.hash );
 		if ( i >= 0 ) {
 			promises.push( self.state.references[ i ].setConstraintsReport( snakListResult.snaks ) );
 		}

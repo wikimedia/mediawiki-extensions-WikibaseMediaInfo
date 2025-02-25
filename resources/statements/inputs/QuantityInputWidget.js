@@ -1,6 +1,6 @@
 'use strict';
 
-var ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
+let ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
 	EntityAutocompleteInputWidget = require( './EntityAutocompleteInputWidget.js' ),
 	AbstractInputWidget = require( './AbstractInputWidget.js' ),
 	QuantityInputWidget;
@@ -72,7 +72,7 @@ QuantityInputWidget.prototype.unbindEventHandlers = function () {
  * @inheritDoc
  */
 QuantityInputWidget.prototype.getTemplateData = function () {
-	var submitButton, addUnitButton, removeUnitButton;
+	let submitButton, addUnitButton, removeUnitButton;
 
 	submitButton = new OO.ui.ButtonWidget( {
 		classes: [ 'wbmi-input-widget__button', 'wbmi-input-widget--submit' ],
@@ -126,7 +126,7 @@ QuantityInputWidget.prototype.onFocus = function () {
 };
 
 QuantityInputWidget.prototype.onChange = function ( value ) {
-	var self = this;
+	const self = this;
 
 	if ( this.parseValuePromise ) {
 		// abort existing API calls if input has changed
@@ -140,18 +140,16 @@ QuantityInputWidget.prototype.onChange = function ( value ) {
 
 	this.parseValuePromise = this.parseValue( undefined, 'quantity' );
 	this.parseValuePromise
-		.then( function ( dataValue ) {
-			var json = dataValue.toJSON();
+		.then( ( dataValue ) => {
+			const json = dataValue.toJSON();
 
 			return self.setState( {
 				amount: json.amount,
 				isActive: true
 			} ).then( self.input.setValidityFlag.bind( self.input, true ) );
 		} )
-		.catch( function () {
-			return self.setState( { amount: false, isActive: true } )
-				.then( self.input.setValidityFlag.bind( self.input, false ) );
-		} )
+		.catch( () => self.setState( { amount: false, isActive: true } )
+			.then( self.input.setValidityFlag.bind( self.input, false ) ) )
 		.always( this.emit.bind( this, 'change', this ) );
 };
 
@@ -237,7 +235,7 @@ QuantityInputWidget.prototype.hasValidInput = function () {
  * @inheritDoc
  */
 QuantityInputWidget.prototype.setData = function ( data ) {
-	var self = this,
+	let self = this,
 		json = data.toJSON(),
 		existing;
 
@@ -266,7 +264,7 @@ QuantityInputWidget.prototype.setData = function ( data ) {
 			isActive: false,
 			showUnitInput: json.unit !== '1'
 		} ) )
-		.then( function () {
+		.then( () => {
 			// update input field label to reflect unit text
 			self.input.setLabel( self.unit.getValue() );
 

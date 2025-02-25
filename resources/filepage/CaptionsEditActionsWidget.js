@@ -1,6 +1,6 @@
 'use strict';
 
-var CaptionsEditActionsWidget,
+let CaptionsEditActionsWidget,
 	CancelPublishWidget;
 
 CancelPublishWidget = require( './CancelPublishWidget.js' );
@@ -12,7 +12,7 @@ CancelPublishWidget = require( './CancelPublishWidget.js' );
  */
 CaptionsEditActionsWidget = function () {
 
-	var cancelAndPublishButtons = new CancelPublishWidget(),
+	const cancelAndPublishButtons = new CancelPublishWidget(),
 		addCaptionButton = new OO.ui.ButtonWidget( {
 			icon: 'add',
 			label: mw.msg( 'wikibasemediainfo-filepage-add-caption' ),

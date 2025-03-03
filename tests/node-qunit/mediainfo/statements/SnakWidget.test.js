@@ -4,8 +4,8 @@ const sinon = require( 'sinon' ),
 	pathToWidget = '../../../../resources/statements/SnakWidget.js',
 	hooks = require( '../../support/hooks.js' );
 
-QUnit.module( 'SnakWidget', hooks.mediainfo, function () {
-	QUnit.test( 'Valid data roundtrip', function ( assert ) {
+QUnit.module( 'SnakWidget', hooks.mediainfo, () => {
+	QUnit.test( 'Valid data roundtrip', ( assert ) => {
 		const done = assert.async(),
 			datamodel = require( 'wikibase.datamodel' ),
 			SnakWidget = require( pathToWidget ),
@@ -15,14 +15,14 @@ QUnit.module( 'SnakWidget', hooks.mediainfo, function () {
 				new datamodel.EntityId( 'Q1' )
 			);
 
-		widget.setData( data ).then( function () {
+		widget.setData( data ).then( () => {
 			assert.ok( widget.getData() );
 			assert.strictEqual( data.equals( widget.getData() ), true );
 			done();
 		} );
 	} );
 
-	QUnit.test( 'Setting other data triggers a change event', function ( assert ) {
+	QUnit.test( 'Setting other data triggers a change event', ( assert ) => {
 		const done = assert.async(),
 			SnakWidget = require( pathToWidget ),
 			widget = new SnakWidget(),
@@ -40,13 +40,13 @@ QUnit.module( 'SnakWidget', hooks.mediainfo, function () {
 		widget.setData( data )
 			.then( widget.on.bind( widget, 'change', onChange, [] ) )
 			.then( widget.setData.bind( widget, newData ) )
-			.then( function () {
+			.then( () => {
 				assert.strictEqual( onChange.called, true );
 				done();
 			} );
 	} );
 
-	QUnit.test( 'Setting same data does not trigger a change event', function ( assert ) {
+	QUnit.test( 'Setting same data does not trigger a change event', ( assert ) => {
 		const done = assert.async(),
 			SnakWidget = require( pathToWidget ),
 			widget = new SnakWidget(),
@@ -64,13 +64,13 @@ QUnit.module( 'SnakWidget', hooks.mediainfo, function () {
 		widget.setData( data )
 			.then( widget.on.bind( widget, 'change', onChange, [] ) )
 			.then( widget.setData.bind( widget, sameData ) )
-			.then( function () {
+			.then( () => {
 				assert.strictEqual( onChange.called, false );
 				done();
 			} );
 	} );
 
-	QUnit.test( 'setData() sets property ID in the PropertyInput widget', function ( assert ) {
+	QUnit.test( 'setData() sets property ID in the PropertyInput widget', ( assert ) => {
 		const done = assert.async(),
 			SnakWidget = require( pathToWidget ),
 			widget = new SnakWidget(),
@@ -80,13 +80,13 @@ QUnit.module( 'SnakWidget', hooks.mediainfo, function () {
 				new datamodel.EntityId( 'Q1' )
 			);
 
-		widget.setData( data ).then( function () {
+		widget.setData( data ).then( () => {
 			assert.strictEqual( widget.propertyInput.getData().toJSON().id, data.getPropertyId() );
 			done();
 		} );
 	} );
 
-	QUnit.test( 'setData() sets value data in the valueInput widget', function ( assert ) {
+	QUnit.test( 'setData() sets value data in the valueInput widget', ( assert ) => {
 		const done = assert.async(),
 			SnakWidget = require( pathToWidget ),
 			widget = new SnakWidget(),
@@ -96,13 +96,13 @@ QUnit.module( 'SnakWidget', hooks.mediainfo, function () {
 				new datamodel.EntityId( 'Q1' )
 			);
 
-		widget.setData( data ).then( function () {
+		widget.setData( data ).then( () => {
 			assert.strictEqual( widget.valueInput.getData().equals( data.getValue() ), true );
 			done();
 		} );
 	} );
 
-	QUnit.test( 'Property labels are available after API calls complete', function ( assert ) {
+	QUnit.test( 'Property labels are available after API calls complete', ( assert ) => {
 		const SnakWidget = require( pathToWidget ),
 			widget = new SnakWidget(),
 			datamodel = require( 'wikibase.datamodel' ),
@@ -120,14 +120,14 @@ QUnit.module( 'SnakWidget', hooks.mediainfo, function () {
 		formatValueStub.returns( $.Deferred().resolve( valueLabel ).promise( { abort: function () {} } ) );
 		widget.setData( data );
 
-		setTimeout( function () {
+		setTimeout( () => {
 			assert.strictEqual( formatPropertyStub.called, true );
 			assert.strictEqual( widget.propertyInput.input.getValue(), propertyLabel );
 			done();
 		}, 200 );
 	} );
 
-	QUnit.test( 'Test enabling edit state', function ( assert ) {
+	QUnit.test( 'Test enabling edit state', ( assert ) => {
 		const done = assert.async(),
 			SnakWidget = require( pathToWidget ),
 			datamodel = require( 'wikibase.datamodel' ),
@@ -144,17 +144,17 @@ QUnit.module( 'SnakWidget', hooks.mediainfo, function () {
 		widget.setData( data );
 
 		// wait for initial render to complete
-		widget.render().then( function ( $element ) {
+		widget.render().then( ( $element ) => {
 			assert.strictEqual( $element.find( '.wbmi-snak-value' ).length, 1 );
 
-			widget.setEditing( true ).then( function ( $innerElement ) {
+			widget.setEditing( true ).then( ( $innerElement ) => {
 				assert.strictEqual( $innerElement.find( '.wbmi-snak-value' ).length, 0 );
 				done();
 			} );
 		} );
 	} );
 
-	QUnit.test( 'Test disabling edit state', function ( assert ) {
+	QUnit.test( 'Test disabling edit state', ( assert ) => {
 		const done = assert.async(),
 			SnakWidget = require( pathToWidget ),
 			widget = new SnakWidget( { editing: true } ),
@@ -171,17 +171,17 @@ QUnit.module( 'SnakWidget', hooks.mediainfo, function () {
 		widget.setData( data );
 
 		// wait for initial render to complete
-		widget.render().then( function ( $element ) {
+		widget.render().then( ( $element ) => {
 			assert.strictEqual( $element.find( '.wbmi-snak-value' ).length, 0 );
 
-			widget.setEditing( false ).then( function ( $innerElement ) {
+			widget.setEditing( false ).then( ( $innerElement ) => {
 				assert.strictEqual( $innerElement.find( '.wbmi-snak-value' ).length, 1 );
 				done();
 			} );
 		} );
 	} );
 
-	QUnit.test( 'Valid data roundtrip with somevalue snak', function ( assert ) {
+	QUnit.test( 'Valid data roundtrip with somevalue snak', ( assert ) => {
 		const done = assert.async(),
 			datamodel = require( 'wikibase.datamodel' ),
 			SnakWidget = require( pathToWidget ),
@@ -194,14 +194,14 @@ QUnit.module( 'SnakWidget', hooks.mediainfo, function () {
 			// doesn't seem to do that in this testing environment.
 			// Instead, let's run it directly.
 			.then( widget.valueInput.onSnakTypeChange.bind( widget.valueInput, data.getType() ) )
-			.then( function () {
+			.then( () => {
 				assert.ok( widget.getData() );
 				assert.strictEqual( data.equals( widget.getData() ), true );
 				done();
 			} );
 	} );
 
-	QUnit.test( 'Valid data roundtrip with novalue snak', function ( assert ) {
+	QUnit.test( 'Valid data roundtrip with novalue snak', ( assert ) => {
 		const done = assert.async(),
 			datamodel = require( 'wikibase.datamodel' ),
 			SnakWidget = require( pathToWidget ),
@@ -214,7 +214,7 @@ QUnit.module( 'SnakWidget', hooks.mediainfo, function () {
 			// doesn't seem to do that in this testing environment.
 			// Instead, let's run it directly.
 			.then( widget.valueInput.onSnakTypeChange.bind( widget.valueInput, data.getType() ) )
-			.then( function () {
+			.then( () => {
 				assert.ok( widget.getData() );
 				assert.strictEqual( data.equals( widget.getData() ), true );
 				done();

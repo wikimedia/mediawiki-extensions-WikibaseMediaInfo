@@ -9,7 +9,7 @@ const sinon = require( 'sinon' ),
 let sandbox,
 	dom;
 
-QUnit.module( 'StatementPanel', {}, function () {
+QUnit.module( 'StatementPanel', {}, () => {
 	// Scenario 1. StatementsPanel on page where no statements are present
 	QUnit.module( 'When no pre-existing statements are present on page', Object.assign( {}, hooks.mediainfo, {
 		beforeEach: function () {
@@ -25,8 +25,8 @@ QUnit.module( 'StatementPanel', {}, function () {
 			hooks.mediainfo.afterEach();
 			sandbox.restore();
 		}
-	} ), function () {
-		QUnit.test( 'constructor', function ( assert ) {
+	} ), () => {
+		QUnit.test( 'constructor', ( assert ) => {
 			const StatementPanel = require( pathToWidget ),
 				config = {
 					$element: $( '.wbmi-entityview-statementsGroup' ),
@@ -42,7 +42,7 @@ QUnit.module( 'StatementPanel', {}, function () {
 			assert.ok( true );
 		} );
 
-		QUnit.test( 'isEditable() is false by default', function ( assert ) {
+		QUnit.test( 'isEditable() is false by default', ( assert ) => {
 			const StatementPanel = require( pathToWidget ),
 				config = {
 					$element: $( '.wbmi-entityview-statementsGroup' ),
@@ -61,9 +61,9 @@ QUnit.module( 'StatementPanel', {}, function () {
 			beforeEach: function () {
 				global.mw.user = helpers.createMediaWikiUser();
 			}
-		}, function () {
+		}, () => {
 			// Async test
-			QUnit.test( 'LicenseDialogWidget is displayed when user attempts to edit', function ( assert ) {
+			QUnit.test( 'LicenseDialogWidget is displayed when user attempts to edit', ( assert ) => {
 				const StatementPanel = require( pathToWidget ),
 					config = {
 						$element: $( '.wbmi-entityview-statementsGroup' ),
@@ -78,7 +78,7 @@ QUnit.module( 'StatementPanel', {}, function () {
 				const spy = sinon.spy( sp.licenseDialogWidget, 'openDialog' );
 				sp.makeEditable();
 
-				setTimeout( function () {
+				setTimeout( () => {
 					assert.strictEqual( spy.called, true );
 					done();
 				}, 100 );

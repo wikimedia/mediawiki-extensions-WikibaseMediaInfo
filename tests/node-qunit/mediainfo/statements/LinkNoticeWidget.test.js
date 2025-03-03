@@ -16,8 +16,8 @@ QUnit.module( 'LinkNoticeWidget', Object.assign( {}, hooks.mediainfo, {
 			text: sinon.stub().withArgs( 'wikibasemediainfo-statements-link-notice-text' ).returns( 'Stub text' )
 		} );
 	}
-} ), function () {
-	QUnit.test( 'constructor', function ( assert ) {
+} ), () => {
+	QUnit.test( 'constructor', ( assert ) => {
 		const LinkNoticeWidget = require( pathToWidget );
 
 		global.mw.user = helpers.createMediaWikiUser( false );
@@ -33,14 +33,14 @@ QUnit.module( 'LinkNoticeWidget', Object.assign( {}, hooks.mediainfo, {
 
 			global.mw.storage.get.returns( 0 );
 		}
-	}, function () {
-		QUnit.test( 'Widget should be visible if not previously dismissed', function ( assert ) {
+	}, () => {
+		QUnit.test( 'Widget should be visible if not previously dismissed', ( assert ) => {
 			const LinkNoticeWidget = require( pathToWidget ),
 				widget = new LinkNoticeWidget();
 			assert.strictEqual( widget.isDismissed(), false );
 		} );
 
-		QUnit.test( 'Widget should not be visible if previously dismissed', function ( assert ) {
+		QUnit.test( 'Widget should not be visible if previously dismissed', ( assert ) => {
 			const LinkNoticeWidget = require( pathToWidget );
 
 			// Fake out previous dismissal in localstorage
@@ -51,26 +51,26 @@ QUnit.module( 'LinkNoticeWidget', Object.assign( {}, hooks.mediainfo, {
 			assert.strictEqual( widget.isDismissed(), true );
 		} );
 
-		QUnit.test( 'dismiss method should store data in local storage for anon users', function ( assert ) {
+		QUnit.test( 'dismiss method should store data in local storage for anon users', ( assert ) => {
 			const done = assert.async(),
 				LinkNoticeWidget = require( pathToWidget ),
 				widget = new LinkNoticeWidget();
 
-			widget.dismiss().then( function () {
+			widget.dismiss().then( () => {
 				assert.strictEqual( global.mw.storage.set.calledWith( prefKey, 1 ), true );
 				done();
 			} );
 		} );
 
-		QUnit.test( 'dismiss method should dismiss the widget', function ( assert ) {
+		QUnit.test( 'dismiss method should dismiss the widget', ( assert ) => {
 			const done = assert.async(),
 				LinkNoticeWidget = require( pathToWidget ),
 				widget = new LinkNoticeWidget();
 
 			// wait for initial render to complete
-			widget.render().then( function ( $element ) {
+			widget.render().then( ( $element ) => {
 				assert.strictEqual( $element.find( '.wbmi-link-notice' ).length, 1 );
-				widget.dismiss().then( function ( $innerElement ) {
+				widget.dismiss().then( ( $innerElement ) => {
 					assert.strictEqual( $innerElement.find( '.wbmi-link-notice' ).length, 0 );
 					done();
 				} );
@@ -86,14 +86,14 @@ QUnit.module( 'LinkNoticeWidget', Object.assign( {}, hooks.mediainfo, {
 				saveOption: sinon.stub()
 			};
 		}
-	}, function () {
-		QUnit.test( 'Widget should be visible if not previously dismissed', function ( assert ) {
+	}, () => {
+		QUnit.test( 'Widget should be visible if not previously dismissed', ( assert ) => {
 			const LinkNoticeWidget = require( pathToWidget ),
 				widget = new LinkNoticeWidget();
 			assert.strictEqual( widget.isDismissed(), false );
 		} );
 
-		QUnit.test( 'Widget should not be visible if previously dismissed', function ( assert ) {
+		QUnit.test( 'Widget should not be visible if previously dismissed', ( assert ) => {
 			const LinkNoticeWidget = require( pathToWidget );
 
 			// Fake out previous dismissal in user prefs
@@ -103,12 +103,12 @@ QUnit.module( 'LinkNoticeWidget', Object.assign( {}, hooks.mediainfo, {
 			assert.strictEqual( widget.isDismissed(), true );
 		} );
 
-		QUnit.test( 'dismiss method should store data in user preferences for logged in users', function ( assert ) {
+		QUnit.test( 'dismiss method should store data in user preferences for logged in users', ( assert ) => {
 			const done = assert.async(),
 				LinkNoticeWidget = require( pathToWidget ),
 				widget = new LinkNoticeWidget();
 
-			widget.dismiss().then( function () {
+			widget.dismiss().then( () => {
 				assert.strictEqual( global.mw.user.options.set.calledWith( prefKey, 1 ), true );
 				assert.strictEqual( global.mw.Api.prototype.saveOption.calledWith( prefKey, 1 ), true );
 				done();

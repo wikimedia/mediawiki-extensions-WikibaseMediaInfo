@@ -34,9 +34,9 @@ QUnit.module( 'DOMLessGroupWidget', Object.assign( {}, hooks.mediainfo, {
 		sandbox.restore();
 		hooks.mediainfo.afterEach();
 	}
-} ), function () {
+} ), () => {
 
-	QUnit.test( 'Test item is added to group', function ( assert ) {
+	QUnit.test( 'Test item is added to group', ( assert ) => {
 		const widget = new GroupWidget(),
 			item = new ItemWidget();
 
@@ -45,7 +45,7 @@ QUnit.module( 'DOMLessGroupWidget', Object.assign( {}, hooks.mediainfo, {
 		assert.strictEqual( widget.getItems().length, 1 );
 	} );
 
-	QUnit.test( 'Test item DOM is not changed after inserting into group', function ( assert ) {
+	QUnit.test( 'Test item DOM is not changed after inserting into group', ( assert ) => {
 		const widget = new GroupWidget(),
 			item = new ItemWidget(),
 			$other = $( '<div>' ).append( item.$element );

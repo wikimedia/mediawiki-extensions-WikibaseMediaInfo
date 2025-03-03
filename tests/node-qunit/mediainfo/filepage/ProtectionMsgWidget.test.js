@@ -8,8 +8,8 @@ const hooks = require( '../../support/hooks.js' ),
 let ProtectionMsgWidget,
 	widget;
 
-QUnit.module( 'ProtectionMsgWidget', hooks.mediainfo, function () {
-	QUnit.test( 'constructor', function ( assert ) {
+QUnit.module( 'ProtectionMsgWidget', hooks.mediainfo, () => {
+	QUnit.test( 'constructor', ( assert ) => {
 		ProtectionMsgWidget = require( pathToWidget );
 		new ProtectionMsgWidget();
 		assert.ok( true );
@@ -19,8 +19,8 @@ QUnit.module( 'ProtectionMsgWidget', hooks.mediainfo, function () {
 		beforeEach: function () {
 			global.mw.config.get.withArgs( 'wbmiProtectionMsg' ).returns( null );
 		}
-	}, function () {
-		QUnit.test( 'Protection message widget does not display', function ( assert ) {
+	}, () => {
+		QUnit.test( 'Protection message widget does not display', ( assert ) => {
 			ProtectionMsgWidget = require( pathToWidget );
 			widget = new ProtectionMsgWidget();
 
@@ -35,8 +35,8 @@ QUnit.module( 'ProtectionMsgWidget', hooks.mediainfo, function () {
 		afterEach: function () {
 			global.mw.config.get.withArgs( 'wbmiProtectionMsg' ).returns( null );
 		}
-	}, function () {
-		QUnit.test( 'Protection message widget displays', function ( assert ) {
+	}, () => {
+		QUnit.test( 'Protection message widget displays', ( assert ) => {
 			ProtectionMsgWidget = require( pathToWidget );
 			widget = new ProtectionMsgWidget();
 

@@ -8,7 +8,7 @@ let sandbox,
 	dom,
 	mediaInfoEntity;
 
-QUnit.module( 'CaptionsPanel', {}, function () {
+QUnit.module( 'CaptionsPanel', {}, () => {
 	// CaptionsPanel on page where statements are already present
 	QUnit.module( 'When pre-existing statements are present on page', Object.assign( {}, hooks.mediainfo, {
 		beforeEach: function () {
@@ -28,8 +28,8 @@ QUnit.module( 'CaptionsPanel', {}, function () {
 			hooks.mediainfo.afterEach();
 			sandbox.restore();
 		}
-	} ), function () {
-		QUnit.test( 'initialization works without errors', function ( assert ) {
+	} ), () => {
+		QUnit.test( 'initialization works without errors', ( assert ) => {
 			const CaptionsPanel = require( pathToWidget ),
 				config = {
 					warnWithinMaxCaptionLength: 20,
@@ -44,7 +44,7 @@ QUnit.module( 'CaptionsPanel', {}, function () {
 			assert.ok( true );
 		} );
 
-		QUnit.test( 'user languages are added to DOM', function ( assert ) {
+		QUnit.test( 'user languages are added to DOM', ( assert ) => {
 			const CaptionsPanel = require( pathToWidget ),
 				userLanguages = [ 'en', 'ga', 'de' ],
 				config = {
@@ -60,13 +60,13 @@ QUnit.module( 'CaptionsPanel', {}, function () {
 			// There should be a new caption row for every user language that doesn't already
 			// exist in the caption data
 			const captionLanguages = Object.keys( mediaInfoEntity.labels );
-			userLanguages.forEach( function ( langCode ) {
-				if ( captionLanguages.indexOf( langCode ) === -1 ) {
+			userLanguages.forEach( ( langCode ) => {
+				if ( !captionLanguages.includes( langCode ) ) {
 					captionLanguages.push( langCode );
 				}
 			} );
 
-			cp.renderPromise.then( function () {
+			cp.renderPromise.then( () => {
 				assert.strictEqual(
 					cp.$element.find( '.wbmi-entityview-caption' ).length,
 					captionLanguages.length

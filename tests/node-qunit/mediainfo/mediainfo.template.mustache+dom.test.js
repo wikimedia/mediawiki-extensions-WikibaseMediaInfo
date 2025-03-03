@@ -17,8 +17,8 @@ QUnit.module( 'mediainfo.template.mustache+dom', Object.assign( {}, hooks.mediaw
 		sandbox.restore();
 		hooks.mediainfo.afterEach();
 	}
-} ), function () {
-	QUnit.test( 'Render mustache templates', function ( assert ) {
+} ), () => {
+	QUnit.test( 'Render mustache templates', ( assert ) => {
 		const template = mw.template.get( 'stub', 'test.mustache+dom' );
 
 		const data = {
@@ -30,8 +30,8 @@ QUnit.module( 'mediainfo.template.mustache+dom', Object.assign( {}, hooks.mediaw
 		assert.strictEqual( html, 'Hello world', 'Rendered mustache template' );
 	} );
 
-	QUnit.module( 'Mustache templates with HTMLElement', {}, function () {
-		QUnit.test( 'Nodes are parsed into template', function ( assert ) {
+	QUnit.module( 'Mustache templates with HTMLElement', {}, () => {
+		QUnit.test( 'Nodes are parsed into template', ( assert ) => {
 			const template = mw.template.get( 'stub', 'test.mustache+dom' ),
 				node = document.createElement( 'div' );
 
@@ -44,7 +44,7 @@ QUnit.module( 'mediainfo.template.mustache+dom', Object.assign( {}, hooks.mediaw
 			assert.strictEqual( $result.find( '#test' ).text(), 'Hello world', 'Node contains content' );
 		} );
 
-		QUnit.test( 'Events triggered from template-based HTML propagate to original element handlers', function ( assert ) {
+		QUnit.test( 'Events triggered from template-based HTML propagate to original element handlers', ( assert ) => {
 			const template = mw.template.get( 'stub', 'test.mustache+dom' ),
 				onClick = sinon.stub(),
 				node = document.createElement( 'div' );
@@ -60,7 +60,7 @@ QUnit.module( 'mediainfo.template.mustache+dom', Object.assign( {}, hooks.mediaw
 			assert.strictEqual( onClick.callCount, 1, 'Event triggered' );
 		} );
 
-		QUnit.test( 'Changes to node later on propagate into DOM rendered by template', function ( assert ) {
+		QUnit.test( 'Changes to node later on propagate into DOM rendered by template', ( assert ) => {
 			const template = mw.template.get( 'stub', 'test.mustache+dom' ),
 				node = document.createElement( 'div' );
 
@@ -75,8 +75,8 @@ QUnit.module( 'mediainfo.template.mustache+dom', Object.assign( {}, hooks.mediaw
 		} );
 	} );
 
-	QUnit.module( 'Mustache templates with jQuery nodes', {}, function () {
-		QUnit.test( 'Nodes are parsed into template', function ( assert ) {
+	QUnit.module( 'Mustache templates with jQuery nodes', {}, () => {
+		QUnit.test( 'Nodes are parsed into template', ( assert ) => {
 			const template = mw.template.get( 'stub', 'test.mustache+dom' ),
 				$node = $( '<div>' )
 					.attr( 'id', 'test' )
@@ -88,7 +88,7 @@ QUnit.module( 'mediainfo.template.mustache+dom', Object.assign( {}, hooks.mediaw
 			assert.strictEqual( $result.find( '#test' ).text(), 'Hello world', 'Node contains content' );
 		} );
 
-		QUnit.test( 'Events triggered from template-based HTML propagate to original element handlers', function ( assert ) {
+		QUnit.test( 'Events triggered from template-based HTML propagate to original element handlers', ( assert ) => {
 			const template = mw.template.get( 'stub', 'test.mustache+dom' ),
 				onClick = sinon.stub(),
 				$node = $( '<div>' )
@@ -103,7 +103,7 @@ QUnit.module( 'mediainfo.template.mustache+dom', Object.assign( {}, hooks.mediaw
 			assert.strictEqual( onClick.callCount, 1, 'Event triggered' );
 		} );
 
-		QUnit.test( 'Changes to node later on propagate into DOM rendered by template', function ( assert ) {
+		QUnit.test( 'Changes to node later on propagate into DOM rendered by template', ( assert ) => {
 			const template = mw.template.get( 'stub', 'test.mustache+dom' ),
 				$node = $( '<div>' )
 					.attr( 'id', 'test' )
@@ -117,8 +117,8 @@ QUnit.module( 'mediainfo.template.mustache+dom', Object.assign( {}, hooks.mediaw
 		} );
 	} );
 
-	QUnit.module( 'Mustache templates with OOUI widgets', {}, function () {
-		QUnit.test( 'Nodes are parsed into template', function ( assert ) {
+	QUnit.module( 'Mustache templates with OOUI widgets', {}, () => {
+		QUnit.test( 'Nodes are parsed into template', ( assert ) => {
 			const template = mw.template.get( 'stub', 'test.mustache+dom' ),
 				widget = new OO.ui.Widget( {
 					id: 'test',
@@ -131,7 +131,7 @@ QUnit.module( 'mediainfo.template.mustache+dom', Object.assign( {}, hooks.mediaw
 			assert.strictEqual( $result.find( '#test' ).text(), 'Hello world', 'Node contains content' );
 		} );
 
-		QUnit.test( 'Events triggered from template-based HTML propagate to original element handlers', function ( assert ) {
+		QUnit.test( 'Events triggered from template-based HTML propagate to original element handlers', ( assert ) => {
 			const template = mw.template.get( 'stub', 'test.mustache+dom' ),
 				onClick = sinon.stub(),
 				widget = new OO.ui.Widget( {
@@ -150,7 +150,7 @@ QUnit.module( 'mediainfo.template.mustache+dom', Object.assign( {}, hooks.mediaw
 			assert.strictEqual( onClick.callCount, 1, 'Event triggered' );
 		} );
 
-		QUnit.test( 'Changes to node later on propagate into DOM rendered by template', function ( assert ) {
+		QUnit.test( 'Changes to node later on propagate into DOM rendered by template', ( assert ) => {
 			const template = mw.template.get( 'stub', 'test.mustache+dom' ),
 				widget = new OO.ui.Widget( {
 					id: 'test',

@@ -4,8 +4,8 @@ const sinon = require( 'sinon' ),
 	pathToWidget = '../../../../../resources/statements/inputs/TimeInputWidget.js',
 	hooks = require( '../../../support/hooks.js' );
 
-QUnit.module( 'TimeInputWidget', hooks.mediainfo, function () {
-	QUnit.test( 'Valid data roundtrip', function ( assert ) {
+QUnit.module( 'TimeInputWidget', hooks.mediainfo, () => {
+	QUnit.test( 'Valid data roundtrip', ( assert ) => {
 		const done = assert.async(),
 			TimeInputWidget = require( pathToWidget ),
 			widget = new TimeInputWidget(),
@@ -23,14 +23,14 @@ QUnit.module( 'TimeInputWidget', hooks.mediainfo, function () {
 		parseValueStub.onFirstCall().returns( $.Deferred().resolve( data ).promise( { abort: function () {} } ) );
 		formatValueStub.withArgs( data ).returns( $.Deferred().resolve( '24 January 2019' ).promise( { abort: function () {} } ) );
 
-		widget.setData( data ).then( function () {
+		widget.setData( data ).then( () => {
 			assert.ok( widget.getData() );
 			assert.strictEqual( data.equals( widget.getData() ), true );
 			done();
 		} );
 	} );
 
-	QUnit.test( 'Setting other data triggers a change event', function ( assert ) {
+	QUnit.test( 'Setting other data triggers a change event', ( assert ) => {
 		const done = assert.async(),
 			TimeInputWidget = require( pathToWidget ),
 			widget = new TimeInputWidget(),
@@ -60,7 +60,7 @@ QUnit.module( 'TimeInputWidget', hooks.mediainfo, function () {
 		formatValueStub.withArgs( newData ).returns( $.Deferred().resolve( '25 January 2019' ).promise( { abort: function () {} } ) );
 
 		widget.setData( data )
-			.then( function () {
+			.then( () => {
 				const deferred = $.Deferred();
 				// timeout because the onchange event is debounced for this duration...
 				setTimeout( deferred.resolve, 210 );
@@ -68,19 +68,19 @@ QUnit.module( 'TimeInputWidget', hooks.mediainfo, function () {
 			} )
 			.then( widget.on.bind( widget, 'change', onChange, [] ) )
 			.then( widget.setData.bind( widget, newData ) )
-			.then( function () {
+			.then( () => {
 				const deferred = $.Deferred();
 				// timeout because the onchange event is debounced for this duration...
 				setTimeout( deferred.resolve, 210 );
 				return deferred.promise();
 			} )
-			.then( function () {
+			.then( () => {
 				assert.strictEqual( onChange.called, true );
 				done();
 			} );
 	} );
 
-	QUnit.test( 'Setting same data does not trigger a change event', function ( assert ) {
+	QUnit.test( 'Setting same data does not trigger a change event', ( assert ) => {
 		const done = assert.async(),
 			TimeInputWidget = require( pathToWidget ),
 			widget = new TimeInputWidget(),
@@ -110,7 +110,7 @@ QUnit.module( 'TimeInputWidget', hooks.mediainfo, function () {
 		formatValueStub.withArgs( sameData ).returns( $.Deferred().resolve( '24 January 2019' ).promise( { abort: function () {} } ) );
 
 		widget.setData( data )
-			.then( function () {
+			.then( () => {
 				const deferred = $.Deferred();
 				// timeout because the onchange event is debounced for this duration...
 				setTimeout( deferred.resolve, 210 );
@@ -118,19 +118,19 @@ QUnit.module( 'TimeInputWidget', hooks.mediainfo, function () {
 			} )
 			.then( widget.on.bind( widget, 'change', onChange, [] ) )
 			.then( widget.setData.bind( widget, sameData ) )
-			.then( function () {
+			.then( () => {
 				const deferred = $.Deferred();
 				// timeout because the onchange event is debounced for this duration...
 				setTimeout( deferred.resolve, 210 );
 				return deferred.promise();
 			} )
-			.then( function () {
+			.then( () => {
 				assert.strictEqual( onChange.called, false );
 				done();
 			} );
 	} );
 
-	QUnit.test( 'Widget has no button in qualifier mode', function ( assert ) {
+	QUnit.test( 'Widget has no button in qualifier mode', ( assert ) => {
 		const done = assert.async(),
 			TimeInputWidget = require( pathToWidget ),
 			widget = new TimeInputWidget( { isQualifier: true } ),
@@ -143,13 +143,13 @@ QUnit.module( 'TimeInputWidget', hooks.mediainfo, function () {
 				calendarmodel: 'http://www.wikidata.org/entity/Q1985786'
 			} );
 
-		widget.setData( data ).then( function ( $element ) {
+		widget.setData( data ).then( ( $element ) => {
 			assert.strictEqual( $element.find( '.wbmi-input-widget__button' ).length, 0 );
 			done();
 		} );
 	} );
 
-	QUnit.test( 'Widget has button in statement mode', function ( assert ) {
+	QUnit.test( 'Widget has button in statement mode', ( assert ) => {
 		const done = assert.async(),
 			TimeInputWidget = require( pathToWidget ),
 			widget = new TimeInputWidget( { isQualifier: false } ),
@@ -162,7 +162,7 @@ QUnit.module( 'TimeInputWidget', hooks.mediainfo, function () {
 				calendarmodel: 'http://www.wikidata.org/entity/Q1985786'
 			} );
 
-		widget.setData( data ).then( function ( $element ) {
+		widget.setData( data ).then( ( $element ) => {
 			assert.strictEqual( $element.find( '.wbmi-input-widget__button' ).length, 1 );
 			done();
 		} );

@@ -37,28 +37,28 @@ QUnit.module( 'ComponentWidget', Object.assign( {}, hooks.mediainfo, {
 		sandbox.restore();
 		hooks.mediainfo.afterEach();
 	}
-} ), function () {
-	QUnit.test( 'Widget renders with default state', function ( assert ) {
+} ), () => {
+	QUnit.test( 'Widget renders with default state', ( assert ) => {
 		const done = assert.async(),
 			widget = new ExampleComponentWidget( { variable: 'foo' } );
 
-		widget.render().then( function ( $element ) {
+		widget.render().then( ( $element ) => {
 			assert.strictEqual( $element.text(), 'foo' );
 			done();
 		} );
 	} );
 
-	QUnit.test( 'Widget rerenders with new state', function ( assert ) {
+	QUnit.test( 'Widget rerenders with new state', ( assert ) => {
 		const done = assert.async(),
 			widget = new ExampleComponentWidget( { variable: 'foo' } );
 
-		widget.setState( { variable: 'bar' } ).then( function ( $element ) {
+		widget.setState( { variable: 'bar' } ).then( ( $element ) => {
 			assert.strictEqual( $element.text(), 'bar' );
 			done();
 		} );
 	} );
 
-	QUnit.test( 'Widget renders with changed template data', function ( assert ) {
+	QUnit.test( 'Widget renders with changed template data', ( assert ) => {
 		const done = assert.async(),
 			widget = new ExampleComponentWidget( { variable: 'foo' } );
 
@@ -68,13 +68,13 @@ QUnit.module( 'ComponentWidget', Object.assign( {}, hooks.mediainfo, {
 			return { variable: 'changed' };
 		};
 
-		widget.setState( { variable: 'bar' } ).then( function ( $element ) {
+		widget.setState( { variable: 'bar' } ).then( ( $element ) => {
 			assert.strictEqual( $element.text(), 'changed' );
 			done();
 		} );
 	} );
 
-	QUnit.test( 'Widget renders with async changed template data', function ( assert ) {
+	QUnit.test( 'Widget renders with async changed template data', ( assert ) => {
 		const done = assert.async(),
 			widget = new ExampleComponentWidget( { variable: 'foo' } );
 
@@ -87,13 +87,13 @@ QUnit.module( 'ComponentWidget', Object.assign( {}, hooks.mediainfo, {
 			return deferred.promise();
 		};
 
-		widget.setState( { variable: 'bar' } ).then( function ( $element ) {
+		widget.setState( { variable: 'bar' } ).then( ( $element ) => {
 			assert.strictEqual( $element.text(), 'changed async' );
 			done();
 		} );
 	} );
 
-	QUnit.test( 'Widget will not rerender on state change if stopped', function ( assert ) {
+	QUnit.test( 'Widget will not rerender on state change if stopped', ( assert ) => {
 		const done = assert.async(),
 			widget = new ExampleComponentWidget( { variable: 'foo' } );
 
@@ -102,13 +102,13 @@ QUnit.module( 'ComponentWidget', Object.assign( {}, hooks.mediainfo, {
 			return false;
 		};
 
-		widget.setState( { variable: 'bar' } ).then( function ( $element ) {
+		widget.setState( { variable: 'bar' } ).then( ( $element ) => {
 			assert.strictEqual( $element.text(), 'foo' );
 			done();
 		} );
 	} );
 
-	QUnit.test( 'Widget will only rerender once when multiple state changes happen during previous render', function ( assert ) {
+	QUnit.test( 'Widget will only rerender once when multiple state changes happen during previous render', ( assert ) => {
 		const done = assert.async(),
 			widget = new ExampleComponentWidget( { variable: 'foo' } );
 
@@ -120,19 +120,19 @@ QUnit.module( 'ComponentWidget', Object.assign( {}, hooks.mediainfo, {
 		};
 
 		// let's wait for in-flight initial render to have completed
-		widget.render().then( function () {
+		widget.render().then( () => {
 			// render with 'foo' - this should render 'foo' just fine (but it'll
 			// take a little since we deferred the template data manipulation)
-			widget.setState( { variable: 'foo' } ).then( function ( $element ) {
+			widget.setState( { variable: 'foo' } ).then( ( $element ) => {
 				// since it'll take some time for the initial render to finish
 				assert.strictEqual( $element.text(), 'foo' );
 			} );
 
 			// wrap next calls inside setTimout to make sure they're executed
 			// while the previous render is ongoing
-			setTimeout( function () {
+			setTimeout( () => {
 				// set new value
-				widget.setState( { variable: 'bar' } ).then( function ( $element ) {
+				widget.setState( { variable: 'bar' } ).then( ( $element ) => {
 					// since it'll take some time for the first render to finish, this
 					// value will already have been overwritten before we get around
 					// to rendering again, and it'll be combined/optimized away
@@ -140,7 +140,7 @@ QUnit.module( 'ComponentWidget', Object.assign( {}, hooks.mediainfo, {
 				} );
 
 				// set another new value - this should be the one that actually gets rendered
-				widget.setState( { variable: 'baz' } ).then( function ( $element ) {
+				widget.setState( { variable: 'baz' } ).then( ( $element ) => {
 					// since it'll take some time for the initial render to finish
 					assert.strictEqual( $element.text(), 'baz' );
 					done();

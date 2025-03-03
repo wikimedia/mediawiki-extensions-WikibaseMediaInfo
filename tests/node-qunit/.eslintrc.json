@@ -10,6 +10,7 @@
 	},
 	"rules": {
 		"max-len": "off",
-		"node/no-missing-require": "off"
+		"n/no-missing-require": "off",
+		"qunit/no-loose-assertions": "warn"
 	}
 }

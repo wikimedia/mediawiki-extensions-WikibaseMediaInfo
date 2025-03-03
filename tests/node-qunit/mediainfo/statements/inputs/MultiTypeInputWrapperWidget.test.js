@@ -11,61 +11,61 @@ const sinon = require( 'sinon' ),
 	pathToUnsupportedInputWidget = '../../../../../resources/statements/inputs/UnsupportedInputWidget.js',
 	hooks = require( '../../../support/hooks.js' );
 
-QUnit.module( 'MultiTypeInputWrapperWidget', hooks.kartographer, function () {
-	QUnit.test( 'Valid data roundtrip (wikibase-entityid)', function ( assert ) {
+QUnit.module( 'MultiTypeInputWrapperWidget', hooks.kartographer, () => {
+	QUnit.test( 'Valid data roundtrip (wikibase-entityid)', ( assert ) => {
 		const done = assert.async(),
 			datamodel = require( 'wikibase.datamodel' ),
 			MultiTypeInputWrapperWidget = require( pathToWidget ),
 			widget = new MultiTypeInputWrapperWidget(),
 			data = new datamodel.EntityId( 'Q1' );
 
-		widget.setData( data ).then( function () {
+		widget.setData( data ).then( () => {
 			assert.ok( widget.getData() );
 			assert.strictEqual( data.equals( widget.getData() ), true );
 			done();
 		} );
 	} );
 
-	QUnit.test( 'Valid data roundtrip (string)', function ( assert ) {
+	QUnit.test( 'Valid data roundtrip (string)', ( assert ) => {
 		const done = assert.async(),
 			MultiTypeInputWrapperWidget = require( pathToWidget ),
 			widget = new MultiTypeInputWrapperWidget(),
 			data = new dataValues.StringValue( 'this is a test' );
 
-		widget.setData( data ).then( function () {
+		widget.setData( data ).then( () => {
 			assert.ok( widget.getData() );
 			assert.strictEqual( data.equals( widget.getData() ), true );
 			done();
 		} );
 	} );
 
-	QUnit.test( 'Valid data roundtrip (monolingualtext)', function ( assert ) {
+	QUnit.test( 'Valid data roundtrip (monolingualtext)', ( assert ) => {
 		const done = assert.async(),
 			MultiTypeInputWrapperWidget = require( pathToWidget ),
 			widget = new MultiTypeInputWrapperWidget(),
 			data = new dataValues.MonolingualTextValue( 'en', 'this is a test' );
 
-		widget.setData( data ).then( function () {
+		widget.setData( data ).then( () => {
 			assert.ok( widget.getData() );
 			assert.strictEqual( data.equals( widget.getData() ), true );
 			done();
 		} );
 	} );
 
-	QUnit.test( 'Valid data roundtrip (quantity)', function ( assert ) {
+	QUnit.test( 'Valid data roundtrip (quantity)', ( assert ) => {
 		const done = assert.async(),
 			MultiTypeInputWrapperWidget = require( pathToWidget ),
 			widget = new MultiTypeInputWrapperWidget(),
 			data = new dataValues.QuantityValue( new dataValues.DecimalValue( 5 ), '1' );
 
-		widget.setData( data ).then( function () {
+		widget.setData( data ).then( () => {
 			assert.ok( widget.getData() );
 			assert.strictEqual( data.equals( widget.getData() ), true );
 			done();
 		} );
 	} );
 
-	QUnit.test( 'Valid data roundtrip (time)', function ( assert ) {
+	QUnit.test( 'Valid data roundtrip (time)', ( assert ) => {
 		const done = assert.async(),
 			MultiTypeInputWrapperWidget = require( pathToWidget ),
 			widget = new MultiTypeInputWrapperWidget(),
@@ -77,14 +77,14 @@ QUnit.module( 'MultiTypeInputWrapperWidget', hooks.kartographer, function () {
 				calendarmodel: 'http://www.wikidata.org/entity/Q1985786'
 			} );
 
-		widget.setData( data ).then( function () {
+		widget.setData( data ).then( () => {
 			assert.ok( widget.getData() );
 			assert.strictEqual( data.equals( widget.getData() ), true );
 			done();
 		} );
 	} );
 
-	QUnit.test( 'Valid data roundtrip (globecoordinate)', function ( assert ) {
+	QUnit.test( 'Valid data roundtrip (globecoordinate)', ( assert ) => {
 		const done = assert.async(),
 			MultiTypeInputWrapperWidget = require( pathToWidget ),
 			widget = new MultiTypeInputWrapperWidget(),
@@ -96,27 +96,27 @@ QUnit.module( 'MultiTypeInputWrapperWidget', hooks.kartographer, function () {
 				} )
 			);
 
-		widget.setData( data ).then( function () {
+		widget.setData( data ).then( () => {
 			assert.ok( widget.getData() );
 			assert.strictEqual( data.equals( widget.getData() ), true );
 			done();
 		} );
 	} );
 
-	QUnit.test( 'Valid data roundtrip (unsupported)', function ( assert ) {
+	QUnit.test( 'Valid data roundtrip (unsupported)', ( assert ) => {
 		const done = assert.async(),
 			MultiTypeInputWrapperWidget = require( pathToWidget ),
 			widget = new MultiTypeInputWrapperWidget(),
 			data = new dataValues.UnknownValue( 'an unknown value' );
 
-		widget.setData( data ).then( function () {
+		widget.setData( data ).then( () => {
 			assert.ok( widget.getData() );
 			assert.strictEqual( data.equals( widget.getData() ), true );
 			done();
 		} );
 	} );
 
-	QUnit.test( 'Setting other data triggers a change event', function ( assert ) {
+	QUnit.test( 'Setting other data triggers a change event', ( assert ) => {
 		const done = assert.async(),
 			MultiTypeInputWrapperWidget = require( pathToWidget ),
 			widget = new MultiTypeInputWrapperWidget(),
@@ -127,13 +127,13 @@ QUnit.module( 'MultiTypeInputWrapperWidget', hooks.kartographer, function () {
 		widget.setData( data )
 			.then( widget.on.bind( widget, 'change', onChange, [] ) )
 			.then( widget.setData.bind( widget, newData ) )
-			.then( function () {
+			.then( () => {
 				assert.strictEqual( onChange.called, true );
 				done();
 			} );
 	} );
 
-	QUnit.test( 'Setting same data does not trigger a change event', function ( assert ) {
+	QUnit.test( 'Setting same data does not trigger a change event', ( assert ) => {
 		const done = assert.async(),
 			MultiTypeInputWrapperWidget = require( pathToWidget ),
 			widget = new MultiTypeInputWrapperWidget(),
@@ -144,13 +144,13 @@ QUnit.module( 'MultiTypeInputWrapperWidget', hooks.kartographer, function () {
 		widget.setData( data )
 			.then( widget.on.bind( widget, 'change', onChange, [] ) )
 			.then( widget.setData.bind( widget, sameData ) )
-			.then( function () {
+			.then( () => {
 				assert.strictEqual( onChange.called, false );
 				done();
 			} );
 	} );
 
-	QUnit.test( 'Changing to same input type leaves existing value unaltered', function ( assert ) {
+	QUnit.test( 'Changing to same input type leaves existing value unaltered', ( assert ) => {
 		const done = assert.async(),
 			MultiTypeInputWrapperWidget = require( pathToWidget ),
 			widget = new MultiTypeInputWrapperWidget(),
@@ -158,13 +158,13 @@ QUnit.module( 'MultiTypeInputWrapperWidget', hooks.kartographer, function () {
 
 		widget.setData( data )
 			.then( widget.setInputType.bind( widget, 'string' ) )
-			.then( function () {
+			.then( () => {
 				assert.strictEqual( data.equals( widget.getData() ), true );
 				done();
 			} );
 	} );
 
-	QUnit.test( 'Changing to other input type (and back) wipes out existing data', function ( assert ) {
+	QUnit.test( 'Changing to other input type (and back) wipes out existing data', ( assert ) => {
 		const done = assert.async(),
 			MultiTypeInputWrapperWidget = require( pathToWidget ),
 			widget = new MultiTypeInputWrapperWidget(),
@@ -173,13 +173,13 @@ QUnit.module( 'MultiTypeInputWrapperWidget', hooks.kartographer, function () {
 		widget.setData( data )
 			.then( widget.setInputType.bind( widget, 'quantity' ) )
 			.then( widget.setInputType.bind( widget, 'string' ) )
-			.then( function () {
+			.then( () => {
 				assert.strictEqual( data.equals( widget.getData() ), false );
 				done();
 			} );
 	} );
 
-	QUnit.test( 'Widget creates the correct input type', function ( assert ) {
+	QUnit.test( 'Widget creates the correct input type', ( assert ) => {
 		const done = assert.async(),
 			MultiTypeInputWrapperWidget = require( pathToWidget ),
 			EntityInputWidget = require( pathToEntityInputWidget ),
@@ -219,19 +219,19 @@ QUnit.module( 'MultiTypeInputWrapperWidget', hooks.kartographer, function () {
 			timeWidget.render(),
 			globeCoordinateWidget.render(),
 			unsupportedWidget.render()
-		).then( function () {
-			assert.strictEqual( entityWidget.state.input instanceof EntityInputWidget, true );
-			assert.strictEqual( stringWidget.state.input instanceof StringInputWidget, true );
-			assert.strictEqual( monolingualTextWidget.state.input instanceof MonolingualTextInputWidget, true );
-			assert.strictEqual( quantityWidget.state.input instanceof QuantityInputWidget, true );
-			assert.strictEqual( timeWidget.state.input instanceof TimeInputWidget, true );
-			assert.strictEqual( globeCoordinateWidget.state.input instanceof GlobeCoordinateInputWidget, true );
-			assert.strictEqual( unsupportedWidget.state.input instanceof UnsupportedInputWidget, true );
+		).then( () => {
+			assert.ok( entityWidget.state.input instanceof EntityInputWidget );
+			assert.ok( stringWidget.state.input instanceof StringInputWidget );
+			assert.ok( monolingualTextWidget.state.input instanceof MonolingualTextInputWidget );
+			assert.ok( quantityWidget.state.input instanceof QuantityInputWidget );
+			assert.ok( timeWidget.state.input instanceof TimeInputWidget );
+			assert.ok( globeCoordinateWidget.state.input instanceof GlobeCoordinateInputWidget );
+			assert.ok( unsupportedWidget.state.input instanceof UnsupportedInputWidget );
 			done();
 		} );
 	} );
 
-	QUnit.test( 'add event is fired when child input emits add', function ( assert ) {
+	QUnit.test( 'add event is fired when child input emits add', ( assert ) => {
 		const done = assert.async(),
 			MultiTypeInputWrapperWidget = require( pathToWidget ),
 			widget = new MultiTypeInputWrapperWidget( {
@@ -241,20 +241,20 @@ QUnit.module( 'MultiTypeInputWrapperWidget', hooks.kartographer, function () {
 
 		widget.on( 'add', callStub );
 
-		widget.render().then( function () {
+		widget.render().then( () => {
 			// trigger an 'add' event
 			widget.state.input.emit( 'add' );
 
 			// events are async, let's attach this check to the end of the call
 			// stack to give the event handler time to run
-			setTimeout( function () {
+			setTimeout( () => {
 				assert.strictEqual( callStub.called, true );
 				done();
 			} );
 		} );
 	} );
 
-	QUnit.test( 'setErrors adds MessageWidget to UI and flags string input as invalid', function ( assert ) {
+	QUnit.test( 'setErrors adds MessageWidget to UI and flags string input as invalid', ( assert ) => {
 		const done = assert.async(),
 			MultiTypeInputWrapperWidget = require( pathToWidget ),
 			widget = new MultiTypeInputWrapperWidget( {
@@ -263,7 +263,7 @@ QUnit.module( 'MultiTypeInputWrapperWidget', hooks.kartographer, function () {
 
 		widget.state.input.input.setValidityFlag = sinon.stub();
 		widget.setErrors( [ 'Invalid string input' ] )
-			.then( function () {
+			.then( () => {
 				assert.strictEqual( widget.$element.find( '.wbmi-statement-error-msg' ).length, 1 );
 				assert.strictEqual( widget.state.input.input.setValidityFlag.called, true );
 				done();
@@ -271,7 +271,7 @@ QUnit.module( 'MultiTypeInputWrapperWidget', hooks.kartographer, function () {
 
 	} );
 
-	QUnit.test( 'Widget can handle multiple errors', function ( assert ) {
+	QUnit.test( 'Widget can handle multiple errors', ( assert ) => {
 		const done = assert.async(),
 			MultiTypeInputWrapperWidget = require( pathToWidget ),
 			widget = new MultiTypeInputWrapperWidget( {
@@ -280,14 +280,14 @@ QUnit.module( 'MultiTypeInputWrapperWidget', hooks.kartographer, function () {
 
 		widget.state.input.input.setValidityFlag = sinon.stub();
 		widget.setErrors( [ 'Error 1', 'Error 2' ] )
-			.then( function () {
+			.then( () => {
 				assert.strictEqual( widget.$element.find( '.wbmi-statement-error-msg' ).length, 2 );
 				assert.strictEqual( widget.state.input.input.setValidityFlag.called, true );
 				done();
 			} );
 	} );
 
-	QUnit.test( 'Setting snak type to somevalue changes input to disabled string input', function ( assert ) {
+	QUnit.test( 'Setting snak type to somevalue changes input to disabled string input', ( assert ) => {
 		const done = assert.async(),
 			MultiTypeInputWrapperWidget = require( pathToWidget ),
 			widget = new MultiTypeInputWrapperWidget(),
@@ -301,14 +301,14 @@ QUnit.module( 'MultiTypeInputWrapperWidget', hooks.kartographer, function () {
 			// process, let's run an empty setState call before checking
 			// the final result.
 			.then( widget.setState.bind( widget, {} ) )
-			.then( function () {
-				assert.strictEqual( widget.state.input instanceof StringInputWidget, true );
+			.then( () => {
+				assert.ok( widget.state.input instanceof StringInputWidget );
 				assert.strictEqual( widget.state.input.input.isDisabled(), true );
 				done();
 			} );
 	} );
 
-	QUnit.test( 'Setting snak type to novalue changes input to disabled string input', function ( assert ) {
+	QUnit.test( 'Setting snak type to novalue changes input to disabled string input', ( assert ) => {
 		const done = assert.async(),
 			MultiTypeInputWrapperWidget = require( pathToWidget ),
 			widget = new MultiTypeInputWrapperWidget(),
@@ -319,14 +319,14 @@ QUnit.module( 'MultiTypeInputWrapperWidget', hooks.kartographer, function () {
 			.then( widget.setData.bind( widget, data ) )
 			.then( widget.setSnakType.bind( widget, 'novalue' ) )
 			.then( widget.setState.bind( widget, {} ) )
-			.then( function () {
-				assert.strictEqual( widget.state.input instanceof StringInputWidget, true );
+			.then( () => {
+				assert.ok( widget.state.input instanceof StringInputWidget );
 				assert.strictEqual( widget.state.input.input.isDisabled(), true );
 				done();
 			} );
 	} );
 
-	QUnit.test( 'Setting snak type to value changes input to original type', function ( assert ) {
+	QUnit.test( 'Setting snak type to value changes input to original type', ( assert ) => {
 		const done = assert.async(),
 			MultiTypeInputWrapperWidget = require( pathToWidget ),
 			widget = new MultiTypeInputWrapperWidget(),
@@ -339,19 +339,19 @@ QUnit.module( 'MultiTypeInputWrapperWidget', hooks.kartographer, function () {
 			.then( widget.setState.bind( widget, {} ) )
 			.then( widget.snakTypeWidget.setValue.bind( widget.snakTypeWidget, 'value' ) )
 			.then( widget.setState.bind( widget, {} ) )
-			.then( function () {
-				assert.strictEqual( widget.state.input instanceof EntityInputWidget, true );
+			.then( () => {
+				assert.ok( widget.state.input instanceof EntityInputWidget );
 				done();
 			} );
 	} );
 
-	QUnit.test( 'Datatype can be set explicitly', function ( assert ) {
+	QUnit.test( 'Datatype can be set explicitly', ( assert ) => {
 		const done = assert.async(),
 			MultiTypeInputWrapperWidget = require( pathToWidget ),
 			widget = new MultiTypeInputWrapperWidget();
 
 		widget.setDataType( 'wikibase-entityid' )
-			.then( function () {
+			.then( () => {
 				assert.strictEqual( widget.state.type, 'wikibase-entityid' );
 				done();
 			} );

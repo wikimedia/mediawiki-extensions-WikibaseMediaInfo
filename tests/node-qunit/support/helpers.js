@@ -232,7 +232,9 @@ module.exports.createWikibaseEnv = function () {
 			} )
 		},
 		utilities: {
-			ClaimGuidGenerator: sinon.stub().returns( { newGuid: function () { return Math.random().toString( 36 ).slice( 2 ); } } )
+			ClaimGuidGenerator: sinon.stub().returns( { newGuid: function () {
+				return Math.random().toString( 36 ).slice( 2 );
+			} } )
 		}
 	};
 };
@@ -293,7 +295,7 @@ module.exports.registerModules = function () {
 	const extensionJson = this.readJSON( path.join( __dirname, '..', '..', '..', 'extension.json' ) ),
 		modules = extensionJson.ResourceModules;
 
-	Object.keys( modules ).forEach( function ( moduleName ) {
+	Object.keys( modules ).forEach( ( moduleName ) => {
 		const packageFiles = modules[ moduleName ].packageFiles;
 		if ( !packageFiles ) {
 			return;
@@ -313,13 +315,13 @@ module.exports.registerTemplates = function () {
 	const extensionJson = this.readJSON( path.join( __dirname, '..', '..', '..', 'extension.json' ) ),
 		modules = extensionJson.ResourceModules;
 
-	Object.keys( modules ).forEach( function ( moduleName ) {
+	Object.keys( modules ).forEach( ( moduleName ) => {
 		const templates = modules[ moduleName ].templates;
 		if ( !templates ) {
 			return;
 		}
 
-		templates.forEach( function ( templateName ) {
+		templates.forEach( ( templateName ) => {
 			const template = fs.readFileSync( path.join( __dirname, '..', '..', '..', templateName ), 'utf8' );
 			global.mw.template.add( moduleName, templateName, template );
 		} );
@@ -330,7 +332,7 @@ module.exports.deregisterModules = function () {
 	const extensionJson = this.readJSON( path.join( __dirname, '..', '..', '..', 'extension.json' ) ),
 		modules = extensionJson.ResourceModules;
 
-	Object.keys( modules ).forEach( function ( moduleName ) {
+	Object.keys( modules ).forEach( ( moduleName ) => {
 		mockery.deregisterMock( moduleName );
 	} );
 };

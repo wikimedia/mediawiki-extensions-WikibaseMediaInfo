@@ -6,8 +6,8 @@ const sinon = require( 'sinon' ),
 	pathToWidget = '../../../../resources/filepage/LicenseDialogWidget.js';
 let LicenseDialogWidget;
 
-QUnit.module( 'LicenseDialogWidget', hooks.mediainfo, function () {
-	QUnit.test( 'constructor', function ( assert ) {
+QUnit.module( 'LicenseDialogWidget', hooks.mediainfo, () => {
+	QUnit.test( 'constructor', ( assert ) => {
 		LicenseDialogWidget = require( pathToWidget );
 		/* eslint-disable-next-line no-new */
 		new LicenseDialogWidget();
@@ -18,14 +18,14 @@ QUnit.module( 'LicenseDialogWidget', hooks.mediainfo, function () {
 		beforeEach: function () {
 			global.mw.user = helpers.createMediaWikiUser();
 		}
-	}, function () {
-		QUnit.test( 'getLicenseConfirmation returns zero', function ( assert ) {
+	}, () => {
+		QUnit.test( 'getLicenseConfirmation returns zero', ( assert ) => {
 			LicenseDialogWidget = require( pathToWidget );
 			const dialog = new LicenseDialogWidget();
 			assert.strictEqual( dialog.getLicenseConfirmation(), 0 );
 		} );
 
-		QUnit.test( 'storeLicenseConfirmation sets value of the appropriate key to 1', function ( assert ) {
+		QUnit.test( 'storeLicenseConfirmation sets value of the appropriate key to 1', ( assert ) => {
 			LicenseDialogWidget = require( pathToWidget );
 			const dialog = new LicenseDialogWidget();
 			dialog.storeLicenseConfirmation();
@@ -41,8 +41,8 @@ QUnit.module( 'LicenseDialogWidget', hooks.mediainfo, function () {
 				saveOption: sinon.stub()
 			};
 		}
-	}, function () {
-		QUnit.test( 'getLicenseConfirmation returns zero', function ( assert ) {
+	}, () => {
+		QUnit.test( 'getLicenseConfirmation returns zero', ( assert ) => {
 			// fake out user pref value: license not yet accepted
 			global.mw.user.options.get.returns( 0 );
 
@@ -51,7 +51,7 @@ QUnit.module( 'LicenseDialogWidget', hooks.mediainfo, function () {
 			assert.strictEqual( dialog.getLicenseConfirmation(), 0 );
 		} );
 
-		QUnit.test( 'storeLicenseConfirmation saves to user preferences', function ( assert ) {
+		QUnit.test( 'storeLicenseConfirmation saves to user preferences', ( assert ) => {
 			LicenseDialogWidget = require( pathToWidget );
 			const dialog = new LicenseDialogWidget();
 			dialog.storeLicenseConfirmation();

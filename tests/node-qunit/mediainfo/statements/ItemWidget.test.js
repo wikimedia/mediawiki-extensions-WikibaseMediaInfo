@@ -4,8 +4,8 @@ const sinon = require( 'sinon' ),
 	pathToWidget = '../../../../resources/statements/ItemWidget.js',
 	hooks = require( '../../support/hooks.js' );
 
-QUnit.module( 'ItemWidget', hooks.mediainfo, function () {
-	QUnit.test( 'Valid data roundtrip', function ( assert ) {
+QUnit.module( 'ItemWidget', hooks.mediainfo, () => {
+	QUnit.test( 'Valid data roundtrip', ( assert ) => {
 		const done = assert.async(),
 			ItemWidget = require( pathToWidget ),
 			widget = new ItemWidget( { propertyId: 'P1' } ),
@@ -19,14 +19,14 @@ QUnit.module( 'ItemWidget', hooks.mediainfo, function () {
 				)
 			);
 
-		widget.setData( data ).then( function () {
+		widget.setData( data ).then( () => {
 			assert.ok( widget.getData() );
 			assert.strictEqual( data.equals( widget.getData() ), true );
 			done();
 		} );
 	} );
 
-	QUnit.test( 'Setting other data triggers a change event', function ( assert ) {
+	QUnit.test( 'Setting other data triggers a change event', ( assert ) => {
 		const done = assert.async(),
 			ItemWidget = require( pathToWidget ),
 			widget = new ItemWidget( { propertyId: 'P1' } ),
@@ -64,13 +64,13 @@ QUnit.module( 'ItemWidget', hooks.mediainfo, function () {
 		widget.setData( data )
 			.then( widget.on.bind( widget, 'change', onChange, [] ) )
 			.then( widget.setData.bind( widget, newData ) )
-			.then( function () {
+			.then( () => {
 				assert.strictEqual( onChange.called, true );
 				done();
 			} );
 	} );
 
-	QUnit.test( 'Setting same data does not trigger a change event', function ( assert ) {
+	QUnit.test( 'Setting same data does not trigger a change event', ( assert ) => {
 		const done = assert.async(),
 			ItemWidget = require( pathToWidget ),
 			widget = new ItemWidget( { propertyId: 'P1' } ),
@@ -108,13 +108,13 @@ QUnit.module( 'ItemWidget', hooks.mediainfo, function () {
 		widget.setData( data )
 			.then( widget.on.bind( widget, 'change', onChange, [] ) )
 			.then( widget.setData.bind( widget, sameData ) )
-			.then( function () {
+			.then( () => {
 				assert.strictEqual( onChange.called, false );
 				done();
 			} );
 	} );
 
-	QUnit.test( 'Widget updates snak widgets with new data', function ( assert ) {
+	QUnit.test( 'Widget updates snak widgets with new data', ( assert ) => {
 		const done = assert.async(),
 			ItemWidget = require( pathToWidget ),
 			widget = new ItemWidget( { propertyId: 'P1' } ),
@@ -161,25 +161,25 @@ QUnit.module( 'ItemWidget', hooks.mediainfo, function () {
 			);
 
 		widget.setData( oneQualifier )
-			.then( function () {
+			.then( () => {
 				assert.strictEqual( oneQualifier.equals( widget.getData() ), true );
 			} )
 			.then( widget.setData.bind( widget, twoQualifiers ) )
-			.then( function () {
+			.then( () => {
 				assert.strictEqual( twoQualifiers.equals( widget.getData() ), true );
 			} )
 			.then( widget.setData.bind( widget, oneQualifier ) )
-			.then( function () {
+			.then( () => {
 				assert.strictEqual( oneQualifier.equals( widget.getData() ), true );
 			} )
 			.then( widget.setData.bind( widget, noQualifiers ) )
-			.then( function () {
+			.then( () => {
 				assert.strictEqual( noQualifiers.equals( widget.getData() ), true );
 				done();
 			} );
 	} );
 
-	QUnit.test( 'Test enabling edit state', function ( assert ) {
+	QUnit.test( 'Test enabling edit state', ( assert ) => {
 		const done = assert.async(),
 			ItemWidget = require( pathToWidget ),
 			widget = new ItemWidget( { propertyId: 'P1' } ),
@@ -195,7 +195,7 @@ QUnit.module( 'ItemWidget', hooks.mediainfo, function () {
 
 		widget.setData( data )
 			.then( widget.setEditing.bind( widget, true ) )
-			.then( function ( $element ) {
+			.then( ( $element ) => {
 				assert.strictEqual( $element.find( '.wbmi-item-read' ).length, 0 );
 				assert.strictEqual( $element.find( '.wbmi-item-edit' ).length, 1 );
 
@@ -206,7 +206,7 @@ QUnit.module( 'ItemWidget', hooks.mediainfo, function () {
 			} );
 	} );
 
-	QUnit.test( 'Test disabling edit state', function ( assert ) {
+	QUnit.test( 'Test disabling edit state', ( assert ) => {
 		const done = assert.async(),
 			ItemWidget = require( pathToWidget ),
 			widget = new ItemWidget( { propertyId: 'P1' } ),
@@ -222,7 +222,7 @@ QUnit.module( 'ItemWidget', hooks.mediainfo, function () {
 
 		widget.setData( data )
 			.then( widget.setEditing.bind( widget, false ) )
-			.then( function ( $element ) {
+			.then( ( $element ) => {
 				assert.strictEqual( $element.find( '.wbmi-item-read' ).length, 1 );
 				assert.strictEqual( $element.find( '.wbmi-item-edit' ).length, 0 );
 
@@ -233,7 +233,7 @@ QUnit.module( 'ItemWidget', hooks.mediainfo, function () {
 			} );
 	} );
 
-	QUnit.test( 'Toggling item prominence changes item rank', function ( assert ) {
+	QUnit.test( 'Toggling item prominence changes item rank', ( assert ) => {
 		const done = assert.async(),
 			ItemWidget = require( pathToWidget ),
 			widget = new ItemWidget( { propertyId: 'P1' } ),
@@ -248,22 +248,22 @@ QUnit.module( 'ItemWidget', hooks.mediainfo, function () {
 			);
 
 		widget.setData( data )
-			.then( function () {
+			.then( () => {
 				// default rank: normal
 				assert.strictEqual( widget.getData().getRank(), datamodel.Statement.RANK.NORMAL );
 			} )
 			.then( widget.toggleItemProminence.bind( widget, { preventDefault: sinon.stub() } ) )
-			.then( function () {
+			.then( () => {
 				assert.strictEqual( widget.getData().getRank(), datamodel.Statement.RANK.PREFERRED );
 			} )
 			.then( widget.toggleItemProminence.bind( widget, { preventDefault: sinon.stub() } ) )
-			.then( function () {
+			.then( () => {
 				assert.strictEqual( widget.getData().getRank(), datamodel.Statement.RANK.NORMAL );
 				done();
 			} );
 	} );
 
-	QUnit.test( 'Valid data roundtrip with somevalue snak', function ( assert ) {
+	QUnit.test( 'Valid data roundtrip with somevalue snak', ( assert ) => {
 		const done = assert.async(),
 			ItemWidget = require( pathToWidget ),
 			widget = new ItemWidget( { propertyId: 'P1' } ),
@@ -275,14 +275,14 @@ QUnit.module( 'ItemWidget', hooks.mediainfo, function () {
 			);
 
 		widget.setData( data )
-			.then( function () {
+			.then( () => {
 				assert.strictEqual( data.equals( widget.getData() ), true );
 				assert.strictEqual( widget.state.snakType, data.getClaim().getMainSnak().getType() );
 				done();
 			} );
 	} );
 
-	QUnit.test( 'Valid data roundtrip with novalue snak', function ( assert ) {
+	QUnit.test( 'Valid data roundtrip with novalue snak', ( assert ) => {
 		const done = assert.async(),
 			ItemWidget = require( pathToWidget ),
 			widget = new ItemWidget( { propertyId: 'P1' } ),
@@ -294,7 +294,7 @@ QUnit.module( 'ItemWidget', hooks.mediainfo, function () {
 			);
 
 		widget.setData( data )
-			.then( function () {
+			.then( () => {
 				assert.strictEqual( data.equals( widget.getData() ), true );
 				assert.strictEqual( widget.state.snakType, data.getClaim().getMainSnak().getType() );
 				done();

@@ -2,7 +2,7 @@
 	"root": true,
 	"extends": [
 		"wikimedia/client",
-		"../.eslintshared.json"
+		".eslintshared.json"
 	],
 	"env": {
 		"commonjs": true

@@ -10,15 +10,10 @@ module.exports = function ( grunt ) {
 	grunt.initConfig( {
 		eslint: {
 			options: {
-				extensions: [ '.js', '.json', '.vue' ],
 				cache: true,
 				fix: grunt.option( 'fix' )
 			},
-			all: [
-				'**/*.{js,json,vue}',
-				'!{vendor,node_modules}/**',
-				'!tests/node-qunit/**'
-			]
+			all: [ '.' ]
 		},
 		banana: conf.MessagesDirs,
 		stylelint: {

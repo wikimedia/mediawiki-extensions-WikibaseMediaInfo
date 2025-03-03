@@ -48,7 +48,7 @@ UlsWidget.prototype.initialiseUls = function ( languages ) {
 	this.uls = this.dropdown.$handle.uls( {
 		onSelect: function ( language ) {
 			ulsWidget.setValue( language );
-			ulsWidget.dropdown.$handle.focus();
+			ulsWidget.dropdown.$handle.trigger( 'focus' );
 		},
 		onReady: function () {
 			// ULS throws away languages for which it doesn't have any data,

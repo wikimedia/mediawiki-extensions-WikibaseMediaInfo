@@ -8,12 +8,7 @@
 		"commonjs": true
 	},
 	"rules": {
-		"max-len": "off",
-		"no-jquery/variable-pattern": "off",
-		"no-jquery/no-event-shorthand": "off",
-		"compat/compat": "warn",
-		"no-jquery/no-extend": "warn",
-		"es-x/no-object-assign": "warn"
+		"max-len": "off"
 	},
 	"overrides": [
 		{

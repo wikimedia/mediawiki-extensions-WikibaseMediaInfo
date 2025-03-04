@@ -186,7 +186,6 @@ CaptionsPanel.prototype.addCaptionsDataForUserLanguages = function ( captionData
  * @private
  */
 CaptionsPanel.prototype.getOrderedLangCodes = function ( captionDataArray ) {
-	let i;
 	const captionLanguages = Object.keys( captionDataArray );
 	const rearrangedCaptionLanguages = [];
 
@@ -199,7 +198,7 @@ CaptionsPanel.prototype.getOrderedLangCodes = function ( captionDataArray ) {
 		typeof captionDataArray[ this.languageFallbackChain[ 0 ] ] !== CaptionData ||
 		captionDataArray[ this.languageFallbackChain[ 0 ] ].text !== ''
 	) {
-		for ( i = 1; i < this.languageFallbackChain.length; i++ ) {
+		for ( let i = 1; i < this.languageFallbackChain.length; i++ ) {
 			if (
 				captionDataArray[ this.languageFallbackChain[ i ] ] &&
 				captionDataArray[ this.languageFallbackChain[ i ] ].text !== ''
@@ -293,7 +292,6 @@ CaptionsPanel.prototype.getTemplateDataReadOnly = function () {
 	const self = this;
 	const templateCaptions = [];
 	const showCaptionFlags = this.getShowCaptionFlagsByLangCode();
-	let count = 0;
 
 	// basic template data
 	const data = {
@@ -333,6 +331,7 @@ CaptionsPanel.prototype.getTemplateDataReadOnly = function () {
 		);
 	}
 
+	let count = 0;
 	// captions data
 	this.state.orderedLanguageCodes.forEach( ( langCode ) => {
 		const captionData = self.state.captionsData[ langCode ];

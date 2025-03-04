@@ -477,11 +477,10 @@ StatementWidget.prototype.submit = function ( baseRevId ) {
 				const guid = response.claim.id;
 				const originalStatement = statementsByGuid[ guid ];
 				const deserializer = new serialization.StatementDeserializer();
-				let responseStatement;
 				if ( response.claim.qualifiers !== undefined ) {
 					// Capture hashes for new qualifiers by replacing the original
 					// statement with a new statement created from the response
-					responseStatement = deserializer.deserialize( response.claim );
+					const responseStatement = deserializer.deserialize( response.claim );
 					if ( data.hasItem( originalStatement ) ) {
 						data.removeItem( originalStatement );
 						// also remove the item from the StatementWidget itself,
@@ -708,12 +707,10 @@ StatementWidget.prototype.handleConstraintsResponse = function ( responseForProp
 		return;
 	}
 	this.getItems().forEach( ( itemWidget ) => {
-		let guid, result;
-
 		try {
 			// find the constraint report for this GUID
-			guid = itemWidget.getData().getClaim().getGuid();
-			result = responseForPropertyId.filter( ( responseForStatement ) => responseForStatement.id === guid )[ 0 ] || null;
+			const guid = itemWidget.getData().getClaim().getGuid();
+			const result = responseForPropertyId.filter( ( responseForStatement ) => responseForStatement.id === guid )[ 0 ] || null;
 			itemWidget.setConstraintsReport( result );
 		} catch ( e ) {
 			itemWidget.setConstraintsReport( null );

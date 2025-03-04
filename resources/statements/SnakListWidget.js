@@ -233,14 +233,12 @@ SnakListWidget.prototype.setConstraintsReport = function ( results ) {
 	// extract snaklist constraint reports, pass them along to snak widget,
 	// and gather promises
 	const promises = this.state.snaks.map( ( widget ) => {
-		let data, propertyId, hash, result;
-
 		try {
-			data = widget.getData();
-			propertyId = data.getPropertyId();
-			hash = data.getHash();
+			const data = widget.getData();
+			const propertyId = data.getPropertyId();
+			const hash = data.getHash();
 
-			result = results[ propertyId ].filter( ( responseForSnak ) => responseForSnak.hash === hash )[ 0 ] || null;
+			const result = results[ propertyId ].filter( ( responseForSnak ) => responseForSnak.hash === hash )[ 0 ] || null;
 			return widget.setConstraintsReport( result );
 		} catch ( e ) {
 			return widget.setConstraintsReport( null );

@@ -180,15 +180,14 @@ MultiTypeInputWrapperWidget.prototype.onChange = function () {
  * @return {jQuery.Promise}
  */
 MultiTypeInputWrapperWidget.prototype.onSnakTypeChange = function ( snakType ) {
-	let input;
 	let promise;
 
 	switch ( snakType ) {
 		case valueTypes.SOMEVALUE:
-		case valueTypes.NOVALUE:
+		case valueTypes.NOVALUE: {
 
 			// Create a disabled string input with the appropriate message.
-			input = this.createInput( 'string' );
+			const input = this.createInput( 'string' );
 			input.input.setValue(
 				mw.message(
 					( snakType === valueTypes.SOMEVALUE ) ?
@@ -208,15 +207,17 @@ MultiTypeInputWrapperWidget.prototype.onSnakTypeChange = function ( snakType ) {
 				promise = promise.then( input.onEnter.bind( input ) );
 			}
 			break;
+		}
 
-		default:
+		default: {
 			// Create a new input with the type corresponding to the property.
 			this.setDisabled( false );
-			input = this.createInput( this.state.type );
+			const input = this.createInput( this.state.type );
 			promise = this.setState( {
 				snakType: snakType,
 				input: input
 			} );
+		}
 	}
 
 	// Create the new input, update state, and emit a change.

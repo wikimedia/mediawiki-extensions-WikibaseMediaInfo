@@ -56,9 +56,6 @@ FormatValueElement.toCache = function ( key, result ) {
 FormatValueElement.prototype.formatValue = function ( dataValue, format, language, propertyId ) {
 	const data = { type: dataValue.getType(), value: dataValue.toJSON() };
 	const stringified = JSON.stringify( data );
-	let promise;
-	let params;
-	let otherKey;
 
 	const api = wikibase.api.getLocationAgnosticMwApi(
 		mw.config.get( 'wbmiRepoApiUrl', mw.config.get( 'wbRepoApiUrl' ) ),
@@ -73,14 +70,14 @@ FormatValueElement.prototype.formatValue = function ( dataValue, format, languag
 	// were included - this can be deleted after parser caches expire
 	// (30 days after this patch got deployed, so probably ~ february 2020)
 	if ( !( key in FormatValueElement.cache ) && propertyId !== undefined ) {
-		otherKey = FormatValueElement.getKey( dataValue, format, language );
+		const otherKey = FormatValueElement.getKey( dataValue, format, language );
 		if ( otherKey in FormatValueElement.cache ) {
 			return FormatValueElement.cache[ otherKey ];
 		}
 	}
 
 	if ( !( key in FormatValueElement.cache ) ) {
-		params = {
+		const params = {
 			action: 'wbformatvalue',
 			datavalue: stringified,
 			format: 'json',
@@ -88,7 +85,7 @@ FormatValueElement.prototype.formatValue = function ( dataValue, format, languag
 			options: JSON.stringify( { lang: language } ),
 			property: propertyId
 		};
-		promise = api.get( params );
+		const promise = api.get( params );
 
 		FormatValueElement.cache[ key ] = promise.then( ( response ) => response.result || '' ).promise( { abort: function () {
 			if ( !( key in FormatValueElement.cache ) ) {

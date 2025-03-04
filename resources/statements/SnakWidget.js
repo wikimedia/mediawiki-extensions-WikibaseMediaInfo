@@ -254,22 +254,18 @@ SnakWidget.prototype.formatProperty = function ( propId, format, language ) {
  * @return {jQuery.Promise}
  */
 SnakWidget.prototype.asyncFormatForDisplay = function () {
-	let promises;
-	let dataValue;
-	let propertyId;
-	let valuePromise;
 	const message = this.valueInput.getSnakType() === valueTypes.SOMEVALUE ?
 		mw.message( 'wikibasemediainfo-filepage-statement-some-value' ).parse() :
 		mw.message( 'wikibasemediainfo-filepage-statement-no-value' ).parse();
 
 	try {
-		propertyId = this.propertyInput.getData().toJSON().id;
-		dataValue = this.valueInput.getData();
-		valuePromise = dataValue ?
+		const propertyId = this.propertyInput.getData().toJSON().id;
+		const dataValue = this.valueInput.getData();
+		const valuePromise = dataValue ?
 			this.formatValue( dataValue, 'text/html', null, propertyId ) :
 			$.Deferred().resolve( message ).promise( { abort: function () {} } );
 
-		promises = [
+		const promises = [
 			this.formatProperty( propertyId, 'text/html' ),
 			valuePromise
 		];

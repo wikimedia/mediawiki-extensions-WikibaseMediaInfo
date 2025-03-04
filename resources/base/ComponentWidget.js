@@ -186,16 +186,11 @@ ComponentWidget.prototype.rebuildDOM = function ( oldContainer, newContainer, pr
 	const newChildrenArray = [].slice.call( newContainer.childNodes );
 	const oldChildrenArray = [].slice.call( oldContainer.childNodes );
 	const matchedNodes = this.matchNodes( newChildrenArray, oldChildrenArray, preservedNodes );
-	let newNode;
-	let oldNode;
-	let newIndex;
-	let currentIndex;
-	let i;
 
-	for ( newIndex = 0; newIndex < newChildrenArray.length; newIndex++ ) {
-		newNode = newChildrenArray[ newIndex ];
-		oldNode = matchedNodes[ newIndex ];
-		currentIndex = oldNode ? [].slice.call( oldContainer.childNodes ).indexOf( oldNode ) : -1;
+	for ( let newIndex = 0; newIndex < newChildrenArray.length; newIndex++ ) {
+		const newNode = newChildrenArray[ newIndex ];
+		let oldNode = matchedNodes[ newIndex ];
+		const currentIndex = oldNode ? [].slice.call( oldContainer.childNodes ).indexOf( oldNode ) : -1;
 
 		// step 1: figure out the position of the new nodes in the old DOM,
 		// insert it at the correct position (if new) or detach existing
@@ -248,10 +243,10 @@ ComponentWidget.prototype.rebuildDOM = function ( oldContainer, newContainer, pr
 			// we don't want to simply swap out these nodes, because then we
 			// could lose context (e.g. focus state or input values), so let's
 			// just try to apply the new characteristics on to the existing nodes
-			for ( i = 0; i < oldNode.attributes.length; i++ ) {
+			for ( let i = 0; i < oldNode.attributes.length; i++ ) {
 				oldNode.removeAttribute( oldNode.attributes[ i ].name );
 			}
-			for ( i = 0; i < newNode.attributes.length; i++ ) {
+			for ( let i = 0; i < newNode.attributes.length; i++ ) {
 				oldNode.setAttribute( newNode.attributes[ i ].name, newNode.attributes[ i ].value );
 			}
 
@@ -298,10 +293,9 @@ ComponentWidget.prototype.extractParamDOMNodes = function ( data ) {
 		const keys = Object.keys( d );
 		const result = new d.constructor();
 		let originals = [];
-		let key, i, j, recursive, nodes, node;
 
-		for ( i = 0; i < keys.length; i++ ) {
-			key = keys[ i ];
+		for ( let i = 0; i < keys.length; i++ ) {
+			const key = keys[ i ];
 
 			if (
 				// check if array or object literal, in which case
@@ -309,7 +303,7 @@ ComponentWidget.prototype.extractParamDOMNodes = function ( data ) {
 				d[ key ] instanceof Array ||
 				( d[ key ] instanceof Object && Object.getPrototypeOf( d[ key ] ) === Object.prototype )
 			) {
-				recursive = transformNodes( d[ key ] );
+				const recursive = transformNodes( d[ key ] );
 				result[ key ] = recursive.data;
 				originals = originals.concat( recursive.nodes );
 			} else {
@@ -321,10 +315,10 @@ ComponentWidget.prototype.extractParamDOMNodes = function ( data ) {
 					// in DOM - instead, we'll parse a clone in there, and then
 					// our post-render processing (`rebuildDOM`) will recognize
 					// these nodes are the same and use the original one instead
-					nodes = getNode( d[ key ] );
+					const nodes = getNode( d[ key ] );
 					result[ key ] = [];
-					for ( j = 0; j < nodes.length; j++ ) {
-						node = nodes[ j ];
+					for ( let j = 0; j < nodes.length; j++ ) {
+						const node = nodes[ j ];
 						originals.push( node );
 						// only clone nodes that are currently rendered - others
 						// should actually render the real nodes (not clones)
@@ -429,7 +423,6 @@ ComponentWidget.prototype.matchNodes = function ( one, two, preserve ) {
 	return one.reduce( ( result, node, index, arr ) => {
 		let other = [].concat( two );
 		const remaining = arr.slice( index ).filter( ( target ) => target.tagName !== undefined );
-		let i;
 
 		// don't bother matching non-nodes
 		if ( node.tagName === undefined ) {
@@ -442,7 +435,7 @@ ComponentWidget.prototype.matchNodes = function ( one, two, preserve ) {
 		);
 
 		// find the first unmatched relevant equal node (if any)
-		for ( i = 0; i < other.length; i++ ) {
+		for ( let i = 0; i < other.length; i++ ) {
 			if ( node.isEqualNode( other[ i ] ) ) {
 				return result.concat( other[ i ] );
 			}
@@ -478,7 +471,6 @@ ComponentWidget.prototype.matchNodes = function ( one, two, preserve ) {
  */
 ComponentWidget.prototype.isEqualNodeAndProps = function ( one, two ) {
 	const self = this;
-	let property, descriptor;
 
 	if ( !one.isEqualNode( two ) ) {
 		return false;
@@ -488,10 +480,10 @@ ComponentWidget.prototype.isEqualNodeAndProps = function ( one, two ) {
 	// text input (where `value` prop is different from the `value` attribute,
 	// because the one doesn't sync back when it changes) could be considered
 	// equal even if they have different values - hence the added value compare
-	for ( property in one.constructor.prototype ) {
+	for ( const property in one.constructor.prototype ) {
 		// some properties or getters are auto computed and can't be set
 		// comparing these (e.g. `webkitEntries`) makes no sense
-		descriptor = Object.getOwnPropertyDescriptor( one.constructor.prototype, property );
+		const descriptor = Object.getOwnPropertyDescriptor( one.constructor.prototype, property );
 		if ( descriptor === undefined || !descriptor.writable || descriptor.set === undefined ) {
 			continue;
 		}

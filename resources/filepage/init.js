@@ -13,8 +13,7 @@
 		mediaInfoEntity = mw.config.get( 'wbEntity' ) || {},
 		statementPanels = {};
 
-	let addPropertyWidget,
-		captionsPanel;
+	let addPropertyWidget;
 
 	Object.freeze( defaultProperties );
 
@@ -178,8 +177,8 @@
 		const $statements = $content.find( '.wbmi-entityview-statementsGroup' );
 		const existingProperties = defaultProperties.concat( Object.keys( mediaInfoEntity.statements || {} ) );
 		const deserializer = new StatementListDeserializer();
-		let tabs;
 
+		let tabs;
 		// Try to infuse the mediainfo tabs.
 		// https://phabricator.wikimedia.org/T262470.
 		try {
@@ -197,7 +196,7 @@
 
 		// Create non-statement JS elements
 		$content.find( '.wbmi-tabs-container' ).first().before( protectionMsgWidget.$element );
-		captionsPanel = createCaptionsPanel();
+		const captionsPanel = createCaptionsPanel();
 		// eslint-disable-next-line no-jquery/no-global-selector
 		$( '.wbmi-entityview-captionsPanel' ).replaceWith( captionsPanel.$element );
 

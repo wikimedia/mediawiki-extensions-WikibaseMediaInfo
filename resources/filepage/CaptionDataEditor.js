@@ -50,12 +50,10 @@ const CaptionDataEditor = function ( guid, captionData, config ) {
 			self.textInput.getValidity()
 				.done( () => {
 					const length = self.textInput.getValue().length;
-					let lengthDiff;
-
 					self.setInputError( '' );
 
 					if ( self.maxCaptionLength !== undefined ) {
-						lengthDiff = self.maxCaptionLength - length;
+						const lengthDiff = self.maxCaptionLength - length;
 						if (
 							lengthDiff >= 0 &&
 							lengthDiff < self.warnWithinMaxCaptionLength

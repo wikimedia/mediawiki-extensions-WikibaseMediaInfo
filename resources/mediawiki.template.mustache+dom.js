@@ -38,10 +38,9 @@ mw.template.registerCompiler( 'mustache+dom', {
 				const transformNodes = function ( d ) {
 					const keys = Object.keys( d );
 					const result = new d.constructor();
-					let key, j, node, $stub;
 
-					for ( j = 0; j < keys.length; j++ ) {
-						key = keys[ j ];
+					for ( let j = 0; j < keys.length; j++ ) {
+						const key = keys[ j ];
 
 						if ( d[ key ] instanceof Function ) {
 							// on<event> handlers can't be parsed into the HTML, so we'll
@@ -61,9 +60,9 @@ mw.template.registerCompiler( 'mustache+dom', {
 							try {
 								// try to fetch DOM node from this data, for which
 								// we'll want to parse a placeholder into the template
-								node = self.getNode( d[ key ] );
+								const node = self.getNode( d[ key ] );
 								// eslint-disable-next-line mediawiki/class-doc
-								$stub = $( '<div>' ).addClass( 'tpl-dom-' + dom.length );
+								const $stub = $( '<div>' ).addClass( 'tpl-dom-' + dom.length );
 								dom.push( node );
 								result[ key ] = $stub[ 0 ].outerHTML;
 							} catch ( e ) {

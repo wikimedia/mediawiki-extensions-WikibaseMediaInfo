@@ -93,7 +93,6 @@ OO.mixinClass( ItemWidget, ConstraintsReportHandlerElement );
  */
 ItemWidget.prototype.getTemplateData = function () {
 	const self = this;
-	let labelPromise;
 	const errors = this.getErrors();
 	const errorMessages = ( errors.length > 0 ) ?
 		errors.map( ( error ) => new OO.ui.MessageWidget( {
@@ -106,6 +105,7 @@ ItemWidget.prototype.getTemplateData = function () {
 	// or else use a dummy promise
 	// Determine if we are dealing with a globecoordinate value, which has
 	// special display needs
+	let labelPromise;
 	if ( this.state.dataValue ) {
 		labelPromise = this.formatValue( this.state.dataValue, 'text/html', null, this.state.propertyId );
 	} else {

@@ -211,7 +211,7 @@ EntityAutocompleteInputWidget.prototype.onMousedown = function ( e ) {
 		// window.open. This is a response to a mousedown event so it shouldn't
 		// trigger any popup blockers in modern browsers. For browsers set to
 		// prefer new tabs over new windows, this will open in a new tab.
-		window.open( e.currentTarget.dataset.url, '_blank' );
+		window.open( e.currentTarget.dataset.mwUrl, '_blank' );
 	}
 };
 

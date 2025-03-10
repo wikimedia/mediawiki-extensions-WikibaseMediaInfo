@@ -1,4 +1,4 @@
-<span class="wbmi-autocomplete-option" data-url={{url}}>
+<span class="wbmi-autocomplete-option" data-mw-url={{url}}>
 	<span class="wbmi-autocomplete-option__label">
 		{{label}}
 	</span>

@@ -37,8 +37,8 @@ StatementPanel = function StatementPanelConstructor( config ) {
 	// Mixin constructors
 	OO.ui.mixin.PendingElement.call( this, this.config );
 
-	if ( this.$element.attr( 'data-formatvalue' ) ) {
-		this.populateFormatValueCache( JSON.parse( this.$element.attr( 'data-formatvalue' ) || '{}' ) );
+	if ( this.$element.attr( 'data-mw-formatvalue' ) ) {
+		this.populateFormatValueCache( JSON.parse( this.$element.attr( 'data-mw-formatvalue' ) || '{}' ) );
 	}
 
 	this.licenseDialogWidget = new LicenseDialogWidget();

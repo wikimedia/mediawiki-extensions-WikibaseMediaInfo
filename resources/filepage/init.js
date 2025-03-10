@@ -177,7 +177,7 @@
 	mw.hook( 'wikipage.content' ).add( function ( $content ) {
 		var linkNoticeWidget = new LinkNoticeWidget(),
 			protectionMsgWidget = new ProtectionMsgWidget(),
-			$statements = $content.find( '.wbmi-entityview-statementsGroup' ),
+			$statements = $content.find( '.wbmi-structured-data-header ~ .wbmi-entityview-statementsGroup' ),
 			existingProperties = defaultProperties.concat( Object.keys( mediaInfoEntity.statements || {} ) ),
 			deserializer = new StatementListDeserializer(),
 			tabs,
@@ -202,7 +202,7 @@
 		$content.find( '.wbmi-tabs-container' ).first().before( protectionMsgWidget.$element );
 		captionsPanel = createCaptionsPanel();
 		// eslint-disable-next-line no-jquery/no-global-selector
-		$( '.wbmi-entityview-captionsPanel' ).replaceWith( captionsPanel.$element );
+		$( '.wbmi-captions-header ~ .wbmi-entityview-captionsPanel' ).replaceWith( captionsPanel.$element );
 
 		// Add link notice widget and add property button if they don't exist.
 		if ( $statements.first().hasClass( 'wbmi-entityview-statementsGroup' ) ) {
@@ -216,8 +216,17 @@
 		// Set up existing statement panels
 		existingStatementPanels = $statements.get().map( function ( element ) {
 			var $statement = $( element ),
-				propId = $statement.data( 'property' ),
-				statementsJson = JSON.parse( $statement.attr( 'data-statements' ) || '[]' ),
+				propId = $statement.data( 'mw-property' ) ||
+					// Fallback for when this attribute was named differently
+					// @see https://phabricator.wikimedia.org/T387691
+					$statement.data( 'property' ),
+				statementsJson = JSON.parse(
+					$statement.attr( 'data-mw-statements' ) ||
+					// Fallback for when this attribute was named differently
+					// @see https://phabricator.wikimedia.org/T387691
+					$statement.attr( 'data-statements' ) ||
+					'[]'
+				),
 				data = deserializer.deserialize( statementsJson ),
 				statementPanel = createStatementsPanel(
 					$statement,

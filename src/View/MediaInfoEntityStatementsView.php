@@ -257,9 +257,9 @@ class MediaInfoEntityStatementsView {
 		] );
 		$panel->setAttributes(
 			[
-				'data-property' => $propertyIdString,
-				'data-statements' => json_encode( $serializedStatements ),
-				'data-formatvalue' => json_encode( $formatValueCache ),
+				'data-mw-property' => $propertyIdString,
+				'data-mw-statements' => json_encode( $serializedStatements ),
+				'data-mw-formatvalue' => json_encode( $formatValueCache ),
 			]
 		);
 		return $panel;
@@ -345,11 +345,6 @@ class MediaInfoEntityStatementsView {
 
 		$statementDiv = new Tag( 'div' );
 		$statementDiv->addClasses( [ 'wbmi-item-container' ] );
-
-		$guid = $statement->getGuid();
-		if ( $guid !== null ) {
-			$statementDiv->setAttributes( [ 'data-guid' => $guid ] );
-		}
 
 		$mainSnakDiv = new Tag( 'div' );
 		$mainSnakDiv->addClasses( [ 'wbmi-entity-header' ] );

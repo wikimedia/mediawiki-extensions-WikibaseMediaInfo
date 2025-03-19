@@ -66,16 +66,6 @@ FormatValueElement.prototype.formatValue = function ( dataValue, format, languag
 	language = language || mw.config.get( 'wgUserLanguage' );
 	const key = FormatValueElement.getKey( dataValue, format, language, propertyId );
 
-	// backward compatibility for output generated before property ids
-	// were included - this can be deleted after parser caches expire
-	// (30 days after this patch got deployed, so probably ~ february 2020)
-	if ( !( key in FormatValueElement.cache ) && propertyId !== undefined ) {
-		const otherKey = FormatValueElement.getKey( dataValue, format, language );
-		if ( otherKey in FormatValueElement.cache ) {
-			return FormatValueElement.cache[ otherKey ];
-		}
-	}
-
 	if ( !( key in FormatValueElement.cache ) ) {
 		const params = {
 			action: 'wbformatvalue',

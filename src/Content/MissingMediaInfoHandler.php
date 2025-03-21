@@ -4,6 +4,7 @@ namespace Wikibase\MediaInfo\Content;
 
 use MediaWiki\Context\IContextSource;
 use MediaWiki\Linker\LinkTarget;
+use MediaWiki\Parser\ParserOptions;
 use MediaWiki\Title\Title;
 use Wikibase\Lib\Store\EntityRevision;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
@@ -102,7 +103,10 @@ class MissingMediaInfoHandler {
 
 		$parserOutput = $outputGenerator->getParserOutput( new EntityRevision( $mediaInfo ), true );
 
-		$outputPage->addParserOutput( $parserOutput );
+		$outputPage->addParserOutput(
+			$parserOutput,
+			ParserOptions::newFromContext( $context )
+		);
 	}
 
 }

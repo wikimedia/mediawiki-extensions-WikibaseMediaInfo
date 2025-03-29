@@ -84,7 +84,7 @@ SnakListWidget.prototype.removeWidgets = function ( snaks ) {
 		removedWidgets = [];
 
 	this.state.snaks.forEach( ( snak ) => {
-		if ( snaks.indexOf( snak ) < 0 ) {
+		if ( !snaks.includes( snak ) ) {
 			// not present in array of items to remove = keep
 			newWidgets.push( snak );
 		} else {

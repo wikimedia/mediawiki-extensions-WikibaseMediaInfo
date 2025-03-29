@@ -122,7 +122,7 @@
 			$element: $el,
 			entityId: mw.config.get( 'wbEntityId' ),
 			helpUrls: mw.config.get( 'wbmiHelpUrls' ) || {},
-			isDefaultProperty: defaultProperties.indexOf( propId ) >= 0,
+			isDefaultProperty: defaultProperties.includes( propId ),
 			propertyId: propId,
 			propertyType: propertyType,
 			showControls: editable,

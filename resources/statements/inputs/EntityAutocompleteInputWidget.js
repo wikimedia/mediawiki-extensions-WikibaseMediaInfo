@@ -278,9 +278,9 @@ EntityAutocompleteInputWidget.prototype.filterData = function ( data ) {
 		const values = filter.value.split( '|' );
 		data = data.filter( ( datum ) => {
 			if ( filterType === 'includeOnMatch' ) {
-				return values.indexOf( datum[ field ] ) !== -1;
+				return values.includes( datum[ field ] );
 			} else {
-				return values.indexOf( datum[ field ] ) === -1;
+				return !values.includes( datum[ field ] );
 			}
 		} );
 	} );

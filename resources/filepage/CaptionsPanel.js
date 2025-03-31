@@ -211,14 +211,14 @@ CaptionsPanel.prototype.getOrderedLangCodes = function ( captionDataArray ) {
 
 	// User languages go next
 	this.userLanguages.forEach( ( langCode ) => {
-		if ( rearrangedCaptionLanguages.indexOf( langCode ) === -1 ) {
+		if ( !rearrangedCaptionLanguages.includes( langCode ) ) {
 			rearrangedCaptionLanguages.push( langCode );
 		}
 	} );
 
 	// And finally all other languages
 	captionLanguages.forEach( ( langCode ) => {
-		if ( rearrangedCaptionLanguages.indexOf( langCode ) === -1 ) {
+		if ( !rearrangedCaptionLanguages.includes( langCode ) ) {
 			rearrangedCaptionLanguages.push( langCode );
 		}
 	} );
@@ -570,7 +570,7 @@ CaptionsPanel.prototype.getShowCaptionFlagsByLangCode = function () {
 		) {
 			showCaption = true;
 		} else {
-			if ( self.userLanguages.indexOf( langCode ) === -1 ) {
+			if ( !self.userLanguages.includes( langCode ) ) {
 				showCaption = false;
 			} else {
 				showCaption = true;

@@ -139,7 +139,7 @@ StatementPanel.prototype.isEditable = function () {
  */
 StatementPanel.prototype.isSupportedType = function () {
 	const supportedTypes = mw.config.get( 'wbmiSupportedDataTypes' ) || [];
-	return supportedTypes.indexOf( this.config.propertyType ) >= 0;
+	return supportedTypes.includes( this.config.propertyType );
 };
 
 /**

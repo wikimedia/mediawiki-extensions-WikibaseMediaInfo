@@ -377,7 +377,7 @@ ItemWidget.prototype.setData = function ( data ) {
 	const referencesHashes = referencesArray.map( ( reference ) => reference.getHash() );
 
 	for ( let i = 0; i < referencesArray.length; i++ ) {
-		if ( referencesHashes.indexOf( this.state.referenceHashes[ i ] ) >= 0 ) {
+		if ( referencesHashes.includes( this.state.referenceHashes[ i ] ) ) {
 			// salvage existing widgets that are also in the newly received data,
 			newReferenceWidgets[ i ] = this.state.references[ i ];
 		} else {

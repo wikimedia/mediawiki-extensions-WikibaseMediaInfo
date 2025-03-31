@@ -219,13 +219,13 @@ ComponentWidget.prototype.rebuildDOM = function ( oldContainer, newContainer, pr
 		// or new node (if it's one to be preserved - i.e. we're manipulating the
 		// node directly elsewhere in JS), or trying to apply properties of the
 		// new node to the old node
-		if ( preservedNodes.indexOf( oldNode ) >= 0 ) {
+		if ( preservedNodes.includes( oldNode ) ) {
 			// oldNode is a node that needs to be preserved: it was a DOM node
 			// directly assigned as a variable to the template and it may have
 			// context that we must not lose (event listeners, focus state...)
 			// leave this node alone!
 			preservedNodes.splice( preservedNodes.indexOf( oldNode ), 1 );
-		} else if ( preservedNodes.indexOf( newNode ) >= 0 ) {
+		} else if ( preservedNodes.includes( newNode ) ) {
 			// same as above: it was assigned to the template, but it did not
 			// yet exist in the old render (a very similar node might exist,
 			// but not this exact one, which might have other event handlers
@@ -431,7 +431,7 @@ ComponentWidget.prototype.matchNodes = function ( one, two, preserve ) {
 
 		other = filterRelevantNodes( node, other ).filter(
 			// exclude nodes that we've already paired to a previous node
-			( target ) => result.indexOf( target ) < 0
+			( target ) => !result.includes( target )
 		);
 
 		// find the first unmatched relevant equal node (if any)
@@ -446,7 +446,7 @@ ComponentWidget.prototype.matchNodes = function ( one, two, preserve ) {
 
 		// narrow down nodes by cross-referencing similarities from the
 		// other side: a future node might actually be a better match...
-		other = other.filter( ( target ) => filterByMostSimilar( target, remaining ).indexOf( node ) >= 0 );
+		other = other.filter( ( target ) => filterByMostSimilar( target, remaining ).includes( node ) );
 
 		// narrow it down further to the one(s) with the minimum amount
 		// of different children
@@ -454,7 +454,7 @@ ComponentWidget.prototype.matchNodes = function ( one, two, preserve ) {
 
 		// narrow down nodes by cross-referencing dissimilarities from the
 		// other side: a future node might actually be a better match...
-		other = other.filter( ( target ) => filterByLeastDissimilar( target, remaining ).indexOf( node ) >= 0 );
+		other = other.filter( ( target ) => filterByLeastDissimilar( target, remaining ).includes( node ) );
 
 		// return the first of whatever is left
 		return result.concat( other.shift() );

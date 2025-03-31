@@ -86,7 +86,7 @@ AddPropertyWidget.prototype.getFilters = function () {
  * @return {jQuery.Promise}
  */
 AddPropertyWidget.prototype.addPropertyId = function ( propertyId ) {
-	if ( this.state.propertyIds.indexOf( propertyId ) >= 0 ) {
+	if ( this.state.propertyIds.includes( propertyId ) ) {
 		return $.Deferred().resolve( this.$element ).promise();
 	}
 

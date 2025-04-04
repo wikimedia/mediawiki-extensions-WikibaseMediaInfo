@@ -88,6 +88,7 @@ return array_map( static function ( array $settings ) use ( $config ) {
 		'synonymsMinByteLength' => 2,
 		'synonymsMinSimilarityToCanonicalForm' => 0.75,
 		'synonymsMinDifferenceFromOthers' => 0.25,
+		'weightedTagsMinScoreThreshold' => 0.5,
 		'nearMatchBoost' => 3.0,
 	];
 	$settings = array_replace_recursive( $defaultSettings, $settings );

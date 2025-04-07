@@ -3,6 +3,7 @@
 		"authors": [
 			"Alexander Yukal",
 			"Bloomaround",
+			"Borealex",
 			"Diman Russkov",
 			"Kaganer",
 			"Kareyac",
@@ -57,7 +58,7 @@
 	"wikibasemediainfo-filepage-statement-no-data": "Нет доступных данных",
 	"wikibasemediainfo-filepage-statement-no-results": "Ничего не найдено",
 	"wikibasemediainfo-filepage-statement-some-value-option": "Некоторое значение",
-	"wikibasemediainfo-filepage-statement-some-value": "У этого свойства есть некоторое значение без элемента в {{plural:{{WBREPONAME}}}}",
+	"wikibasemediainfo-filepage-statement-some-value": "Некоторое значение без элемента в {{WBREPONAME}}",
 	"wikibasemediainfo-filepage-statement-error": "При получении значения для этого свойства произошла ошибка",
 	"wikibasemediainfo-filepage-license-title": "Добавление кратких подписей и других структурированных данных",
 	"wikibasemediainfo-filepage-license-content": "Нажимая «Опубликовать изменения», вы соглашаетесь с [[wmf:Terms_of_Use|условиями использования]], а также соглашаетесь безотзывно публиковать свой вклад на условиях [https://creativecommons.org/publicdomain/zero/1.0/ лицензии Creative Commons CC0].",

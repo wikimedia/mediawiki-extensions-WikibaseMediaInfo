@@ -120,6 +120,30 @@
                                                                         "boost": 30
                                                                     }
                                                                 }
+                                                            },
+                                                            {
+                                                                "match": {
+                                                                    "weighted_tags": {
+                                                                        "query": "image.linked.from.wikidata.p18\/Q2",
+                                                                        "boost": 5
+                                                                    }
+                                                                }
+                                                            },
+                                                            {
+                                                                "match": {
+                                                                    "weighted_tags": {
+                                                                        "query": "image.linked.from.wikidata.p373\/Q2",
+                                                                        "boost": 10
+                                                                    }
+                                                                }
+                                                            },
+                                                            {
+                                                                "match": {
+                                                                    "weighted_tags": {
+                                                                        "query": "image.linked.from.wikidata.sitelink\/Q2",
+                                                                        "boost": 15
+                                                                    }
+                                                                }
                                                             }
                                                         ]
                                                     }

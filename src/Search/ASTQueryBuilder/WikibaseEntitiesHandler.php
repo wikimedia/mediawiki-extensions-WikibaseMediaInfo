@@ -56,7 +56,10 @@ class WikibaseEntitiesHandler implements ParsedNodeHandlerInterface {
 		$weightedTagsQueries = [];
 
 		foreach ( $entities as $entity ) {
-			if ( $entity['score'] >= 0 ) {
+			if (
+				$entity['score'] >= 0 &&
+				is_array( $this->boosts['statement'] ?? [] )
+			) {
 				foreach ( $this->boosts['statement'] ?? [] as $propertyId => $weight ) {
 					$statementBoost = $this->variableBoost ? $weight * $entity['score'] : $weight;
 					if ( $statementBoost > 0 ) {
@@ -72,7 +75,10 @@ class WikibaseEntitiesHandler implements ParsedNodeHandlerInterface {
 			// ONLY do weighted_tags queries if we have a good enough match
 			// weighted_tags is a very powerful search signal, so we want to be sure we're
 			// searching for the right thing
-			if ( $entity['score'] >= $this->weightedTagsMinScoreThreshold ) {
+			if (
+				$entity['score'] >= $this->weightedTagsMinScoreThreshold &&
+				is_array( $this->boosts['weighted_tags'] ?? [] )
+			) {
 				foreach ( $this->boosts['weighted_tags'] ?? [] as $prefix => $weight ) {
 					$weightedTagBoost = $this->variableBoost ? $weight * $entity['score'] : $weight;
 					if ( $weightedTagBoost > 0 ) {

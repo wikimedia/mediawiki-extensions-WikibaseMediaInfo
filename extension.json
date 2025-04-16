@@ -77,7 +77,10 @@
 	"callback": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onRegistration",
 	"HookHandlers": {
 		"main": {
-			"class": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks"
+			"class": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks",
+			"services": [
+				"HookContainer"
+			]
 		},
 		"services": {
 			"class": "Wikibase\\MediaInfo\\WikibaseMediaInfoServicesHooks"
@@ -87,15 +90,18 @@
 			"services": [
 				"ContentHandlerFactory"
 			]
+		},
+		"MediaInfoWikibaseHooks": {
+			"class": "Wikibase\\MediaInfo\\MediaInfoWikibaseHooks"
 		}
 	},
 	"Hooks": {
 		"MediaWikiServices": "services",
-		"WikibaseRepoEntityNamespaces": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onWikibaseRepoEntityNamespaces",
-		"WikibaseRepoEntityTypes": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onWikibaseEntityTypes",
-		"WikibaseClientEntityTypes": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onWikibaseEntityTypes",
-		"GetEntityByLinkedTitleLookup": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onGetEntityByLinkedTitleLookup",
-		"GetEntityContentModelForTitle": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onGetEntityContentModelForTitle",
+		"WikibaseRepoEntityNamespaces": "MediaInfoWikibaseHooks",
+		"WikibaseRepoEntityTypes": "MediaInfoWikibaseHooks",
+		"WikibaseClientEntityTypes": "MediaInfoWikibaseHooks",
+		"GetEntityByLinkedTitleLookup": "MediaInfoWikibaseHooks",
+		"GetEntityContentModelForTitle": "MediaInfoWikibaseHooks",
 		"BeforePageDisplay": "main",
 		"ParserOutputPostCacheTransform": "main",
 		"GetPreferences": "main",

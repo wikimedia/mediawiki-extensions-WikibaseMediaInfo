@@ -19,6 +19,7 @@ use Wikibase\MediaInfo\Services\FilePageLookup;
 use Wikibase\MediaInfo\Services\MediaInfoIdLookup;
 use Wikibase\Repo\Content\EntityHandler;
 use Wikibase\Repo\Content\EntityHolder;
+use Wikibase\Repo\Hooks\WikibaseTextForSearchIndexHook;
 use Wikibase\Repo\Search\Fields\FieldDefinitions;
 use Wikibase\Repo\Validators\EntityConstraintProvider;
 use Wikibase\Repo\Validators\ValidatorErrorLocalizer;
@@ -63,6 +64,11 @@ class MediaInfoHandler extends EntityHandler {
 	private $titleFactory;
 
 	/**
+	 * @var WikibaseTextForSearchIndexHook
+	 */
+	private $hookRunner;
+
+	/**
 	 * @param EntityContentDataCodec $contentCodec
 	 * @param EntityConstraintProvider $constraintProvider
 	 * @param ValidatorErrorLocalizer $errorLocalizer
@@ -73,6 +79,7 @@ class MediaInfoHandler extends EntityHandler {
 	 * @param FieldDefinitions $mediaInfoFieldDefinitions
 	 * @param PageStore $pageStore
 	 * @param TitleFactory $titleFactory
+	 * @param WikibaseTextForSearchIndexHook $hookRunner
 	 * @param callable|null $legacyExportFormatDetector
 	 */
 	public function __construct(
@@ -86,6 +93,7 @@ class MediaInfoHandler extends EntityHandler {
 		FieldDefinitions $mediaInfoFieldDefinitions,
 		PageStore $pageStore,
 		TitleFactory $titleFactory,
+		WikibaseTextForSearchIndexHook $hookRunner,
 		$legacyExportFormatDetector = null
 	) {
 		parent::__construct(
@@ -103,6 +111,7 @@ class MediaInfoHandler extends EntityHandler {
 		$this->filePageLookup = $filePageLookup;
 		$this->pageStore = $pageStore;
 		$this->titleFactory = $titleFactory;
+		$this->hookRunner = $hookRunner;
 	}
 
 	/**
@@ -120,7 +129,7 @@ class MediaInfoHandler extends EntityHandler {
 	 * @return MediaInfoContent
 	 */
 	public function newEntityContent( ?EntityHolder $entityHolder ) {
-		return new MediaInfoContent( $entityHolder );
+		return new MediaInfoContent( $this->hookRunner, $entityHolder );
 	}
 
 	/**

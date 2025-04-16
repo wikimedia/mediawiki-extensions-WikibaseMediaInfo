@@ -23,6 +23,7 @@ use Wikibase\MediaInfo\Content\MediaInfoContent;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\MediaInfo\DataModel\MediaInfoId;
 use Wikibase\Repo\Content\EntityInstanceHolder;
+use Wikibase\Repo\Hooks\WikibaseTextForSearchIndexHook;
 
 /**
  * @covers Wikibase\MediaInfo\Content\MediaInfoContent
@@ -36,26 +37,38 @@ class MediaInfoContentTest extends \PHPUnit\Framework\TestCase {
 
 	public function testInvalidEntityType() {
 		$this->expectException( InvalidArgumentException::class );
-		new MediaInfoContent( new EntityInstanceHolder( new Item() ) );
+		new MediaInfoContent(
+			$this->createMock( WikibaseTextForSearchIndexHook::class ),
+			new EntityInstanceHolder( new Item() )
+		);
 	}
 
 	public function testGetMediaInfo() {
 		$mediaInfo = new MediaInfo();
-		$mediaInfoContent = new MediaInfoContent( new EntityInstanceHolder( $mediaInfo ) );
+		$mediaInfoContent = new MediaInfoContent(
+			$this->createMock( WikibaseTextForSearchIndexHook::class ),
+			new EntityInstanceHolder( $mediaInfo )
+		);
 
 		$this->assertSame( $mediaInfo, $mediaInfoContent->getMediaInfo() );
 	}
 
 	public function testGetEntity() {
 		$mediaInfo = new MediaInfo();
-		$mediaInfoContent = new MediaInfoContent( new EntityInstanceHolder( $mediaInfo ) );
+		$mediaInfoContent = new MediaInfoContent(
+			$this->createMock( WikibaseTextForSearchIndexHook::class ),
+			new EntityInstanceHolder( $mediaInfo )
+		);
 
 		$this->assertSame( $mediaInfo, $mediaInfoContent->getEntity() );
 	}
 
 	public function testIsEmpty() {
 		$mediaInfo = new MediaInfo();
-		$content = new MediaInfoContent( new EntityInstanceHolder( $mediaInfo ) );
+		$content = new MediaInfoContent(
+			$this->createMock( WikibaseTextForSearchIndexHook::class ),
+			new EntityInstanceHolder( $mediaInfo )
+		);
 
 		$this->assertTrue( $content->isEmpty() );
 	}
@@ -63,7 +76,10 @@ class MediaInfoContentTest extends \PHPUnit\Framework\TestCase {
 	public function testIsNotEmpty() {
 		$mediaInfo = new MediaInfo();
 		$mediaInfo->getLabels()->setTextForLanguage( 'en', 'Foo' );
-		$content = new MediaInfoContent( new EntityInstanceHolder( $mediaInfo ) );
+		$content = new MediaInfoContent(
+			$this->createMock( WikibaseTextForSearchIndexHook::class ),
+			new EntityInstanceHolder( $mediaInfo )
+		);
 
 		$this->assertFalse( $content->isEmpty() );
 	}
@@ -101,7 +117,10 @@ class MediaInfoContentTest extends \PHPUnit\Framework\TestCase {
 	 * @dataProvider provideCountable
 	 */
 	public function testIsCountable( MediaInfo $mediaInfo ) {
-		$mediaInfoContent = new MediaInfoContent( new EntityInstanceHolder( $mediaInfo ) );
+		$mediaInfoContent = new MediaInfoContent(
+			$this->createMock( WikibaseTextForSearchIndexHook::class ),
+			new EntityInstanceHolder( $mediaInfo )
+		);
 
 		$this->assertTrue( $mediaInfoContent->isCountable() );
 	}
@@ -117,7 +136,10 @@ class MediaInfoContentTest extends \PHPUnit\Framework\TestCase {
 	 * @dataProvider provideNotCountable
 	 */
 	public function testIsNotCountable( MediaInfo $mediaInfo ) {
-		$mediaInfoContent = new MediaInfoContent( new EntityInstanceHolder( $mediaInfo ) );
+		$mediaInfoContent = new MediaInfoContent(
+			$this->createMock( WikibaseTextForSearchIndexHook::class ),
+			new EntityInstanceHolder( $mediaInfo )
+		);
 
 		$this->assertFalse( $mediaInfoContent->isCountable() );
 	}
@@ -151,7 +173,12 @@ class MediaInfoContentTest extends \PHPUnit\Framework\TestCase {
 	 * @dataProvider provideTextForSearchIndex
 	 */
 	public function testGetTextForSearchIndex( MediaInfo $mediaInfo, $expected ) {
-		$mediaInfoContent = new MediaInfoContent( new EntityInstanceHolder( $mediaInfo ) );
+		$hookRunner = $this->createMock( WikibaseTextForSearchIndexHook::class );
+		$hookRunner->method( 'onWikibaseTextForSearchIndex' )->willReturn( true );
+		$mediaInfoContent = new MediaInfoContent(
+			$hookRunner,
+			new EntityInstanceHolder( $mediaInfo )
+		);
 
 		$this->assertSame( $expected, $mediaInfoContent->getTextForSearchIndex() );
 	}
@@ -202,7 +229,13 @@ class MediaInfoContentTest extends \PHPUnit\Framework\TestCase {
 			)
 		);
 
-		$content = new MediaInfoContent( new EntityInstanceHolder( $entity ) );
+		$hookRunner = $this->createMock( WikibaseTextForSearchIndexHook::class );
+		$hookRunner->method( 'onWikibaseTextForSearchIndex' )->willReturn( true );
+
+		$content = new MediaInfoContent(
+			$hookRunner,
+			new EntityInstanceHolder( $entity )
+		);
 		$output = $content->getTextForFilters();
 
 		$this->assertSame(

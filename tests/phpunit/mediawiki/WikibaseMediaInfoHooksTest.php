@@ -4,6 +4,7 @@ namespace Wikibase\MediaInfo\Tests\MediaWiki;
 
 use CirrusSearch\Profile\SearchProfileService;
 use MediaWiki\Context\RequestContext;
+use MediaWiki\HookContainer\HookContainer;
 use MediaWiki\Language\RawMessage;
 use MediaWiki\Output\OutputPage;
 use MediaWiki\Page\PageIdentity;
@@ -14,11 +15,7 @@ use MediaWiki\Title\Title;
 use MediaWiki\Title\TitleFormatter;
 use MediaWiki\User\User;
 use MockTitleTrait;
-use Wikibase\DataModel\Services\EntityId\EntityIdComposer;
-use Wikibase\Lib\Store\EntityByLinkedTitleLookup;
-use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\MediaInfo\Search\MediaSearchQueryBuilder;
-use Wikibase\MediaInfo\Services\MediaInfoByLinkedTitleLookup;
 use Wikibase\MediaInfo\WikibaseMediaInfoHooks;
 use Wikimedia\TestingAccessWrapper;
 
@@ -33,28 +30,6 @@ use Wikimedia\TestingAccessWrapper;
  */
 class WikibaseMediaInfoHooksTest extends \MediaWikiIntegrationTestCase {
 	use MockTitleTrait;
-
-	public function testOnWikibaseRepoEntityNamespaces() {
-		$entityNamespaces = [];
-		WikibaseMediaInfoHooks::onWikibaseRepoEntityNamespaces( $entityNamespaces );
-		$this->assertArrayHasKey( MediaInfo::ENTITY_TYPE, $entityNamespaces );
-	}
-
-	public static function provideWikibaseEntityTypesHooks() {
-		return [
-			[ 'WikibaseRepoEntityTypes' ],
-			[ 'WikibaseClientEntityTypes' ],
-		];
-	}
-
-	/**
-	 * @dataProvider provideWikibaseEntityTypesHooks
-	 */
-	public function testOnWikibaseEntityTypes( $hook ) {
-		$entityTypeDefinitions = [];
-		$this->getServiceContainer()->getHookContainer()->run( $hook, [ &$entityTypeDefinitions ] );
-		$this->assertArrayHasKey( 'mediainfo', $entityTypeDefinitions );
-	}
 
 	public static function providePostCacheTransformInput() {
 		return [
@@ -75,11 +50,12 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiIntegrationTestCase {
 	public function testOnParserOutputPostCacheTransform( $original, $expected ) {
 		$parserOutput = $this->createMock( ParserOutput::class );
 		$options = [];
-		( new WikibaseMediaInfoHooks )->onParserOutputPostCacheTransform(
-			$parserOutput,
-			$original,
-			$options
-		);
+		( new WikibaseMediaInfoHooks( $this->createMock( HookContainer::class ) ) )
+			->onParserOutputPostCacheTransform(
+				$parserOutput,
+				$original,
+				$options
+			);
 		$this->assertEquals( $expected, $original );
 	}
 
@@ -134,7 +110,8 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiIntegrationTestCase {
 		$out->expects( $this->once() )
 			->method( 'addModules' );
 
-		( new WikibaseMediaInfoHooks )->onBeforePageDisplay( $out, $skin );
+		( new WikibaseMediaInfoHooks( $this->createMock( HookContainer::class ) ) )
+			->onBeforePageDisplay( $out, $skin );
 	}
 
 	public function testOnBeforePageDisplayWithMissingTitle() {
@@ -151,22 +128,8 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiIntegrationTestCase {
 
 		$skin = $this->createMock( \Skin::class );
 
-		( new WikibaseMediaInfoHooks )->onBeforePageDisplay( $out, $skin );
-	}
-
-	private function createHookObjectWithMocks() {
-		return new WikibaseMediaInfoHooks(
-			$this->createMock( EntityIdComposer::class )
-		);
-	}
-
-	public function testOnGetEntityByLinkedTitleLookup() {
-		$lookup = $this->createMock( EntityByLinkedTitleLookup::class );
-		WikibaseMediaInfoHooks::onGetEntityByLinkedTitleLookup( $lookup );
-		$this->assertInstanceOf(
-			MediaInfoByLinkedTitleLookup::class,
-			$lookup
-		);
+		( new WikibaseMediaInfoHooks( $this->createMock( HookContainer::class ) ) )
+			->onBeforePageDisplay( $out, $skin );
 	}
 
 	public function testOnCirrusSearchProfileServiceMediaSearch() {
@@ -283,8 +246,7 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiIntegrationTestCase {
 	}
 
 	private function getWrapper() {
-		$entityId = $this->createMock( EntityIdComposer::class );
-		$hooks = new WikibaseMediaInfoHooks( $entityId );
+		$hooks = new WikibaseMediaInfoHooks( $this->createMock( HookContainer::class ) );
 		return TestingAccessWrapper::newFromObject( $hooks );
 	}
 

@@ -27,6 +27,7 @@ use Wikibase\MediaInfo\Search\MediaInfoFieldDefinitions;
 use Wikibase\MediaInfo\Services\FilePageLookup;
 use Wikibase\MediaInfo\Services\MediaInfoIdLookup;
 use Wikibase\Repo\Content\EntityInstanceHolder;
+use Wikibase\Repo\Hooks\WikibaseTextForSearchIndexHook;
 use Wikibase\Repo\Validators\EntityConstraintProvider;
 use Wikibase\Repo\Validators\ValidatorErrorLocalizer;
 use Wikibase\Search\Elastic\Fields\DescriptionsProviderFieldDefinitions;
@@ -53,7 +54,10 @@ class MediaInfoDataForSearchIndexTest extends \MediaWikiUnitTestCase {
 			new NullLogger()
 		);
 
-		$content = new MediaInfoContent( new EntityInstanceHolder( $this->createEntity() ) );
+		$content = new MediaInfoContent(
+			$this->createMock( WikibaseTextForSearchIndexHook::class ),
+			new EntityInstanceHolder( $this->createEntity() )
+		);
 		$revision = $this->createMock( RevisionRecord::class );
 		$revision->method( 'hasSlot' )
 			->with( MediaInfo::ENTITY_TYPE )
@@ -124,6 +128,7 @@ class MediaInfoDataForSearchIndexTest extends \MediaWikiUnitTestCase {
 			),
 			$this->createMock( PageStore::class ),
 			$this->createMock( TitleFactory::class ),
+			$this->createMock( WikibaseTextForSearchIndexHook::class ),
 			null
 		);
 	}

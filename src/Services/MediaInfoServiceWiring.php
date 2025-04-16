@@ -4,6 +4,7 @@ use MediaWiki\MediaWikiServices;
 use Wikibase\MediaInfo\Content\MediaInfoHandler;
 use Wikibase\MediaInfo\Content\MissingMediaInfoHandler;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
+use Wikibase\MediaInfo\MediaInfoWikibaseHookRunner;
 use Wikibase\MediaInfo\Services\FilePageLookup;
 use Wikibase\MediaInfo\Services\MediaInfoIdLookup;
 use Wikibase\MediaInfo\Services\MediaInfoServices;
@@ -43,7 +44,15 @@ return [
 				->getFieldDefinitionsByType( MediaInfo::ENTITY_TYPE ),
 			$services->getPageStore(),
 			$services->getTitleFactory(),
+			MediaInfoServices::getHookRunner( $services ),
 			null
 		);
+	},
+
+	'MediaInfoHookRunner' => static function ( MediaWikiServices $services ): MediaInfoWikibaseHookRunner {
+		return new MediaInfoWikibaseHookRunner(
+			$services->getHookContainer()
+		);
 	}
+
 ];

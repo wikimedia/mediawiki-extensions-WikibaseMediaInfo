@@ -4,11 +4,11 @@ namespace Wikibase\MediaInfo\Content;
 
 use InvalidArgumentException;
 use LogicException;
-use MediaWiki\MediaWikiServices;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\Repo\Content\EntityContent;
 use Wikibase\Repo\Content\EntityHolder;
 use Wikibase\Repo\FingerprintSearchTextGenerator;
+use Wikibase\Repo\Hooks\WikibaseTextForSearchIndexHook;
 
 /**
  * @license GPL-2.0-or-later
@@ -24,18 +24,22 @@ class MediaInfoContent extends EntityContent {
 	private $mediaInfoHolder;
 
 	/**
-	 * Do not use to construct new stuff from outside of this class,
-	 * use the static newFoobar methods.
+	 * @var WikibaseTextForSearchIndexHook
+	 */
+	private $hookRunner;
+
+	/**
+	 * Do not use to construct new stuff from outside of this class -
+	 * prefer MediaInfoHandler::newEntityContent (since I61d9a89e3ef19e10c04dbfdea02d4096cd2b8cda)
 	 *
-	 * In other words: treat as protected (which it was, but now
-	 * cannot be since we derive from Content).
-	 *
-	 * @protected
-	 *
+	 * @param WikibaseTextForSearchIndexHook $hookRunner
 	 * @param EntityHolder|null $mediaInfoHolder
 	 * @throws InvalidArgumentException
 	 */
-	public function __construct( ?EntityHolder $mediaInfoHolder = null ) {
+	public function __construct(
+		WikibaseTextForSearchIndexHook $hookRunner,
+		?EntityHolder $mediaInfoHolder = null
+	) {
 		parent::__construct( self::CONTENT_MODEL_ID );
 
 		if ( $mediaInfoHolder !== null
@@ -45,32 +49,7 @@ class MediaInfoContent extends EntityContent {
 		}
 
 		$this->mediaInfoHolder = $mediaInfoHolder;
-	}
-
-	/**
-	 * Constructs an empty content object.
-	 *
-	 * @return MediaInfoContent
-	 */
-	public static function emptyContent(): MediaInfoContent {
-		return new self( new class() implements EntityHolder {
-
-			/** @inheritDoc */
-			public function getEntity( $expectedClass = MediaInfo::class ) {
-				return new MediaInfo();
-			}
-
-			/** @inheritDoc */
-			public function getEntityId() {
-				return null;
-			}
-
-			/** @inheritDoc */
-			public function getEntityType() {
-				return MediaInfo::ENTITY_TYPE;
-			}
-
-		} );
+		$this->hookRunner = $hookRunner;
 	}
 
 	/**
@@ -144,9 +123,7 @@ class MediaInfoContent extends EntityContent {
 		$searchTextGenerator = new FingerprintSearchTextGenerator();
 		$text = $searchTextGenerator->generate( $this->getMediaInfo() );
 
-		if ( !MediaWikiServices::getInstance()->getHookContainer()
-			->run( 'WikibaseTextForSearchIndex', [ $this, &$text ] )
-		) {
+		if ( !$this->hookRunner->onWikibaseTextForSearchIndex( $this, $text ) ) {
 			return '';
 		}
 

@@ -18,6 +18,7 @@ use Wikibase\MediaInfo\DataModel\MediaInfoId;
 use Wikibase\MediaInfo\Search\MediaInfoFieldDefinitions;
 use Wikibase\MediaInfo\Services\FilePageLookup;
 use Wikibase\MediaInfo\Services\MediaInfoIdLookup;
+use Wikibase\Repo\Hooks\WikibaseTextForSearchIndexHook;
 use Wikibase\Repo\Validators\EntityConstraintProvider;
 use Wikibase\Repo\Validators\ValidatorErrorLocalizer;
 use Wikibase\Search\Elastic\Fields\DescriptionsProviderFieldDefinitions;
@@ -94,6 +95,7 @@ class MediaInfoHandlerTest extends \MediaWikiIntegrationTestCase {
 			),
 			$this->getServiceContainer()->getPageStore(),
 			$this->getServiceContainer()->getTitleFactory(),
+			$this->createMock( WikibaseTextForSearchIndexHook::class ),
 			null
 		);
 	}

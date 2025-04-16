@@ -9,6 +9,7 @@ use MediaWiki\Config\ConfigException;
 use MediaWiki\Context\RequestContext;
 use MediaWiki\Hook\ParserOutputPostCacheTransformHook;
 use MediaWiki\Hook\SidebarBeforeOutputHook;
+use MediaWiki\HookContainer\HookContainer;
 use MediaWiki\Html\Html;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\Output\Hook\BeforePageDisplayHook;
@@ -39,7 +40,6 @@ use Wikibase\DataModel\Entity\NumericPropertyId;
 use Wikibase\DataModel\Services\Lookup\PropertyDataTypeLookupException;
 use Wikibase\DataModel\Statement\StatementGuid;
 use Wikibase\Lib\LanguageFallbackChainFactory;
-use Wikibase\Lib\Store\EntityByLinkedTitleLookup;
 use Wikibase\Lib\UserLanguageLookup;
 use Wikibase\MediaInfo\Content\MediaInfoContent;
 use Wikibase\MediaInfo\DataAccess\Scribunto\WikibaseMediaInfoEntityLibrary;
@@ -48,7 +48,6 @@ use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\MediaInfo\Search\Feature\CustomMatchFeature;
 use Wikibase\MediaInfo\Search\MediaSearchASTClassifier;
 use Wikibase\MediaInfo\Search\MediaSearchQueryBuilder;
-use Wikibase\MediaInfo\Services\MediaInfoByLinkedTitleLookup;
 use Wikibase\MediaInfo\Services\MediaInfoServices;
 use Wikibase\Repo\BabelUserLanguageLookup;
 use Wikibase\Repo\Content\EntityInstanceHolder;
@@ -74,31 +73,10 @@ class WikibaseMediaInfoHooks implements
 
 	public const MEDIAINFO_SLOT_HEADER_PLACEHOLDER = '<mediainfoslotheader />';
 
-	/**
-	 * Hook to register the MediaInfo entity namespaces for EntityNamespaceLookup.
-	 *
-	 * @param int[] &$entityNamespacesSetting
-	 */
-	public static function onWikibaseRepoEntityNamespaces( &$entityNamespacesSetting ) {
-		// Tell Wikibase where to put our entity content.
-		$entityNamespacesSetting[ MediaInfo::ENTITY_TYPE ] = NS_FILE . '/' . MediaInfo::ENTITY_TYPE;
-	}
+	private HookContainer $hookContainer;
 
-	/**
-	 * Adds the definition of the media info entity type to the definitions array Wikibase uses.
-	 *
-	 * @see WikibaseMediaInfo.entitytypes.php
-	 *
-	 * @note This is bootstrap code, it is executed for EVERY request. Avoid instantiating
-	 * objects or loading classes here!
-	 *
-	 * @param array[] &$entityTypeDefinitions
-	 */
-	public static function onWikibaseEntityTypes( array &$entityTypeDefinitions ) {
-		$entityTypeDefinitions = array_merge(
-			$entityTypeDefinitions,
-			require __DIR__ . '/../WikibaseMediaInfo.entitytypes.php'
-		);
+	public function __construct( HookContainer $hookContainer ) {
+		$this->hookContainer = $hookContainer;
 	}
 
 	/**
@@ -196,7 +174,7 @@ class WikibaseMediaInfoHooks implements
 			}
 		}
 
-		$hooksObject = new self();
+		$hooksObject = new self( $this->hookContainer );
 		$hooksObject->doBeforePageDisplay(
 			$out,
 			$skin,
@@ -611,17 +589,6 @@ class WikibaseMediaInfoHooks implements
 		return $msg;
 	}
 
-	public static function onGetEntityByLinkedTitleLookup( EntityByLinkedTitleLookup &$lookup ) {
-		$lookup = new MediaInfoByLinkedTitleLookup( $lookup );
-	}
-
-	/** @inheritDoc */
-	public static function onGetEntityContentModelForTitle( Title $title, &$contentModel ) {
-		if ( $title->inNamespace( NS_FILE ) && $title->getArticleID() ) {
-			$contentModel = MediaInfoContent::CONTENT_MODEL_ID;
-		}
-	}
-
 	/**
 	 * Register a ProfileContext for cirrus that will mean that queries in NS_FILE will use
 	 * the MediaQueryBuilder class for searching
@@ -787,7 +754,10 @@ class WikibaseMediaInfoHooks implements
 				$statement->setGuid( (string)$newStatementGuid );
 			}
 		}
-		$newContent = new MediaInfoContent( new EntityInstanceHolder( $newEntity ) );
+		$newContent = new MediaInfoContent(
+			new MediaInfoWikibaseHookRunner( $this->hookContainer ),
+			new EntityInstanceHolder( $newEntity )
+		);
 
 		// store updated content in blob store
 		$unsavedSlot = SlotRecord::newUnsaved( 'mediainfo', $newContent );

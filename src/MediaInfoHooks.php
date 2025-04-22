@@ -61,7 +61,7 @@ use Wikibase\Repo\WikibaseRepo;
  * @license GPL-2.0-or-later
  * @author Bene* < benestar.wikimedia@gmail.com >
  */
-class WikibaseMediaInfoHooks implements
+class MediaInfoHooks implements
 	BeforePageDisplayHook,
 	ParserOutputPostCacheTransformHook,
 	GetPreferencesHook,

@@ -16,12 +16,12 @@ use MediaWiki\Title\Title;
 use MediaWiki\Title\TitleFormatter;
 use MediaWiki\User\User;
 use MockTitleTrait;
+use Wikibase\MediaInfo\MediaInfoHooks;
 use Wikibase\MediaInfo\Search\MediaSearchQueryBuilder;
-use Wikibase\MediaInfo\WikibaseMediaInfoHooks;
 use Wikimedia\TestingAccessWrapper;
 
 /**
- * @covers \Wikibase\MediaInfo\WikibaseMediaInfoHooks
+ * @covers \Wikibase\MediaInfo\MediaInfoHooks
  *
  * @group WikibaseMediaInfo
  * @group Database
@@ -29,7 +29,7 @@ use Wikimedia\TestingAccessWrapper;
  * @license GPL-2.0-or-later
  * @author Bene* < benestar.wikimedia@gmail.com >
  */
-class WikibaseMediaInfoHooksTest extends \MediaWikiIntegrationTestCase {
+class MediaInfoHooksTest extends \MediaWikiIntegrationTestCase {
 	use MockTitleTrait;
 
 	public static function providePostCacheTransformInput() {
@@ -51,7 +51,7 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiIntegrationTestCase {
 	public function testOnParserOutputPostCacheTransform( $original, $expected ) {
 		$parserOutput = $this->createMock( ParserOutput::class );
 		$options = [];
-		( new WikibaseMediaInfoHooks( $this->createMock( HookContainer::class ) ) )
+		( new MediaInfoHooks( $this->createMock( HookContainer::class ) ) )
 			->onParserOutputPostCacheTransform(
 				$parserOutput,
 				$original,
@@ -111,7 +111,7 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiIntegrationTestCase {
 		$out->expects( $this->once() )
 			->method( 'addModules' );
 
-		( new WikibaseMediaInfoHooks( $this->createMock( HookContainer::class ) ) )
+		( new MediaInfoHooks( $this->createMock( HookContainer::class ) ) )
 			->onBeforePageDisplay( $out, $skin );
 	}
 
@@ -129,7 +129,7 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiIntegrationTestCase {
 
 		$skin = $this->createMock( Skin::class );
 
-		( new WikibaseMediaInfoHooks( $this->createMock( HookContainer::class ) ) )
+		( new MediaInfoHooks( $this->createMock( HookContainer::class ) ) )
 			->onBeforePageDisplay( $out, $skin );
 	}
 
@@ -149,11 +149,11 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiIntegrationTestCase {
 				$this->containsEqual( NS_FILE )
 			);
 
-		WikibaseMediaInfoHooks::onCirrusSearchProfileService( $service );
+		MediaInfoHooks::onCirrusSearchProfileService( $service );
 	}
 
 	public function testGetProtectionMsgIsProtected() {
-		/** @var WikibaseMediaInfoHooks $wrapper */
+		/** @var MediaInfoHooks $wrapper */
 		$wrapper = $this->getWrapper();
 		$title = $this->createMock( Title::class );
 
@@ -176,7 +176,7 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiIntegrationTestCase {
 	}
 
 	public function testGetProtectionMsgIsSemiProtected() {
-		/** @var WikibaseMediaInfoHooks $wrapper */
+		/** @var MediaInfoHooks $wrapper */
 		$wrapper = $this->getWrapper();
 		$title = $this->createMock( Title::class );
 
@@ -202,7 +202,7 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiIntegrationTestCase {
 	}
 
 	public function testGetProtectionMsgIsCascadeProtected() {
-		/** @var WikibaseMediaInfoHooks $wrapper */
+		/** @var MediaInfoHooks $wrapper */
 		$wrapper = $this->getWrapper();
 		$cascadeSource = $this->createMock( PageIdentity::class );
 
@@ -234,7 +234,7 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiIntegrationTestCase {
 	}
 
 	public function testGetProtectionMsgIsNotProtected() {
-		/** @var WikibaseMediaInfoHooks $wrapper */
+		/** @var MediaInfoHooks $wrapper */
 		$wrapper = $this->getWrapper();
 
 		$title = $this->createMock( Title::class );
@@ -247,7 +247,7 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiIntegrationTestCase {
 	}
 
 	private function getWrapper() {
-		$hooks = new WikibaseMediaInfoHooks( $this->createMock( HookContainer::class ) );
+		$hooks = new MediaInfoHooks( $this->createMock( HookContainer::class ) );
 		return TestingAccessWrapper::newFromObject( $hooks );
 	}
 

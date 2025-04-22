@@ -74,16 +74,16 @@
 	"ServiceWiringFiles": [
 		"src/Services/MediaInfoServiceWiring.php"
 	],
-	"callback": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onRegistration",
+	"callback": "Wikibase\\MediaInfo\\MediaInfoHooks::onRegistration",
 	"HookHandlers": {
 		"main": {
-			"class": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks",
+			"class": "Wikibase\\MediaInfo\\MediaInfoHooks",
 			"services": [
 				"HookContainer"
 			]
 		},
 		"services": {
-			"class": "Wikibase\\MediaInfo\\WikibaseMediaInfoServicesHooks"
+			"class": "Wikibase\\MediaInfo\\MediaInfoServicesHooks"
 		},
 		"mediainfo_searchdata": {
 			"class": "\\Wikibase\\MediaInfo\\MediaInfoDataForSearchIndex",
@@ -105,13 +105,13 @@
 		"BeforePageDisplay": "main",
 		"ParserOutputPostCacheTransform": "main",
 		"GetPreferences": "main",
-		"ScribuntoExternalLibraries": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onScribuntoExternalLibraries",
+		"ScribuntoExternalLibraries": "Wikibase\\MediaInfo\\MediaInfoHooks::onScribuntoExternalLibraries",
 		"RevisionUndeleted": "main",
 		"ArticleUndelete": "main",
-		"CirrusSearchProfileService": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onCirrusSearchProfileService",
-		"CirrusSearchRegisterFullTextQueryClassifiers": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onCirrusSearchRegisterFullTextQueryClassifiers",
+		"CirrusSearchProfileService": "Wikibase\\MediaInfo\\MediaInfoHooks::onCirrusSearchProfileService",
+		"CirrusSearchRegisterFullTextQueryClassifiers": "Wikibase\\MediaInfo\\MediaInfoHooks::onCirrusSearchRegisterFullTextQueryClassifiers",
 		"SidebarBeforeOutput": "main",
-		"CirrusSearchAddQueryFeatures": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::onCirrusSearchAddQueryFeatures",
+		"CirrusSearchAddQueryFeatures": "Wikibase\\MediaInfo\\MediaInfoHooks::onCirrusSearchAddQueryFeatures",
 		"MultiContentSave": "main",
 		"SearchDataForIndex2": "mediainfo_searchdata"
 	},
@@ -285,11 +285,11 @@
 				"resources/statements/config/index.js",
 				{
 					"name": "resources/statements/config/wbTermsLanguages.json",
-					"callback": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::generateWbTermsLanguages"
+					"callback": "Wikibase\\MediaInfo\\MediaInfoHooks::generateWbTermsLanguages"
 				},
 				{
 					"name": "resources/statements/config/wbMonolingualTextLanguages.json",
-					"callback": "Wikibase\\MediaInfo\\WikibaseMediaInfoHooks::generateWbMonolingualTextLanguages"
+					"callback": "Wikibase\\MediaInfo\\MediaInfoHooks::generateWbMonolingualTextLanguages"
 				}
 			],
 			"dependencies": [

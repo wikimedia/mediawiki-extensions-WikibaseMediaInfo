@@ -57,7 +57,7 @@ class WBMIHooksHelper {
 	 */
 	public static function getStructuredDataHeaderRegex() {
 		return '#<h1\b[^>]*\bclass=(\'|")mw-slot-header\\1[^>]*>' .
-			WikibaseMediaInfoHooks::MEDIAINFO_SLOT_HEADER_PLACEHOLDER . '</h1>#iU';
+			MediaInfoHooks::MEDIAINFO_SLOT_HEADER_PLACEHOLDER . '</h1>#iU';
 	}
 
 	/**

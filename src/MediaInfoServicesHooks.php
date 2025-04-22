@@ -12,7 +12,7 @@ use Wikibase\MediaInfo\Content\MediaInfoContent;
  *
  * @license GPL-2.0-or-later
  */
-class WikibaseMediaInfoServicesHooks implements MediaWikiServicesHook {
+class MediaInfoServicesHooks implements MediaWikiServicesHook {
 
 	/**
 	 * Hook to register the MediaInfo slot role.

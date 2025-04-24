@@ -23,6 +23,7 @@ use MediaWiki\Registration\ExtensionRegistry;
 use MediaWiki\Revision\RenderedRevision;
 use MediaWiki\Revision\RevisionRecord;
 use MediaWiki\Revision\SlotRecord;
+use MediaWiki\Skin\Skin;
 use MediaWiki\Status\Status;
 use MediaWiki\Storage\BlobStore;
 use MediaWiki\Storage\Hook\MultiContentSaveHook;
@@ -34,7 +35,6 @@ use OOUI\HtmlSnippet;
 use OOUI\IndexLayout;
 use OOUI\PanelLayout;
 use OOUI\TabPanelLayout;
-use Skin;
 use Wikibase\Client\WikibaseClient;
 use Wikibase\DataModel\Entity\NumericPropertyId;
 use Wikibase\DataModel\Services\Lookup\PropertyDataTypeLookupException;
@@ -134,7 +134,7 @@ class WikibaseMediaInfoHooks implements
 	 * Replace mediainfo-specific placeholders (if any), move structured data, add data and modules
 	 *
 	 * @param OutputPage $out
-	 * @param \Skin $skin
+	 * @param Skin $skin
 	 * @throws ConfigException
 	 * @throws \OOUI\Exception
 	 */
@@ -196,7 +196,7 @@ class WikibaseMediaInfoHooks implements
 
 	/**
 	 * @param OutputPage $out
-	 * @param \Skin $skin
+	 * @param Skin $skin
 	 * @param bool $isMediaInfoPage
 	 * @param UserLanguageLookup $userLanguageLookup
 	 * @param DispatchingEntityViewFactory $entityViewFactory

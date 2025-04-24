@@ -2,11 +2,11 @@
 
 namespace Wikibase\MediaInfo\Tests\MediaWiki\Rdf;
 
-use File;
 use InvalidArgumentException;
+use MediaWiki\FileRepo\File\File;
+use MediaWiki\FileRepo\RepoGroup;
 use MediaWiki\Revision\SlotRecord;
 use PHPUnit\Framework\TestCase;
-use RepoGroup;
 use Wikibase\DataAccess\DatabaseEntitySource;
 use Wikibase\DataAccess\EntitySourceDefinitions;
 use Wikibase\Lib\SubEntityTypesMapper;

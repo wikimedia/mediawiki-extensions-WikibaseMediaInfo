@@ -2,8 +2,8 @@
 
 namespace Wikibase\MediaInfo\Rdf;
 
-use File;
-use RepoGroup;
+use MediaWiki\FileRepo\File\File;
+use MediaWiki\FileRepo\RepoGroup;
 use Wikibase\DataModel\Entity\EntityDocument;
 use Wikibase\MediaInfo\Content\MediaInfoHandler;
 use Wikibase\MediaInfo\DataModel\MediaInfo;

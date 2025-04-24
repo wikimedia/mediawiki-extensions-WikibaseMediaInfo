@@ -6,6 +6,7 @@ use MediaWiki\Content\ContentHandler;
 use MediaWiki\Content\ContentHandlerFactory;
 use MediaWiki\HookContainer\HookContainer;
 use MediaWiki\Page\PageStore;
+use MediaWiki\Page\WikiPage;
 use MediaWiki\Parser\ParserOutput;
 use MediaWiki\Revision\RevisionRecord;
 use MediaWiki\Title\TitleFactory;
@@ -71,7 +72,7 @@ class MediaInfoDataForSearchIndexTest extends \MediaWikiUnitTestCase {
 		$hook->onSearchDataForIndex2(
 			$fields,
 			$this->createMock( ContentHandler::class ),
-			$this->createMock( \WikiPage::class ),
+			$this->createMock( WikiPage::class ),
 			$this->createMock( ParserOutput::class ),
 			$this->createMock( \SearchEngine::class ),
 			$revision

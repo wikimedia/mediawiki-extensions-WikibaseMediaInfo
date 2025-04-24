@@ -11,6 +11,7 @@ use MediaWiki\Page\PageIdentity;
 use MediaWiki\Parser\ParserOutput;
 use MediaWiki\Permissions\RestrictionStore;
 use MediaWiki\Revision\RevisionRecord;
+use MediaWiki\Skin\Skin;
 use MediaWiki\Title\Title;
 use MediaWiki\Title\TitleFormatter;
 use MediaWiki\User\User;
@@ -95,7 +96,7 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiIntegrationTestCase {
 	public function testOnBeforePageDisplay() {
 		$imgTitle = $this->makeMockTitle( 'Foo.jpg', [ 'namespace' => NS_FILE, 'id' => 13 ] );
 
-		$skin = $this->createMock( \Skin::class );
+		$skin = $this->createMock( Skin::class );
 
 		$out = $this->getMockOutputPage( $imgTitle );
 		$out->expects( $this->once() )
@@ -126,7 +127,7 @@ class WikibaseMediaInfoHooksTest extends \MediaWikiIntegrationTestCase {
 				}
 			);
 
-		$skin = $this->createMock( \Skin::class );
+		$skin = $this->createMock( Skin::class );
 
 		( new WikibaseMediaInfoHooks( $this->createMock( HookContainer::class ) ) )
 			->onBeforePageDisplay( $out, $skin );

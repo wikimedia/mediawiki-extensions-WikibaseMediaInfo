@@ -2,7 +2,7 @@
 
 namespace Wikibase\MediaInfo\Tests\MediaWiki\Rdf;
 
-use File;
+use MediaWiki\FileRepo\File\File;
 
 /**
  * Simple mock for File MediaWiki class.

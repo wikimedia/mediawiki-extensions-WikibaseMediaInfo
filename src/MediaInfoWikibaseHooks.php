@@ -6,6 +6,7 @@ namespace Wikibase\MediaInfo;
 
 use MediaWiki\Title\Title;
 use Wikibase\Client\Hooks\WikibaseClientEntityTypesHook;
+use Wikibase\DataAccess\Hooks\GetEntityContentModelForTitleHook;
 use Wikibase\Lib\Store\EntityByLinkedTitleLookup;
 use Wikibase\MediaInfo\Content\MediaInfoContent;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
@@ -20,6 +21,7 @@ use Wikibase\Repo\Hooks\WikibaseRepoEntityTypesHook;
  * @license GPL-2.0-or-later
  */
 class MediaInfoWikibaseHooks implements
+	GetEntityContentModelForTitleHook,
 	GetEntityByLinkedTitleLookupHook,
 	WikibaseClientEntityTypesHook,
 	WikibaseRepoEntityTypesHook,

@@ -93,6 +93,23 @@ return array_map( static function ( array $settings ) use ( $config ) {
 	];
 	$settings = array_replace_recursive( $defaultSettings, $settings );
 
+	// work around '.' being replaced by '_' in query keys
+	$fixUnderscores = static function ( $underscored, $original ) use ( &$fixUnderscores ) {
+		$result = [];
+		foreach ( $underscored as $key => $value ) {
+			// build a regex where all underscores match either dot or underscore; rest has to be
+			// an exact match
+			$regex = '/^' . str_replace( '_', '[\._]', preg_quote( $key, '/' ) ) . '$/';
+			// then find a match in the expected keys
+			$matches = preg_grep( $regex, array_keys( $original ) );
+			if ( $matches ) {
+				$key = array_pop( $matches );
+			}
+			$result[ $key ] = is_array( $value ) ? $fixUnderscores( $value, $original[ $key ] ?? [] ) : $value;
+		}
+		return $result;
+	};
+
 	// allow settings (boost etc.) to be customized from URL query params
 	foreach ( RequestContext::getMain()->getRequest()->getQueryValues() as $key => $value ) {
 		// convert [ 'one:two' => 'three' ] into ['one']['two'] = 'three'
@@ -104,13 +121,8 @@ return array_map( static function ( array $settings ) use ( $config ) {
 			},
 			null
 		);
-		$settings = array_replace_recursive( $settings, $result );
-	}
 
-	// work around '.' being replaced by '_'
-	if ( isset( $settings['boost']['redirect_title'] ) ) {
-		$settings['boost']['redirect.title'] = $settings['boost']['redirect_title'];
-		unset( $settings['boost']['redirect_title'] );
+		$settings = array_replace_recursive( $settings, $fixUnderscores( $result, $settings ) );
 	}
 
 	return [

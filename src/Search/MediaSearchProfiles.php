@@ -127,7 +127,7 @@ return array_map( static function ( array $settings ) use ( $config ) {
 
 	return [
 		'builder_factory' => closureToAnonymousClass( static function ( array $settings ) {
-			$languageCode = WikibaseRepo::getUserLanguage()->getCode();
+			$languageCode = RequestContext::getMain()->getLanguage()->getCode();
 			$languageFallbackChain = WikibaseRepo::getLanguageFallbackChainFactory()
 				->newFromLanguageCode( $languageCode );
 

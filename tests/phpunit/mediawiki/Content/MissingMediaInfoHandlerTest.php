@@ -98,22 +98,20 @@ class MissingMediaInfoHandlerTest extends \PHPUnit\Framework\TestCase {
 		return $handler;
 	}
 
-	public function provideGetMediaInfoId() {
+	public static function provideGetMediaInfoId() {
 		// NOTE: getTitleFactory() defines a file with page ID 1 exists (File:Test-1.png),
 		// a non-file page with id 11 exists (User:Test-11.png), and no other pages exist.
-		$titleFactory = $this->getTitleFactory();
-
 		return [
 			'media info page exists and is file page' => [
-				$titleFactory->newFromID( 1 ),
+				1,
 				new MediaInfoId( 'M1' )
 			],
 			'media info page exists but is no file page' => [
-				$titleFactory->newFromID( 11 ),
+				11,
 				null
 			],
 			'media info page/file page does not exist' => [
-				Title::makeTitle( NS_FILE, 'Test-111.png' ),
+				[ NS_FILE, 'Test-111.png' ],
 				null
 			],
 		];
@@ -121,11 +119,13 @@ class MissingMediaInfoHandlerTest extends \PHPUnit\Framework\TestCase {
 
 	/**
 	 * @dataProvider provideGetMediaInfoId
-	 *
-	 * @param Title $title
-	 * @param MediaInfoId|null $expected
 	 */
-	public function testGetMediaInfoId( Title $title, $expected ) {
+	public function testGetMediaInfoId( $titleSpec, $expected ) {
+		if ( is_array( $titleSpec ) ) {
+			$title = Title::makeTitle( ...$titleSpec );
+		} else {
+			$title = $titleFactory = $this->getTitleFactory()->newFromID( $titleSpec );
+		}
 		$context = $this->getContext( $title );
 		$handler = $this->newHandler( $title );
 

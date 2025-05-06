@@ -4,7 +4,6 @@ namespace Wikibase\MediaInfo\Tests\MediaWiki\Search;
 
 use CirrusSearch\CirrusSearch;
 use CirrusSearch\CirrusSearchHookRunner;
-use CirrusSearch\Parser\AST\ParsedNode;
 use CirrusSearch\Parser\AST\ParsedQuery;
 use CirrusSearch\Parser\NamespacePrefixParser;
 use CirrusSearch\Search\SearchQueryBuilder;
@@ -34,32 +33,32 @@ class MediaSearchASTEntitiesExtractorTest extends MediaWikiIntegrationTestCase {
 		return $searchQuery->getParsedQuery();
 	}
 
-	public function provideTestGetEntities(): array {
-		$query = $this->createParsedQuery( 'cat AND dog OR goat NOT duck' );
+	public static function provideTestGetEntities(): array {
+		$query = 'cat AND dog OR goat NOT duck';
 		$entities = [ 'cat' => [ 'P1', 'P2' ], 'dog' => [ 'P3' ], 'goat' => [] ];
 
 		return [
 			'multiple entities found' => [
 				$query,
-				$query->getRoot()->getClauses()[0]->getNode(),
+				0,
 				$entities,
 				[ 'P1', 'P2' ],
 			],
 			'one entity found' => [
 				$query,
-				$query->getRoot()->getClauses()[1]->getNode(),
+				1,
 				$entities,
 				[ 'P3' ],
 			],
 			'no entity found' => [
 				$query,
-				$query->getRoot()->getClauses()[2]->getNode(),
+				2,
 				$entities,
 				[],
 			],
 			"doesn't exist" => [
 				$query,
-				$query->getRoot()->getClauses()[3]->getNode(),
+				3,
 				$entities,
 				[],
 			],
@@ -68,17 +67,16 @@ class MediaSearchASTEntitiesExtractorTest extends MediaWikiIntegrationTestCase {
 
 	/**
 	 * @dataProvider provideTestGetEntities
-	 * @param ParsedQuery $parsedQuery
-	 * @param ParsedNode $parsedNode
-	 * @param array $entities
-	 * @param array $expect
 	 */
 	public function testGetEntities(
-		ParsedQuery $parsedQuery,
-		ParsedNode $parsedNode,
+		string $query,
+		int $clauseIndex,
 		array $entities,
 		array $expect
 	) {
+		$parsedQuery = $this->createParsedQuery( $query );
+		$parsedNode = $parsedQuery->getRoot()->getClauses()[$clauseIndex]->getNode();
+
 		$mockEntitiesFetcher = $this->createMock( MediaSearchEntitiesFetcher::class );
 		$mockEntitiesFetcher->method( 'get' )->willReturn( $entities );
 

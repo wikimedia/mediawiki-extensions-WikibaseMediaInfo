@@ -7,7 +7,8 @@
 			"Kwj2772",
 			"Songhee",
 			"Ykhwong",
-			"Dr1t jg"
+			"Dr1t jg",
+			"아라"
 		]
 	},
 	"right-mediainfo-term": "미디어 정보 용어(설명, 요약) 변경",
@@ -32,7 +33,7 @@
 	"wikibasemediainfo-filepage-edit-depicts": "묘사된 항목 편집하기",
 	"wikibasemediainfo-filepage-cancel": "취소",
 	"wikibasemediainfo-filepage-cancel-confirm": "변경사항은 저장되지 않습니다.",
-	"wikibasemediainfo-filepage-cancel-confirm-title": "변경 사항을 버리겠습니까?",
+	"wikibasemediainfo-filepage-cancel-confirm-title": "변경사항을 버리겠습니까?",
 	"wikibasemediainfo-filepage-cancel-confirm-accept": "버리기",
 	"wikibasemediainfo-filepage-edit": "편집",
 	"wikibasemediainfo-filepage-publish": "변경사항 게시",

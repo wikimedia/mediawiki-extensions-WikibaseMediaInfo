@@ -15,6 +15,7 @@
 	"wikibasemediainfo-filepage-caption-empty": "Adjuntez 1 lineo explikanta quo reprezentas ca arkivo",
 	"wikibasemediainfo-filepage-caption-too-short": "$1 plusa {{PLURAL:$1|karaktero|karakteri}} bezonata",
 	"wikibasemediainfo-filepage-statement-some-value-option": "Kelka valoro",
+	"wikibasemediainfo-filepage-license-content": "Kliktanta \"publikigez chanji\" vu konkordas tacite kun [[wmf:Terms_of_Use|uzo-termini]], e vu nerevokeble aceptas publikiggar vua kontributado segun la https://creativecommons.org/publicdomain/zero/1.0/ licenco Creative Commons CC0].",
 	"wikibasemediainfo-statements-item-reference": "Refero",
 	"wikibasemediainfo-statements-item-references": "Referi",
 	"wikibasemediainfo-statements-item-add-reference-snak": "Adjuntar",

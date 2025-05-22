@@ -1,9 +1,11 @@
 {
 	"@metadata": {
 		"authors": [
-			"Ajiniyaz Nurniyazov"
+			"Ajiniyaz Nurniyazov",
+			"Janabaevazizbek"
 		]
 	},
+	"wikibasemediainfo-filepage-edit": "Redaktorlaw",
 	"wikibasemediainfo-statements-item-reference": "Eskertpe",
 	"wikibasemediainfo-statements-item-references": "Derekler"
 }

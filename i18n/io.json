@@ -10,6 +10,7 @@
 	"wikibasemediainfo-filepage-structured-data-heading": "Strukturigita datumo",
 	"wikibasemediainfo-filepage-captions-title": "Deskripto-texti",
 	"wikibasemediainfo-filepage-more-languages": "Videz $1 plusa {{PLURAL:$1|linguo|lingui}}",
+	"wikibasemediainfo-filepage-fewer-languages": "Vidar min-multa lingui",
 	"wikibasemediainfo-filepage-cancel": "Nuligez",
 	"wikibasemediainfo-filepage-publish": "Publikigez chanji",
 	"wikibasemediainfo-filepage-caption-empty": "Adjuntez 1 lineo explikanta quo reprezentas ca arkivo",

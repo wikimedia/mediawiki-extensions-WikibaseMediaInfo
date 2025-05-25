@@ -59,7 +59,7 @@ class MediaSearchCachingEntitiesFetcher extends MediaSearchEntitiesFetcher {
 				return $this->objectCache->makeKey(
 					'wbmi-mediasearch-entities',
 					$this->queryKeyspace,
-					$this->objectCache->hash256( $query ),
+					$query,
 					$this->inputLanguage,
 					$this->outputLanguage
 				);

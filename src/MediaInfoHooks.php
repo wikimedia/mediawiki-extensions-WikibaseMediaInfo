@@ -136,7 +136,6 @@ class MediaInfoHooks implements
 	 * @param OutputPage $out
 	 * @param Skin $skin
 	 * @throws ConfigException
-	 * @throws \OOUI\Exception
 	 */
 	public function onBeforePageDisplay( $out, $skin ): void {
 		$config = MediaWikiServices::getInstance()->getMainConfig();
@@ -202,7 +201,6 @@ class MediaInfoHooks implements
 	 * @param DispatchingEntityViewFactory $entityViewFactory
 	 * @param TempUserConfig $tempUserConfig
 	 * @param array $jsConfigVars Variables to expose to JavaScript
-	 * @throws \OOUI\Exception
 	 */
 	public function doBeforePageDisplay(
 		$out,
@@ -338,7 +336,6 @@ class MediaInfoHooks implements
 	 * @param OutputPage $out
 	 * @param DispatchingEntityViewFactory $entityViewFactory
 	 * @return OutputPage $out
-	 * @throws \OOUI\Exception
 	 */
 	private function tabifyStructuredData(
 		OutputPage $out,

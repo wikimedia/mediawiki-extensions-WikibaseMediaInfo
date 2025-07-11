@@ -391,7 +391,6 @@ class MediaSearchASTQueryBuilder implements Visitor {
 				$canonical = $this->canonicalizeTerm( $term );
 				// discard terms where a significant portion was punctuation or separators,
 				// the canonical form likely is no longer representative enough (e.g `c#` != `c`)
-				// @phan-suppress-next-line PhanPluginUseReturnValueInternalKnown
 				similar_text( strtolower( $canonical ), strtolower( $term ), $similarity );
 				return $similarity / 100 >= $threshold;
 			},
@@ -412,7 +411,6 @@ class MediaSearchASTQueryBuilder implements Visitor {
 			$differences[$term] = array_reduce(
 				$previousTerms,
 				static function ( $min, $otherTerm ) use ( $term ) {
-					// @phan-suppress-next-line PhanPluginUseReturnValueInternalKnown
 					similar_text( strtolower( $term ), strtolower( $otherTerm ), $similarity );
 					$difference = 1 - $similarity / 100;
 					return $min === null ? $difference : min( $min, $difference );

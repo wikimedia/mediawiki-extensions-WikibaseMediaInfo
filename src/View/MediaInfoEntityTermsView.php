@@ -240,7 +240,7 @@ class MediaInfoEntityTermsView {
 		$classes = [ 'wbmi-caption-value' ];
 		try {
 			$captionText = $termList->getByLanguage( $languageCode )->getText();
-		} catch ( \OutOfBoundsException $e ) {
+		} catch ( \OutOfBoundsException ) {
 			$captionText = htmlspecialchars(
 				$this->textProvider->get( 'wikibasemediainfo-filepage-caption-empty' )
 			);

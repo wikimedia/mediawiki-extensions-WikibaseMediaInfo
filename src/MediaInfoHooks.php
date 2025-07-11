@@ -107,6 +107,9 @@ class MediaInfoHooks implements
 		);
 	}
 
+	/**
+	 * @throws ExtensionDependencyError
+	 */
 	public static function onRegistration() {
 		if ( !ExtensionRegistry::getInstance()->isLoaded( 'WikibaseRepository' ) ) {
 			// HACK: Declaring a dependency on Wikibase in extension.json
@@ -168,7 +171,7 @@ class MediaInfoHooks implements
 
 				// get data type for values associated with this property
 				$propertyTypes[$property] = WBMIHooksHelper::getPropertyType( new NumericPropertyId( $property ) );
-			} catch ( PropertyDataTypeLookupException $e ) {
+			} catch ( PropertyDataTypeLookupException ) {
 				// ignore invalid properties...
 			}
 		}
@@ -235,7 +238,7 @@ class MediaInfoHooks implements
 					try {
 						$existingPropertyTypes[$propertyId->getSerialization()] =
 							WBMIHooksHelper::getPropertyType( $propertyId );
-					} catch ( PropertyDataTypeLookupException $e ) {
+					} catch ( PropertyDataTypeLookupException ) {
 						// ignore when property can't be found - it likely no longer exists;
 						// either way, we can't find what datatype is has, so there's no
 						// useful data to be gathered here
@@ -245,7 +248,7 @@ class MediaInfoHooks implements
 						try {
 							$existingPropertyTypes[$qualifierPropertyId->getSerialization()] =
 								WBMIHooksHelper::getPropertyType( $qualifierPropertyId );
-						} catch ( PropertyDataTypeLookupException $e ) {
+						} catch ( PropertyDataTypeLookupException ) {
 							// ignore when property can't be found - it likely no longer exists;
 							// either way, we can't find what datatype is has, so there's no
 							// useful data to be gathered here

@@ -483,7 +483,7 @@ class MediaInfoEntityStatementsView {
 
 			// if there are any links inside the formatted content, make them open in a new window
 			return preg_replace( '/<a/', '<a target="_blank"', $formatted );
-		} catch ( Exception $e ) {
+		} catch ( Exception ) {
 			return wfMessage( 'wikibasemediainfo-filepage-statement-invalid-value' )->escaped();
 		}
 	}

@@ -113,7 +113,7 @@ return array_map( static function ( array $settings ) use ( $config ) {
 	// allow settings (boost etc.) to be customized from URL query params
 	foreach ( RequestContext::getMain()->getRequest()->getQueryValues() as $key => $value ) {
 		// convert [ 'one:two' => 'three' ] into ['one']['two'] = 'three'
-		$flat = array_merge( explode( ':', $key ), [ floatval( $value ) ] );
+		$flat = array_merge( explode( ':', urldecode( $key ) ), [ floatval( $value ) ] );
 		$result = array_reduce(
 			array_reverse( $flat ),
 			static function ( $previous, $key ) {

@@ -53,6 +53,7 @@
 	"wikibasemediainfo-statements-learn-more": "Цул совнаха хаа",
 	"wikibasemediainfo-statements-remove": "ДӀайаха йерриге",
 	"wikibasemediainfo-statements-title-depicts": "ХӀокху файл тӀера элементаш",
+	"wikibasemediainfo-statements-unsupported-property-title": "Ловш доцу башхалла",
 	"wikibasemediainfo-statements-link-notice-dismiss": "Йухадаккха",
 	"wikibasemediainfo-remove-all-statements-confirm-title": "ДӀайаха йерриге?",
 	"wikibasemediainfo-remove-all-statements-confirm-accept": "ДӀайаккха",
@@ -94,7 +95,9 @@
 	"wikibasemediainfo-time-calendar-gregorian": "Григорианан",
 	"wikibasemediainfo-time-calendar-julian": "Юлианан",
 	"wikibasemediainfo-quantity-input-button-text": "ТӀетоха",
+	"wikibasemediainfo-quantity-unit-placeholder": "Барамийн цхьаьнакхетаралла йазйе (лаамехь)",
 	"wikibasemediainfo-quantity-unit-label": "дустаран дакъа",
+	"wikibasemediainfo-quantity-unit-button-text": "Барамийн цхьаьнакхетаралла хӀоттайе",
 	"wikibasemediainfo-globecoordinate-input-button-text": "ТӀетоха",
 	"wikibasemediainfo-globecoordinate-map-button-text": "Харжа картан тӀехь"
 }

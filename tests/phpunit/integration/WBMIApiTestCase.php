@@ -25,22 +25,7 @@ abstract class WBMIApiTestCase extends ApiUploadTestCase {
 		$this->setupSearchEngine();
 	}
 
-	private function login() {
-		$user = $this->getTestUser();
-		$userName = $user->getUser()->getName();
-		$password = $user->getPassword();
-
-		$params = [
-			'action' => 'login',
-			'lgname' => $userName,
-			'lgpassword' => $password
-		];
-		[ , , $session ] = $this->doApiRequest( $params );
-		return $session;
-	}
-
 	protected function uploadRandomImage() {
-		$session = $this->login();
 		$extension = 'png';
 		$mimeType = 'image/png';
 
@@ -73,7 +58,7 @@ abstract class WBMIApiTestCase extends ApiUploadTestCase {
 
 		[ $result, , ] = $this->doApiRequestWithToken(
 			$params,
-			$session,
+			null,
 			$this->getTestUser()->getUser()
 		);
 

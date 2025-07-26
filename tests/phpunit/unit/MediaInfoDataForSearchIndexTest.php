@@ -1,6 +1,6 @@
 <?php
 
-namespace extensions\WikibaseMediaInfo\tests\phpunit\unit;
+namespace Wikibase\MediaInfo\Tests\MediaWiki\Unit;
 
 use MediaWiki\Content\ContentHandler;
 use MediaWiki\Content\ContentHandlerFactory;

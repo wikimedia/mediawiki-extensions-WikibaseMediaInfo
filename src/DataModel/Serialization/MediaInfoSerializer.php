@@ -24,10 +24,6 @@ class MediaInfoSerializer implements DispatchableSerializer {
 	 */
 	private $statementListSerializer;
 
-	/**
-	 * @param Serializer $termListSerializer
-	 * @param Serializer $statementListSerializer
-	 */
 	public function __construct(
 		Serializer $termListSerializer,
 		Serializer $statementListSerializer

@@ -27,10 +27,6 @@ class MatchExplorerQuery extends AbstractQuery {
 	public const TYPE_STDDEV_RAW_TTF = 'stddev_raw_ttf';
 	public const TYPE_UNIQUE_TERMS_COUNT = 'unique_terms_count';
 
-	/**
-	 * @param string $type
-	 * @param AbstractQuery $query
-	 */
 	public function __construct( string $type, AbstractQuery $query ) {
 		$this->setType( $type )
 			->setQuery( $query );

@@ -79,7 +79,6 @@ class MediaInfoSpecificComponentsRdfBuilder implements EntityRdfBuilder {
 
 	/**
 	 * Produce MediaInfo types
-	 * @param MediaInfoId $id
 	 */
 	private function addTypes( MediaInfoId $id ) {
 		$this->aboutId( $id )
@@ -88,8 +87,6 @@ class MediaInfoSpecificComponentsRdfBuilder implements EntityRdfBuilder {
 
 	/**
 	 * Add file metadata to RDF representation
-	 *
-	 * @param MediaInfoId $id
 	 */
 	private function addFileMetadataFromEntityId( MediaInfoId $id ) {
 		$fileTitle = $this->mediaInfoHandler->getTitleForId( $id );

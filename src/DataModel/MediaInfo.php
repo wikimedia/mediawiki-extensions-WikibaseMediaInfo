@@ -141,7 +141,7 @@ class MediaInfo
 	/**
 	 * @see EntityDocument::copy
 	 *
-	 * @return MediaInfo
+	 * @return self
 	 */
 	public function copy() {
 		return clone $this;

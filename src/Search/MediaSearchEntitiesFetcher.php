@@ -182,10 +182,6 @@ class MediaSearchEntitiesFetcher {
 		return $collection;
 	}
 
-	/**
-	 * @param array $result
-	 * @return array
-	 */
 	protected function transformEntitySearchResult( array $result ): array {
 		// unfortunately, the search API doesn't return an actual score
 		// (for relevancy of the match), which means that we have no way

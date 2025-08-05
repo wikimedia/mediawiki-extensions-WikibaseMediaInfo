@@ -20,9 +20,6 @@ class MediaInfoByLinkedTitleLookup implements EntityByLinkedTitleLookup {
 	 */
 	private $defaultLookup;
 
-	/**
-	 * @param EntityByLinkedTitleLookup $defaultLookup
-	 */
 	public function __construct( EntityByLinkedTitleLookup $defaultLookup ) {
 		$this->defaultLookup = $defaultLookup;
 	}

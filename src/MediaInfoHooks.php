@@ -592,8 +592,6 @@ class MediaInfoHooks implements
 	/**
 	 * Register a ProfileContext for cirrus that will mean that queries in NS_FILE will use
 	 * the MediaQueryBuilder class for searching
-	 *
-	 * @param SearchProfileService $service
 	 */
 	public static function onCirrusSearchProfileService( SearchProfileService $service ) {
 		global $wgWBCSUseCirrus;

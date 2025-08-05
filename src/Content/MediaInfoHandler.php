@@ -187,10 +187,6 @@ class MediaInfoHandler extends EntityHandler {
 		return false;
 	}
 
-	/**
-	 * @param Content $content
-	 * @return array
-	 */
 	public function getContentDataForSearchIndex( Content $content ): array {
 		$fieldsData = parent::getContentDataForSearchIndex( $content );
 		if ( $content->isRedirect() || !( $content instanceof MediaInfoContent ) ) {

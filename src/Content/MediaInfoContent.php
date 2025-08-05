@@ -52,9 +52,7 @@ class MediaInfoContent extends EntityContent {
 		$this->hookRunner = $hookRunner;
 	}
 
-	/**
-	 * @return array
-	 */
+	/** @inheritDoc */
 	protected function getIgnoreKeysForFilters() {
 		// We explicitly want to allow the 'labels' block's 'language' keys through, so that AbuseFilters
 		// can be written that check if e.g. Latin characters are written in a zh-hans label slot.

@@ -31,9 +31,6 @@ class MediaInfoPrefetchingTermLookup extends EntityTermLookupBase implements Pre
 	 */
 	private $terms = [];
 
-	/**
-	 * @param EntityRevisionLookup $entityRevisionLookup
-	 */
 	public function __construct( EntityRevisionLookup $entityRevisionLookup ) {
 		$this->entityRevisionLookup = $entityRevisionLookup;
 	}

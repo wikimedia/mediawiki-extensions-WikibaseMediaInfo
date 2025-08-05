@@ -15,6 +15,7 @@ abstract class WBMIApiTestCase extends ApiUploadTestCase {
 	private function setupSearchEngine() {
 		MockSearchEngine::clearMockResults();
 		$this->overrideConfigValues( [
+			MainConfigNames::FileExtensions => [ 'svg' ],
 			MainConfigNames::SearchType => MockSearchEngine::class,
 		] );
 	}
@@ -26,25 +27,20 @@ abstract class WBMIApiTestCase extends ApiUploadTestCase {
 	}
 
 	protected function uploadRandomImage() {
-		$extension = 'png';
-		$mimeType = 'image/png';
-
 		try {
-			$randomImageGenerator = new RandomImageGenerator();
-			$filePaths = $randomImageGenerator->writeImages(
+			$filePaths = ( new RandomImageGenerator() )->writeImages(
 				1,
-				$extension,
+				'svg',
 				$this->getNewTempDirectory()
 			);
 		} catch ( \Exception $e ) {
 			$this->markTestIncomplete( $e->getMessage() );
 		}
 
-		/** @var array $filePaths */
 		$filePath = $filePaths[0];
 		$fileName = basename( $filePath );
 
-		if ( !$this->fakeUploadFile( 'file', $fileName, $mimeType, $filePath ) ) {
+		if ( !$this->fakeUploadFile( 'file', $fileName, 'image/svg', $filePath ) ) {
 			$this->markTestIncomplete( "Couldn't upload file!\n" );
 		}
 

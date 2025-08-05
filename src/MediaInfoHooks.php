@@ -707,7 +707,7 @@ class MediaInfoHooks implements
 	 * @param ?int $oldPageID
 	 */
 	public function onRevisionUndeleted( $revision, $oldPageID ) {
-		$title = Title::newFromLinkTarget( $revision->getPageAsLinkTarget() );
+		$title = Title::newFromPageIdentity( $revision->getPage() );
 		if ( !$title->inNamespace( NS_FILE ) ) {
 			// short-circuit if we're not even dealing with a file
 			return;

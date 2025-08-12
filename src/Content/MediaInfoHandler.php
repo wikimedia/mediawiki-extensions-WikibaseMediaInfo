@@ -222,6 +222,7 @@ class MediaInfoHandler extends EntityHandler {
 		'@phan-var MediaInfoId $id';
 		$idString = $id->getSerialization();
 		if ( !isset( $this->titleForIdCache[$idString] ) ) {
+			// @phan-suppress-next-line PhanTypeMismatchProperty
 			$this->titleForIdCache[$idString] = $this->titleFactory->newFromID( $id->getNumericId() );
 		}
 		return $this->titleForIdCache[$idString];
@@ -263,6 +264,7 @@ class MediaInfoHandler extends EntityHandler {
 
 			// @phan-suppress-next-line PhanTypeMismatchArgumentNullable
 			$idString = $this->getIdForTitle( $title )->getSerialization();
+			// @phan-suppress-next-line PhanTypeMismatchProperty
 			$this->titleForIdCache[$idString] = $title;
 			$titles[$idString] = $title;
 		}

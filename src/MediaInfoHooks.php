@@ -224,6 +224,7 @@ class MediaInfoHooks implements
 			$out->setPreventClickjacking( true );
 			$imgTitle = $out->getTitle();
 			$entityId = MediaInfoServices::getMediaInfoIdLookup()->getEntityIdForTitle( $imgTitle );
+			$user = $out->getUser();
 
 			$entityLookup = WikibaseRepo::getEntityLookup();
 			$entityRevisionId = $entityLookup->hasEntity( $entityId ) ? $imgTitle->getLatestRevID() : null;
@@ -285,8 +286,13 @@ class MediaInfoHooks implements
 			] );
 
 			if ( ExtensionRegistry::getInstance()->isLoaded( 'WikibaseQualityConstraints' ) ) {
-				// Don't display constraints violations unless the user is logged in and can edit
-				if ( !$out->getUser()->isAnon() && $out->getUser()->probablyCan( 'edit', $imgTitle ) ) {
+				// Don't display constraints violations unless the user is logged in
+				// and has permission to edit the page and check constraints
+				if (
+					$user->isNamed() &&
+					$user->probablyCan( 'edit', $imgTitle ) &&
+					$user->isAllowed( 'wbqc-check-constraints' )
+				) {
 					$modules[] = 'wikibase.quality.constraints.ui';
 					$modules[] = 'wikibase.quality.constraints.icon';
 					$jsConfigVars['wbmiDoConstraintCheck'] = true;

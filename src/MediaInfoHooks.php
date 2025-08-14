@@ -284,8 +284,13 @@ class MediaInfoHooks implements
 			] );
 
 			if ( ExtensionRegistry::getInstance()->isLoaded( 'WikibaseQualityConstraints' ) ) {
-				// Don't display constraints violations unless the user is logged in and can edit
-				if ( $user->isNamed() && $user->probablyCan( 'edit', $imgTitle ) ) {
+				// Don't display constraints violations unless the user is logged in
+				// and has permission to edit the page and check constraints
+				if (
+					$user->isNamed() &&
+					$user->probablyCan( 'edit', $imgTitle ) &&
+					$user->isAllowed( 'wbqc-check-constraints' )
+				) {
 					$modules[] = 'wikibase.quality.constraints.ui';
 					$modules[] = 'wikibase.quality.constraints.icon';
 					$jsConfigVars['wbmiDoConstraintCheck'] = true;

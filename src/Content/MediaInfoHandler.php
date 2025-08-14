@@ -260,11 +260,9 @@ class MediaInfoHandler extends EntityHandler {
 
 		/** @var PageRecord $pageIdentity */
 		foreach ( $unindexedTitles as $pageIdentity ) {
-			$title = $this->titleFactory->castFromPageIdentity( $pageIdentity );
+			$title = $this->titleFactory->newFromPageIdentity( $pageIdentity );
 
-			// @phan-suppress-next-line PhanTypeMismatchArgumentNullable
 			$idString = $this->getIdForTitle( $title )->getSerialization();
-			// @phan-suppress-next-line PhanTypeMismatchProperty
 			$this->titleForIdCache[$idString] = $title;
 			$titles[$idString] = $title;
 		}

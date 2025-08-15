@@ -30,7 +30,7 @@
 		"Wikibase\\MediaInfo\\": "tests/phpunit/unit/"
 	},
 	"ConfigRegistry": {
-		"WikibaseMediaInfo": "GlobalVarConfig::newInstance"
+		"WikibaseMediaInfo": "MediaWiki\\Config\\GlobalVarConfig::newInstance"
 	},
 	"config": {
 		"MediaInfoProperties": {

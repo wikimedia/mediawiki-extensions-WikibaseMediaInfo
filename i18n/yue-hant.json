@@ -1,0 +1,19 @@
+{
+	"@metadata": {
+		"authors": [
+			"Yueman"
+		]
+	},
+	"wikibasemediainfo-filepage-cancel": "取消",
+	"wikibasemediainfo-filepage-statement-no-value-option": "冇數値",
+	"wikibasemediainfo-filepage-statement-no-results": "搵唔到結果",
+	"wikibasemediainfo-statements-link-notice-dismiss": "閂咗佢",
+	"wikibasemediainfo-time-precision-year100": "世紀",
+	"wikibasemediainfo-time-precision-year10": "年代",
+	"wikibasemediainfo-time-precision-year": "年",
+	"wikibasemediainfo-time-precision-month": "月",
+	"wikibasemediainfo-time-precision-day": "日",
+	"wikibasemediainfo-time-precision-hour": "鐘頭",
+	"wikibasemediainfo-time-precision-minute": "分鐘",
+	"wikibasemediainfo-time-precision-second": "秒"
+}

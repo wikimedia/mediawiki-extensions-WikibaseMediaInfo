@@ -1,8 +1,45 @@
 {
 	"@metadata": {
 		"authors": [
-			"Ahmed-Najib-Biabani-Ibrahimkhel"
+			"Ahmed-Najib-Biabani-Ibrahimkhel",
+			"شاه زمان پټان"
 		]
 	},
-	"wikibase-entity-mediainfo": "رسنۍ مالومات"
+	"slot-name-mediainfo": "د رسنۍ جوړښتي مالومات",
+	"wikibase-entity-mediainfo": "رسنۍ مالومات",
+	"wikibase-mediainfo-summary-wbsetlabel-add": "[$2] نيونگ ورگډ شو",
+	"wikibase-mediainfo-summary-wbsetlabel-remove": "[$2] نيونگ لرې‌شو",
+	"wikibase-mediainfo-summary-wbsetlabel-set": "[$2] نيونگ سم‌شو",
+	"wikibasemediainfo-add-property": "د ځانتياوو ورگډولو لپاره پلټل (برخه د، رسنۍ ډول، نور.)",
+	"wikibasemediainfo-add-statement": "پرېکړه‌ليک ورگډول",
+	"wikibasemediainfo-custommatch-feature-no-profile": "د دوديز انډول لپاره هېڅ پېژنيال ترتيب‌شوی نه دی:$1",
+	"wikibasemediainfo-custommatch-feature-invalid-term": "د دوديز انډول ځانگړنې لپاره د لټون ناسمه گړنه",
+	"wikibasemediainfo-desc": "د جوړښتي مېټااومتوک د رسنيزو دوتنو مهارولو لپاره د ويکي‌اډانې شاتاړی",
+	"wikibasemediainfo-diffview-label": "نيونگ",
+	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "نيونگې",
+	"wikibasemediainfo-filepage-fileinfo-heading": "دوتنې مالومات",
+	"wikibasemediainfo-filepage-structured-data-heading": "جوړښتي اومتوکي",
+	"wikibasemediainfo-filepage-captions-title": "نيونگې",
+	"wikibasemediainfo-filepage-more-languages": "$1 {{PLURAL:$1|بله ژبه|نورې ژبې}} وگورئ",
+	"wikibasemediainfo-filepage-fewer-languages": "لږې ژبې وگورئ",
+	"wikibasemediainfo-filepage-add-caption": "نيونگ ورگډول",
+	"wikibasemediainfo-filepage-edit-captions": "نيونگې سمول",
+	"wikibasemediainfo-filepage-edit-depicts": "ښودنې سمول",
+	"wikibasemediainfo-filepage-cancel": "ناگارل",
+	"wikibasemediainfo-property-placeholder": "ځانتيا",
+	"wikibasemediainfo-filepage-license-agree": "زه همغږی يم",
+	"wikibasemediainfo-statements-item-reference": "سرچينه",
+	"wikibasemediainfo-statements-item-references": "سرچينې",
+	"wikibasemediainfo-statements-item-add-reference": "سرچينه ورگډول",
+	"wikibasemediainfo-statements-item-add-reference-snak": "ورگډول",
+	"wikibasemediainfo-statements-item-input-label": "له {{WBREPONAME}}",
+	"wikibasemediainfo-statements-item-input-placeholder": "توکو ورگډولو لپاره پلټل",
+	"wikibasemediainfo-statements-item-remove": "لرې‌کول",
+	"wikibasemediainfo-statements-learn-more": "نور څه زده کول",
+	"wikibasemediainfo-statements-remove": "ټول لرې‌کول",
+	"wikibasemediainfo-statements-link-notice-dismiss": "تړل",
+	"wikibasemediainfo-remove-all-statements-confirm-title": "ټول لرې‌کول",
+	"wikibasemediainfo-remove-all-statements-confirm-accept": "لرې‌کول",
+	"wikibasemediainfo-precision-input-label": "بيخي‌سمون",
+	"wikibasemediainfo-select-precision-label": "بيخي‌سمون غوره‌کول"
 }

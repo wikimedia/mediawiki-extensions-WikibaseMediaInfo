@@ -1,0 +1,35 @@
+{
+	"@metadata": {
+		"authors": [
+			"Song GK"
+		]
+	},
+	"wikibasemediainfo-filepage-cancel": "Kinsil",
+	"wikibasemediainfo-filepage-edit": "Edit",
+	"wikibasemediainfo-statements-item-reference": "Kereban sanding",
+	"wikibasemediainfo-statements-item-references": "Kereban sanding",
+	"wikibasemediainfo-statements-item-add-reference": "Tambah kereban sanding",
+	"wikibasemediainfo-statements-item-add-reference-snak": "Tambah",
+	"wikibasemediainfo-string-input-button-text": "Tambah",
+	"wikibasemediainfo-monolingualtext-input-button-text": "Tambah",
+	"wikibasemediainfo-monolingualtext-input-placeholder": "Pasukka teks",
+	"wikibasemediainfo-monolingualtext-language-label": "Pilih jaku",
+	"wikibasemediainfo-time-input-button-text": "Tambah",
+	"wikibasemediainfo-time-precision-year1g": "bilion taun",
+	"wikibasemediainfo-time-precision-year100m": "ratus juta taun",
+	"wikibasemediainfo-time-precision-year10m": "puluh juta taun",
+	"wikibasemediainfo-time-precision-year1m": "juta taun",
+	"wikibasemediainfo-time-precision-year100k": "100,000 taun",
+	"wikibasemediainfo-time-precision-year10k": "10,000 taun",
+	"wikibasemediainfo-time-precision-year1k": "milenium",
+	"wikibasemediainfo-time-precision-year100": "kurun",
+	"wikibasemediainfo-time-precision-year10": "dekad",
+	"wikibasemediainfo-time-precision-year": "taun",
+	"wikibasemediainfo-time-precision-month": "bulan",
+	"wikibasemediainfo-time-precision-day": "hari",
+	"wikibasemediainfo-time-precision-hour": "jam",
+	"wikibasemediainfo-time-precision-minute": "minit",
+	"wikibasemediainfo-time-precision-second": "sikin",
+	"wikibasemediainfo-time-calendar-label": "Kalendar",
+	"wikibasemediainfo-quantity-input-button-text": "Tambah"
+}

@@ -20,7 +20,7 @@
 	}
 
 	.wbmi-item-container {
-		.flex(1, 0, auto);
+		.flex();
 
 		// don't allow long content (e.g. strings, monolingual text) to increase width
 		max-width: 100%;
@@ -34,6 +34,8 @@
 		.wbmi-entity-primary,
 		.wbmi-entity-prominent {
 			font-weight: bold;
+			// Prefer to have the label shrink over the prominence marker
+			flex-shrink: 0;
 
 			&.wbmi-entity-is-primary,
 			&.wbmi-entity-is-prominent {

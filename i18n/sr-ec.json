@@ -50,7 +50,7 @@
 	"wikibasemediainfo-filepage-statement-no-data": "Нема података",
 	"wikibasemediainfo-filepage-statement-no-results": "Нема резултата",
 	"wikibasemediainfo-filepage-statement-some-value-option": "Прикажи вредност",
-	"wikibasemediainfo-filepage-statement-some-value": "Нека вредност без ставке на {{WBREPONAME}}",
+	"wikibasemediainfo-filepage-statement-some-value": "неке вредности",
 	"wikibasemediainfo-filepage-statement-error": "Дошло је до грешке при добављању вредности за ово својство",
 	"wikibasemediainfo-filepage-license-title": "Описи и други доприноси структурисаних података",
 	"wikibasemediainfo-filepage-license-content": "Кликом на „Прихватам”, пристајете на [[wmf:Terms_of_Use|услове коришћења]], те неопозиво пристајете да дате своје доприносе под [https://creativecommons.org/publicdomain/zero/1.0/ Кријејтив комонс CC0 лиценцом].",

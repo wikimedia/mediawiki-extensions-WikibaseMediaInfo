@@ -11,12 +11,16 @@ wikibaseMediaInfo.setupInterface = function ()
 		wikibaseMediaInfo[key] = func
 	end
 
+	local function incrementStatsKey( key )
+		php.incrementStatsKey( key, 'mediainfo' )
+	end
+
 	-- Override parent getEntityIdForTitle - there is no support for a 2nd (globalSiteId) argument.
 	--
 	-- @param {string} pageTitle
 	-- @param {string} [globalSiteId]
 	wikibaseMediaInfo.getEntityIdForTitle = function ( pageTitle, globalSiteId )
-		php.incrementStatsKey( 'wikibase.client.scribunto.wikibase.mediainfo.getEntityIdForTitle.call' )
+		incrementStatsKey( 'wikibase.client.scribunto.wikibase.mediainfo.getEntityIdForTitle.call' )
 
 		util.checkType( 'getEntityIdForTitle', 1, pageTitle, 'string' )
 		-- Keeping around the 2nd argument to remain compatible with internal calls to this
@@ -28,7 +32,7 @@ wikibaseMediaInfo.setupInterface = function ()
 
 	-- @param {string} [id]
 	wikibaseMediaInfo.getCaptionWithLang = function ( id )
-		php.incrementStatsKey( 'wikibase.client.scribunto.wikibase.mediainfo.getCaptionWithLang.call' )
+		incrementStatsKey( 'wikibase.client.scribunto.wikibase.mediainfo.getCaptionWithLang.call' )
 
 		util.checkTypeMulti( 'getCaptionWithLang', 1, id, { 'string', 'nil' } )
 
@@ -37,7 +41,7 @@ wikibaseMediaInfo.setupInterface = function ()
 
 	-- @param {string} [id]
 	wikibaseMediaInfo.getCaption = function ( id )
-		php.incrementStatsKey( 'wikibase.client.scribunto.wikibase.mediainfo.getCaption.call' )
+		incrementStatsKey( 'wikibase.client.scribunto.wikibase.mediainfo.getCaption.call' )
 
 		util.checkTypeMulti( 'getCaption', 1, id, { 'string', 'nil' } )
 
@@ -47,7 +51,7 @@ wikibaseMediaInfo.setupInterface = function ()
 	-- @param {string} id
 	-- @param {string} languageCode
 	wikibaseMediaInfo.getCaptionByLang = function ( id, languageCode )
-		php.incrementStatsKey( 'wikibase.client.scribunto.wikibase.mediainfo.getCaptionByLang.call' )
+		incrementStatsKey( 'wikibase.client.scribunto.wikibase.mediainfo.getCaptionByLang.call' )
 
 		util.checkType( 'getCaptionByLang', 1, id, 'string' )
 		util.checkType( 'getCaptionByLang', 2, languageCode, 'string' )

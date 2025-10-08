@@ -58,7 +58,6 @@ class MediaSearchASTQueryBuilderTest extends MediaWikiIntegrationTestCase {
 	public function testCanonicalizeTerm() {
 		$builder = $this->getBuilderInstance();
 		$method = ( new \ReflectionObject( $builder ) )->getMethod( 'canonicalizeTerm' );
-		$method->setAccessible( true );
 		$this->assertEquals( 'abc', $method->invoke( $builder, 'abc' ) );
 		$this->assertEquals( 'abc', $method->invoke( $builder, ' abc' ) );
 		$this->assertEquals( 'abc', $method->invoke( $builder, 'abc ' ) );
@@ -73,7 +72,6 @@ class MediaSearchASTQueryBuilderTest extends MediaWikiIntegrationTestCase {
 	public function testFilterTermsTooShort() {
 		$builder = $this->getBuilderInstance();
 		$method = ( new \ReflectionObject( $builder ) )->getMethod( 'filterTermsTooShort' );
-		$method->setAccessible( true );
 		$this->assertEquals(
 			[ 'a' => 1, 'bb' => 1, 'ccc' => 1 ],
 			$method->invoke(
@@ -103,7 +101,6 @@ class MediaSearchASTQueryBuilderTest extends MediaWikiIntegrationTestCase {
 	public function testFilterTermsTooDissimilarCanonicalized() {
 		$builder = $this->getBuilderInstance();
 		$method = ( new \ReflectionObject( $builder ) )->getMethod( 'filterTermsTooDissimilarCanonicalized' );
-		$method->setAccessible( true );
 		$this->assertEquals(
 			[ 'a test' => 1, 'A TEST' => 1, '# A test...' => 1 ],
 			$method->invoke(
@@ -125,7 +122,6 @@ class MediaSearchASTQueryBuilderTest extends MediaWikiIntegrationTestCase {
 	public function testFilterTermsTooSimilar() {
 		$builder = $this->getBuilderInstance();
 		$method = ( new \ReflectionObject( $builder ) )->getMethod( 'filterTermsTooSimilar' );
-		$method->setAccessible( true );
 		$this->assertEquals(
 			[ 'this is a test' => 1, 'this is a second test' => 1, 'and a third one' => 1 ],
 			$method->invoke(
@@ -147,7 +143,6 @@ class MediaSearchASTQueryBuilderTest extends MediaWikiIntegrationTestCase {
 	public function testFilterTermsSupersets() {
 		$builder = $this->getBuilderInstance();
 		$method = ( new \ReflectionObject( $builder ) )->getMethod( 'filterTermsSupersets' );
-		$method->setAccessible( true );
 		$this->assertEquals(
 			[ 'a test' => 1, 'and a third one' => 1 ],
 			$method->invoke(

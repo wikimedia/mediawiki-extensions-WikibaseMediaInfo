@@ -58,6 +58,10 @@ class MediaInfoView implements EntityDocumentView {
 		return '';
 	}
 
+	public function getParserOutputOptions(): array {
+		return [];
+	}
+
 	/** @inheritDoc */
 	public function getContent( EntityDocument $entity, $revision = null ): ViewContent {
 		if ( !( $entity instanceof MediaInfo ) ) {

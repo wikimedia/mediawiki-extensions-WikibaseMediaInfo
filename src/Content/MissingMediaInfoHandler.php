@@ -92,12 +92,12 @@ class MissingMediaInfoHandler {
 	 *        by $context->getLanguage().
 	 */
 	public function showVirtualMediaInfo( MediaInfoId $mediaInfoId, IContextSource $context ) {
-		$userLanguage = $context->getLanguage();
 		$outputPage = $context->getOutput();
 
+		$parserOptions = ParserOptions::newFromContext( $context );
 		// show an empty MediaInfo
 		$outputGenerator = $this->outputGeneratorFactory->
-			getEntityParserOutputGenerator( $userLanguage );
+			getEntityParserOutputGeneratorForParserOptions( $parserOptions );
 
 		$mediaInfo = new MediaInfo( $mediaInfoId );
 
@@ -105,7 +105,7 @@ class MissingMediaInfoHandler {
 
 		$outputPage->addParserOutput(
 			$parserOutput,
-			ParserOptions::newFromContext( $context )
+			$parserOptions,
 		);
 	}
 

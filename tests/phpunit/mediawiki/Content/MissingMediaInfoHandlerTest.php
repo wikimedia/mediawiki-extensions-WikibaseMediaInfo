@@ -86,7 +86,7 @@ class MissingMediaInfoHandlerTest extends \PHPUnit\Framework\TestCase {
 		/** @var EntityParserOutputGeneratorFactory $outputGeneratorFactory */
 		$outputGeneratorFactory = $this->createMock( EntityParserOutputGeneratorFactory::class );
 
-		$outputGeneratorFactory->method( 'getEntityParserOutputGenerator' )
+		$outputGeneratorFactory->method( 'getEntityParserOutputGeneratorForParserOptions' )
 			->willReturn( $outputGenerator );
 
 		$handler = new MissingMediaInfoHandler(

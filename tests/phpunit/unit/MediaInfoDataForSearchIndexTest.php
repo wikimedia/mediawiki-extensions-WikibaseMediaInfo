@@ -45,10 +45,9 @@ class MediaInfoDataForSearchIndexTest extends \MediaWikiUnitTestCase {
 		$contentHandlerFactory = new ContentHandlerFactory(
 			[
 				MediaInfoContent::CONTENT_MODEL_ID => [
-					'factory' => function () {
-						return $this->createHandler();
-					},
-					'class' => MediaInfoHandler::class ]
+					'factory' => $this->createHandler( ... ),
+					'class' => MediaInfoHandler::class,
+				],
 			],
 			new ObjectFactory( $this->createMock( ServiceContainer::class ) ),
 			$this->createMock( HookContainer::class ),

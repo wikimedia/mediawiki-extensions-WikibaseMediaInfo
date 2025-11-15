@@ -11,7 +11,7 @@
 	},
 	"devDependencies": {
 		"dotenv": "8.0.0",
-		"eslint-config-wikimedia": "0.31.0",
+		"eslint-config-wikimedia": "0.32.1",
 		"grunt": "1.6.1",
 		"grunt-banana-checker": "0.13.0",
 		"grunt-eslint": "24.3.0",
@@ -22,7 +22,7 @@
 		"jsdom": "14.0.0",
 		"mockery": "2.1.0",
 		"mustache": "3.0.1",
-		"nyc": "15.0.0",
+		"nyc": "15.1.0",
 		"oojs": "3.0.0",
 		"oojs-ui": "0.36.3",
 		"qunit": "2.24.1",

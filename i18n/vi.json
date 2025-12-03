@@ -5,6 +5,7 @@
 			"Leduyquang753",
 			"Minh Nguyen",
 			"Nguyễn Mạnh An",
+			"Nvdtn19",
 			"Vinhtantran"
 		]
 	},
@@ -24,7 +25,7 @@
 	"wikibasemediainfo-filepage-structured-data-heading": "Dữ liệu có cấu trúc",
 	"wikibasemediainfo-filepage-captions-title": "Chú thích",
 	"wikibasemediainfo-filepage-more-languages": "Xem $1 {{PLURAL:$1}}ngôn ngữ nữa",
-	"wikibasemediainfo-filepage-fewer-languages": "Xem ít ngôn ngữ lại",
+	"wikibasemediainfo-filepage-fewer-languages": "Ẩn bớt ngôn ngữ",
 	"wikibasemediainfo-filepage-add-caption": "Thêm chú thích",
 	"wikibasemediainfo-filepage-edit-captions": "Sửa chú thích",
 	"wikibasemediainfo-filepage-edit-depicts": "Sửa đổi lời phát biểu tả",

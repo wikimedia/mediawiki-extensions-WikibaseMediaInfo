@@ -25,7 +25,8 @@
 			"坑触可",
 			"沈澄心",
 			"神樂坂秀吉",
-			"科劳"
+			"科劳",
+			"Peterxy12"
 		]
 	},
 	"action-mediainfo-term": "更改多媒体信息项目（说明、摘要）",
@@ -37,6 +38,7 @@
 	"wikibase-mediainfo-summary-wbsetlabel-set": "已编辑[$2]的说明",
 	"wikibasemediainfo-add-property": "搜索以添加属性（如媒体类别、所属等）",
 	"wikibasemediainfo-add-statement": "添加陈述",
+	"wikibasemediainfo-custommatch-feature-no-profile": "没有为自定义匹配配置的个人设置：$1",
 	"wikibasemediainfo-custommatch-feature-invalid-term": "自定义匹配搜索功能的搜索词无效",
 	"wikibasemediainfo-desc": "管理媒体文件结构化元数据的Wikibase扩展",
 	"wikibasemediainfo-diffview-label": "说明",

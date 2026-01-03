@@ -32,7 +32,6 @@ class WikibaseMediaInfoLibrary extends WikibaseLibrary {
 			'getMediaInfoId' => [ $this, 'getMediaInfoId' ],
 		];
 
-		// @phan-suppress-next-line PhanUndeclaredMethod
 		return $this->getEngine()->registerInterface(
 			__DIR__ . '/mw.wikibase.mediainfo.lua', $lib, []
 		);
@@ -46,7 +45,6 @@ class WikibaseMediaInfoLibrary extends WikibaseLibrary {
 	 * @return array
 	 */
 	public function getMediaInfoId( $pageTitle ) {
-		// @phan-suppress-next-line PhanUndeclaredMethod
 		$this->checkType( 'getMediaInfoId', 1, $pageTitle, 'string' );
 
 		$title = Title::newFromDBkey( $pageTitle );

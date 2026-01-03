@@ -20,7 +20,6 @@ class WikibaseMediaInfoEntityLibrary extends WikibaseEntityLibrary {
 		// these can't be called from user code, unless explicitly exposed in Lua.
 		$lib = [];
 
-		// @phan-suppress-next-line PhanUndeclaredMethod
 		return $this->getEngine()->registerInterface(
 			__DIR__ . '/mw.wikibase.mediainfo.entity.lua', $lib, []
 		);

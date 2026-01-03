@@ -7,6 +7,7 @@ use CirrusSearch\Profile\SearchProfileService;
 use MediaWiki\CommentStore\CommentStoreComment;
 use MediaWiki\Config\ConfigException;
 use MediaWiki\Context\RequestContext;
+use MediaWiki\Extension\Scribunto\Hooks\ScribuntoExternalLibrariesHook;
 use MediaWiki\Hook\ParserOutputPostCacheTransformHook;
 use MediaWiki\Hook\SidebarBeforeOutputHook;
 use MediaWiki\HookContainer\HookContainer;
@@ -65,6 +66,7 @@ class MediaInfoHooks implements
 	BeforePageDisplayHook,
 	ParserOutputPostCacheTransformHook,
 	GetPreferencesHook,
+	ScribuntoExternalLibrariesHook,
 	RevisionUndeletedHook,
 	ArticleUndeleteHook,
 	SidebarBeforeOutputHook,
@@ -690,7 +692,7 @@ class MediaInfoHooks implements
 	 * @param string $engine
 	 * @param string[] &$extraLibraries
 	 */
-	public static function onScribuntoExternalLibraries( $engine, array &$extraLibraries ) {
+	public function onScribuntoExternalLibraries( $engine, array &$extraLibraries ) {
 		if ( !ExtensionRegistry::getInstance()->isLoaded( 'WikibaseClient' ) ) {
 			return;
 		}

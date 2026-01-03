@@ -17,18 +17,11 @@ use Wikibase\Repo\ChangeOp\Deserialization\LabelsChangeOpDeserializer;
  */
 class MediaInfoChangeOpDeserializer implements ChangeOpDeserializer {
 
-	private LabelsChangeOpDeserializer $labelsChangeOpDeserializer;
-	private DescriptionsChangeOpDeserializer $descriptionsChangeOpDeserializer;
-	private ClaimsChangeOpDeserializer $claimsChangeOpDeserializer;
-
 	public function __construct(
-		LabelsChangeOpDeserializer $labelsChangeOpDeserializer,
-		DescriptionsChangeOpDeserializer $descriptionsChangeOpDeserializer,
-		ClaimsChangeOpDeserializer $claimsChangeOpDeserializer
+		private readonly LabelsChangeOpDeserializer $labelsChangeOpDeserializer,
+		private readonly DescriptionsChangeOpDeserializer $descriptionsChangeOpDeserializer,
+		private readonly ClaimsChangeOpDeserializer $claimsChangeOpDeserializer,
 	) {
-		$this->labelsChangeOpDeserializer = $labelsChangeOpDeserializer;
-		$this->descriptionsChangeOpDeserializer = $descriptionsChangeOpDeserializer;
-		$this->claimsChangeOpDeserializer = $claimsChangeOpDeserializer;
 	}
 
 	/**

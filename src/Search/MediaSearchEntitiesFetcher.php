@@ -5,33 +5,13 @@ namespace Wikibase\MediaInfo\Search;
 use Wikimedia\Http\MultiHttpClient;
 
 class MediaSearchEntitiesFetcher {
-	/** @var MultiHttpClient */
-	protected $multiHttpClient;
-
-	/** @var string */
-	protected $entitySearchUrl;
-
-	/** @var string */
-	protected $titleMatchUrl;
-
-	/** @var string */
-	protected $inputLanguage;
-
-	/** @var string */
-	protected $outputLanguage;
-
 	public function __construct(
-		MultiHttpClient $multiHttpClient,
-		string $entitySearchUrl,
-		string $titleMatchUrl,
-		string $inputLanguage,
-		string $outputLanguage
+		protected readonly MultiHttpClient $multiHttpClient,
+		protected readonly string $entitySearchUrl,
+		protected readonly string $titleMatchUrl,
+		protected readonly string $inputLanguage,
+		protected readonly string $outputLanguage,
 	) {
-		$this->multiHttpClient = $multiHttpClient;
-		$this->entitySearchUrl = $entitySearchUrl;
-		$this->titleMatchUrl = $titleMatchUrl;
-		$this->inputLanguage = $inputLanguage;
-		$this->outputLanguage = $outputLanguage;
 	}
 
 	/**

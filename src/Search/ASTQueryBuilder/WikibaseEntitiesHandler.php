@@ -13,35 +13,16 @@ use Wikibase\MediaInfo\Search\MediaSearchASTEntitiesExtractor;
 use Wikibase\Search\Elastic\Fields\StatementsField;
 
 class WikibaseEntitiesHandler implements ParsedNodeHandlerInterface {
-	/** @var ParsedNode */
-	private $node;
-
-	/** @var ParsedQuery */
-	private $query;
-
-	/** @var MediaSearchASTEntitiesExtractor */
-	private $entitiesExtractor;
-
-	/** @var array */
-	private $boosts;
-
-	/** @var bool */
-	private $variableBoost;
-
-	/** @var float */
-	private $weightedTagsMinScoreThreshold;
+	private readonly bool $variableBoost;
+	private readonly float $weightedTagsMinScoreThreshold;
 
 	public function __construct(
-		ParsedNode $node,
-		ParsedQuery $query,
-		MediaSearchASTEntitiesExtractor $entitiesExtractor,
-		array $boosts,
-		array $options
+		private readonly ParsedNode $node,
+		private readonly ParsedQuery $query,
+		private readonly MediaSearchASTEntitiesExtractor $entitiesExtractor,
+		private readonly array $boosts,
+		array $options,
 	) {
-		$this->node = $node;
-		$this->query = $query;
-		$this->entitiesExtractor = $entitiesExtractor;
-		$this->boosts = $boosts;
 		$this->variableBoost = $options['entitiesVariableBoost'];
 		$this->weightedTagsMinScoreThreshold = $options['weightedTagsMinScoreThreshold'] ?? 0.5;
 	}

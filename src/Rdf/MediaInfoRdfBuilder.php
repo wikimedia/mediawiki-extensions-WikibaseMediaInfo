@@ -18,32 +18,15 @@ use Wikibase\Repo\Rdf\TruthyStatementRdfBuilderFactory;
  */
 class MediaInfoRdfBuilder implements EntityRdfBuilder {
 
-	/**
-	 * @var TruthyStatementRdfBuilder
-	 */
-	private $truthyStatementRdfBuilder;
-
-	/**
-	 * @var TermsRdfBuilder
-	 */
-	private $termsRdfBuilder;
-
-	/**
-	 * @var FullStatementRdfBuilder
-	 */
-	private $fullStatementRdfBuilder;
-
-	/**
-	 * @var MediaInfoSpecificComponentsRdfBuilder
-	 */
-	private $mediaInfoSpecificComponentsRdfBuilder;
+	private ?TruthyStatementRdfBuilder $truthyStatementRdfBuilder = null;
+	private ?FullStatementRdfBuilder $fullStatementRdfBuilder = null;
 
 	public function __construct(
 		int $flavorFlags,
-		TermsRdfBuilder $termsRdfBuilder,
+		private readonly TermsRdfBuilder $termsRdfBuilder,
 		TruthyStatementRdfBuilderFactory $truthyStatementRdfBuilderFactory,
 		FullStatementRdfBuilderFactory $fullStatementRdfBuilderFactory,
-		MediaInfoSpecificComponentsRdfBuilder $mediaInfoSpecificComponentsRdfBuilder
+		private readonly MediaInfoSpecificComponentsRdfBuilder $mediaInfoSpecificComponentsRdfBuilder,
 	) {
 		if ( $flavorFlags & RdfProducer::PRODUCE_TRUTHY_STATEMENTS ) {
 			$this->truthyStatementRdfBuilder = $truthyStatementRdfBuilderFactory->getTruthyStatementRdfBuilder(
@@ -57,9 +40,6 @@ class MediaInfoRdfBuilder implements EntityRdfBuilder {
 			);
 			$this->fullStatementRdfBuilder = $fullStatementRdfBuilder;
 		}
-
-		$this->termsRdfBuilder = $termsRdfBuilder;
-		$this->mediaInfoSpecificComponentsRdfBuilder = $mediaInfoSpecificComponentsRdfBuilder;
 	}
 
 	public function addEntity( EntityDocument $entity ) {

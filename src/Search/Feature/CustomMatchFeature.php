@@ -128,11 +128,9 @@ use RuntimeException;
  */
 class CustomMatchFeature extends SimpleKeywordFeature {
 
-	/** @var array */
-	private $featureConfig;
-
-	public function __construct( array $featureConfig ) {
-		$this->featureConfig = $featureConfig;
+	public function __construct(
+		private array $featureConfig,
+	) {
 	}
 
 	/**

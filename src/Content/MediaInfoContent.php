@@ -19,26 +19,14 @@ class MediaInfoContent extends EntityContent {
 	public const CONTENT_MODEL_ID = 'wikibase-mediainfo';
 
 	/**
-	 * @var EntityHolder|null
-	 */
-	private $mediaInfoHolder;
-
-	/**
-	 * @var WikibaseTextForSearchIndexHook
-	 */
-	private $hookRunner;
-
-	/**
 	 * Do not use to construct new stuff from outside of this class -
 	 * prefer MediaInfoHandler::newEntityContent (since I61d9a89e3ef19e10c04dbfdea02d4096cd2b8cda)
 	 *
-	 * @param WikibaseTextForSearchIndexHook $hookRunner
-	 * @param EntityHolder|null $mediaInfoHolder
 	 * @throws InvalidArgumentException
 	 */
 	public function __construct(
-		WikibaseTextForSearchIndexHook $hookRunner,
-		?EntityHolder $mediaInfoHolder = null
+		private readonly WikibaseTextForSearchIndexHook $hookRunner,
+		private readonly ?EntityHolder $mediaInfoHolder = null,
 	) {
 		parent::__construct( self::CONTENT_MODEL_ID );
 
@@ -47,9 +35,6 @@ class MediaInfoContent extends EntityContent {
 		) {
 			throw new InvalidArgumentException( '$mediaInfoHolder must contain a MediaInfo entity' );
 		}
-
-		$this->mediaInfoHolder = $mediaInfoHolder;
-		$this->hookRunner = $hookRunner;
 	}
 
 	/** @inheritDoc */

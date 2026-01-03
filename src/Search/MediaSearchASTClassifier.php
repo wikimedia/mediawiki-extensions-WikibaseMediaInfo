@@ -16,9 +16,6 @@ use CirrusSearch\Parser\ParsedQueryClassifier;
 
 class MediaSearchASTClassifier extends LeafVisitor implements ParsedQueryClassifier {
 	/** @var string[] */
-	private $profiles;
-
-	/** @var string[] */
 	private $supported = [];
 
 	/** @var string[] */
@@ -27,9 +24,10 @@ class MediaSearchASTClassifier extends LeafVisitor implements ParsedQueryClassif
 	/**
 	 * @param string[] $profiles
 	 */
-	public function __construct( array $profiles = [] ) {
+	public function __construct(
+		private readonly array $profiles = [],
+	) {
 		parent::__construct();
-		$this->profiles = $profiles;
 	}
 
 	/**

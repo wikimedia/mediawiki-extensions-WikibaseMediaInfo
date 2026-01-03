@@ -15,13 +15,9 @@ use Wikibase\Repo\WikibaseRepo;
  * @author Mark Holmquist
  */
 class MediaInfoByLinkedTitleLookup implements EntityByLinkedTitleLookup {
-	/**
-	 * @var EntityByLinkedTitleLookup
-	 */
-	private $defaultLookup;
-
-	public function __construct( EntityByLinkedTitleLookup $defaultLookup ) {
-		$this->defaultLookup = $defaultLookup;
+	public function __construct(
+		private readonly EntityByLinkedTitleLookup $defaultLookup,
+	) {
 	}
 
 	/**

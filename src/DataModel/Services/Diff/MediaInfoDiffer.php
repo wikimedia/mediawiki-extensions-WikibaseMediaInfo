@@ -19,15 +19,8 @@ use Wikibase\MediaInfo\DataModel\MediaInfo;
  */
 class MediaInfoDiffer implements EntityDifferStrategy {
 
-	/**
-	 * @var MapDiffer
-	 */
-	private $recursiveMapDiffer;
-
-	/**
-	 * @var StatementListDiffer
-	 */
-	private $statementListDiffer;
+	private readonly MapDiffer $recursiveMapDiffer;
+	private readonly StatementListDiffer $statementListDiffer;
 
 	public function __construct() {
 		$this->recursiveMapDiffer = new MapDiffer( true );

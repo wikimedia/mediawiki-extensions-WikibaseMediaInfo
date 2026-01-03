@@ -24,18 +24,16 @@ class MediaSearchASTEntitiesExtractor extends LeafVisitor {
 	/** @var ParsedQuery */
 	private $parsedQuery;
 
-	/** @var MediaSearchEntitiesFetcher */
-	private $entitiesFetcher;
-
 	/** @var SplObjectStorage */
 	private $terms;
 
 	/** @var SplObjectStorage */
 	private $entities;
 
-	public function __construct( MediaSearchEntitiesFetcher $entitiesFetcher ) {
+	public function __construct(
+		private readonly MediaSearchEntitiesFetcher $entitiesFetcher,
+	) {
 		parent::__construct();
-		$this->entitiesFetcher = $entitiesFetcher;
 	}
 
 	public function getEntities( ParsedQuery $parsedQuery, ParsedNode $parsedNode ): array {

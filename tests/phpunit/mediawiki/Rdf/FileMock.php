@@ -12,20 +12,16 @@ use MediaWiki\FileRepo\File\File;
 class FileMock extends File {
 
 	/**
-	 * @var mixed[string]
-	 */
-	private $params;
-
-	/**
 	 * Simple File mock for RDF generation tests
 	 *
 	 * @param string $title
 	 * @param mixed[string] $params
 	 */
-	public function __construct( $title, array $params ) {
+	public function __construct(
+		$title,
+		private readonly array $params,
+	) {
 		parent::__construct( $title, false );
-
-		$this->params = $params;
 	}
 
 	/** @inheritDoc */

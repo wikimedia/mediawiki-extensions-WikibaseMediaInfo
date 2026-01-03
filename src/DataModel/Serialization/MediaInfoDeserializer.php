@@ -16,36 +16,12 @@ use Wikibase\MediaInfo\DataModel\MediaInfoId;
  * @author Bene* < benestar.wikimedia@gmail.com >
  */
 class MediaInfoDeserializer extends TypedObjectDeserializer {
-	/**
-	 * @var Deserializer
-	 */
-	private $idDeserializer;
-
-	/**
-	 * @var Deserializer
-	 */
-	private $termListDeserializer;
-
-	/**
-	 * @var Deserializer
-	 */
-	private $statementListDeserializer;
-
-	/**
-	 * @param Deserializer $idDeserializer
-	 * @param Deserializer $termListDeserializer
-	 * @param Deserializer $statementListDeserializer
-	 */
 	public function __construct(
-		Deserializer $idDeserializer,
-		Deserializer $termListDeserializer,
-		Deserializer $statementListDeserializer
+		private readonly Deserializer $idDeserializer,
+		private readonly Deserializer $termListDeserializer,
+		private readonly Deserializer $statementListDeserializer,
 	) {
 		parent::__construct( 'mediainfo', 'type' );
-
-		$this->idDeserializer = $idDeserializer;
-		$this->termListDeserializer = $termListDeserializer;
-		$this->statementListDeserializer = $statementListDeserializer;
 	}
 
 	/**

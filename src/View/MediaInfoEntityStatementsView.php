@@ -38,18 +38,6 @@ use Wikibase\View\LocalizedTextProvider;
  */
 class MediaInfoEntityStatementsView {
 
-	private PropertyOrderProvider $propertyOrderProvider;
-	private LocalizedTextProvider $textProvider;
-	/** @var NumericPropertyId[] */
-	private array $defaultPropertyIds;
-	private OutputFormatSnakFormatterFactory $snakFormatterFactory;
-	private OutputFormatValueFormatterFactory $valueFormatterFactory;
-	private SerializerFactory $serializerFactory;
-	/** @var string */
-	private $languageCode;
-	/** @var array<string,string> */
-	private $properties;
-
 	public const STATEMENTS_CUSTOM_TAG = 'mediaInfoViewStatements';
 
 	/**
@@ -64,25 +52,16 @@ class MediaInfoEntityStatementsView {
 	 * @param array<string,string> $properties Array of property IDs
 	 */
 	public function __construct(
-		PropertyOrderProvider $propertyOrderProvider,
-		LocalizedTextProvider $textProvider,
-		array $defaultPropertyIds,
-		OutputFormatSnakFormatterFactory $snakFormatterFactory,
-		OutputFormatValueFormatterFactory $valueFormatterFactory,
-		SerializerFactory $serializerFactory,
-		$languageCode,
-		$properties
+		private readonly PropertyOrderProvider $propertyOrderProvider,
+		private readonly LocalizedTextProvider $textProvider,
+		private readonly array $defaultPropertyIds,
+		private readonly OutputFormatSnakFormatterFactory $snakFormatterFactory,
+		private readonly OutputFormatValueFormatterFactory $valueFormatterFactory,
+		private readonly SerializerFactory $serializerFactory,
+		private readonly string $languageCode,
+		private readonly array $properties,
 	) {
 		OutputPage::setupOOUI();
-
-		$this->propertyOrderProvider = $propertyOrderProvider;
-		$this->textProvider = $textProvider;
-		$this->defaultPropertyIds = $defaultPropertyIds;
-		$this->snakFormatterFactory = $snakFormatterFactory;
-		$this->valueFormatterFactory = $valueFormatterFactory;
-		$this->serializerFactory = $serializerFactory;
-		$this->languageCode = $languageCode;
-		$this->properties = $properties;
 	}
 
 	/**

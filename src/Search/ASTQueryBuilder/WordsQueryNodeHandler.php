@@ -10,12 +10,6 @@ use Elastica\Query\MatchQuery;
 use Elastica\Query\MultiMatch;
 
 class WordsQueryNodeHandler implements ParsedNodeHandlerInterface {
-	/** @var WordsQueryNode */
-	private $node;
-
-	/** @var WikibaseEntitiesHandler */
-	private $entitiesHandler;
-
 	/** @var float[] */
 	private $decays;
 
@@ -23,8 +17,8 @@ class WordsQueryNodeHandler implements ParsedNodeHandlerInterface {
 	private $termScoringFieldIterators;
 
 	public function __construct(
-		WordsQueryNode $node,
-		WikibaseEntitiesHandler $entitiesHandler,
+		private readonly WordsQueryNode $node,
+		private readonly WikibaseEntitiesHandler $entitiesHandler,
 		array $languages,
 		array $synonyms,
 		array $synonymsLanguages,
@@ -39,8 +33,6 @@ class WordsQueryNodeHandler implements ParsedNodeHandlerInterface {
 					FieldIterator::LANGUAGE_AWARE_FIELDS )
 			)
 		);
-		$this->node = $node;
-		$this->entitiesHandler = $entitiesHandler;
 		$this->decays = $decays;
 
 		$this->termScoringFieldIterators[$node->getWords()] = new FieldIterator(

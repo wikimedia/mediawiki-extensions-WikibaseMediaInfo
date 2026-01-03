@@ -24,29 +24,11 @@ use Wikibase\Repo\Diff\EntityDiffVisualizer;
  */
 class BasicMediaInfoDiffVisualizer implements EntityDiffVisualizer {
 
-	/**
-	 * @var MessageLocalizer
-	 */
-	private $messageLocalizer;
-
-	/**
-	 * @var ClaimDiffer|null
-	 */
-	private $claimDiffer;
-
-	/**
-	 * @var ClaimDifferenceVisualizer|null
-	 */
-	private $claimDiffVisualizer;
-
 	public function __construct(
-		MessageLocalizer $messageLocalizer,
-		ClaimDiffer $claimDiffer,
-		ClaimDifferenceVisualizer $claimDiffView
+		private readonly MessageLocalizer $messageLocalizer,
+		private readonly ClaimDiffer $claimDiffer,
+		private readonly ClaimDifferenceVisualizer $claimDiffVisualizer,
 	) {
-		$this->messageLocalizer = $messageLocalizer;
-		$this->claimDiffer = $claimDiffer;
-		$this->claimDiffVisualizer = $claimDiffView;
 	}
 
 	/**

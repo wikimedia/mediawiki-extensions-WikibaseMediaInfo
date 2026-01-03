@@ -25,39 +25,16 @@ class MediaInfo
 
 	public const ENTITY_TYPE = 'mediainfo';
 
-	/**
-	 * @var MediaInfoId|null
-	 */
-	private $id;
+	private TermList $labels;
+	private TermList $descriptions;
+	private StatementList $statements;
 
-	/**
-	 * @var TermList
-	 */
-	private $labels;
-
-	/**
-	 * @var TermList
-	 */
-	private $descriptions;
-
-	/**
-	 * @var StatementList
-	 */
-	private $statements;
-
-	/**
-	 * @param MediaInfoId|null $id
-	 * @param TermList|null $labels
-	 * @param TermList|null $descriptions
-	 * @param StatementList|null $statements
-	 */
 	public function __construct(
-		?MediaInfoId $id = null,
+		private ?MediaInfoId $id = null,
 		?TermList $labels = null,
 		?TermList $descriptions = null,
-		?StatementList $statements = null
+		?StatementList $statements = null,
 	) {
-		$this->id = $id;
 		$this->labels = $labels ?: new TermList();
 		$this->descriptions = $descriptions ?: new TermList();
 		$this->statements = $statements ?: new StatementList();

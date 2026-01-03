@@ -14,22 +14,10 @@ use Wikibase\MediaInfo\DataModel\MediaInfo;
  */
 class MediaInfoSerializer implements DispatchableSerializer {
 
-	/**
-	 * @var Serializer
-	 */
-	private $termListSerializer;
-
-	/**
-	 * @var Serializer
-	 */
-	private $statementListSerializer;
-
 	public function __construct(
-		Serializer $termListSerializer,
-		Serializer $statementListSerializer
+		private readonly Serializer $termListSerializer,
+		private readonly Serializer $statementListSerializer,
 	) {
-		$this->termListSerializer = $termListSerializer;
-		$this->statementListSerializer = $statementListSerializer;
 	}
 
 	/**

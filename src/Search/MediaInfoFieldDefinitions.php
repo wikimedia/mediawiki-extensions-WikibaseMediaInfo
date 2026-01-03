@@ -12,29 +12,11 @@ use Wikibase\Search\Elastic\Fields\StatementCountField;
  */
 class MediaInfoFieldDefinitions implements FieldDefinitions {
 
-	/**
-	 * @var FieldDefinitions
-	 */
-	private $labelsProviderFieldDefinitions;
-
-	/**
-	 * @var FieldDefinitions
-	 */
-	private $descriptionsProviderFieldDefinitions;
-
-	/**
-	 * @var FieldDefinitions
-	 */
-	private $statementProviderDefinitions;
-
 	public function __construct(
-		FieldDefinitions $labelsProviderFieldDefinitions,
-		FieldDefinitions $descriptionsProviderFieldDefinitions,
-		FieldDefinitions $statementProviderDefinitions
+		private readonly FieldDefinitions $labelsProviderFieldDefinitions,
+		private readonly FieldDefinitions $descriptionsProviderFieldDefinitions,
+		private readonly FieldDefinitions $statementProviderDefinitions,
 	) {
-		$this->labelsProviderFieldDefinitions = $labelsProviderFieldDefinitions;
-		$this->descriptionsProviderFieldDefinitions = $descriptionsProviderFieldDefinitions;
-		$this->statementProviderDefinitions = $statementProviderDefinitions;
 	}
 
 	/**

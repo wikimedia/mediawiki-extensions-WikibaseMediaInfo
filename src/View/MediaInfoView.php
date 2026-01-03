@@ -16,37 +16,13 @@ use Wikibase\View\ViewContent;
  */
 class MediaInfoView implements EntityDocumentView {
 
-	/**
-	 * @var MediaInfoEntityTermsView
-	 */
-	private $captionsView;
-
-	/**
-	 * @var string
-	 */
-	protected $languageCode;
-
-	/**
-	 * @var MediaInfoEntityStatementsView
-	 */
-	private $statementsView;
-
 	public const MEDIAINFOVIEW_CUSTOM_TAG = 'mediaInfoView';
 
-	/**
-	 * @param MediaInfoEntityTermsView $captionsView
-	 * @param string $languageCode
-	 * @param MediaInfoEntityStatementsView $statementsView
-	 * @codeCoverageIgnore
-	 */
 	public function __construct(
-		MediaInfoEntityTermsView $captionsView,
-		$languageCode,
-		MediaInfoEntityStatementsView $statementsView
+		private readonly MediaInfoEntityTermsView $captionsView,
+		private readonly string $languageCode,
+		private readonly MediaInfoEntityStatementsView $statementsView,
 	) {
-		$this->captionsView = $captionsView;
-		$this->languageCode = $languageCode;
-		$this->statementsView = $statementsView;
 	}
 
 	/**

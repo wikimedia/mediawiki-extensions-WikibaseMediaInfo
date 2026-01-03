@@ -19,15 +19,8 @@ use Wikibase\MediaInfo\DataModel\MediaInfo;
  */
 class MediaInfoPatcher implements EntityPatcherStrategy {
 
-	/**
-	 * @var TermListPatcher
-	 */
-	private $termListPatcher;
-
-	/**
-	 * @var StatementListPatcher
-	 */
-	private $statementListPatcher;
+	private readonly TermListPatcher $termListPatcher;
+	private readonly StatementListPatcher $statementListPatcher;
 
 	public function __construct() {
 		$this->termListPatcher = new TermListPatcher();

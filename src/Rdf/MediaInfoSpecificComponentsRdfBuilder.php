@@ -17,36 +17,12 @@ use Wikimedia\Purtle\RdfWriter;
  */
 class MediaInfoSpecificComponentsRdfBuilder implements EntityRdfBuilder {
 
-	/**
-	 * @var RdfVocabulary
-	 */
-	private $vocabulary;
-
-	/**
-	 * @var RdfWriter
-	 */
-	private $writer;
-
-	/**
-	 * @var MediaInfoHandler
-	 */
-	private $mediaInfoHandler;
-
-	/**
-	 * @var RepoGroup
-	 */
-	private $repoGroup;
-
 	public function __construct(
-		RdfVocabulary $vocabulary,
-		RdfWriter $writer,
-		MediaInfoHandler $mediaInfoHandler,
-		RepoGroup $repoGroup
+		private readonly RdfVocabulary $vocabulary,
+		private readonly RdfWriter $writer,
+		private readonly MediaInfoHandler $mediaInfoHandler,
+		private readonly RepoGroup $repoGroup,
 	) {
-		$this->vocabulary = $vocabulary;
-		$this->writer = $writer;
-		$this->mediaInfoHandler = $mediaInfoHandler;
-		$this->repoGroup = $repoGroup;
 	}
 
 	/**

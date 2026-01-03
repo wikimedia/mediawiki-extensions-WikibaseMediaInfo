@@ -10,22 +10,14 @@ use Elastica\Query\BoolQuery;
 class MediaSearchQueryBuilder implements FullTextQueryBuilder {
 	public const SEARCH_PROFILE_CONTEXT_NAME = 'mediasearch';
 
-	/** @var KeywordFeature[] */
-	private $features;
-
-	/** @var MediaSearchASTQueryBuilder */
-	protected $queryBuilder;
-
 	/**
 	 * @param KeywordFeature[] $features
 	 * @param MediaSearchASTQueryBuilder $queryBuilder
 	 */
 	public function __construct(
-		array $features,
-		MediaSearchASTQueryBuilder $queryBuilder
+		private readonly array $features,
+		protected readonly MediaSearchASTQueryBuilder $queryBuilder
 	) {
-		$this->features = $features;
-		$this->queryBuilder = $queryBuilder;
 	}
 
 	/**

@@ -62,9 +62,6 @@ class FieldIterator extends ArrayIterator {
 		'suggest',
 	];
 
-	/** @var fieldQueryBuilderInterface */
-	private $fieldQueryBuilder;
-
 	/** @var string[] */
 	private $fields;
 
@@ -81,14 +78,13 @@ class FieldIterator extends ArrayIterator {
 	private $decays;
 
 	public function __construct(
-		fieldQueryBuilderInterface $fieldQueryBuilder,
+		private readonly fieldQueryBuilderInterface $fieldQueryBuilder,
 		array $fields,
 		array $languages,
 		array $stemmingSettings,
 		array $boosts,
 		array $decays
 	) {
-		$this->fieldQueryBuilder = $fieldQueryBuilder;
 		$this->fields = $fields;
 		$this->languages = $languages;
 		$this->stemmingSettings = $stemmingSettings;

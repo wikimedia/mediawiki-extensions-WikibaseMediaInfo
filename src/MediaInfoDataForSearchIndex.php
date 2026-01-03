@@ -20,13 +20,9 @@ use Wikimedia\Assert\Assert;
  * slot content data into the search index.
  */
 class MediaInfoDataForSearchIndex implements SearchDataForIndex2Hook {
-	/**
-	 * @var ContentHandlerFactory
-	 */
-	private $contentHandlerFactory;
-
-	public function __construct( ContentHandlerFactory $contentHandlerFactory ) {
-		$this->contentHandlerFactory = $contentHandlerFactory;
+	public function __construct(
+		private readonly ContentHandlerFactory $contentHandlerFactory,
+	) {
 	}
 
 	/**

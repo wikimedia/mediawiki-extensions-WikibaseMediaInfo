@@ -11,7 +11,6 @@ use MediaWiki\Title\TitleFactory;
 use Wikibase\DataModel\Entity\EntityId;
 use Wikibase\DataModel\Entity\EntityIdParser;
 use Wikibase\Lib\Store\EntityContentDataCodec;
-use Wikibase\Lib\Store\EntityIdLookup;
 use Wikibase\Lib\Store\NullEntityTermStoreWriter;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\MediaInfo\DataModel\MediaInfoId;
@@ -34,39 +33,9 @@ use Wikimedia\Assert\Assert;
 class MediaInfoHandler extends EntityHandler {
 
 	/**
-	 * @var MissingMediaInfoHandler
-	 */
-	private $missingMediaInfoHandler;
-
-	/**
-	 * @var EntityIdLookup
-	 */
-	private $idLookup;
-
-	/**
-	 * @var FilePageLookup
-	 */
-	private $filePageLookup;
-
-	/**
 	 * @var array<string,Title|null>
 	 */
 	private $titleForIdCache = [];
-
-	/**
-	 * @var PageStore
-	 */
-	private $pageStore;
-
-	/**
-	 * @var TitleFactory
-	 */
-	private $titleFactory;
-
-	/**
-	 * @var WikibaseTextForSearchIndexHook
-	 */
-	private $hookRunner;
 
 	/**
 	 * @param EntityContentDataCodec $contentCodec
@@ -87,13 +56,13 @@ class MediaInfoHandler extends EntityHandler {
 		EntityConstraintProvider $constraintProvider,
 		ValidatorErrorLocalizer $errorLocalizer,
 		EntityIdParser $entityIdParser,
-		MissingMediaInfoHandler $missingMediaInfoHandler,
-		MediaInfoIdLookup $idLookup,
-		FilePageLookup $filePageLookup,
+		private readonly MissingMediaInfoHandler $missingMediaInfoHandler,
+		private readonly MediaInfoIdLookup $idLookup,
+		private readonly FilePageLookup $filePageLookup,
 		FieldDefinitions $mediaInfoFieldDefinitions,
-		PageStore $pageStore,
-		TitleFactory $titleFactory,
-		WikibaseTextForSearchIndexHook $hookRunner,
+		private readonly PageStore $pageStore,
+		private readonly TitleFactory $titleFactory,
+		private readonly WikibaseTextForSearchIndexHook $hookRunner,
 		$legacyExportFormatDetector = null
 	) {
 		parent::__construct(
@@ -106,12 +75,6 @@ class MediaInfoHandler extends EntityHandler {
 			$mediaInfoFieldDefinitions,
 			$legacyExportFormatDetector
 		);
-		$this->missingMediaInfoHandler = $missingMediaInfoHandler;
-		$this->idLookup = $idLookup;
-		$this->filePageLookup = $filePageLookup;
-		$this->pageStore = $pageStore;
-		$this->titleFactory = $titleFactory;
-		$this->hookRunner = $hookRunner;
 	}
 
 	/**

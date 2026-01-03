@@ -15,13 +15,9 @@ use Wikibase\MediaInfo\DataModel\MediaInfoId;
  */
 class FilePageLookup {
 
-	/**
-	 * @var TitleFactory
-	 */
-	private $titleFactory;
-
-	public function __construct( TitleFactory $titleFactory ) {
-		$this->titleFactory = $titleFactory;
+	public function __construct(
+		private readonly TitleFactory $titleFactory,
+	) {
 	}
 
 	/**

@@ -18,19 +18,16 @@ use Wikimedia\Assert\Assert;
  */
 class MediaInfoIdLookup implements EntityIdLookup {
 
-	private EntityIdComposer $entityIdComposer;
-	private int $mediaInfoNamespace;
-
 	/**
 	 * @param EntityIdComposer $entityIdComposer
 	 * @param int $mediaInfoNamespace numeric namespace ID of the namespace in which MediaInfo
 	 * entities reside.
 	 */
-	public function __construct( EntityIdComposer $entityIdComposer, int $mediaInfoNamespace ) {
+	public function __construct(
+		private readonly EntityIdComposer $entityIdComposer,
+		private readonly int $mediaInfoNamespace,
+	) {
 		Assert::parameter( $mediaInfoNamespace >= 0, '$mediaInfoNamespace', 'Must not be negative' );
-
-		$this->entityIdComposer = $entityIdComposer;
-		$this->mediaInfoNamespace = $mediaInfoNamespace;
 	}
 
 	/** @inheritDoc */

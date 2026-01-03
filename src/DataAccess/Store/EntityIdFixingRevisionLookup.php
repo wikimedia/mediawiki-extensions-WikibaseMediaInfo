@@ -22,19 +22,10 @@ use Wikibase\Lib\Store\LookupConstants;
  */
 class EntityIdFixingRevisionLookup implements EntityRevisionLookup {
 
-	/**
-	 * @var EntityRevisionLookup
-	 */
-	private $lookup;
-
-	/**
-	 * @var LoggerInterface
-	 */
-	private $logger;
-
-	public function __construct( EntityRevisionLookup $lookup, LoggerInterface $logger ) {
-		$this->lookup = $lookup;
-		$this->logger = $logger;
+	public function __construct(
+		private readonly EntityRevisionLookup $lookup,
+		private readonly LoggerInterface $logger,
+	) {
 	}
 
 	/**

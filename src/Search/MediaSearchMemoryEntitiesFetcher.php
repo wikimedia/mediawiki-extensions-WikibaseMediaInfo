@@ -3,14 +3,12 @@
 namespace Wikibase\MediaInfo\Search;
 
 class MediaSearchMemoryEntitiesFetcher extends MediaSearchEntitiesFetcher {
-	/** @var MediaSearchEntitiesFetcher */
-	protected $fetcher;
-
 	/** @var array */
 	protected static $cache = [];
 
-	public function __construct( MediaSearchEntitiesFetcher $fetcher ) {
-		$this->fetcher = $fetcher;
+	public function __construct(
+		protected readonly MediaSearchEntitiesFetcher $fetcher,
+	) {
 	}
 
 	/**

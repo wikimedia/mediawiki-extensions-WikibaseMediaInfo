@@ -11,7 +11,8 @@
 			"TheRukk",
 			"Toa",
 			"Valerio Bozzolan",
-			"ZioNicco"
+			"ZioNicco",
+			"Valepert"
 		]
 	},
 	"right-mediainfo-term": "Modifica le informazioni del file (didascalie, riassunti)",
@@ -86,7 +87,7 @@
 	"wikibasemediainfo-time-precision-year10k": "10 000 anni",
 	"wikibasemediainfo-time-precision-year1k": "millennio",
 	"wikibasemediainfo-time-precision-year100": "secolo",
-	"wikibasemediainfo-time-precision-year10": "decade",
+	"wikibasemediainfo-time-precision-year10": "decennio",
 	"wikibasemediainfo-time-precision-year": "anno",
 	"wikibasemediainfo-time-precision-month": "mese",
 	"wikibasemediainfo-time-precision-day": "giorno",

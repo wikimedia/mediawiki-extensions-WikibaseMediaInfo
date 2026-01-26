@@ -4,9 +4,12 @@
 			"Abijeet Patro",
 			"Archana mathur",
 			"Roovinn",
+			"Saurmandal",
 			"गोपाल"
 		]
 	},
+	"action-mediainfo-term": "मीडिया की जानकारी (कैप्शन, सारांश) बदलने",
+	"right-mediainfo-term": "मीडिया की जानकारी (कैप्शन, सारांश) बदलना",
 	"wikibasemediainfo-filepage-statement-value-type-dropdown-title": "मान प्रकार चुनें।",
 	"wikibasemediainfo-time-precision-year1k": "सहस्राब्दी"
 }

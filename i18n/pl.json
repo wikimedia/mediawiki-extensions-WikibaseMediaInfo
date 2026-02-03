@@ -20,6 +20,7 @@
 	"wikibase-mediainfo-summary-wbsetlabel-set": "Zmieniono [$2] podpis",
 	"wikibasemediainfo-add-property": "Wyszukaj właściwości do dodania (część, rodzaj pliku itp.)",
 	"wikibasemediainfo-add-statement": "Dodaj stwierdzenie",
+	"wikibasemediainfo-custommatch-feature-no-profile": "Brak skonfigurowanego profilu dla custommatch:$1",
 	"wikibasemediainfo-desc": "Rozszerzenie Wikibase do zarządzania strukturalizowanymi metadanymi plików multimedialnych",
 	"wikibasemediainfo-diffview-label": "podpis",
 	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Podpisy",
@@ -43,6 +44,7 @@
 	"wikibasemediainfo-filepage-caption-approaching-limit": "Pozostał{{PLURAL:$1|y|o}} $1 {{PLURAL:$1|znak|znaki|znaków}}",
 	"wikibasemediainfo-filepage-statement-value-type-dropdown-title": "Wybierz typ wartości.",
 	"wikibasemediainfo-filepage-statement-custom-value-option": "własna wartość",
+	"wikibasemediainfo-filepage-statement-invalid-value": "Nieprawidłowa wartość",
 	"wikibasemediainfo-filepage-statement-no-value-option": "bez wartości",
 	"wikibasemediainfo-filepage-statement-no-value": "Brak wartości tej właściwości",
 	"wikibasemediainfo-filepage-statement-no-data": "Brak dostępnych danych",
@@ -58,6 +60,7 @@
 	"wikibasemediainfo-statements-depicts-title": "Obiekty przedstawione na tym zdjęciu",
 	"wikibasemediainfo-statements-item-qualifiers": "Kwalifikatory",
 	"wikibasemediainfo-statements-item-add-qualifier": "Dodaj kwalifikator",
+	"wikibasemediainfo-statements-item-reference": "Przypis",
 	"wikibasemediainfo-statements-item-references": "Przypisy",
 	"wikibasemediainfo-statements-item-add-reference": "Dodaj przypis",
 	"wikibasemediainfo-statements-item-add-reference-snak": "Dodaj",
@@ -107,5 +110,6 @@
 	"wikibasemediainfo-quantity-unit-label": "jednostka",
 	"wikibasemediainfo-quantity-unit-button-text": "Ustaw jednostkę",
 	"wikibasemediainfo-globecoordinate-input-button-text": "Dodaj",
-	"wikibasemediainfo-globecoordinate-map-button-text": "Wybierz na mapie"
+	"wikibasemediainfo-globecoordinate-map-button-text": "Wybierz na mapie",
+	"wikibasemediainfo-rescore-profile-classic-noboostlinks-max-boost-template": "Ranking na podstawie najlepszego szablonu, języka strony i aktualności, gdy jest aktywowany na tej wiki."
 }

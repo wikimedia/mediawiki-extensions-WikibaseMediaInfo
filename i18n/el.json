@@ -9,11 +9,12 @@
 			"Warudo"
 		]
 	},
-	"right-mediainfo-term": "Αλλαγή μέσων σε όρους (λεζάντες, περιλήψεις)",
+	"right-mediainfo-term": "Αλλαγή όρων πληροφοριών πολυμέσων (λεζάντες, περιλήψεις)",
+	"slot-name-mediainfo": "Δομημένες πληροφορίες πολυμέσου",
 	"wikibase-entity-mediainfo": "πληροφορίες πολυμέσου",
-	"wikibase-mediainfo-summary-wbsetlabel-add": "Προστέθηκε [$2] λεζάντα",
-	"wikibase-mediainfo-summary-wbsetlabel-remove": "Αφαιρέθηκε [$2] λεζάντα",
-	"wikibase-mediainfo-summary-wbsetlabel-set": "Τροποποιήθηκε [$2] λεζάντα",
+	"wikibase-mediainfo-summary-wbsetlabel-add": "Προστέθηκε η [$2] λεζάντα",
+	"wikibase-mediainfo-summary-wbsetlabel-remove": "Αφαιρέθηκε η [$2] λεζάντα",
+	"wikibase-mediainfo-summary-wbsetlabel-set": "Τροποποιήθηκε η [$2] λεζάντα",
 	"wikibasemediainfo-add-statement": "Προσθήκη δήλωσης",
 	"wikibasemediainfo-diffview-label": "λεζάντα",
 	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Λεζάντες",

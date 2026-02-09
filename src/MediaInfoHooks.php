@@ -29,7 +29,6 @@ use MediaWiki\Status\Status;
 use MediaWiki\Storage\BlobStore;
 use MediaWiki\Storage\Hook\MultiContentSaveHook;
 use MediaWiki\Title\Title;
-use MediaWiki\User\TempUser\TempUserConfig;
 use MediaWiki\User\User;
 use MediaWiki\User\UserIdentity;
 use OOUI\HtmlSnippet;
@@ -41,7 +40,6 @@ use Wikibase\DataModel\Entity\NumericPropertyId;
 use Wikibase\DataModel\Services\Lookup\PropertyDataTypeLookupException;
 use Wikibase\DataModel\Statement\StatementGuid;
 use Wikibase\Lib\LanguageFallbackChainFactory;
-use Wikibase\Lib\UserLanguageLookup;
 use Wikibase\MediaInfo\Content\MediaInfoContent;
 use Wikibase\MediaInfo\DataAccess\Scribunto\WikibaseMediaInfoEntityLibrary;
 use Wikibase\MediaInfo\DataAccess\Scribunto\WikibaseMediaInfoLibrary;
@@ -142,15 +140,15 @@ class MediaInfoHooks implements
 	 * @throws ConfigException
 	 */
 	public function onBeforePageDisplay( $out, $skin ): void {
-		$config = MediaWikiServices::getInstance()->getMainConfig();
+		$imgTitle = $out->getTitle();
 
 		// Hide any MediaInfo content and UI on a page, if the target page is a redirect.
-		if ( $out->getTitle()->isRedirect() ) {
-			$out = self::deleteMediaInfoData( $out );
+		if ( !$imgTitle || $imgTitle->isRedirect() ) {
+			self::deleteMediaInfoData( $out );
 			return;
 		}
 
-		$imgTitle = $out->getTitle();
+		$config = $out->getConfig();
 
 		$isMediaInfoPage = static::isMediaInfoPage( $imgTitle ) &&
 			// … the page view is a read
@@ -165,7 +163,7 @@ class MediaInfoHooks implements
 				// label, to help clarify what data is expected there
 				// possible messages include:
 				// wikibasemediainfo-statements-title-depicts
-				$message = wfMessage( 'wikibasemediainfo-statements-title-' . ( $name ?: '' ) );
+				$message = $out->msg( 'wikibasemediainfo-statements-title-' . ( $name ?: '' ) );
 				if ( $message->exists() ) {
 					$propertyTitles[$property] = $message->text();
 				}
@@ -177,53 +175,23 @@ class MediaInfoHooks implements
 			}
 		}
 
-		$hooksObject = new self( $this->hookContainer );
-		$hooksObject->doBeforePageDisplay(
-			$out,
-			$skin,
-			$isMediaInfoPage,
-			new BabelUserLanguageLookup(),
-			WikibaseRepo::getEntityViewFactory(),
-			MediaWikiServices::getInstance()->getTempUserConfig(),
-			[
-				'wbmiDefaultProperties' => array_values( $properties ),
-				'wbmiPropertyTitles' => $propertyTitles,
-				'wbmiPropertyTypes' => $propertyTypes,
-				'wbmiRepoApiUrl' => wfScript( 'api' ),
-				'wbmiHelpUrls' => $config->get( 'MediaInfoHelpUrls' ),
-				'wbmiExternalEntitySearchBaseUri' => $config->get( 'MediaInfoExternalEntitySearchBaseUri' ),
-				'wbmiSupportedDataTypes' => $config->get( 'MediaInfoSupportedDataTypes' ),
-			]
-		);
-	}
-
-	/**
-	 * @param OutputPage $out
-	 * @param Skin $skin
-	 * @param bool $isMediaInfoPage
-	 * @param UserLanguageLookup $userLanguageLookup
-	 * @param DispatchingEntityViewFactory $entityViewFactory
-	 * @param TempUserConfig $tempUserConfig
-	 * @param array $jsConfigVars Variables to expose to JavaScript
-	 */
-	public function doBeforePageDisplay(
-		$out,
-		$skin,
-		$isMediaInfoPage,
-		UserLanguageLookup $userLanguageLookup,
-		DispatchingEntityViewFactory $entityViewFactory,
-		TempUserConfig $tempUserConfig,
-		array $jsConfigVars = []
-	) {
 		// Site-wide config
+		$jsConfigVars = [
+			'wbmiDefaultProperties' => array_values( $properties ),
+			'wbmiPropertyTitles' => $propertyTitles,
+			'wbmiPropertyTypes' => $propertyTypes,
+			'wbmiRepoApiUrl' => wfScript( 'api' ),
+			'wbmiHelpUrls' => $config->get( 'MediaInfoHelpUrls' ),
+			'wbmiExternalEntitySearchBaseUri' => $config->get( 'MediaInfoExternalEntitySearchBaseUri' ),
+			'wbmiSupportedDataTypes' => $config->get( 'MediaInfoSupportedDataTypes' ),
+		];
 		$modules = [];
 		$moduleStyles = [];
 
 		if ( $isMediaInfoPage ) {
 			OutputPage::setupOOUI();
-			$out = $this->tabifyStructuredData( $out, $entityViewFactory );
+			$this->tabifyStructuredData( $out, WikibaseRepo::getEntityViewFactory() );
 			$out->setPreventClickjacking( true );
-			$imgTitle = $out->getTitle();
 			$entityId = MediaInfoServices::getMediaInfoIdLookup()->getEntityIdForTitle( $imgTitle );
 			$user = $out->getUser();
 
@@ -262,6 +230,8 @@ class MediaInfoHooks implements
 			$modules[] = 'wikibase.mediainfo.filePageDisplay';
 			$moduleStyles[] = 'wikibase.mediainfo.filepage.styles';
 			$moduleStyles[] = 'wikibase.mediainfo.statements.styles';
+			$userLanguageLookup = new BabelUserLanguageLookup();
+			$tempUserConfig = MediaWikiServices::getInstance()->getTempUserConfig();
 
 			$jsConfigVars = array_merge( $jsConfigVars, [
 				'wbUserSpecifiedLanguages' => $userLanguageLookup->getAllUserLanguages( $user ),
@@ -343,7 +313,6 @@ class MediaInfoHooks implements
 	/**
 	 * @param OutputPage $out
 	 * @param DispatchingEntityViewFactory $entityViewFactory
-	 * @return OutputPage $out
 	 */
 	private function tabifyStructuredData(
 		OutputPage $out,
@@ -378,7 +347,7 @@ class MediaInfoHooks implements
 			// Something has gone wrong - markup should have been created for empty/missing data.
 			// Return the html unmodified (this should not be reachable, it's here just in case)
 			$out->addHTML( $html );
-			return $out;
+			return;
 		}
 
 		// Add a title to statements for no-js
@@ -420,7 +389,7 @@ class MediaInfoHooks implements
 			// If the div isn't found, something has gone wrong - return unmodified html
 			// (this should not be reachable, it's here just in case)
 			$out->addHTML( $html );
-			return $out;
+			return;
 		}
 
 		// Prepare tab panels
@@ -464,7 +433,6 @@ class MediaInfoHooks implements
 		$html = str_replace( '<WBMI_TABS_PLACEHOLDER>', $tabWrapper, $html );
 
 		$out->addHTML( $html );
-		return $out;
 	}
 
 	/**
@@ -538,7 +506,6 @@ class MediaInfoHooks implements
 	 * Delete all MediaInfo data from the output
 	 *
 	 * @param OutputPage $out
-	 * @return OutputPage
 	 */
 	private static function deleteMediaInfoData( $out ) {
 		$html = $out->getHTML();
@@ -546,7 +513,6 @@ class MediaInfoHooks implements
 		$html = preg_replace( WBMIHooksHelper::getMediaInfoViewRegex(), '', $html );
 		$html = preg_replace( WBMIHooksHelper::getStructuredDataHeaderRegex(), '', $html );
 		$out->addHTML( $html );
-		return $out;
 	}
 
 	/**

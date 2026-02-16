@@ -5,6 +5,7 @@ namespace Wikibase\MediaInfo\Search;
 use CirrusSearch\Parser\FullTextKeywordRegistry;
 use CirrusSearch\SearchConfig;
 use MediaWiki\Context\RequestContext;
+use MediaWiki\MainConfigNames;
 use MediaWiki\MediaWikiServices;
 use UnexpectedValueException;
 use Wikibase\Repo\WikibaseRepo;
@@ -152,11 +153,11 @@ return array_map( static function ( array $settings ) use ( $config ) {
 						$entitySearchBaseUri,
 						$titleMatchBaseUri,
 						$languageCode,
-						$config->get( 'LanguageCode' )
+						$config->get( MainConfigNames::LanguageCode )
 					),
 					$mwServices->getMainWANObjectCache(),
 					$languageCode,
-					$config->get( 'LanguageCode' ),
+					$config->get( MainConfigNames::LanguageCode ),
 					$entitySearchBaseUri . '-' . $titleMatchBaseUri
 				)
 			);
@@ -167,7 +168,7 @@ return array_map( static function ( array $settings ) use ( $config ) {
 					new MediaSearchASTEntitiesExtractor( $entitiesFetcher ),
 					$configFactory->makeConfig( 'WikibaseCirrusSearch' )->get( 'UseStemming' ),
 					$languages,
-					$config->get( 'LanguageCode' ),
+					$config->get( MainConfigNames::LanguageCode ),
 					$settings
 				)
 			);

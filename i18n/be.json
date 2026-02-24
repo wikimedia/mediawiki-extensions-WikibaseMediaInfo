@@ -5,6 +5,7 @@
 			"Maksim L.",
 			"No Sleep till Krupki",
 			"Plaga med",
+			"Ucukor",
 			"Чаховіч Уладзіслаў"
 		]
 	},
@@ -30,10 +31,10 @@
 	"wikibasemediainfo-filepage-add-caption": "Дадаць загаловак",
 	"wikibasemediainfo-filepage-edit-captions": "Правіць загалоўкі",
 	"wikibasemediainfo-filepage-edit-depicts": "Правіць апісанні таго, што адлюстравана",
-	"wikibasemediainfo-filepage-cancel": "Адмяніць",
+	"wikibasemediainfo-filepage-cancel": "Скасаваць",
 	"wikibasemediainfo-filepage-cancel-confirm": "Унесеныя змены не будуць захаваныя.",
 	"wikibasemediainfo-filepage-cancel-confirm-title": "Адмяніць змяненні",
-	"wikibasemediainfo-filepage-cancel-confirm-accept": "Адмяніць",
+	"wikibasemediainfo-filepage-cancel-confirm-accept": "Адхіліць",
 	"wikibasemediainfo-filepage-edit": "Правіць",
 	"wikibasemediainfo-filepage-publish": "Апублікаваць змены",
 	"wikibasemediainfo-filepage-caption-empty": "Апішыце ў адным радку, што ўяўляе сабой гэты файл",

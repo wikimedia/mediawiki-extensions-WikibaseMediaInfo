@@ -7,7 +7,7 @@ use Wikibase\Client\Tests\Integration\DataAccess\Scribunto\WikibaseLibraryTestCa
 /**
  * @covers \Wikibase\MediaInfo\DataAccess\Scribunto\WikibaseMediaInfoEntityLibrary
  */
-class WikibaseMediaInfoEntityLibraryTest extends WikibaseLibraryTestCase {
+abstract class WikibaseMediaInfoEntityLibraryTestBase extends WikibaseLibraryTestCase {
 
 	/** @inheritDoc */
 	protected static $moduleName = 'WikibaseMediaInfoEntityLibraryTests';

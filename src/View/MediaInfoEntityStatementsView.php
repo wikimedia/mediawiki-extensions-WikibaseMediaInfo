@@ -295,7 +295,7 @@ class MediaInfoEntityStatementsView {
 	}
 
 	/**
-	 * @param string $formattedValue
+	 * @param string|HtmlSnippet $formattedValue
 	 * @return Tag
 	 */
 	private function createFormattedDataValue( $formattedValue ) {

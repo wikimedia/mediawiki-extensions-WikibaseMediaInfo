@@ -169,9 +169,7 @@ class MediaInfoHandlerTest extends \MediaWikiIntegrationTestCase {
 
 		$mediaInfoHandler = $this->newMediaInfoHandler();
 
-		$mockId = $this->createMock( MediaInfoId::class );
-		$mockId->method( 'getNumericId' )
-			->willReturn( $testId );
+		$mockId = new MediaInfoId( "M$testId" );
 
 		$this->assertEquals( $testTitle, $mediaInfoHandler->getTitleForId( $mockId ) );
 	}

@@ -32,7 +32,7 @@
 	"wikibasemediainfo-filepage-caption-approaching-limit": "Preostaje $1 {{PLURAL:$1|znak|znaka|0=znakova}}",
 	"wikibasemediainfo-filepage-statement-no-value": "Nepostojeća vrijednost za ovo svojstvo",
 	"wikibasemediainfo-filepage-statement-no-data": "Nema podataka",
-	"wikibasemediainfo-filepage-statement-no-results": "Nisam ništa pronašao",
+	"wikibasemediainfo-filepage-statement-no-results": "Nema rezultata",
 	"wikibasemediainfo-filepage-statement-some-value": "Ovo svojstvo ima vrijednost, ali nije poznato",
 	"wikibasemediainfo-filepage-statement-error": "Došlo je do greške pri dohvatanju vrijednosti ovog svojstva",
 	"wikibasemediainfo-filepage-license-title": "Opisi i drugi doprinosi strukturiranim podacima",

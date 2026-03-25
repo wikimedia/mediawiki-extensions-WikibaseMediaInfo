@@ -73,7 +73,7 @@ class CustomMatchFeatureTest extends \MediaWikiIntegrationTestCase {
 						]
 					],
 				],
-				'search string' => 'custommatch:profile_1=Q11111',
+				'searchString' => 'custommatch:profile_1=Q11111',
 			],
 			'search with function score' => [
 				'expected' => ( new FunctionScore() )
@@ -114,12 +114,12 @@ class CustomMatchFeatureTest extends \MediaWikiIntegrationTestCase {
 						],
 					]
 				],
-				'search string' => 'custommatch:profile_A=Q5',
+				'searchString' => 'custommatch:profile_A=Q5',
 			],
 			'config empty, no query generated' => [
 				'expected' => null,
 				'config' => [],
-				'search string' => 'custommatch:profile_A=Q5',
+				'searchString' => 'custommatch:profile_A=Q5',
 			],
 		];
 	}

@@ -66,11 +66,11 @@ class MediaInfoEntityTermsViewTest extends \PHPUnit\Framework\TestCase {
 
 	/**
 	 * @param string[] $labels Array with langCodes as keys, label text for that language as values
-	 * @param string[] $fallbackLangCodes Array of lang codes
+	 * @param string[] $fallback Array of lang codes
 	 * @dataProvider provideLabelsAndFallback
 	 */
-	public function testGetHtml( $labels, $fallbackLangCodes ) {
-		$this->createDependencies( $fallbackLangCodes );
+	public function testGetHtml( $labels, $fallback ) {
+		$this->createDependencies( $fallback );
 		$testEntity = self::createTestEntityWithLabels( $labels );
 
 		// Expected display order of label languages is:
@@ -78,7 +78,7 @@ class MediaInfoEntityTermsViewTest extends \PHPUnit\Framework\TestCase {
 		// Other languages from fallback chain that have values, in order
 		// Any other languages for which there are values
 		$expectedLanguageOrder = [];
-		foreach ( $fallbackLangCodes as $index => $fbLangCode ) {
+		foreach ( $fallback as $index => $fbLangCode ) {
 			if ( $index == 0 || $testEntity->getLabels()->hasTermForLanguage( $fbLangCode ) ) {
 				$expectedLanguageOrder[] = $fbLangCode;
 			}
@@ -96,7 +96,7 @@ class MediaInfoEntityTermsViewTest extends \PHPUnit\Framework\TestCase {
 		//	 in the fallback chain has no value, and some other captions has a value
 		$shownLabelCount = 1;
 		if (
-			!$testEntity->getLabels()->hasTermForLanguage( $fallbackLangCodes[0] ) &&
+			!$testEntity->getLabels()->hasTermForLanguage( $fallback[0] ) &&
 			count( $labels ) > 0
 		) {
 			$shownLabelCount = 2;
@@ -170,12 +170,12 @@ class MediaInfoEntityTermsViewTest extends \PHPUnit\Framework\TestCase {
 	}
 
 	/**
-	 * @param TermList $labels
+	 * @param TermList $termList
 	 * @param string $languageCode
 	 * @param bool $showLabel
 	 * @dataProvider provideForGetSingleLabelHtml
 	 */
-	public function testGetSingleLabelHtml( TermList $labels, $languageCode, $showLabel ) {
+	public function testGetSingleLabelHtml( TermList $termList, $languageCode, $showLabel ) {
 		$this->createDependencies( [] );
 		$testLangName = strtoupper( $languageCode . '_NAME' );
 		$testLangDir = 'TEST_LANG_DIR>';
@@ -199,9 +199,9 @@ class MediaInfoEntityTermsViewTest extends \PHPUnit\Framework\TestCase {
 			$this->textProvider,
 			$this->fallbackChain
 		);
-		$html = $sut->getSingleCaptionLayout( $labels, $languageCode, $showLabel )->toString();
+		$html = $sut->getSingleCaptionLayout( $termList, $languageCode, $showLabel )->toString();
 
-		if ( $labels->hasTermForLanguage( $languageCode ) ) {
+		if ( $termList->hasTermForLanguage( $languageCode ) ) {
 			$this->assertMatchesRegularExpression(
 				'/lang=("|\')' . htmlspecialchars( $languageCode ) . '\\1/',
 				$html,

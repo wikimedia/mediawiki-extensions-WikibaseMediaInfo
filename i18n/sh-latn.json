@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"Winston Sung"
+			"Winston Sung",
+			"Aca"
 		]
 	},
 	"action-mediainfo-term": "promjena informacija za datoteke (natpisi, opisi)",
@@ -31,9 +32,9 @@
 	"wikibasemediainfo-filepage-caption-approaching-limit": "Preostaje $1 {{PLURAL:$1|znak|znaka|0=znakova}}",
 	"wikibasemediainfo-filepage-statement-no-value": "Nepostojeća vrijednost za ovo svojstvo",
 	"wikibasemediainfo-filepage-statement-no-data": "Nema podataka",
-	"wikibasemediainfo-filepage-statement-no-results": "Nisam ništa pronašao",
+	"wikibasemediainfo-filepage-statement-no-results": "Nema rezultata",
 	"wikibasemediainfo-filepage-statement-some-value": "Ovo svojstvo ima vrijednost, ali nije poznato",
-	"wikibasemediainfo-filepage-statement-error": "Došlo je do greške prilikom dohvata vrijednosti ovog svojstva",
+	"wikibasemediainfo-filepage-statement-error": "Došlo je do greške pri dohvatanju vrijednosti ovog svojstva",
 	"wikibasemediainfo-filepage-license-title": "Opisi i drugi doprinosi strukturiranim podacima",
 	"wikibasemediainfo-filepage-license-content": "Klikom na \"Objavi izmjene\" slažete se s [[wmf:Terms_of_Use|uvjetima uporabe]] i neopozivo pristajete na objavu doprinosa pod licencijom [https://creativecommons.org/publicdomain/zero/1.0/ Creative Commons CC0].",
 	"wikibasemediainfo-filepage-license-content-acceptance": "Prihvaćam ove uslove što će vrijediti za buduća uređivanja. Više ne pokazuj ovu poruku.",

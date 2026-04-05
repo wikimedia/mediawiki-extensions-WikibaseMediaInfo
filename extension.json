@@ -93,6 +93,9 @@
 		},
 		"MediaInfoWikibaseHooks": {
 			"class": "Wikibase\\MediaInfo\\MediaInfoWikibaseHooks"
+		},
+		"ScribuntoHooks": {
+			"class": "Wikibase\\MediaInfo\\ScribuntoHooks"
 		}
 	},
 	"Hooks": {
@@ -105,7 +108,7 @@
 		"BeforePageDisplay": "main",
 		"ParserOutputPostCacheTransform": "main",
 		"GetPreferences": "main",
-		"ScribuntoExternalLibraries": "main",
+		"ScribuntoExternalLibraries": "ScribuntoHooks",
 		"RevisionUndeleted": "main",
 		"ArticleUndelete": "main",
 		"CirrusSearchProfileService": "Wikibase\\MediaInfo\\MediaInfoHooks::onCirrusSearchProfileService",

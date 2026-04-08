@@ -3,6 +3,7 @@
 namespace Wikibase\MediaInfo\Tests\MediaWiki\Rdf;
 
 use MediaWiki\FileRepo\File\File;
+use MediaWiki\Title\Title;
 
 /**
  * Simple mock for File MediaWiki class.
@@ -14,8 +15,8 @@ class FileMock extends File {
 	/**
 	 * Simple File mock for RDF generation tests
 	 *
-	 * @param string $title
-	 * @param mixed[string] $params
+	 * @param Title|string $title
+	 * @param array $params
 	 */
 	public function __construct(
 		$title,

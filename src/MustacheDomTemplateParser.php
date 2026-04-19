@@ -2,9 +2,9 @@
 
 namespace Wikibase\MediaInfo;
 
-use FileContentsHasher;
 use LightnCandy\LightnCandy;
 use MediaWiki\Html\TemplateParser;
+use MediaWiki\Utils\FileContentsHasher;
 use RuntimeException;
 
 /**

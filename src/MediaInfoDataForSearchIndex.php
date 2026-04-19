@@ -8,7 +8,7 @@ use MediaWiki\Content\Hook\SearchDataForIndex2Hook;
 use MediaWiki\Page\WikiPage;
 use MediaWiki\Parser\ParserOutput;
 use MediaWiki\Revision\RevisionRecord;
-use SearchEngine;
+use MediaWiki\Search\SearchEngine;
 use Wikibase\MediaInfo\Content\MediaInfoHandler;
 use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikimedia\Assert\Assert;

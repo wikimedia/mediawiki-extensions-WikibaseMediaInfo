@@ -8,7 +8,7 @@ use Diff\DiffOp\DiffOpAdd;
 use Diff\DiffOp\DiffOpChange;
 use Diff\DiffOp\DiffOpRemove;
 use InvalidArgumentException;
-use MessageLocalizer;
+use MediaWiki\Language\MessageLocalizer;
 use Wikibase\DataModel\Services\Diff\EntityDiff;
 use Wikibase\Repo\Content\EntityContentDiff;
 use Wikibase\Repo\Diff\BasicDiffView;

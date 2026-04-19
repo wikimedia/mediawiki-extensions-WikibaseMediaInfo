@@ -9,6 +9,7 @@ use MediaWiki\Page\PageStore;
 use MediaWiki\Page\WikiPage;
 use MediaWiki\Parser\ParserOutput;
 use MediaWiki\Revision\RevisionRecord;
+use MediaWiki\Search\SearchEngine;
 use MediaWiki\Title\TitleFactory;
 use Psr\Log\NullLogger;
 use Wikibase\DataModel\Entity\ItemIdParser;
@@ -73,7 +74,7 @@ class MediaInfoDataForSearchIndexTest extends \MediaWikiUnitTestCase {
 			$this->createMock( ContentHandler::class ),
 			$this->createMock( WikiPage::class ),
 			$this->createMock( ParserOutput::class ),
-			$this->createMock( \SearchEngine::class ),
+			$this->createMock( SearchEngine::class ),
 			$revision
 		);
 		// Here we mainly test that the entity "labels" (captions for MediaInfo) are written as

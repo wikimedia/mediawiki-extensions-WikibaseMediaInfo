@@ -14,6 +14,7 @@
  */
 
 use MediaWiki\Language\Language;
+use MediaWiki\Language\MessageLocalizer;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\Site\SiteLookup;
 use MediaWiki\Title\Title;

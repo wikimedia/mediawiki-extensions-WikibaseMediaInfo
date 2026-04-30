@@ -45,7 +45,7 @@
 	"wikibasemediainfo-filepage-caption-too-long": "$1{{PLURAL:$1|자}} 제한 초과",
 	"wikibasemediainfo-filepage-caption-approaching-limit": "$1{{PLURAL:$1|자}} 남음",
 	"wikibasemediainfo-filepage-statement-value-type-dropdown-title": "값 유형을 선택하세요.",
-	"wikibasemediainfo-filepage-statement-custom-value-option": "사용자 정의 값",
+	"wikibasemediainfo-filepage-statement-custom-value-option": "사용자 지정 값",
 	"wikibasemediainfo-filepage-statement-invalid-value": "잘못된 값",
 	"wikibasemediainfo-filepage-statement-no-value-option": "값 없음",
 	"wikibasemediainfo-filepage-statement-no-value": "이 속성에 대한 값이 존재하지 않습니다",

@@ -90,6 +90,11 @@ class MediaInfoDataForSearchIndexTest extends \MediaWikiUnitTestCase {
 			'statement_keywords' => [],
 			'statement_count' => 0
 		];
+		// TODO: The if check can be removed after the
+		// WikibaseCirrusSearch patch for T413319 is merged
+		if ( array_key_exists( 'statement_time', $fields ) ) {
+			$expectedFields['statement_time'] = [];
+		}
 		$this->assertEquals( $expectedFields, $fields );
 	}
 

@@ -8,9 +8,11 @@
 			"Kwj2772",
 			"Songhee",
 			"Ykhwong",
-			"아라"
+			"아라",
+			"Tensama0415"
 		]
 	},
+	"action-mediainfo-term": "미디어 정보 용어(설명, 요약)를 변경할",
 	"right-mediainfo-term": "미디어 정보 용어(설명, 요약) 변경",
 	"slot-name-mediainfo": "구조화된 미디어 정보",
 	"wikibase-entity-mediainfo": "미디어 정보",
@@ -20,6 +22,7 @@
 	"wikibasemediainfo-add-property": "속성을 추가하려면 검색하세요 (항목의 일부, 미디어 타입 등)",
 	"wikibasemediainfo-add-statement": "서술 추가하기",
 	"wikibasemediainfo-custommatch-feature-no-profile": "custommatch:$1에 대해 설정된 프로필이 없습니다",
+	"wikibasemediainfo-custommatch-feature-invalid-term": "custommatch 검색 기능에 대한 잘못된 검색어",
 	"wikibasemediainfo-desc": "미디어 파일의 구조화된 메타데이터를 관리하는 위키베이스 확장 기능",
 	"wikibasemediainfo-diffview-label": "캡션",
 	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "설명",
@@ -42,7 +45,7 @@
 	"wikibasemediainfo-filepage-caption-too-long": "$1{{PLURAL:$1|자}} 제한 초과",
 	"wikibasemediainfo-filepage-caption-approaching-limit": "$1{{PLURAL:$1|자}} 남음",
 	"wikibasemediainfo-filepage-statement-value-type-dropdown-title": "값 유형을 선택하세요.",
-	"wikibasemediainfo-filepage-statement-custom-value-option": "사용자 정의 값",
+	"wikibasemediainfo-filepage-statement-custom-value-option": "사용자 지정 값",
 	"wikibasemediainfo-filepage-statement-invalid-value": "잘못된 값",
 	"wikibasemediainfo-filepage-statement-no-value-option": "값 없음",
 	"wikibasemediainfo-filepage-statement-no-value": "이 속성에 대한 값이 존재하지 않습니다",
@@ -117,9 +120,10 @@
 	"wikibasemediainfo-time-calendar-gregorian": "그레고리력",
 	"wikibasemediainfo-time-calendar-julian": "율리우스력",
 	"wikibasemediainfo-quantity-input-button-text": "추가",
-	"wikibasemediainfo-quantity-unit-placeholder": "단위의 종류 (선택)",
+	"wikibasemediainfo-quantity-unit-placeholder": "단위의 종류 (선택 사항)",
 	"wikibasemediainfo-quantity-unit-label": "단위",
 	"wikibasemediainfo-quantity-unit-button-text": "단위 설정",
 	"wikibasemediainfo-globecoordinate-input-button-text": "추가",
-	"wikibasemediainfo-globecoordinate-map-button-text": "지도에서 찾기"
+	"wikibasemediainfo-globecoordinate-map-button-text": "지도에서 찾기",
+	"wikibasemediainfo-rescore-profile-classic-noboostlinks-max-boost-template": "이 위키에 활성화될 때 최고의 틀과 문서의 언어, 최신 정도를 바탕으로 순위를 매김."
 }

@@ -119,10 +119,8 @@ ConstraintsReportHandlerElement.prototype.buildReportList = function ( reports )
  * @see WikibaseQualityConstraints/modules/gadget.js::_createPopupWidget()
  */
 ConstraintsReportHandlerElement.prototype.createPopupWidget = function ( $content, icon, titleMessageKey, classes ) {
-	// eslint-disable-next-line mediawiki/class-doc
 	const widget = new OO.ui.PopupButtonWidget( {
 		icon: icon,
-		// eslint-disable-next-line mediawiki/msg-doc
 		title: mw.msg( titleMessageKey ),
 		flags: '',
 		framed: false,

@@ -6,6 +6,7 @@ use Wikibase\Client\Tests\Integration\DataAccess\Scribunto\WikibaseLibraryTestCa
 
 /**
  * @covers \Wikibase\MediaInfo\DataAccess\Scribunto\WikibaseMediaInfoEntityLibrary
+ * @group Database
  */
 class WikibaseMediaInfoEntityLibraryTest extends WikibaseLibraryTestCase {
 

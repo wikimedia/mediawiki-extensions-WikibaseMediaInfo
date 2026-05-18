@@ -4,6 +4,7 @@ namespace Wikibase\MediaInfo\Tests\MediaWiki\DataAccess\Scribunto;
 
 /**
  * @covers \Wikibase\MediaInfo\DataAccess\Scribunto\WikibaseMediaInfoEntityLibrary
+ * @group Database
  * @group Lua
  * @group LuaSandbox
  */

@@ -12,7 +12,7 @@
 			"Tensama0415"
 		]
 	},
-	"action-mediainfo-term": "미디어 정보 용어(설명, 요약)를 변경할",
+	"action-mediainfo-term": "미디어 정보 용어(설명, 요약) 변경",
 	"right-mediainfo-term": "미디어 정보 용어(설명, 요약) 변경",
 	"slot-name-mediainfo": "구조화된 미디어 정보",
 	"wikibase-entity-mediainfo": "미디어 정보",

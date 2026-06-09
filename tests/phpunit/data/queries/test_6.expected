@@ -12,7 +12,7 @@
                         {
                             "match": {
                                 "template": {
-                                    "query": "Template:Foo"
+                                    "query": "Template:foo"
                                 }
                             }
                         },
@@ -21,6 +21,13 @@
                                 "namespace": [
                                     0
                                 ]
+                            }
+                        }
+                    ],
+                    "must_not": [
+                        {
+                            "term": {
+                                "page_type": "redirect"
                             }
                         }
                     ]

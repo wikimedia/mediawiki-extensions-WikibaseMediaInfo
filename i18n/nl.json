@@ -14,7 +14,8 @@
 			"Romaine",
 			"Sjoerddebruin",
 			"Spinster",
-			"Xbaked potatox"
+			"Xbaked potatox",
+			"Siebrand"
 		]
 	},
 	"action-mediainfo-term": "de media-info te wijzigen (bijschriften, samenvattingen)",
@@ -28,7 +29,7 @@
 	"wikibasemediainfo-add-statement": "Voeg verklaring toe",
 	"wikibasemediainfo-custommatch-feature-no-profile": "Er is geen profiel geconfigureerd voor custommatch:$1",
 	"wikibasemediainfo-custommatch-feature-invalid-term": "Ongeldige zoekterm voor zoekfunctie custommatch",
-	"wikibasemediainfo-desc": "Wikibase-extensie om gestructureerde metadata van mediabestanden te beheren",
+	"wikibasemediainfo-desc": "Wikibase-uitbreiding om gestructureerde metagegevens van mediabestanden te beheren",
 	"wikibasemediainfo-diffview-label": "bijschrift",
 	"wikibasemediainfo-entitytermsforlanguagelistview-caption": "Bijschriften",
 	"wikibasemediainfo-filepage-fileinfo-heading": "Bestandsinformatie",
@@ -78,7 +79,7 @@
 	"wikibasemediainfo-statements-item-remove": "Verwijderen",
 	"wikibasemediainfo-statements-learn-more": "Meer informatie",
 	"wikibasemediainfo-statements-remove": "Verwijder alles",
-	"wikibasemediainfo-statements-title-depicts": "Items getoond in dit bestand",
+	"wikibasemediainfo-statements-title-depicts": "Items weergegeven in dit bestand",
 	"wikibasemediainfo-statements-unsupported-property-title": "Niet-ondersteunde eigenschap",
 	"wikibasemediainfo-statements-unsupported-property-content": "Andere eigenschappen dan $1 worden nog niet volledig ondersteund, maar zullen in de toekomst ondersteund gaan worden. Voor nu werkt de functionaliteit voor niet-ondersteunde eigenschappen mogelijk niet zoals u zou verwachten.",
 	"wikibasemediainfo-statements-unsupported-property-type-content": "Niet alle eigenschaptypes worden volledig ondersteund, maar zullen in de toekomst ondersteund gaan worden. Voor nu werkt de functionaliteit voor niet-ondersteunde eigenschappen mogelijk niet zoals u zou verwachten.",

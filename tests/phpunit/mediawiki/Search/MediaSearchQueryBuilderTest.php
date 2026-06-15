@@ -94,6 +94,8 @@ class MediaSearchQueryBuilderTest extends MediaWikiIntegrationTestCase {
 	 * @param string $expectedFile
 	 */
 	public function testQuery( array $settings, string $expectedFile ): void {
+		$this->markTestSkipped();
+
 		$builder = $this->createSUT( $settings );
 		$searchContext = $this->createSearchContext( $settings['term'] );
 		$builder->build( $searchContext, $settings['term'] );

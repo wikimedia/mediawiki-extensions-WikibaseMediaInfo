@@ -25,6 +25,8 @@ class MediaSearchQueryBuilderTest extends MediaWikiIntegrationTestCase {
 	protected function setUp(): void {
 		parent::setUp();
 		$this->overrideConfigValue( MainConfigNames::LanguageCode, 'qqx' );
+		// Force to true to ensure that hastemplate:foo gets written as "Template:Foo" in the query
+		$this->overrideConfigValue( MainConfigNames::CapitalLinks, true );
 	}
 
 	private function createSUT( array $params = [] ): MediaSearchQueryBuilder {
@@ -94,8 +96,6 @@ class MediaSearchQueryBuilderTest extends MediaWikiIntegrationTestCase {
 	 * @param string $expectedFile
 	 */
 	public function testQuery( array $settings, string $expectedFile ): void {
-		$this->markTestSkipped();
-
 		$builder = $this->createSUT( $settings );
 		$searchContext = $this->createSearchContext( $settings['term'] );
 		$builder->build( $searchContext, $settings['term'] );

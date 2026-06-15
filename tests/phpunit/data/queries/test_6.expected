@@ -12,7 +12,7 @@
                         {
                             "match": {
                                 "template": {
-                                    "query": "Template:foo"
+                                    "query": "Template:Foo"
                                 }
                             }
                         },

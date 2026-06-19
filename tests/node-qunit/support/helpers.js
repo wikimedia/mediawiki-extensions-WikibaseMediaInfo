@@ -291,9 +291,17 @@ module.exports.requireULS = function () {
 	requireAgain( 'jquery.uls/src/jquery.uls.languagefilter.js' );
 };
 
+module.exports.extensionJsonModules = function () {
+	const extensionJson = this.readJSON( path.join( __dirname, '..', '..', '..', 'extension.json' ) );
+	const extraModules = this.readJSON( path.join( __dirname, '..', '..', '..', 'extraResourceModulesProcessedByHookHandler.json' ) );
+	return {
+		...extensionJson.ResourceModules,
+		...extraModules
+	};
+};
+
 module.exports.registerModules = function () {
-	const extensionJson = this.readJSON( path.join( __dirname, '..', '..', '..', 'extension.json' ) ),
-		modules = extensionJson.ResourceModules;
+	const modules = this.extensionJsonModules();
 
 	Object.keys( modules ).forEach( ( moduleName ) => {
 		const packageFiles = modules[ moduleName ].packageFiles;
@@ -312,8 +320,7 @@ module.exports.registerModules = function () {
 };
 
 module.exports.registerTemplates = function () {
-	const extensionJson = this.readJSON( path.join( __dirname, '..', '..', '..', 'extension.json' ) ),
-		modules = extensionJson.ResourceModules;
+	const modules = this.extensionJsonModules();
 
 	Object.keys( modules ).forEach( ( moduleName ) => {
 		const templates = modules[ moduleName ].templates;
@@ -329,8 +336,7 @@ module.exports.registerTemplates = function () {
 };
 
 module.exports.deregisterModules = function () {
-	const extensionJson = this.readJSON( path.join( __dirname, '..', '..', '..', 'extension.json' ) ),
-		modules = extensionJson.ResourceModules;
+	const modules = this.extensionJsonModules();
 
 	Object.keys( modules ).forEach( ( moduleName ) => {
 		mockery.deregisterMock( moduleName );

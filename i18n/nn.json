@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"Njardarlogar"
+			"Njardarlogar",
+			"Ranveig"
 		]
 	},
 	"wikibase-entity-mediainfo": "medieinformasjon",
@@ -43,7 +44,7 @@
 	"wikibasemediainfo-statements-item-add-qualifier": "Legg til kvalifikator",
 	"wikibasemediainfo-statements-item-references": "Referansar",
 	"wikibasemediainfo-statements-item-input-label": "frå Wikidata",
-	"wikibasemediainfo-statements-item-input-placeholder": "Søk for å leggja til element (katt, hav, Galdhøpiggen osb.)",
+	"wikibasemediainfo-statements-item-input-placeholder": "Søk for å leggja til element",
 	"wikibasemediainfo-statements-item-is-prominent": "Framståande",
 	"wikibasemediainfo-statements-item-mark-as-prominent": "Merk som framståande",
 	"wikibasemediainfo-statements-learn-more": "Lær meir",

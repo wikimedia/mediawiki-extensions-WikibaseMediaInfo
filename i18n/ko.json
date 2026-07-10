@@ -19,7 +19,7 @@
 	"wikibase-mediainfo-summary-wbsetlabel-add": "[$2] 캡션을 추가함",
 	"wikibase-mediainfo-summary-wbsetlabel-remove": "[$2] 캡션을 제거함",
 	"wikibase-mediainfo-summary-wbsetlabel-set": "[$2] 캡션을 편집",
-	"wikibasemediainfo-add-property": "속성을 추가하려면 검색하세요 (항목의 일부, 미디어 타입 등)",
+	"wikibasemediainfo-add-property": "속성을 추가하려면 검색하세요 (항목의 일부, 미디어 유형 등)",
 	"wikibasemediainfo-add-statement": "서술 추가하기",
 	"wikibasemediainfo-custommatch-feature-no-profile": "custommatch:$1에 대해 설정된 프로필이 없습니다",
 	"wikibasemediainfo-custommatch-feature-invalid-term": "custommatch 검색 기능에 대한 잘못된 검색어",

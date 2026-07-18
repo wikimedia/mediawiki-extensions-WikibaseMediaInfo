@@ -27,7 +27,7 @@
 		"oojs-ui": "0.36.3",
 		"qunit": "2.24.1",
 		"sinon": "7.2.7",
-		"stylelint-config-wikimedia": "0.19.2",
+		"stylelint-config-wikimedia": "0.19.3",
 		"tap-mocha-reporter": "5.0.1",
 		"tmp": "0.1.0",
 		"wikibase-data-model": "^6.1.0",

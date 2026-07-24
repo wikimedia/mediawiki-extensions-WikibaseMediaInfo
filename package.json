@@ -5,11 +5,12 @@
 	"scripts": {
 		"test": "grunt test && npm run test:unit",
 		"test:unit": "qunit \"tests/node-qunit/**/*.test.js\"",
-		"coverage": "nyc --include=\"resources/**/*.js\" --reporter=lcov --reporter=lcovonly --reporter=text --reporter=text-summary qunit \"tests/node-qunit/**/*.test.js\"",
+		"coverage": "c8 --include=\"resources/**/*.js\" --reporter=lcov --reporter=lcovonly --reporter=text --reporter=text-summary qunit \"tests/node-qunit/**/*.test.js\"",
 		"install": "rm -rf node_modules/mediawiki && git clone -q --depth=1 https://gerrit.wikimedia.org/r/mediawiki/core node_modules/mediawiki",
 		"build-lib": ". ./bin/build.sh"
 	},
 	"devDependencies": {
+		"c8": "12.0.0",
 		"dotenv": "8.0.0",
 		"eslint-config-wikimedia": "0.32.5",
 		"grunt": "1.6.3",
@@ -22,7 +23,6 @@
 		"jsdom": "14.0.0",
 		"mockery": "2.1.0",
 		"mustache": "3.0.1",
-		"nyc": "15.1.0",
 		"oojs": "3.0.0",
 		"oojs-ui": "0.36.3",
 		"qunit": "2.26.0",

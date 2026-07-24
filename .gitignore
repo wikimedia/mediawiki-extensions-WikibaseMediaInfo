@@ -8,7 +8,6 @@
 .eslintcache
 .DS_Store
 .env
-/.nyc_output/
 /coverage
 /.vscode/
 /.stylelintcache

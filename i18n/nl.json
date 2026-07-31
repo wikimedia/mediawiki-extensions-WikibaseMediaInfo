@@ -15,7 +15,8 @@
 			"Sjoerddebruin",
 			"Spinster",
 			"Xbaked potatox",
-			"Siebrand"
+			"Siebrand",
+			"Pennenetui3000"
 		]
 	},
 	"action-mediainfo-term": "de media-info te wijzigen (bijschriften, samenvattingen)",
@@ -123,8 +124,8 @@
 	"wikibasemediainfo-time-precision-minute": "minuut",
 	"wikibasemediainfo-time-precision-second": "seconde",
 	"wikibasemediainfo-time-calendar-label": "Kalender",
-	"wikibasemediainfo-time-calendar-gregorian": "Gregoriaans",
-	"wikibasemediainfo-time-calendar-julian": "Juliaans",
+	"wikibasemediainfo-time-calendar-gregorian": "gregoriaans",
+	"wikibasemediainfo-time-calendar-julian": "juliaans",
 	"wikibasemediainfo-quantity-input-button-text": "Toevoegen",
 	"wikibasemediainfo-quantity-unit-placeholder": "Type de eenheid (optioneel)",
 	"wikibasemediainfo-quantity-unit-label": "eenheid",

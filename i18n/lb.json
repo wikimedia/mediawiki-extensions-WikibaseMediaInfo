@@ -7,6 +7,9 @@
 		]
 	},
 	"wikibase-entity-mediainfo": "Medieninformatiounen",
+	"wikibase-mediainfo-summary-wbsetlabel-add": "[$2]-Beschrëftung derbäigesat",
+	"wikibase-mediainfo-summary-wbsetlabel-remove": "[$2]-Beschrëftung ewechgeholl",
+	"wikibase-mediainfo-summary-wbsetlabel-set": "[$2]-Beschrëftung geännert",
 	"wikibasemediainfo-add-statement": "Ausso derbäisetzen",
 	"wikibasemediainfo-desc": "Wikibase-Erweiderung fir déi strukturéiert Meta-Donnéeë vu Medie-Fichieren zegeréieren",
 	"wikibasemediainfo-diffview-label": "Beschrëftung",
@@ -64,6 +67,7 @@
 	"wikibasemediainfo-coordinate-input-placeholder": "Breedegrad, Längegrad",
 	"wikibasemediainfo-precision-input-label": "Prezisioun",
 	"wikibasemediainfo-select-precision-label": "Prezisioun eraussichen",
+	"wikibasemediainfo-arcminute-label": "op eng Bouminutt genee",
 	"wikibasemediainfo-arcsecond-label": "op eng Bousekonn genee",
 	"wikibasemediainfo-tenth-of-arcsecond-label": "op 1/10 vun enger Bousekonn genee",
 	"wikibasemediainfo-hundreth-of-arcsecond-label": "op 1/100 vun enger Bousekonn genee",

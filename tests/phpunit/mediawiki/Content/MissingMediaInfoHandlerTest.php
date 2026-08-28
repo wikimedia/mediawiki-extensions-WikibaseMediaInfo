@@ -17,7 +17,7 @@ use Wikibase\Repo\ParserOutput\EntityParserOutputGenerator;
 use Wikibase\Repo\ParserOutput\EntityParserOutputGeneratorFactory;
 
 /**
- * @covers Wikibase\MediaInfo\Content\MissingMediaInfoHandler
+ * @covers \Wikibase\MediaInfo\Content\MissingMediaInfoHandler
  *
  * @group WikibaseMediaInfo
  *

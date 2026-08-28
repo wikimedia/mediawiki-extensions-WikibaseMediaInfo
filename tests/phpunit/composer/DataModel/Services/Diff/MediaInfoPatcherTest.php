@@ -15,7 +15,7 @@ use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\MediaInfo\DataModel\Services\Diff\MediaInfoPatcher;
 
 /**
- * @covers Wikibase\MediaInfo\DataModel\Services\Diff\MediaInfoPatcher
+ * @covers \Wikibase\MediaInfo\DataModel\Services\Diff\MediaInfoPatcher
  *
  * @group WikibaseMediaInfo
  *

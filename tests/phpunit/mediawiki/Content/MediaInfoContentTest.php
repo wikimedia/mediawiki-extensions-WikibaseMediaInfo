@@ -26,7 +26,7 @@ use Wikibase\Repo\Content\EntityInstanceHolder;
 use Wikibase\Repo\Hooks\WikibaseTextForSearchIndexHook;
 
 /**
- * @covers Wikibase\MediaInfo\Content\MediaInfoContent
+ * @covers \Wikibase\MediaInfo\Content\MediaInfoContent
  *
  * @group WikibaseMediaInfo
  *

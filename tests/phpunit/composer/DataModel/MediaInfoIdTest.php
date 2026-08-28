@@ -7,7 +7,7 @@ use MediaWikiTestCaseTrait;
 use Wikibase\MediaInfo\DataModel\MediaInfoId;
 
 /**
- * @covers Wikibase\MediaInfo\DataModel\MediaInfoId;
+ * @covers \Wikibase\MediaInfo\DataModel\MediaInfoId;
  *
  * @group WikibaseMediaInfo
  *

@@ -11,7 +11,7 @@ use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\MediaInfo\DataModel\Services\Diff\MediaInfoDiffer;
 
 /**
- * @covers Wikibase\MediaInfo\DataModel\Services\Diff\MediaInfoDiffer
+ * @covers \Wikibase\MediaInfo\DataModel\Services\Diff\MediaInfoDiffer
  *
  * @group WikibaseMediaInfo
  *

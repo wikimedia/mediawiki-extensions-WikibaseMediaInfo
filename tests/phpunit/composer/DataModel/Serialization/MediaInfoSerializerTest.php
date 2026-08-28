@@ -13,7 +13,7 @@ use Wikibase\MediaInfo\DataModel\MediaInfoId;
 use Wikibase\MediaInfo\DataModel\Serialization\MediaInfoSerializer;
 
 /**
- * @covers Wikibase\MediaInfo\DataModel\Serialization\MediaInfoSerializer
+ * @covers \Wikibase\MediaInfo\DataModel\Serialization\MediaInfoSerializer
  *
  * @group WikibaseMediaInfo
  *

@@ -33,7 +33,7 @@ use Wikibase\Repo\WikibaseRepo;
 use Wikimedia\Purtle\RdfWriter;
 
 /**
- * @covers Wikibase\MediaInfo\Rdf\MediaInfoRdfBuilder
+ * @covers \Wikibase\MediaInfo\Rdf\MediaInfoRdfBuilder
  *
  * @group WikibaseRdf
  * @group Database

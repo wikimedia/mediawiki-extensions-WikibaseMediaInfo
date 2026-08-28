@@ -13,7 +13,7 @@ use Wikibase\MediaInfo\DataModel\MediaInfo;
 use Wikibase\MediaInfo\DataModel\MediaInfoId;
 
 /**
- * @covers Wikibase\MediaInfo\DataModel\MediaInfo
+ * @covers \Wikibase\MediaInfo\DataModel\MediaInfo
  *
  * @group WikibaseMediaInfo
  *

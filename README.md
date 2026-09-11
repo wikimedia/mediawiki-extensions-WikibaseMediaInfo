@@ -84,15 +84,10 @@ TBD
 
 ### Less variables
 
-Since Wikimedia UI base variables aren't in core, we require them as a package
-dependency, then use a shell script to copy them to the `lib` directory. To
-update the base variables, require the new version in package.json and install
-it, then run `npm run build-lib` to copy the updated file into `lib`. Commit the
-updated files.
-
-We're including the base variables in our custom variables file,
+We're including the MediaWiki skin variables in our custom variables file,
 `resources/mediainfo-variables.less`. To use them in other files, include
-`mediainfo-variables.less` rather than directly including the base file itself.
+`mediainfo-variables.less` rather than directly including the skin variables
+themselves.
 
 ## Configuration
 Extension configuration variables are sets of key-value pairs. They are

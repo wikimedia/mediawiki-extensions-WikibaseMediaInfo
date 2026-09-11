@@ -7,7 +7,6 @@ const sinon = require( 'sinon' ),
 	wbDataTypes = require( './fixtures/data/wbDataTypes.json' ),
 	wbmiPropertyTypes = require( './fixtures/data/wbmiPropertyTypes.json' ),
 	sandboxes = {};
-let dom;
 
 module.exports.jquery = {
 	beforeEach: function () {
@@ -16,8 +15,7 @@ module.exports.jquery = {
 		// Construct a new DOM for each test. OOUI registers a custom element
 		// at load time. A custom element name can be registered only one time
 		// in a window, thus each test needs its own window.
-		dom = new jsdom.JSDOM( '<!doctype html><html lang="en"><body></body></html>' );
-		global.window = dom.window;
+		global.window = new jsdom.JSDOM( '<!doctype html><html lang="en"><body></body></html>' ).window;
 		global.window.scrollTo = function () { /* noop */ };
 
 		global.document = global.window.document;
@@ -160,6 +158,6 @@ module.exports.kartographer = Object.assign( {}, module.exports.mediainfo, {
 
 	afterEach: function () {
 		sandboxes.kartographer.restore();
-		module.exports.mediawiki.afterEach();
+		module.exports.mediainfo.afterEach();
 	}
 } );

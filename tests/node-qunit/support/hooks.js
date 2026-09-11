@@ -3,7 +3,7 @@
 const sinon = require( 'sinon' ),
 	jsdom = require( 'jsdom' ),
 	helpers = require( './helpers.js' ),
-	mockery = require( 'mockery' ),
+	moduleMocks = require( './moduleMocks.js' ),
 	wbDataTypes = require( './fixtures/data/wbDataTypes.json' ),
 	wbmiPropertyTypes = require( './fixtures/data/wbmiPropertyTypes.json' ),
 	sandboxes = {};
@@ -81,10 +81,7 @@ module.exports.wikibase = Object.assign( {}, module.exports.mediawiki, {
 		// MediaWiki is a requirement for Wikibase
 		module.exports.mediawiki.beforeEach();
 
-		mockery.enable( {
-			warnOnReplace: false,
-			warnOnUnregistered: false
-		} );
+		moduleMocks.enable();
 
 		sandboxes.wikibase = sinon.createSandbox();
 
@@ -98,7 +95,7 @@ module.exports.wikibase = Object.assign( {}, module.exports.mediawiki, {
 	},
 	afterEach: function () {
 		sandboxes.wikibase.restore();
-		mockery.disable();
+		moduleMocks.disable();
 		module.exports.mediawiki.afterEach();
 	}
 } );

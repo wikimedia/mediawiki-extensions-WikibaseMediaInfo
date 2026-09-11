@@ -21,7 +21,6 @@
 		"jquery": "3.7.1",
 		"jquery.uls": "^0.1.0",
 		"jsdom": "30.0.1",
-		"mockery": "2.1.0",
 		"mustache": "3.0.1",
 		"oojs": "7.0.1",
 		"oojs-ui": "0.54.1",

@@ -5,7 +5,7 @@ const sinon = require( 'sinon' ),
 	fs = require( 'fs' ),
 	path = require( 'path' ),
 	Mustache = require( 'mustache' ),
-	mockery = require( 'mockery' ),
+	moduleMocks = require( './moduleMocks.js' ),
 	mockCache = {};
 
 /**
@@ -248,7 +248,7 @@ module.exports.registerWbDataModel = function () {
 
 	requireAgain( 'wikibase-data-values/lib/util/util.inherit.js' );
 
-	mockery.registerSubstitute( 'wikibase.datamodel', 'wikibase-data-model/src/index.js' );
+	moduleMocks.registerSubstitute( 'wikibase.datamodel', 'wikibase-data-model/src/index.js' );
 };
 
 module.exports.registerWbSerialization = function () {
@@ -256,7 +256,7 @@ module.exports.registerWbSerialization = function () {
 
 	requireAgain( 'wikibase-data-values/lib/util/util.inherit.js' );
 
-	mockery.registerSubstitute( 'wikibase.serialization', 'wikibase-serialization/src/index.js' );
+	moduleMocks.registerSubstitute( 'wikibase.serialization', 'wikibase-serialization/src/index.js' );
 };
 
 /**
@@ -310,7 +310,7 @@ module.exports.registerModules = function () {
 		}
 
 		try {
-			mockery.registerMock( moduleName, require( path.join( __dirname, '..', '..', '..', packageFiles[ 0 ] ) ) );
+			moduleMocks.registerMock( moduleName, require( path.join( __dirname, '..', '..', '..', packageFiles[ 0 ] ) ) );
 		} catch ( e ) {
 			// failed to include, but that could be ok, it might just expect immediate
 			// execution in the browser - we'll have to deal with this module not
@@ -339,6 +339,6 @@ module.exports.deregisterModules = function () {
 	const modules = this.extensionJsonModules();
 
 	Object.keys( modules ).forEach( ( moduleName ) => {
-		mockery.deregisterMock( moduleName );
+		moduleMocks.deregisterMock( moduleName );
 	} );
 };

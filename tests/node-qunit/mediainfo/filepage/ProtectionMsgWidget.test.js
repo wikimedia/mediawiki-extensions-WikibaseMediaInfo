@@ -12,7 +12,7 @@ QUnit.module( 'ProtectionMsgWidget', hooks.mediainfo, () => {
 	QUnit.test( 'constructor', ( assert ) => {
 		ProtectionMsgWidget = require( pathToWidget );
 		new ProtectionMsgWidget();
-		assert.ok( true );
+		assert.true( true, 'ProtectionMsgWidget constructs without errors' );
 	} );
 
 	QUnit.module( 'Page is not protected', {

@@ -23,7 +23,6 @@ QUnit.module( 'GlobeCoordinateInputWidget', hooks.kartographer, () => {
 		);
 
 		widget.setData( data ).then( () => {
-			assert.ok( widget.getData() );
 			assert.strictEqual( data.equals( widget.getData() ), true );
 			done();
 		} );

@@ -39,7 +39,7 @@ QUnit.module( 'StatementPanel', {}, () => {
 			// eslint-disable-next-line no-new
 			new StatementPanel( config );
 
-			assert.ok( true );
+			assert.true( true, 'StatementPanel constructs without errors' );
 		} );
 
 		QUnit.test( 'isEditable() is false by default', ( assert ) => {

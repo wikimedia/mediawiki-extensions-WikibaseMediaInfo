@@ -13,12 +13,10 @@ QUnit.module( 'AddPropertyWidget', hooks.mediainfo, () => {
 
 		widget.addPropertyId( 'Q1' )
 			.then( () => {
-				assert.ok( widget.getFilters() );
 				assert.strictEqual( widget.getFilters()[ 1 ].value, 'Q1' );
 			} )
 			.then( widget.addPropertyId.bind( widget, 'Q2' ) )
 			.then( () => {
-				assert.ok( widget.getFilters() );
 				assert.strictEqual( widget.getFilters()[ 1 ].value, 'Q1|Q2' );
 				done();
 			} );

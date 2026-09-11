@@ -20,7 +20,6 @@ QUnit.module( 'MultiTypeInputWrapperWidget', hooks.kartographer, () => {
 			data = new datamodel.EntityId( 'Q1' );
 
 		widget.setData( data ).then( () => {
-			assert.ok( widget.getData() );
 			assert.strictEqual( data.equals( widget.getData() ), true );
 			done();
 		} );
@@ -33,7 +32,6 @@ QUnit.module( 'MultiTypeInputWrapperWidget', hooks.kartographer, () => {
 			data = new dataValues.StringValue( 'this is a test' );
 
 		widget.setData( data ).then( () => {
-			assert.ok( widget.getData() );
 			assert.strictEqual( data.equals( widget.getData() ), true );
 			done();
 		} );
@@ -46,7 +44,6 @@ QUnit.module( 'MultiTypeInputWrapperWidget', hooks.kartographer, () => {
 			data = new dataValues.MonolingualTextValue( 'en', 'this is a test' );
 
 		widget.setData( data ).then( () => {
-			assert.ok( widget.getData() );
 			assert.strictEqual( data.equals( widget.getData() ), true );
 			done();
 		} );
@@ -59,7 +56,6 @@ QUnit.module( 'MultiTypeInputWrapperWidget', hooks.kartographer, () => {
 			data = new dataValues.QuantityValue( new dataValues.DecimalValue( 5 ), '1' );
 
 		widget.setData( data ).then( () => {
-			assert.ok( widget.getData() );
 			assert.strictEqual( data.equals( widget.getData() ), true );
 			done();
 		} );
@@ -78,7 +74,6 @@ QUnit.module( 'MultiTypeInputWrapperWidget', hooks.kartographer, () => {
 			} );
 
 		widget.setData( data ).then( () => {
-			assert.ok( widget.getData() );
 			assert.strictEqual( data.equals( widget.getData() ), true );
 			done();
 		} );
@@ -97,7 +92,6 @@ QUnit.module( 'MultiTypeInputWrapperWidget', hooks.kartographer, () => {
 			);
 
 		widget.setData( data ).then( () => {
-			assert.ok( widget.getData() );
 			assert.strictEqual( data.equals( widget.getData() ), true );
 			done();
 		} );
@@ -110,7 +104,6 @@ QUnit.module( 'MultiTypeInputWrapperWidget', hooks.kartographer, () => {
 			data = new dataValues.UnknownValue( 'an unknown value' );
 
 		widget.setData( data ).then( () => {
-			assert.ok( widget.getData() );
 			assert.strictEqual( data.equals( widget.getData() ), true );
 			done();
 		} );
@@ -220,13 +213,13 @@ QUnit.module( 'MultiTypeInputWrapperWidget', hooks.kartographer, () => {
 			globeCoordinateWidget.render(),
 			unsupportedWidget.render()
 		).then( () => {
-			assert.ok( entityWidget.state.input instanceof EntityInputWidget );
-			assert.ok( stringWidget.state.input instanceof StringInputWidget );
-			assert.ok( monolingualTextWidget.state.input instanceof MonolingualTextInputWidget );
-			assert.ok( quantityWidget.state.input instanceof QuantityInputWidget );
-			assert.ok( timeWidget.state.input instanceof TimeInputWidget );
-			assert.ok( globeCoordinateWidget.state.input instanceof GlobeCoordinateInputWidget );
-			assert.ok( unsupportedWidget.state.input instanceof UnsupportedInputWidget );
+			assert.true( entityWidget.state.input instanceof EntityInputWidget );
+			assert.true( stringWidget.state.input instanceof StringInputWidget );
+			assert.true( monolingualTextWidget.state.input instanceof MonolingualTextInputWidget );
+			assert.true( quantityWidget.state.input instanceof QuantityInputWidget );
+			assert.true( timeWidget.state.input instanceof TimeInputWidget );
+			assert.true( globeCoordinateWidget.state.input instanceof GlobeCoordinateInputWidget );
+			assert.true( unsupportedWidget.state.input instanceof UnsupportedInputWidget );
 			done();
 		} );
 	} );
@@ -302,7 +295,7 @@ QUnit.module( 'MultiTypeInputWrapperWidget', hooks.kartographer, () => {
 			// the final result.
 			.then( widget.setState.bind( widget, {} ) )
 			.then( () => {
-				assert.ok( widget.state.input instanceof StringInputWidget );
+				assert.true( widget.state.input instanceof StringInputWidget );
 				assert.strictEqual( widget.state.input.input.isDisabled(), true );
 				done();
 			} );
@@ -320,7 +313,7 @@ QUnit.module( 'MultiTypeInputWrapperWidget', hooks.kartographer, () => {
 			.then( widget.setSnakType.bind( widget, 'novalue' ) )
 			.then( widget.setState.bind( widget, {} ) )
 			.then( () => {
-				assert.ok( widget.state.input instanceof StringInputWidget );
+				assert.true( widget.state.input instanceof StringInputWidget );
 				assert.strictEqual( widget.state.input.input.isDisabled(), true );
 				done();
 			} );
@@ -340,7 +333,7 @@ QUnit.module( 'MultiTypeInputWrapperWidget', hooks.kartographer, () => {
 			.then( widget.snakTypeWidget.setValue.bind( widget.snakTypeWidget, 'value' ) )
 			.then( widget.setState.bind( widget, {} ) )
 			.then( () => {
-				assert.ok( widget.state.input instanceof EntityInputWidget );
+				assert.true( widget.state.input instanceof EntityInputWidget );
 				done();
 			} );
 	} );

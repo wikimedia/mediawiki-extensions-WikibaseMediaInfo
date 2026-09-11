@@ -16,7 +16,6 @@ QUnit.module( 'SnakWidget', hooks.mediainfo, () => {
 			);
 
 		widget.setData( data ).then( () => {
-			assert.ok( widget.getData() );
 			assert.strictEqual( data.equals( widget.getData() ), true );
 			done();
 		} );
@@ -195,7 +194,6 @@ QUnit.module( 'SnakWidget', hooks.mediainfo, () => {
 			// Instead, let's run it directly.
 			.then( widget.valueInput.onSnakTypeChange.bind( widget.valueInput, data.getType() ) )
 			.then( () => {
-				assert.ok( widget.getData() );
 				assert.strictEqual( data.equals( widget.getData() ), true );
 				done();
 			} );
@@ -215,7 +213,6 @@ QUnit.module( 'SnakWidget', hooks.mediainfo, () => {
 			// Instead, let's run it directly.
 			.then( widget.valueInput.onSnakTypeChange.bind( widget.valueInput, data.getType() ) )
 			.then( () => {
-				assert.ok( widget.getData() );
 				assert.strictEqual( data.equals( widget.getData() ), true );
 				done();
 			} );

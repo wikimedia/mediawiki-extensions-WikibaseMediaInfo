@@ -11,7 +11,7 @@ QUnit.module( 'LicenseDialogWidget', hooks.mediainfo, () => {
 		LicenseDialogWidget = require( pathToWidget );
 		/* eslint-disable-next-line no-new */
 		new LicenseDialogWidget();
-		assert.ok( true );
+		assert.true( true, 'LicenseDialogWidget constructs without errors' );
 	} );
 
 	QUnit.module( 'User is not logged in and has not accepted license', {

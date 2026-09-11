@@ -12,7 +12,6 @@ QUnit.module( 'MonolingualText', hooks.mediainfo, () => {
 			data = dataValues.MonolingualTextValue.newFromJSON( { language: 'en', text: 'this is a test' } );
 
 		widget.setData( data ).then( () => {
-			assert.ok( widget.getData() );
 			assert.strictEqual( data.equals( widget.getData() ), true );
 			done();
 		} );

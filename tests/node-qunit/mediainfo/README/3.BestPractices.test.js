@@ -11,7 +11,6 @@ QUnit.module( 'BestPractices', hooks.mediainfo, () => {
 			data = { some: 'some', relevant: 1, data: { test: 'example' } };
 
 		widget.setData( data ).then( () => {
-			assert.ok( widget.getData() );
 			assert.strictEqual( JSON.stringify( widget.getData() ), JSON.stringify( data ) );
 			done();
 		} );

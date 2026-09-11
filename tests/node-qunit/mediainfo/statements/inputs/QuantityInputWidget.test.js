@@ -12,7 +12,6 @@ QUnit.module( 'QuantityInputWidget', hooks.mediainfo, () => {
 			data = dataValues.QuantityValue.newFromJSON( { amount: '+1', unit: '1' } );
 
 		widget.setData( data ).then( () => {
-			assert.ok( widget.getData() );
 			assert.strictEqual( data.equals( widget.getData() ), true );
 			done();
 		} );

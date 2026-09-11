@@ -12,7 +12,6 @@ QUnit.module( 'StringInputWidget', hooks.mediainfo, () => {
 			data = new dataValues.StringValue( 'this is a string' );
 
 		widget.setData( data ).then( () => {
-			assert.ok( widget.getData() );
 			assert.strictEqual( data.equals( widget.getData() ), true );
 			done();
 		} );

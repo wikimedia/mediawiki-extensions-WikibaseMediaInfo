@@ -41,7 +41,7 @@ QUnit.module( 'CaptionsPanel', {}, () => {
 				// eslint-disable-next-line no-unused-vars
 				cp = new CaptionsPanel( config );
 
-			assert.ok( true );
+			assert.true( true, 'CaptionsPanel initialises without errors' );
 		} );
 
 		QUnit.test( 'user languages are added to DOM', ( assert ) => {

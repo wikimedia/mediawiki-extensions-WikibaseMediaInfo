@@ -24,7 +24,6 @@ QUnit.module( 'TimeInputWidget', hooks.mediainfo, () => {
 		formatValueStub.withArgs( data ).returns( $.Deferred().resolve( '24 January 2019' ).promise( { abort: function () {} } ) );
 
 		widget.setData( data ).then( () => {
-			assert.ok( widget.getData() );
 			assert.strictEqual( data.equals( widget.getData() ), true );
 			done();
 		} );

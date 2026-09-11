@@ -18,7 +18,6 @@ QUnit.module( 'SnakListWidget', hooks.mediainfo, () => {
 			] );
 
 		widget.setData( data ).then( () => {
-			assert.ok( widget.getData() );
 			assert.strictEqual( data.equals( widget.getData() ), true );
 			done();
 		} );
@@ -88,7 +87,7 @@ QUnit.module( 'SnakListWidget', hooks.mediainfo, () => {
 
 		widget.createWidget()
 			.then( ( snak ) => {
-				assert.ok( snak instanceof SnakWidget );
+				assert.true( snak instanceof SnakWidget );
 				done();
 			} );
 	} );

@@ -24,7 +24,7 @@ QUnit.module( 'LinkNoticeWidget', Object.assign( {}, hooks.mediainfo, {
 
 		/* eslint-disable-next-line no-new */
 		new LinkNoticeWidget();
-		assert.ok( true );
+		assert.true( true, 'LinkNoticeWidget constructs without errors' );
 	} );
 
 	QUnit.module( 'User is not logged in.', {

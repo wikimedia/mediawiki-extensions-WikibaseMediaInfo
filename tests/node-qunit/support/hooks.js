@@ -21,6 +21,7 @@ module.exports.jquery = {
 		global.window.scrollTo = function () { /* noop */ };
 
 		global.document = global.window.document;
+		global.Node = global.window.Node;
 		global.jQuery = global.$ = global.window.jQuery = global.window.$ = require( 'jquery' );
 	},
 	afterEach: function () {

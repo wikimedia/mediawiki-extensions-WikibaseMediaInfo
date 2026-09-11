@@ -33,7 +33,6 @@ const EntityAutocompleteInputWidget = function MediaInfoStatementsEntityAutocomp
 	// select it anew
 	this.dataCache = {};
 
-	// eslint-disable-next-line mediawiki/class-doc
 	EntityAutocompleteInputWidget.super.call( this, Object.assign( {}, config, {
 		// classes should *always* be added, because some essential functionality
 		// (e.g. CSS to turn red on invalid input) depends on these classes

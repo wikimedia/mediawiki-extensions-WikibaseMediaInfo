@@ -32,5 +32,10 @@
 		"wikibase-data-model": "^6.1.0",
 		"wikibase-data-values": "^0.10.0",
 		"wikibase-serialization": "^5.0.0"
+	},
+	"overrides": {
+		"wikibase-serialization": {
+			"wikibase-data-model": "$wikibase-data-model"
+		}
 	}
 }

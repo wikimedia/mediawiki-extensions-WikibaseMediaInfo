@@ -13,15 +13,16 @@ module.exports.jquery = {
 	beforeEach: function () {
 		sandboxes.jquery = sinon.createSandbox();
 
-		// construct DOM is none exists yet
-		if ( !global.window ) {
-			dom = new jsdom.JSDOM( '<!doctype html><html lang="en"><body></body></html>' );
-			global.window = dom.window;
-		}
+		// Construct a new DOM for each test. OOUI registers a custom element
+		// at load time. A custom element name can be registered only one time
+		// in a window, thus each test needs its own window.
+		dom = new jsdom.JSDOM( '<!doctype html><html lang="en"><body></body></html>' );
+		global.window = dom.window;
 		global.window.scrollTo = function () { /* noop */ };
 
 		global.document = global.window.document;
 		global.Node = global.window.Node;
+		global.HTMLElement = global.window.HTMLElement;
 		global.jQuery = global.$ = global.window.jQuery = global.window.$ = require( 'jquery' );
 	},
 	afterEach: function () {

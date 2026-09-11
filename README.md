@@ -293,6 +293,18 @@ need to be updated here manually if the package versions in core's
 `maintenance/resources/foreign-resources.yaml` file change. Versions should
 be pinned exactly to avoid any potential problems.
 
+The `install` script also clones MediaWiki core into `node_modules/mediawiki`.
+The tests only use `mw.template` from core's `resources/src`, so the clone is
+shallow and sparse and checks out that directory alone. Widen the sparse
+checkout if the tests come to need more of core.
+
+The clone also asks for `--filter=blob:none`, so that git downloads the file
+contents of `resources/src` alone. Gerrit does not allow that filter yet, so
+git prints `warning: filtering not recognized by server, ignoring` and
+downloads every file's contents. The clone is still correct, only larger than
+it needs to be. Keep the flag: it starts to work on its own when Gerrit
+enables `uploadpack.allowFilter`. See T437725.
+
 
 ## See also
 

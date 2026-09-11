@@ -300,23 +300,53 @@ module.exports.extensionJsonModules = function () {
 	};
 };
 
+/**
+ * The errors from the last registerModules() call.
+ *
+ * A module that runs immediately needs a browser. Such a module cannot load
+ * here, thus it stays unavailable for the tests. Read this property to find
+ * the cause when a test cannot require a module.
+ *
+ * @type {Array<{moduleName: string, error: Error}>}
+ */
+module.exports.moduleLoadFailures = [];
+
 module.exports.registerModules = function () {
 	const modules = this.extensionJsonModules();
 
-	Object.keys( modules ).forEach( ( moduleName ) => {
-		const packageFiles = modules[ moduleName ].packageFiles;
-		if ( !packageFiles ) {
-			return;
+	let pending = Object.keys( modules ).filter(
+		( moduleName ) => modules[ moduleName ].packageFiles
+	);
+
+	module.exports.moduleLoadFailures = [];
+
+	// A module can require a different module. Do more passes while each pass
+	// registers one module or more. The order in extension.json is thus not
+	// important.
+	while ( pending.length > 0 ) {
+		const failures = [];
+
+		pending.forEach( ( moduleName ) => {
+			const packageFile = modules[ moduleName ].packageFiles[ 0 ];
+			try {
+				moduleMocks.registerMock(
+					moduleName,
+					require( path.join( __dirname, '..', '..', '..', packageFile ) )
+				);
+			} catch ( error ) {
+				failures.push( { moduleName, error } );
+			}
+		} );
+
+		module.exports.moduleLoadFailures = failures;
+
+		if ( failures.length === pending.length ) {
+			// This pass registered no module. More passes cannot help.
+			break;
 		}
 
-		try {
-			moduleMocks.registerMock( moduleName, require( path.join( __dirname, '..', '..', '..', packageFiles[ 0 ] ) ) );
-		} catch ( e ) {
-			// failed to include, but that could be ok, it might just expect immediate
-			// execution in the browser - we'll have to deal with this module not
-			// being available for JS tests
-		}
-	} );
+		pending = failures.map( ( failure ) => failure.moduleName );
+	}
 };
 
 module.exports.registerTemplates = function () {

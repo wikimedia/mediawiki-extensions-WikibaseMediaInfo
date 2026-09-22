@@ -67,6 +67,8 @@ class MediaInfoHooks implements
 {
 
 	public const MEDIAINFO_SLOT_HEADER_PLACEHOLDER = '<mediainfoslotheader />';
+	public const MEDIAINFO_SLOT_HEADER_PARSOID_PLACEHOLDER =
+		'<mediainfoslotheaderparsoid></mediainfoslotheaderparsoid>';
 
 	public function __construct(
 		private readonly HookContainer $hookContainer,
@@ -94,11 +96,21 @@ class MediaInfoHooks implements
 		&$text,
 		&$options
 	): void {
-		$text = str_replace(
-			'<mw:slotheader>mediainfo</mw:slotheader>',
-			self::MEDIAINFO_SLOT_HEADER_PLACEHOLDER,
-			$text
-		);
+		$contentHolder = $parserOutput->getContentHolder();
+		if ( $contentHolder->isParsoidContent() ) {
+			// FIXME: Maybe the output layout hint for this role should be none instead
+			// Or, alternatively, HydrateHeaderPlaceholders could allow suppressing the
+			// slot output by setting it to null here
+			$contentHolder->setAsHtmlString(
+				'slot-mediainfo', self::MEDIAINFO_SLOT_HEADER_PARSOID_PLACEHOLDER
+			);
+		} else {
+			$text = str_replace(
+				'<mw:slotheader>mediainfo</mw:slotheader>',
+				self::MEDIAINFO_SLOT_HEADER_PLACEHOLDER,
+				$text
+			);
+		}
 	}
 
 	/**
@@ -318,7 +330,7 @@ class MediaInfoHooks implements
 		$textProvider = new MediaWikiLocalizedTextProvider( $out->getLanguage() );
 
 		// Remove the slot header, as it's made redundant by the tabs
-		$html = preg_replace( WBMIHooksHelper::getStructuredDataHeaderRegex(), '', $html );
+		$html = WBMIHooksHelper::removeSlotHeader( $html );
 
 		// Snip out out the structured data sections ($captions, $statements)
 		$extractedHtml = $this->extractStructuredDataHtml( $html, $out, $entityViewFactory );
@@ -506,7 +518,7 @@ class MediaInfoHooks implements
 		$html = $out->getHTML();
 		$out->clearHTML();
 		$html = preg_replace( WBMIHooksHelper::getMediaInfoViewRegex(), '', $html );
-		$html = preg_replace( WBMIHooksHelper::getStructuredDataHeaderRegex(), '', $html );
+		$html = WBMIHooksHelper::removeSlotHeader( $html );
 		$out->addHTML( $html );
 	}
 

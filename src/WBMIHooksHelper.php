@@ -55,9 +55,12 @@ class WBMIHooksHelper {
 	/**
 	 * @return string
 	 */
-	public static function getStructuredDataHeaderRegex() {
-		return '#<h1\b[^>]*\bclass=(\'|")mw-slot-header\\1[^>]*>' .
-			MediaInfoHooks::MEDIAINFO_SLOT_HEADER_PLACEHOLDER . '</h1>#iU';
+	public static function removeSlotHeader( string $html ): string {
+		$html = preg_replace( '#<h1\b[^>]*\bclass=(\'|")mw-slot-header\\1[^>]*>' .
+			MediaInfoHooks::MEDIAINFO_SLOT_HEADER_PLACEHOLDER . '</h1>#iU', '', $html );
+		$html = preg_replace( '#<h1\b[^>]*\bclass=(\'|")mw-slot-header\\1[^>]*>.*</h1>' .
+			MediaInfoHooks::MEDIAINFO_SLOT_HEADER_PARSOID_PLACEHOLDER . '#iU', '', $html );
+		return $html;
 	}
 
 	/**

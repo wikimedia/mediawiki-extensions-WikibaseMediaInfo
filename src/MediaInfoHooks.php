@@ -98,11 +98,9 @@ class MediaInfoHooks implements
 	): void {
 		$contentHolder = $parserOutput->getContentHolder();
 		if ( $contentHolder->isParsoidContent() ) {
-			// FIXME: Maybe the output layout hint for this role should be none instead
-			// Or, alternatively, HydrateHeaderPlaceholders could allow suppressing the
-			// slot output by setting it to null here
-			$contentHolder->setAsHtmlString(
-				'slot-mediainfo', self::MEDIAINFO_SLOT_HEADER_PARSOID_PLACEHOLDER
+			$contentHolder->prependHtmlString(
+				self::MEDIAINFO_SLOT_HEADER_PARSOID_PLACEHOLDER,
+				'slot-mediainfo'
 			);
 		} else {
 			$text = str_replace(

@@ -12,7 +12,8 @@
 			"MarcoAurelio",
 			"Mpayansilva",
 			"Rodney Araujo",
-			"ZealousBlaze"
+			"ZealousBlaze",
+			"Ovruni"
 		]
 	},
 	"action-mediainfo-term": "Cambiar términos de información de medios (leyendas, resúmenes…)",
@@ -60,6 +61,7 @@
 	"wikibasemediainfo-property-placeholder": "Propiedad",
 	"wikibasemediainfo-filepage-license-agree": "Estoy de acuerdo",
 	"wikibasemediainfo-statements-depicts-title": "Elementos que aparecen en esta imagen",
+	"wikibasemediainfo-statements-item-qualifiers": "Calificadores",
 	"wikibasemediainfo-statements-item-add-qualifier": "Añadir un calificativo",
 	"wikibasemediainfo-statements-item-reference": "Referencia",
 	"wikibasemediainfo-statements-item-references": "Referencias",

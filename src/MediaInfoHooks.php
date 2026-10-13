@@ -673,7 +673,7 @@ class MediaInfoHooks implements
 		}
 
 		$mwServices = MediaWikiServices::getInstance();
-		$dbw = $mwServices->getDBLoadBalancerFactory()->getPrimaryDatabase();
+		$dbw = $mwServices->getConnectionProvider()->getPrimaryDatabase();
 		$blobStore = $mwServices->getBlobStoreFactory()->newSqlBlobStore();
 		$statementGuidParser = WikibaseRepo::getStatementGuidParser( $mwServices );
 

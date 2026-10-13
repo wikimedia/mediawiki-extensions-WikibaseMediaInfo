@@ -35,9 +35,9 @@ class MediaInfo
 		?TermList $descriptions = null,
 		?StatementList $statements = null,
 	) {
-		$this->labels = $labels ?: new TermList();
-		$this->descriptions = $descriptions ?: new TermList();
-		$this->statements = $statements ?: new StatementList();
+		$this->labels = $labels ?? new TermList();
+		$this->descriptions = $descriptions ?? new TermList();
+		$this->statements = $statements ?? new StatementList();
 	}
 
 	/**

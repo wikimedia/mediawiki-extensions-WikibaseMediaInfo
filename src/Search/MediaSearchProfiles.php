@@ -141,8 +141,10 @@ return array_map( static function ( array $settings ) use ( $config ) {
 			}
 			$features = ( new FullTextKeywordRegistry( $searchConfig ) )->getKeywords();
 
-			$languages = array_merge( [ $languageCode ], $languageFallbackChain->getFetchLanguageCodes() );
-			$languages = array_unique( $languages );
+			$languages = array_unique( [
+				$languageCode,
+				...$languageFallbackChain->getFetchLanguageCodes(),
+			] );
 			$entitySearchBaseUri = sprintf( $settings[ 'entitySearchBaseUri' ], $languageCode );
 			$titleMatchBaseUri = sprintf( $settings[ 'titleMatchBaseUri' ], $languageCode );
 

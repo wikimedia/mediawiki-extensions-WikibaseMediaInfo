@@ -41,40 +41,32 @@ class MediaInfoPrefetchingTermLookup extends EntityTermLookupBase implements Pre
 	 *        If null, all languages are prefetched.
 	 */
 	private function prefetchTerm( EntityId $entityId, ?array $termTypes = null, ?array $languageCodes = null ) {
-		$termTypes = $termTypes ?: $this->supportedTermTypes;
-
-		// init term cache, indicating these entity/term combinations were
-		// requested (but might not have been found)
-		$this->terms[$entityId->getSerialization()] = [];
-		foreach ( $termTypes as $termType ) {
-			$this->terms[$entityId->getSerialization()][$termType] = [];
-		}
-
 		$revision = $this->entityRevisionLookup->getEntityRevision( $entityId );
-		if ( $revision === null ) {
+		if ( !$revision ) {
 			// entity does not exist - make term cache unusable
 			$this->terms[$entityId->getSerialization()] = false;
 			return;
 		}
+
 		$entity = $revision->getEntity();
 		if ( !$entity instanceof MediaInfo ) {
 			$class = get_class( $entity );
 			throw new TermLookupException( $entityId, $languageCodes, "Entity of class $class is not supported" );
 		}
 
+		$termTypes ??= $this->supportedTermTypes;
+
+		// init term cache, indicating these entity/term combinations were
+		// requested (but might not have been found)
+		$this->terms[$entityId->getSerialization()] = array_fill_keys( $termTypes, [] );
+
 		foreach ( $termTypes as $termType ) {
-			switch ( $termType ) {
-				case 'label':
-					$termList = $entity->getLabels();
-					break;
-				case 'description':
-					$termList = $entity->getDescriptions();
-					break;
-				default:
-					// term type not supported, there is no data here
-					$termList = new TermList( [] );
-					break;
-			}
+			$termList = match ( $termType ) {
+				'label' => $entity->getLabels(),
+				'description' => $entity->getDescriptions(),
+				// term type not supported, there is no data here
+				default => new TermList( [] ),
+			};
 
 			$terms = $termList->toTextArray();
 			foreach ( $terms as $languageCode => $text ) {

@@ -106,21 +106,22 @@ return array_map( static function ( array $settings ) use ( $config ) {
 			if ( $matches ) {
 				$key = array_pop( $matches );
 			}
-			$result[ $key ] = is_array( $value ) ? $fixUnderscores( $value, $original[ $key ] ?? [] ) : $value;
+			// Recurse deeper only when both sides are still arrays
+			if ( is_array( $value ) && is_array( $original[$key] ?? null ) ) {
+				$value = $fixUnderscores( $value, $original[$key] );
+			}
+			$result[$key] = $value;
 		}
 		return $result;
 	};
 
 	// allow settings (boost etc.) to be customized from URL query params
 	foreach ( RequestContext::getMain()->getRequest()->getQueryValues() as $key => $value ) {
-		// convert [ 'one:two' => 'three' ] into ['one']['two'] = 'three'
-		$flat = array_merge( explode( ':', urldecode( $key ) ), [ floatval( $value ) ] );
+		// convert [ 'one:two' => '3' ] into ['one']['two'] = 3.0
 		$result = array_reduce(
-			array_reverse( $flat ),
-			static function ( $previous, $key ) {
-				return $previous !== null ? [ $key => $previous ] : $key;
-			},
-			null
+			array_reverse( explode( ':', urldecode( $key ) ) ),
+			static fn ( $previous, $key ) => [ $key => $previous ],
+			(float)$value
 		);
 
 		$settings = array_replace_recursive( $settings, $fixUnderscores( $result, $settings ) );

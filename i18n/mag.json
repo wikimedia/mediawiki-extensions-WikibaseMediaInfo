@@ -4,5 +4,8 @@
 			"ऐक्टिवेटेड्"
 		]
 	},
-	"wikibasemediainfo-filepage-cancel": "निरस्त करथिन"
+	"wikibasemediainfo-filepage-cancel": "निरस्त करथिन",
+	"wikibasemediainfo-filepage-cancel-confirm-accept": "त्यागथिन",
+	"wikibasemediainfo-filepage-edit": "सम्पादन",
+	"wikibasemediainfo-filepage-publish": "परिवर्तन प्रकाशित करथिन"
 }

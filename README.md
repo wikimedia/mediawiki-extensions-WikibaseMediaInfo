@@ -73,8 +73,21 @@ In order to add values to statements, you will also need to add Entity items to
 your local Wikibase instance. This can be done manually at: `Special:NewItem`,
 or through using the WikibaseImport script (see below).
 
+### Importing entities from Wikidata
+To use the same properties and items as Wikimedia Commons, import them from
+Wikidata, keeping their IDs. This imports the properties of
+`$wgMediaInfoProperties` (so set it to the Wikidata IDs, e.g.
+`'depicts' => 'P180'`, beforehand) and the entities given with `--ids`:
+
+```
+php maintenance/run.php ./extensions/WikibaseMediaInfo/maintenance/importWikidataEntities.php --ids Q1735
+```
+
+Only the labels, descriptions and aliases (in `mul`, `en` and the content
+language, see `--languages`) and the data types of properties are imported.
+
 ### WikibaseImport
-You can optionally use the unofficial
+Alternatively, you can use the unofficial
 [WikibaseImport](https://github.com/filbertkm/WikibaseImport) extension to
 automate the process of importing entities from another Wikibase instance (such
 as Wikidata). See that project's README for more information.

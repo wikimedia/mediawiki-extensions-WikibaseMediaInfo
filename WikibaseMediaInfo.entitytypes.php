@@ -144,7 +144,6 @@ return [
 
 			return new MediaInfoView(
 				$mediaInfoEntityTermsView,
-				$languageCode,
 				$statementsView
 			);
 		},

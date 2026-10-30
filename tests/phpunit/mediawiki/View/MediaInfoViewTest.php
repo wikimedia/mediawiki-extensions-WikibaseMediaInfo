@@ -33,8 +33,6 @@ class MediaInfoViewTest extends \PHPUnit\Framework\TestCase {
 	private $statementsView;
 	/** @var EntityDocument */
 	private $entity;
-	/** @var string */
-	private $languageCode = 'qqq';
 	/** @var MediaInfoView */
 	private $sut;
 
@@ -54,7 +52,6 @@ class MediaInfoViewTest extends \PHPUnit\Framework\TestCase {
 
 		$this->sut = new MediaInfoView(
 			$this->entityTermsView,
-			$this->languageCode,
 			$this->statementsView
 		);
 	}

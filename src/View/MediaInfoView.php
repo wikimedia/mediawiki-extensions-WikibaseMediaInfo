@@ -20,7 +20,6 @@ class MediaInfoView implements EntityDocumentView {
 
 	public function __construct(
 		private readonly MediaInfoEntityTermsView $captionsView,
-		private readonly string $languageCode,
 		private readonly MediaInfoEntityStatementsView $statementsView,
 	) {
 	}

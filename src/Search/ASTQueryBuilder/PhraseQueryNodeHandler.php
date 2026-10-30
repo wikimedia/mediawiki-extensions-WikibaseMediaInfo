@@ -27,7 +27,7 @@ class PhraseQueryNodeHandler implements ParsedNodeHandlerInterface {
 		$fields = array_diff( $fields, [ 'suggest' ] );
 
 		$this->termScoringFieldIterator = new FieldIterator(
-			$this->getTermScoringFieldQueryBuilder( $node->getPhrase(), $node->getSlop() ),
+			$this->getTermScoringFieldQueryBuilder( $node->getPhrase() ),
 			$fields,
 			$languages,
 			$stemmingSettings,
@@ -66,24 +66,18 @@ class PhraseQueryNodeHandler implements ParsedNodeHandlerInterface {
 
 	/**
 	 * @param string $phrase
-	 * @param int $slop
 	 * @return FieldQueryBuilderInterface
 	 */
-	private function getTermScoringFieldQueryBuilder( $phrase, $slop ): FieldQueryBuilderInterface {
-		return new class( $phrase, $slop ) implements FieldQueryBuilderInterface {
+	private function getTermScoringFieldQueryBuilder( $phrase ): FieldQueryBuilderInterface {
+		return new class( $phrase ) implements FieldQueryBuilderInterface {
 			/** @var string */
 			private $phrase;
 
-			/** @var int */
-			private $slop;
-
 			/**
 			 * @param string $phrase
-			 * @param int $slop
 			 */
-			public function __construct( $phrase, $slop ) {
+			public function __construct( $phrase ) {
 				$this->phrase = $phrase;
-				$this->slop = $slop;
 			}
 
 			/** @inheritDoc */

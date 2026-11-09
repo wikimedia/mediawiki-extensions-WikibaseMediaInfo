@@ -270,7 +270,7 @@ EntityAutocompleteInputWidget.prototype.filterData = function ( data ) {
 		let field = filter.field;
 		let filterType = 'includeOnMatch';
 
-		if ( field.indexOf( '!' ) === 0 ) {
+		if ( field.startsWith( '!' ) ) {
 			filterType = 'excludeOnMatch';
 			field = filter.field.slice( 1 );
 		}

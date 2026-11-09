@@ -17,8 +17,6 @@
 				"ignoreComments": true
 			}
 		],
-		"mediawiki/msg-doc": "warn",
-		"mediawiki/class-doc": "warn",
 		"no-jquery/no-class-state": "off",
 		"no-jquery/no-sizzle": "off"
 	}

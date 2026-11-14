@@ -78,7 +78,7 @@ class FieldIterator extends ArrayIterator {
 	private $decays;
 
 	public function __construct(
-		private readonly fieldQueryBuilderInterface $fieldQueryBuilder,
+		private readonly FieldQueryBuilderInterface $fieldQueryBuilder,
 		array $fields,
 		array $languages,
 		array $stemmingSettings,

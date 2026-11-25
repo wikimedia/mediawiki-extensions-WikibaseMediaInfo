@@ -31,6 +31,8 @@ class MediaSearchQueryBuilder implements FullTextQueryBuilder {
 			$feature->apply( $context, $term );
 		}
 
+		// record mediasearch as a type similar to CirrusSearch's full_text
+		$context->addSyntaxUsed( self::SEARCH_PROFILE_CONTEXT_NAME, 10 );
 		$parsedQuery = $context->getSearchQuery()->getParsedQuery();
 		$context->setMainQuery(
 			( new BoolQuery() )

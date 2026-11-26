@@ -46,6 +46,7 @@
 			{{{publishButton}}}
 			{{{cancelButton}}}
 		</div>
+		{{#captchaNotice}}<div class="wbmi-hcaptcha-notice">{{{captchaNotice}}}</div>{{/captchaNotice}}
 		{{/showControls}}
 
 		<div class="wbmi-statement-footer-buttons">

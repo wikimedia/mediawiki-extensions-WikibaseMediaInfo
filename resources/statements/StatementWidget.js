@@ -7,7 +7,22 @@ const dataTypesMap = mw.config.get( 'wbDataTypes' ),
 	ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
 	DOMLessGroupWidget = require( 'wikibase.mediainfo.base' ).DOMLessGroupWidget,
 	datamodel = require( 'wikibase.datamodel' ),
-	serialization = require( 'wikibase.serialization' );
+	serialization = require( 'wikibase.serialization' ),
+	{ withCaptcha, isCaptchaRequired } = require( 'wikibase.captcha' );
+
+/**
+ * The hCaptcha notice for the editor, when a save needs an hCaptcha. The CAPTCHA itself
+ * is invisible, so the editor shows the notice next to the publish button, as the
+ * Wikibase entity editors do.
+ *
+ * @return {string} HTML, or '' when no notice is needed
+ */
+function getHCaptchaNoticeHtml() {
+	if ( !isCaptchaRequired() || mw.config.get( 'wgConfirmEditCaptchaNeededForGenericEdit' ) !== 'hcaptcha' ) {
+		return '';
+	}
+	return mw.config.get( 'wbHCaptchaPrivacyPolicyHtml' ) || '';
+}
 
 /**
  * @constructor
@@ -159,6 +174,7 @@ StatementWidget.prototype.getTemplateData = function () {
 			items: self.getItems(),
 			input: self.input,
 			publishButton: self.publishButton,
+			captchaNotice: getHCaptchaNoticeHtml(),
 			editButton: editButton,
 			cancelButton: cancelButton,
 			removeAll: removeButton,
@@ -434,9 +450,9 @@ StatementWidget.prototype.resetData = function ( data ) {
  */
 StatementWidget.prototype.submit = function ( baseRevId ) {
 	const self = this;
-	const api = wikibase.api.getLocationAgnosticMwApi(
+	const api = withCaptcha( wikibase.api.getLocationAgnosticMwApi(
 		mw.config.get( 'wbmiRepoApiUrl', mw.config.get( 'wbRepoApiUrl' ) )
-	);
+	) );
 	const data = this.getData();
 	const statementsByGuid = {};
 	const serializer = new serialization.StatementSerializer();
@@ -457,7 +473,7 @@ StatementWidget.prototype.submit = function ( baseRevId ) {
 	} );
 
 	changedStatements.forEach( ( statement ) => {
-		promise = promise.then( ( ( innerStatement, prevResponse ) => api.postWithEditToken( {
+		promise = promise.then( ( ( innerStatement, prevResponse ) => api.postWithToken( 'csrf', {
 			action: 'wbsetclaim',
 			format: 'json',
 			claim: JSON.stringify( serializer.serialize( innerStatement ) ),
@@ -535,7 +551,7 @@ StatementWidget.prototype.submit = function ( baseRevId ) {
 
 	// Delete removed items
 	if ( removedStatements.length > 0 ) {
-		promise = promise.then( ( prevResponse ) => api.postWithEditToken( {
+		promise = promise.then( ( prevResponse ) => api.postWithToken( 'csrf', {
 			action: 'wbremoveclaims',
 			format: 'json',
 			claim: removedStatements.map( ( statement ) => statement.getClaim().getGuid() ).join( '|' ),

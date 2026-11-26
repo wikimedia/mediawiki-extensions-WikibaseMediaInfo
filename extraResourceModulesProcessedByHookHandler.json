@@ -43,6 +43,7 @@
 			"oojs-ui.styles.icons-interactions",
 			"oojs-ui.styles.icons-location",
 			"wikibase.api.RepoApi",
+			"wikibase.captcha",
 			"wikibase.mediainfo.statements.styles",
 			"wikibase.serialization",
 			"wikibase.datamodel",

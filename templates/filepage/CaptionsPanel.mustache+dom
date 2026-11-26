@@ -15,6 +15,7 @@
 	{{/captions}}
 
 	{{#editActionsWidget}} {{{editActionsWidget}}} {{/editActionsWidget}}
+	{{#captchaNotice}}<div class="wbmi-hcaptcha-notice">{{{captchaNotice}}}</div>{{/captchaNotice}}
 	{{#languagesViewWidget}} {{{languagesViewWidget}}} {{/languagesViewWidget}}
 
 <div>

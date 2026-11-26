@@ -86,6 +86,8 @@ module.exports.wikibase = Object.assign( {}, module.exports.mediawiki, {
 		global.globeCoordinate = helpers.createGlobeCoordinateEnv();
 		global.dataValues = helpers.createDataValuesEnv();
 		global.wikibase = helpers.createWikibaseEnv();
+		// Saves go through Wikibase's CAPTCHA helper; tests use the plain API stub
+		moduleMocks.registerMock( 'wikibase.captcha', { withCaptcha: ( api ) => api, isCaptchaRequired: () => false } );
 		helpers.registerWbDataModel();
 		global.mw.config.get.withArgs( 'wbDataTypes' ).returns( wbDataTypes );
 

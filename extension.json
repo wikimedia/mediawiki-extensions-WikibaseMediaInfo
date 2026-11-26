@@ -225,6 +225,7 @@
 				"wikibase.mediainfo.statements",
 				"wikibase",
 				"wikibase.api.RepoApi",
+				"wikibase.captcha",
 				"wikibase.serialization"
 			],
 			"messages": [

@@ -6,7 +6,22 @@ const AnonWarning = require( './AnonWarning.js' ),
 	CaptionsEditActionsWidget = require( './CaptionsEditActionsWidget.js' ),
 	LicenseDialogWidget = require( './LicenseDialogWidget.js' ),
 	ComponentWidget = require( 'wikibase.mediainfo.base' ).ComponentWidget,
-	wbTermsLanguages = require( 'wikibase.mediainfo.statements' ).config.wbTermsLanguages;
+	wbTermsLanguages = require( 'wikibase.mediainfo.statements' ).config.wbTermsLanguages,
+	{ withCaptcha, isCaptchaRequired } = require( 'wikibase.captcha' );
+
+/**
+ * The hCaptcha notice for the editor, when a save needs an hCaptcha. The CAPTCHA itself
+ * is invisible, so the editor shows the notice next to the publish button, as the
+ * Wikibase entity editors do.
+ *
+ * @return {string} HTML, or '' when no notice is needed
+ */
+function getHCaptchaNoticeHtml() {
+	if ( !isCaptchaRequired() || mw.config.get( 'wgConfirmEditCaptchaNeededForGenericEdit' ) !== 'hcaptcha' ) {
+		return '';
+	}
+	return mw.config.get( 'wbHCaptchaPrivacyPolicyHtml' ) || '';
+}
 
 /**
  * Panel for displaying/editing structured data multi-lingual captions
@@ -59,12 +74,12 @@ const CaptionsPanel = function ( config ) {
 	this.warnWithinMaxCaptionLength = config.warnWithinMaxCaptionLength;
 	this.savedCaptionsData = this.captionsDataFromMediaInfoEntity( config.mediaInfo );
 
-	this.api = wikibase.api.getLocationAgnosticMwApi(
+	this.api = withCaptcha( wikibase.api.getLocationAgnosticMwApi(
 		mw.config.get(
 			'wbmiRepoApiUrl',
 			mw.config.get( 'wbRepoApiUrl' )
 		)
-	);
+	) );
 
 	// Create the various widgets
 	this.licenseDialogWidget = new LicenseDialogWidget();
@@ -246,7 +261,8 @@ CaptionsPanel.prototype.getTemplateDataEditable = function () {
 	const data = {
 		editing: true,
 		title: mw.msg( 'wikibasemediainfo-entitytermsforlanguagelistview-caption' ),
-		editActionsWidget: this.editActionsWidget
+		editActionsWidget: this.editActionsWidget,
+		captchaNotice: getHCaptchaNoticeHtml()
 	};
 
 	let inputErrorFound = false;
@@ -673,6 +689,9 @@ CaptionsPanel.prototype.sendData = function () {
 	const captionsDataEditors = Object.assign( {}, this.state.captionsDataEditors );
 	let promise = $.Deferred().resolve().promise();
 	const tempuser = {};
+	// With a CAPTCHA, one request saves all the captions: one CAPTCHA, not one for each language.
+	const together = isCaptchaRequired();
+	const labels = {};
 
 	this.setSending();
 
@@ -684,6 +703,10 @@ CaptionsPanel.prototype.sendData = function () {
 			savedData = self.savedCaptionsData[ langCode ];
 
 		if ( text && langCode && ( !savedData || savedData.text !== text ) ) {
+			if ( together ) {
+				labels[ langCode ] = { language: langCode, value: text };
+				return;
+			}
 			promise = promise.then( () => self.api.postWithToken(
 				'csrf',
 				self.getWbSetLabelParams( langCode, text )
@@ -714,6 +737,10 @@ CaptionsPanel.prototype.sendData = function () {
 	Object.keys( this.savedCaptionsData ).forEach( ( langCode ) => {
 		const captionsData = self.state.captionsData[ langCode ];
 		if ( !captionsData || captionsData.text === '' ) {
+			if ( together ) {
+				labels[ langCode ] = { language: langCode, remove: '' };
+				return;
+			}
 			promise = promise.then( () => self.api.postWithToken(
 				'csrf',
 				self.getWbSetLabelParams( langCode, '' )
@@ -742,6 +769,10 @@ CaptionsPanel.prototype.sendData = function () {
 		}
 	} );
 
+	if ( Object.keys( labels ).length > 0 ) {
+		promise = this.sendLabelsTogether( labels, captionsDataEditors, tempuser );
+	}
+
 	promise.then( () => {
 		self.setState(
 			Object.assign(
@@ -767,6 +798,70 @@ CaptionsPanel.prototype.sendData = function () {
 		}
 		self.setReady();
 	} );
+};
+
+/**
+ * Save all the changed captions in one request, so that a CAPTCHA is needed only once.
+ *
+ * @param {Object} labels The changed captions, by language code, as wbeditentity takes them
+ * @param {Object} captionsDataEditors The editors, by guid; gets an editor for a removed
+ *  caption whose removal failed
+ * @param {Object} tempuser Gets the tempuser properties of the response
+ * @return {jQuery.Promise}
+ */
+CaptionsPanel.prototype.sendLabelsTogether = function ( labels, captionsDataEditors, tempuser ) {
+	const params = {
+		// As in getWbSetLabelParams
+		bot: 1,
+		action: 'wbeditentity',
+		id: mw.config.get( 'wbEntityId' ),
+		data: JSON.stringify( { labels: labels } ),
+		returnto: mw.config.get( 'wgPageName' )
+	};
+	if ( Object.keys( this.savedCaptionsData ).length > 0 ) {
+		params.baserevid = mw.mediaInfo.structuredData.currentRevision;
+	}
+
+	return this.api.postWithToken( 'csrf', params )
+		.done( ( response ) => {
+			mw.mediaInfo.structuredData.currentRevision = response.entity.lastrevid;
+
+			Object.keys( labels ).forEach( ( langCode ) => {
+				if ( 'remove' in labels[ langCode ] ) {
+					delete this.savedCaptionsData[ langCode ];
+				} else {
+					this.savedCaptionsData[ langCode ] = new CaptionData( langCode, labels[ langCode ].value );
+				}
+			} );
+
+			for ( const property in response ) {
+				if ( property.match( /^tempuser/ ) ) {
+					tempuser[ property ] = response[ property ];
+				}
+			}
+		} )
+		.fail( ( errorCode, error ) => {
+			const apiError = wikibase.api.RepoApiError.newFromApiResponse( error, 'save' ),
+				languagesWithEditor = [];
+
+			Object.keys( captionsDataEditors ).forEach( ( guid ) => {
+				const langCode = captionsDataEditors[ guid ].getLanguageCode();
+				if ( langCode in labels ) {
+					captionsDataEditors[ guid ].setInputError( apiError.detailedMessage );
+					languagesWithEditor.push( langCode );
+				}
+			} );
+			// A removed caption has no editor: show it again, with the error
+			Object.keys( labels ).forEach( ( langCode ) => {
+				if ( languagesWithEditor.includes( langCode ) || !this.savedCaptionsData[ langCode ] ) {
+					return;
+				}
+				const guid = this.createGuid(),
+					captionDataEditor = this.createCaptionDataEditor( guid, this.savedCaptionsData[ langCode ] );
+				captionDataEditor.setInputError( apiError.detailedMessage );
+				captionsDataEditors[ guid ] = captionDataEditor;
+			} );
+		} );
 };
 
 /**
